@@ -127,10 +127,10 @@ class Arrow {
 };
 
 #define UPDATE_PLAYER_SPRITE_X() \
-	player.sprite->srcrect.x = (player.frameState / 2) * player.sprite->srcrect.w;
+	sprite->srcrect.x = (frameState / 2) * sprite->srcrect.w;
 
 #define UPDATE_PLAYER_SPRITE_Y() \
-	player.sprite->srcrect.y = player.facingRight * player.sprite->srcrect.h;
+	sprite->srcrect.y = facingRight * sprite->srcrect.h;
 
 class Trogdor {
 	public:
@@ -143,26 +143,37 @@ class Trogdor {
 		SpriteObject *sprite; // includes position via dstrect
 		Sint8 x_offset;       // used for movement
 		Sint8 y_offset;       // used for movement
-		Sint8 moveSpeed;
+		Sint8 moveSpeed;      // used for movement
+		Uint8 frameStateFlag; // used for movement
 		Trogdor() {
 		}
 		Trogdor(SpriteObject &s) {
 			frameState = 0;
 			facingRight = true;
-			sprite->srcrect.x = (frameState / 2) * sprite->srcrect.w;
-			sprite->srcrect.y = facingRight * sprite->srcrect.h;
 			hitboxRect = { 13, 11, 18, 25 }; // TODO: this should change depending on frame...
 			spawnPos_x = (Sint16)(2780.0 / 5000 * GAME_WIDTH);
 			spawnPos_y = (Sint16)(2360.0 / 3600 * GAME_HEIGHT);
 			sprite = &s;
+			UPDATE_PLAYER_SPRITE_X();
+			UPDATE_PLAYER_SPRITE_Y();
 			x_offset = 0;
 			y_offset = 0;
 			moveSpeed = 3;
 		}
 		void move(Sint8 delta_x, Sint8 delta_y) {
 			// TODO: Pretty much everything in this function
-			sprite->dstrect.x += delta_x;
-			sprite->dstrect.y += delta_y;
+			if (frameStateFlag & 2) {
+				sprite->dstrect.x += delta_x;
+				sprite->dstrect.y += delta_y;
+				frameState = 0;
+				UPDATE_PLAYER_SPRITE_X();
+				UPDATE_PLAYER_SPRITE_Y();
+			} else if (frameStateFlag & 1) {
+				sprite->dstrect.x += delta_x;
+				sprite->dstrect.y += delta_y;
+				frameState = (++frameState % 8);
+				UPDATE_PLAYER_SPRITE_X();
+			}
 		}
 };
 
@@ -254,35 +265,32 @@ class GameManager {
 		void getPlayerInput() {
 			player.x_offset = 0;
 			player.y_offset = 0;
-			if (KEY_HELD(INPUT_DOWN)) {
-				player.frameState = (++player.frameState % 8);
-				player.y_offset = player.moveSpeed;
-				UPDATE_PLAYER_SPRITE_X();
-			} else if (KEY_HELD(INPUT_UP)) {
-				player.frameState = (++player.frameState % 8);
+			player.frameStateFlag = 0;
+			if (KEY_HELD(INPUT_UP)) {
+				player.frameStateFlag |= 1;
 				player.y_offset = -player.moveSpeed;
-				UPDATE_PLAYER_SPRITE_X();
+			}
+			if (KEY_HELD(INPUT_DOWN)) {
+				player.frameStateFlag |= 1;
+				player.y_offset = player.moveSpeed;
+			}
+			if (KEY_HELD(INPUT_LEFT)) {
+				if (!player.facingRight) {
+					player.frameStateFlag |= 1;
+				} else {
+					player.frameStateFlag |= 2;
+					player.facingRight = false;
+				}
+				player.x_offset = -player.moveSpeed;
 			}
 			if (KEY_HELD(INPUT_RIGHT)) {
 				if (player.facingRight) {
-					player.frameState = (++player.frameState % 8);
+					player.frameStateFlag |= 1;
 				} else {
-					player.frameState = 0;
+					player.frameStateFlag |= 2;
 					player.facingRight = true;
-					UPDATE_PLAYER_SPRITE_Y();
 				}
 				player.x_offset = player.moveSpeed;
-				UPDATE_PLAYER_SPRITE_X();
-			} else if (KEY_HELD(INPUT_LEFT)) {
-				if (!player.facingRight) {
-					player.frameState = (++player.frameState % 8);
-				} else {
-					player.frameState = 0;
-					player.facingRight = false;
-					UPDATE_PLAYER_SPRITE_Y();
-				}
-				player.x_offset = -player.moveSpeed;
-				UPDATE_PLAYER_SPRITE_X();
 			}
 			player.move(player.x_offset, player.y_offset);
 		}
