@@ -4,27 +4,54 @@
 #include "config.h"
 #include "general.h"
 #include "input.h"
+#include "level_data.h"
 #include "media_objects_init.h"
 #include "sound_logic.h"
 #include "sprite_objects.h"
 
-// for all "directions": 0 = up, 1 = down, 2 = left, 3 = right
+// for all "directions": 1 = up, 2 = down, 3 = left, 4 = right
+
+#define MAX_NUM_HUTS 6
+
+extern Uint16 rand_var;
 
 class Cottage {
 	public:
 		Uint8 frameState;
-		Sint16 x;
-		Sint16 y;
+		SDL_Rect srcrect;
+		SDL_Rect dstrect;
+		SDL_Rect fire_srcrect;
+		SDL_Rect fire_dstrect;
 		bool burning;
 		bool burned;
 		Sint8 direction;
-		Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 0) {
-			frameState = 0;
-			x = pos_x;
-			y = pos_y;
+		Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1) {
+			frameState = 9;
+			srcrect = { 0, (dir - 1) * sprite_cottage.dstrect.h, sprite_cottage.dstrect.w, sprite_cottage.dstrect.h };
+			dstrect = { pos_x, pos_y, sprite_cottage.dstrect.w, sprite_cottage.dstrect.h };
+			fire_srcrect = { 0, 0, sprite_cottage_fire.dstrect.w, sprite_cottage_fire.dstrect.h };
+			fire_dstrect.x = dstrect.x + 5;
+			fire_dstrect.y = dstrect.y - 5;
+			fire_dstrect.w = sprite_cottage_fire.dstrect.w;
+			fire_dstrect.h = sprite_cottage_fire.dstrect.h;
 			burning = false;
 			burned = false;
 			direction = dir;
+		}
+		void updateFrameState() {
+			frameState++;
+			if (frameState == 10) {
+				Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_burn_hut, 0);
+			}
+			if (frameState >= 12 && frameState <= 28) {
+				fire_srcrect.x = (((frameState - 12) / 3) % 4) * sprite_cottage_fire.dstrect.w; // TODO: flames should be flipped horizontally if direction == 3
+				if (frameState == 26) {
+					srcrect.x = dstrect.w;
+				}
+			}
+			if (frameState == 30) {
+				burned = true;
+			}
 		}
 };
 
@@ -34,7 +61,7 @@ class Knight {
 		Sint16 x;
 		Sint16 y;
 		Sint8 direction;
-		Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 0) {
+		Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1) {
 			frameState = 0;
 			x = pos_x;
 			y = pos_y;
@@ -72,14 +99,14 @@ class Peasant {
 			myStart = 999; // TODO: no idea what this is yet
 			myStartx = 0;
 			myStarty = 0;
-			direction = 1;
+			direction = 2;
 			myTargetx = 0;
 			myTargety = 0;
 			returning = false;
 			timer = 0;
 		}
 		void Squish() {
-			Uint16 rand_var = rand() % 1000;
+			rand_var = rand() % 1000;
 			if (rand_var < 0.003) {
 				Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb2, 0);
 			} else if (rand_var < 0.006) {
@@ -101,7 +128,7 @@ class Archer {
 		Sint16 y;
 		bool active;
 		Sint8 direction;
-		Archer(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 2) {
+		Archer(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 3) {
 			frameState = 0;
 			x = pos_x;
 			y = pos_y;
@@ -117,7 +144,7 @@ class Arrow {
 		Sint16 y;
 		bool active;
 		Sint8 direction;
-		Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 2) {
+		Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 3) {
 			//frameState = 0;
 			x = pos_x;
 			y = pos_y;
@@ -191,13 +218,14 @@ class GameManager {
 		bool manually_paused;           // game is paused by the player
 		bool gameOver;                  // game is over
 		Uint8 level;                    // current level
+		Uint8 levelIndex;               // current level index (determined by level)
 		double burnination;             // amount of time left in burnination state
 		double archerFrequency;         // frequency at which archers appear
 		double burnRate;                // rate at which the burnination meter decreases
 		Sint8 invince;                  // remaining invincibility time (after respawn)
 		Arrow arrowArrayL[5];           // array of Arrow objects (firing from right to left)
 		Arrow arrowArrayR[5];           // array of Arrow objects (firing from left to right)
-		Cottage hutArray[10];           // array of Cottage objects
+		Cottage hutArray[6];            // array of Cottage objects
 		Peasant peasantArray[7];        // array of Peasant objects
 		Knight knightArray[2];          // array of Knight objects
 		Trogdor player;                 // the player
@@ -211,6 +239,7 @@ class GameManager {
 			manually_paused = false;
 			gameOver = false;
 			level = 1;
+			levelIndex = 1;
 			SET_BURNINATION(0);
 			archerFrequency = 0;
 			burnRate = 0;
@@ -241,21 +270,57 @@ class GameManager {
 			}
 			invince = 0;
 			// TODO: load level ((level - 2) % 32 + 2) here
+			if (level == 1) {
+				levelIndex = 0;
+			} else {
+				levelIndex = ((level - 2) % 32 + 2) - 1;
+			}
+			switch (levels[levelIndex][0]) {
+				case 1:
+					sprite_level_background = &sprite_level_background_1;
+					break;
+				case 2:
+					sprite_level_background = &sprite_level_background_2;
+					break;
+				case 3:
+					sprite_level_background = &sprite_level_background_3;
+					break;
+				case 4:
+					sprite_level_background = &sprite_level_background_4;
+					break;
+				default:
+					sprite_level_background = &sprite_level_background_1;
+					break;
+			}
+			for (i = 0; i < MAX_NUM_HUTS; i++) {
+				j = (i * 3) + 2;
+				if (levels[levelIndex][j] > 0) {
+					hutArray[i] = Cottage(
+						OBJ_TO_SCREEN_AT_FRACTION_X(sprite_cottage, (levels[levelIndex][j + 1] + 2466) / 5000.0),
+						OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_cottage, (levels[levelIndex][j + 2] + 2183) / 3600.0),
+						levels[levelIndex][j]
+					);
+					PRINT("COTTAGE INFO:");
+					PRINT((int)hutArray[i].direction);
+					PRINT((int)hutArray[i].dstrect.x);
+					PRINT((int)hutArray[i].dstrect.y);
+				} else {
+					hutArray[i] = Cottage(0, 0, 0);
+					hutArray[i].burned = true;
+				}
+			}
 			// level data should be stored in a binary file
 			for (i = 0; i < LEN(arrowArrayL); i++) {
-				arrowArrayL[i] = Arrow(0, 0, 2);
+				arrowArrayL[i] = Arrow(0, 0, 3);
 			}
 			for (i = 0; i < LEN(arrowArrayR); i++) {
-				arrowArrayR[i] = Arrow(0, 0, 3);
-			}
-			for (i = 0; i < LEN(hutArray); i++) {
-				hutArray[i] = Cottage(0, 0, 2); // TODO: Get cottage data from level here
+				arrowArrayR[i] = Arrow(0, 0, 4);
 			}
 			for (i = 0; i < LEN(peasantArray); i++) {
-				peasantArray[i] = Peasant(0, 0);
+				peasantArray[i] = Peasant(0, 1);
 			}
 			for (i = 0; i < LEN(knightArray); i++) {
-				knightArray[i] = Knight(0, 0, 0);
+				knightArray[i] = Knight(0, 0, 1);
 			}
 			peasantometer = 0;
 			player.sprite->dstrect.x = player.spawnPos_x;
@@ -293,6 +358,18 @@ class GameManager {
 				player.x_offset = player.moveSpeed;
 			}
 			player.move(player.x_offset, player.y_offset);
+			// TODO: Handle pausing here
+		}
+		void testBurnHut() {
+			for (i = 0; i < MAX_NUM_HUTS; i++) {
+				if (!hutArray[i].burning && KEY_PRESSED(INPUT_SELECT)) { // TODO: replace KEY_PRESSED(INPUT_SELECT) with breath.hitTest(hutArray[i])
+					hutArray[i].burning = true;
+					rand_var = rand() % 1000;
+					if (rand_var < 0.05) {
+						Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbdooj, 0);
+					}
+				}
+			}
 		}
 		void burninationIncreaseTest() {
 			SET_BURNINATION(burnination + 1);
@@ -307,5 +384,18 @@ class GameManager {
 			}
 		}
 };
+
+#define RENDER_AND_ANIMATE_COTTAGES()                                                                                     \
+	for (i = 0; i < MAX_NUM_HUTS; i++) {                                                                                  \
+		if (GM.hutArray[i].direction > 0) {                                                                               \
+			if (GM.hutArray[i].burning && !GM.hutArray[i].burned) {                                                       \
+				GM.hutArray[i].updateFrameState();                                                                        \
+			}                                                                                                             \
+			RENDER_SPRITE_USING_RECTS(sprite_cottage, GM.hutArray[i].srcrect, GM.hutArray[i].dstrect);                    \
+			if (GM.hutArray[i].frameState >= 12 && GM.hutArray[i].frameState <= 28) {                                     \
+				RENDER_SPRITE_USING_RECTS(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
+			}                                                                                                             \
+		}                                                                                                                 \
+	}
 
 #endif

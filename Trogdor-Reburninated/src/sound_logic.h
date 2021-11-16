@@ -9,8 +9,6 @@ struct SoundSettings {
 
 #define MUSIC_TITLE_SCREEN (rootDir+"music/title_screen.wav").c_str()
 
-#define SFX_TROGADOR (rootDir+"sfx/trogador.wav").c_str()
-
 #define SFX_CHANNEL_GAME 1
 #define SFX_CHANNEL_STRONG_BAD 2
 

@@ -50,6 +50,7 @@ Uint32 heldKeys;
 /* Audio */
 SoundSettings soundSettings;
 Mix_Music *bgm;
+Mix_Chunk *sfx_burn_hut;
 Mix_Chunk *sfx_goldget;
 Mix_Chunk *sfx_peasantscream;
 Mix_Chunk *sfx_sb1;
@@ -90,6 +91,8 @@ SpriteObject *sprite_level_background;
 SpriteObject sprite_trogdor;
 SpriteObject sprite_burnination_meter_full;
 SpriteObject sprite_burnination_meter_empty;
+SpriteObject sprite_cottage;
+SpriteObject sprite_cottage_fire;
 
 /* Fonts */
 SDL_Color color_white  = { 255, 255, 255 };
@@ -120,6 +123,7 @@ SDL_RWops *saveFile;
 Sint8 sceneState = 3;
 Sint16 frameState = 1;
 Sint16 textTestState = 0;
+Uint16 rand_var;
 bool isRunning = true;
 bool isWindowed = true;
 
@@ -177,6 +181,7 @@ int main(int argv, char** args) {
 	Mix_VolumeMusic((int)(soundSettings.bgmVolume * 128.0 / 100));
 	Mix_Volume(SFX_CHANNEL_GAME, (int)(soundSettings.sfxVolume * 128.0 / 100));
 	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(soundSettings.sfxVolume * 128.0 / 100));
+	sfx_burn_hut = Mix_LoadWAV((rootDir + "sfx/burn_hut.wav").c_str());
 	sfx_goldget = Mix_LoadWAV((rootDir + "sfx/trog_goldget.wav").c_str());
 	sfx_peasantscream = Mix_LoadWAV((rootDir + "sfx/trog_peasantscream.wav").c_str());
 	sfx_sb1 = Mix_LoadWAV((rootDir + "sfx/trog_sb1.wav").c_str());
@@ -245,6 +250,10 @@ int main(int argv, char** args) {
 		OBJ_TO_MID_SCREEN_X(sprite_burnination_meter_full), 8, 1, 1, 1);
 	PREPARE_SPRITE(sprite_burnination_meter_empty, (rootDir + "graphics/burnination_meter/empty.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_burnination_meter_empty), 8, 1, 1, 1);
+	PREPARE_SPRITE(sprite_cottage, (rootDir + "graphics/cottage.bmp").c_str(),
+		0, 0, 2, 4, 1);
+	PREPARE_SPRITE(sprite_cottage_fire, (rootDir + "graphics/cottage_fire.bmp").c_str(),
+		0, 0, 4, 1, 1);
 	/* Set Text */
 	SET_FONT(font_serif_brown_6, "fonts/27_serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_brown_6, color_brown, 32, 122);
@@ -1041,7 +1050,6 @@ int main(int argv, char** args) {
 					UPDATE_TEXT(text_4_score_val, to_string(GM.score));
 					UPDATE_TEXT(text_4_mans_val, to_string(GM.mans));
 					UPDATE_TEXT(text_4_level_val, to_string(GM.level));
-					sprite_level_background = &sprite_level_background_1;
 					sceneState = 4;
 				}
 				RENDER_SPRITE(sprite_trogdor_logo);
@@ -1065,6 +1073,11 @@ int main(int argv, char** args) {
 					GM.burninationDecreaseTest();
 				}
 				GM.getPlayerInput();
+				if (GM.burnination == 0) {
+
+				} else {
+					GM.testBurnHut();
+				}
 #if !defined(SDL1)
 				SDL_RenderCopy(renderer, sprite_level_background->texture, NULL, &sprite_level_background->dstrect);
 #else
@@ -1080,6 +1093,7 @@ int main(int argv, char** args) {
 					RENDER_SPRITE(sprite_burnination_meter_empty);
 					RENDER_SPRITE(sprite_burnination_meter_full);
 				}
+				RENDER_AND_ANIMATE_COTTAGES();
 				RENDER_SPRITE(sprite_trogdor);
 				break;
 			/* Nothing? (or maybe Game) */

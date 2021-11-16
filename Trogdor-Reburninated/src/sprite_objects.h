@@ -30,6 +30,12 @@ struct SpriteObject {
 #define RENDER_SPRITE_ALT(spriteObj) \
     SDL_RenderCopy(renderer, spriteObj->texture, &spriteObj->srcrect, &spriteObj->dstrect);
 
+#define RENDER_SPRITE_AT_RECT(spriteObj, rect) \
+    SDL_RenderCopy(renderer, spriteObj.texture, &spriteObj.srcrect, &rect);
+
+#define RENDER_SPRITE_USING_RECTS(spriteObj, srect, drect) \
+    SDL_RenderCopy(renderer, spriteObj.texture, &srect, &drect);
+
 #define SET_SPRITE_SCALE(spriteObj, scale)                                                             \
     spriteObj.dstrect.w = (int)(spriteObj.srcrect.w * min(GAME_WIDTH_MULT, GAME_HEIGHT_MULT) * scale); \
     spriteObj.dstrect.h = (int)(spriteObj.srcrect.h * min(GAME_WIDTH_MULT, GAME_HEIGHT_MULT) * scale);
@@ -64,6 +70,12 @@ struct SpriteObject {
 
 #define RENDER_SPRITE_ALT(spriteObj) \
     SDL_BlitSurface(spriteObj->surface, &spriteObj->srcrect, screen, &spriteObj->dstrect);
+
+#define RENDER_SPRITE_AT_RECT(spriteObj, rect) \
+    SDL_BlitSurface(spriteObj.surface, &spriteObj.srcrect, screen, &rect);
+
+#define RENDER_SPRITE_USING_RECTS(spriteObj, srect, drect) \
+    SDL_BlitSurface(spriteObj.surface, &srect, screen, &drect);
 
 // Scales, but does NOT make color key transparent. Pick your poison...
 #define RENDER_SPRITE_SCALED(spriteObj) \

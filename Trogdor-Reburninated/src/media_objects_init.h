@@ -18,7 +18,10 @@ extern SpriteObject *sprite_level_background;
 extern SpriteObject sprite_trogdor;
 extern SpriteObject sprite_burnination_meter_full;
 extern SpriteObject sprite_burnination_meter_empty;
+extern SpriteObject sprite_cottage;
+extern SpriteObject sprite_cottage_fire;
 
+extern Mix_Chunk *sfx_burn_hut;
 extern Mix_Chunk *sfx_goldget;
 extern Mix_Chunk *sfx_peasantscream;
 extern Mix_Chunk *sfx_sb1;
