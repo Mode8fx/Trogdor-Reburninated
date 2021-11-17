@@ -21,9 +21,9 @@ extern Uint16 frameRate;
 #define GAME_HEIGHT_MULT gameHeightMult
 #define FRAME_RATE frameRate
 
-#define SET_WIDTH_HEIGHT_MULTS()                                     \
-	double gameWidthMult = ((double)gameWidth / DEFAULT_GAME_WIDTH); \
-	double gameHeightMult = ((double)gameHeight / DEFAULT_GAME_HEIGHT);
+#define SET_WIDTH_HEIGHT_MULTS()                              \
+	gameWidthMult = ((double)gameWidth / DEFAULT_GAME_WIDTH); \
+	gameHeightMult = ((double)gameHeight / DEFAULT_GAME_HEIGHT);
 
 #define SAVE_FILE (rootDir+"save.bin").c_str()
 
