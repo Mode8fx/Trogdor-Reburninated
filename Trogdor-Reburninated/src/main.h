@@ -83,6 +83,8 @@ SpriteObject sprite_burnination_meter_full;
 SpriteObject sprite_burnination_meter_empty;
 SpriteObject sprite_cottage;
 SpriteObject sprite_cottage_fire;
+SpriteObject sprite_peasantometer_icon;
+Uint8 sprite_peasantometer_icon_init_x;
 
 /* Fonts */
 SDL_Color color_white  = { 255, 255, 255 };
@@ -363,6 +365,9 @@ void InitializeSprites() {
 		0, 0, 2, 4, 1);
 	PREPARE_SPRITE(sprite_cottage_fire, (rootDir + "graphics/cottage_fire.bmp").c_str(),
 		0, 0, 4, 1, 1);
+	PREPARE_SPRITE(sprite_peasantometer_icon, (rootDir + "graphics/peasantometer.bmp").c_str(),
+		0, 3, 2, 1, 1);
+	sprite_peasantometer_icon_init_x = (Uint8)(GAME_WIDTH * 66 / 250);
 }
 
 void InitializeTextChars() {
@@ -430,7 +435,7 @@ void InitializeTextObjects() {
 	SET_TEXT("loading...", text_0_loading, textChars_font_serif_white_14,
 		OBJ_TO_MID_SCREEN_X(text_0_loading), OBJ_TO_MID_SCREEN_Y(text_0_loading));
 	text_0_loading_censor_rect = { text_0_loading.dstrect.x, text_0_loading.dstrect.y,
-		1, 1 }; //(Uint16)text_0_loading.dstrect.w, (Uint16)text_0_loading.dstrect.h };
+		(Uint16)text_0_loading.dstrect.w, (Uint16)text_0_loading.dstrect.h };
 	/* 1: Videlectrix Logo */
 	SET_TEXT("presents", text_1_presents, textChars_font_nokia_12,
 		OBJ_TO_MID_SCREEN_X(text_1_presents), OBJ_TO_SCREEN_AT_FRACTION_Y(text_1_presents, 0.7));
@@ -535,12 +540,6 @@ void InitializeController() {
 		DESTROY_SPRITE(textChars[i]);      \
 	}
 
-#if !defined(WII) && !defined(GAMECUBE)
-#define MIX_QUIT() Mix_Quit();
-#else
-#define MIX_QUIT()
-#endif
-
 #if !defined(SDL1)
 #define DESTROY_SPRITE(sprite) \
 	SDL_DestroyTexture(sprite.texture);
@@ -588,7 +587,9 @@ void DestroyAll() {
 	}
 	Mix_FreeChunk(sfx_trogador);
 	Mix_CloseAudio();
-	MIX_QUIT();
+#if !defined(WII) && !defined(GAMECUBE)
+	Mix_Quit();
+#endif
 	/* Controller */
 	CLOSE_CONTROLLER();
 	/* Renderer/Screen and Window */

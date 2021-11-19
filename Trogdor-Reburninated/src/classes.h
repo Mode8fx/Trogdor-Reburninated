@@ -11,7 +11,11 @@
 
 // for all "directions": 1 = up, 2 = down, 3 = left, 4 = right
 
-#define MAX_NUM_HUTS 6
+#define MAX_NUM_HUTS   6
+#define LEFT_BOUND    -3 //  17 - 20
+#define RIGHT_BOUND  211 // 250 - 39
+#define UPPER_BOUND    7
+#define LOWER_BOUND  133 // 180 - 47
 
 extern Uint16 rand_var;
 
@@ -25,6 +29,7 @@ class Cottage {
 		bool burning;
 		bool burned;
 		Sint8 direction;
+		SDL_Rect collision;
 		Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1) {
 			frameState = 9;
 			srcrect = { 0, (dir - 1) * sprite_cottage.dstrect.h, sprite_cottage.dstrect.w, sprite_cottage.dstrect.h };
@@ -37,6 +42,23 @@ class Cottage {
 			burning = false;
 			burned = false;
 			direction = dir;
+			switch (direction) {
+				case 1:
+					collision = { 8 + dstrect.x, 15 + dstrect.y, 23, 12 };
+					break;
+				case 2:
+					collision = { 8 + dstrect.x, 16 + dstrect.y, 23, 12 };
+					break;
+				case 3:
+					collision = { 12 + dstrect.x, 14 + dstrect.y, 22, 13 };
+					break;
+				case 4:
+					collision = { 7 + dstrect.x, 15 + dstrect.y, 25, 12 };
+					break;
+				default:
+					collision = { 8 + dstrect.x, 16 + dstrect.y, 23, 12 };
+					break;
+			}
 		}
 		void updateFrameState() {
 			frameState++;
@@ -153,18 +175,11 @@ class Arrow {
 		}
 };
 
-#define UPDATE_PLAYER_SPRITE_X() \
-	sprite->srcrect.x = (frameState / 2) * sprite->srcrect.w;
-
-#define UPDATE_PLAYER_SPRITE_Y() \
-	sprite->srcrect.y = facingRight * sprite->srcrect.h;
-
 class Trogdor {
 	public:
 		Uint8 frameState;
 		bool facingRight;
-		// Trogdor is 43x47
-		SDL_Rect hitboxRect;
+		SDL_Rect collision;
 		Sint16 spawnPos_x;
 		Sint16 spawnPos_y;
 		SpriteObject *sprite; // includes position via dstrect
@@ -177,30 +192,15 @@ class Trogdor {
 		Trogdor(SpriteObject &s) {
 			frameState = 0;
 			facingRight = true;
-			hitboxRect = { 13, 11, 18, 25 }; // TODO: this should change depending on frame...
+			collision = { 11 + sprite->dstrect.x, 11 + sprite->dstrect.y, 18, 24 };
 			spawnPos_x = (Sint16)(2780.0 / 5000 * GAME_WIDTH);
 			spawnPos_y = (Sint16)(2360.0 / 3600 * GAME_HEIGHT);
 			sprite = &s;
-			UPDATE_PLAYER_SPRITE_X();
-			UPDATE_PLAYER_SPRITE_Y();
+			sprite->srcrect.x = 0;
+			sprite->srcrect.y = sprite->srcrect.h;
 			x_offset = 0;
 			y_offset = 0;
 			moveSpeed = 3;
-		}
-		void move(Sint8 delta_x, Sint8 delta_y) {
-			// TODO: Pretty much everything in this function
-			if (frameStateFlag & 2) {
-				sprite->dstrect.x += delta_x;
-				sprite->dstrect.y += delta_y;
-				frameState = 0;
-				UPDATE_PLAYER_SPRITE_X();
-				UPDATE_PLAYER_SPRITE_Y();
-			} else if (frameStateFlag & 1) {
-				sprite->dstrect.x += delta_x;
-				sprite->dstrect.y += delta_y;
-				frameState = (++frameState % 8);
-				UPDATE_PLAYER_SPRITE_X();
-			}
 		}
 };
 
@@ -269,7 +269,6 @@ class GameManager {
 				burnRate = 0.7;
 			}
 			invince = 0;
-			// TODO: load level ((level - 2) % 32 + 2) here
 			if (level == 1) {
 				levelIndex = 0;
 			} else {
@@ -325,6 +324,7 @@ class GameManager {
 			peasantometer = 0;
 			player.sprite->dstrect.x = player.spawnPos_x;
 			player.sprite->dstrect.y = player.spawnPos_y;
+			player.collision = { 11 + player.sprite->dstrect.x, 11 + player.sprite->dstrect.y, 18, 24 };
 			player.facingRight = true;
 		}
 		void getPlayerInput() {
@@ -357,8 +357,57 @@ class GameManager {
 				}
 				player.x_offset = player.moveSpeed;
 			}
-			player.move(player.x_offset, player.y_offset);
 			// TODO: Handle pausing here
+			moveTrogdor(&player, player.x_offset, player.y_offset);
+		}
+		inline void trogdor_add_x_delta(Sint8 dx) {
+			player.sprite->dstrect.x += dx;
+			player.collision.x = 11 + player.sprite->dstrect.x;
+		}
+		inline void trogdor_add_y_delta(Sint8 dy) {
+			player.sprite->dstrect.y += dy;
+			player.collision.y = 11 + player.sprite->dstrect.y;
+		}
+		// This has to be part of GM and not Trogdor since it references GM (and GameManager references Trogdor, so it would be circular)
+		void moveTrogdor(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
+			// TODO: Pretty much everything in this function
+			// X movement
+			if (delta_x != 0) {
+				trogdor_add_x_delta(delta_x);
+				// Collision
+				if (trog->sprite->dstrect.x < LEFT_BOUND || trog->sprite->dstrect.x > RIGHT_BOUND) {
+					trogdor_add_x_delta(-delta_x);
+				}
+				for (i = 0; i < MAX_NUM_HUTS; i++) {
+					if (hutArray[i].direction > 0 && !hutArray[i].burned && SDL_HasIntersection(&trog->sprite->dstrect, &hutArray[i].collision)) { // &trog->sprite->dstrect, NOT &trog->collision
+						trogdor_add_x_delta(-delta_x);
+						break;
+					}
+				}
+			}
+			// Y movement
+			if (delta_y != 0) {
+				trogdor_add_y_delta(delta_y);
+				// Collision
+				if (trog->sprite->dstrect.y < UPPER_BOUND || trog->sprite->dstrect.y > LOWER_BOUND) {
+					trogdor_add_y_delta(-delta_y);
+				}
+				for (i = 0; i < MAX_NUM_HUTS; i++) {
+					if (hutArray[i].direction > 0 && !hutArray[i].burned && SDL_HasIntersection(&trog->sprite->dstrect, &hutArray[i].collision)) { // &trog->sprite->dstrect, NOT &trog->collision
+						trogdor_add_y_delta(-delta_y);
+						break;
+					}
+				}
+			}
+			// Animate sprite
+			if (trog->frameStateFlag & 2) {
+				trog->frameState = 0;
+				trog->sprite->srcrect.x = 0;
+				trog->sprite->srcrect.y = trog->facingRight * trog->sprite->srcrect.h;
+			} else if (trog->frameStateFlag & 1) {
+				trog->frameState = (++trog->frameState % 8);
+				trog->sprite->srcrect.x = (trog->frameState / 2) * trog->sprite->srcrect.w;
+			}
 		}
 		void testBurnHut() {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
@@ -372,22 +421,48 @@ class GameManager {
 			}
 		}
 		void burninationIncreaseTest() {
-			SET_BURNINATION(burnination + 1);
-			if (burnination > 100) {
-				SET_BURNINATION(100);
+			if (peasantometer < 9) {
+				peasantometer++;
+			} else {
+				peasantometer = 10;
+				SET_BURNINATION(burnination + 1);
+				if (burnination > 100) {
+					SET_BURNINATION(100);
+				}
 			}
 		}
 		void burninationDecreaseTest() {
-			SET_BURNINATION(burnination - 1);
-			if (burnination < 0) {
-				SET_BURNINATION(0);
+			if (peasantometer < 10) {
+				peasantometer--;
+				if (peasantometer < 0) {
+					peasantometer = 0;
+				}
+			} else {
+				SET_BURNINATION(burnination - 1);
+				if (burnination <= 0) {
+					SET_BURNINATION(0);
+					peasantometer = 0;
+				}
 			}
 		}
 };
 
-#define RENDER_AND_ANIMATE_COTTAGES()                                                                                     \
+#define RENDER_AND_ANIMATE_UPPER_COTTAGES()                                                                               \
 	for (i = 0; i < MAX_NUM_HUTS; i++) {                                                                                  \
-		if (GM.hutArray[i].direction > 0) {                                                                               \
+		if (GM.hutArray[i].direction > 0 && GM.hutArray[i].dstrect.y < GM.player.sprite->dstrect.y + 9) {                 \
+			if (GM.hutArray[i].burning && !GM.hutArray[i].burned) {                                                       \
+				GM.hutArray[i].updateFrameState();                                                                        \
+			}                                                                                                             \
+			RENDER_SPRITE_USING_RECTS(sprite_cottage, GM.hutArray[i].srcrect, GM.hutArray[i].dstrect);                    \
+			if (GM.hutArray[i].frameState >= 12 && GM.hutArray[i].frameState <= 28) {                                     \
+				RENDER_SPRITE_USING_RECTS(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
+			}                                                                                                             \
+		}                                                                                                                 \
+	}
+
+#define RENDER_AND_ANIMATE_LOWER_COTTAGES()                                                                               \
+	for (i = 0; i < MAX_NUM_HUTS; i++) {                                                                                  \
+		if (GM.hutArray[i].direction > 0 && GM.hutArray[i].dstrect.y >= GM.player.sprite->dstrect.y + 9) {                \
 			if (GM.hutArray[i].burning && !GM.hutArray[i].burned) {                                                       \
 				GM.hutArray[i].updateFrameState();                                                                        \
 			}                                                                                                             \

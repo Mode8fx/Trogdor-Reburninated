@@ -25,6 +25,8 @@ extern SpriteObject sprite_burnination_meter_full;
 extern SpriteObject sprite_burnination_meter_empty;
 extern SpriteObject sprite_cottage;
 extern SpriteObject sprite_cottage_fire;
+extern SpriteObject sprite_peasantometer_icon;
+extern Uint8        sprite_peasantometer_icon_init_x;
 
 extern Mix_Chunk *sfx_burn_hut;
 extern Mix_Chunk *sfx_goldget;

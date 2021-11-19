@@ -17,7 +17,6 @@ Uint32 frameTime;
 /* Program State */
 Sint8 sceneState = 3;
 Sint16 frameState = 1;
-Sint16 textTestState = 0;
 Uint16 rand_var;
 bool isRunning = true;
 bool isWindowed = true;
@@ -40,10 +39,10 @@ int main(int argv, char** args) {
 	/* Load Save File */
 	LOAD_SAVE_FILE();
 	InitializeDisplay();
-	InitializeSound();
-	InitializeSprites();
 	InitializeTextChars();
 	InitializeTextObjects();
+	InitializeSound();
+	InitializeSprites();
 	InitializeController();
 
 	while (isRunning) {
@@ -120,8 +119,13 @@ int main(int argv, char** args) {
 							} else {
 								float_i = (uint_j / DEFAULT_GAME_HEIGHT);
 							}
-							SDL_SetWindowSize(window, (int)(DEFAULT_GAME_WIDTH * float_i), (int)(DEFAULT_GAME_HEIGHT * float_i));
-							SDL_RenderSetScale(renderer, float_i, float_i);
+							if (float_i < 1) {
+								SDL_SetWindowSize(window, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT);
+								SDL_RenderSetScale(renderer, 1, 1);
+							} else {
+								SDL_SetWindowSize(window, (int)(DEFAULT_GAME_WIDTH * float_i), (int)(DEFAULT_GAME_HEIGHT * float_i));
+								SDL_RenderSetScale(renderer, float_i, float_i);
+							}
 							break;
 						case SDL_WINDOWEVENT_MAXIMIZED:
 							SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
@@ -759,9 +763,24 @@ int main(int argv, char** args) {
 				if (GM.burnination > 0) {
 					RENDER_SPRITE(sprite_burnination_meter_empty);
 					RENDER_SPRITE(sprite_burnination_meter_full);
+				} else {
+					sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;
+					sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;
+					for (i = 0; i < 10; i++) {
+						if (GM.peasantometer == i) {
+							sprite_peasantometer_icon.srcrect.x = 0;
+						}
+						RENDER_SPRITE(sprite_peasantometer_icon);
+						sprite_peasantometer_icon.dstrect.x += (sprite_peasantometer_icon.dstrect.w * 1.5);
+					}
 				}
-				RENDER_AND_ANIMATE_COTTAGES();
-				RENDER_SPRITE(sprite_trogdor);
+				RENDER_AND_ANIMATE_UPPER_COTTAGES();
+				RENDER_SPRITE_ALT(GM.player.sprite);
+				RENDER_AND_ANIMATE_LOWER_COTTAGES();
+				//DRAW_RECT(GM.player.collision, color_red.r, color_red.g, color_red.b);
+				//for (i = 0; i < MAX_NUM_HUTS; i++) {
+				//	DRAW_RECT(GM.hutArray[i].collision, color_red.r, color_red.g, color_red.b);
+				//}
 				break;
 			/* Nothing? (or maybe Game) */
 			case 5:
@@ -825,76 +844,6 @@ int main(int argv, char** args) {
 				break;
 			/* High Scores Screen */
 			case 25:
-				break;
-			/* DEBUG - Text Test Screen */
-			case 101:
-				if (KEY_PRESSED(INPUT_RIGHT)) {
-					textTestState = (textTestState + 1) % 17;
-				}
-				if (KEY_PRESSED(INPUT_LEFT)) {
-					textTestState--;
-					while (textTestState < 0) {
-						textTestState += 17;
-					}
-				}
-				if (KEY_PRESSED(INPUT_SELECT)) {
-					sceneState = 0;
-				}
-				switch (textTestState) {
-					case 0:
-						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
-						break;
-					case 1:
-						RENDER_TEXT(text_1_presents, textChars_font_nokia_12);
-						break;
-					case 2:
-						RENDER_TEXT(text_3_click_anywhere_to_start, textChars_font_serif_red_8);
-						break;
-					case 3:
-						RENDER_TEXT(text_3_programmed, textChars_font_serif_white_6);
-						break;
-					case 4:
-						RENDER_TEXT(text_3_designed, textChars_font_serif_white_6);
-						break;
-					case 5:
-						RENDER_TEXT(text_3_instructions_1, textChars_font_serif_white_6);
-						break;
-					case 6:
-						RENDER_TEXT(text_3_instructions_2, textChars_font_serif_white_6);
-						break;
-					case 7:
-						RENDER_TEXT(text_3_instructions_3, textChars_font_serif_white_6);
-						break;
-					case 8:
-						RENDER_TEXT(text_3_instructions_4, textChars_font_serif_white_6);
-						break;
-					case 9:
-						RENDER_TEXT(text_3_instructions_5, textChars_font_serif_white_6);
-						break;
-					case 10:
-						RENDER_TEXT(text_3_hints_1, textChars_font_serif_red_6);
-						break;
-					case 11:
-						RENDER_TEXT(text_3_hints_2, textChars_font_serif_white_6);
-						break;
-					case 12:
-						RENDER_TEXT(text_3_hints_3, textChars_font_serif_white_6);
-						break;
-					case 13:
-						RENDER_TEXT(text_3_hints_4, textChars_font_serif_white_6);
-						break;
-					case 14:
-						RENDER_TEXT(text_3_hints_5, textChars_font_serif_white_6);
-						break;
-					case 15:
-						RENDER_TEXT(text_3_hints_6, textChars_font_serif_red_6);
-						break;
-					case 16:
-						RENDER_TEXT(text_3_hints_7, textChars_font_serif_red_6);
-						break;
-					default:
-						break;
-				}
 				break;
 			default:
 				break;
