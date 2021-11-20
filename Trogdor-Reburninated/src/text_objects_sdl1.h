@@ -68,6 +68,19 @@ struct TextCharObject {
         charWidthCounter += CHAR_AT_INDEX(charCounter, charArr).dstrect.w;                           \
     }
 
+#define RENDER_TEXT_CHAR_ON_SCREEN(textObj, scr) \
+    SDL_BlitSurface(textObj.surface, NULL, scr, &textObj.dstrect);
+
+#define RENDER_TEXT_ON_SCREEN(textObj, charArr, scr)                                                 \
+    STRCPY(tempCharArray, textObj.str.c_str());                                                      \
+    charWidthCounter = 0;                                                                            \
+    for (charCounter = 0; charCounter < textObj.str.length(); charCounter++) {                       \
+        SET_TEXT_POS_X(CHAR_AT_INDEX(charCounter, charArr), (textObj.dstrect.x + charWidthCounter)); \
+        SET_TEXT_POS_Y(CHAR_AT_INDEX(charCounter, charArr), textObj.dstrect.y);                      \
+        RENDER_TEXT_CHAR_ON_SCREEN(CHAR_AT_INDEX(charCounter, charArr), scr);                        \
+        charWidthCounter += CHAR_AT_INDEX(charCounter, charArr).dstrect.w;                           \
+    }
+
 #define SET_TEXT_POS_X(textObj, pos_x) \
     textObj.dstrect.x = (pos_x);
 

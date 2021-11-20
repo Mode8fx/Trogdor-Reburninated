@@ -289,6 +289,7 @@ void InitializeDisplay() {
 #if !defined(SDL1)
 	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gameWidth, gameHeight, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII) || defined(GAMECUBE)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	screen = SDL_SetVideoMode(gameWidth, gameHeight, 24, SDL_DOUBLEBUF);
@@ -486,6 +487,10 @@ void InitializeTextObjects() {
 		240, 14);
 	/* 5: Nothing? (or maybe Game) */
 	/* 6: Pause Screen (overlayed on Game) */
+	SET_TEXT("paused", text_6_paused_1, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(text_6_paused_1), 145);
+	SET_TEXT("press 'SPACE' to resume", text_6_paused_2, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(text_6_paused_2), 160);
 	/* 7: Nothing */
 	/* 8: End of Level Animation */
 	/* 9: Level Beaten Screen */

@@ -13,6 +13,7 @@ Uint32 deltaTime;
 
 /* Framerate */
 Uint32 frameTime;
+Uint32 frameCounter_global;
 
 /* Program State */
 Sint8 sceneState = 3;
@@ -23,6 +24,7 @@ bool isWindowed = true;
 
 /* Other */
 GameManager GM;
+SDL_Rect gameScreenRect;
 
 /* General-use Variables */
 Sint8 i, j, k;
@@ -36,9 +38,9 @@ int main(int argv, char** args) {
 	/* Initialize SDL */
 	SDL_Init(SDL_INIT_EVERYTHING);
 
-	/* Load Save File */
 	LOAD_SAVE_FILE();
 	InitializeDisplay();
+	gameScreenRect = { 0, 0, GAME_WIDTH, GAME_HEIGHT };
 	InitializeTextChars();
 	InitializeTextObjects();
 	InitializeSound();
@@ -737,17 +739,29 @@ int main(int argv, char** args) {
 				break;
 			/* Game */
 			case 4:
-				if (KEY_PRESSED(INPUT_B)) {
-					GM.burninationIncreaseTest();
-				}
-				if (KEY_PRESSED(INPUT_A)) {
-					GM.burninationDecreaseTest();
-				}
-				GM.getPlayerInput();
-				if (GM.burnination == 0) {
+				if (!GM.paused && !GM.manually_paused) {
+					if (KEY_PRESSED(INPUT_B)) {
+						GM.burninationIncreaseTest();
+					}
+					if (KEY_PRESSED(INPUT_A)) {
+						GM.burninationDecreaseTest();
+					}
+					GM.getPlayerInput();
+					if (GM.burnination == 0) {
 
+					} else {
+						GM.testBurnHut();
+					}
 				} else {
-					GM.testBurnHut();
+					if (GM.manually_paused) {
+						if (KEY_HELD(INPUT_START)) {
+							GM.startDown = true;
+						}
+						if (GM.startDown && !KEY_HELD(INPUT_START)) {
+							GM.startDown = false;
+							GM.manually_paused = 0;
+						}
+					}
 				}
 #if !defined(SDL1)
 				SDL_RenderCopy(renderer, sprite_level_background->texture, NULL, &sprite_level_background->dstrect);
@@ -760,6 +774,7 @@ int main(int argv, char** args) {
 				RENDER_TEXT(text_4_mans_val, textChars_font_serif_red_6);
 				RENDER_TEXT(text_4_level, textChars_font_serif_2_red_6);
 				RENDER_TEXT(text_4_level_val, textChars_font_serif_red_6);
+				// render peasantometer/burnination meter (depending on their values)
 				if (GM.burnination > 0) {
 					RENDER_SPRITE(sprite_burnination_meter_empty);
 					RENDER_SPRITE(sprite_burnination_meter_full);
@@ -781,13 +796,33 @@ int main(int argv, char** args) {
 				//for (i = 0; i < MAX_NUM_HUTS; i++) {
 				//	DRAW_RECT(GM.hutArray[i].collision, color_red.r, color_red.g, color_red.b);
 				//}
+				if (GM.manually_paused) {
+					// Here, the original game renders a black circle around the top-right of the center of the screen...
+					// I think it's a mistake? I may add it later, but I'll leave it out for now.
+#if !defined(SDL1)
+					DRAW_RECT_WITH_ALPHA(gameScreenRect, color_black.r, color_black.g, color_black.b, 0xC8);
+#else
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+					SDL_Surface *screen_transparent = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_DOUBLEBUF, gameWidth, gameHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+#else
+					SDL_Surface *screen_transparent = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_DOUBLEBUF, gameWidth, gameHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+#endif
+					SDL_FillRect(screen_transparent, NULL, 0xC8000000);
+					SDL_BlitSurface(screen_transparent, NULL, screen, &gameScreenRect);
+					SDL_FreeSurface(screen_transparent);
+#endif
+					if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
+						RENDER_TEXT(text_6_paused_1, textChars_font_serif_white_6);
+						RENDER_TEXT(text_6_paused_2, textChars_font_serif_white_6);
+					}
+				}
 				break;
-			/* Nothing? (or maybe Game) */
-			case 5:
-				break;
-			/* Pause Screen (overlayed on Game) */
-			case 6:
-				break;
+			///* Nothing? (or maybe Game) */
+			//case 5:
+			//	break;
+			///* Pause Screen (overlayed on Game) */
+			//case 6:
+			//	break;
 			/* Nothing */
 			case 7:
 				break;
@@ -863,6 +898,7 @@ int main(int argv, char** args) {
 #endif
 		
 		/* Cap Framerate */
+		frameCounter_global++;
 		frameTime = SDL_GetTicks() - (Uint32)timer_global.now;
 		if (frameTime < (1000 / FRAME_RATE)) {
 			SDL_Delay((1000 / FRAME_RATE) - frameTime);

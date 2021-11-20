@@ -18,6 +18,13 @@
 #define LOWER_BOUND  133 // 180 - 47
 
 extern Uint16 rand_var;
+extern Uint32 frameCounter_global;
+
+#if defined(SDL1)
+inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
+	return (!((A->x + A->w < B->x) || (B->x + B->w < A->x) || (A->y + A->h < B->y) || (B->y + B->h < A->y)));
+}
+#endif
 
 class Cottage {
 	public:
@@ -215,6 +222,7 @@ class GameManager {
 		Uint32 score;                   // score
 		Sint8 peasantometer;            // # of peasants burned for burnination meter
 		bool paused;                    // game is paused through any means (clearing a level, dying, etc.)
+		bool startDown;                 // bool used for pausing
 		bool manually_paused;           // game is paused by the player
 		bool gameOver;                  // game is over
 		Uint8 level;                    // current level
@@ -236,6 +244,7 @@ class GameManager {
 			score = 0;
 			peasantometer = 0;
 			paused = false;
+			startDown = false;
 			manually_paused = false;
 			gameOver = false;
 			level = 1;
@@ -357,8 +366,14 @@ class GameManager {
 				}
 				player.x_offset = player.moveSpeed;
 			}
-			// TODO: Handle pausing here
-			moveTrogdor(&player, player.x_offset, player.y_offset);
+			playerMove(&player, player.x_offset, player.y_offset);
+			if (KEY_HELD(INPUT_START)) {
+				startDown = true;
+			}
+			if (startDown && !KEY_HELD(INPUT_START)) {
+				startDown = false;
+				manually_paused = frameCounter_global;
+			}
 		}
 		inline void trogdor_add_x_delta(Sint8 dx) {
 			player.sprite->dstrect.x += dx;
@@ -369,7 +384,7 @@ class GameManager {
 			player.collision.y = 11 + player.sprite->dstrect.y;
 		}
 		// This has to be part of GM and not Trogdor since it references GM (and GameManager references Trogdor, so it would be circular)
-		void moveTrogdor(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
+		void playerMove(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
 			// TODO: Pretty much everything in this function
 			// X movement
 			if (delta_x != 0) {
@@ -379,7 +394,8 @@ class GameManager {
 					trogdor_add_x_delta(-delta_x);
 				}
 				for (i = 0; i < MAX_NUM_HUTS; i++) {
-					if (hutArray[i].direction > 0 && !hutArray[i].burned && SDL_HasIntersection(&trog->sprite->dstrect, &hutArray[i].collision)) { // &trog->sprite->dstrect, NOT &trog->collision
+					if (hutArray[i].direction > 0 && !hutArray[i].burned
+						&& SDL_HasIntersection(&trog->sprite->dstrect, &hutArray[i].collision)) { // &trog->sprite->dstrect, NOT &trog->collision
 						trogdor_add_x_delta(-delta_x);
 						break;
 					}
@@ -393,7 +409,8 @@ class GameManager {
 					trogdor_add_y_delta(-delta_y);
 				}
 				for (i = 0; i < MAX_NUM_HUTS; i++) {
-					if (hutArray[i].direction > 0 && !hutArray[i].burned && SDL_HasIntersection(&trog->sprite->dstrect, &hutArray[i].collision)) { // &trog->sprite->dstrect, NOT &trog->collision
+					if (hutArray[i].direction > 0 && !hutArray[i].burned
+						&& SDL_HasIntersection(&trog->sprite->dstrect, &hutArray[i].collision)) { // &trog->sprite->dstrect, NOT &trog->collision
 						trogdor_add_y_delta(-delta_y);
 						break;
 					}

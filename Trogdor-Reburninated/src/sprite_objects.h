@@ -44,6 +44,10 @@ struct SpriteObject {
     SDL_SetRenderDrawColor(renderer, r, g, b, 255); \
     SDL_RenderFillRect(renderer, &rect);
 
+#define DRAW_RECT_WITH_ALPHA(rect, r, g, b, a)    \
+    SDL_SetRenderDrawColor(renderer, r, g, b, a); \
+    SDL_RenderFillRect(renderer, &rect);
+
 #else
 
 struct SpriteObject {
@@ -90,6 +94,9 @@ struct SpriteObject {
 
 #define DRAW_RECT(rect, r, g, b) \
     SDL_FillRect(screen, &rect, ((r<<16) + (g<<8) + (b)));
+
+#define DRAW_RECT_WITH_ALPHA(rect, r, g, b, a) \
+    SDL_FillRect(screen, &rect, ((a<<24) + (r<<16) + (g<<8) + (b)));
 
 #endif
 
