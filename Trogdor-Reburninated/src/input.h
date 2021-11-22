@@ -2,19 +2,19 @@
 #define INPUT_H
 
 // A/B/X/Y are Xbox-style
-#define INPUT_UP          (1 <<  0)
-#define INPUT_DOWN        (1 <<  1)
-#define INPUT_LEFT        (1 <<  2)
-#define INPUT_RIGHT       (1 <<  3)
-#define INPUT_A           (1 <<  4)
-#define INPUT_B           (1 <<  5)
-#define INPUT_X           (1 <<  6)
-#define INPUT_Y           (1 <<  7)
-#define INPUT_L           (1 <<  8)
-#define INPUT_R           (1 <<  9)
-#define INPUT_START       (1 << 10)
-#define INPUT_SELECT      (1 << 11)
-#define INPUT_FULLSCREEN  (1 << 12)
+#define INPUT_UP          (1 <<  0) // up/w
+#define INPUT_DOWN        (1 <<  1) // down/s
+#define INPUT_LEFT        (1 <<  2) // left/a
+#define INPUT_RIGHT       (1 <<  3) // right/d
+#define INPUT_A           (1 <<  4) // z
+#define INPUT_B           (1 <<  5) // x
+#define INPUT_X           (1 <<  6) // c
+#define INPUT_Y           (1 <<  7) // v
+#define INPUT_L           (1 <<  8) // q
+#define INPUT_R           (1 <<  9) // e
+#define INPUT_START       (1 << 10) // enter
+#define INPUT_SELECT      (1 << 11) // ` (backquote)
+#define INPUT_FULLSCREEN  (1 << 12) // f
 
 #define STICK_DEADZONE (32767 * 0.1)
 

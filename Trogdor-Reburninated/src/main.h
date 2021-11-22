@@ -85,6 +85,8 @@ SpriteObject sprite_cottage;
 SpriteObject sprite_cottage_fire;
 SpriteObject sprite_peasantometer_icon;
 Uint8 sprite_peasantometer_icon_init_x;
+SpriteObject sprite_archer;
+SpriteObject sprite_arrow;
 
 /* Fonts */
 SDL_Color color_white  = { 255, 255, 255 };
@@ -369,6 +371,10 @@ void InitializeSprites() {
 	PREPARE_SPRITE(sprite_peasantometer_icon, (rootDir + "graphics/peasantometer.bmp").c_str(),
 		0, 3, 2, 1, 1);
 	sprite_peasantometer_icon_init_x = (Uint8)(GAME_WIDTH * 66 / 250);
+	PREPARE_SPRITE(sprite_archer, (rootDir + "graphics/archer.bmp").c_str(),
+		0, 3, 2, 2, 1);
+	PREPARE_SPRITE(sprite_arrow, (rootDir + "graphics/arrow.bmp").c_str(),
+		0, 3, 1, 2, 1);
 }
 
 void InitializeTextChars() {

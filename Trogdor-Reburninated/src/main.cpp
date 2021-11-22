@@ -747,11 +747,16 @@ int main(int argv, char** args) {
 						GM.burninationDecreaseTest();
 					}
 					GM.getPlayerInput();
-					if (GM.burnination == 0) {
-
-					} else {
+					if (GM.burnination > 0) {
 						GM.testBurnHut();
 					}
+					if (KEY_PRESSED(INPUT_X)) {
+						GM.player.invince = 36;
+					}
+
+					GM.player.invinceCheck();
+					GM.popArchers();
+					GM.updateArchers();
 				} else {
 					if (GM.manually_paused) {
 						if (KEY_HELD(INPUT_START)) {
@@ -790,8 +795,11 @@ int main(int argv, char** args) {
 					}
 				}
 				RENDER_AND_ANIMATE_UPPER_COTTAGES();
-				RENDER_SPRITE_ALT(GM.player.sprite);
+				if (GM.player.visible) {
+					RENDER_SPRITE_ALT(GM.player.sprite);
+				}
 				RENDER_AND_ANIMATE_LOWER_COTTAGES();
+				RENDER_ARCHERS();
 				//DRAW_RECT(GM.player.collision, color_red.r, color_red.g, color_red.b);
 				//for (i = 0; i < MAX_NUM_HUTS; i++) {
 				//	DRAW_RECT(GM.hutArray[i].collision, color_red.r, color_red.g, color_red.b);

@@ -11,11 +11,15 @@
 
 // for all "directions": 1 = up, 2 = down, 3 = left, 4 = right
 
-#define MAX_NUM_HUTS   6
-#define LEFT_BOUND    -3 //  17 - 20
-#define RIGHT_BOUND  211 // 250 - 39
-#define UPPER_BOUND    7
-#define LOWER_BOUND  133 // 180 - 47
+#define MAX_NUM_HUTS        6
+#define LEFT_BOUND_TROG    -2 //  17 - (39 / 2)
+#define RIGHT_BOUND_TROG  214 // 233 - (39 / 2)
+#define UPPER_BOUND_TROG    7 //  30 - (46 / 2)
+#define LOWER_BOUND_TROG  132 // 155 - (46 / 2)
+#define ARCHER_Y_UPPER     20 //  30 - (20 / 2)
+#define ARCHER_Y_LOWER    145 // 155 - (20 / 2)
+#define ARCHER_LEFT_X      -1 //  179 / 5000 * 250 - (20 / 2)
+#define ARCHER_RIGHT_X    231 // 4829 / 5000 * 250 - (20 / 2)
 
 extern Uint16 rand_var;
 extern Uint32 frameCounter_global;
@@ -25,6 +29,9 @@ inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
 	return (!((A->x + A->w < B->x) || (B->x + B->w < A->x) || (A->y + A->h < B->y) || (B->y + B->h < A->y)));
 }
 #endif
+
+#define archerR archerArray[0]
+#define archerL archerArray[1]
 
 class Cottage {
 	public:
@@ -153,32 +160,51 @@ class Peasant {
 class Archer {
 	public:
 		Uint8 frameState;
-		Sint16 x;
-		Sint16 y;
+		SDL_Rect srcrect;
+		SDL_Rect dstrect;
 		bool active;
-		Sint8 direction;
-		Archer(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 3) {
+		bool facingRight; // facing right == on the left; facing left == on the right
+		Archer(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 			frameState = 0;
-			x = pos_x;
-			y = pos_y;
+			facingRight = fr;
+			srcrect = { 0, facingRight * sprite_archer.dstrect.h, sprite_archer.dstrect.w, sprite_archer.dstrect.h };
+			dstrect = { pos_x, pos_y, sprite_archer.dstrect.w, sprite_archer.dstrect.h };
 			active = false;
-			direction = dir;
+		}
+		void updateFrameState() {
+			frameState++;
+			switch (frameState) {
+				case 14:
+					srcrect.x = dstrect.w;
+					break;
+				case 20:
+					srcrect.x = 0;
+					// TODO: shoot arrow here
+					break;
+				case 23:
+					dstrect.y = -300;
+					active = false;
+				default:
+					break;
+			}
 		}
 };
 
-class Arrow {
+class Arrow { // arrows move 5px per frame
 	public:
 		//Uint8 frameState;
 		Sint16 x;
 		Sint16 y;
 		bool active;
-		Sint8 direction;
-		Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 3) {
+		bool facingRight;
+		SDL_Rect collision;
+		Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 			//frameState = 0;
 			x = pos_x;
 			y = pos_y;
 			active = false;
-			direction = dir;
+			facingRight = fr;
+			collision = { 1 + facingRight, 1, 12, 3 };
 		}
 };
 
@@ -190,6 +216,8 @@ class Trogdor {
 		Sint16 spawnPos_x;
 		Sint16 spawnPos_y;
 		SpriteObject *sprite; // includes position via dstrect
+		Sint8 invince;        // remaining invincibility time (after respawn)
+		bool visible;         // sprite is visible (used with invince)
 		Sint8 x_offset;       // used for movement
 		Sint8 y_offset;       // used for movement
 		Sint8 moveSpeed;      // used for movement
@@ -203,11 +231,26 @@ class Trogdor {
 			spawnPos_x = (Sint16)(2780.0 / 5000 * GAME_WIDTH);
 			spawnPos_y = (Sint16)(2360.0 / 3600 * GAME_HEIGHT);
 			sprite = &s;
+			invince = 0;
+			visible = true;
 			sprite->srcrect.x = 0;
 			sprite->srcrect.y = sprite->srcrect.h;
 			x_offset = 0;
 			y_offset = 0;
 			moveSpeed = 3;
+		}
+		void invinceCheck() {
+			if (invince >= 1) {
+				invince--;
+				if (invince % 3 == 0) {
+					visible = false;
+				} else {
+					visible = true;
+				}
+				if (invince == 0) {
+					visible = true;
+				}
+			}
 		}
 };
 
@@ -230,12 +273,12 @@ class GameManager {
 		double burnination;             // amount of time left in burnination state
 		double archerFrequency;         // frequency at which archers appear
 		double burnRate;                // rate at which the burnination meter decreases
-		Sint8 invince;                  // remaining invincibility time (after respawn)
-		Arrow arrowArrayL[5];           // array of Arrow objects (firing from right to left)
-		Arrow arrowArrayR[5];           // array of Arrow objects (firing from left to right)
+		Arrow arrowArrayL[5];           // array of Arrow objects (facing left, firing from right to left)
+		Arrow arrowArrayR[5];           // array of Arrow objects (facing right, firing from left to right)
 		Cottage hutArray[6];            // array of Cottage objects
 		Peasant peasantArray[7];        // array of Peasant objects
 		Knight knightArray[2];          // array of Knight objects
+		Archer archerArray[2];          // array of Archer objects
 		Trogdor player;                 // the player
 		GameManager() {
 		}
@@ -252,32 +295,30 @@ class GameManager {
 			SET_BURNINATION(0);
 			archerFrequency = 0;
 			burnRate = 0;
-			invince = 0;
 			player = Trogdor(s_trogdor);
 			player.facingRight = true;
 		}
 		void levelInit() {
 			SET_BURNINATION(0);
 			if (level > 25) {
-				archerFrequency = 4;
+				archerFrequency = 400; // 4
 				burnRate = 1.3;
 			} else if (level > 20) {
-				archerFrequency = 2;
+				archerFrequency = 200; // 2
 				burnRate = 1.2;
 			} else if (level > 15) {
-				archerFrequency = 0.8;
+				archerFrequency = 80; // 0.8
 				burnRate = 1.1;
 			} else if (level > 10) {
-				archerFrequency = 0.6;
+				archerFrequency = 60; // 0.6
 				burnRate = 1;
 			} else if (level > 5) {
-				archerFrequency = 0.4;
+				archerFrequency = 40; // 0.4
 				burnRate = 0.9;
 			} else {
-				archerFrequency = 0.2;
+				archerFrequency = 20; // 0.2
 				burnRate = 0.7;
 			}
-			invince = 0;
 			if (level == 1) {
 				levelIndex = 0;
 			} else {
@@ -319,10 +360,10 @@ class GameManager {
 			}
 			// level data should be stored in a binary file
 			for (i = 0; i < LEN(arrowArrayL); i++) {
-				arrowArrayL[i] = Arrow(0, 0, 3);
+				arrowArrayL[i] = Arrow(0, 0, false);
 			}
 			for (i = 0; i < LEN(arrowArrayR); i++) {
-				arrowArrayR[i] = Arrow(0, 0, 4);
+				arrowArrayR[i] = Arrow(0, 0, true);
 			}
 			for (i = 0; i < LEN(peasantArray); i++) {
 				peasantArray[i] = Peasant(0, 1);
@@ -330,6 +371,8 @@ class GameManager {
 			for (i = 0; i < LEN(knightArray); i++) {
 				knightArray[i] = Knight(0, 0, 1);
 			}
+			archerArray[0] = Archer(ARCHER_LEFT_X, 0, true);   // archerR (on the left, facing right)
+			archerArray[1] = Archer(ARCHER_RIGHT_X, 0, false); // archerL (on the right, facing left)
 			peasantometer = 0;
 			player.sprite->dstrect.x = player.spawnPos_x;
 			player.sprite->dstrect.y = player.spawnPos_y;
@@ -390,7 +433,7 @@ class GameManager {
 			if (delta_x != 0) {
 				trogdor_add_x_delta(delta_x);
 				// Collision
-				if (trog->sprite->dstrect.x < LEFT_BOUND || trog->sprite->dstrect.x > RIGHT_BOUND) {
+				if (trog->sprite->dstrect.x < LEFT_BOUND_TROG || trog->sprite->dstrect.x > RIGHT_BOUND_TROG) {
 					trogdor_add_x_delta(-delta_x);
 				}
 				for (i = 0; i < MAX_NUM_HUTS; i++) {
@@ -405,7 +448,7 @@ class GameManager {
 			if (delta_y != 0) {
 				trogdor_add_y_delta(delta_y);
 				// Collision
-				if (trog->sprite->dstrect.y < UPPER_BOUND || trog->sprite->dstrect.y > LOWER_BOUND) {
+				if (trog->sprite->dstrect.y < UPPER_BOUND_TROG || trog->sprite->dstrect.y > LOWER_BOUND_TROG) {
 					trogdor_add_y_delta(-delta_y);
 				}
 				for (i = 0; i < MAX_NUM_HUTS; i++) {
@@ -424,6 +467,33 @@ class GameManager {
 			} else if (trog->frameStateFlag & 1) {
 				trog->frameState = (++trog->frameState % 8);
 				trog->sprite->srcrect.x = (trog->frameState / 2) * trog->sprite->srcrect.w;
+			}
+		}
+		void popArchers() {
+			rand_var = rand() % 10000;
+			if (rand_var < archerFrequency || KEY_PRESSED(INPUT_Y)) { // TODO: Remove KEY_PRESSED
+				PRINT(rand_var);
+				if (rand_var % 2 == 0) {
+					if (!archerR.active) {
+						archerR.active = true;
+						archerR.dstrect.y = rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER;
+						archerR.frameState = 4;
+					}
+				} else {
+					if (!archerL.active) {
+						archerL.active = true;
+						archerL.dstrect.y = rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER;
+						archerL.frameState = 4;
+					}
+				}
+			}
+		}
+		void updateArchers() {
+			if (archerR.active) {
+				archerR.updateFrameState();
+			}
+			if (archerL.active) {
+				archerL.updateFrameState();
 			}
 		}
 		void testBurnHut() {
@@ -488,6 +558,14 @@ class GameManager {
 				RENDER_SPRITE_USING_RECTS(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
 			}                                                                                                             \
 		}                                                                                                                 \
+	}
+
+#define RENDER_ARCHERS()                                                                  \
+	if (GM.archerR.active) {                                                              \
+		RENDER_SPRITE_USING_RECTS(sprite_archer, GM.archerR.srcrect, GM.archerR.dstrect); \
+	}                                                                                     \
+	if (GM.archerL.active) {                                                              \
+		RENDER_SPRITE_USING_RECTS(sprite_archer, GM.archerL.srcrect, GM.archerL.dstrect); \
 	}
 
 #endif
