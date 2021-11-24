@@ -66,6 +66,7 @@ Mix_Chunk *sfx_sbwin2;
 Mix_Chunk *sfx_sbworst;
 Mix_Chunk *sfx_sfx2;
 Mix_Chunk *sfx_trogador;
+Mix_Chunk *sfx_arrow;
 
 /* Sprite Objects */
 SDL_Surface  *temp;
@@ -334,6 +335,7 @@ void InitializeSound() {
 	sfx_sbworst = Mix_LoadWAV((rootDir + "sfx/trog_sbworst.wav").c_str());
 	sfx_sfx2 = Mix_LoadWAV((rootDir + "sfx/trog_sfx2.wav").c_str());
 	sfx_trogador = Mix_LoadWAV((rootDir + "sfx/trogador.wav").c_str());
+	sfx_arrow = Mix_LoadWAV((rootDir + "sfx/arrow.wav").c_str());
 }
 
 void InitializeSprites() {

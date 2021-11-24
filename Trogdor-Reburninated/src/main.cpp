@@ -718,7 +718,7 @@ int main(int argv, char** args) {
 			case 3:
 				frameState++;
 				if (KEY_PRESSED(INPUT_A)) {
-					GM = GameManager(sprite_trogdor, 4);
+					GM = GameManager(4);
 					GM.levelInit();
 					UPDATE_TEXT(text_4_score_val, to_string(GM.score));
 					UPDATE_TEXT(text_4_mans_val, to_string(GM.mans));
@@ -746,7 +746,6 @@ int main(int argv, char** args) {
 					if (KEY_PRESSED(INPUT_A)) {
 						GM.burninationDecreaseTest();
 					}
-					GM.getPlayerInput();
 					if (GM.burnination > 0) {
 						GM.testBurnHut();
 					}
@@ -756,7 +755,9 @@ int main(int argv, char** args) {
 
 					GM.player.invinceCheck();
 					GM.popArchers();
-					GM.updateArchers();
+					GM.updateArchersAndArrows();
+					GM.getPlayerInput();
+					GM.updateKnight();
 				} else {
 					if (GM.manually_paused) {
 						if (KEY_HELD(INPUT_START)) {
@@ -796,10 +797,11 @@ int main(int argv, char** args) {
 				}
 				RENDER_AND_ANIMATE_UPPER_COTTAGES();
 				if (GM.player.visible) {
-					RENDER_SPRITE_ALT(GM.player.sprite);
+					RENDER_SPRITE_USING_RECTS(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);
 				}
 				RENDER_AND_ANIMATE_LOWER_COTTAGES();
 				RENDER_ARCHERS();
+				RENDER_ARROWS();
 				//DRAW_RECT(GM.player.collision, color_red.r, color_red.g, color_red.b);
 				//for (i = 0; i < MAX_NUM_HUTS; i++) {
 				//	DRAW_RECT(GM.hutArray[i].collision, color_red.r, color_red.g, color_red.b);

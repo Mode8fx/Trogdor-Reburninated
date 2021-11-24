@@ -56,6 +56,7 @@ extern Mix_Chunk *sfx_sbwin2;
 extern Mix_Chunk *sfx_sbworst;
 extern Mix_Chunk *sfx_sfx2;
 extern Mix_Chunk *sfx_trogador;
+extern Mix_Chunk *sfx_arrow;
 
 extern TTF_Font *font_serif_brown_6;
 extern TextCharObject textChars_font_serif_brown_6[122 + 1 - 32];

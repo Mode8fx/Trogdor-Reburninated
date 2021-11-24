@@ -11,7 +11,6 @@
 
 // for all "directions": 1 = up, 2 = down, 3 = left, 4 = right
 
-#define MAX_NUM_HUTS        6
 #define LEFT_BOUND_TROG    -2 //  17 - (39 / 2)
 #define RIGHT_BOUND_TROG  214 // 233 - (39 / 2)
 #define UPPER_BOUND_TROG    7 //  30 - (46 / 2)
@@ -30,6 +29,8 @@ inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
 }
 #endif
 
+#define MAX_NUM_HUTS   6
+#define MAX_NUM_ARROWS 5
 #define archerR archerArray[0]
 #define archerL archerArray[1]
 
@@ -77,7 +78,7 @@ class Cottage {
 		void updateFrameState() {
 			frameState++;
 			if (frameState == 10) {
-				Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_burn_hut, 0);
+				Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_burn_hut, 0);
 			}
 			if (frameState >= 12 && frameState <= 28) {
 				fire_srcrect.x = (((frameState - 12) / 3) % 4) * sprite_cottage_fire.dstrect.w; // TODO: flames should be flipped horizontally if direction == 3
@@ -179,7 +180,7 @@ class Archer {
 					break;
 				case 20:
 					srcrect.x = 0;
-					// TODO: shoot arrow here
+					// shoot arrow; this is handled by GameManager
 					break;
 				case 23:
 					dstrect.y = -300;
@@ -190,32 +191,55 @@ class Archer {
 		}
 };
 
-class Arrow { // arrows move 5px per frame
+class Arrow {
 	public:
-		//Uint8 frameState;
-		Sint16 x;
-		Sint16 y;
+		Uint8 frameState;
+		SDL_Rect srcrect;
+		SDL_Rect dstrect;
 		bool active;
 		bool facingRight;
 		SDL_Rect collision;
 		Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
-			//frameState = 0;
-			x = pos_x;
-			y = pos_y;
-			active = false;
+			frameState = 0;
 			facingRight = fr;
+			srcrect = { 0, facingRight * sprite_arrow.dstrect.h, sprite_arrow.dstrect.w, sprite_arrow.dstrect.h };
+			dstrect = { pos_x, pos_y, sprite_arrow.dstrect.w, sprite_arrow.dstrect.h };
+			active = false;
 			collision = { 1 + facingRight, 1, 12, 3 };
+		}
+		void updateFrameState() {
+			frameState++;
+			if (frameState == 1) { // 4?
+				Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_arrow, 0);
+			}
+			if (facingRight) {
+				dstrect.x += 5;
+				if (dstrect.x > 250) { // not exactly the same as the original, but close enough
+					clear();
+				}
+
+			} else {
+				dstrect.x -= 5;
+				if (dstrect.x < -8) { // not exactly the same as the original, but close enough
+					clear();
+				}
+			}
+		}
+		void clear() {
+			active = false;
+			dstrect.x = -500;
 		}
 };
 
 class Trogdor {
 	public:
 		Uint8 frameState;
+		SDL_Rect srcrect;
+		SDL_Rect dstrect;
 		bool facingRight;
 		SDL_Rect collision;
 		Sint16 spawnPos_x;
 		Sint16 spawnPos_y;
-		SpriteObject *sprite; // includes position via dstrect
 		Sint8 invince;        // remaining invincibility time (after respawn)
 		bool visible;         // sprite is visible (used with invince)
 		Sint8 x_offset;       // used for movement
@@ -223,18 +247,17 @@ class Trogdor {
 		Sint8 moveSpeed;      // used for movement
 		Uint8 frameStateFlag; // used for movement
 		Trogdor() {
-		}
-		Trogdor(SpriteObject &s) {
 			frameState = 0;
 			facingRight = true;
-			collision = { 11 + sprite->dstrect.x, 11 + sprite->dstrect.y, 18, 24 };
-			spawnPos_x = (Sint16)(2780.0 / 5000 * GAME_WIDTH);
-			spawnPos_y = (Sint16)(2360.0 / 3600 * GAME_HEIGHT);
-			sprite = &s;
+			srcrect = { 0, facingRight * sprite_trogdor.dstrect.h, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
+			spawnPos_x = (Sint16)(2780.0 / 5000 * GAME_WIDTH) - (srcrect.w / 2);
+			spawnPos_y = (Sint16)(2360.0 / 3600 * GAME_HEIGHT) - (srcrect.h / 2);
+			dstrect = { spawnPos_x, spawnPos_y, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
+			collision = { 11 + dstrect.x, 11 + dstrect.y, 18, 24 };
 			invince = 0;
 			visible = true;
-			sprite->srcrect.x = 0;
-			sprite->srcrect.y = sprite->srcrect.h;
+			srcrect.x = 0;
+			srcrect.y = srcrect.h;
 			x_offset = 0;
 			y_offset = 0;
 			moveSpeed = 3;
@@ -282,7 +305,7 @@ class GameManager {
 		Trogdor player;                 // the player
 		GameManager() {
 		}
-		GameManager(SpriteObject &s_trogdor, Sint8 init_mans) {
+		GameManager(Sint8 init_mans) {
 			mans = init_mans;
 			score = 0;
 			peasantometer = 0;
@@ -295,7 +318,7 @@ class GameManager {
 			SET_BURNINATION(0);
 			archerFrequency = 0;
 			burnRate = 0;
-			player = Trogdor(s_trogdor);
+			player = Trogdor();
 			player.facingRight = true;
 		}
 		void levelInit() {
@@ -345,8 +368,8 @@ class GameManager {
 				j = (i * 3) + 2;
 				if (levels[levelIndex][j] > 0) {
 					hutArray[i] = Cottage(
-						OBJ_TO_SCREEN_AT_FRACTION_X(sprite_cottage, (levels[levelIndex][j + 1] + 2466) / 5000.0),
-						OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_cottage, (levels[levelIndex][j + 2] + 2183) / 3600.0),
+						OBJ_TO_SCREEN_AT_FRACTION_X(sprite_cottage, (levels[levelIndex][j + 1] + 2466) / 5000.0) + 8,
+						OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_cottage, (levels[levelIndex][j + 2] + 2183) / 3600.0) - 11,
 						levels[levelIndex][j]
 					);
 					PRINT("COTTAGE INFO:");
@@ -374,9 +397,9 @@ class GameManager {
 			archerArray[0] = Archer(ARCHER_LEFT_X, 0, true);   // archerR (on the left, facing right)
 			archerArray[1] = Archer(ARCHER_RIGHT_X, 0, false); // archerL (on the right, facing left)
 			peasantometer = 0;
-			player.sprite->dstrect.x = player.spawnPos_x;
-			player.sprite->dstrect.y = player.spawnPos_y;
-			player.collision = { 11 + player.sprite->dstrect.x, 11 + player.sprite->dstrect.y, 18, 24 };
+			player.dstrect.x = player.spawnPos_x;
+			player.dstrect.y = player.spawnPos_y;
+			player.collision = { 11 + player.dstrect.x, 11 + player.dstrect.y, 18, 24 };
 			player.facingRight = true;
 		}
 		void getPlayerInput() {
@@ -419,12 +442,12 @@ class GameManager {
 			}
 		}
 		inline void trogdor_add_x_delta(Sint8 dx) {
-			player.sprite->dstrect.x += dx;
-			player.collision.x = 11 + player.sprite->dstrect.x;
+			player.dstrect.x += dx;
+			player.collision.x = 11 + player.dstrect.x;
 		}
 		inline void trogdor_add_y_delta(Sint8 dy) {
-			player.sprite->dstrect.y += dy;
-			player.collision.y = 11 + player.sprite->dstrect.y;
+			player.dstrect.y += dy;
+			player.collision.y = 11 + player.dstrect.y;
 		}
 		// This has to be part of GM and not Trogdor since it references GM (and GameManager references Trogdor, so it would be circular)
 		void playerMove(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
@@ -433,12 +456,12 @@ class GameManager {
 			if (delta_x != 0) {
 				trogdor_add_x_delta(delta_x);
 				// Collision
-				if (trog->sprite->dstrect.x < LEFT_BOUND_TROG || trog->sprite->dstrect.x > RIGHT_BOUND_TROG) {
+				if (trog->dstrect.x < LEFT_BOUND_TROG || trog->dstrect.x > RIGHT_BOUND_TROG) {
 					trogdor_add_x_delta(-delta_x);
 				}
 				for (i = 0; i < MAX_NUM_HUTS; i++) {
 					if (hutArray[i].direction > 0 && !hutArray[i].burned
-						&& SDL_HasIntersection(&trog->sprite->dstrect, &hutArray[i].collision)) { // &trog->sprite->dstrect, NOT &trog->collision
+						&& SDL_HasIntersection(&trog->dstrect, &hutArray[i].collision)) { // &trog->sprite->dstrect, NOT &trog->collision
 						trogdor_add_x_delta(-delta_x);
 						break;
 					}
@@ -448,12 +471,12 @@ class GameManager {
 			if (delta_y != 0) {
 				trogdor_add_y_delta(delta_y);
 				// Collision
-				if (trog->sprite->dstrect.y < UPPER_BOUND_TROG || trog->sprite->dstrect.y > LOWER_BOUND_TROG) {
+				if (trog->dstrect.y < UPPER_BOUND_TROG || trog->dstrect.y > LOWER_BOUND_TROG) {
 					trogdor_add_y_delta(-delta_y);
 				}
 				for (i = 0; i < MAX_NUM_HUTS; i++) {
 					if (hutArray[i].direction > 0 && !hutArray[i].burned
-						&& SDL_HasIntersection(&trog->sprite->dstrect, &hutArray[i].collision)) { // &trog->sprite->dstrect, NOT &trog->collision
+						&& SDL_HasIntersection(&trog->dstrect, &hutArray[i].collision)) { // &trog->sprite->dstrect, NOT &trog->collision
 						trogdor_add_y_delta(-delta_y);
 						break;
 					}
@@ -462,11 +485,11 @@ class GameManager {
 			// Animate sprite
 			if (trog->frameStateFlag & 2) {
 				trog->frameState = 0;
-				trog->sprite->srcrect.x = 0;
-				trog->sprite->srcrect.y = trog->facingRight * trog->sprite->srcrect.h;
+				trog->srcrect.x = 0;
+				trog->srcrect.y = trog->facingRight * trog->srcrect.h;
 			} else if (trog->frameStateFlag & 1) {
 				trog->frameState = (++trog->frameState % 8);
-				trog->sprite->srcrect.x = (trog->frameState / 2) * trog->sprite->srcrect.w;
+				trog->srcrect.x = (trog->frameState / 2) * trog->srcrect.w;
 			}
 		}
 		void popArchers() {
@@ -488,13 +511,46 @@ class GameManager {
 				}
 			}
 		}
-		void updateArchers() {
+		void updateArchersAndArrows() {
 			if (archerR.active) {
 				archerR.updateFrameState();
+				if (archerR.frameState == 20) {
+					for (i = 0; i < MAX_NUM_ARROWS; i++) {
+						if (!arrowArrayR[i].active) {
+							arrowArrayR[i].frameState = 0;
+							arrowArrayR[i].active = true;
+							arrowArrayR[i].dstrect.x = archerR.dstrect.x + (archerR.dstrect.w / 2) - (arrowArrayR[i].dstrect.w / 2);
+							arrowArrayR[i].dstrect.y = archerR.dstrect.y + (archerR.dstrect.h / 2) - (arrowArrayR[i].dstrect.h / 2);
+							break;
+						}
+					}
+				}
 			}
 			if (archerL.active) {
 				archerL.updateFrameState();
+				if (archerL.frameState == 20) {
+					for (i = 0; i < MAX_NUM_ARROWS; i++) {
+						if (!arrowArrayL[i].active) {
+							arrowArrayL[i].frameState = 0;
+							arrowArrayL[i].active = true;
+							arrowArrayL[i].dstrect.x = archerL.dstrect.x + (archerL.dstrect.w / 2) - (arrowArrayR[i].dstrect.w / 2);
+							arrowArrayL[i].dstrect.y = archerL.dstrect.y + (archerL.dstrect.h / 2) - (arrowArrayR[i].dstrect.h / 2);
+							break;
+						}
+					}
+				}
 			}
+			for (i = 0; i < MAX_NUM_ARROWS; i++) {
+				if (arrowArrayR[i].active) {
+					arrowArrayR[i].updateFrameState();
+				}
+				if (arrowArrayL[i].active) {
+					arrowArrayL[i].updateFrameState();
+				}
+			}
+		}
+		void updateKnight() {
+			// TODO: All of this
 		}
 		void testBurnHut() {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
@@ -536,7 +592,7 @@ class GameManager {
 
 #define RENDER_AND_ANIMATE_UPPER_COTTAGES()                                                                               \
 	for (i = 0; i < MAX_NUM_HUTS; i++) {                                                                                  \
-		if (GM.hutArray[i].direction > 0 && GM.hutArray[i].dstrect.y < GM.player.sprite->dstrect.y + 9) {                 \
+		if (GM.hutArray[i].direction > 0 && GM.hutArray[i].dstrect.y < GM.player.dstrect.y + 9) {                         \
 			if (GM.hutArray[i].burning && !GM.hutArray[i].burned) {                                                       \
 				GM.hutArray[i].updateFrameState();                                                                        \
 			}                                                                                                             \
@@ -549,7 +605,7 @@ class GameManager {
 
 #define RENDER_AND_ANIMATE_LOWER_COTTAGES()                                                                               \
 	for (i = 0; i < MAX_NUM_HUTS; i++) {                                                                                  \
-		if (GM.hutArray[i].direction > 0 && GM.hutArray[i].dstrect.y >= GM.player.sprite->dstrect.y + 9) {                \
+		if (GM.hutArray[i].direction > 0 && GM.hutArray[i].dstrect.y >= GM.player.dstrect.y + 9) {                        \
 			if (GM.hutArray[i].burning && !GM.hutArray[i].burned) {                                                       \
 				GM.hutArray[i].updateFrameState();                                                                        \
 			}                                                                                                             \
@@ -566,6 +622,16 @@ class GameManager {
 	}                                                                                     \
 	if (GM.archerL.active) {                                                              \
 		RENDER_SPRITE_USING_RECTS(sprite_archer, GM.archerL.srcrect, GM.archerL.dstrect); \
+	}
+
+#define RENDER_ARROWS()                                                                                    \
+	for (i = 0; i < MAX_NUM_ARROWS; i++) {                                                                 \
+		if (GM.arrowArrayR[i].active) {                                                                    \
+			RENDER_SPRITE_USING_RECTS(sprite_arrow, GM.arrowArrayR[i].srcrect, GM.arrowArrayR[i].dstrect); \
+		}                                                                                                  \
+		if (GM.arrowArrayL[i].active) {                                                                    \
+			RENDER_SPRITE_USING_RECTS(sprite_arrow, GM.arrowArrayL[i].srcrect, GM.arrowArrayL[i].dstrect); \
+		}                                                                                                  \
 	}
 
 #endif
