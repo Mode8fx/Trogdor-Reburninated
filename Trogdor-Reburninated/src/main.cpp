@@ -806,6 +806,7 @@ int main(int argv, char** args) {
 					RENDER_SPRITE_USING_RECTS(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);
 				}
 				RENDER_AND_ANIMATE_LOWER_COTTAGES();
+				RENDER_KNIGHTS();
 				RENDER_ARCHERS();
 				RENDER_ARROWS();
 				//DRAW_RECT(GM.player.collision, color_red.r, color_red.g, color_red.b);

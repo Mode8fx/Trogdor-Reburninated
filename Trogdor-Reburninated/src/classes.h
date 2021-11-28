@@ -11,10 +11,14 @@
 
 // for all "directions": 1 = up, 2 = down, 3 = left, 4 = right
 
-#define LEFT_BOUND_TROG    -2 //  17 - (39 / 2)
-#define RIGHT_BOUND_TROG  214 // 233 - (39 / 2)
-#define UPPER_BOUND_TROG    7 //  30 - (46 / 2)
-#define LOWER_BOUND_TROG  132 // 155 - (46 / 2)
+#define LEFT_BOUND   17
+#define RIGHT_BOUND 233
+#define UPPER_BOUND   7
+#define LOWER_BOUND 132
+constexpr auto LEFT_BOUND_TROG = LEFT_BOUND - (39 / 2);
+constexpr auto RIGHT_BOUND_TROG = RIGHT_BOUND - (39 / 2);
+constexpr auto UPPER_BOUND_TROG = UPPER_BOUND - (46 / 2);
+constexpr auto LOWER_BOUND_TROG = LOWER_BOUND - (46 / 2);
 #define ARCHER_Y_UPPER     20 //  30 - (20 / 2)
 #define ARCHER_Y_LOWER    145 // 155 - (20 / 2)
 #define ARCHER_LEFT_X      -1 //  179 / 5000 * 250 - (20 / 2)
@@ -29,10 +33,11 @@ inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
 }
 #endif
 
-#define MAX_NUM_HUTS   6
-#define MAX_NUM_ARROWS 5
+#define MAX_NUM_HUTS    6
+#define MAX_NUM_ARROWS  5
 #define archerR archerArray[0]
 #define archerL archerArray[1]
+#define MAX_NUM_KNIGHTS 2
 
 class Cottage {
 	public:
@@ -92,14 +97,68 @@ class Cottage {
 class Knight {
 	public:
 		Uint8 frameState;
-		Sint16 x;
-		Sint16 y;
+		SDL_Rect srcrect;
+		SDL_Rect dstrect;
 		Sint8 direction;
-		Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1) {
+		bool facingRight;
+		Sint16 home_x;    // the parent (x,y) coordinates
+		Sint16 home_y;    // the parent (x,y) coordinates
+		Sint16 offset_x;  // the offset relative to home
+		Sint16 offset_y;  // the offset relative to home
+		Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true) {
 			frameState = 0;
-			x = pos_x;
-			y = pos_y;
+			facingRight = fr;
+			home_x = pos_x;
+			home_y = pos_y;
+			srcrect = { 0, facingRight * sprite_knight.dstrect.h, sprite_knight.dstrect.w, sprite_knight.dstrect.h };
+			dstrect = { home_x, home_y, sprite_knight.dstrect.w, sprite_knight.dstrect.h };
+			offset_x = 0;
+			offset_y = 0;
 			direction = dir;
+		}
+		void updateFrameStateAndMove() {
+			frameState++;
+			if (frameState > 60) { // a while loop isn't necessary; it'll never go that far above 60
+				frameState -= 60;
+			}
+			switch (frameState) {
+				case 1:
+				case 9:
+				case 17:
+				case 25:
+				case 33:
+				case 41:
+				case 49:
+				case 57:
+					srcrect.x = 0;
+					break;
+				case 5:
+				case 29:
+				case 53:
+					srcrect.x = sprite_knight.dstrect.w;
+					break;
+				case 13:
+				case 21:
+				case 37:
+				case 45:
+					srcrect.x = 2 * sprite_knight.dstrect.w;
+					break;
+				default:
+					break;
+			}
+			if (frameState <= 30) {
+				offset_x = frameState;
+			} else {
+				offset_x = 60 - frameState;
+			}
+			offset_y = -offset_x;
+			if (!facingRight) {
+				offset_x *= -1;
+			}
+
+			dstrect.x = home_x + offset_x;
+			dstrect.y = home_y + offset_y;
+			// TODO: update collision here... also create collision above
 		}
 };
 
@@ -253,6 +312,7 @@ class Trogdor {
 			spawnPos_x = (Sint16)(2780.0 / 5000 * GAME_WIDTH) - (srcrect.w / 2);
 			spawnPos_y = (Sint16)(2360.0 / 3600 * GAME_HEIGHT) - (srcrect.h / 2);
 			dstrect = { spawnPos_x, spawnPos_y, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
+			fire_frameState = 0;
 			fire_srcrect = { 0, facingRight * sprite_trogdor_fire.dstrect.h, sprite_trogdor_fire.dstrect.w, sprite_trogdor_fire.dstrect.h };
 			fire_dstrect = { dstrect.x - 24 + (facingRight * 62), dstrect.y + 10, sprite_trogdor_fire.dstrect.w, sprite_trogdor_fire.dstrect.h };
 			collision = { 11 + dstrect.x, 11 + dstrect.y, 18, 24 };
@@ -263,6 +323,7 @@ class Trogdor {
 			x_offset = 0;
 			y_offset = 0;
 			moveSpeed = 3;
+			frameStateFlag = 0;
 		}
 		void updateBreathLoc() {
 			fire_dstrect.x = dstrect.x - 24 + (facingRight * 62);
@@ -309,9 +370,11 @@ class GameManager {
 		Knight knightArray[2];          // array of Knight objects
 		Archer archerArray[2];          // array of Archer objects
 		Trogdor player;                 // the player
+		double knightIncrement;         // knight movement speed
 		GameManager() {
 		}
 		GameManager(Sint8 init_mans) {
+			srand(SDL_GetTicks());
 			mans = init_mans;
 			score = 0;
 			peasantometer = 0;
@@ -326,6 +389,7 @@ class GameManager {
 			burnRate = 0;
 			player = Trogdor();
 			player.facingRight = true;
+			knightIncrement = 1;
 		}
 		void levelInit() {
 			SET_BURNINATION(0);
@@ -387,7 +451,6 @@ class GameManager {
 					hutArray[i].burned = true;
 				}
 			}
-			// level data should be stored in a binary file
 			for (i = 0; i < LEN(arrowArrayL); i++) {
 				arrowArrayL[i] = Arrow(0, 0, false);
 			}
@@ -397,11 +460,10 @@ class GameManager {
 			for (i = 0; i < LEN(peasantArray); i++) {
 				peasantArray[i] = Peasant(0, 1);
 			}
-			for (i = 0; i < LEN(knightArray); i++) {
-				knightArray[i] = Knight(0, 0, 1);
-			}
 			archerArray[0] = Archer(ARCHER_LEFT_X, 0, true);   // archerR (on the left, facing right)
 			archerArray[1] = Archer(ARCHER_RIGHT_X, 0, false); // archerL (on the right, facing left)
+			knightArray[0] = Knight(72, 128, 1, false); // TODO: exact ticks: 1453, 2572
+			knightArray[1] = Knight(170, 57, 1, true);  // TODO: exact ticks: 3418, 1147
 			peasantometer = 0;
 			player.dstrect.x = player.spawnPos_x;
 			player.dstrect.y = player.spawnPos_y;
@@ -566,8 +628,40 @@ class GameManager {
 				}
 			}
 		}
-		void updateKnight() {
-			// TODO: All of this
+		void updateKnight() { // TODO: adjust these bounds to be specific to knight
+			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
+				if (knightArray[i].home_x < LEFT_BOUND) {
+					knightArray[i].direction = rand() % 6;
+					knightArray[i].home_x = LEFT_BOUND + 1;
+				} else if (knightArray[i].home_x > RIGHT_BOUND) {
+					knightArray[i].direction = rand() % 6;
+					knightArray[i].home_x = RIGHT_BOUND - 1;
+				}
+				if (knightArray[i].home_y < UPPER_BOUND + 50) {
+					knightArray[i].direction = rand() % 6;
+					knightArray[i].home_y = UPPER_BOUND + 51;
+				} else if (knightArray[i].home_y > LOWER_BOUND) {
+					knightArray[i].direction = rand() % 6;
+					knightArray[i].home_y = LOWER_BOUND - 1;
+				}
+				switch (knightArray[i].direction) {
+					case 0:
+						knightArray[i].home_x += knightIncrement;
+						break;
+					case 1:
+					case 2:
+						knightArray[i].home_y += knightIncrement;
+						break;
+					case 3:
+					case 4:
+						knightArray[i].home_x -= knightIncrement;
+						break;
+					case 5:
+						knightArray[i].home_y -= knightIncrement;
+						break;
+				}
+				knightArray[i].updateFrameStateAndMove();
+			}
 		}
 		void testBurnHut() {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
@@ -656,6 +750,11 @@ class GameManager {
 		if (GM.arrowArrayL[i].active) {                                                                    \
 			RENDER_SPRITE_USING_RECTS(sprite_arrow, GM.arrowArrayL[i].srcrect, GM.arrowArrayL[i].dstrect); \
 		}                                                                                                  \
+	}
+
+#define RENDER_KNIGHTS()                                                                                \
+	for (i = 0; i < MAX_NUM_KNIGHTS; i++) {                                                             \
+		RENDER_SPRITE_USING_RECTS(sprite_knight, GM.knightArray[i].srcrect, GM.knightArray[i].dstrect); \
 	}
 
 #endif
