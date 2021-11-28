@@ -50,10 +50,7 @@ class Cottage {
 			srcrect = { 0, (dir - 1) * sprite_cottage.dstrect.h, sprite_cottage.dstrect.w, sprite_cottage.dstrect.h };
 			dstrect = { pos_x, pos_y, sprite_cottage.dstrect.w, sprite_cottage.dstrect.h };
 			fire_srcrect = { 0, 0, sprite_cottage_fire.dstrect.w, sprite_cottage_fire.dstrect.h };
-			fire_dstrect.x = dstrect.x + 5;
-			fire_dstrect.y = dstrect.y - 5;
-			fire_dstrect.w = sprite_cottage_fire.dstrect.w;
-			fire_dstrect.h = sprite_cottage_fire.dstrect.h;
+			fire_dstrect = { dstrect.x + 5, dstrect.y - 5, sprite_cottage_fire.dstrect.w, sprite_cottage_fire.dstrect.h };
 			burning = false;
 			burned = false;
 			direction = dir;
@@ -236,6 +233,9 @@ class Trogdor {
 		Uint8 frameState;
 		SDL_Rect srcrect;
 		SDL_Rect dstrect;
+		Uint8 fire_frameState;
+		SDL_Rect fire_srcrect;
+		SDL_Rect fire_dstrect;
 		bool facingRight;
 		SDL_Rect collision;
 		Sint16 spawnPos_x;
@@ -253,6 +253,8 @@ class Trogdor {
 			spawnPos_x = (Sint16)(2780.0 / 5000 * GAME_WIDTH) - (srcrect.w / 2);
 			spawnPos_y = (Sint16)(2360.0 / 3600 * GAME_HEIGHT) - (srcrect.h / 2);
 			dstrect = { spawnPos_x, spawnPos_y, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
+			fire_srcrect = { 0, facingRight * sprite_trogdor_fire.dstrect.h, sprite_trogdor_fire.dstrect.w, sprite_trogdor_fire.dstrect.h };
+			fire_dstrect = { dstrect.x - 24 + (facingRight * 62), dstrect.y + 10, sprite_trogdor_fire.dstrect.w, sprite_trogdor_fire.dstrect.h };
 			collision = { 11 + dstrect.x, 11 + dstrect.y, 18, 24 };
 			invince = 0;
 			visible = true;
@@ -261,6 +263,10 @@ class Trogdor {
 			x_offset = 0;
 			y_offset = 0;
 			moveSpeed = 3;
+		}
+		void updateBreathLoc() {
+			fire_dstrect.x = dstrect.x - 24 + (facingRight * 62);
+			fire_dstrect.y = dstrect.y + 10;
 		}
 		void invinceCheck() {
 			if (invince >= 1) {
@@ -451,7 +457,6 @@ class GameManager {
 		}
 		// This has to be part of GM and not Trogdor since it references GM (and GameManager references Trogdor, so it would be circular)
 		void playerMove(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
-			// TODO: Pretty much everything in this function
 			// X movement
 			if (delta_x != 0) {
 				trogdor_add_x_delta(delta_x);
@@ -490,6 +495,18 @@ class GameManager {
 			} else if (trog->frameStateFlag & 1) {
 				trog->frameState = (++trog->frameState % 8);
 				trog->srcrect.x = (trog->frameState / 2) * trog->srcrect.w;
+			}
+			if (burnination > 0) {
+				trog->updateBreathLoc();
+				// Animate sprite
+				if (trog->frameStateFlag & 2) {
+					trog->fire_frameState = 0;
+					trog->fire_srcrect.x = 0;
+					trog->fire_srcrect.y = trog->facingRight * trog->fire_srcrect.h;
+				} else {
+					trog->fire_frameState = (++trog->fire_frameState % 12);
+					trog->fire_srcrect.x = (trog->fire_frameState / 3) * trog->fire_srcrect.w;
+				}
 			}
 		}
 		void popArchers() {
@@ -554,13 +571,20 @@ class GameManager {
 		}
 		void testBurnHut() {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
-				if (!hutArray[i].burning && KEY_PRESSED(INPUT_SELECT)) { // TODO: replace KEY_PRESSED(INPUT_SELECT) with breath.hitTest(hutArray[i])
+				if (!hutArray[i].burning && SDL_HasIntersection(&player.fire_dstrect, &hutArray[i].dstrect)) { // TODO: Fire breath is too generous; check for collision with the actual cottage sprite, not just its dstrect (maybe create a new dstrect?)
 					hutArray[i].burning = true;
-					rand_var = rand() % 1000;
-					if (rand_var < 0.05) {
+					rand_var = rand() % 10000;
+					if (rand_var < 500) {
 						Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbdooj, 0);
 					}
 				}
+			}
+		}
+		void updateBurnmeter() {
+			SET_BURNINATION(burnination - burnRate);
+			if (burnination <= 0) {
+				SET_BURNINATION(0);
+				peasantometer = 0;
 			}
 		}
 		void burninationIncreaseTest() {
@@ -568,7 +592,7 @@ class GameManager {
 				peasantometer++;
 			} else {
 				peasantometer = 10;
-				SET_BURNINATION(burnination + 1);
+				SET_BURNINATION(100);
 				if (burnination > 100) {
 					SET_BURNINATION(100);
 				}
@@ -581,7 +605,7 @@ class GameManager {
 					peasantometer = 0;
 				}
 			} else {
-				SET_BURNINATION(burnination - 1);
+				SET_BURNINATION(burnination - 2);
 				if (burnination <= 0) {
 					SET_BURNINATION(0);
 					peasantometer = 0;

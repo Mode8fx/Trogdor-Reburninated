@@ -758,6 +758,11 @@ int main(int argv, char** args) {
 					GM.updateArchersAndArrows();
 					GM.getPlayerInput();
 					GM.updateKnight();
+					if (!GM.burnination) {
+
+					} else {
+						GM.updateBurnmeter();
+					}
 				} else {
 					if (GM.manually_paused) {
 						if (KEY_HELD(INPUT_START)) {
@@ -784,6 +789,7 @@ int main(int argv, char** args) {
 				if (GM.burnination > 0) {
 					RENDER_SPRITE(sprite_burnination_meter_empty);
 					RENDER_SPRITE(sprite_burnination_meter_full);
+					RENDER_SPRITE_USING_RECTS(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
 				} else {
 					sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;
 					sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;

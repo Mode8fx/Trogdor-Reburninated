@@ -29,6 +29,7 @@ extern SpriteObject sprite_peasantometer_icon;
 extern Uint8        sprite_peasantometer_icon_init_x;
 extern SpriteObject sprite_archer;
 extern SpriteObject sprite_arrow;
+extern SpriteObject sprite_trogdor_fire;
 
 extern Mix_Chunk *sfx_burn_hut;
 extern Mix_Chunk *sfx_goldget;

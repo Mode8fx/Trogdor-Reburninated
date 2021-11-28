@@ -88,6 +88,7 @@ SpriteObject sprite_peasantometer_icon;
 Uint8 sprite_peasantometer_icon_init_x;
 SpriteObject sprite_archer;
 SpriteObject sprite_arrow;
+SpriteObject sprite_trogdor_fire;
 
 /* Fonts */
 SDL_Color color_white  = { 255, 255, 255 };
@@ -377,6 +378,8 @@ void InitializeSprites() {
 		0, 3, 2, 2, 1);
 	PREPARE_SPRITE(sprite_arrow, (rootDir + "graphics/arrow.bmp").c_str(),
 		0, 3, 1, 2, 1);
+	PREPARE_SPRITE(sprite_trogdor_fire, (rootDir + "graphics/trogdor_fire.bmp").c_str(),
+		0, 3, 4, 2, 1);
 }
 
 void InitializeTextChars() {
