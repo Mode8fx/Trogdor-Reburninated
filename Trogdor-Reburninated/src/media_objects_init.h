@@ -31,6 +31,7 @@ extern SpriteObject sprite_archer;
 extern SpriteObject sprite_arrow;
 extern SpriteObject sprite_trogdor_fire;
 extern SpriteObject sprite_knight;
+extern SpriteObject sprite_end_of_level_flash;
 
 extern Mix_Chunk *sfx_burn_hut;
 extern Mix_Chunk *sfx_goldget;

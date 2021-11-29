@@ -15,10 +15,10 @@
 #define RIGHT_BOUND 233
 #define UPPER_BOUND   7
 #define LOWER_BOUND 132
-constexpr auto LEFT_BOUND_TROG = LEFT_BOUND - (39 / 2);
-constexpr auto RIGHT_BOUND_TROG = RIGHT_BOUND - (39 / 2);
-constexpr auto UPPER_BOUND_TROG = UPPER_BOUND - (46 / 2);
-constexpr auto LOWER_BOUND_TROG = LOWER_BOUND - (46 / 2);
+#define LEFT_BOUND_TROG    -2 // LEFT_BOUND  - (39 / 2)
+#define RIGHT_BOUND_TROG  214 // RIGHT_BOUND - (39 / 2)
+#define UPPER_BOUND_TROG    7 // UPPER_BOUND - (46 / 2)
+#define LOWER_BOUND_TROG  132 // LOWER_BOUND - (46 / 2)
 #define ARCHER_Y_UPPER     20 //  30 - (20 / 2)
 #define ARCHER_Y_LOWER    145 // 155 - (20 / 2)
 #define ARCHER_LEFT_X      -1 //  179 / 5000 * 250 - (20 / 2)
@@ -147,9 +147,9 @@ class Knight {
 					break;
 			}
 			if (frameState <= 30) {
-				offset_x = frameState;
+				offset_x =  frameState * 34 / 30;
 			} else {
-				offset_x = 60 - frameState;
+				offset_x = 68 - (frameState * 34 / 30);
 			}
 			offset_y = -offset_x;
 			if (!facingRight) {
@@ -199,12 +199,12 @@ class Peasant {
 			timer = 0;
 		}
 		void Squish() {
-			rand_var = rand() % 1000;
-			if (rand_var < 0.003) {
+			rand_var = rand() % 100000;
+			if (rand_var < 3) {
 				Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb2, 0);
-			} else if (rand_var < 0.006) {
+			} else if (rand_var < 6) {
 				Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbsquish1, 0);
-			} else if (rand_var < 0.01) {
+			} else if (rand_var < 10) {
 				Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbsquish2, 0);
 			}
 		}
@@ -312,10 +312,10 @@ class Trogdor {
 			spawnPos_x = (Sint16)(2780.0 / 5000 * GAME_WIDTH) - (srcrect.w / 2);
 			spawnPos_y = (Sint16)(2360.0 / 3600 * GAME_HEIGHT) - (srcrect.h / 2);
 			dstrect = { spawnPos_x, spawnPos_y, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
+			collision = { 11 + dstrect.x, 11 + dstrect.y, 18, 24 };
 			fire_frameState = 0;
 			fire_srcrect = { 0, facingRight * sprite_trogdor_fire.dstrect.h, sprite_trogdor_fire.dstrect.w, sprite_trogdor_fire.dstrect.h };
 			fire_dstrect = { dstrect.x - 24 + (facingRight * 62), dstrect.y + 10, sprite_trogdor_fire.dstrect.w, sprite_trogdor_fire.dstrect.h };
-			collision = { 11 + dstrect.x, 11 + dstrect.y, 18, 24 };
 			invince = 0;
 			visible = true;
 			srcrect.x = 0;
@@ -324,6 +324,12 @@ class Trogdor {
 			y_offset = 0;
 			moveSpeed = 3;
 			frameStateFlag = 0;
+		}
+		void resetPos() {
+			facingRight = true;
+			srcrect = { 0, facingRight * sprite_trogdor.dstrect.h, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
+			dstrect = { spawnPos_x, spawnPos_y, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
+			collision = { 11 + dstrect.x, 11 + dstrect.y, 18, 24 };
 		}
 		void updateBreathLoc() {
 			fire_dstrect.x = dstrect.x - 24 + (facingRight * 62);
@@ -371,6 +377,8 @@ class GameManager {
 		Archer archerArray[2];          // array of Archer objects
 		Trogdor player;                 // the player
 		double knightIncrement;         // knight movement speed
+		Uint16 extraMansBreak;          // # of points for an extra life
+		Uint16 extraMansCounter;        // how many extra lives have been earned so far
 		GameManager() {
 		}
 		GameManager(Sint8 init_mans) {
@@ -390,6 +398,8 @@ class GameManager {
 			player = Trogdor();
 			player.facingRight = true;
 			knightIncrement = 1;
+			extraMansBreak = 300;
+			extraMansCounter = 0;
 		}
 		void levelInit() {
 			SET_BURNINATION(0);
@@ -465,10 +475,7 @@ class GameManager {
 			knightArray[0] = Knight(72, 128, 1, false); // TODO: exact ticks: 1453, 2572
 			knightArray[1] = Knight(170, 57, 1, true);  // TODO: exact ticks: 3418, 1147
 			peasantometer = 0;
-			player.dstrect.x = player.spawnPos_x;
-			player.dstrect.y = player.spawnPos_y;
-			player.collision = { 11 + player.dstrect.x, 11 + player.dstrect.y, 18, 24 };
-			player.facingRight = true;
+			player.resetPos();
 		}
 		void getPlayerInput() {
 			player.x_offset = 0;
@@ -663,6 +670,29 @@ class GameManager {
 				knightArray[i].updateFrameStateAndMove();
 			}
 		}
+		bool testWon() {
+			for (i = 0; i < MAX_NUM_HUTS; i++) {
+				if (!hutArray[i].burned) {
+					return false;
+					break;
+				}
+			}
+			return true;
+		}
+		void updateScore(Uint16 increment) {
+			uint_i = score;
+			score += increment;
+			if ((uint_i < (extraMansBreak * extraMansCounter)) && (score >= (extraMansBreak * extraMansCounter))) {
+				mans++;
+				extraMansCounter++;
+			}
+		}
+		void clearArrows() {
+			for (i = 0; i < MAX_NUM_ARROWS; i++) {
+				arrowArrayR[i].clear();
+				arrowArrayL[i].clear();
+			}
+		}
 		void testBurnHut() {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
 				if (!hutArray[i].burning && SDL_HasIntersection(&player.fire_dstrect, &hutArray[i].dstrect)) { // TODO: Fire breath is too generous; check for collision with the actual cottage sprite, not just its dstrect (maybe create a new dstrect?)
@@ -707,6 +737,19 @@ class GameManager {
 			}
 		}
 };
+
+#define RENDER_AND_ANIMATE_COTTAGES()                                                                                     \
+	for (i = 0; i < MAX_NUM_HUTS; i++) {                                                                                  \
+		if (GM.hutArray[i].direction > 0) {                                                                               \
+			if (GM.hutArray[i].burning && !GM.hutArray[i].burned) {                                                       \
+				GM.hutArray[i].updateFrameState();                                                                        \
+			}                                                                                                             \
+			RENDER_SPRITE_USING_RECTS(sprite_cottage, GM.hutArray[i].srcrect, GM.hutArray[i].dstrect);                    \
+			if (GM.hutArray[i].frameState >= 12 && GM.hutArray[i].frameState <= 28) {                                     \
+				RENDER_SPRITE_USING_RECTS(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
+			}                                                                                                             \
+		}                                                                                                                 \
+	}
 
 #define RENDER_AND_ANIMATE_UPPER_COTTAGES()                                                                               \
 	for (i = 0; i < MAX_NUM_HUTS; i++) {                                                                                  \

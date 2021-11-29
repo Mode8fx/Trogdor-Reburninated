@@ -758,6 +758,12 @@ int main(int argv, char** args) {
 					GM.updateArchersAndArrows();
 					GM.getPlayerInput();
 					GM.updateKnight();
+					if (GM.testWon()) {
+						GM.updateScore(min((20 + ((GM.level / 5) + 1) * 5), 200));
+						GM.clearArrows();
+						sceneState = 8;
+						frameState = 256;
+					}
 					if (!GM.burnination) {
 
 					} else {
@@ -789,7 +795,6 @@ int main(int argv, char** args) {
 				if (GM.burnination > 0) {
 					RENDER_SPRITE(sprite_burnination_meter_empty);
 					RENDER_SPRITE(sprite_burnination_meter_full);
-					RENDER_SPRITE_USING_RECTS(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
 				} else {
 					sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;
 					sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;
@@ -801,12 +806,16 @@ int main(int argv, char** args) {
 						sprite_peasantometer_icon.dstrect.x += (sprite_peasantometer_icon.dstrect.w * 1.5);
 					}
 				}
-				RENDER_AND_ANIMATE_UPPER_COTTAGES();
+				//RENDER_AND_ANIMATE_UPPER_COTTAGES();
+				RENDER_AND_ANIMATE_COTTAGES();
+				RENDER_KNIGHTS();
 				if (GM.player.visible) {
 					RENDER_SPRITE_USING_RECTS(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);
 				}
-				RENDER_AND_ANIMATE_LOWER_COTTAGES();
-				RENDER_KNIGHTS();
+				//RENDER_AND_ANIMATE_LOWER_COTTAGES();
+				if (GM.burnination > 0) {
+					RENDER_SPRITE_USING_RECTS(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
+				}
 				RENDER_ARCHERS();
 				RENDER_ARROWS();
 				//DRAW_RECT(GM.player.collision, color_red.r, color_red.g, color_red.b);
@@ -845,6 +854,65 @@ int main(int argv, char** args) {
 				break;
 			/* End of Level Animation */
 			case 8:
+#if !defined(SDL1)
+				SDL_RenderCopy(renderer, sprite_level_background->texture, NULL, &sprite_level_background->dstrect);
+#else
+				SDL_BlitSurface(sprite_level_background->surface, NULL, screen, &sprite_level_background->dstrect);
+#endif
+				RENDER_TEXT(text_4_score, textChars_font_serif_2_red_6);
+				RENDER_TEXT(text_4_score_val, textChars_font_serif_red_6);
+				RENDER_TEXT(text_4_mans, textChars_font_serif_2_red_6);
+				RENDER_TEXT(text_4_mans_val, textChars_font_serif_red_6);
+				RENDER_TEXT(text_4_level, textChars_font_serif_2_red_6);
+				RENDER_TEXT(text_4_level_val, textChars_font_serif_red_6);
+				// render peasantometer/burnination meter (depending on their values)
+				if (GM.burnination > 0) {
+					RENDER_SPRITE(sprite_burnination_meter_empty);
+					RENDER_SPRITE(sprite_burnination_meter_full);
+				} else {
+					sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;
+					sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;
+					for (i = 0; i < 10; i++) {
+						if (GM.peasantometer == i) {
+							sprite_peasantometer_icon.srcrect.x = 0;
+						}
+						RENDER_SPRITE(sprite_peasantometer_icon);
+						sprite_peasantometer_icon.dstrect.x += (sprite_peasantometer_icon.dstrect.w * 1.5);
+					}
+				}
+				RENDER_AND_ANIMATE_UPPER_COTTAGES();
+				RENDER_AND_ANIMATE_LOWER_COTTAGES();
+				if (((frameState - 1) / 2) % 2 == 0) {
+					RENDER_SPRITE(sprite_end_of_level_flash);
+				}
+				switch (frameState) {
+					case 257:
+						GM.player.srcrect.x = 0;
+						GM.player.srcrect.y = GM.player.srcrect.h;
+						GM.player.dstrect.w *= 1.5; // TODO: these are placeholder values; also, it doesn't work in SDL1...
+						GM.player.dstrect.h *= 1.5; // TODO: these are placeholder values; also, it doesn't work in SDL1...
+						GM.player.dstrect.x = OBJ_TO_MID_SCREEN_X(GM.player);
+						GM.player.dstrect.y = OBJ_TO_MID_SCREEN_Y(GM.player);
+						if ((rand() % 100) < 10) {
+							if ((rand() % 100) < 50) {
+								Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sblevelbeat, 0);
+							} else {
+								Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb1, 0);
+							}
+						}
+						break;
+					case 265:
+						if ((rand() % 100) < 10) {
+							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbbest, 0);
+						}
+						break;
+					case 276:
+						sceneState = 9;
+					default:
+						break;
+				}
+				frameState++;
+				RENDER_SPRITE_USING_RECTS(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);
 				break;
 			/* Level Beaten Screen */
 			case 9:

@@ -90,6 +90,7 @@ SpriteObject sprite_archer;
 SpriteObject sprite_arrow;
 SpriteObject sprite_trogdor_fire;
 SpriteObject sprite_knight;
+SpriteObject sprite_end_of_level_flash;
 
 /* Fonts */
 SDL_Color color_white  = { 255, 255, 255 };
@@ -376,13 +377,15 @@ void InitializeSprites() {
 		0, 3, 2, 1, 1);
 	sprite_peasantometer_icon_init_x = (Uint8)(GAME_WIDTH * 66 / 250);
 	PREPARE_SPRITE(sprite_archer, (rootDir + "graphics/archer.bmp").c_str(),
-		0, 3, 2, 2, 1);
+		0, 0, 2, 2, 1);
 	PREPARE_SPRITE(sprite_arrow, (rootDir + "graphics/arrow.bmp").c_str(),
-		0, 3, 1, 2, 1);
+		0, 0, 1, 2, 1);
 	PREPARE_SPRITE(sprite_trogdor_fire, (rootDir + "graphics/trogdor_fire.bmp").c_str(),
-		0, 3, 4, 2, 1);
+		0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_knight, (rootDir + "graphics/knight.bmp").c_str(),
-		0, 3, 3, 2, 1);
+		0, 0, 3, 2, 1);
+	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X(sprite_end_of_level_flash), OBJ_TO_MID_SCREEN_Y(sprite_end_of_level_flash), 1, 1, 1);
 }
 
 void InitializeTextChars() {
