@@ -746,9 +746,6 @@ int main(int argv, char** args) {
 					if (KEY_PRESSED(INPUT_A)) {
 						GM.burninationDecreaseTest();
 					}
-					if (GM.burnination > 0) {
-						GM.testBurnHut();
-					}
 					if (KEY_PRESSED(INPUT_X)) {
 						GM.player.invince = 36;
 					}
@@ -765,9 +762,15 @@ int main(int argv, char** args) {
 						frameState = 256;
 					}
 					if (!GM.burnination) {
-
+						GM.popPeasants();
+						GM.peasantEatTest();    // TODO (partially completed)
+						GM.peasantTimerClick(); // TODO (partially completed)
+						//GM.testKnightHit();   // TODO
 					} else {
 						GM.updateBurnmeter();
+						GM.testBurnHut();
+						//GM.testBurnPeasant();   // TODO
+						GM.peasantTimerClick(); // TODO (partially completed)
 					}
 				} else {
 					if (GM.manually_paused) {
@@ -809,6 +812,7 @@ int main(int argv, char** args) {
 				//RENDER_AND_ANIMATE_UPPER_COTTAGES();
 				RENDER_AND_ANIMATE_COTTAGES();
 				RENDER_KNIGHTS();
+				RENDER_PEASANTS();
 				if (GM.player.visible) {
 					RENDER_SPRITE_USING_RECTS(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);
 				}

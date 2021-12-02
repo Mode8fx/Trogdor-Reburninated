@@ -38,6 +38,7 @@ inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
 #define archerR archerArray[0]
 #define archerL archerArray[1]
 #define MAX_NUM_KNIGHTS 2
+#define MAX_NUM_PEASANTS 7
 
 class Cottage {
 	public:
@@ -105,6 +106,7 @@ class Knight {
 		Sint16 home_y;    // the parent (x,y) coordinates
 		Sint16 offset_x;  // the offset relative to home
 		Sint16 offset_y;  // the offset relative to home
+		SDL_Rect collision;
 		Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true) {
 			frameState = 0;
 			facingRight = fr;
@@ -165,25 +167,25 @@ class Knight {
 class Peasant {
 	public:
 		Uint8 frameState;
-		Sint16 x;
-		Sint16 y;
+		SDL_Rect srcrect;
+		SDL_Rect dstrect;
 		bool active;
 		Sint8 myHome;
 		bool stomped;
 		bool waiting;
 		bool burning;
 		Uint32 myStart; // TODO: no idea what this is yet
-		Sint8 myStartx;
-		Sint8 myStarty;
+		Sint16 myStartx;
+		Sint16 myStarty;
 		Sint8 direction;
-		Sint8 myTargetx;
-		Sint8 myTargety;
+		Sint16 myTargetx;
+		Sint16 myTargety;
 		bool returning;
 		Sint16 timer;
-		Peasant(Sint16 pos_x = 0, Sint16 pos_y = 0) {
+		Peasant() {
 			frameState = 0;
-			x = pos_x;
-			y = pos_y;
+			srcrect = { 0, 0, sprite_peasant.dstrect.w, sprite_peasant.dstrect.h };
+			dstrect = { 0, 0, sprite_peasant.dstrect.w, sprite_peasant.dstrect.h };
 			active = false;
 			myHome = 0;
 			stomped = false;
@@ -357,28 +359,29 @@ class Trogdor {
 
 class GameManager {
 	public:
-		Sint8 mans;                     // lives
-		Uint32 score;                   // score
-		Sint8 peasantometer;            // # of peasants burned for burnination meter
-		bool paused;                    // game is paused through any means (clearing a level, dying, etc.)
-		bool startDown;                 // bool used for pausing
-		bool manually_paused;           // game is paused by the player
-		bool gameOver;                  // game is over
-		Uint8 level;                    // current level
-		Uint8 levelIndex;               // current level index (determined by level)
-		double burnination;             // amount of time left in burnination state
-		double archerFrequency;         // frequency at which archers appear
-		double burnRate;                // rate at which the burnination meter decreases
-		Arrow arrowArrayL[5];           // array of Arrow objects (facing left, firing from right to left)
-		Arrow arrowArrayR[5];           // array of Arrow objects (facing right, firing from left to right)
-		Cottage hutArray[6];            // array of Cottage objects
-		Peasant peasantArray[7];        // array of Peasant objects
-		Knight knightArray[2];          // array of Knight objects
-		Archer archerArray[2];          // array of Archer objects
-		Trogdor player;                 // the player
-		double knightIncrement;         // knight movement speed
-		Uint16 extraMansBreak;          // # of points for an extra life
-		Uint16 extraMansCounter;        // how many extra lives have been earned so far
+		Sint8 mans;                             // lives
+		Uint32 score;                           // score
+		Sint8 peasantometer;                    // # of peasants burned for burnination meter
+		bool paused;                            // game is paused through any means (clearing a level, dying, etc.)
+		bool startDown;                         // bool used for pausing
+		bool manually_paused;                   // game is paused by the player
+		bool gameOver;                          // game is over
+		Uint8 level;                            // current level
+		Uint8 levelIndex;                       // current level index (determined by level)
+		double burnination;                     // amount of time left in burnination state
+		double archerFrequency;                 // frequency at which archers appear
+		double burnRate;                        // rate at which the burnination meter decreases
+		Arrow arrowArrayL[MAX_NUM_ARROWS];      // array of Arrow objects (facing left, firing from right to left)
+		Arrow arrowArrayR[MAX_NUM_ARROWS];      // array of Arrow objects (facing right, firing from left to right)
+		Cottage hutArray[MAX_NUM_HUTS];         // array of Cottage objects
+		Uint8 numHuts;
+		Peasant peasantArray[MAX_NUM_PEASANTS]; // array of Peasant objects
+		Knight knightArray[MAX_NUM_KNIGHTS];    // array of Knight objects
+		Archer archerArray[2];                  // array of Archer objects
+		Trogdor player;                         // the player
+		double knightIncrement;                 // knight movement speed
+		Uint16 extraMansBreak;                  // # of points for an extra life
+		Uint16 extraMansCounter;                // how many extra lives have been earned so far
 		GameManager() {
 		}
 		GameManager(Sint8 init_mans) {
@@ -444,6 +447,7 @@ class GameManager {
 					sprite_level_background = &sprite_level_background_1;
 					break;
 			}
+			numHuts = 0;
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
 				j = (i * 3) + 2;
 				if (levels[levelIndex][j] > 0) {
@@ -452,6 +456,7 @@ class GameManager {
 						OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_cottage, (levels[levelIndex][j + 2] + 2183) / 3600.0) - 11,
 						levels[levelIndex][j]
 					);
+					numHuts++;
 					PRINT("COTTAGE INFO:");
 					PRINT((int)hutArray[i].direction);
 					PRINT((int)hutArray[i].dstrect.x);
@@ -468,7 +473,7 @@ class GameManager {
 				arrowArrayR[i] = Arrow(0, 0, true);
 			}
 			for (i = 0; i < LEN(peasantArray); i++) {
-				peasantArray[i] = Peasant(0, 1);
+				peasantArray[i] = Peasant();
 			}
 			archerArray[0] = Archer(ARCHER_LEFT_X, 0, true);   // archerR (on the left, facing right)
 			archerArray[1] = Archer(ARCHER_RIGHT_X, 0, false); // archerL (on the right, facing left)
@@ -581,7 +586,6 @@ class GameManager {
 		void popArchers() {
 			rand_var = rand() % 10000;
 			if (rand_var < archerFrequency || KEY_PRESSED(INPUT_Y)) { // TODO: Remove KEY_PRESSED
-				PRINT(rand_var);
 				if (rand_var % 2 == 0) {
 					if (!archerR.active) {
 						archerR.active = true;
@@ -711,6 +715,140 @@ class GameManager {
 				peasantometer = 0;
 			}
 		}
+		void popPeasants() {
+			if (rand() % 100 < 4) {
+				for (i = 0; i < MAX_NUM_PEASANTS; i++) {
+					if (!peasantArray[i].active) {
+						peasantArray[i].active = true;
+						j = rand() % numHuts; // j = hutChoice
+						peasantArray[i].myHome = j;
+						peasantArray[i].returning = false;
+						peasantArray[i].waiting = false;
+						peasantArray[i].stomped = false;
+						peasantArray[i].direction = hutArray[j].direction;
+						switch (peasantArray[i].direction) {
+							case 1: // UP
+								peasantArray[i].dstrect.x = hutArray[j].dstrect.x + 6;
+								peasantArray[i].dstrect.y = hutArray[j].dstrect.y - 20;
+								peasantArray[i].myTargetx = peasantArray[i].dstrect.x;
+								peasantArray[i].myTargety = peasantArray[i].dstrect.y - ((rand() % (peasantArray[i].dstrect.y - UPPER_BOUND + 5)) + 5);
+								break;
+							case 2: // DOWN
+								peasantArray[i].dstrect.x = hutArray[j].dstrect.x + 6;
+								peasantArray[i].dstrect.y = hutArray[j].dstrect.y + 3;
+								peasantArray[i].myTargetx = peasantArray[i].dstrect.x;
+								peasantArray[i].myTargety = peasantArray[i].dstrect.y + ((rand() % (LOWER_BOUND - peasantArray[i].dstrect.y - 5)) + 5);
+								break;
+							case 3: // LEFT
+								peasantArray[i].dstrect.x = hutArray[j].dstrect.x + 2;
+								peasantArray[i].dstrect.y = hutArray[j].dstrect.y + 3;
+								peasantArray[i].myTargetx = peasantArray[i].dstrect.x - ((rand() % (peasantArray[i].dstrect.x - LEFT_BOUND - 7)) + 7);
+								peasantArray[i].myTargety = peasantArray[i].dstrect.y;
+								break;
+							case 4: // RIGHT
+								peasantArray[i].dstrect.x = hutArray[j].dstrect.x + 13;
+								peasantArray[i].dstrect.y = hutArray[j].dstrect.y + 3;
+								peasantArray[i].myTargetx = peasantArray[i].dstrect.x + ((rand() % (RIGHT_BOUND - peasantArray[i].dstrect.x + 8)) + 8);
+								peasantArray[i].myTargety = peasantArray[i].dstrect.y;
+								break;
+							default:
+								break;
+						}
+						peasantArray[i].myStartx = peasantArray[i].dstrect.x;
+						peasantArray[i].myStarty = peasantArray[i].dstrect.y;
+						break;
+					}
+				}
+			}
+		}
+		void peasantEatTest() {
+			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
+				if (peasantArray[i].active && !peasantArray[i].stomped && SDL_HasIntersection(&player.collision, &peasantArray[i].dstrect)) {
+					peasantArray[i].stomped = true;
+					// TODO: play peasant stomped animation here
+					PRINT("Stomped!");
+					updateScore(2);
+					if (peasantometer < 9) {
+						peasantometer++;
+					} else {
+						peasantometer = 10;
+						SET_BURNINATION(100);
+						// TODO: play burnination animation here, pause game as necessary, etc.
+						PRINT("BURNINATE!");
+					}
+				}
+			}
+		}
+		void peasantTimerClick() {
+			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
+				if (peasantArray[i].active && !peasantArray[i].waiting && !peasantArray[i].stomped) {
+					switch (peasantArray[i].direction) {
+						case 1: // UP
+							j = 0;  // x_offset
+							k = -1; // y_offset
+							break;
+						case 2: // DOWN
+							j = 0;
+							k = 1;
+							break;
+						case 3: // LEFT
+							j = -1;
+							k = 0;
+							break;
+						case 4: // RIGHT
+							j = 1;
+							k = 0;
+							break;
+						default:
+							break;
+					}
+					if (peasantArray[i].burning) {
+						j *= 2;
+						k *= 2;
+						peasantArray[i].returning = true;
+						peasantArray[i].waiting = false;
+					}
+					if (peasantArray[i].returning) {
+						if ((j >= 1 && peasantArray[i].dstrect.x >= peasantArray[i].myStartx)
+							|| (j <= -1 && peasantArray[i].dstrect.x <= peasantArray[i].myStartx)
+							|| (k >= 1 && peasantArray[i].dstrect.y >= peasantArray[i].myStarty)
+							|| (k <= -1 && peasantArray[i].dstrect.y <= peasantArray[i].myStarty)) {
+							peasantArray[i].dstrect.x -= j;
+							peasantArray[i].dstrect.y -= k;
+							// TODO: peasantArray[i].nextFrame();
+						} else {
+							peasantArray[i].active = false;
+							peasantArray[i].returning = false;
+							if (peasantArray[i].burning && !hutArray[peasantArray[i].myHome].burning) {
+								hutArray[peasantArray[i].myHome].burning = true;
+							}
+							if (peasantometer > 0 && !peasantArray[i].burning) { // I added the burning check; this looks like an oversight in the original game (though it's very rare that it would actually affect the player)
+								peasantometer--;
+							}
+							peasantArray[i].burning = false;
+							peasantArray[i].dstrect.x = -300;
+						}
+					} else if ((j >= 1 && peasantArray[i].dstrect.x <= peasantArray[i].myTargetx)
+						|| (j <= -1 && peasantArray[i].dstrect.x >= peasantArray[i].myTargetx)
+						|| (k >= 1 && peasantArray[i].dstrect.y <= peasantArray[i].myTargety)
+						|| (k <= -1 && peasantArray[i].dstrect.y >= peasantArray[i].myTargety)) {
+						peasantArray[i].dstrect.x += j;
+						peasantArray[i].dstrect.y += k;
+						// TODO: peasantArray[i].nextFrame();
+					} else {
+						peasantArray[i].waiting = true;
+						peasantArray[i].timer = (60 / level) + 24;
+					}
+				}
+				if (peasantArray[i].active && peasantArray[i].waiting) {
+					peasantArray[i].timer--;
+					if (peasantArray[i].timer < 0) {
+						peasantArray[i].waiting = false;
+						peasantArray[i].returning = true;
+					}
+				}
+			}
+		}
 		void burninationIncreaseTest() {
 			if (peasantometer < 9) {
 				peasantometer++;
@@ -798,6 +936,13 @@ class GameManager {
 #define RENDER_KNIGHTS()                                                                                \
 	for (i = 0; i < MAX_NUM_KNIGHTS; i++) {                                                             \
 		RENDER_SPRITE_USING_RECTS(sprite_knight, GM.knightArray[i].srcrect, GM.knightArray[i].dstrect); \
+	}
+
+#define RENDER_PEASANTS()                                                                                      \
+	for (i = 0; i < MAX_NUM_PEASANTS; i++) {                                                                   \
+		if (GM.peasantArray[i].active) {                                                                       \
+			RENDER_SPRITE_USING_RECTS(sprite_peasant, GM.peasantArray[i].srcrect, GM.peasantArray[i].dstrect); \
+		}                                                                                                      \
 	}
 
 #endif

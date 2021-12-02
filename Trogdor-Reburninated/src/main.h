@@ -90,6 +90,7 @@ SpriteObject sprite_archer;
 SpriteObject sprite_arrow;
 SpriteObject sprite_trogdor_fire;
 SpriteObject sprite_knight;
+SpriteObject sprite_peasant;
 SpriteObject sprite_end_of_level_flash;
 
 /* Fonts */
@@ -384,6 +385,8 @@ void InitializeSprites() {
 		0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_knight, (rootDir + "graphics/knight.bmp").c_str(),
 		0, 0, 3, 2, 1);
+	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
+		0, 0, 2, 2, 1);
 	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_end_of_level_flash), OBJ_TO_MID_SCREEN_Y(sprite_end_of_level_flash), 1, 1, 1);
 }
