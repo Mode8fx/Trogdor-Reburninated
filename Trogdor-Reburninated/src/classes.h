@@ -182,6 +182,7 @@ class Peasant {
 		Sint16 myTargety;
 		bool returning;
 		Sint16 timer;
+		SDL_Rect collision;
 		Peasant() {
 			frameState = 0;
 			srcrect = { 0, 0, sprite_peasant.dstrect.w, sprite_peasant.dstrect.h };
@@ -199,20 +200,50 @@ class Peasant {
 			myTargety = 0;
 			returning = false;
 			timer = 0;
+			collision = { 8 + dstrect.x, 5 + dstrect.y, 8, 19 };
 		}
-		void Squish() {
-			rand_var = rand() % 100000;
-			if (rand_var < 3) {
-				Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb2, 0);
-			} else if (rand_var < 6) {
-				Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbsquish1, 0);
-			} else if (rand_var < 10) {
-				Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbsquish2, 0);
+		void updateFrameState() {
+			frameState++;
+			switch (frameState) {
+				case 1:
+					srcrect.x = 0;
+					srcrect.y = 0;
+					break;
+				case 4:
+					srcrect.x = sprite_peasant.dstrect.w;
+					break;
+				case 6:
+					frameState = 0;
+					break;
+				case 8:
+					srcrect.x = 0;
+					srcrect.y = 2 * sprite_peasant.dstrect.h;
+					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_squish, 0);
+					rand_var = rand() % 100000;
+					if (rand_var < 3) {
+						Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb2, 0);
+					} else if (rand_var < 6) {
+						Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbsquish1, 0);
+					} else if (rand_var < 10) {
+						Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbsquish2, 0);
+					}
+					break;
+				case 25:
+					active = false;
+					stomped = false;
+					dstrect.x = -300;
+					break;
+				case 26:
+					srcrect.x = 0;
+					srcrect.y = sprite_peasant.dstrect.h;
+					break;
+				case 27:
+					srcrect.x = sprite_peasant.dstrect.w;
+					frameState = 25;
+					break;
+				default:
+					break;
 			}
-		}
-		void Despawn() {
-			active = false;
-			stomped = false;
 		}
 };
 
@@ -690,6 +721,7 @@ class GameManager {
 				mans++;
 				extraMansCounter++;
 			}
+			UPDATE_TEXT(text_4_score_val, to_string(score));
 		}
 		void clearArrows() {
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
@@ -715,11 +747,28 @@ class GameManager {
 				peasantometer = 0;
 			}
 		}
+		inline void peasant_set_x_delta(Sint16 new_x) {
+			peasantArray[i].dstrect.x = new_x;
+			peasantArray[i].collision.x = 8 + peasantArray[i].dstrect.x;
+		}
+		inline void peasant_set_y_delta(Sint16 new_y) {
+			peasantArray[i].dstrect.y = new_y;
+			peasantArray[i].collision.y = 5 + peasantArray[i].dstrect.y;
+		}
+		inline void peasant_add_x_delta(Sint8 dx) {
+			peasantArray[i].dstrect.x += dx;
+			peasantArray[i].collision.x = 8 + peasantArray[i].dstrect.x;
+		}
+		inline void peasant_add_y_delta(Sint8 dy) {
+			peasantArray[i].dstrect.y += dy;
+			peasantArray[i].collision.y = 5 + peasantArray[i].dstrect.y;
+		}
 		void popPeasants() {
-			if (rand() % 100 < 4) {
+			if ((rand() % 100) < 4) {
 				for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 					if (!peasantArray[i].active) {
 						peasantArray[i].active = true;
+						peasantArray[i].frameState = 0;
 						j = rand() % numHuts; // j = hutChoice
 						peasantArray[i].myHome = j;
 						peasantArray[i].returning = false;
@@ -728,26 +777,26 @@ class GameManager {
 						peasantArray[i].direction = hutArray[j].direction;
 						switch (peasantArray[i].direction) {
 							case 1: // UP
-								peasantArray[i].dstrect.x = hutArray[j].dstrect.x + 6;
-								peasantArray[i].dstrect.y = hutArray[j].dstrect.y - 20;
+								peasant_set_x_delta(hutArray[j].dstrect.x + 6);
+								peasant_set_y_delta(hutArray[j].dstrect.y - 20);
 								peasantArray[i].myTargetx = peasantArray[i].dstrect.x;
 								peasantArray[i].myTargety = peasantArray[i].dstrect.y - ((rand() % (peasantArray[i].dstrect.y - UPPER_BOUND + 5)) + 5);
 								break;
 							case 2: // DOWN
-								peasantArray[i].dstrect.x = hutArray[j].dstrect.x + 6;
-								peasantArray[i].dstrect.y = hutArray[j].dstrect.y + 3;
+								peasant_set_x_delta(hutArray[j].dstrect.x + 6);
+								peasant_set_y_delta(hutArray[j].dstrect.y + 3);
 								peasantArray[i].myTargetx = peasantArray[i].dstrect.x;
 								peasantArray[i].myTargety = peasantArray[i].dstrect.y + ((rand() % (LOWER_BOUND - peasantArray[i].dstrect.y - 5)) + 5);
 								break;
 							case 3: // LEFT
-								peasantArray[i].dstrect.x = hutArray[j].dstrect.x + 2;
-								peasantArray[i].dstrect.y = hutArray[j].dstrect.y + 3;
+								peasant_set_x_delta(hutArray[j].dstrect.x + 2);
+								peasant_set_y_delta(hutArray[j].dstrect.y + 3);
 								peasantArray[i].myTargetx = peasantArray[i].dstrect.x - ((rand() % (peasantArray[i].dstrect.x - LEFT_BOUND - 7)) + 7);
 								peasantArray[i].myTargety = peasantArray[i].dstrect.y;
 								break;
 							case 4: // RIGHT
-								peasantArray[i].dstrect.x = hutArray[j].dstrect.x + 13;
-								peasantArray[i].dstrect.y = hutArray[j].dstrect.y + 3;
+								peasant_set_x_delta(hutArray[j].dstrect.x + 13);
+								peasant_set_y_delta(hutArray[j].dstrect.y + 3);
 								peasantArray[i].myTargetx = peasantArray[i].dstrect.x + ((rand() % (RIGHT_BOUND - peasantArray[i].dstrect.x + 8)) + 8);
 								peasantArray[i].myTargety = peasantArray[i].dstrect.y;
 								break;
@@ -763,18 +812,17 @@ class GameManager {
 		}
 		void peasantEatTest() {
 			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
-				if (peasantArray[i].active && !peasantArray[i].stomped && SDL_HasIntersection(&player.collision, &peasantArray[i].dstrect)) {
+				if (peasantArray[i].active && !peasantArray[i].stomped && SDL_HasIntersection(&player.collision, &peasantArray[i].collision)) {
 					peasantArray[i].stomped = true;
-					// TODO: play peasant stomped animation here
-					PRINT("Stomped!");
+					peasantArray[i].frameState = 7;
 					updateScore(2);
 					if (peasantometer < 9) {
 						peasantometer++;
 					} else {
 						peasantometer = 10;
 						SET_BURNINATION(100);
+						player.updateBreathLoc();
 						// TODO: play burnination animation here, pause game as necessary, etc.
-						PRINT("BURNINATE!");
 					}
 				}
 			}
@@ -813,9 +861,8 @@ class GameManager {
 							|| (j <= -1 && peasantArray[i].dstrect.x <= peasantArray[i].myStartx)
 							|| (k >= 1 && peasantArray[i].dstrect.y >= peasantArray[i].myStarty)
 							|| (k <= -1 && peasantArray[i].dstrect.y <= peasantArray[i].myStarty)) {
-							peasantArray[i].dstrect.x -= j;
-							peasantArray[i].dstrect.y -= k;
-							// TODO: peasantArray[i].nextFrame();
+							peasant_add_x_delta(-j);
+							peasant_add_y_delta(-k);
 						} else {
 							peasantArray[i].active = false;
 							peasantArray[i].returning = false;
@@ -826,15 +873,14 @@ class GameManager {
 								peasantometer--;
 							}
 							peasantArray[i].burning = false;
-							peasantArray[i].dstrect.x = -300;
+							//peasantArray[i].dstrect.x = -300;
 						}
 					} else if ((j >= 1 && peasantArray[i].dstrect.x <= peasantArray[i].myTargetx)
 						|| (j <= -1 && peasantArray[i].dstrect.x >= peasantArray[i].myTargetx)
 						|| (k >= 1 && peasantArray[i].dstrect.y <= peasantArray[i].myTargety)
 						|| (k <= -1 && peasantArray[i].dstrect.y >= peasantArray[i].myTargety)) {
-						peasantArray[i].dstrect.x += j;
-						peasantArray[i].dstrect.y += k;
-						// TODO: peasantArray[i].nextFrame();
+						peasant_add_x_delta(j);
+						peasant_add_y_delta(k);
 					} else {
 						peasantArray[i].waiting = true;
 						peasantArray[i].timer = (60 / level) + 24;
@@ -941,6 +987,9 @@ class GameManager {
 #define RENDER_PEASANTS()                                                                                      \
 	for (i = 0; i < MAX_NUM_PEASANTS; i++) {                                                                   \
 		if (GM.peasantArray[i].active) {                                                                       \
+			if (!GM.peasantArray[i].waiting) {                                                                 \
+				GM.peasantArray[i].updateFrameState();                                                         \
+			}                                                                                                  \
 			RENDER_SPRITE_USING_RECTS(sprite_peasant, GM.peasantArray[i].srcrect, GM.peasantArray[i].dstrect); \
 		}                                                                                                      \
 	}

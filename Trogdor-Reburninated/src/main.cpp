@@ -822,9 +822,13 @@ int main(int argv, char** args) {
 				}
 				RENDER_ARCHERS();
 				RENDER_ARROWS();
+				// Draw Collision
 				//DRAW_RECT(GM.player.collision, color_red.r, color_red.g, color_red.b);
 				//for (i = 0; i < MAX_NUM_HUTS; i++) {
 				//	DRAW_RECT(GM.hutArray[i].collision, color_red.r, color_red.g, color_red.b);
+				//}
+				//for (i = 0; i < MAX_NUM_PEASANTS; i++) {
+				//	DRAW_RECT(GM.peasantArray[i].collision, color_red.r, color_red.g, color_red.b);
 				//}
 				if (GM.manually_paused) {
 					// Here, the original game renders a black circle around the top-right of the center of the screen...

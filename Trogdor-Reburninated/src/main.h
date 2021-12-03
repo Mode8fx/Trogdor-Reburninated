@@ -67,6 +67,7 @@ Mix_Chunk *sfx_sbworst;
 Mix_Chunk *sfx_sfx2;
 Mix_Chunk *sfx_trogador;
 Mix_Chunk *sfx_arrow;
+Mix_Chunk *sfx_squish;
 
 /* Sprite Objects */
 SDL_Surface  *temp;
@@ -340,6 +341,7 @@ void InitializeSound() {
 	sfx_sfx2 = Mix_LoadWAV((rootDir + "sfx/trog_sfx2.wav").c_str());
 	sfx_trogador = Mix_LoadWAV((rootDir + "sfx/trogador.wav").c_str());
 	sfx_arrow = Mix_LoadWAV((rootDir + "sfx/arrow.wav").c_str());
+	sfx_squish = Mix_LoadWAV((rootDir + "sfx/squish.wav").c_str());
 }
 
 void InitializeSprites() {
@@ -386,7 +388,7 @@ void InitializeSprites() {
 	PREPARE_SPRITE(sprite_knight, (rootDir + "graphics/knight.bmp").c_str(),
 		0, 0, 3, 2, 1);
 	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
-		0, 0, 2, 2, 1);
+		0, 0, 2, 3, 1);
 	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_end_of_level_flash), OBJ_TO_MID_SCREEN_Y(sprite_end_of_level_flash), 1, 1, 1);
 }
