@@ -13,16 +13,20 @@
 
 #define LEFT_BOUND   17
 #define RIGHT_BOUND 233
-#define UPPER_BOUND   7
-#define LOWER_BOUND 132
-#define LEFT_BOUND_TROG    -2 // LEFT_BOUND  - (39 / 2)
-#define RIGHT_BOUND_TROG  214 // RIGHT_BOUND - (39 / 2)
-#define UPPER_BOUND_TROG    7 // UPPER_BOUND - (46 / 2)
-#define LOWER_BOUND_TROG  132 // LOWER_BOUND - (46 / 2)
-#define ARCHER_Y_UPPER     20 //  30 - (20 / 2)
-#define ARCHER_Y_LOWER    145 // 155 - (20 / 2)
-#define ARCHER_LEFT_X      -1 //  179 / 5000 * 250 - (20 / 2)
-#define ARCHER_RIGHT_X    231 // 4829 / 5000 * 250 - (20 / 2)
+#define UPPER_BOUND  30
+#define LOWER_BOUND 155
+#define LEFT_BOUND_TROG      -2 // LEFT_BOUND  - (39 / 2)
+#define RIGHT_BOUND_TROG    214 // RIGHT_BOUND - (39 / 2)
+#define UPPER_BOUND_TROG      7 // UPPER_BOUND - (46 / 2)
+#define LOWER_BOUND_TROG    132 // LOWER_BOUND - (46 / 2)
+#define LEFT_BOUND_KNIGHT     7 // LEFT_BOUND  - (21 / 2)
+#define RIGHT_BOUND_KNIGHT  223 // RIGHT_BOUND - (21 / 2)
+#define UPPER_BOUND_KNIGHT   18 // UPPER_BOUND - (24 / 2)
+#define LOWER_BOUND_KNIGHT  143 // LOWER_BOUND - (24 / 2)
+#define ARCHER_Y_UPPER       20 //   30 - (20 / 2)
+#define ARCHER_Y_LOWER      145 //  155 - (20 / 2)
+#define ARCHER_LEFT_X        -1 //  179 / 5000 * 250 - (20 / 2)
+#define ARCHER_RIGHT_X      231 // 4829 / 5000 * 250 - (20 / 2)
 
 extern Uint16 rand_var;
 extern Uint32 frameCounter_global;
@@ -521,8 +525,8 @@ class GameManager {
 			}
 			archerArray[0] = Archer(ARCHER_LEFT_X, 0, true);   // archerR (on the left, facing right)
 			archerArray[1] = Archer(ARCHER_RIGHT_X, 0, false); // archerL (on the right, facing left)
-			knightArray[0] = Knight(72, 128, 1, false); // TODO: exact ticks: 1453, 2572
-			knightArray[1] = Knight(170, 57, 1, true);  // TODO: exact ticks: 3418, 1147
+			knightArray[0] = Knight(61, 111, 1, false);
+			knightArray[1] = Knight(163, 40, 1, true);
 			peasantometer = 0;
 			player.resetPos();
 		}
@@ -683,21 +687,21 @@ class GameManager {
 				}
 			}
 		}
-		void updateKnight() { // TODO: adjust these bounds to be specific to knight
+		void updateKnight() {
 			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
-				if (knightArray[i].home_x < LEFT_BOUND) {
+				if (knightArray[i].home_x < LEFT_BOUND_KNIGHT) {
 					knightArray[i].direction = rand() % 6;
-					knightArray[i].home_x = LEFT_BOUND + 1;
-				} else if (knightArray[i].home_x > RIGHT_BOUND) {
+					knightArray[i].home_x = LEFT_BOUND_KNIGHT + 1;
+				} else if (knightArray[i].home_x > RIGHT_BOUND_KNIGHT) {
 					knightArray[i].direction = rand() % 6;
-					knightArray[i].home_x = RIGHT_BOUND - 1;
+					knightArray[i].home_x = RIGHT_BOUND_KNIGHT - 1;
 				}
-				if (knightArray[i].home_y < UPPER_BOUND + 50) {
+				if (knightArray[i].home_y < UPPER_BOUND_KNIGHT + 50) {
 					knightArray[i].direction = rand() % 6;
-					knightArray[i].home_y = UPPER_BOUND + 51;
-				} else if (knightArray[i].home_y > LOWER_BOUND) {
+					knightArray[i].home_y = UPPER_BOUND_KNIGHT + 51;
+				} else if (knightArray[i].home_y > LOWER_BOUND_KNIGHT) {
 					knightArray[i].direction = rand() % 6;
-					knightArray[i].home_y = LOWER_BOUND - 1;
+					knightArray[i].home_y = LOWER_BOUND_KNIGHT - 1;
 				}
 				switch (knightArray[i].direction) {
 					case 0:
