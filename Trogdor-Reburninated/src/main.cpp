@@ -703,7 +703,7 @@ int main(int argv, char** args) {
 			/* Title Screen */
 			case 2:
 				if (frameState == 73) {
-					PLAY_MUSIC_WITHOUT_LOOP(MUSIC_TITLE_SCREEN);
+					Mix_PlayChannel(SFX_CHANNEL_GAME_MUSIC, music_title_screen, 0);
 				}
 				if (frameState < 192) {
 					frameState++;
@@ -763,14 +763,14 @@ int main(int argv, char** args) {
 					}
 					if (!GM.burnination) {
 						GM.popPeasants();
-						GM.peasantEatTest();    // TODO (partially completed)
-						GM.peasantTimerClick(); // TODO (partially completed)
+						GM.peasantEatTest();
+						GM.peasantTimerClick();
 						//GM.testKnightHit();   // TODO
 					} else {
 						GM.updateBurnmeter();
 						GM.testBurnHut();
-						//GM.testBurnPeasant();   // TODO
-						GM.peasantTimerClick(); // TODO (partially completed)
+						GM.testBurnPeasant();
+						GM.peasantTimerClick();
 					}
 				} else {
 					if (GM.manually_paused) {

@@ -51,6 +51,7 @@ class Cottage {
 		bool burned;
 		Sint8 direction;
 		SDL_Rect collision;
+		SDL_Rect fire_collision;
 		Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1) {
 			frameState = 9;
 			srcrect = { 0, (dir - 1) * sprite_cottage.dstrect.h, sprite_cottage.dstrect.w, sprite_cottage.dstrect.h };
@@ -63,18 +64,23 @@ class Cottage {
 			switch (direction) {
 				case 1:
 					collision = { 8 + dstrect.x, 15 + dstrect.y, 23, 12 };
+					fire_collision = { 4 + dstrect.x, 1 + dstrect.y, 32, 36 };
 					break;
 				case 2:
 					collision = { 8 + dstrect.x, 16 + dstrect.y, 23, 12 };
+					fire_collision = { 3 + dstrect.x, 0 + dstrect.y, 33, 37 };
 					break;
 				case 3:
 					collision = { 12 + dstrect.x, 14 + dstrect.y, 22, 13 };
+					fire_collision = { 7 + dstrect.x, 1 + dstrect.y, 32, 36 };
 					break;
 				case 4:
 					collision = { 7 + dstrect.x, 15 + dstrect.y, 25, 12 };
+					fire_collision = { 4 + dstrect.x, 1 + dstrect.y, 32, 36 };
 					break;
 				default:
 					collision = { 8 + dstrect.x, 16 + dstrect.y, 23, 12 };
+					fire_collision = { 3 + dstrect.x, 0 + dstrect.y, 33, 37 };
 					break;
 			}
 		}
@@ -84,7 +90,8 @@ class Cottage {
 				Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_burn_hut, 0);
 			}
 			if (frameState >= 12 && frameState <= 28) {
-				fire_srcrect.x = (((frameState - 12) / 3) % 4) * sprite_cottage_fire.dstrect.w; // TODO: flames should be flipped horizontally if direction == 3
+				fire_srcrect.x = (((frameState - 12) / 3) % 4) * sprite_cottage_fire.dstrect.w;
+				fire_srcrect.y = ((direction == 3) * sprite_cottage_fire.dstrect.h);
 				if (frameState == 26) {
 					srcrect.x = dstrect.w;
 				}
@@ -117,6 +124,14 @@ class Knight {
 			offset_x = 0;
 			offset_y = 0;
 			direction = dir;
+			updateCollision();
+		}
+		inline void updateCollision() {
+			if (facingRight) {
+				collision = { 4 + dstrect.x, 9 + dstrect.y, 9, 13 };
+			} else {
+				collision = { 8 + dstrect.x, 9 + dstrect.y, 9, 13 };
+			}
 		}
 		void updateFrameStateAndMove() {
 			frameState++;
@@ -160,7 +175,7 @@ class Knight {
 
 			dstrect.x = home_x + offset_x;
 			dstrect.y = home_y + offset_y;
-			// TODO: update collision here... also create collision above
+			updateCollision();
 		}
 };
 
@@ -174,7 +189,6 @@ class Peasant {
 		bool stomped;
 		bool waiting;
 		bool burning;
-		Uint32 myStart; // TODO: no idea what this is yet
 		Sint16 myStartx;
 		Sint16 myStarty;
 		Sint8 direction;
@@ -192,7 +206,6 @@ class Peasant {
 			stomped = false;
 			waiting = false;
 			burning = false;
-			myStart = 999; // TODO: no idea what this is yet
 			myStartx = 0;
 			myStarty = 0;
 			direction = 2;
@@ -616,7 +629,7 @@ class GameManager {
 		}
 		void popArchers() {
 			rand_var = rand() % 10000;
-			if (rand_var < archerFrequency || KEY_PRESSED(INPUT_Y)) { // TODO: Remove KEY_PRESSED
+			if (rand_var < archerFrequency) {
 				if (rand_var % 2 == 0) {
 					if (!archerR.active) {
 						archerR.active = true;
@@ -705,7 +718,7 @@ class GameManager {
 				knightArray[i].updateFrameStateAndMove();
 			}
 		}
-		bool testWon() {
+		inline bool testWon() {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
 				if (!hutArray[i].burned) {
 					return false;
@@ -731,7 +744,7 @@ class GameManager {
 		}
 		void testBurnHut() {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
-				if (!hutArray[i].burning && SDL_HasIntersection(&player.fire_dstrect, &hutArray[i].dstrect)) { // TODO: Fire breath is too generous; check for collision with the actual cottage sprite, not just its dstrect (maybe create a new dstrect?)
+				if (!hutArray[i].burning && SDL_HasIntersection(&player.fire_dstrect, &hutArray[i].fire_collision)) {
 					hutArray[i].burning = true;
 					rand_var = rand() % 10000;
 					if (rand_var < 500) {
@@ -740,7 +753,7 @@ class GameManager {
 				}
 			}
 		}
-		void updateBurnmeter() {
+		inline void updateBurnmeter() {
 			SET_BURNINATION(burnination - burnRate);
 			if (burnination <= 0) {
 				SET_BURNINATION(0);
@@ -777,26 +790,26 @@ class GameManager {
 						peasantArray[i].direction = hutArray[j].direction;
 						switch (peasantArray[i].direction) {
 							case 1: // UP
-								peasant_set_x_delta(hutArray[j].dstrect.x + 6);
-								peasant_set_y_delta(hutArray[j].dstrect.y - 20);
+								peasant_set_x_delta(hutArray[j].dstrect.x + 11);
+								peasant_set_y_delta(hutArray[j].dstrect.y - 6);
 								peasantArray[i].myTargetx = peasantArray[i].dstrect.x;
 								peasantArray[i].myTargety = peasantArray[i].dstrect.y - ((rand() % (peasantArray[i].dstrect.y - UPPER_BOUND + 5)) + 5);
 								break;
 							case 2: // DOWN
-								peasant_set_x_delta(hutArray[j].dstrect.x + 6);
-								peasant_set_y_delta(hutArray[j].dstrect.y + 3);
+								peasant_set_x_delta(hutArray[j].dstrect.x + 7);
+								peasant_set_y_delta(hutArray[j].dstrect.y + 20);
 								peasantArray[i].myTargetx = peasantArray[i].dstrect.x;
 								peasantArray[i].myTargety = peasantArray[i].dstrect.y + ((rand() % (LOWER_BOUND - peasantArray[i].dstrect.y - 5)) + 5);
 								break;
 							case 3: // LEFT
-								peasant_set_x_delta(hutArray[j].dstrect.x + 2);
-								peasant_set_y_delta(hutArray[j].dstrect.y + 3);
+								peasant_set_x_delta(hutArray[j].dstrect.x + 3);
+								peasant_set_y_delta(hutArray[j].dstrect.y + 15);
 								peasantArray[i].myTargetx = peasantArray[i].dstrect.x - ((rand() % (peasantArray[i].dstrect.x - LEFT_BOUND - 7)) + 7);
 								peasantArray[i].myTargety = peasantArray[i].dstrect.y;
 								break;
 							case 4: // RIGHT
-								peasant_set_x_delta(hutArray[j].dstrect.x + 13);
-								peasant_set_y_delta(hutArray[j].dstrect.y + 3);
+								peasant_set_x_delta(hutArray[j].dstrect.x + 16);
+								peasant_set_y_delta(hutArray[j].dstrect.y + 18);
 								peasantArray[i].myTargetx = peasantArray[i].dstrect.x + ((rand() % (RIGHT_BOUND - peasantArray[i].dstrect.x + 8)) + 8);
 								peasantArray[i].myTargety = peasantArray[i].dstrect.y;
 								break;
@@ -892,6 +905,25 @@ class GameManager {
 						peasantArray[i].waiting = false;
 						peasantArray[i].returning = true;
 					}
+				}
+			}
+		}
+		void testBurnPeasant() {
+			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
+				if (!peasantArray[i].burning && !peasantArray[i].stomped && peasantArray[i].active && SDL_HasIntersection(&player.fire_dstrect, &peasantArray[i].collision)) {
+					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_peasantscream, 0);
+					if ((rand() % 100) < 40) {
+						if ((rand() % 100) > 50) {
+							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb6, 0);
+						} else {
+							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb6, 0); // These two are the same... I feel like this one is supposed to be sfx_sb7? It's completely unused, and it would fit here
+						}
+					}
+					peasantArray[i].returning = true;
+					peasantArray[i].waiting = false;
+					peasantArray[i].timer = false;
+					peasantArray[i].burning = true;
+					peasantArray[i].frameState = 25;
 				}
 			}
 		}

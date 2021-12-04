@@ -34,6 +34,7 @@ extern SpriteObject sprite_knight;
 extern SpriteObject sprite_peasant;
 extern SpriteObject sprite_end_of_level_flash;
 
+extern Mix_Chunk *music_title_screen;
 extern Mix_Chunk *sfx_burn_hut;
 extern Mix_Chunk *sfx_goldget;
 extern Mix_Chunk *sfx_peasantscream;

@@ -7,10 +7,9 @@ struct SoundSettings {
 	Sint8 sfxVolume = 100;
 };
 
-#define MUSIC_TITLE_SCREEN (rootDir+"music/title_screen.wav").c_str()
-
-#define SFX_CHANNEL_GAME 1
-#define SFX_CHANNEL_STRONG_BAD 2
+#define SFX_CHANNEL_GAME       -1 // any free channel
+#define SFX_CHANNEL_GAME_MUSIC  6
+#define SFX_CHANNEL_STRONG_BAD  7 // highest channel
 
 #define PLAY_MUSIC(music)     \
 	bgm = Mix_LoadMUS(music); \

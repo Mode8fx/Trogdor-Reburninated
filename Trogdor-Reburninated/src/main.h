@@ -40,6 +40,7 @@ Uint32 heldKeys;
 /* Audio */
 SoundSettings soundSettings;
 Mix_Music *bgm;
+Mix_Chunk *music_title_screen;
 Mix_Chunk *sfx_burn_hut;
 Mix_Chunk *sfx_goldget;
 Mix_Chunk *sfx_peasantscream;
@@ -312,8 +313,10 @@ void InitializeSound() {
 		PRINT(Mix_GetError());
 	}
 	Mix_VolumeMusic((int)(soundSettings.bgmVolume * 128.0 / 100));
+	Mix_AllocateChannels(8);
 	Mix_Volume(SFX_CHANNEL_GAME, (int)(soundSettings.sfxVolume * 128.0 / 100));
 	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(soundSettings.sfxVolume * 128.0 / 100));
+	music_title_screen = Mix_LoadWAV((rootDir + "music/title_screen.wav").c_str());
 	sfx_burn_hut = Mix_LoadWAV((rootDir + "sfx/burn_hut.wav").c_str());
 	sfx_goldget = Mix_LoadWAV((rootDir + "sfx/trog_goldget.wav").c_str());
 	sfx_peasantscream = Mix_LoadWAV((rootDir + "sfx/trog_peasantscream.wav").c_str());
@@ -375,7 +378,7 @@ void InitializeSprites() {
 	PREPARE_SPRITE(sprite_cottage, (rootDir + "graphics/cottage.bmp").c_str(),
 		0, 0, 2, 4, 1);
 	PREPARE_SPRITE(sprite_cottage_fire, (rootDir + "graphics/cottage_fire.bmp").c_str(),
-		0, 0, 4, 1, 1);
+		0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_peasantometer_icon, (rootDir + "graphics/peasantometer.bmp").c_str(),
 		0, 3, 2, 1, 1);
 	sprite_peasantometer_icon_init_x = (Uint8)(GAME_WIDTH * 66 / 250);
