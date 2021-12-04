@@ -1019,7 +1019,7 @@ class GameManager {
 #define RENDER_PEASANTS()                                                                                      \
 	for (i = 0; i < MAX_NUM_PEASANTS; i++) {                                                                   \
 		if (GM.peasantArray[i].active) {                                                                       \
-			if (!GM.peasantArray[i].waiting) {                                                                 \
+			if (!GM.peasantArray[i].waiting || GM.peasantArray[i].stomped) {                                   \
 				GM.peasantArray[i].updateFrameState();                                                         \
 			}                                                                                                  \
 			RENDER_SPRITE_USING_RECTS(sprite_peasant, GM.peasantArray[i].srcrect, GM.peasantArray[i].dstrect); \
