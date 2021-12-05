@@ -30,9 +30,12 @@ extern Uint8        sprite_peasantometer_icon_init_x;
 extern SpriteObject sprite_archer;
 extern SpriteObject sprite_arrow;
 extern SpriteObject sprite_trogdor_fire;
+extern SpriteObject sprite_trogdor_dead;
 extern SpriteObject sprite_knight;
 extern SpriteObject sprite_peasant;
 extern SpriteObject sprite_end_of_level_flash;
+extern SpriteObject sprite_arrowed;
+extern SpriteObject sprite_sworded;
 
 extern Mix_Chunk *music_title_screen;
 extern Mix_Chunk *sfx_burn_hut;

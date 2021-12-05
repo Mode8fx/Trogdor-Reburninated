@@ -91,9 +91,12 @@ Uint8 sprite_peasantometer_icon_init_x;
 SpriteObject sprite_archer;
 SpriteObject sprite_arrow;
 SpriteObject sprite_trogdor_fire;
+SpriteObject sprite_trogdor_dead;
 SpriteObject sprite_knight;
 SpriteObject sprite_peasant;
 SpriteObject sprite_end_of_level_flash;
+SpriteObject sprite_arrowed;
+SpriteObject sprite_sworded;
 
 /* Fonts */
 SDL_Color color_white  = { 255, 255, 255 };
@@ -388,12 +391,18 @@ void InitializeSprites() {
 		0, 0, 1, 2, 1);
 	PREPARE_SPRITE(sprite_trogdor_fire, (rootDir + "graphics/trogdor_fire.bmp").c_str(),
 		0, 0, 4, 2, 1);
+	PREPARE_SPRITE(sprite_trogdor_dead, (rootDir + "graphics/trogdor_dead.bmp").c_str(),
+		0, 0, 2, 1, 1);
 	PREPARE_SPRITE(sprite_knight, (rootDir + "graphics/knight.bmp").c_str(),
 		0, 0, 3, 2, 1);
 	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
 		0, 0, 2, 3, 1);
 	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_end_of_level_flash), OBJ_TO_MID_SCREEN_Y(sprite_end_of_level_flash), 1, 1, 1);
+	PREPARE_SPRITE(sprite_arrowed, (rootDir + "graphics/arrowed.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X(sprite_arrowed), OBJ_TO_MID_SCREEN_Y(sprite_arrowed), 1, 5, 1);
+	PREPARE_SPRITE(sprite_sworded, (rootDir + "graphics/sworded.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X(sprite_sworded), OBJ_TO_MID_SCREEN_Y(sprite_sworded), 1, 5, 1);
 }
 
 void InitializeTextChars() {

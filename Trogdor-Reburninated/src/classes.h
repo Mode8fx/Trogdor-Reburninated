@@ -109,6 +109,7 @@ class Cottage {
 class Knight {
 	public:
 		Uint8 frameState;
+		bool moving;      // used in toggleKnightMotion()
 		SDL_Rect srcrect;
 		SDL_Rect dstrect;
 		Sint8 direction;
@@ -120,6 +121,7 @@ class Knight {
 		SDL_Rect collision;
 		Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true) {
 			frameState = 0;
+			moving = true;
 			facingRight = fr;
 			home_x = pos_x;
 			home_y = pos_y;
@@ -345,6 +347,8 @@ class Trogdor {
 		Uint8 fire_frameState;
 		SDL_Rect fire_srcrect;
 		SDL_Rect fire_dstrect;
+		SDL_Rect death_srcrect;
+		SDL_Rect death_dstrect;
 		bool facingRight;
 		SDL_Rect collision;
 		Sint16 spawnPos_x;
@@ -366,6 +370,8 @@ class Trogdor {
 			fire_frameState = 0;
 			fire_srcrect = { 0, facingRight * sprite_trogdor_fire.dstrect.h, sprite_trogdor_fire.dstrect.w, sprite_trogdor_fire.dstrect.h };
 			fire_dstrect = { dstrect.x - 24 + (facingRight * 62), dstrect.y + 10, sprite_trogdor_fire.dstrect.w, sprite_trogdor_fire.dstrect.h };
+			death_srcrect = { 0, 0, sprite_trogdor_dead.dstrect.w, sprite_trogdor_dead.dstrect.h };
+			death_dstrect = { dstrect.x + ((dstrect.w + sprite_trogdor_dead.dstrect.w) / 2), dstrect.y + (dstrect.h - sprite_trogdor_dead.dstrect.h), sprite_trogdor_dead.dstrect.w, sprite_trogdor_dead.dstrect.h };
 			invince = 0;
 			visible = true;
 			srcrect.x = 0;
@@ -375,7 +381,41 @@ class Trogdor {
 			moveSpeed = 3;
 			frameStateFlag = 0;
 		}
-		void resetPos() {
+		void updateFrameState() {
+			frameState++;
+			switch (frameState) {
+				case 20: // sworded
+					death_srcrect.x = 0;
+					death_dstrect.x = dstrect.x + ((dstrect.w - sprite_trogdor_dead.dstrect.w) / 2);
+					death_dstrect.y = dstrect.y + (dstrect.h - sprite_trogdor_dead.dstrect.h);
+					break;
+				case 50: // arrowed
+					death_srcrect.x = sprite_trogdor_dead.srcrect.w;
+					death_dstrect.x = dstrect.x + ((dstrect.w - sprite_trogdor_dead.dstrect.w) / 2);
+					death_dstrect.y = dstrect.y + (dstrect.h - sprite_trogdor_dead.dstrect.h);
+					break;
+				case 34:
+				case 38:
+				case 42:
+				case 64:
+				case 68:
+				case 72:
+					visible = false;
+					break;
+				case 36:
+				case 40:
+				case 66:
+				case 70:
+					visible = true;
+					break;
+				case 48:
+				case 78:
+					visible = true;
+					frameState = 0;
+					break;
+			}
+		}
+		void resetPos(bool giveInvince) {
 			facingRight = true;
 			srcrect = { 0, facingRight * sprite_trogdor.dstrect.h, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
 			dstrect = { spawnPos_x, spawnPos_y, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
@@ -528,7 +568,7 @@ class GameManager {
 			knightArray[0] = Knight(61, 111, 1, false);
 			knightArray[1] = Knight(163, 40, 1, true);
 			peasantometer = 0;
-			player.resetPos();
+			player.resetPos(false);
 		}
 		void getPlayerInput() {
 			player.x_offset = 0;
@@ -719,7 +759,27 @@ class GameManager {
 						knightArray[i].home_y -= knightIncrement;
 						break;
 				}
-				knightArray[i].updateFrameStateAndMove();
+				if (knightArray[i].moving) {
+					knightArray[i].updateFrameStateAndMove();
+				}
+			}
+		}
+		void testKnightHit() {
+			if (!player.invince) {
+				for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
+					if (SDL_HasIntersection(&player.collision, &knightArray[i].collision)) {
+						paused = true;
+						toggleKnightMotion(false);
+						clearArrows();
+						player.frameState = 19;
+						// TODO: SWORDED!
+					}
+				}
+			}
+		}
+		inline void toggleKnightMotion(bool hasMotion) {
+			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
+				knightArray[i].moving = hasMotion;
 			}
 		}
 		inline bool testWon() {
@@ -1028,6 +1088,15 @@ class GameManager {
 			}                                                                                                  \
 			RENDER_SPRITE_USING_RECTS(sprite_peasant, GM.peasantArray[i].srcrect, GM.peasantArray[i].dstrect); \
 		}                                                                                                      \
+	}
+
+#define RENDER_TROGDOR()                                                                                      \
+	if (GM.player.visible) {                                                                                  \
+		if (GM.player.frameState >= 19) {                                                                     \
+			RENDER_SPRITE_USING_RECTS(sprite_trogdor_dead, GM.player.death_srcrect, GM.player.death_dstrect); \
+		} else {                                                                                              \
+			RENDER_SPRITE_USING_RECTS(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);                  \
+		}                                                                                                     \
 	}
 
 #endif

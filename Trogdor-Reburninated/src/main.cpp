@@ -765,7 +765,7 @@ int main(int argv, char** args) {
 						GM.popPeasants();
 						GM.peasantEatTest();
 						GM.peasantTimerClick();
-						//GM.testKnightHit();   // TODO
+						GM.testKnightHit();
 					} else {
 						GM.updateBurnmeter();
 						GM.testBurnHut();
@@ -781,6 +781,11 @@ int main(int argv, char** args) {
 							GM.startDown = false;
 							GM.manually_paused = 0;
 						}
+					}
+				}
+				if (!GM.manually_paused) {
+					if (GM.player.frameState >= 19) {
+						GM.player.updateFrameState();
 					}
 				}
 #if !defined(SDL1)
@@ -813,9 +818,7 @@ int main(int argv, char** args) {
 				RENDER_AND_ANIMATE_COTTAGES();
 				RENDER_KNIGHTS();
 				RENDER_PEASANTS();
-				if (GM.player.visible) {
-					RENDER_SPRITE_USING_RECTS(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);
-				}
+				RENDER_TROGDOR();
 				//RENDER_AND_ANIMATE_LOWER_COTTAGES();
 				if (GM.burnination > 0) {
 					RENDER_SPRITE_USING_RECTS(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
