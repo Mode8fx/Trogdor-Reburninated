@@ -69,6 +69,7 @@ Mix_Chunk *sfx_sfx2;
 Mix_Chunk *sfx_trogador;
 Mix_Chunk *sfx_arrow;
 Mix_Chunk *sfx_squish;
+Mix_Chunk *sfx_death;
 
 /* Sprite Objects */
 SDL_Surface  *temp;
@@ -95,8 +96,7 @@ SpriteObject sprite_trogdor_dead;
 SpriteObject sprite_knight;
 SpriteObject sprite_peasant;
 SpriteObject sprite_end_of_level_flash;
-SpriteObject sprite_arrowed;
-SpriteObject sprite_sworded;
+SpriteObject sprite_death_message;
 
 /* Fonts */
 SDL_Color color_white  = { 255, 255, 255 };
@@ -348,6 +348,7 @@ void InitializeSound() {
 	sfx_trogador = Mix_LoadWAV((rootDir + "sfx/trogador.wav").c_str());
 	sfx_arrow = Mix_LoadWAV((rootDir + "sfx/arrow.wav").c_str());
 	sfx_squish = Mix_LoadWAV((rootDir + "sfx/squish.wav").c_str());
+	sfx_death = Mix_LoadWAV((rootDir + "sfx/death.wav").c_str());
 }
 
 void InitializeSprites() {
@@ -399,10 +400,8 @@ void InitializeSprites() {
 		0, 0, 2, 3, 1);
 	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_end_of_level_flash), OBJ_TO_MID_SCREEN_Y(sprite_end_of_level_flash), 1, 1, 1);
-	PREPARE_SPRITE(sprite_arrowed, (rootDir + "graphics/arrowed.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_arrowed), OBJ_TO_MID_SCREEN_Y(sprite_arrowed), 1, 5, 1);
-	PREPARE_SPRITE(sprite_sworded, (rootDir + "graphics/sworded.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_sworded), OBJ_TO_MID_SCREEN_Y(sprite_sworded), 1, 5, 1);
+	PREPARE_SPRITE(sprite_death_message, (rootDir + "graphics/death_message.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X(sprite_death_message), OBJ_TO_MID_SCREEN_Y(sprite_death_message), 2, 5, 1);
 }
 
 void InitializeTextChars() {

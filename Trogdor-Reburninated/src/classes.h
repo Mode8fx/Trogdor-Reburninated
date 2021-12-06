@@ -313,7 +313,7 @@ class Arrow {
 			srcrect = { 0, facingRight * sprite_arrow.dstrect.h, sprite_arrow.dstrect.w, sprite_arrow.dstrect.h };
 			dstrect = { pos_x, pos_y, sprite_arrow.dstrect.w, sprite_arrow.dstrect.h };
 			active = false;
-			collision = { 1 + facingRight, 1, 12, 3 };
+			collision = { 1 + facingRight + dstrect.x, 1 + dstrect.y, 12, 3 };
 		}
 		void updateFrameState() {
 			frameState++;
@@ -325,12 +325,16 @@ class Arrow {
 				if (dstrect.x > 250) { // not exactly the same as the original, but close enough
 					clear();
 				}
+				collision.x = 2 + dstrect.x;
+				collision.y = 1 + dstrect.y;
 
 			} else {
 				dstrect.x -= 5;
 				if (dstrect.x < -8) { // not exactly the same as the original, but close enough
 					clear();
 				}
+				collision.x = 1 + dstrect.x;
+				collision.y = 1 + dstrect.y;
 			}
 		}
 		void clear() {
@@ -394,6 +398,10 @@ class Trogdor {
 					death_dstrect.x = dstrect.x + ((dstrect.w - sprite_trogdor_dead.dstrect.w) / 2);
 					death_dstrect.y = dstrect.y + (dstrect.h - sprite_trogdor_dead.dstrect.h);
 					break;
+				case 22:
+				case 52:
+					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_death, 0);
+					break;
 				case 34:
 				case 38:
 				case 42:
@@ -420,6 +428,9 @@ class Trogdor {
 			srcrect = { 0, facingRight * sprite_trogdor.dstrect.h, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
 			dstrect = { spawnPos_x, spawnPos_y, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
 			collision = { 11 + dstrect.x, 11 + dstrect.y, 18, 24 };
+			if (giveInvince) {
+				invince = 36;
+			}
 		}
 		void updateBreathLoc() {
 			fire_dstrect.x = dstrect.x - 24 + (facingRight * 62);
@@ -447,7 +458,7 @@ class Trogdor {
 
 class GameManager {
 	public:
-		Sint8 mans;                             // lives
+		Sint16 mans;                            // lives
 		Uint32 score;                           // score
 		Sint8 peasantometer;                    // # of peasants burned for burnination meter
 		bool paused;                            // game is paused through any means (clearing a level, dying, etc.)
@@ -470,6 +481,11 @@ class GameManager {
 		double knightIncrement;                 // knight movement speed
 		Uint16 extraMansBreak;                  // # of points for an extra life
 		Uint16 extraMansCounter;                // how many extra lives have been earned so far
+		bool arched;                            // previous death was to arrow
+		Uint8 dm_frameState;                    // Death Message ("SWORDED!", etc)
+		SDL_Rect dm_srcrect;                    // Death Message ("SWORDED!", etc)
+		SDL_Rect dm_dstrect;                    // Death Message ("SWORDED!", etc)
+		bool dm_visible;                        // Death Message ("SWORDED!", etc)
 		GameManager() {
 		}
 		GameManager(Sint8 init_mans) {
@@ -491,6 +507,11 @@ class GameManager {
 			knightIncrement = 1;
 			extraMansBreak = 300;
 			extraMansCounter = 0;
+			arched = false;
+			dm_frameState = 0;
+			dm_srcrect = { 0, 0, sprite_death_message.dstrect.w, sprite_death_message.dstrect.h };
+			dm_dstrect = { OBJ_TO_MID_SCREEN_X(sprite_death_message), OBJ_TO_MID_SCREEN_Y(sprite_death_message), sprite_death_message.dstrect.w, sprite_death_message.dstrect.h };
+			dm_visible = false;
 		}
 		void levelInit() {
 			SET_BURNINATION(0);
@@ -771,8 +792,27 @@ class GameManager {
 						paused = true;
 						toggleKnightMotion(false);
 						clearArrows();
-						player.frameState = 19;
-						// TODO: SWORDED!
+						dm_frameState = 3; // 28 for arrow
+					}
+				}
+			}
+		}
+		void arrowHitEventHandler() {
+			if (!player.invince) { // (burnination == 0 && !paused) has already been checked
+				for (i = 0; i < MAX_NUM_ARROWS; i++) {
+					if (arrowArrayL[i].active && SDL_HasIntersection(&player.collision, &arrowArrayL[i].collision)) {
+						paused = true;
+						// the original game does NOT pause knights when you are arrowed
+						clearArrows();
+						dm_frameState = 28;
+						break;
+					}
+					if (arrowArrayR[i].active && SDL_HasIntersection(&player.collision, &arrowArrayR[i].collision)) {
+						paused = true;
+						// the original game does NOT pause knights when you are arrowed
+						clearArrows();
+						dm_frameState = 28;
+						break;
 					}
 				}
 			}
@@ -791,14 +831,18 @@ class GameManager {
 			}
 			return true;
 		}
-		void updateScore(Uint16 increment) {
+		inline void updateScore(Uint16 increment) {
 			uint_i = score;
 			score += increment;
 			if ((uint_i < (extraMansBreak * extraMansCounter)) && (score >= (extraMansBreak * extraMansCounter))) {
-				mans++;
+				updateMans(1);
 				extraMansCounter++;
 			}
 			UPDATE_TEXT(text_4_score_val, to_string(score));
+		}
+		inline void updateMans(Sint8 increment) {
+			mans += increment;
+			UPDATE_TEXT(text_4_mans_val, to_string(mans));
 		}
 		void clearArrows() {
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
@@ -854,27 +898,27 @@ class GameManager {
 						peasantArray[i].direction = hutArray[j].direction;
 						switch (peasantArray[i].direction) {
 							case 1: // UP
-								peasant_set_x_delta(hutArray[j].dstrect.x + 11);
+								peasant_set_x_delta(hutArray[j].dstrect.x + 9);
 								peasant_set_y_delta(hutArray[j].dstrect.y - 6);
 								peasantArray[i].myTargetx = peasantArray[i].dstrect.x;
-								peasantArray[i].myTargety = peasantArray[i].dstrect.y - ((rand() % (peasantArray[i].dstrect.y - UPPER_BOUND + 5)) + 5);
+								peasantArray[i].myTargety = peasantArray[i].dstrect.y - ((rand() % (peasantArray[i].dstrect.y - UPPER_BOUND + 6)) + 6);
 								break;
 							case 2: // DOWN
 								peasant_set_x_delta(hutArray[j].dstrect.x + 7);
 								peasant_set_y_delta(hutArray[j].dstrect.y + 20);
 								peasantArray[i].myTargetx = peasantArray[i].dstrect.x;
-								peasantArray[i].myTargety = peasantArray[i].dstrect.y + ((rand() % (LOWER_BOUND - peasantArray[i].dstrect.y - 5)) + 5);
+								peasantArray[i].myTargety = peasantArray[i].dstrect.y + ((rand() % (LOWER_BOUND - peasantArray[i].dstrect.y - 4)) + 4);
 								break;
 							case 3: // LEFT
 								peasant_set_x_delta(hutArray[j].dstrect.x + 3);
-								peasant_set_y_delta(hutArray[j].dstrect.y + 15);
-								peasantArray[i].myTargetx = peasantArray[i].dstrect.x - ((rand() % (peasantArray[i].dstrect.x - LEFT_BOUND - 7)) + 7);
+								peasant_set_y_delta(hutArray[j].dstrect.y + 18);
+								peasantArray[i].myTargetx = peasantArray[i].dstrect.x - ((rand() % (peasantArray[i].dstrect.x - LEFT_BOUND - 9)) + 9);
 								peasantArray[i].myTargety = peasantArray[i].dstrect.y;
 								break;
 							case 4: // RIGHT
 								peasant_set_x_delta(hutArray[j].dstrect.x + 16);
 								peasant_set_y_delta(hutArray[j].dstrect.y + 18);
-								peasantArray[i].myTargetx = peasantArray[i].dstrect.x + ((rand() % (RIGHT_BOUND - peasantArray[i].dstrect.x + 8)) + 8);
+								peasantArray[i].myTargetx = peasantArray[i].dstrect.x + ((rand() % (RIGHT_BOUND - peasantArray[i].dstrect.x + 11)) + 11);
 								peasantArray[i].myTargety = peasantArray[i].dstrect.y;
 								break;
 							default:
@@ -989,6 +1033,62 @@ class GameManager {
 					peasantArray[i].burning = true;
 					peasantArray[i].frameState = 25;
 				}
+			}
+		}
+		void dm_updateFrameState() {
+			dm_frameState++;
+			switch (dm_frameState) {
+				case 4:
+					dm_srcrect.x = 0;
+					//dm_srcrect.y = 0;
+					dm_visible = true;
+					player.frameState = 19;
+					paused = true;
+					arched = false;
+					break;
+				case 6:
+					if (mans > 0) {
+						if (peasantometer == 9) {
+							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb3, 0);
+						} else if ((rand() % 100) < 20) {
+							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbworst, 0);
+						}
+					}
+					break;
+				case 27:
+				case 52:
+					dm_visible = false;
+					player.frameState = 0;
+					updateMans(-1);
+					peasantometer = 0;
+					if (mans < 0) {
+						mans = 0;
+						gameOver = true;
+					} else {
+						player.resetPos(true);
+						paused = false;
+						toggleKnightMotion(true);
+					}
+					dm_frameState = 0;
+					break;
+				case 29:
+					dm_srcrect.x = sprite_death_message.dstrect.w;
+					//dm_srcrect.y = 0;
+					dm_visible = true;
+					player.frameState = 49;
+					paused = true;
+					arched = true;
+					break;
+				case 31:
+					if (mans > 0 && (rand() % 100) < 20) {
+						Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbarch, 0);
+					}
+					break;
+			}
+			if (dm_frameState < 28) {
+				dm_srcrect.y = (((dm_frameState -  4) / 2) % 5) * dm_dstrect.h;
+			} else {
+				dm_srcrect.y = (((dm_frameState - 29) / 2) % 5) * dm_dstrect.h;
 			}
 		}
 		void burninationIncreaseTest() {

@@ -746,9 +746,6 @@ int main(int argv, char** args) {
 					if (KEY_PRESSED(INPUT_A)) {
 						GM.burninationDecreaseTest();
 					}
-					if (KEY_PRESSED(INPUT_X)) {
-						GM.player.invince = 36;
-					}
 
 					GM.player.invinceCheck();
 					GM.popArchers();
@@ -766,6 +763,7 @@ int main(int argv, char** args) {
 						GM.peasantEatTest();
 						GM.peasantTimerClick();
 						GM.testKnightHit();
+						GM.arrowHitEventHandler();
 					} else {
 						GM.updateBurnmeter();
 						GM.testBurnHut();
@@ -784,6 +782,9 @@ int main(int argv, char** args) {
 					}
 				}
 				if (!GM.manually_paused) {
+					if (GM.dm_frameState >= 3) {
+						GM.dm_updateFrameState();
+					}
 					if (GM.player.frameState >= 19) {
 						GM.player.updateFrameState();
 					}
@@ -825,6 +826,9 @@ int main(int argv, char** args) {
 				}
 				RENDER_ARCHERS();
 				RENDER_ARROWS();
+				if (GM.dm_visible) {
+					RENDER_SPRITE_USING_RECTS(sprite_death_message, GM.dm_srcrect, GM.dm_dstrect);
+				}
 				// Draw Collision
 				//DRAW_RECT(GM.player.collision, color_red.r, color_red.g, color_red.b);
 				//for (i = 0; i < MAX_NUM_HUTS; i++) {

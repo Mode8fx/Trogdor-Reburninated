@@ -34,8 +34,7 @@ extern SpriteObject sprite_trogdor_dead;
 extern SpriteObject sprite_knight;
 extern SpriteObject sprite_peasant;
 extern SpriteObject sprite_end_of_level_flash;
-extern SpriteObject sprite_arrowed;
-extern SpriteObject sprite_sworded;
+extern SpriteObject sprite_death_message;
 
 extern Mix_Chunk *music_title_screen;
 extern Mix_Chunk *sfx_burn_hut;
@@ -66,6 +65,7 @@ extern Mix_Chunk *sfx_sfx2;
 extern Mix_Chunk *sfx_trogador;
 extern Mix_Chunk *sfx_arrow;
 extern Mix_Chunk *sfx_squish;
+extern Mix_Chunk *sfx_death;
 
 extern TTF_Font *font_serif_brown_6;
 extern TextCharObject textChars_font_serif_brown_6[122 + 1 - 32];
