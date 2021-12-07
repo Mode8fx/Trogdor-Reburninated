@@ -70,6 +70,7 @@ Mix_Chunk *sfx_trogador;
 Mix_Chunk *sfx_arrow;
 Mix_Chunk *sfx_squish;
 Mix_Chunk *sfx_death;
+Mix_Chunk *sfx_kick;
 
 /* Sprite Objects */
 SDL_Surface  *temp;
@@ -349,6 +350,7 @@ void InitializeSound() {
 	sfx_arrow = Mix_LoadWAV((rootDir + "sfx/arrow.wav").c_str());
 	sfx_squish = Mix_LoadWAV((rootDir + "sfx/squish.wav").c_str());
 	sfx_death = Mix_LoadWAV((rootDir + "sfx/death.wav").c_str());
+	sfx_kick = Mix_LoadWAV((rootDir + "sfx/kick.wav").c_str());
 }
 
 void InitializeSprites() {
@@ -570,6 +572,35 @@ void InitializeController() {
 	SDL_JoystickEventState(SDL_ENABLE);
 #endif
 }
+
+#if !defined(SDL1)
+#define RENDER_BACKGROUND() \
+	SDL_RenderCopy(renderer, sprite_level_background->texture, NULL, &sprite_level_background->dstrect);
+#else
+#define RENDER_BACKGROUND() \
+	SDL_BlitSurface(sprite_level_background->surface, NULL, screen, &sprite_level_background->dstrect);
+#endif
+
+#if !defined(SDL1)
+#define RENDER_TRANSPARENT_FOREGROUND() \
+	DRAW_RECT_WITH_ALPHA(gameScreenRect, color_black.r, color_black.g, color_black.b, 0xC8);
+#else
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+#define RENDER_TRANSPARENT_FOREGROUND()                                                   \
+	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_DOUBLEBUF, \
+		gameWidth, gameHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);       \
+	SDL_FillRect(screen_transparent, NULL, 0xC8000000);                                   \
+	SDL_BlitSurface(screen_transparent, NULL, screen, &gameScreenRect);                   \
+	SDL_FreeSurface(screen_transparent);
+#else
+#define RENDER_TRANSPARENT_FOREGROUND()                                                   \
+	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_DOUBLEBUF, \
+		gameWidth, gameHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);       \
+	SDL_FillRect(screen_transparent, NULL, 0xC8000000);                                   \
+	SDL_BlitSurface(screen_transparent, NULL, screen, &gameScreenRect);                   \
+	SDL_FreeSurface(screen_transparent);
+#endif
+#endif
 
 
 

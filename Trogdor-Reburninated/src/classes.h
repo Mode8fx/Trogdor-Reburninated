@@ -486,6 +486,7 @@ class GameManager {
 		SDL_Rect dm_srcrect;                    // Death Message ("SWORDED!", etc)
 		SDL_Rect dm_dstrect;                    // Death Message ("SWORDED!", etc)
 		bool dm_visible;                        // Death Message ("SWORDED!", etc)
+		Uint8 kick_frameState;                  // kick the machine
 		GameManager() {
 		}
 		GameManager(Sint8 init_mans) {
@@ -512,6 +513,7 @@ class GameManager {
 			dm_srcrect = { 0, 0, sprite_death_message.dstrect.w, sprite_death_message.dstrect.h };
 			dm_dstrect = { OBJ_TO_MID_SCREEN_X(sprite_death_message), OBJ_TO_MID_SCREEN_Y(sprite_death_message), sprite_death_message.dstrect.w, sprite_death_message.dstrect.h };
 			dm_visible = false;
+			kick_frameState = 0;
 		}
 		void levelInit() {
 			SET_BURNINATION(0);
@@ -628,6 +630,9 @@ class GameManager {
 			if (startDown && !KEY_HELD(INPUT_START)) {
 				startDown = false;
 				manually_paused = frameCounter_global;
+			}
+			if (KEY_HELD(INPUT_L) && kick_frameState == 0) {
+				kick_frameState = 3;
 			}
 		}
 		inline void trogdor_add_x_delta(Sint8 dx) {
@@ -1089,6 +1094,20 @@ class GameManager {
 				dm_srcrect.y = (((dm_frameState -  4) / 2) % 5) * dm_dstrect.h;
 			} else {
 				dm_srcrect.y = (((dm_frameState - 29) / 2) % 5) * dm_dstrect.h;
+			}
+		}
+		void kick_updateFrameState() {
+			kick_frameState++;
+			switch (kick_frameState) {
+				case 4:
+					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_kick, 0);
+					break;
+				case 9:
+					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_trogador, 0);
+					break;
+				case 29:
+					kick_frameState = 0;
+					break;
 			}
 		}
 		void burninationIncreaseTest() {

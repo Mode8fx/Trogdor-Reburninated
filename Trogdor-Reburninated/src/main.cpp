@@ -789,78 +789,64 @@ int main(int argv, char** args) {
 						GM.player.updateFrameState();
 					}
 				}
-#if !defined(SDL1)
-				SDL_RenderCopy(renderer, sprite_level_background->texture, NULL, &sprite_level_background->dstrect);
-#else
-				SDL_BlitSurface(sprite_level_background->surface, NULL, screen, &sprite_level_background->dstrect);
-#endif
-				RENDER_TEXT(text_4_score, textChars_font_serif_2_red_6);
-				RENDER_TEXT(text_4_score_val, textChars_font_serif_red_6);
-				RENDER_TEXT(text_4_mans, textChars_font_serif_2_red_6);
-				RENDER_TEXT(text_4_mans_val, textChars_font_serif_red_6);
-				RENDER_TEXT(text_4_level, textChars_font_serif_2_red_6);
-				RENDER_TEXT(text_4_level_val, textChars_font_serif_red_6);
-				// render peasantometer/burnination meter (depending on their values)
-				if (GM.burnination > 0) {
-					RENDER_SPRITE(sprite_burnination_meter_empty);
-					RENDER_SPRITE(sprite_burnination_meter_full);
+				if (GM.gameOver) {
+					sceneState = 5;
+					// no break; it should continue directly to the next state on the current frame
 				} else {
-					sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;
-					sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;
-					for (i = 0; i < 10; i++) {
-						if (GM.peasantometer == i) {
-							sprite_peasantometer_icon.srcrect.x = 0;
+					if (GM.kick_frameState > 0) {
+						GM.kick_updateFrameState();
+					}
+					// render everything
+					RENDER_BACKGROUND();
+					RENDER_TEXT(text_4_score, textChars_font_serif_2_red_6);
+					RENDER_TEXT(text_4_score_val, textChars_font_serif_red_6);
+					RENDER_TEXT(text_4_mans, textChars_font_serif_2_red_6);
+					RENDER_TEXT(text_4_mans_val, textChars_font_serif_red_6);
+					RENDER_TEXT(text_4_level, textChars_font_serif_2_red_6);
+					RENDER_TEXT(text_4_level_val, textChars_font_serif_red_6);
+					// render peasantometer/burnination meter (depending on their values)
+					if (GM.burnination > 0) {
+						RENDER_SPRITE(sprite_burnination_meter_empty);
+						RENDER_SPRITE(sprite_burnination_meter_full);
+					} else {
+						sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;
+						sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;
+						for (i = 0; i < 10; i++) {
+							if (GM.peasantometer == i) {
+								sprite_peasantometer_icon.srcrect.x = 0;
+							}
+							RENDER_SPRITE(sprite_peasantometer_icon);
+							sprite_peasantometer_icon.dstrect.x += (sprite_peasantometer_icon.dstrect.w * 1.5);
 						}
-						RENDER_SPRITE(sprite_peasantometer_icon);
-						sprite_peasantometer_icon.dstrect.x += (sprite_peasantometer_icon.dstrect.w * 1.5);
 					}
-				}
-				//RENDER_AND_ANIMATE_UPPER_COTTAGES();
-				RENDER_AND_ANIMATE_COTTAGES();
-				RENDER_KNIGHTS();
-				RENDER_PEASANTS();
-				RENDER_TROGDOR();
-				//RENDER_AND_ANIMATE_LOWER_COTTAGES();
-				if (GM.burnination > 0) {
-					RENDER_SPRITE_USING_RECTS(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
-				}
-				RENDER_ARCHERS();
-				RENDER_ARROWS();
-				if (GM.dm_visible) {
-					RENDER_SPRITE_USING_RECTS(sprite_death_message, GM.dm_srcrect, GM.dm_dstrect);
-				}
-				// Draw Collision
-				//DRAW_RECT(GM.player.collision, color_red.r, color_red.g, color_red.b);
-				//for (i = 0; i < MAX_NUM_HUTS; i++) {
-				//	DRAW_RECT(GM.hutArray[i].collision, color_red.r, color_red.g, color_red.b);
-				//}
-				//for (i = 0; i < MAX_NUM_PEASANTS; i++) {
-				//	DRAW_RECT(GM.peasantArray[i].collision, color_red.r, color_red.g, color_red.b);
-				//}
-				if (GM.manually_paused) {
-					// Here, the original game renders a black circle around the top-right of the center of the screen...
-					// I think it's a mistake? I may add it later, but I'll leave it out for now.
-#if !defined(SDL1)
-					DRAW_RECT_WITH_ALPHA(gameScreenRect, color_black.r, color_black.g, color_black.b, 0xC8);
-#else
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-					SDL_Surface *screen_transparent = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_DOUBLEBUF, gameWidth, gameHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
-#else
-					SDL_Surface *screen_transparent = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_DOUBLEBUF, gameWidth, gameHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-#endif
-					SDL_FillRect(screen_transparent, NULL, 0xC8000000);
-					SDL_BlitSurface(screen_transparent, NULL, screen, &gameScreenRect);
-					SDL_FreeSurface(screen_transparent);
-#endif
-					if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
-						RENDER_TEXT(text_6_paused_1, textChars_font_serif_white_6);
-						RENDER_TEXT(text_6_paused_2, textChars_font_serif_white_6);
+					//RENDER_AND_ANIMATE_UPPER_COTTAGES();
+					RENDER_AND_ANIMATE_COTTAGES();
+					RENDER_KNIGHTS();
+					RENDER_PEASANTS();
+					RENDER_TROGDOR();
+					//RENDER_AND_ANIMATE_LOWER_COTTAGES();
+					if (GM.burnination > 0) {
+						RENDER_SPRITE_USING_RECTS(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
 					}
+					RENDER_ARCHERS();
+					RENDER_ARROWS();
+					if (GM.dm_visible) {
+						RENDER_SPRITE_USING_RECTS(sprite_death_message, GM.dm_srcrect, GM.dm_dstrect);
+					}
+					if (GM.manually_paused) {
+						// Here, the original game renders a black circle around the top-right of the center of the screen...
+						// I think it's a mistake? I may add it later, but I'll leave it out for now.
+						RENDER_TRANSPARENT_FOREGROUND();
+						if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
+							RENDER_TEXT(text_6_paused_1, textChars_font_serif_white_6);
+							RENDER_TEXT(text_6_paused_2, textChars_font_serif_white_6);
+						}
+					}
+					break;
 				}
+			/* Game Over Screen */
+			case 5:
 				break;
-			///* Nothing? (or maybe Game) */
-			//case 5:
-			//	break;
 			///* Pause Screen (overlayed on Game) */
 			//case 6:
 			//	break;
@@ -932,7 +918,7 @@ int main(int argv, char** args) {
 			/* Level Beaten Screen */
 			case 9:
 				break;
-			/* Game Over Screen */
+			/* Nothing */
 			case 10:
 				break;
 			/* Level 4 Interlude */
