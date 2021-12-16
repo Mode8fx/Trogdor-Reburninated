@@ -71,6 +71,9 @@ Mix_Chunk *sfx_arrow;
 Mix_Chunk *sfx_squish;
 Mix_Chunk *sfx_death;
 Mix_Chunk *sfx_kick;
+Mix_Chunk *sfx_burninate;
+Mix_Chunk *sfx_cutscene;
+Mix_Chunk *sfx_gameover;
 
 /* Sprite Objects */
 SDL_Surface  *temp;
@@ -98,6 +101,9 @@ SpriteObject sprite_knight;
 SpriteObject sprite_peasant;
 SpriteObject sprite_end_of_level_flash;
 SpriteObject sprite_death_message;
+SpriteObject sprite_burninate_text;
+SpriteObject sprite_burninate_fire;
+SDL_Rect     divider_level_beaten_rect;
 
 /* Fonts */
 SDL_Color color_white  = { 255, 255, 255 };
@@ -132,10 +138,10 @@ TTF_Font *font_serif_white_14;
 TextCharObject textChars_font_serif_white_14[126 + 1 - 32];
 TTF_Font *font_nokia_12;
 TextCharObject textChars_font_nokia_12[126 + 1 - 32];
-TTF_Font *font_serif_2_bold_black_23;
-TextCharObject textChars_font_serif_2_bold_black_23[90 + 1 - 32];
-TTF_Font *font_serif_2_bold_red_23;
-TextCharObject textChars_font_serif_2_bold_red_23[90 + 1 - 32];
+//TTF_Font *font_serif_2_bold_black_23;
+//TextCharObject textChars_font_serif_2_bold_black_23[90 + 1 - 32];
+//TTF_Font *font_serif_2_bold_red_23;
+//TextCharObject textChars_font_serif_2_bold_red_23[90 + 1 - 32];
 TTF_Font *font_serif_2_red_6;
 TextCharObject textChars_font_serif_2_red_6[90 + 1 - 32];
 TTF_Font *font_serif_2_red_13;
@@ -351,6 +357,9 @@ void InitializeSound() {
 	sfx_squish = Mix_LoadWAV((rootDir + "sfx/squish.wav").c_str());
 	sfx_death = Mix_LoadWAV((rootDir + "sfx/death.wav").c_str());
 	sfx_kick = Mix_LoadWAV((rootDir + "sfx/kick.wav").c_str());
+	sfx_burninate = Mix_LoadWAV((rootDir + "sfx/burninate.wav").c_str());
+	sfx_cutscene = Mix_LoadWAV((rootDir + "sfx/cutscene.wav").c_str());
+	sfx_gameover = Mix_LoadWAV((rootDir + "sfx/gameover.wav").c_str());
 }
 
 void InitializeSprites() {
@@ -404,6 +413,11 @@ void InitializeSprites() {
 		OBJ_TO_MID_SCREEN_X(sprite_end_of_level_flash), OBJ_TO_MID_SCREEN_Y(sprite_end_of_level_flash), 1, 1, 1);
 	PREPARE_SPRITE(sprite_death_message, (rootDir + "graphics/death_message.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_death_message), OBJ_TO_MID_SCREEN_Y(sprite_death_message), 2, 5, 1);
+	PREPARE_SPRITE(sprite_burninate_text, (rootDir + "graphics/burninate_text.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X(sprite_burninate_text), OBJ_TO_MID_SCREEN_Y(sprite_burninate_text), 1, 1, 1);
+	PREPARE_SPRITE(sprite_burninate_fire, (rootDir + "graphics/burninate_message_fire.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X(sprite_burninate_fire), OBJ_TO_MID_SCREEN_Y(sprite_burninate_fire), 1, 14, 1);
+	divider_level_beaten_rect = { 0, 25, GAME_WIDTH, 2 };
 }
 
 void InitializeTextChars() {
@@ -450,12 +464,12 @@ void InitializeTextChars() {
 		TTF_STYLE_NORMAL, textChars_font_nokia_12, color_white, 97, 126);
 	TTF_CloseFont(font_nokia_12);
 
-	SET_FONT(font_serif_2_bold_black_23, "fonts/54_serif_v01.ttf", 23,
-		TTF_STYLE_BOLD, textChars_font_serif_2_bold_black_23, color_black, 32, 90);
-	TTF_CloseFont(font_serif_2_bold_black_23);
-	SET_FONT(font_serif_2_bold_red_23, "fonts/54_serif_v01.ttf", 23,
-		TTF_STYLE_BOLD, textChars_font_serif_2_bold_red_23, color_red, 32, 90);
-	TTF_CloseFont(font_serif_2_bold_red_23);
+	//SET_FONT(font_serif_2_bold_black_23, "fonts/54_serif_v01.ttf", 23,
+	//	TTF_STYLE_BOLD, textChars_font_serif_2_bold_black_23, color_black, 32, 90);
+	//TTF_CloseFont(font_serif_2_bold_black_23);
+	//SET_FONT(font_serif_2_bold_red_23, "fonts/54_serif_v01.ttf", 23,
+	//	TTF_STYLE_BOLD, textChars_font_serif_2_bold_red_23, color_red, 32, 90);
+	//TTF_CloseFont(font_serif_2_bold_red_23);
 	SET_FONT(font_serif_2_red_6, "fonts/54_serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_2_red_6, color_red, 32, 90);
 	TTF_CloseFont(font_serif_2_red_6);
@@ -529,19 +543,45 @@ void InitializeTextObjects() {
 	/* 7: Nothing */
 	/* 8: End of Level Animation */
 	/* 9: Level Beaten Screen */
+	SET_TEXT("nice work!", text_9_nice_work, textChars_font_serif_white_10,
+		(GAME_WIDTH * 0.55), (GAME_HEIGHT * 0.45));
 	/* 10: Game Over Screen */
 	/* 11: Level 4 Interlude */
+	SET_TEXT("stompin' good!", text_11_cutscene, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(text_11_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_11_cutscene, 0.25));
 	/* 12: Level 8 Interlude */
+	SET_TEXT("fry 'em up dan.", text_12_cutscene, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(text_12_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_12_cutscene, 0.25));
 	/* 13: Level 12 Interlude */
+	SET_TEXT("parade of trogdors", text_13_cutscene, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(text_13_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_13_cutscene, 0.25));
 	/* 14: Level 16 Interlude */
+	SET_TEXT("dancin' time", text_14_cutscene, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(text_14_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_14_cutscene, 0.25));
 	/* 15: Level 20 Interlude */
+	SET_TEXT("flex it, troggie.", text_15_cutscene, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(text_15_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_15_cutscene, 0.25));
 	/* 16: Level 24 Interlude */
+	SET_TEXT("peasant dominoes", text_16_cutscene, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(text_16_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_16_cutscene, 0.25));
 	/* 17: Level 30 Interlude */
+	SET_TEXT("trogdor incognito", text_17_cutscene, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(text_17_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_17_cutscene, 0.25));
 	/* 18: Level 34 Interlude */
+	SET_TEXT("go trogdor # 2!", text_18_cutscene, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(text_18_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_18_cutscene, 0.25));
 	/* 19: Level 38 Interlude */
+	SET_TEXT("forbidden peasant love", text_19_cutscene, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(text_19_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_19_cutscene, 0.25));
 	/* 20: Level 42 Interlude */
+	SET_TEXT("2 cottages", text_20_cutscene, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(text_20_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_20_cutscene, 0.25));
 	/* 21: Level 46 Interlude */
+	SET_TEXT("a funny joke", text_21_cutscene, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(text_21_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_21_cutscene, 0.25));
 	/* 22: Level 50 Interlude */
+	SET_TEXT("smote that kerrek!", text_22_cutscene, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(text_22_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_22_cutscene, 0.25));
 	/* 23: Level 100 Interlude (Credits) */
 	/* 24: Nothing? (or maybe blank transition from Credits to High Scores Screen) */
 	/* 25: High Scores Screen */
@@ -636,18 +676,18 @@ void DestroyAll() {
 	DESTROY_TEXTCHARS(textChars_font_serif_brown_6);
 	DESTROY_TEXTCHARS(textChars_font_serif_brown_8);
 	DESTROY_TEXTCHARS(textChars_font_serif_gray_6);
-	DESTROY_TEXTCHARS(textChars_font_serif_gray_12);
+	//DESTROY_TEXTCHARS(textChars_font_serif_gray_12);
 	DESTROY_TEXTCHARS(textChars_font_serif_orange_6);
 	DESTROY_TEXTCHARS(textChars_font_serif_red_6);
 	DESTROY_TEXTCHARS(textChars_font_serif_red_8);
-	DESTROY_TEXTCHARS(textChars_font_serif_red_12);
+	//DESTROY_TEXTCHARS(textChars_font_serif_red_12);
 	DESTROY_TEXTCHARS(textChars_font_serif_white_6);
 	DESTROY_TEXTCHARS(textChars_font_serif_white_9);
 	DESTROY_TEXTCHARS(textChars_font_serif_white_10);
 	DESTROY_TEXTCHARS(textChars_font_serif_white_14);
 	DESTROY_TEXTCHARS(textChars_font_nokia_12);
-	DESTROY_TEXTCHARS(textChars_font_serif_2_bold_black_23);
-	DESTROY_TEXTCHARS(textChars_font_serif_2_bold_red_23);
+	//DESTROY_TEXTCHARS(textChars_font_serif_2_bold_black_23);
+	//DESTROY_TEXTCHARS(textChars_font_serif_2_bold_red_23);
 	DESTROY_TEXTCHARS(textChars_font_serif_2_red_6);
 	DESTROY_TEXTCHARS(textChars_font_serif_2_red_13);
 	/* Sound */

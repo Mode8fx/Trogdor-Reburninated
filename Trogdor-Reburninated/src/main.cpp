@@ -687,9 +687,9 @@ int main(int argv, char** args) {
 			case 1:
 				if (frameState < 65) {
 #if !defined(SDL1)
-					RENDER_SPRITE(sprite_videlectrix_logo, NULL, &sprite_videlectrix_logo.dstrect);
+					RENDER_SPRITE(sprite_videlectrix_logo);
 #else
-					RENDER_SPRITE_SCALED(sprite_videlectrix_logo, NULL, &sprite_videlectrix_logo.dstrect);
+					RENDER_SPRITE_SCALED(sprite_videlectrix_logo);
 #endif
 					RENDER_TEXT(text_1_presents, textChars_font_nokia_12);
 				}
@@ -712,13 +712,13 @@ int main(int argv, char** args) {
 					sceneState = 3;
 					frameState = 3; // 3 is intentional
 				}
-				RENDER_SPRITE(sprite_title_screen, NULL, &sprite_title_screen.dstrect);
+				RENDER_SPRITE(sprite_title_screen);
 				break;
 			/* Instructions Screen */
 			case 3:
 				frameState++;
 				if (KEY_PRESSED(INPUT_A)) {
-					GM = GameManager(4);
+					GM = GameManager(3);
 					GM.levelInit();
 					UPDATE_TEXT(text_4_score_val, to_string(GM.score));
 					UPDATE_TEXT(text_4_mans_val, to_string(GM.mans));
@@ -785,12 +785,16 @@ int main(int argv, char** args) {
 					if (GM.dm_frameState >= 3) {
 						GM.dm_updateFrameState();
 					}
+					if (GM.b_frameState >= 1) {
+						GM.b_updateFrameState();
+					}
 					if (GM.player.frameState >= 19) {
 						GM.player.updateFrameState();
 					}
 				}
 				if (GM.gameOver) {
 					sceneState = 5;
+					frameState = 321;
 					// no break; it should continue directly to the next state on the current frame
 				} else {
 					if (GM.kick_frameState > 0) {
@@ -798,27 +802,7 @@ int main(int argv, char** args) {
 					}
 					// render everything
 					RENDER_BACKGROUND();
-					RENDER_TEXT(text_4_score, textChars_font_serif_2_red_6);
-					RENDER_TEXT(text_4_score_val, textChars_font_serif_red_6);
-					RENDER_TEXT(text_4_mans, textChars_font_serif_2_red_6);
-					RENDER_TEXT(text_4_mans_val, textChars_font_serif_red_6);
-					RENDER_TEXT(text_4_level, textChars_font_serif_2_red_6);
-					RENDER_TEXT(text_4_level_val, textChars_font_serif_red_6);
-					// render peasantometer/burnination meter (depending on their values)
-					if (GM.burnination > 0) {
-						RENDER_SPRITE(sprite_burnination_meter_empty);
-						RENDER_SPRITE(sprite_burnination_meter_full);
-					} else {
-						sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;
-						sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;
-						for (i = 0; i < 10; i++) {
-							if (GM.peasantometer == i) {
-								sprite_peasantometer_icon.srcrect.x = 0;
-							}
-							RENDER_SPRITE(sprite_peasantometer_icon);
-							sprite_peasantometer_icon.dstrect.x += (sprite_peasantometer_icon.dstrect.w * 1.5);
-						}
-					}
+					RENDER_TOP_BAR();
 					//RENDER_AND_ANIMATE_UPPER_COTTAGES();
 					RENDER_AND_ANIMATE_COTTAGES();
 					RENDER_KNIGHTS();
@@ -832,6 +816,9 @@ int main(int argv, char** args) {
 					RENDER_ARROWS();
 					if (GM.dm_visible) {
 						RENDER_SPRITE_USING_RECTS(sprite_death_message, GM.dm_srcrect, GM.dm_dstrect);
+					} else if (GM.b_visible) {
+						RENDER_SPRITE_USING_RECTS(sprite_burninate_fire, GM.bf_srcrect, GM.bf_dstrect);
+						RENDER_SPRITE_USING_RECTS(sprite_burninate_text, GM.bt_srcrect, GM.bt_dstrect);
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
@@ -846,6 +833,37 @@ int main(int argv, char** args) {
 				}
 			/* Game Over Screen */
 			case 5:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				// TODO: draw Trogdor, "IT'S OVER!", and whatever else needs to be handled for this screen
+				switch (frameState) {
+					case 321:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_gameover, 0);
+						if (GM.score < 2000) {
+							if (GM.arched) {
+								if ((rand() % 100) < 50) {
+									Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbarchend, 0);
+								}
+							} else if ((GM.score > 1000) && ((rand() % 100) < 70)) {
+								Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbscore, 0);
+							} else if ((rand() % 100) < 70) {
+								Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbgameover, 0);
+							}
+						} else {
+							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbsecret, 0);
+						}
+						GM.setMans(0);
+						break;
+					default:
+						break;
+				}
+				// TODO: high score-related things here
+				if (KEY_PRESSED(INPUT_START)) { // TODO: placeholder; remove this later
+					sceneState = 3;
+				}
+				if (sceneState == 5) {
+					frameState++;
+				}
 				break;
 			///* Pause Screen (overlayed on Game) */
 			//case 6:
@@ -855,34 +873,9 @@ int main(int argv, char** args) {
 				break;
 			/* End of Level Animation */
 			case 8:
-#if !defined(SDL1)
-				SDL_RenderCopy(renderer, sprite_level_background->texture, NULL, &sprite_level_background->dstrect);
-#else
-				SDL_BlitSurface(sprite_level_background->surface, NULL, screen, &sprite_level_background->dstrect);
-#endif
-				RENDER_TEXT(text_4_score, textChars_font_serif_2_red_6);
-				RENDER_TEXT(text_4_score_val, textChars_font_serif_red_6);
-				RENDER_TEXT(text_4_mans, textChars_font_serif_2_red_6);
-				RENDER_TEXT(text_4_mans_val, textChars_font_serif_red_6);
-				RENDER_TEXT(text_4_level, textChars_font_serif_2_red_6);
-				RENDER_TEXT(text_4_level_val, textChars_font_serif_red_6);
-				// render peasantometer/burnination meter (depending on their values)
-				if (GM.burnination > 0) {
-					RENDER_SPRITE(sprite_burnination_meter_empty);
-					RENDER_SPRITE(sprite_burnination_meter_full);
-				} else {
-					sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;
-					sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;
-					for (i = 0; i < 10; i++) {
-						if (GM.peasantometer == i) {
-							sprite_peasantometer_icon.srcrect.x = 0;
-						}
-						RENDER_SPRITE(sprite_peasantometer_icon);
-						sprite_peasantometer_icon.dstrect.x += (sprite_peasantometer_icon.dstrect.w * 1.5);
-					}
-				}
-				RENDER_AND_ANIMATE_UPPER_COTTAGES();
-				RENDER_AND_ANIMATE_LOWER_COTTAGES();
+				RENDER_BACKGROUND();
+				RENDER_TOP_BAR();
+				RENDER_AND_ANIMATE_COTTAGES();
 				if (((frameState - 1) / 2) % 2 == 0) {
 					RENDER_SPRITE(sprite_end_of_level_flash);
 				}
@@ -890,10 +883,10 @@ int main(int argv, char** args) {
 					case 257:
 						GM.player.srcrect.x = 0;
 						GM.player.srcrect.y = GM.player.srcrect.h;
-						GM.player.dstrect.w *= 1.5; // TODO: these are placeholder values; also, it doesn't work in SDL1...
-						GM.player.dstrect.h *= 1.5; // TODO: these are placeholder values; also, it doesn't work in SDL1...
+						GM.player.dstrect.w *= 1.5; // TODO: this doesn't work in SDL1...
+						GM.player.dstrect.h *= 1.5; // TODO: this doesn't work in SDL1...
 						GM.player.dstrect.x = OBJ_TO_MID_SCREEN_X(GM.player);
-						GM.player.dstrect.y = OBJ_TO_MID_SCREEN_Y(GM.player);
+						GM.player.dstrect.y = OBJ_TO_MID_SCREEN_Y(GM.player); // TODO: adjust this
 						if ((rand() % 100) < 10) {
 							if ((rand() % 100) < 50) {
 								Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sblevelbeat, 0);
@@ -909,56 +902,356 @@ int main(int argv, char** args) {
 						break;
 					case 276:
 						sceneState = 9;
+						frameState = 277;
+						break;
 					default:
 						break;
 				}
-				frameState++;
+				if (sceneState == 8) {
+					frameState++;
+				}
 				RENDER_SPRITE_USING_RECTS(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);
 				break;
 			/* Level Beaten Screen */
 			case 9:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_9_nice_work, textChars_font_serif_white_10);
+				// TODO: draw Trogdor, "LEVEL BEATEN!", smoke, and level fire
+				switch (frameState) {
+					case 277:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_burninate, 0);
+						break;
+					case 285:
+						GM.updateLevel(1);
+						break;
+					case 316:
+						switch (GM.level) {
+							case 5:
+								sceneState = 11;
+								frameState = 420;
+								break;
+							case 9:
+								sceneState = 12;
+								frameState = 493;
+								break;
+							case 13:
+								sceneState = 13;
+								frameState = 567;
+								break;
+							case 17:
+								sceneState = 14;
+								frameState = 641;
+								break;
+							case 21:
+								sceneState = 15;
+								frameState = 710;
+								break;
+							case 25:
+								sceneState = 16;
+								frameState = 780;
+								break;
+							case 31:
+								sceneState = 17;
+								frameState = 853;
+								break;
+							case 35:
+								sceneState = 18;
+								frameState = 927;
+								break;
+							case 39:
+								sceneState = 19;
+								frameState = 1000;
+								break;
+							case 43:
+								sceneState = 20;
+								frameState = 1076;
+								break;
+							case 47:
+								sceneState = 21;
+								frameState = 1153;
+								break;
+							case 51:
+								sceneState = 22;
+								frameState = 1226;
+								break;
+							case 101:
+								sceneState = 23;
+								frameState = 1337;
+								break;
+							default:
+								GM.levelInit();
+								sceneState = 4;
+								break;
+						}
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 9) {
+					frameState++;
+				}
 				break;
 			/* Nothing */
 			case 10:
 				break;
 			/* Level 4 Interlude */
 			case 11:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_11_cutscene, textChars_font_serif_white_9);
+				// TODO: implement cutscene
+				switch (frameState) {
+					case 420:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						break;
+					case 492:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 11) {
+					frameState++;
+				}
 				break;
 			/* Level 8 Interlude */
 			case 12:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_12_cutscene, textChars_font_serif_white_9);
+				// TODO: implement cutscene
+				switch (frameState) {
+					case 493:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						break;
+					case 566:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 12) {
+					frameState++;
+				}
 				break;
 			/* Level 12 Interlude */
 			case 13:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_13_cutscene, textChars_font_serif_white_9);
+				// TODO: implement cutscene
+				switch (frameState) {
+					case 567:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						break;
+					case 640:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 13) {
+					frameState++;
+				}
 				break;
 			/* Level 16 Interlude */
 			case 14:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_14_cutscene, textChars_font_serif_white_9);
+				// TODO: implement cutscene
+				switch (frameState) {
+					case 641:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						break;
+					case 709:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 14) {
+					frameState++;
+				}
 				break;
 			/* Level 20 Interlude */
 			case 15:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_15_cutscene, textChars_font_serif_white_9);
+				// TODO: implement cutscene
+				switch (frameState) {
+					case 710:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						break;
+					case 779:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 15) {
+					frameState++;
+				}
 				break;
 			/* Level 24 Interlude */
 			case 16:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_16_cutscene, textChars_font_serif_white_9);
+				// TODO: implement cutscene
+				switch (frameState) {
+					case 780:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						break;
+					case 850:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 16) {
+					frameState++;
+				}
 				break;
 			/* Level 30 Interlude */
 			case 17:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_17_cutscene, textChars_font_serif_white_9);
+				// TODO: implement cutscene
+				switch (frameState) {
+					case 853:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						break;
+					case 924:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 17) {
+					frameState++;
+				}
 				break;
 			/* Level 34 Interlude */
 			case 18:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_18_cutscene, textChars_font_serif_white_9);
+				// TODO: implement cutscene
+				switch (frameState) {
+					case 927:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						break;
+					case 997:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 18) {
+					frameState++;
+				}
 				break;
 			/* Level 38 Interlude */
 			case 19:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_19_cutscene, textChars_font_serif_white_9);
+				// TODO: implement cutscene
+				switch (frameState) {
+					case 1000:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						break;
+					case 1071:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 19) {
+					frameState++;
+				}
 				break;
 			/* Level 42 Interlude */
 			case 20:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_20_cutscene, textChars_font_serif_white_9);
+				// TODO: implement cutscene
+				switch (frameState) {
+					case 1076:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						break;
+					case 1147:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 20) {
+					frameState++;
+				}
 				break;
 			/* Level 46 Interlude */
 			case 21:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_21_cutscene, textChars_font_serif_white_9);
+				// TODO: implement cutscene
+				switch (frameState) {
+					case 1153:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						break;
+					case 1222:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 21) {
+					frameState++;
+				}
 				break;
 			/* Level 50 Interlude */
 			case 22:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				RENDER_TEXT(text_22_cutscene, textChars_font_serif_white_9);
+				// TODO: implement cutscene
+				switch (frameState) {
+					case 1226:
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						break;
+					case 1334:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 22) {
+					frameState++;
+				}
 				break;
 			/* Level 100 Interlude (Credits) */
 			case 23:
+				RENDER_TOP_BAR();
+				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				// TODO: implement cutscene
 				break;
 			/* Nothing? (or maybe blank transition from Credits to High Scores Screen) */
 			case 24:

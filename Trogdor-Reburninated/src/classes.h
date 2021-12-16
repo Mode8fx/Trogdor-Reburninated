@@ -482,10 +482,16 @@ class GameManager {
 		Uint16 extraMansBreak;                  // # of points for an extra life
 		Uint16 extraMansCounter;                // how many extra lives have been earned so far
 		bool arched;                            // previous death was to arrow
-		Uint8 dm_frameState;                    // Death Message ("SWORDED!", etc)
-		SDL_Rect dm_srcrect;                    // Death Message ("SWORDED!", etc)
-		SDL_Rect dm_dstrect;                    // Death Message ("SWORDED!", etc)
-		bool dm_visible;                        // Death Message ("SWORDED!", etc)
+		Uint8 dm_frameState;                    // Death Message ("SWORDED!", "ARROWED!")
+		SDL_Rect dm_srcrect;                    // Death Message ("SWORDED!", "ARROWED!")
+		SDL_Rect dm_dstrect;                    // Death Message ("SWORDED!", "ARROWED!")
+		bool dm_visible;                        // Death Message ("SWORDED!", "ARROWED!")
+		Uint8 b_frameState;                     // BURNINATE! Message
+		SDL_Rect bt_srcrect;                    // BURNINATE! Message Text
+		SDL_Rect bt_dstrect;                    // BURNINATE! Message Text
+		SDL_Rect bf_srcrect;                    // BURNINATE! Message Fire
+		SDL_Rect bf_dstrect;                    // BURNINATE! Message Fire
+		bool b_visible;                         // BURNINATE! Message
 		Uint8 kick_frameState;                  // kick the machine
 		GameManager() {
 		}
@@ -513,6 +519,12 @@ class GameManager {
 			dm_srcrect = { 0, 0, sprite_death_message.dstrect.w, sprite_death_message.dstrect.h };
 			dm_dstrect = { OBJ_TO_MID_SCREEN_X(sprite_death_message), OBJ_TO_MID_SCREEN_Y(sprite_death_message), sprite_death_message.dstrect.w, sprite_death_message.dstrect.h };
 			dm_visible = false;
+			b_frameState = 0;
+			bt_srcrect = { 0, 0, sprite_burninate_text.dstrect.w, sprite_burninate_text.dstrect.h };
+			bt_dstrect = { OBJ_TO_MID_SCREEN_X(sprite_burninate_text), OBJ_TO_MID_SCREEN_Y(sprite_burninate_text), sprite_burninate_text.dstrect.w, sprite_burninate_text.dstrect.h };
+			bf_srcrect = { 0, 0, sprite_burninate_fire.dstrect.w, sprite_burninate_fire.dstrect.h };
+			bf_dstrect = { OBJ_TO_MID_SCREEN_X(sprite_burninate_fire), bt_dstrect.y - bf_srcrect.h + 4, sprite_burninate_fire.dstrect.w, sprite_burninate_fire.dstrect.h };
+			b_visible = false;
 			kick_frameState = 0;
 		}
 		void levelInit() {
@@ -849,6 +861,14 @@ class GameManager {
 			mans += increment;
 			UPDATE_TEXT(text_4_mans_val, to_string(mans));
 		}
+		inline void setMans(Sint8 val) {
+			mans = val;
+			UPDATE_TEXT(text_4_mans_val, to_string(mans));
+		}
+		inline void updateLevel(Sint8 increment) {
+			level += increment;
+			UPDATE_TEXT(text_4_level_val, to_string(level));
+		}
 		void clearArrows() {
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
 				arrowArrayR[i].clear();
@@ -946,9 +966,7 @@ class GameManager {
 						peasantometer++;
 					} else {
 						peasantometer = 10;
-						SET_BURNINATION(100);
-						player.updateBreathLoc();
-						// TODO: play burnination animation here, pause game as necessary, etc.
+						b_frameState = 3;
 					}
 				}
 			}
@@ -1067,7 +1085,7 @@ class GameManager {
 					updateMans(-1);
 					peasantometer = 0;
 					if (mans < 0) {
-						mans = 0;
+						setMans(0);
 						gameOver = true;
 					} else {
 						player.resetPos(true);
@@ -1096,6 +1114,71 @@ class GameManager {
 				dm_srcrect.y = (((dm_frameState - 29) / 2) % 5) * dm_dstrect.h;
 			}
 		}
+		void b_updateFrameState() {
+			b_frameState++;
+			// hardcoded is messier, but faster
+			switch (b_frameState) {
+				case 4:
+					bf_srcrect.y = 0;
+					rand_var = rand() % 100;
+					if (rand_var < 10) {
+						if (rand_var < 50) {
+							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb4, 0);
+						} else {
+							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb5, 0);
+						}
+					}
+					b_visible = true;
+					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_burninate, 0);
+					//player.visible = true;
+					paused = true;
+					break;
+				case 5:
+				case 17:
+					bf_srcrect.y = bf_srcrect.h;
+					break;
+				case 6:
+					bf_srcrect.y = bf_srcrect.h * 2;
+					break;
+				case 7:
+				case 15:
+					bf_srcrect.y = bf_srcrect.h * 3;
+					break;
+				case 8:
+					bf_srcrect.y = bf_srcrect.h * 4;
+					break;
+				case 9:
+					bf_srcrect.y = bf_srcrect.h * 5;
+					break;
+				case 10:
+					bf_srcrect.y = bf_srcrect.h * 6;
+					break;
+				case 11:
+					bf_srcrect.y = bf_srcrect.h * 7;
+					break;
+				case 12:
+					bf_srcrect.y = bf_srcrect.h * 8;
+					break;
+				case 13:
+					bf_srcrect.y = bf_srcrect.h * 9;
+					break;
+				case 14:
+					bf_srcrect.y = bf_srcrect.h * 10;
+					break;
+				case 16:
+					bf_srcrect.y = bf_srcrect.h * 11;
+					break;
+				case 18:
+					bf_srcrect.y = bf_srcrect.h * 12;
+					b_visible = false;
+					paused = false;
+					peasantometer = 10;
+					SET_BURNINATION(100);
+					player.updateBreathLoc();
+					b_frameState = 0;
+					break;
+			}
+		}
 		void kick_updateFrameState() {
 			kick_frameState++;
 			switch (kick_frameState) {
@@ -1115,10 +1198,7 @@ class GameManager {
 				peasantometer++;
 			} else {
 				peasantometer = 10;
-				SET_BURNINATION(100);
-				if (burnination > 100) {
-					SET_BURNINATION(100);
-				}
+				b_frameState = 3;
 			}
 		}
 		void burninationDecreaseTest() {
@@ -1216,6 +1296,29 @@ class GameManager {
 		} else {                                                                                              \
 			RENDER_SPRITE_USING_RECTS(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);                  \
 		}                                                                                                     \
+	}
+
+#define RENDER_TOP_BAR()                                                                        \
+	RENDER_TEXT(text_4_score, textChars_font_serif_2_red_6);                                    \
+	RENDER_TEXT(text_4_score_val, textChars_font_serif_red_6);                                  \
+	RENDER_TEXT(text_4_mans, textChars_font_serif_2_red_6);                                     \
+	RENDER_TEXT(text_4_mans_val, textChars_font_serif_red_6);                                   \
+	RENDER_TEXT(text_4_level, textChars_font_serif_2_red_6);                                    \
+	RENDER_TEXT(text_4_level_val, textChars_font_serif_red_6);                                  \
+	/* render peasantometer/burnination meter (depending on their values) */                    \
+	if (GM.burnination > 0) {                                                                   \
+		RENDER_SPRITE(sprite_burnination_meter_empty);                                          \
+		RENDER_SPRITE(sprite_burnination_meter_full);                                           \
+	} else {                                                                                    \
+		sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;                 \
+		sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;              \
+		for (i = 0; i < 10; i++) {                                                              \
+			if (GM.peasantometer == i) {                                                        \
+				sprite_peasantometer_icon.srcrect.x = 0;                                        \
+			}                                                                                   \
+			RENDER_SPRITE(sprite_peasantometer_icon);                                           \
+			sprite_peasantometer_icon.dstrect.x += (sprite_peasantometer_icon.dstrect.w * 1.5); \
+		}                                                                                       \
 	}
 
 #endif
