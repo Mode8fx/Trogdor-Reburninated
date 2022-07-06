@@ -1,0 +1,50 @@
+To-Do List
+
+First:
+- Verify what needs to be done and finish to-do list
+
+Trogdor Alpha [gameplay-complete basic port of Trogdor]:
+- Add all levels to level file
+- Fully implement treasure rooms
+- Add Konami code
+- Fix scaling for large Trogdor that appears right after you've burninated the last cottage
+- Port screen scaling code from SuDokuL (including option to change scaling on-demand)
+- Port Android and PSP code from SuDokuL
+- Add basic credits screen
+- Turn fake loading screen into actual loading screen
+- Verify that all game logic matches Flash game (it should already, but it's been so long since I worked on this that I don't remember)
+- Verify that the SDL1 and SDL2 versions look and run equally well
+- Polish controls for all systems
+- Make sure instructions screen is accurate for controls on all systems
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
+- Write Readme
+- ???
+
+Trogdor Classic [faithful recreation of original Trogdor flash game]:
+- Rework cutscene system so that animations are easier to add
+	- It's okay if the implementation has to be slightly inefficient to make this work, this really isn't that intensive of a game
+- Add art and animation to Level Beaten and Game Over screens
+- Add art and animation to all cutscenes
+- Polish text
+- Restore the original game's unused High Scores screen
+- Add basic Records screen
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
+- ???
+
+Trogdor Reburninated [enhanced port of Trogdor with additional options, achievements, and more; mainly inspired by XBLA ports of arcade games]:
+- Add new title screen
+- Add new main menu
+- Add all Reburninated settings
+- Add overlay and screen centering support (especially needed since the main menu will run at a larger resolution than the main game itself)
+- Add achievements
+- Add more detailed credits screen
+- Add History of Trogdor screen
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
+- Make a trailer?
+- ???
+
+Stretch Goals:
+- Port to LibRetro core
+- Port to 3DS
+- Port to PS2
+- Port to Xbox
