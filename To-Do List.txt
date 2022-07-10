@@ -4,34 +4,40 @@ First:
 - Verify what needs to be done and finish to-do list
 
 Trogdor Alpha [gameplay-complete basic port of Trogdor]:
-- Add all levels to level file
-- Fully implement treasure rooms
+Features:
+- Fully implement treasure huts
 - Add Konami code
-- Fix scaling for large Trogdor that appears right after you've burninated the last cottage
 - Port screen scaling code from SuDokuL (including option to change scaling on-demand)
 - Port Android and PSP code from SuDokuL
 - Add basic credits screen
+Polish:
+- Fix scaling for large Trogdor that appears right after you've burninated the last cottage
 - Turn fake loading screen into actual loading screen
 - Verify that all game logic matches Flash game (it should already, but it's been so long since I worked on this that I don't remember)
 - Verify that the SDL1 and SDL2 versions look and run equally well
 - Polish controls for all systems
 - Make sure instructions screen is accurate for controls on all systems
+Final:
 - Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
 - Write Readme
 - ???
 
 Trogdor Classic [faithful recreation of original Trogdor flash game]:
+Features:
 - Rework cutscene system so that animations are easier to add
 	- It's okay if the implementation has to be slightly inefficient to make this work, this really isn't that intensive of a game
 - Add art and animation to Level Beaten and Game Over screens
 - Add art and animation to all cutscenes
-- Polish text
 - Restore the original game's unused High Scores screen
 - Add basic Records screen
+Polish:
+- Polish text
+Final:
 - Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
 - ???
 
 Trogdor Reburninated [enhanced port of Trogdor with additional options, achievements, and more; mainly inspired by XBLA ports of arcade games]:
+Features:
 - Add new title screen
 - Add new main menu
 - Add all Reburninated settings
@@ -39,12 +45,33 @@ Trogdor Reburninated [enhanced port of Trogdor with additional options, achievem
 - Add achievements
 - Add more detailed credits screen
 - Add History of Trogdor screen
+Final:
 - Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
 - Make a trailer?
 - ???
 
 Stretch Goals:
 - Port to LibRetro core
+	- Coolness:   5
+	- Difficulty: 4?
+	- Analysis:   Well worth the trouble. This would likely lead to the game running on many devices it wasn't originally designed for. Difficulty depends on how easily SDL 1.2 apps can be ported to a core.
+- Port to Miyoo Mini (and other retro handhelds?)
+	- Coolness:   3
+	- Difficulty: 2
+	- Analysis:   Not a big deal, but at least one other SDL 1.2 game has been ported to Miyoo Mini; so if porting this would be trivial, might as well. Do this as practice for LibRetro?
 - Port to 3DS
+	- Coolness:   3
+	- Difficulty: 3
+	- Analysis:   I'm not sure how good the 3DS's SDL port is, and the 400x240 top screen resolution could be an issue. At the very least, it would probably look worse than any other version.
+- Port to Xbox (original)
+	- Coolness:   3
+	- Difficulty: 4
+	- Analysis:   I'm not sure how good the Xbox's SDL port is, but I'd assume it's good since I've heard the Xbox had a strong homebrew scene. We'll see.
 - Port to PS2
-- Port to Xbox
+	- Coolness:   2
+	- Difficulty: 4
+	- Analysis:   I'm not sure how good the PS2's SDL port is, and this isn't a system I'm overly attached to. Maybe a LibRetro core could run on this instead?
+- Port to Dreamcast:
+	- Coolness:   5
+	- Difficulty: 5
+	- Analysis:   The absolute madman goal. Unfortunately, I think Dreamcast's SDL port is barebones, and the 16 MB of RAM could definitely be an issue. I have no idea if this would actually work, but it would be great.
