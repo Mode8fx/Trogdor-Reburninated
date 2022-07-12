@@ -10,7 +10,6 @@ Features:
 - Fully implement treasure huts
 - Add basic credits screen
 - Add hints screen (click the G)
-- Port Android and PSP code from SuDokuL
 Polish:
 - Fix scaling for large Trogdor that appears right after you've burninated the last cottage
 - Turn fake loading screen into actual loading screen

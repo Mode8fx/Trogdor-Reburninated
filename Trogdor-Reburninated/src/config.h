@@ -5,6 +5,12 @@
 
 #include "include.h"
 
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
+#define PC 0
+#else
+#define PC 1
+#endif
+
 #define DEFAULT_GAME_WIDTH    250
 #define DEFAULT_GAME_HEIGHT   180
 #define DEFAULT_FRAME_RATE    16

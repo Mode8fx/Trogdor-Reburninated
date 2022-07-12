@@ -29,7 +29,7 @@ Sint16 controllerAxis_rightStickX;
 Sint16 controllerAxis_rightStickY;
 Sint16 controllerAxis_LT;
 Sint16 controllerAxis_RT;
-#if !defined(WII_U) && !defined(VITA) && !defined(SWITCH) && !defined(WII) && !defined(GAMECUBE)
+#if defined(PC)
 Sint32 mouseInput_x;
 Sint32 mouseInput_x_last;
 Sint32 mouseInput_y;
@@ -309,7 +309,7 @@ void InitializeDisplay() {
 	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gameWidth, gameHeight, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-#elif defined(WII_U) || defined(VITA) || defined(SWITCH)
+#elif defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID)
 	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gameWidth, gameHeight, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
@@ -328,7 +328,9 @@ void InitializeDisplay() {
 
 void InitializeSound() {
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-		PRINT(Mix_GetError());
+#if !defined(SDL1) && !defined(ANDROID)
+		SDL_Log(Mix_GetError());
+#endif
 	}
 	Mix_VolumeMusic((int)(soundSettings.bgmVolume * 128.0 / 100));
 	Mix_AllocateChannels(8);

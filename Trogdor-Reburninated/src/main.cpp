@@ -41,7 +41,7 @@ int main(int argv, char** args) {
 #else
 	if (SDL_Init(SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_GAMECONTROLLER) != 0) {
 #endif
-#if !defined(SDL1)
+#if !defined(SDL1) && !defined(ANDROID)
 		SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
 #endif
 		return 1;
@@ -119,7 +119,7 @@ int main(int argv, char** args) {
 				case SDL_QUIT:
 					isRunning = false;
 					break;
-#if !defined(SDL1) && !defined(WII_U) && !defined(VITA) && !defined(SWITCH) && !defined(WII) && !defined(GAMECUBE) && !defined(PSP)
+#if defined(PC) && !defined(SDL1)
 				case SDL_WINDOWEVENT:
 					switch (event.window.event) {
 						case SDL_WINDOWEVENT_RESIZED:
@@ -262,7 +262,7 @@ int main(int argv, char** args) {
 						break;
 					}
 					break;
-#if !defined(WII_U) && !defined(VITA) && !defined(SWITCH) && !defined(WII) && !defined(GAMECUBE) && !defined(PSP)
+#if defined(PC)
 				case SDL_MOUSEMOTION:
 					SDL_GetMouseState(&mouseInput_x, &mouseInput_y);
 					break;
@@ -1272,7 +1272,7 @@ int main(int argv, char** args) {
 				break;
 		}
 
-#if !defined(WII_U) && !defined(VITA) && !defined(SWITCH) && !defined(WII) && !defined(GAMECUBE)
+#if defined(PC)
 		/* Update Mouse Position */
 		mouseInput_x_last = mouseInput_x;
 		mouseInput_y_last = mouseInput_y;

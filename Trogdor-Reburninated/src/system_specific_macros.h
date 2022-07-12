@@ -37,9 +37,12 @@ extern "C" FILE * __cdecl __iob_func(void) {
 #define SYSTEM_SPECIFIC_CLOSE()
 #define STRCPY(dest, src) strcpy(dest, src);
 #elif defined(WII) || defined(GAMECUBE)
-#define SYSTEM_SPECIFIC_OPEN() \
-	fatInitDefault();
+#define SYSTEM_SPECIFIC_OPEN() fatInitDefault();
 #define SYSTEM_SPECIFIC_CLOSE() exit(EXIT_SUCCESS);
+#define STRCPY(dest, src) strcpy(dest, src);
+#elif defined(ANDROID)
+#define SYSTEM_SPECIFIC_OPEN()
+#define SYSTEM_SPECIFIC_CLOSE()
 #define STRCPY(dest, src) strcpy(dest, src);
 #elif defined(PSP)
 #define SYSTEM_SPECIFIC_OPEN()
