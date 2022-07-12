@@ -607,16 +607,20 @@ void InitializeTextObjects() {
 }
 
 void InitializeController() {
-#if !defined(SDL1) && !defined(PSP)
+#if defined(PSP)
+	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
+	joystick = SDL_JoystickOpen(0);
+#elif defined(SDL1)
+	SDL_JoystickEventState(SDL_ENABLE);
+	joystick = SDL_JoystickOpen(0);
+	SDL_JoystickEventState(SDL_ENABLE);
+#else
 	for (i = 0; i < SDL_NumJoysticks(); i++) {
 		if (SDL_IsGameController(i)) {
 			controller = SDL_GameControllerOpen(i);
 			break;
 		}
 	}
-#else
-	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
-	joystick = SDL_JoystickOpen(0);
 #endif
 }
 

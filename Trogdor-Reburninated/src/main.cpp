@@ -36,12 +36,14 @@ int main(int argv, char** args) {
 	SYSTEM_SPECIFIC_OPEN();
 
 	/* Initialize SDL */
-#if defined(PSP)
-	if (SDL_Init(SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_EVENTS) != 0) {
+#if defined(SDL1) || defined(PSP)
+	if (SDL_Init(SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_VIDEO|SDL_INIT_JOYSTICK) != 0) {
 #else
-	if (SDL_Init(SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_GAMECONTROLLER|SDL_INIT_EVENTS) != 0) {
+	if (SDL_Init(SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_GAMECONTROLLER) != 0) {
 #endif
+#if !defined(SDL1)
 		SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
+#endif
 		return 1;
 	}
 
