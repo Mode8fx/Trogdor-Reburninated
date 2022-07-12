@@ -36,7 +36,14 @@ int main(int argv, char** args) {
 	SYSTEM_SPECIFIC_OPEN();
 
 	/* Initialize SDL */
-	SDL_Init(SDL_INIT_EVERYTHING);
+#if defined(PSP)
+	if (SDL_Init(SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_EVENTS) != 0) {
+#else
+	if (SDL_Init(SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_GAMECONTROLLER|SDL_INIT_EVENTS) != 0) {
+#endif
+		SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
+		return 1;
+	}
 
 	LOAD_SAVE_FILE();
 	InitializeDisplay();
@@ -54,7 +61,7 @@ int main(int argv, char** args) {
 		deltaTime = timer_global.now - timer_global.last;
 
 		/* Update Key/Button Presses, Mouse/Touch Input, and Window Resizing */
-#if !defined(SDL1)
+#if !defined(SDL1) && !defined(PSP)
 		/* Update Controller Axes (SDL2 only; SDL1 axes are handled later) */
 		controllerAxis_leftStickX = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
 		controllerAxis_leftStickY = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);
@@ -110,7 +117,7 @@ int main(int argv, char** args) {
 				case SDL_QUIT:
 					isRunning = false;
 					break;
-#if !defined(SDL1) && !defined(WII_U) && !defined(VITA) && !defined(SWITCH) && !defined(WII) && !defined(GAMECUBE)
+#if !defined(SDL1) && !defined(WII_U) && !defined(VITA) && !defined(SWITCH) && !defined(WII) && !defined(GAMECUBE) && !defined(PSP)
 				case SDL_WINDOWEVENT:
 					switch (event.window.event) {
 						case SDL_WINDOWEVENT_RESIZED:
@@ -253,7 +260,7 @@ int main(int argv, char** args) {
 						break;
 					}
 					break;
-#if !defined(WII_U) && !defined(VITA) && !defined(SWITCH) && !defined(WII) && !defined(GAMECUBE)
+#if !defined(WII_U) && !defined(VITA) && !defined(SWITCH) && !defined(WII) && !defined(GAMECUBE) && !defined(PSP)
 				case SDL_MOUSEMOTION:
 					SDL_GetMouseState(&mouseInput_x, &mouseInput_y);
 					break;

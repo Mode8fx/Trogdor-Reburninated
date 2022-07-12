@@ -3,16 +3,21 @@
 
 // to fix conflicting int32_t and uint32_t definitions, comment their typedefs out in `include/SDL/SDL_config_wii.h`
 
-#if !defined(WII)
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <SDL_mixer.h>
-#else
+#if defined(PSP)
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <SDL2/SDL_ttf.h>
+#include <SDL2/SDL_mixer.h>
+#elif defined(WII)
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
+#else
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h>
 #endif
 #include <iostream>
 // #include <stdio.h>
@@ -42,6 +47,10 @@
 #include <ogc/pad.h>
 #include <dirent.h>
 #include <fat.h>
+#elif defined(PSP)
+#include <pspkernel.h>
+#include <pspdebug.h>
+#include <pspctrl.h>
 #endif
 
 using namespace std;

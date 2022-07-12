@@ -17,7 +17,7 @@ SDL_Event event;
 Uint32 keyInputs;
 
 /* SDL Input */
-#if !defined(SDL1)
+#if !defined(SDL1) && !defined(PSP)
 SDL_GameController *controller = nullptr;
 #else
 SDL_Joystick *joystick = nullptr;
@@ -305,16 +305,24 @@ void InitializeDisplay() {
 	frameRate = DEFAULT_FRAME_RATE;
 
 	/* Set Window/Renderer */
-#if !defined(SDL1)
-	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gameWidth, gameHeight, SDL_WINDOW_RESIZABLE);
+#if defined(PSP)
+	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gameWidth, gameHeight, SDL_WINDOW_SHOWN);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+#elif defined(WII_U) || defined(VITA) || defined(SWITCH)
+	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gameWidth, gameHeight, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII) || defined(GAMECUBE)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	screen = SDL_SetVideoMode(gameWidth, gameHeight, 24, SDL_DOUBLEBUF);
-#else
+#elif defined(SDL1)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	screen = SDL_SetVideoMode(gameWidth, gameHeight, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
+#else
+	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gameWidth, gameHeight, SDL_WINDOW_RESIZABLE);
+	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
 }
 
@@ -599,7 +607,7 @@ void InitializeTextObjects() {
 }
 
 void InitializeController() {
-#if !defined(SDL1)
+#if !defined(SDL1) && !defined(PSP)
 	for (i = 0; i < SDL_NumJoysticks(); i++) {
 		if (SDL_IsGameController(i)) {
 			controller = SDL_GameControllerOpen(i);
@@ -607,9 +615,8 @@ void InitializeController() {
 		}
 	}
 #else
-	SDL_JoystickEventState(SDL_ENABLE);
+	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
 	joystick = SDL_JoystickOpen(0);
-	SDL_JoystickEventState(SDL_ENABLE);
 #endif
 }
 
@@ -649,7 +656,17 @@ void InitializeController() {
 		DESTROY_SPRITE(textChars[i]);      \
 	}
 
-#if !defined(SDL1)
+#if defined(PSP)
+#define DESTROY_SPRITE(sprite) \
+	SDL_DestroyTexture(sprite.texture);
+#define CLOSE_CONTROLLER() \
+	if (SDL_JoystickOpened(0)) {     \
+		SDL_JoystickClose(joystick); \
+	}
+#define DESTROY_DISPLAY()          \
+	SDL_DestroyRenderer(renderer); \
+	SDL_DestroyWindow(window);
+#elif !defined(SDL1)
 #define DESTROY_SPRITE(sprite) \
 	SDL_DestroyTexture(sprite.texture);
 #define CLOSE_CONTROLLER() \

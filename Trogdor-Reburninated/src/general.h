@@ -23,8 +23,12 @@ struct Timer {
 #define ZERO_OUT_ARRAY(arr) \
     (memset(arr, 0, sizeof(arr)))
 
+#if !defined(WII_U) && !defined(VITA) && !defined(SWITCH) && !defined(PSP)
 #define PRINT(str) \
     cout << str << endl
+#else
+#define PRINT(str)
+#endif
 
 #define SIN_WAVE(timeVal, halfPeriod, amplitude) \
     (sin((timeVal) * PI / (halfPeriod)) * (amplitude))
@@ -39,7 +43,7 @@ struct Timer {
     timer.last = timer.now; \
     timer.now = SDL_GetTicks() / 1000.0;
 
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(SDL1)
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(PSP) || defined(SDL1)
 #define SDL_TOGGLE_FULLSCREEN()
 #else
 #define SDL_TOGGLE_FULLSCREEN()                                 \

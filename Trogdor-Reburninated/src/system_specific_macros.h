@@ -41,6 +41,10 @@ extern "C" FILE * __cdecl __iob_func(void) {
 	fatInitDefault();
 #define SYSTEM_SPECIFIC_CLOSE() exit(EXIT_SUCCESS);
 #define STRCPY(dest, src) strcpy(dest, src);
+#elif defined(PSP)
+#define SYSTEM_SPECIFIC_OPEN()
+#define SYSTEM_SPECIFIC_CLOSE() sceKernelExitGame();
+#define STRCPY(dest, src) strcpy(dest, src);
 #else
 #define SYSTEM_SPECIFIC_OPEN()
 #define SYSTEM_SPECIFIC_CLOSE()

@@ -11,9 +11,15 @@ struct SoundSettings {
 #define SFX_CHANNEL_GAME_MUSIC  6
 #define SFX_CHANNEL_STRONG_BAD  7 // highest channel
 
+#if !defined(PSP)
 #define PLAY_MUSIC(music)     \
 	bgm = Mix_LoadMUS(music); \
 	Mix_PlayMusic(bgm, -1);
+#else
+#define PLAY_MUSIC(music)     \
+	bgm = Mix_LoadMUS(music); \
+	Mix_PlayMusic(bgm, 0);
+#endif
 
 #define PLAY_MUSIC_WITHOUT_LOOP(music) \
 	bgm = Mix_LoadMUS(music);          \
