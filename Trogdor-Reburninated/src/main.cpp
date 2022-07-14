@@ -22,8 +22,10 @@ Uint16 rand_var;
 bool isRunning = true;
 
 /* Other */
+MenuManager MM;
 GameManager GM;
 SDL_Rect gameScreenRect;
+Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down Left Right Left Right B A
 
 /* General-use Variables */
 Sint8 i, j, k;
@@ -707,14 +709,21 @@ int main(int argv, char** args) {
 					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_trogador, 0);
 					sceneState = 3;
 					frameState = 3; // 3 is intentional
+					MM = MenuManager();
 				}
 				RENDER_SPRITE(sprite_title_screen);
 				break;
 			/* Instructions Screen */
 			case 3:
 				frameState++;
+				MM.typeStuff();
 				if (KEY_PRESSED(INPUT_A)) {
-					GM = GameManager(3);
+					if (MM.contraActive) {
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_sfx2, 0);
+						GM = GameManager(30);
+					} else {
+						GM = GameManager(11);
+					}
 					GM.levelInit();
 					UPDATE_TEXT(text_4_score_val, to_string(GM.score));
 					UPDATE_TEXT(text_4_mans_val, to_string(GM.mans));

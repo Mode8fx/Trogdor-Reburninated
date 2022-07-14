@@ -670,13 +670,13 @@ void InitializeTextObjects() {
 	SET_TEXT("012345", text_4_score_val, textChars_font_serif_red_6,
 		10, 14);
 	SET_TEXT("MANS:", text_4_mans, textChars_font_serif_2_red_6,
-		210, 4);
+		200, 4);
 	SET_TEXT("67", text_4_mans_val, textChars_font_serif_red_6,
-		240, 4);
+		230, 4);
 	SET_TEXT("LEVEL:", text_4_level, textChars_font_serif_2_red_6,
-		205, 14);
+		195, 14);
 	SET_TEXT("89", text_4_level_val, textChars_font_serif_red_6,
-		240, 14);
+		230, 14);
 	/* 5: Nothing? (or maybe Game) */
 	/* 6: Pause Screen (overlayed on Game) */
 	SET_TEXT("paused", text_6_paused_1, textChars_font_serif_white_6,

@@ -30,6 +30,7 @@
 
 extern Uint16 rand_var;
 extern Uint32 frameCounter_global;
+extern Uint8 contraArrayKey[10];
 
 #if defined(SDL1)
 inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
@@ -446,6 +447,31 @@ class Trogdor {
 				}
 				if (invince == 0) {
 					visible = true;
+				}
+			}
+		}
+};
+
+class MenuManager {
+	public:
+		bool contraActive;                      // Konami code (Contra cheat) is enabled
+		Sint8 contraIndex;                       // the current index of the Konami code input
+		MenuManager() {
+			contraActive = false;
+			contraIndex = 0;
+		}
+		void typeStuff() {
+			if (!contraActive) {
+				if (keyInputs != 0) {
+					PRINT(keyInputs);
+					if (keyInputs == (1 << (contraArrayKey[contraIndex]))) {
+						contraIndex++;
+						if (contraIndex == LEN(contraArrayKey)) {
+							contraActive = true;
+						}
+					} else {
+						contraIndex = 0;
+					}
 				}
 			}
 		}

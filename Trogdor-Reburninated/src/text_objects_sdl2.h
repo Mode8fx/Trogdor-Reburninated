@@ -36,6 +36,8 @@ struct TextCharObject {
 
 #define SET_TEXT_HELPER(text, textObj, pos_x, pos_y, charArr)                                              \
     textObj.str = text;                                                                                    \
+    textObj.dstrect.w = 0;                                                                                 \
+    textObj.dstrect.h = 0;                                                                                 \
     STRCPY(tempCharArray, textObj.str.c_str());                                                            \
     for (uint_i = 0; uint_i < textObj.str.length(); uint_i++) {                                            \
         textObj.dstrect.w += charArr[tempCharArray[uint_i] - 32].dstrect.w;                                \
