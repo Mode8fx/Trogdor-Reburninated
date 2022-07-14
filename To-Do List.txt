@@ -5,7 +5,6 @@ First:
 
 Trogdor Alpha [gameplay-complete basic port of Trogdor]:
 Features:
-- Port screen scaling code from SuDokuL (including option to change scaling on-demand)
 - Add Konami code
 - Fully implement treasure huts
 - Add basic credits screen

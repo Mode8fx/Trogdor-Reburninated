@@ -1,11 +1,7 @@
+#include "shared.h"
+
 #ifndef SOUND_LOGIC_H
 #define SOUND_LOGIC_H
-
-struct SoundSettings {
-	Sint8 musicIndex;
-	Sint8 bgmVolume = 100;
-	Sint8 sfxVolume = 100;
-};
 
 #define SFX_CHANNEL_GAME       -1 // any free channel
 #define SFX_CHANNEL_GAME_MUSIC  6

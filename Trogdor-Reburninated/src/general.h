@@ -43,15 +43,85 @@ struct Timer {
     timer.last = timer.now; \
     timer.now = SDL_GetTicks() / 1000.0;
 
+
+
 #if !defined(PC) || defined(SDL1)
 #define SDL_TOGGLE_FULLSCREEN()
 #else
 #define SDL_TOGGLE_FULLSCREEN()                                 \
+	isWindowed = !isWindowed;                                   \
 	if (isWindowed)                                             \
-		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN); \
-	else                                                        \
 		SDL_SetWindowFullscreen(window, 0);                     \
-	isWindowed = !isWindowed;
+	else                                                        \
+		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN); \
+	SET_SCALING();
 #endif
+
+#define SDL_TOGGLE_INTEGER_SCALE()    \
+	isIntegerScale = !isIntegerScale; \
+	SET_SCALING();
+
+#if !defined(PC)
+#define SCALING_WIDTH DEFAULT_GAME_WIDTH
+#define SCALING_HEIGHT DEFAULT_GAME_HEIGHT
+#else
+#define SCALING_WIDTH SDL_GetWindowSurface(window)->w
+#define SCALING_HEIGHT SDL_GetWindowSurface(window)->h
+#endif
+
+#if defined(ANDROID)
+#define SET_SCALING()
+#else
+#define SET_SCALING()                                                                            \
+	if (isIntegerScale) {                                                                        \
+		int_i = min((int)(SCALING_WIDTH / gameWidth), (int)(SCALING_HEIGHT / gameHeight));       \
+		if (int_i < 1) int_i = 1;                                                                \
+		centerViewport.w = gameWidth * int_i;                                                    \
+		centerViewport.h = gameHeight * int_i;                                                   \
+		centerViewport.x = max((int)((SCALING_WIDTH - centerViewport.w) / 2 / int_i), 0);        \
+		centerViewport.y = max((int)((SCALING_HEIGHT - centerViewport.h) / 2 / int_i), 0);       \
+		SDL_RenderSetScale(renderer, int_i, int_i);                                              \
+		SDL_RenderSetViewport(renderer, &centerViewport);                                        \
+		screenScale = (double)int_i;                                                             \
+	} else {                                                                                     \
+		screenScale = (double)SCALING_WIDTH / gameWidth;                                         \
+		if ((double)SCALING_HEIGHT / gameHeight < screenScale) {                                 \
+			screenScale = (double)SCALING_HEIGHT / gameHeight;                                   \
+		}                                                                                        \
+		if (screenScale < 1) screenScale = 1;                                                    \
+		centerViewport.w = (int)(gameWidth * screenScale);                                       \
+		centerViewport.h = (int)(gameHeight * screenScale);                                      \
+		centerViewport.x = max((int)((SCALING_WIDTH - centerViewport.w) / 2 / screenScale), 0);  \
+		centerViewport.y = max((int)((SCALING_HEIGHT - centerViewport.h) / 2 / screenScale), 0); \
+		SDL_RenderSetScale(renderer, screenScale, screenScale);                                  \
+		SDL_RenderSetViewport(renderer, &centerViewport);                                        \
+	}                                                                                            \
+	UPDATE_BORDER_RECTS();
+//SDL_RenderSetClipRect(renderer, &centerViewport);
+#endif
+
+#define UPDATE_BORDER_RECTS()                             \
+	topRect.x = -(SCALING_WIDTH - gameWidth) / 2 - 50;    \
+	topRect.y = -(SCALING_HEIGHT - gameHeight) / 2 - 100; \
+	topRect.w = SCALING_WIDTH + 100;                      \
+	topRect.h = (SCALING_HEIGHT - gameHeight) / 2 + 100;  \
+	bottomRect.x = topRect.x;                             \
+	bottomRect.y = gameHeight;                            \
+	bottomRect.w = topRect.w;                             \
+	bottomRect.h = topRect.h;                             \
+	leftRect.x = -(SCALING_WIDTH - gameWidth) / 2 - 100;  \
+	leftRect.y = -(SCALING_HEIGHT - gameHeight) / 2 - 50; \
+	leftRect.w = (SCALING_WIDTH - gameWidth) / 2 + 100;   \
+	leftRect.h = SCALING_HEIGHT + 100;                    \
+	rightRect.x = gameWidth;                              \
+	rightRect.y = leftRect.y;                             \
+	rightRect.w = leftRect.w;                             \
+	rightRect.h = leftRect.h;
+
+#define RENDER_BORDER_RECTS()                  \
+	SDL_RenderFillRect(renderer, &topRect);    \
+	SDL_RenderFillRect(renderer, &bottomRect); \
+	SDL_RenderFillRect(renderer, &leftRect);   \
+	SDL_RenderFillRect(renderer, &rightRect);
 
 #endif

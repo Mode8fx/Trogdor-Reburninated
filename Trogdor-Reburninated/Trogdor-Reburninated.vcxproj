@@ -247,6 +247,7 @@
     <ClInclude Include="src\level_data.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\config.h" />
+    <ClInclude Include="src\shared.h" />
     <ClInclude Include="src\sound_logic.h" />
     <ClInclude Include="src\sprite_objects.h" />
     <ClInclude Include="src\media_objects_init.h" />

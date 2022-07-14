@@ -20,7 +20,6 @@ Sint8 sceneState = 3;
 Sint16 frameState = 1;
 Uint16 rand_var;
 bool isRunning = true;
-bool isWindowed = true;
 
 /* Other */
 GameManager GM;
@@ -121,28 +120,12 @@ int main(int argv, char** args) {
 					break;
 #if defined(PC) && !defined(SDL1)
 				case SDL_WINDOWEVENT:
-					switch (event.window.event) {
-						case SDL_WINDOWEVENT_RESIZED:
-							uint_i = SDL_GetWindowSurface(window)->w;
-							uint_j = SDL_GetWindowSurface(window)->h;
-							if ((uint_i / DEFAULT_GAME_WIDTH) < (uint_j / DEFAULT_GAME_HEIGHT)) {
-								float_i = (uint_i / DEFAULT_GAME_WIDTH);
-							} else {
-								float_i = (uint_j / DEFAULT_GAME_HEIGHT);
-							}
-							if (float_i < 1) {
-								SDL_SetWindowSize(window, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT);
-								SDL_RenderSetScale(renderer, 1, 1);
-							} else {
-								SDL_SetWindowSize(window, (int)(DEFAULT_GAME_WIDTH * float_i), (int)(DEFAULT_GAME_HEIGHT * float_i));
-								SDL_RenderSetScale(renderer, float_i, float_i);
-							}
-							break;
-						case SDL_WINDOWEVENT_MAXIMIZED:
-							SDL_SetWindowPosition(window, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-							break;
-						default:
-							break;
+					if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
+						if (SDL_GetWindowSurface(window)->w < gameWidth)
+							SDL_SetWindowSize(window, gameWidth, SDL_GetWindowSurface(window)->h);
+						if (SDL_GetWindowSurface(window)->h < gameHeight)
+							SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, gameHeight);
+						SET_SCALING();
 					}
 					break;
 #endif
@@ -586,6 +569,10 @@ int main(int argv, char** args) {
 		/* Key Presses (Always Active) */
 		if (KEY_PRESSED(INPUT_FULLSCREEN)) {
 			SDL_TOGGLE_FULLSCREEN();
+		}
+		if (KEY_PRESSED(INPUT_R)) {
+			SDL_TOGGLE_INTEGER_SCALE();
+			PRINT(isIntegerScale);
 		}
 
 		/* Clear Screen */
@@ -1277,6 +1264,9 @@ int main(int argv, char** args) {
 		mouseInput_x_last = mouseInput_x;
 		mouseInput_y_last = mouseInput_y;
 #endif
+
+		/* Draw Black Rectangles */
+		RENDER_BORDER_RECTS();
 
 		/* Update Screen */
 #if !defined(SDL1)

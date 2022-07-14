@@ -291,14 +291,146 @@ string rootDir = "sd:/apps/TrogdorRB/";
 string rootDir = "";
 #endif
 
-/* Other */
+/* Window */
+SDL_Rect topRect;
+SDL_Rect bottomRect;
+SDL_Rect leftRect;
+SDL_Rect rightRect;
+SDL_Rect centerViewport;
+bool isWindowed = true;
+double screenScale = 1;
+bool isIntegerScale = true;
 Uint16 gameWidth;
 Uint16 gameHeight;
+SDL_DisplayMode DM;
+#if !defined(ANDROID)
+#define SYSTEM_WIDTH  DM.w
+#define SYSTEM_HEIGHT DM.h
+#else
+#define SYSTEM_WIDTH  max(DM.w, DM.h)
+#define SYSTEM_HEIGHT min(DM.w, DM.h)
+#endif
+#if defined(WII_U)
+const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[7] = { 320,  362,  640,  725,  768,  800,  960 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[7] = { 240,  272,  480,  544,  576,  600,  720 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_9[6] = { 426,  480,  853,  960, 1176, 1280 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_9[6] = { 240,  272,  480,  544,  664,  720 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_10[3] = { 435,  720, 1152 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_10[3] = { 272,  480,  720 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_21_9[3] = { 480,  960, 1280 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[3] = { 205,  410,  548 };
+#define DEFAULT_WIDTH  1280
+#define DEFAULT_HEIGHT 720
+#define DEFAULT_RI     5
+#define DEFAULT_ARI    1
+#elif defined(VITA)
+const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[4] = { 320, 362, 640, 725 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[4] = { 240, 272, 480, 544 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_9[4] = { 426, 480, 853, 960 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_9[4] = { 240, 272, 480, 544 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_10[2] = { 435, 720 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_10[2] = { 272, 480 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_21_9[2] = { 480, 960 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[2] = { 205, 410 };
+#define DEFAULT_WIDTH  960
+#define DEFAULT_HEIGHT 544
+#define DEFAULT_RI     3
+#define DEFAULT_ARI    1
+#elif defined(SWITCH)
+const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[11] = { 320,  362,  640,  725,  768,  800,  960, 1024, 1152, 1280, 1440 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[11] = { 240,  272,  480,  544,  576,  600,  720,  768,  864,  960, 1080 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_9[9] = { 426,  480,  853,  960, 1176, 1280, 1360, 1600, 1920 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_9[9] = { 240,  272,  480,  544,  664,  720,  768,  900, 1080 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_10[7] = { 435,  720, 1152, 1280, 1440, 1600, 1680 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_10[7] = { 272,  480,  720,  800,  900, 1024, 1050 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_21_9[3] = { 480,  960, 1280 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[3] = { 205,  410,  548 };
+#define DEFAULT_WIDTH  1920
+#define DEFAULT_HEIGHT 1080
+#define DEFAULT_RI     8
+#define DEFAULT_ARI    1
+#elif defined(PSP)
+const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[2] = { 320, 362 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[2] = { 240, 272 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_9[2] = { 426, 480 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_9[2] = { 240, 272 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_10[1] = { 435 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_10[1] = { 272 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_21_9[1] = { 480 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[1] = { 205 };
+#define DEFAULT_WIDTH  480
+#define DEFAULT_HEIGHT 272
+#define DEFAULT_RI     1
+#define DEFAULT_ARI    1
+#elif defined(WII) || defined(GAMECUBE)
+const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[3] = { 320, 362, 640 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[3] = { 240, 272, 480 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_9[3] = { 426, 480, 640 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_9[3] = { 240, 272, 360 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_10[2] = { 435, 640 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_10[2] = { 272, 400 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_21_9[2] = { 480, 640 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[2] = { 205, 274 };
+#define DEFAULT_WIDTH  640
+#define DEFAULT_HEIGHT 480
+#define DEFAULT_RI     2
+#define DEFAULT_ARI    0
+#else
+const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[14] = { 320,  362,  640,  725,  768,  800,  960, 1024, 1152, 1280, 1440, 1600, 1920, 2880 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[14] = { 240,  272,  480,  544,  576,  600,  720,  768,  864,  960, 1080, 1200, 1440, 2160 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_9[12] = { 426,  480,  853,  960, 1176, 1280, 1360, 1600, 1920, 2560, 3620, 3840 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_9[12] = { 240,  272,  480,  544,  664,  720,  768,  900, 1080, 1440, 2036, 2160 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_10[10] = { 435,  720, 1152, 1280, 1440, 1600, 1680, 1920, 2560, 3840 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_10[10] = { 272,  480,  720,  800,  900, 1024, 1050, 1200, 1600, 2400 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_21_9[6] = { 480,  960, 1280, 2560, 3440, 5120 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[6] = { 205,  410,  548, 1080, 1440, 2160 };
+#if defined(ANDROID)
+#define DEFAULT_WIDTH  SYSTEM_WIDTH
+#define DEFAULT_HEIGHT SYSTEM_HEIGHT
+#define DEFAULT_RI     0
+#define DEFAULT_ARI    0
+#else
+#define DEFAULT_WIDTH  640
+#define DEFAULT_HEIGHT 480
+#define DEFAULT_RI     2
+#define DEFAULT_ARI    0
+#endif
+#endif
+VideoSettings videoSettings;
 double gameWidthMult;
 double gameHeightMult;
 Uint16 frameRate;
 
+
+
 void InitializeDisplay() {
+	SDL_GetCurrentDisplayMode(0, &DM);
+#if !defined(ANDROID)
+	switch (videoSettings.aspectRatioIndex) {
+		case 1:
+			videoSettings.widthSetting = RESOLUTION_OPTIONS_WIDTH_16_9[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_WIDTH_16_9)];
+			videoSettings.heightSetting = RESOLUTION_OPTIONS_HEIGHT_16_9[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_HEIGHT_16_9)];
+			break;
+		case 2:
+			videoSettings.widthSetting = RESOLUTION_OPTIONS_WIDTH_16_10[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_WIDTH_16_10)];
+			videoSettings.heightSetting = RESOLUTION_OPTIONS_HEIGHT_16_10[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_HEIGHT_16_10)];
+			break;
+		case 3:
+			videoSettings.widthSetting = RESOLUTION_OPTIONS_WIDTH_21_9[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_WIDTH_21_9)];
+			videoSettings.heightSetting = RESOLUTION_OPTIONS_HEIGHT_21_9[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_HEIGHT_21_9)];
+			break;
+		default:
+			videoSettings.widthSetting = RESOLUTION_OPTIONS_WIDTH_4_3[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_WIDTH_4_3)];
+			videoSettings.heightSetting = RESOLUTION_OPTIONS_HEIGHT_4_3[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_HEIGHT_4_3)];
+			break;
+	}
+#else
+	videoSettings.widthSetting = SYSTEM_WIDTH;
+	videoSettings.heightSetting = SYSTEM_HEIGHT;
+	SDL_SetHint(SDL_HINT_ORIENTATIONS, "Landscape");
+#endif
+	videoSettings.widthSetting = 800;
+	videoSettings.heightSetting = 600;
 	gameWidth = DEFAULT_GAME_WIDTH;
 	gameHeight = DEFAULT_GAME_HEIGHT;
 	SET_WIDTH_HEIGHT_MULTS();
@@ -306,11 +438,11 @@ void InitializeDisplay() {
 
 	/* Set Window/Renderer */
 #if defined(PSP)
-	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gameWidth, gameHeight, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID)
-	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gameWidth, gameHeight, 0);
+	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII) || defined(GAMECUBE)
@@ -320,10 +452,11 @@ void InitializeDisplay() {
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	screen = SDL_SetVideoMode(gameWidth, gameHeight, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
-	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, gameWidth, gameHeight, SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
+	SET_SCALING();
 }
 
 void InitializeSound() {
