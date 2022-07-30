@@ -44,6 +44,7 @@ inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
 #define archerL archerArray[1]
 #define MAX_NUM_KNIGHTS 2
 #define MAX_NUM_PEASANTS 7
+#define MAX_NUM_LOOT 7
 
 class Cottage {
 	public:
@@ -344,6 +345,20 @@ class Arrow {
 		}
 };
 
+class Loot {
+	public:
+		SDL_Rect srcrect;
+		SDL_Rect dstrect;
+		bool active;
+		Loot() {
+		}
+		Loot(Sint16 x_pos, Sint16 y_pos) {
+			srcrect = { 0, 0, sprite_loot.dstrect.w, sprite_loot.dstrect.h };
+			dstrect = { x_pos, y_pos, sprite_loot.dstrect.w, sprite_loot.dstrect.h };
+			active = false;
+		}
+};
+
 class Trogdor {
 	public:
 		Uint8 frameState;
@@ -525,6 +540,7 @@ class GameManager {
 		Sint16 storex;                          // old player X position (used for treasure huts)
 		Sint16 storey;                          // old player Y position (used for treasure huts)
 		Sint16 treasureHut_timer;               // remaining time in treasure hut
+		Loot lootArray[MAX_NUM_LOOT];           // array of Loot objects
 		GameManager() {
 		}
 		GameManager(Sint8 init_mans) {
@@ -621,6 +637,13 @@ class GameManager {
 			for (i = 0; i < LEN(peasantArray); i++) {
 				peasantArray[i] = Peasant();
 			}
+			lootArray[0] = Loot((GAME_WIDTH * 0.144), (GAME_HEIGHT * 0.661));
+			lootArray[1] = Loot((GAME_WIDTH * 0.292), (GAME_HEIGHT * 0.522));
+			lootArray[2] = Loot((GAME_WIDTH * 0.284), (GAME_HEIGHT * 0.806));
+			lootArray[3] = Loot((GAME_WIDTH * 0.416), (GAME_HEIGHT * 0.644));
+			lootArray[4] = Loot((GAME_WIDTH * 0.548), (GAME_HEIGHT * 0.522));
+			lootArray[5] = Loot((GAME_WIDTH * 0.548), (GAME_HEIGHT * 0.783));
+			lootArray[6] = Loot((GAME_WIDTH * 0.688), (GAME_HEIGHT * 0.644));
 			archerArray[0] = Archer(ARCHER_LEFT_X, 0, true);   // archerR (on the left, facing right)
 			archerArray[1] = Archer(ARCHER_RIGHT_X, 0, false); // archerL (on the right, facing left)
 			knightArray[0] = Knight(61, 111, 1, false);
@@ -707,9 +730,15 @@ class GameManager {
 			player.dstrect.y += dy;
 			player.collision.y = 11 + player.dstrect.y;
 		}
-		inline void handle_treasure_hut_entry(Trogdor* trog) {
+		inline void handle_treasure_hut_entry(Trogdor* trog, Sint8 delta_x, Sint8 delta_y) {
+			// Technically, the original treasure_button collision is different from the hut fire collision used here, but it's both negligible and inconsistent between huts (seems like a bug), so I'm not gonna bother
 			if (treasureHutIndex && !treasureHutFound && !hutArray[treasureHutIndex - 1].burned && SDL_HasIntersection(&trog->dstrect, &hutArray[treasureHutIndex - 1].collision)) {
 				inTreasureHut = true;
+				for (i = 0; i < MAX_NUM_LOOT; i++) {
+					lootArray[i].active = true;
+				}
+				storex = player.dstrect.x - delta_x; // The delta is to prevent respawning inside hut after exitting (this probably wouldn't happen, but just in case)
+				storey = player.dstrect.y - delta_y;
 			}
 		}
 		void handle_treasure_hut() {
@@ -725,7 +754,7 @@ class GameManager {
 			// X movement
 			if (delta_x != 0) {
 				trogdor_add_x_delta(delta_x);
-				handle_treasure_hut_entry(trog);
+				handle_treasure_hut_entry(trog, delta_x, delta_y);
 				// Collision
 				if (trog->dstrect.x < LEFT_BOUND_TROG || trog->dstrect.x > RIGHT_BOUND_TROG) {
 					trogdor_add_x_delta(-delta_x);
@@ -741,7 +770,7 @@ class GameManager {
 			// Y movement
 			if (delta_y != 0) {
 				trogdor_add_y_delta(delta_y);
-				handle_treasure_hut_entry(trog);
+				handle_treasure_hut_entry(trog, delta_x, delta_y);
 				// Collision
 				if (trog->dstrect.y < UPPER_BOUND_TROG || trog->dstrect.y > LOWER_BOUND_TROG) {
 					trogdor_add_y_delta(-delta_y);
@@ -911,7 +940,7 @@ class GameManager {
 		void testKnightHit() {
 			if (!player.invince) {
 				for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
-					if (SDL_HasIntersection(&player.collision, &knightArray[i].collision)) {
+					if (SDL_HasIntersection(&player.dstrect, &knightArray[i].collision)) {
 						paused = true;
 						toggleKnightMotion(false);
 						clearArrows();
@@ -1322,7 +1351,13 @@ class GameManager {
 			}
 		}
 		void testLootHit() {
-			// TODO: Make this
+			for (i = 0; i < MAX_NUM_LOOT; i++) {
+				if (lootArray[i].active && SDL_HasIntersection(&player.dstrect, &lootArray[i].dstrect)) {
+					updateScore(50);
+					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_goldget, 0);
+					lootArray[i].active = false;
+				}
+			}
 		}
 };
 
@@ -1381,6 +1416,13 @@ class GameManager {
 		if (GM.arrowArrayL[i].active) {                                                                    \
 			RENDER_SPRITE_USING_RECTS(sprite_arrow, GM.arrowArrayL[i].srcrect, GM.arrowArrayL[i].dstrect); \
 		}                                                                                                  \
+	}
+
+#define RENDER_LOOT()                                                                                 \
+	for (i = 0; i < MAX_NUM_LOOT; i++) {                                                              \
+		if (GM.lootArray[i].active) {                                                                 \
+			RENDER_SPRITE_USING_RECTS(sprite_loot, GM.lootArray[i].srcrect, GM.lootArray[i].dstrect); \
+		}                                                                                             \
 	}
 
 #define RENDER_KNIGHTS()                                                                                \

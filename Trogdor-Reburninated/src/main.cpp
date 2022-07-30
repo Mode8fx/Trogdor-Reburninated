@@ -837,8 +837,6 @@ int main(int argv, char** args) {
 					if (GM.inTreasureHut) {
 						GM.paused = true;
 						GM.treasureHutFound = true;
-						GM.storex = GM.player.dstrect.x;
-						GM.storey = GM.player.dstrect.y;
 						GM.player.dstrect.x = 211;
 						GM.player.dstrect.y = 118;
 						GM.treasureHut_timer = 110;
@@ -915,6 +913,7 @@ int main(int argv, char** args) {
 					// render everything
 					RENDER_BACKGROUND();
 					RENDER_TOP_BAR();
+					RENDER_LOOT();
 					RENDER_TROGDOR();
 					if (GM.burnination > 0) {
 						RENDER_SPRITE_USING_RECTS(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);

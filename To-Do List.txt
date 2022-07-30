@@ -2,7 +2,6 @@ To-Do List
 
 Trogdor Alpha [gameplay-complete basic port of Trogdor]:
 Features:
-- Add treasure to treasure huts
 - Add hints screen (in original game, click the G) (page 2; L/R to change pages)
 - Add basic credits screen (page 3; L/R to change pages)
 Polish:

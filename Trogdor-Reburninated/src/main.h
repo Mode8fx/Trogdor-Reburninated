@@ -103,6 +103,7 @@ SpriteObject sprite_end_of_level_flash;
 SpriteObject sprite_death_message;
 SpriteObject sprite_burninate_text;
 SpriteObject sprite_burninate_fire;
+SpriteObject sprite_loot;
 SDL_Rect     divider_level_beaten_rect;
 
 /* Fonts */
@@ -560,6 +561,8 @@ void InitializeSprites() {
 		OBJ_TO_MID_SCREEN_X(sprite_burninate_text), OBJ_TO_MID_SCREEN_Y(sprite_burninate_text), 1, 1, 1);
 	PREPARE_SPRITE(sprite_burninate_fire, (rootDir + "graphics/burninate_message_fire.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_burninate_fire), OBJ_TO_MID_SCREEN_Y(sprite_burninate_fire), 1, 14, 1);
+	PREPARE_SPRITE(sprite_loot, (rootDir + "graphics/loot.bmp").c_str(),
+		0, 0, 1, 1, 1);
 	divider_level_beaten_rect = { 0, 25, GAME_WIDTH, 2 };
 }
 
