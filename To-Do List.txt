@@ -1,8 +1,5 @@
 To-Do List
 
-First:
-- Verify what needs to be done and finish to-do list
-
 Trogdor Alpha [gameplay-complete basic port of Trogdor]:
 Features:
 - Fully implement treasure huts
@@ -12,7 +9,6 @@ Polish:
 - Fix scaling for large Trogdor that appears right after you've burninated the last cottage
 - Turn fake loading screen into actual loading screen
 - Verify that all game logic matches Flash game (it should already, but it's been so long since I worked on this that I don't remember)
-	- Make sure the knights behave properly; it feels like they go offscreen too often
 - Verify that the SDL1 and SDL2 versions look and run equally well
 - Polish controls for all systems
 - Make sure instructions screen is accurate for controls on all systems

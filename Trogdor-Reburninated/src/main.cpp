@@ -722,7 +722,7 @@ int main(int argv, char** args) {
 						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_sfx2, 0);
 						GM = GameManager(30);
 					} else {
-						GM = GameManager(11);
+						GM = GameManager(3);
 					}
 					GM.levelInit();
 					UPDATE_TEXT(text_4_score_val, to_string(GM.score));

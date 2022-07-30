@@ -429,8 +429,8 @@ void InitializeDisplay() {
 	videoSettings.heightSetting = SYSTEM_HEIGHT;
 	SDL_SetHint(SDL_HINT_ORIENTATIONS, "Landscape");
 #endif
-	videoSettings.widthSetting = 800;
-	videoSettings.heightSetting = 600;
+	videoSettings.widthSetting = 640;
+	videoSettings.heightSetting = 480;
 	gameWidth = DEFAULT_GAME_WIDTH;
 	gameHeight = DEFAULT_GAME_HEIGHT;
 	SET_WIDTH_HEIGHT_MULTS();

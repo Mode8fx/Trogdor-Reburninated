@@ -171,7 +171,7 @@ class Knight {
 					break;
 			}
 			if (frameState <= 30) {
-				offset_x =  frameState * 34 / 30;
+				offset_x = frameState * 34 / 30;
 			} else {
 				offset_x = 68 - (frameState * 34 / 30);
 			}
@@ -455,7 +455,7 @@ class Trogdor {
 class MenuManager {
 	public:
 		bool contraActive;                      // Konami code (Contra cheat) is enabled
-		Sint8 contraIndex;                       // the current index of the Konami code input
+		Sint8 contraIndex;                      // the current index of the Konami code input
 		MenuManager() {
 			contraActive = false;
 			contraIndex = 0;
@@ -519,6 +519,9 @@ class GameManager {
 		SDL_Rect bf_dstrect;                    // BURNINATE! Message Fire
 		bool b_visible;                         // BURNINATE! Message
 		Uint8 kick_frameState;                  // kick the machine
+		bool treasureHutFound;                  // treasure hut has been found in this level
+		bool inTreasureHut;                     // player is currently in treasure hut
+		Uint8 treasureHutIndex;                 // index of hut that contains treasure (0 = no treasure hut)
 		GameManager() {
 		}
 		GameManager(Sint8 init_mans) {
@@ -552,6 +555,10 @@ class GameManager {
 			bf_dstrect = { OBJ_TO_MID_SCREEN_X(sprite_burninate_fire), bt_dstrect.y - bf_srcrect.h + 4, sprite_burninate_fire.dstrect.w, sprite_burninate_fire.dstrect.h };
 			b_visible = false;
 			kick_frameState = 0;
+			numHuts = 0;
+			treasureHutFound = false;
+			inTreasureHut = false;
+			treasureHutIndex = 0;
 		}
 		void levelInit() {
 			SET_BURNINATION(0);
@@ -579,23 +586,7 @@ class GameManager {
 			} else {
 				levelIndex = ((level - 2) % 32 + 2) - 1;
 			}
-			switch (levels[levelIndex][0]) {
-				case 1:
-					sprite_level_background = &sprite_level_background_1;
-					break;
-				case 2:
-					sprite_level_background = &sprite_level_background_2;
-					break;
-				case 3:
-					sprite_level_background = &sprite_level_background_3;
-					break;
-				case 4:
-					sprite_level_background = &sprite_level_background_4;
-					break;
-				default:
-					sprite_level_background = &sprite_level_background_1;
-					break;
-			}
+			set_level_background(levels[levelIndex][0]);
 			numHuts = 0;
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
 				j = (i * 3) + 2;
@@ -606,10 +597,10 @@ class GameManager {
 						levels[levelIndex][j]
 					);
 					numHuts++;
-					PRINT("COTTAGE INFO:");
-					PRINT((int)hutArray[i].direction);
-					PRINT((int)hutArray[i].dstrect.x);
-					PRINT((int)hutArray[i].dstrect.y);
+					//PRINT("COTTAGE INFO:");
+					//PRINT((int)hutArray[i].direction);
+					//PRINT((int)hutArray[i].dstrect.x);
+					//PRINT((int)hutArray[i].dstrect.y);
 				} else {
 					hutArray[i] = Cottage(0, 0, 0);
 					hutArray[i].burned = true;
@@ -630,6 +621,31 @@ class GameManager {
 			knightArray[1] = Knight(163, 40, 1, true);
 			peasantometer = 0;
 			player.resetPos(false);
+			treasureHutFound = false;
+			inTreasureHut = false;
+			treasureHutIndex = levels[levelIndex][1];
+		}
+		inline void set_level_background(Uint8 bg_index) {
+			switch (bg_index) {
+				case 1:
+					sprite_level_background = &sprite_level_background_1;
+					break;
+				case 2:
+					sprite_level_background = &sprite_level_background_2;
+					break;
+				case 3:
+					sprite_level_background = &sprite_level_background_3;
+					break;
+				case 4:
+					sprite_level_background = &sprite_level_background_4;
+					break;
+				case 5:
+					sprite_level_background = &sprite_level_background_th;
+					break;
+				default:
+					sprite_level_background = &sprite_level_background_1;
+					break;
+			}
 		}
 		void getPlayerInput() {
 			player.x_offset = 0;
@@ -681,11 +697,20 @@ class GameManager {
 			player.dstrect.y += dy;
 			player.collision.y = 11 + player.dstrect.y;
 		}
+		inline void handle_treasure_hut_entry(Trogdor *trog) {
+			if (treasureHutIndex && !treasureHutFound && !hutArray[treasureHutIndex - 1].burned && SDL_HasIntersection(&trog->dstrect, &hutArray[treasureHutIndex - 1].collision)) {
+				paused = true;
+				treasureHutFound = true;
+				set_level_background(5);
+				Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_sfx2, 0);
+			}
+		}
 		// This has to be part of GM and not Trogdor since it references GM (and GameManager references Trogdor, so it would be circular)
 		void playerMove(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
 			// X movement
 			if (delta_x != 0) {
 				trogdor_add_x_delta(delta_x);
+				handle_treasure_hut_entry(trog);
 				// Collision
 				if (trog->dstrect.x < LEFT_BOUND_TROG || trog->dstrect.x > RIGHT_BOUND_TROG) {
 					trogdor_add_x_delta(-delta_x);
@@ -701,6 +726,7 @@ class GameManager {
 			// Y movement
 			if (delta_y != 0) {
 				trogdor_add_y_delta(delta_y);
+				handle_treasure_hut_entry(trog);
 				// Collision
 				if (trog->dstrect.y < UPPER_BOUND_TROG || trog->dstrect.y > LOWER_BOUND_TROG) {
 					trogdor_add_y_delta(-delta_y);
@@ -1308,7 +1334,7 @@ class GameManager {
 #define RENDER_PEASANTS()                                                                                      \
 	for (i = 0; i < MAX_NUM_PEASANTS; i++) {                                                                   \
 		if (GM.peasantArray[i].active) {                                                                       \
-			if (!GM.peasantArray[i].waiting || GM.peasantArray[i].stomped) {                                   \
+			if (!GM.manually_paused && (!GM.peasantArray[i].waiting || GM.peasantArray[i].stomped)) {          \
 				GM.peasantArray[i].updateFrameState();                                                         \
 			}                                                                                                  \
 			RENDER_SPRITE_USING_RECTS(sprite_peasant, GM.peasantArray[i].srcrect, GM.peasantArray[i].dstrect); \
