@@ -522,6 +522,9 @@ class GameManager {
 		bool treasureHutFound;                  // treasure hut has been found in this level
 		bool inTreasureHut;                     // player is currently in treasure hut
 		Uint8 treasureHutIndex;                 // index of hut that contains treasure (0 = no treasure hut)
+		Sint16 storex;                          // old player X position (used for treasure huts)
+		Sint16 storey;                          // old player Y position (used for treasure huts)
+		Sint16 treasureHut_timer;               // remaining time in treasure hut
 		GameManager() {
 		}
 		GameManager(Sint8 init_mans) {
@@ -559,6 +562,9 @@ class GameManager {
 			treasureHutFound = false;
 			inTreasureHut = false;
 			treasureHutIndex = 0;
+			storex = 0;
+			storey = 0;
+			treasureHut_timer = 0;
 		}
 		void levelInit() {
 			SET_BURNINATION(0);
@@ -677,13 +683,17 @@ class GameManager {
 				}
 				player.x_offset = player.moveSpeed;
 			}
-			playerMove(&player, player.x_offset, player.y_offset);
-			if (KEY_HELD(INPUT_START)) {
-				startDown = true;
-			}
-			if (startDown && !KEY_HELD(INPUT_START)) {
-				startDown = false;
-				manually_paused = frameCounter_global;
+			if (!inTreasureHut) {
+				playerMove(&player, player.x_offset, player.y_offset);
+				if (KEY_HELD(INPUT_START)) {
+					startDown = true;
+				}
+				if (startDown && !KEY_HELD(INPUT_START)) {
+					startDown = false;
+					manually_paused = frameCounter_global;
+				}
+			} else {
+				playerMove_treasureHut(&player, player.x_offset, player.y_offset);
 			}
 			if (KEY_HELD(INPUT_L) && kick_frameState == 0) {
 				kick_frameState = 3;
@@ -697,12 +707,17 @@ class GameManager {
 			player.dstrect.y += dy;
 			player.collision.y = 11 + player.dstrect.y;
 		}
-		inline void handle_treasure_hut_entry(Trogdor *trog) {
+		inline void handle_treasure_hut_entry(Trogdor* trog) {
 			if (treasureHutIndex && !treasureHutFound && !hutArray[treasureHutIndex - 1].burned && SDL_HasIntersection(&trog->dstrect, &hutArray[treasureHutIndex - 1].collision)) {
-				paused = true;
-				treasureHutFound = true;
-				set_level_background(5);
-				Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_sfx2, 0);
+				inTreasureHut = true;
+			}
+		}
+		void handle_treasure_hut() {
+			treasureHut_timer--;
+			getPlayerInput();
+			testLootHit();
+			if (treasureHut_timer <= 0) {
+				inTreasureHut = false;
 			}
 		}
 		// This has to be part of GM and not Trogdor since it references GM (and GameManager references Trogdor, so it would be circular)
@@ -737,6 +752,45 @@ class GameManager {
 						trogdor_add_y_delta(-delta_y);
 						break;
 					}
+				}
+			}
+			// Animate sprite
+			if (trog->frameStateFlag & 2) {
+				trog->frameState = 0;
+				trog->srcrect.x = 0;
+				trog->srcrect.y = trog->facingRight * trog->srcrect.h;
+			} else if (trog->frameStateFlag & 1) {
+				trog->frameState = (++trog->frameState % 8);
+				trog->srcrect.x = (trog->frameState / 2) * trog->srcrect.w;
+			}
+			if (burnination > 0) {
+				trog->updateBreathLoc();
+				// Animate sprite
+				if (trog->frameStateFlag & 2) {
+					trog->fire_frameState = 0;
+					trog->fire_srcrect.x = 0;
+					trog->fire_srcrect.y = trog->facingRight * trog->fire_srcrect.h;
+				} else {
+					trog->fire_frameState = (++trog->fire_frameState % 12);
+					trog->fire_srcrect.x = (trog->fire_frameState / 3) * trog->fire_srcrect.w;
+				}
+			}
+		}
+		void playerMove_treasureHut(Trogdor* trog, Sint8 delta_x, Sint8 delta_y) {
+			// X movement
+			if (delta_x != 0) {
+				trogdor_add_x_delta(delta_x);
+				// Collision
+				if (trog->dstrect.x < LEFT_BOUND_TROG || trog->dstrect.x > RIGHT_BOUND_TROG) {
+					trogdor_add_x_delta(-delta_x);
+				}
+			}
+			// Y movement
+			if (delta_y != 0) {
+				trogdor_add_y_delta(delta_y);
+				// Collision
+				if (trog->dstrect.y < UPPER_BOUND_TROG || trog->dstrect.y > LOWER_BOUND_TROG) {
+					trogdor_add_y_delta(-delta_y);
 				}
 			}
 			// Animate sprite
@@ -1110,7 +1164,7 @@ class GameManager {
 				}
 			}
 		}
-		void dm_updateFrameState() {
+		void dm_updateFrameState() { // death message
 			dm_frameState++;
 			switch (dm_frameState) {
 				case 4:
@@ -1166,7 +1220,7 @@ class GameManager {
 				dm_srcrect.y = (((dm_frameState - 29) / 2) % 5) * dm_dstrect.h;
 			}
 		}
-		void b_updateFrameState() {
+		void b_updateFrameState() { // burninate message
 			b_frameState++;
 			// hardcoded is messier, but faster
 			switch (b_frameState) {
@@ -1266,6 +1320,9 @@ class GameManager {
 					peasantometer = 0;
 				}
 			}
+		}
+		void testLootHit() {
+			// TODO: Make this
 		}
 };
 

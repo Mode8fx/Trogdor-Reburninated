@@ -526,7 +526,7 @@ void InitializeSprites() {
 	PREPARE_SPRITE(sprite_level_background_4, (rootDir + "graphics/backgrounds/4.bmp").c_str(),
 		OBJ_TO_SCREEN_AT_FRACTION_X(sprite_level_background_4, 0.4932), OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_level_background_4, 0.6064), 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_th, (rootDir + "graphics/backgrounds/treasure_hut.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_level_background_th), OBJ_TO_MID_SCREEN_Y(sprite_level_background_th), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(sprite_level_background_th), OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_level_background_th, 0.567), 1, 1, 1);
 	PREPARE_SPRITE(sprite_trogdor, (rootDir + "graphics/trogdor.bmp").c_str(),
 		0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_burnination_meter_full, (rootDir + "graphics/burnination_meter/full.bmp").c_str(),

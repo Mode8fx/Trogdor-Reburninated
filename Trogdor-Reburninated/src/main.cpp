@@ -834,6 +834,18 @@ int main(int argv, char** args) {
 							RENDER_TEXT(text_6_paused_2, textChars_font_serif_white_6);
 						}
 					}
+					if (GM.inTreasureHut) {
+						GM.paused = true;
+						GM.treasureHutFound = true;
+						GM.storex = GM.player.dstrect.x;
+						GM.storey = GM.player.dstrect.y;
+						GM.player.dstrect.x = 211;
+						GM.player.dstrect.y = 118;
+						GM.treasureHut_timer = 110;
+						GM.set_level_background(5);
+						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_sfx2, 0);
+						sceneState = 6;
+					}
 					break;
 				}
 			/* Game Over Screen */
@@ -870,10 +882,67 @@ int main(int argv, char** args) {
 					frameState++;
 				}
 				break;
-			///* Pause Screen (overlayed on Game) */
-			//case 6:
-			//	break;
-			/* Nothing */
+			/* Game (Treasure Hut) */
+			case 6:
+				if (GM.manually_paused) {
+					if (KEY_HELD(INPUT_START)) {
+						GM.startDown = true;
+					}
+					if (GM.startDown && !KEY_HELD(INPUT_START)) {
+						GM.startDown = false;
+						GM.manually_paused = 0;
+					}
+				} else {
+					GM.handle_treasure_hut();
+					if (GM.dm_frameState >= 3) {
+						GM.dm_updateFrameState();
+					}
+					if (GM.b_frameState >= 1) {
+						GM.b_updateFrameState();
+					}
+					if (GM.player.frameState >= 19) {
+						GM.player.updateFrameState();
+					}
+				}
+				if (GM.gameOver) {
+					sceneState = 5;
+					frameState = 321;
+					break;
+				} else {
+					if (GM.kick_frameState > 0) {
+						GM.kick_updateFrameState();
+					}
+					// render everything
+					RENDER_BACKGROUND();
+					RENDER_TOP_BAR();
+					RENDER_TROGDOR();
+					if (GM.burnination > 0) {
+						RENDER_SPRITE_USING_RECTS(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
+					}
+					if (GM.dm_visible) {
+						RENDER_SPRITE_USING_RECTS(sprite_death_message, GM.dm_srcrect, GM.dm_dstrect);
+					} else if (GM.b_visible) {
+						RENDER_SPRITE_USING_RECTS(sprite_burninate_fire, GM.bf_srcrect, GM.bf_dstrect);
+						RENDER_SPRITE_USING_RECTS(sprite_burninate_text, GM.bt_srcrect, GM.bt_dstrect);
+					}
+					if (GM.manually_paused) {
+						// Here, the original game renders a black circle around the top-right of the center of the screen...
+						// I think it's a mistake? I may add it later, but I'll leave it out for now.
+						RENDER_TRANSPARENT_FOREGROUND();
+						if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
+							RENDER_TEXT(text_6_paused_1, textChars_font_serif_white_6);
+							RENDER_TEXT(text_6_paused_2, textChars_font_serif_white_6);
+						}
+					}
+					if (!GM.inTreasureHut) {
+						GM.paused = false;
+						GM.player.dstrect.x = GM.storex;
+						GM.player.dstrect.y = GM.storey;
+						GM.set_level_background(levels[GM.levelIndex][0]);
+						sceneState = 4;
+					}
+					break;
+				}
 			case 7:
 				break;
 			/* End of Level Animation */
