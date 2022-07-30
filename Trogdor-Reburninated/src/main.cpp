@@ -849,7 +849,7 @@ int main(int argv, char** args) {
 			/* Game Over Screen */
 			case 5:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				// TODO: draw Trogdor, "IT'S OVER!", and whatever else needs to be handled for this screen
 				switch (frameState) {
 					case 321:
@@ -988,7 +988,7 @@ int main(int argv, char** args) {
 			/* Level Beaten Screen */
 			case 9:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_9_nice_work, textChars_font_serif_white_10);
 				// TODO: draw Trogdor, "LEVEL BEATEN!", smoke, and level fire
 				switch (frameState) {
@@ -1071,7 +1071,7 @@ int main(int argv, char** args) {
 			/* Level 4 Interlude */
 			case 11:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_11_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1092,7 +1092,7 @@ int main(int argv, char** args) {
 			/* Level 8 Interlude */
 			case 12:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_12_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1113,7 +1113,7 @@ int main(int argv, char** args) {
 			/* Level 12 Interlude */
 			case 13:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_13_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1134,7 +1134,7 @@ int main(int argv, char** args) {
 			/* Level 16 Interlude */
 			case 14:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_14_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1155,7 +1155,7 @@ int main(int argv, char** args) {
 			/* Level 20 Interlude */
 			case 15:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_15_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1176,7 +1176,7 @@ int main(int argv, char** args) {
 			/* Level 24 Interlude */
 			case 16:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_16_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1197,7 +1197,7 @@ int main(int argv, char** args) {
 			/* Level 30 Interlude */
 			case 17:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_17_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1218,7 +1218,7 @@ int main(int argv, char** args) {
 			/* Level 34 Interlude */
 			case 18:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_18_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1239,7 +1239,7 @@ int main(int argv, char** args) {
 			/* Level 38 Interlude */
 			case 19:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_19_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1260,7 +1260,7 @@ int main(int argv, char** args) {
 			/* Level 42 Interlude */
 			case 20:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_20_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1281,7 +1281,7 @@ int main(int argv, char** args) {
 			/* Level 46 Interlude */
 			case 21:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_21_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1302,7 +1302,7 @@ int main(int argv, char** args) {
 			/* Level 50 Interlude */
 			case 22:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				RENDER_TEXT(text_22_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1323,7 +1323,7 @@ int main(int argv, char** args) {
 			/* Level 100 Interlude (Credits) */
 			case 23:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_red.r, color_red.g, color_red.b);
+				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				// TODO: implement cutscene
 				break;
 			/* Nothing? (or maybe blank transition from Credits to High Scores Screen) */
