@@ -665,41 +665,42 @@ int main(int argv, char** args) {
 						frameState++;
 						break;
 					case 9:
+						InitializeTextChars();
 						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
 						text_0_loading_censor_rect.x += textChars_font_serif_white_14['.' - 32].dstrect.w;
-						InitializeTextChars();
 						frameState++;
 						break;
 					case 10:
+						InitializeSound();
 						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
 						text_0_loading_censor_rect.x += textChars_font_serif_white_14['.' - 32].dstrect.w;
-						InitializeTextObjects();
 						frameState++;
 						break;
 					case 11:
+						InitializeMusic();
 						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
 						text_0_loading_censor_rect.x += textChars_font_serif_white_14['.' - 32].dstrect.w;
-						InitializeController();
 						frameState++;
 						break;
 					case 12:
+						InitializeTextObjects();
+						InitializeController();
 						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
-						InitializeSoundAndMusic();
 						frameState++;
 						break;
 					case 13:
-						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
 						InitializeSFX();
+						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
 						frameState++;
 						break;
 					case 14:
-						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
 						InitializeSpritesPart1();
+						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
 						frameState++;
 						break;
 					case 15:
-						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
 						InitializeSpritesPart2();
+						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
 						frameState++;
 						break;
 					case 16:

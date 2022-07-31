@@ -467,7 +467,7 @@ void InitializeDisplay() {
 	SET_SCALING();
 }
 
-void InitializeSoundAndMusic() {
+void InitializeSound() {
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 #if !defined(SDL1) && !defined(ANDROID)
 		SDL_Log(Mix_GetError());
@@ -477,6 +477,9 @@ void InitializeSoundAndMusic() {
 	Mix_AllocateChannels(8);
 	Mix_Volume(SFX_CHANNEL_GAME, (int)(soundSettings.sfxVolume * 128.0 / 100));
 	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(soundSettings.sfxVolume * 128.0 / 100));
+}
+
+void InitializeMusic() {
 	music_title_screen = Mix_LoadWAV((rootDir + "music/title_screen.wav").c_str());
 }
 
