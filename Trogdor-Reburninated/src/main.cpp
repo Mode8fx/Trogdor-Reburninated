@@ -16,7 +16,7 @@ Uint32 frameTime;
 Uint32 frameCounter_global;
 
 /* Program State */
-Sint8 sceneState = 3;
+Sint8 sceneState = 0;
 Sint16 frameState = 1;
 Uint16 rand_var;
 bool isRunning = true;
@@ -51,11 +51,18 @@ int main(int argv, char** args) {
 	LOAD_SAVE_FILE();
 	InitializeDisplay();
 	gameScreenRect = { 0, 0, GAME_WIDTH, GAME_HEIGHT };
-	InitializeTextChars();
-	InitializeTextObjects();
-	InitializeSound();
-	InitializeSprites();
-	InitializeController();
+
+	/* Initialize SDL_ttf and font used for Loading text */
+	TTF_Init();
+	SET_FONT(font_serif_white_14, "fonts/27_serif_v01.ttf", 14,
+		TTF_STYLE_NORMAL, textChars_font_serif_white_14, color_white, 32, 126);
+	TTF_CloseFont(font_serif_white_14);
+
+	/* Initialize Loading Screen text objects */
+	SET_TEXT("loading...", text_0_loading, textChars_font_serif_white_14,
+		OBJ_TO_MID_SCREEN_X(text_0_loading), OBJ_TO_MID_SCREEN_Y(text_0_loading));
+	text_0_loading_censor_rect = { text_0_loading.dstrect.x, text_0_loading.dstrect.y,
+		(Uint16)text_0_loading.dstrect.w, (Uint16)text_0_loading.dstrect.h };
 
 	while (isRunning) {
 		/* Update Timers */
@@ -658,17 +665,41 @@ int main(int argv, char** args) {
 						frameState++;
 						break;
 					case 9:
+						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
+						text_0_loading_censor_rect.x += textChars_font_serif_white_14['.' - 32].dstrect.w;
+						InitializeTextChars();
+						frameState++;
+						break;
 					case 10:
+						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
+						text_0_loading_censor_rect.x += textChars_font_serif_white_14['.' - 32].dstrect.w;
+						InitializeTextObjects();
+						frameState++;
+						break;
 					case 11:
 						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
 						text_0_loading_censor_rect.x += textChars_font_serif_white_14['.' - 32].dstrect.w;
+						InitializeController();
 						frameState++;
 						break;
 					case 12:
+						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
+						InitializeSoundAndMusic();
+						frameState++;
+						break;
 					case 13:
+						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
+						InitializeSFX();
+						frameState++;
+						break;
 					case 14:
+						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
+						InitializeSpritesPart1();
+						frameState++;
+						break;
 					case 15:
 						RENDER_TEXT(text_0_loading, textChars_font_serif_white_14);
+						InitializeSpritesPart2();
 						frameState++;
 						break;
 					case 16:
@@ -696,6 +727,12 @@ int main(int argv, char** args) {
 				} else {
 					sceneState = 2;
 					frameState = 73;
+				}
+				if (KEY_PRESSED(INPUT_START)) {
+					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_trogador, 0);
+					sceneState = 3;
+					frameState = 3; // 3 is intentional
+					MM = MenuManager();
 				}
 				break;
 			/* Title Screen */

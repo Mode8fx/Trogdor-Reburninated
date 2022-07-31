@@ -467,7 +467,7 @@ void InitializeDisplay() {
 	SET_SCALING();
 }
 
-void InitializeSound() {
+void InitializeSoundAndMusic() {
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 #if !defined(SDL1) && !defined(ANDROID)
 		SDL_Log(Mix_GetError());
@@ -478,6 +478,9 @@ void InitializeSound() {
 	Mix_Volume(SFX_CHANNEL_GAME, (int)(soundSettings.sfxVolume * 128.0 / 100));
 	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(soundSettings.sfxVolume * 128.0 / 100));
 	music_title_screen = Mix_LoadWAV((rootDir + "music/title_screen.wav").c_str());
+}
+
+void InitializeSFX() {
 	sfx_burn_hut = Mix_LoadWAV((rootDir + "sfx/burn_hut.wav").c_str());
 	sfx_goldget = Mix_LoadWAV((rootDir + "sfx/trog_goldget.wav").c_str());
 	sfx_peasantscream = Mix_LoadWAV((rootDir + "sfx/trog_peasantscream.wav").c_str());
@@ -513,7 +516,7 @@ void InitializeSound() {
 	sfx_gameover = Mix_LoadWAV((rootDir + "sfx/gameover.wav").c_str());
 }
 
-void InitializeSprites() {
+void InitializeSpritesPart1() {
 	PREPARE_SPRITE(sprite_videlectrix_logo, (rootDir + "graphics/videlectrix_logo.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_videlectrix_logo), OBJ_TO_MID_SCREEN_Y(sprite_videlectrix_logo), 1, 1, (221.0 / 300));
 	// I'm gonna be lazy and just use the title screen directly instead of its separate components
@@ -535,6 +538,9 @@ void InitializeSprites() {
 		OBJ_TO_SCREEN_AT_FRACTION_X(sprite_level_background_4, 0.4932), OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_level_background_4, 0.6064), 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_th, (rootDir + "graphics/backgrounds/treasure_hut.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_level_background_th), OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_level_background_th, 0.567), 1, 1, 1);
+}
+
+void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_trogdor, (rootDir + "graphics/trogdor.bmp").c_str(),
 		0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_burnination_meter_full, (rootDir + "graphics/burnination_meter/full.bmp").c_str(),
@@ -576,8 +582,6 @@ void InitializeSprites() {
 }
 
 void InitializeTextChars() {
-	TTF_Init();
-
 	SET_FONT(font_serif_brown_6, "fonts/27_serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_brown_6, color_brown, 32, 122);
 	TTF_CloseFont(font_serif_brown_6);
@@ -611,9 +615,6 @@ void InitializeTextChars() {
 	SET_FONT(font_serif_white_10, "fonts/27_serif_v01.ttf", 10,
 		TTF_STYLE_NORMAL, textChars_font_serif_white_10, color_white, 32, 126);
 	TTF_CloseFont(font_serif_white_10);
-	SET_FONT(font_serif_white_14, "fonts/27_serif_v01.ttf", 14,
-		TTF_STYLE_NORMAL, textChars_font_serif_white_14, color_white, 32, 126);
-	TTF_CloseFont(font_serif_white_14);
 
 	SET_FONT(font_nokia_12, "fonts/29_NOKIA 5110 FontSet.ttf", 12,
 		TTF_STYLE_NORMAL, textChars_font_nokia_12, color_white, 97, 126);
@@ -636,11 +637,6 @@ void InitializeTextChars() {
 }
 
 void InitializeTextObjects() {
-	/* 0: Loading Screen */
-	SET_TEXT("loading...", text_0_loading, textChars_font_serif_white_14,
-		OBJ_TO_MID_SCREEN_X(text_0_loading), OBJ_TO_MID_SCREEN_Y(text_0_loading));
-	text_0_loading_censor_rect = { text_0_loading.dstrect.x, text_0_loading.dstrect.y,
-		(Uint16)text_0_loading.dstrect.w, (Uint16)text_0_loading.dstrect.h };
 	/* 1: Videlectrix Logo */
 	SET_TEXT("presents", text_1_presents, textChars_font_nokia_12,
 		OBJ_TO_MID_SCREEN_X(text_1_presents), OBJ_TO_SCREEN_AT_FRACTION_Y(text_1_presents, 0.7));
