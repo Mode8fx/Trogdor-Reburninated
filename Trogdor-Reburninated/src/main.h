@@ -100,6 +100,7 @@ SpriteObject sprite_trogdor_dead;
 SpriteObject sprite_knight;
 SpriteObject sprite_peasant;
 SpriteObject sprite_end_of_level_flash;
+SpriteObject sprite_end_of_level_trogdor;
 SpriteObject sprite_death_message;
 SpriteObject sprite_burninate_text;
 SpriteObject sprite_burninate_fire;
@@ -303,11 +304,13 @@ double screenScale = 1;
 bool isIntegerScale = true;
 Uint16 gameWidth;
 Uint16 gameHeight;
+#if !defined(SDL1)
 SDL_DisplayMode DM;
-#if !defined(ANDROID)
-#define SYSTEM_WIDTH  DM.w
-#define SYSTEM_HEIGHT DM.h
-#else
+#endif
+//#if !defined(ANDROID)
+//#define SYSTEM_WIDTH  DM.w
+//#define SYSTEM_HEIGHT DM.h
+#if defined(ANDROID)
 #define SYSTEM_WIDTH  max(DM.w, DM.h)
 #define SYSTEM_HEIGHT min(DM.w, DM.h)
 #endif
@@ -405,7 +408,9 @@ Uint16 frameRate;
 
 
 void InitializeDisplay() {
+#if !defined(SDL1)
 	SDL_GetCurrentDisplayMode(0, &DM);
+#endif
 #if !defined(ANDROID)
 	switch (videoSettings.aspectRatioIndex) {
 		case 1:
@@ -448,9 +453,11 @@ void InitializeDisplay() {
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII) || defined(GAMECUBE)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
+	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
 	screen = SDL_SetVideoMode(gameWidth, gameHeight, 24, SDL_DOUBLEBUF);
 #elif defined(SDL1)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
+	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
 	screen = SDL_SetVideoMode(gameWidth, gameHeight, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
 	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_RESIZABLE);
@@ -555,6 +562,8 @@ void InitializeSprites() {
 		0, 0, 2, 3, 1);
 	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_end_of_level_flash), OBJ_TO_MID_SCREEN_Y(sprite_end_of_level_flash), 1, 1, 1);
+	PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X(sprite_end_of_level_trogdor), OBJ_TO_MID_SCREEN_Y(sprite_end_of_level_trogdor), 1, 1, 1);
 	PREPARE_SPRITE(sprite_death_message, (rootDir + "graphics/death_message.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_death_message), OBJ_TO_MID_SCREEN_Y(sprite_death_message), 2, 5, 1);
 	PREPARE_SPRITE(sprite_burninate_text, (rootDir + "graphics/burninate_text.bmp").c_str(),

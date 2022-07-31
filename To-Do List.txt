@@ -5,9 +5,9 @@ Features:
 - Add hints screen (in original game, click the G) (page 2; L/R to change pages)
 - Add basic credits screen (page 3; L/R to change pages)
 Polish:
-- Fix scaling for large Trogdor that appears right after you've burninated the last cottage
+- Fix knights not moving while burninate text appears (they should keep moving)
+- Adjust end of level flash
 - Turn fake loading screen into actual loading screen
-- Polish opening graphics (Videlectrix, etc.)
 - Verify that all game logic matches Flash game (it should already, but it's been so long since I worked on this that I don't remember)
 - Verify that the SDL1 and SDL2 versions look and run equally well
 - Polish controls for all systems
@@ -19,6 +19,7 @@ Final:
 
 Trogdor Classic [faithful recreation of original Trogdor flash game]:
 Features:
+- Polish opening graphics (Videlectrix, etc.)
 - Add art and animation to Level Beaten and Game Over screens
 - Rework cutscene system so that animations are easier to add
 	- It's okay if the implementation has to be slightly inefficient to make this work, this really isn't that intensive of a game

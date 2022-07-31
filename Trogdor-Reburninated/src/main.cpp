@@ -954,12 +954,6 @@ int main(int argv, char** args) {
 				}
 				switch (frameState) {
 					case 257:
-						GM.player.srcrect.x = 0;
-						GM.player.srcrect.y = GM.player.srcrect.h;
-						GM.player.dstrect.w *= 1.5; // TODO: this doesn't work in SDL1...
-						GM.player.dstrect.h *= 1.5; // TODO: this doesn't work in SDL1...
-						GM.player.dstrect.x = OBJ_TO_MID_SCREEN_X(GM.player);
-						GM.player.dstrect.y = OBJ_TO_MID_SCREEN_Y(GM.player); // TODO: adjust this
 						if ((rand() % 100) < 10) {
 							if ((rand() % 100) < 50) {
 								Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sblevelbeat, 0);
@@ -983,7 +977,7 @@ int main(int argv, char** args) {
 				if (sceneState == 8) {
 					frameState++;
 				}
-				RENDER_SPRITE_USING_RECTS(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);
+				RENDER_SPRITE(sprite_end_of_level_trogdor);
 				break;
 			/* Level Beaten Screen */
 			case 9:

@@ -61,7 +61,7 @@ struct Timer {
 	isIntegerScale = !isIntegerScale; \
 	SET_SCALING();
 
-#if !defined(PC)
+#if !defined(PC) || defined(SDL1)
 #define SCALING_WIDTH DEFAULT_GAME_WIDTH
 #define SCALING_HEIGHT DEFAULT_GAME_HEIGHT
 #else
@@ -71,6 +71,32 @@ struct Timer {
 
 #if defined(ANDROID)
 #define SET_SCALING()
+#elif defined(SDL1)
+#define SET_SCALING()                                                                            \
+	if (isIntegerScale) {                                                                        \
+		int_i = min((int)(SCALING_WIDTH / gameWidth), (int)(SCALING_HEIGHT / gameHeight));       \
+		if (int_i < 1) int_i = 1;                                                                \
+		centerViewport.w = gameWidth * int_i;                                                    \
+		centerViewport.h = gameHeight * int_i;                                                   \
+		centerViewport.x = max((int)((SCALING_WIDTH - centerViewport.w) / 2 / int_i), 0);        \
+		centerViewport.y = max((int)((SCALING_HEIGHT - centerViewport.h) / 2 / int_i), 0);       \
+		/* SDL_RenderSetScale(renderer, int_i, int_i); */                                        \
+		/* SDL_RenderSetViewport(renderer, &centerViewport); */                                  \
+		screenScale = (double)int_i;                                                             \
+	} else {                                                                                     \
+		screenScale = (double)SCALING_WIDTH / gameWidth;                                         \
+		if ((double)SCALING_HEIGHT / gameHeight < screenScale) {                                 \
+			screenScale = (double)SCALING_HEIGHT / gameHeight;                                   \
+		}                                                                                        \
+		if (screenScale < 1) screenScale = 1;                                                    \
+		centerViewport.w = (int)(gameWidth * screenScale);                                       \
+		centerViewport.h = (int)(gameHeight * screenScale);                                      \
+		centerViewport.x = max((int)((SCALING_WIDTH - centerViewport.w) / 2 / screenScale), 0);  \
+		centerViewport.y = max((int)((SCALING_HEIGHT - centerViewport.h) / 2 / screenScale), 0); \
+		/* SDL_RenderSetScale(renderer, screenScale, screenScale); */                            \
+		/* SDL_RenderSetViewport(renderer, &centerViewport); */                                  \
+	}                                                                                            \
+	UPDATE_BORDER_RECTS();
 #else
 #define SET_SCALING()                                                                            \
 	if (isIntegerScale) {                                                                        \
@@ -118,10 +144,14 @@ struct Timer {
 	rightRect.w = leftRect.w;                             \
 	rightRect.h = leftRect.h;
 
+#if !defined(SDL1)
 #define RENDER_BORDER_RECTS()                  \
 	SDL_RenderFillRect(renderer, &topRect);    \
 	SDL_RenderFillRect(renderer, &bottomRect); \
 	SDL_RenderFillRect(renderer, &leftRect);   \
 	SDL_RenderFillRect(renderer, &rightRect);
+#else
+#define RENDER_BORDER_RECTS()
+#endif
 
 #endif

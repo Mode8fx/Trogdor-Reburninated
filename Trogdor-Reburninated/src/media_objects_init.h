@@ -34,6 +34,7 @@ extern SpriteObject sprite_trogdor_dead;
 extern SpriteObject sprite_knight;
 extern SpriteObject sprite_peasant;
 extern SpriteObject sprite_end_of_level_flash;
+extern SpriteObject sprite_end_of_level_trogdor;
 extern SpriteObject sprite_death_message;
 extern SpriteObject sprite_burninate_text;
 extern SpriteObject sprite_burninate_fire;
