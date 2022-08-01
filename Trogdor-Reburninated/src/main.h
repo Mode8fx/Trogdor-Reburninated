@@ -704,17 +704,17 @@ void InitializeTextObjects() {
 		OBJ_TO_MID_SCREEN_X(text_3_credits_7), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_7, 0.85));
 	/* 4: Game */
 	SET_TEXT("SCORE:", text_4_score, textChars_font_serif_2_red_6,
-		10, 4);
+		10, 1);
 	SET_TEXT("012345", text_4_score_val, textChars_font_serif_red_6,
 		10, 14);
 	SET_TEXT("MANS:", text_4_mans, textChars_font_serif_2_red_6,
 		200, 4);
 	SET_TEXT("67", text_4_mans_val, textChars_font_serif_red_6,
-		230, 4);
+		230, 1);
 	SET_TEXT("LEVEL:", text_4_level, textChars_font_serif_2_red_6,
 		195, 14);
 	SET_TEXT("89", text_4_level_val, textChars_font_serif_red_6,
-		230, 14);
+		230, 11);
 	/* 5: Nothing? (or maybe Game) */
 	/* 6: Pause Screen (overlayed on Game) */
 	SET_TEXT("paused", text_6_paused_1, textChars_font_serif_white_6,

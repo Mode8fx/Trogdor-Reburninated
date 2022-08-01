@@ -817,7 +817,8 @@ int main(int argv, char** args) {
 					GM.popArchers();
 					GM.updateArchersAndArrows();
 					GM.getPlayerInput();
-					GM.updateKnight();
+					GM.updateKnightHome();
+					GM.updateKnightOffsetAndMove();
 					if (GM.testWon()) {
 						GM.updateScore(min((20 + ((GM.level / 5) + 1) * 5), 200));
 						GM.clearArrows();
@@ -845,6 +846,8 @@ int main(int argv, char** args) {
 							GM.startDown = false;
 							GM.manually_paused = 0;
 						}
+					} else {
+						GM.updateKnightOffsetAndMove();
 					}
 				}
 				if (!GM.manually_paused) {
@@ -953,6 +956,7 @@ int main(int argv, char** args) {
 					}
 				} else {
 					GM.handle_treasure_hut();
+					GM.updateKnightOffsetAndMove();
 					if (GM.dm_frameState >= 3) {
 						GM.dm_updateFrameState();
 					}

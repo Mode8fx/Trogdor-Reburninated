@@ -141,6 +141,38 @@ class Knight {
 				collision = { 8 + dstrect.x, 9 + dstrect.y, 9, 13 };
 			}
 		}
+		void updateHome(double knightIncrement) {
+			if (home_x < LEFT_BOUND_KNIGHT) {
+				direction = rand() % 6;
+				home_x = LEFT_BOUND_KNIGHT + 1;
+			} else if (home_x > RIGHT_BOUND_KNIGHT) {
+				direction = rand() % 6;
+				home_x = RIGHT_BOUND_KNIGHT - 1;
+			}
+			if (home_y < UPPER_BOUND_KNIGHT + 50) {
+				direction = rand() % 6;
+				home_y = UPPER_BOUND_KNIGHT + 51;
+			} else if (home_y > LOWER_BOUND_KNIGHT) {
+				direction = rand() % 6;
+				home_y = LOWER_BOUND_KNIGHT - 1;
+			}
+			switch (direction) {
+				case 0:
+					home_x += knightIncrement;
+					break;
+				case 1:
+				case 2:
+					home_y += knightIncrement;
+					break;
+				case 3:
+				case 4:
+					home_x -= knightIncrement;
+					break;
+				case 5:
+					home_y -= knightIncrement;
+					break;
+			}
+		}
 		void updateFrameStateAndMove() {
 			frameState++;
 			if (frameState > 60) { // a while loop isn't necessary; it'll never go that far above 60
@@ -912,38 +944,13 @@ class GameManager {
 				}
 			}
 		}
-		void updateKnight() {
+		void updateKnightHome() {
 			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
-				if (knightArray[i].home_x < LEFT_BOUND_KNIGHT) {
-					knightArray[i].direction = rand() % 6;
-					knightArray[i].home_x = LEFT_BOUND_KNIGHT + 1;
-				} else if (knightArray[i].home_x > RIGHT_BOUND_KNIGHT) {
-					knightArray[i].direction = rand() % 6;
-					knightArray[i].home_x = RIGHT_BOUND_KNIGHT - 1;
-				}
-				if (knightArray[i].home_y < UPPER_BOUND_KNIGHT + 50) {
-					knightArray[i].direction = rand() % 6;
-					knightArray[i].home_y = UPPER_BOUND_KNIGHT + 51;
-				} else if (knightArray[i].home_y > LOWER_BOUND_KNIGHT) {
-					knightArray[i].direction = rand() % 6;
-					knightArray[i].home_y = LOWER_BOUND_KNIGHT - 1;
-				}
-				switch (knightArray[i].direction) {
-					case 0:
-						knightArray[i].home_x += knightIncrement;
-						break;
-					case 1:
-					case 2:
-						knightArray[i].home_y += knightIncrement;
-						break;
-					case 3:
-					case 4:
-						knightArray[i].home_x -= knightIncrement;
-						break;
-					case 5:
-						knightArray[i].home_y -= knightIncrement;
-						break;
-				}
+				knightArray[i].updateHome(knightIncrement);
+			}
+		}
+		void updateKnightOffsetAndMove() {
+			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 				if (knightArray[i].moving) {
 					knightArray[i].updateFrameStateAndMove();
 				}
