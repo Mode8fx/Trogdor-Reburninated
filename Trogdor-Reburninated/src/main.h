@@ -159,8 +159,9 @@ TextObject text_0_loading;
 SDL_Rect text_0_loading_censor_rect;
 TextObject text_1_presents;
 TextObject text_3_click_anywhere_to_start;
-TextObject text_3_programmed;
-TextObject text_3_designed;
+//TextObject text_3_programmed;
+//TextObject text_3_designed;
+TextObject text_3_page;
 TextObject text_3_instructions_1;
 TextObject text_3_instructions_2;
 TextObject text_3_instructions_3;
@@ -173,6 +174,13 @@ TextObject text_3_hints_4;
 TextObject text_3_hints_5;
 TextObject text_3_hints_6;
 TextObject text_3_hints_7;
+TextObject text_3_credits_1;
+TextObject text_3_credits_2;
+TextObject text_3_credits_3;
+TextObject text_3_credits_4;
+TextObject text_3_credits_5;
+TextObject text_3_credits_6;
+TextObject text_3_credits_7;
 TextObject text_4_score_val;
 TextObject text_4_mans_val;
 TextObject text_4_level_val;
@@ -585,37 +593,37 @@ void InitializeSpritesPart2() {
 }
 
 void InitializeTextChars() {
-	SET_FONT(font_serif_brown_6, "fonts/27_serif_v01.ttf", 6,
+	SET_FONT(font_serif_brown_6, "fonts/serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_brown_6, color_brown, 32, 122);
 	TTF_CloseFont(font_serif_brown_6);
-	SET_FONT(font_serif_brown_8, "fonts/27_serif_v01.ttf", 8,
+	SET_FONT(font_serif_brown_8, "fonts/serif_v01.ttf", 8,
 		TTF_STYLE_NORMAL, textChars_font_serif_brown_8, color_brown, 32, 126);
 	TTF_CloseFont(font_serif_brown_8);
-	SET_FONT(font_serif_gray_6, "fonts/27_serif_v01.ttf", 6,
+	SET_FONT(font_serif_gray_6, "fonts/serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_gray_6, color_gray, 32, 126);
 	TTF_CloseFont(font_serif_gray_6);
-	SET_FONT(font_serif_gray_12, "fonts/27_serif_v01.ttf", 12,
+	SET_FONT(font_serif_gray_12, "fonts/serif_v01.ttf", 12,
 		TTF_STYLE_NORMAL, textChars_font_serif_gray_12, color_gray, 32, 90);
 	TTF_CloseFont(font_serif_gray_12);
-	SET_FONT(font_serif_orange_6, "fonts/27_serif_v01.ttf", 6,
+	SET_FONT(font_serif_orange_6, "fonts/serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_orange_6, color_orange, 32, 90);
 	TTF_CloseFont(font_serif_orange_6);
-	SET_FONT(font_serif_red_6, "fonts/27_serif_v01.ttf", 6,
+	SET_FONT(font_serif_red_6, "fonts/serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_red_6, color_red, 32, 126);
 	TTF_CloseFont(font_serif_red_6);
-	SET_FONT(font_serif_red_8, "fonts/27_serif_v01.ttf", 8,
+	SET_FONT(font_serif_red_8, "fonts/serif_v01.ttf", 8,
 		TTF_STYLE_NORMAL, textChars_font_serif_red_8, color_red, 32, 126);
 	TTF_CloseFont(font_serif_red_8);
-	SET_FONT(font_serif_red_12, "fonts/27_serif_v01.ttf", 12,
+	SET_FONT(font_serif_red_12, "fonts/serif_v01.ttf", 12,
 		TTF_STYLE_NORMAL, textChars_font_serif_red_12, color_red, 32, 90);
 	TTF_CloseFont(font_serif_red_12);
-	SET_FONT(font_serif_white_6, "fonts/27_serif_v01.ttf", 6,
+	SET_FONT(font_serif_white_6, "fonts/serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_white_6, color_white, 32, 126);
 	TTF_CloseFont(font_serif_white_6);
-	SET_FONT(font_serif_white_9, "fonts/27_serif_v01.ttf", 9,
+	SET_FONT(font_serif_white_9, "fonts/serif_v01.ttf", 9,
 		TTF_STYLE_NORMAL, textChars_font_serif_white_9, color_white, 32, 126);
 	TTF_CloseFont(font_serif_white_9);
-	SET_FONT(font_serif_white_10, "fonts/27_serif_v01.ttf", 10,
+	SET_FONT(font_serif_white_10, "fonts/serif_v01.ttf", 10,
 		TTF_STYLE_NORMAL, textChars_font_serif_white_10, color_white, 32, 126);
 	TTF_CloseFont(font_serif_white_10);
 
@@ -647,10 +655,13 @@ void InitializeTextObjects() {
 	/* 3: Instructions Screen */
 	SET_TEXT("click anywhere to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8,
 		OBJ_TO_MID_SCREEN_X(text_3_click_anywhere_to_start), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_click_anywhere_to_start, 0.75));
-	SET_TEXT("Programmed by Jonathan Howe", text_3_programmed, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_programmed), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_programmed, 0.85));
-	SET_TEXT("Designed by Mike and Matt", text_3_designed, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_designed), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_designed, 0.93));
+	// Use a separate credits page instead of these
+	//SET_TEXT("Programmed by Jonathan Howe", text_3_programmed, textChars_font_serif_white_6,
+	//	OBJ_TO_MID_SCREEN_X(text_3_programmed), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_programmed, 0.85));
+	//SET_TEXT("Designed by Mike and Matt", text_3_designed, textChars_font_serif_white_6,
+	//	OBJ_TO_MID_SCREEN_X(text_3_designed), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_designed, 0.93));
+	SET_TEXT("(1/3)", text_3_page, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(text_3_page), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_page, 0.95));
 	SET_TEXT("Use the arrow keys to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(text_3_instructions_1), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_instructions_1, 0.35));
 	SET_TEXT("Stomp 10 peasants to achieve burnination.", text_3_instructions_2, textChars_font_serif_white_6,
@@ -662,19 +673,35 @@ void InitializeTextObjects() {
 	SET_TEXT("Press SPACE to pause.", text_3_instructions_5, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(text_3_instructions_5), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_instructions_5, 0.67));
 	SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_1), OBJ_TO_MID_SCREEN_Y(text_3_hints_1));
+		OBJ_TO_MID_SCREEN_X(text_3_hints_1), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_1, 0.39));
 	SET_TEXT("-Don't let the peasants return to their cottages", text_3_hints_2, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_2), OBJ_TO_MID_SCREEN_Y(text_3_hints_2));
+		OBJ_TO_MID_SCREEN_X(text_3_hints_2), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_2, 0.51));
 	SET_TEXT("-Once you\'re burninating, you\'re invincible", text_3_hints_3, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_3), OBJ_TO_MID_SCREEN_Y(text_3_hints_3));
+		OBJ_TO_MID_SCREEN_X(text_3_hints_3), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_3, 0.58));
 	SET_TEXT("-Burninated peasants set their cottages on fire", text_3_hints_4, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_4), OBJ_TO_MID_SCREEN_Y(text_3_hints_4));
+		OBJ_TO_MID_SCREEN_X(text_3_hints_4), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_4, 0.65));
 	SET_TEXT("-Get an extra man every 300 points", text_3_hints_5, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_5), OBJ_TO_MID_SCREEN_Y(text_3_hints_5));
+		OBJ_TO_MID_SCREEN_X(text_3_hints_5), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_5, 0.72));
 	SET_TEXT("-What\'s a treasure hut?!?!", text_3_hints_6, textChars_font_serif_red_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_6), OBJ_TO_MID_SCREEN_Y(text_3_hints_6));
+		OBJ_TO_MID_SCREEN_X(text_3_hints_6), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_6, 0.79));
 	SET_TEXT("- Secret Code?!?!", text_3_hints_7, textChars_font_serif_red_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_7), OBJ_TO_MID_SCREEN_Y(text_3_hints_7));
+		OBJ_TO_MID_SCREEN_X(text_3_hints_7), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_7, 0.86));
+
+	SET_TEXT("CREDITS", text_3_credits_1, textChars_font_serif_red_6,
+		OBJ_TO_MID_SCREEN_X(text_3_credits_1), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_1, 0.35));
+	SET_TEXT("ORIGINAL FLASH GAME", text_3_credits_2, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(text_3_credits_2), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_2, 0.43));
+	SET_TEXT("Programming: Jonathan Howe", text_3_credits_3, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(text_3_credits_3), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_3, 0.51));
+	// credits for the HTML5 version will be added when stuff from the HTML5 version is added to this version
+	SET_TEXT("Design: Mike Chapman, Matt Chapman", text_3_credits_4, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(text_3_credits_4), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_4, 0.59));
+	SET_TEXT("THIS PORT", text_3_credits_5, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(text_3_credits_5), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_5, 0.69));
+	SET_TEXT("Mips96", text_3_credits_6, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(text_3_credits_6), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_6, 0.77));
+	SET_TEXT("https://github.com/Mips96/Trogdor-Reburninated", text_3_credits_7, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(text_3_credits_7), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_7, 0.85));
 	/* 4: Game */
 	SET_TEXT("SCORE:", text_4_score, textChars_font_serif_2_red_6,
 		10, 4);

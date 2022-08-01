@@ -54,7 +54,7 @@ int main(int argv, char** args) {
 
 	/* Initialize SDL_ttf and font used for Loading text */
 	TTF_Init();
-	SET_FONT(font_serif_white_14, "fonts/27_serif_v01.ttf", 14,
+	SET_FONT(font_serif_white_14, "fonts/serif_v01.ttf", 14,
 		TTF_STYLE_NORMAL, textChars_font_serif_white_14, color_white, 32, 126);
 	TTF_CloseFont(font_serif_white_14);
 
@@ -581,7 +581,6 @@ int main(int argv, char** args) {
 		}
 		if (KEY_PRESSED(INPUT_R)) {
 			SDL_TOGGLE_INTEGER_SCALE();
-			PRINT(isIntegerScale);
 		}
 
 		/* Clear Screen */
@@ -755,7 +754,8 @@ int main(int argv, char** args) {
 			case 3:
 				frameState++;
 				MM.typeStuff();
-				if (KEY_PRESSED(INPUT_A)) {
+				MM.handlePageChange();
+				if (KEY_PRESSED(INPUT_A) && MM.page == 1) {
 					if (MM.contraActive) {
 						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_sfx2, 0);
 						GM = GameManager(30);
@@ -769,16 +769,39 @@ int main(int argv, char** args) {
 					sceneState = 4;
 				}
 				RENDER_SPRITE(sprite_trogdor_logo);
-				RENDER_TEXT(text_3_instructions_1, textChars_font_serif_white_6);
-				RENDER_TEXT(text_3_instructions_2, textChars_font_serif_white_6);
-				RENDER_TEXT(text_3_instructions_3, textChars_font_serif_white_6);
-				RENDER_TEXT(text_3_instructions_4, textChars_font_serif_white_6);
-				RENDER_TEXT(text_3_instructions_5, textChars_font_serif_white_6);
-				RENDER_TEXT(text_3_programmed, textChars_font_serif_white_6);
-				RENDER_TEXT(text_3_designed, textChars_font_serif_white_6);
-				if (frameState % 4 < 2) {
-					RENDER_TEXT(text_3_click_anywhere_to_start, textChars_font_serif_red_8);
+				switch (MM.page) {
+					case 1:
+						RENDER_TEXT(text_3_instructions_1, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_instructions_2, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_instructions_3, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_instructions_4, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_instructions_5, textChars_font_serif_white_6);
+						//RENDER_TEXT(text_3_programmed, textChars_font_serif_white_6);
+						//RENDER_TEXT(text_3_designed, textChars_font_serif_white_6);
+						if (frameState % 4 < 2) {
+							RENDER_TEXT(text_3_click_anywhere_to_start, textChars_font_serif_red_8);
+						}
+						break;
+					case 2:
+						RENDER_TEXT(text_3_hints_1, textChars_font_serif_red_6);
+						RENDER_TEXT(text_3_hints_2, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_hints_3, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_hints_4, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_hints_5, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_hints_6, textChars_font_serif_red_6);
+						RENDER_TEXT(text_3_hints_7, textChars_font_serif_red_6);
+						break;
+					default:
+						RENDER_TEXT(text_3_credits_1, textChars_font_serif_red_6);
+						RENDER_TEXT(text_3_credits_2, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_credits_3, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_credits_4, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_credits_5, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_credits_6, textChars_font_serif_white_6);
+						RENDER_TEXT(text_3_credits_7, textChars_font_serif_white_6);
+						break;
 				}
+				RENDER_TEXT(text_3_page, textChars_font_serif_white_6);
 				break;
 			/* Game */
 			case 4:

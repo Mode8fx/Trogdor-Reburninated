@@ -469,16 +469,17 @@ class Trogdor {
 
 class MenuManager {
 	public:
-		bool contraActive;                      // Konami code (Contra cheat) is enabled
-		Sint8 contraIndex;                      // the current index of the Konami code input
+		bool contraActive; // Konami code (Contra cheat) is enabled
+		Sint8 contraIndex; // the current index of the Konami code input
+		Sint8 page;        // the current page number
 		MenuManager() {
 			contraActive = false;
 			contraIndex = 0;
+			page = 1;
 		}
 		void typeStuff() {
 			if (!contraActive) {
 				if (keyInputs != 0) {
-					PRINT(keyInputs);
 					if (keyInputs == (1 << (contraArrayKey[contraIndex]))) {
 						contraIndex++;
 						if (contraIndex == LEN(contraArrayKey)) {
@@ -488,6 +489,17 @@ class MenuManager {
 						contraIndex = 0;
 					}
 				}
+			}
+		}
+		void handlePageChange() {
+			if (KEY_PRESSED(INPUT_LEFT)) {
+				page--;
+				if (page < 1) page = 3;
+				UPDATE_TEXT(text_3_page, "("+to_string(page)+"/3)");
+			} else if (KEY_PRESSED(INPUT_RIGHT)) {
+				page++;
+				if (page > 3) page = 1;
+				UPDATE_TEXT(text_3_page, "(" + to_string(page) + "/3)");
 			}
 		}
 };
