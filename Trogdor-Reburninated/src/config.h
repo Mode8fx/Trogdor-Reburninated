@@ -15,21 +15,21 @@
 #define DEFAULT_GAME_HEIGHT   180
 #define DEFAULT_FRAME_RATE    16
 
-extern Uint16 gameWidth;
-extern Uint16 gameHeight;
+extern Uint16 GAME_WIDTH;
+extern Uint16 GAME_HEIGHT;
 extern double gameWidthMult;
 extern double gameHeightMult;
 extern Uint16 frameRate;
 
-#define GAME_WIDTH gameWidth
-#define GAME_HEIGHT gameHeight
+#define GAME_WIDTH DEFAULT_GAME_WIDTH
+#define GAME_HEIGHT DEFAULT_GAME_HEIGHT
 #define GAME_WIDTH_MULT gameWidthMult
 #define GAME_HEIGHT_MULT gameHeightMult
 #define FRAME_RATE frameRate
 
 #define SET_WIDTH_HEIGHT_MULTS()                              \
-	gameWidthMult = ((double)gameWidth / DEFAULT_GAME_WIDTH); \
-	gameHeightMult = ((double)gameHeight / DEFAULT_GAME_HEIGHT);
+	gameWidthMult = ((double)GAME_WIDTH / DEFAULT_GAME_WIDTH); \
+	gameHeightMult = ((double)GAME_HEIGHT / DEFAULT_GAME_HEIGHT);
 
 #define SAVE_FILE (rootDir+"save.bin").c_str()
 

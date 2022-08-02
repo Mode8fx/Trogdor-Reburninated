@@ -130,10 +130,10 @@ int main(int argv, char** args) {
 #if defined(PC) && !defined(SDL1)
 				case SDL_WINDOWEVENT:
 					if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
-						if (SDL_GetWindowSurface(window)->w < gameWidth)
-							SDL_SetWindowSize(window, gameWidth, SDL_GetWindowSurface(window)->h);
-						if (SDL_GetWindowSurface(window)->h < gameHeight)
-							SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, gameHeight);
+						if (SDL_GetWindowSurface(window)->w < GAME_WIDTH)
+							SDL_SetWindowSize(window, GAME_WIDTH, SDL_GetWindowSurface(window)->h);
+						if (SDL_GetWindowSurface(window)->h < GAME_HEIGHT)
+							SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, GAME_HEIGHT);
 						SET_SCALING();
 					}
 					break;
@@ -415,12 +415,12 @@ int main(int argv, char** args) {
 					}
 					break;
 				case SDL_FINGERDOWN:
-					mouseInput_x = (Sint32)(event.tfinger.x * gameWidth);
-					mouseInput_y = (Sint32)(event.tfinger.y * gameHeight);
+					mouseInput_x = (Sint32)(event.tfinger.x * GAME_WIDTH);
+					mouseInput_y = (Sint32)(event.tfinger.y * GAME_HEIGHT);
 					break;
 				case SDL_FINGERMOTION:
-					mouseInput_x = (Sint32)(event.tfinger.x * gameWidth);
-					mouseInput_y = (Sint32)(event.tfinger.y * gameHeight);
+					mouseInput_x = (Sint32)(event.tfinger.x * GAME_WIDTH);
+					mouseInput_y = (Sint32)(event.tfinger.y * GAME_HEIGHT);
 					break;
 				case SDL_FINGERUP:
 					break;

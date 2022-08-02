@@ -2,8 +2,16 @@ To-Do List
 
 Trogdor Alpha [gameplay-complete basic port of Trogdor]:
 Polish:
+- Rework gameWidth/gameHeight/GAME_WIDTH/GAME_HEIGHT/DEFAULT_GAME_WIDTH/DEFAULT_GAME_HEIGHT into three sizes:
+	- GAME_WIDTH/GAME_HEIGHT: The size of the Trogdor game; locked to 250 and 180 respectively
+	- appWidth/appHeight: The size of the program; initialized and locked when the game is first opened, determined by the setting from save data (like what SuDokuL did)
+	- windowWidth/windowHeight: The size of the window; starts out equal to appWidth/appHeight, but can be resized; scaling should scale app relative to window size
+- If window is resized while integer scaling is enabled, snap window size to app multiple if within 10%
 - Fix text
 	- It doesn't have to be completely polished for Alpha, but there are some major issues: 6pt font is too blurry but also too big for the 250x180 game window (despite matching the original game?). So even though it won't match the original game, 8pt font should be used instead, and text positions should be adjusted to allow for this. Also, maybe text should go outside the game window? Outside of the 250x180 game window and into the 320x240 full window
+- Refactoring
+	- Change macros to inline functions or constexprs
+	- Fix easy compiler warnings (generally caused by type conversions and signed/unsigned mismatches)
 - Adjust end of level flash
 - Add art to Level Beaten and Game Over screens
 - Verify that all game logic matches Flash game (it should already, but it's been so long since I worked on this that I don't remember)
@@ -36,7 +44,6 @@ Features:
 - Add new title screen
 - Add new main menu
 - Add all Reburninated settings
-- Add overlay and screen centering support (especially needed since the main menu will run at a larger resolution than the main game itself)
 - Add achievements
 - Add more detailed credits screen
 - Add History of Trogdor screen

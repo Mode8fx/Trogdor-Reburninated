@@ -311,8 +311,6 @@ SDL_Rect rightRect;
 bool isWindowed = true;
 double screenScale = 1;
 bool isIntegerScale = true;
-Uint16 gameWidth;
-Uint16 gameHeight;
 #if !defined(SDL1)
 SDL_DisplayMode DM;
 #endif
@@ -446,8 +444,6 @@ void InitializeDisplay() {
 #endif
 	videoSettings.widthSetting = 640;
 	videoSettings.heightSetting = 480;
-	gameWidth = DEFAULT_GAME_WIDTH;
-	gameHeight = DEFAULT_GAME_HEIGHT;
 	SET_WIDTH_HEIGHT_MULTS();
 	frameRate = DEFAULT_FRAME_RATE;
 
@@ -465,11 +461,11 @@ void InitializeDisplay() {
 #elif defined(WII) || defined(GAMECUBE)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	gameScreen = SDL_SetVideoMode(gameWidth, gameHeight, 24, SDL_DOUBLEBUF);
+	gameScreen = SDL_SetVideoMode(GAME_WIDTH, GAME_HEIGHT, 24, SDL_DOUBLEBUF);
 #elif defined(SDL1)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	gameScreen = SDL_SetVideoMode(gameWidth, gameHeight, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	gameScreen = SDL_SetVideoMode(GAME_WIDTH, GAME_HEIGHT, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
 	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -811,14 +807,14 @@ void InitializeController() {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 #define RENDER_TRANSPARENT_FOREGROUND()                                                   \
 	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_DOUBLEBUF, \
-		gameWidth, gameHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);       \
+		GAME_WIDTH, GAME_HEIGHT, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);       \
 	SDL_FillRect(screen_transparent, NULL, 0xC8000000);                                   \
 	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &appScreenRect);               \
 	SDL_FreeSurface(screen_transparent);
 #else
 #define RENDER_TRANSPARENT_FOREGROUND()                                                   \
 	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_DOUBLEBUF, \
-		gameWidth, gameHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);       \
+		GAME_WIDTH, GAME_HEIGHT, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);       \
 	SDL_FillRect(screen_transparent, NULL, 0xC8000000);                                   \
 	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &appScreenRect);               \
 	SDL_FreeSurface(screen_transparent);
