@@ -1,9 +1,10 @@
-#if !defined(SDL1)
-
 #include "config.h"
 
 #ifndef TEXT_OBJECTS_H
 #define TEXT_OBJECTS_H
+
+#define charTempX int_j // Yes, this is necessary
+#define charTempY int_k // Yes, this is necessary
 
 struct TextRect {
     Sint16 x = 0;
@@ -26,8 +27,7 @@ struct TextObject {
 
 /* Single Characters */
 struct TextCharObject {
-    SDL_Surface *surface;
-    SDL_Texture *texture;
+    SDL_Surface* surface;
     SDL_Rect dstrect;
 };
 
@@ -36,9 +36,9 @@ struct TextCharObject {
 
 #define SET_TEXT_HELPER(text, textObj, pos_x, pos_y, charArr)                                              \
     textObj.str = text;                                                                                    \
+    STRCPY(tempCharArray, textObj.str.c_str());                                                            \
     textObj.dstrect.w = 0;                                                                                 \
     textObj.dstrect.h = 0;                                                                                 \
-    STRCPY(tempCharArray, textObj.str.c_str());                                                            \
     for (uint_i = 0; uint_i < textObj.str.length(); uint_i++) {                                            \
         textObj.dstrect.w += charArr[tempCharArray[uint_i] - 32].dstrect.w;                                \
         textObj.dstrect.h = max(textObj.dstrect.h, (Sint16)charArr[tempCharArray[uint_i] - 32].dstrect.h); \
@@ -49,14 +49,14 @@ struct TextCharObject {
 #define UPDATE_TEXT(textObj, text) \
     textObj.str = text;
 
-#define SET_TEXT_CHAR(text, font, text_color, textObj)                         \
-    textObj.surface = TTF_RenderText_Blended(font, text, text_color);          \
-    textObj.texture = SDL_CreateTextureFromSurface(renderer, textObj.surface); \
-    TTF_SizeText(font, text, &textObj.dstrect.w, &textObj.dstrect.h);          \
-    SDL_FreeSurface(textObj.surface);
+#define SET_TEXT_CHAR(text, font, text_color, textObj)              \
+    textObj.surface = TTF_RenderText_Solid(font, text, text_color); \
+    TTF_SizeText(font, text, &charTempX, &charTempY);               \
+    textObj.dstrect.w = charTempX;                                  \
+    textObj.dstrect.h = charTempY;
 
 #define RENDER_TEXT_CHAR(textObj) \
-    SDL_RenderCopy(renderer, textObj.texture, NULL, &textObj.dstrect);
+    SDL_BlitSurface(textObj.surface, NULL, gameScreen, &textObj.dstrect);
 
 #define RENDER_TEXT(textObj, charArr)                                                                \
     STRCPY(tempCharArray, textObj.str.c_str());                                                      \
@@ -75,7 +75,7 @@ struct TextCharObject {
     textObj.dstrect.y = (pos_y);
 
 #define DESTROY_TEXT_OBJECT_TEXTURE(textObj) \
-    SDL_DestroyTexture(textObj.texture);
+    SDL_FreeSurface(textObj.surface);
 
 #define SET_FONT(font, fontFile, size, style, charArr, color, minIndex, maxIndex) \
     font = TTF_OpenFont((rootDir + fontFile).c_str(), size);                      \
@@ -85,7 +85,5 @@ struct TextCharObject {
         ss << static_cast<char>(uint_i);                                          \
         SET_TEXT_CHAR(ss.str().c_str(), font, color, charArr[uint_i - 32]);       \
     }
-
-#endif
 
 #endif

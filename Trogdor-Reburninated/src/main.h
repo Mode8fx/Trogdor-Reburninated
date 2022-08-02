@@ -8,9 +8,11 @@
 #if !defined(SDL1)
 SDL_Window *window;
 SDL_Renderer *renderer;
-#else
-SDL_Surface *screen;
+SDL_Texture *gameTexture;
 #endif
+SDL_Surface *gameScreen;
+const SDL_Rect gameWindowSrcRect = { 0, 0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT };
+SDL_Rect gameWindowDstRect = { 0, 0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT };
 SDL_Event event;
 
 /* General Input */
@@ -306,7 +308,6 @@ SDL_Rect topRect;
 SDL_Rect bottomRect;
 SDL_Rect leftRect;
 SDL_Rect rightRect;
-SDL_Rect centerViewport;
 bool isWindowed = true;
 double screenScale = 1;
 bool isIntegerScale = true;
@@ -454,22 +455,25 @@ void InitializeDisplay() {
 #if defined(PSP)
 	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+	gameSurface = SDL_CreateRGBSurface(0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT, 24, 0, 0, 0, 0);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID)
 	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	gameSurface = SDL_CreateRGBSurface(0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT, 24, 0, 0, 0, 0);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII) || defined(GAMECUBE)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	screen = SDL_SetVideoMode(gameWidth, gameHeight, 24, SDL_DOUBLEBUF);
+	gameScreen = SDL_SetVideoMode(gameWidth, gameHeight, 24, SDL_DOUBLEBUF);
 #elif defined(SDL1)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	screen = SDL_SetVideoMode(gameWidth, gameHeight, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	gameScreen = SDL_SetVideoMode(gameWidth, gameHeight, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
 	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+	gameScreen = SDL_CreateRGBSurface(0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT, 24, 0, 0, 0, 0);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
 	SET_SCALING();
@@ -797,31 +801,26 @@ void InitializeController() {
 #endif
 }
 
-#if !defined(SDL1)
 #define RENDER_BACKGROUND() \
-	SDL_RenderCopy(renderer, sprite_level_background->texture, NULL, &sprite_level_background->dstrect);
-#else
-#define RENDER_BACKGROUND() \
-	SDL_BlitSurface(sprite_level_background->surface, NULL, screen, &sprite_level_background->dstrect);
-#endif
+	SDL_BlitSurface(sprite_level_background->surface, NULL, gameScreen, &sprite_level_background->dstrect);
 
 #if !defined(SDL1)
 #define RENDER_TRANSPARENT_FOREGROUND() \
-	DRAW_RECT_WITH_ALPHA(gameScreenRect, color_black.r, color_black.g, color_black.b, 0xC8);
+	DRAW_RECT_WITH_ALPHA(appScreenRect, color_black.r, color_black.g, color_black.b, 0xC8);
 #else
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 #define RENDER_TRANSPARENT_FOREGROUND()                                                   \
 	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_DOUBLEBUF, \
 		gameWidth, gameHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);       \
 	SDL_FillRect(screen_transparent, NULL, 0xC8000000);                                   \
-	SDL_BlitSurface(screen_transparent, NULL, screen, &gameScreenRect);                   \
+	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &appScreenRect);               \
 	SDL_FreeSurface(screen_transparent);
 #else
 #define RENDER_TRANSPARENT_FOREGROUND()                                                   \
 	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_DOUBLEBUF, \
 		gameWidth, gameHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);       \
 	SDL_FillRect(screen_transparent, NULL, 0xC8000000);                                   \
-	SDL_BlitSurface(screen_transparent, NULL, screen, &gameScreenRect);                   \
+	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &appScreenRect);               \
 	SDL_FreeSurface(screen_transparent);
 #endif
 #endif
@@ -861,29 +860,29 @@ void InitializeController() {
 		SDL_JoystickClose(joystick); \
 	}
 #define DESTROY_DISPLAY() \
-	SDL_FreeSurface(screen);
+	SDL_FreeSurface(gameScreen);
 #endif
 
 void DestroyAll() {
 	/* Textures */
 	/* Text Chars */
-	DESTROY_TEXTCHARS(textChars_font_serif_brown_6);
-	DESTROY_TEXTCHARS(textChars_font_serif_brown_8);
-	DESTROY_TEXTCHARS(textChars_font_serif_gray_6);
-	//DESTROY_TEXTCHARS(textChars_font_serif_gray_12);
-	DESTROY_TEXTCHARS(textChars_font_serif_orange_6);
-	DESTROY_TEXTCHARS(textChars_font_serif_red_6);
-	DESTROY_TEXTCHARS(textChars_font_serif_red_8);
-	//DESTROY_TEXTCHARS(textChars_font_serif_red_12);
-	DESTROY_TEXTCHARS(textChars_font_serif_white_6);
-	DESTROY_TEXTCHARS(textChars_font_serif_white_9);
-	DESTROY_TEXTCHARS(textChars_font_serif_white_10);
-	DESTROY_TEXTCHARS(textChars_font_serif_white_14);
-	DESTROY_TEXTCHARS(textChars_font_nokia_12);
-	//DESTROY_TEXTCHARS(textChars_font_serif_2_bold_black_23);
-	//DESTROY_TEXTCHARS(textChars_font_serif_2_bold_red_23);
-	DESTROY_TEXTCHARS(textChars_font_serif_2_red_6);
-	DESTROY_TEXTCHARS(textChars_font_serif_2_red_13);
+	//DESTROY_TEXTCHARS(textChars_font_serif_brown_6);
+	//DESTROY_TEXTCHARS(textChars_font_serif_brown_8);
+	//DESTROY_TEXTCHARS(textChars_font_serif_gray_6);
+	////DESTROY_TEXTCHARS(textChars_font_serif_gray_12);
+	//DESTROY_TEXTCHARS(textChars_font_serif_orange_6);
+	//DESTROY_TEXTCHARS(textChars_font_serif_red_6);
+	//DESTROY_TEXTCHARS(textChars_font_serif_red_8);
+	////DESTROY_TEXTCHARS(textChars_font_serif_red_12);
+	//DESTROY_TEXTCHARS(textChars_font_serif_white_6);
+	//DESTROY_TEXTCHARS(textChars_font_serif_white_9);
+	//DESTROY_TEXTCHARS(textChars_font_serif_white_10);
+	//DESTROY_TEXTCHARS(textChars_font_serif_white_14);
+	//DESTROY_TEXTCHARS(textChars_font_nokia_12);
+	////DESTROY_TEXTCHARS(textChars_font_serif_2_bold_black_23);
+	////DESTROY_TEXTCHARS(textChars_font_serif_2_bold_red_23);
+	//DESTROY_TEXTCHARS(textChars_font_serif_2_red_6);
+	//DESTROY_TEXTCHARS(textChars_font_serif_2_red_13);
 	/* Sound */
 	if (soundSettings.musicIndex != 0) {
 		Mix_FreeMusic(bgm);

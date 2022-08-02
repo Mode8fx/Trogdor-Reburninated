@@ -1,10 +1,6 @@
 #include "config.h"
 #include "sprite_objects.h"
-#if !defined(SDL1)
-#include "text_objects_sdl2.h"
-#else
-#include "text_objects_sdl1.h"
-#endif
+#include "text_objects.h"
 
 #ifndef MEDIA_OBJECTS_INIT_H
 #define MEDIA_OBJECTS_INIT_H

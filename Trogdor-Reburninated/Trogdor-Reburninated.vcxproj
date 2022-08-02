@@ -252,8 +252,7 @@
     <ClInclude Include="src\sprite_objects.h" />
     <ClInclude Include="src\media_objects_init.h" />
     <ClInclude Include="src\system_specific_macros.h" />
-    <ClInclude Include="src\text_objects_sdl1.h" />
-    <ClInclude Include="src\text_objects_sdl2.h" />
+    <ClInclude Include="src\text_objects.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

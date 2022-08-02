@@ -24,7 +24,7 @@ bool isRunning = true;
 /* Other */
 MenuManager MM;
 GameManager GM;
-SDL_Rect gameScreenRect;
+SDL_Rect appScreenRect;
 Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down Left Right Left Right B A
 
 /* General-use Variables */
@@ -50,7 +50,7 @@ int main(int argv, char** args) {
 
 	LOAD_SAVE_FILE();
 	InitializeDisplay();
-	gameScreenRect = { 0, 0, GAME_WIDTH, GAME_HEIGHT };
+	appScreenRect = { 0, 0, GAME_WIDTH, GAME_HEIGHT };
 
 	/* Initialize SDL_ttf and font used for Loading text */
 	TTF_Init();
@@ -584,11 +584,10 @@ int main(int argv, char** args) {
 		}
 
 		/* Clear Screen */
+		SDL_FillRect(gameScreen, NULL, 0x000000);
 #if !defined(SDL1)
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
-#else
-		SDL_FillRect(screen, NULL, 0x000000);
 #endif
 
 		/* Scene states:
@@ -1406,9 +1405,12 @@ int main(int argv, char** args) {
 
 		/* Update Screen */
 #if !defined(SDL1)
+		gameTexture = SDL_CreateTextureFromSurface(renderer, gameScreen);
+		SDL_RenderCopy(renderer, gameTexture, &gameWindowSrcRect, &gameWindowDstRect);
+		SDL_DestroyTexture(gameTexture); // there was a memory leak, and freeing the gameScreen crashes, so I guess this is the right way to fix it?
 		SDL_RenderPresent(renderer);
 #else
-		SDL_Flip(screen);
+		SDL_Flip(gameScreen);
 #endif
 		
 		/* Cap Framerate */
