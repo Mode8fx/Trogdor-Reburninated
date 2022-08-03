@@ -13,6 +13,7 @@ SDL_Texture *gameTexture;
 SDL_Surface *gameScreen;
 const SDL_Rect gameWindowSrcRect = { 0, 0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT };
 SDL_Rect gameWindowDstRect = { 0, 0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT };
+SDL_Rect appScreenRect;
 SDL_Event event;
 
 /* General Input */
@@ -797,34 +798,32 @@ void InitializeController() {
 #endif
 }
 
-#define RENDER_BACKGROUND() \
+void renderBackground() {
 	SDL_BlitSurface(sprite_level_background->surface, NULL, gameScreen, &sprite_level_background->dstrect);
+}
 
+void renderTransparentForeground() {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-#define RENDER_TRANSPARENT_FOREGROUND()                                               \
-	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(0,                         \
-		GAME_WIDTH, GAME_HEIGHT, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF); \
-	SDL_FillRect(screen_transparent, NULL, 0xC8000000);                               \
-	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &appScreenRect);            \
-	SDL_FreeSurface(screen_transparent);
+	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(0,
+		GAME_WIDTH, GAME_HEIGHT, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
 #else
-#define RENDER_TRANSPARENT_FOREGROUND()                                               \
-	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(0,                         \
-		GAME_WIDTH, GAME_HEIGHT, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000); \
-	SDL_FillRect(screen_transparent, NULL, 0xC8000000);                               \
-	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &appScreenRect);            \
-	SDL_FreeSurface(screen_transparent);
+	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(0,
+		GAME_WIDTH, GAME_HEIGHT, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 #endif
+	SDL_FillRect(screen_transparent, NULL, 0xC8000000);
+	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &appScreenRect);
+	SDL_FreeSurface(screen_transparent);
+}
 
 
 
-void destroyTextChars(textChars) {
+void destroyTextChars(TextCharObject textChars[]) {
 	for (i = 0; i < LEN(textChars); i++) {
-		destroySprite(textChars[i]);
+		SDL_FreeSurface(textChars[i].surface);
 	}
 }
 
-void destroySprite(sprite) {
+void destroySprite(SpriteObject sprite) {
 	SDL_FreeSurface(sprite.surface);
 }
 

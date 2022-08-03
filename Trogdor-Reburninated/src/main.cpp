@@ -24,7 +24,6 @@ bool isRunning = true;
 /* Other */
 MenuManager MM;
 GameManager GM;
-SDL_Rect appScreenRect;
 Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down Left Right Left Right B A
 SDL_Rect outputRect;
 
@@ -870,7 +869,7 @@ int main(int argv, char** args) {
 						GM.kick_updateFrameState();
 					}
 					// render everything
-					RENDER_BACKGROUND();
+					renderBackground();
 					RENDER_TOP_BAR();
 					//RENDER_AND_ANIMATE_UPPER_COTTAGES();
 					RENDER_AND_ANIMATE_COTTAGES();
@@ -892,7 +891,7 @@ int main(int argv, char** args) {
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
 						// I think it's a mistake? I may add it later, but I'll leave it out for now.
-						RENDER_TRANSPARENT_FOREGROUND();
+						renderTransparentForeground();
 						if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
 							RENDER_TEXT(text_6_paused_1, textChars_font_serif_white_6);
 							RENDER_TEXT(text_6_paused_2, textChars_font_serif_white_6);
@@ -976,7 +975,7 @@ int main(int argv, char** args) {
 						GM.kick_updateFrameState();
 					}
 					// render everything
-					RENDER_BACKGROUND();
+					renderBackground();
 					RENDER_TOP_BAR();
 					RENDER_LOOT();
 					RENDER_TROGDOR();
@@ -992,7 +991,7 @@ int main(int argv, char** args) {
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
 						// I think it's a mistake? I may add it later, but I'll leave it out for now.
-						RENDER_TRANSPARENT_FOREGROUND();
+						renderTransparentForeground();
 						if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
 							RENDER_TEXT(text_6_paused_1, textChars_font_serif_white_6);
 							RENDER_TEXT(text_6_paused_2, textChars_font_serif_white_6);
@@ -1011,7 +1010,7 @@ int main(int argv, char** args) {
 				break;
 			/* End of Level Animation */
 			case 8:
-				RENDER_BACKGROUND();
+				renderBackground();
 				RENDER_TOP_BAR();
 				RENDER_AND_ANIMATE_COTTAGES();
 				if (((frameState - 1) / 2) % 2 == 0) {
