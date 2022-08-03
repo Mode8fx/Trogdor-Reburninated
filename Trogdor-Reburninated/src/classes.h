@@ -928,8 +928,8 @@ class GameManager {
 						if (!arrowArrayL[i].active) {
 							arrowArrayL[i].frameState = 0;
 							arrowArrayL[i].active = true;
-							arrowArrayL[i].dstrect.x = archerL.dstrect.x + (archerL.dstrect.w / 2) - (arrowArrayR[i].dstrect.w / 2);
-							arrowArrayL[i].dstrect.y = archerL.dstrect.y + (archerL.dstrect.h / 2) - (arrowArrayR[i].dstrect.h / 2);
+							arrowArrayL[i].dstrect.x = archerL.dstrect.x + (archerL.dstrect.w / 2) - (arrowArrayL[i].dstrect.w / 2);
+							arrowArrayL[i].dstrect.y = archerL.dstrect.y + (archerL.dstrect.h / 2) - (arrowArrayL[i].dstrect.h / 2);
 							break;
 						}
 					}

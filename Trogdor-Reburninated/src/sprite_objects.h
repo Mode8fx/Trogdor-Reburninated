@@ -37,25 +37,31 @@ struct SpriteObject {
 #endif
 
 
-#define RENDER_SPRITE(spriteObj) \
-    SDL_BlitSurface(spriteObj.surface, &spriteObj.srcrect, gameScreen, &spriteObj.dstrect);
+#define RENDER_SPRITE(spriteObj)     \
+    outputRect = spriteObj.dstrect;  \
+    SDL_BlitSurface(spriteObj.surface, &spriteObj.srcrect, gameScreen, &outputRect);
 
-#define RENDER_SPRITE_ALT(spriteObj) \
-    SDL_BlitSurface(spriteObj->surface, &spriteObj->srcrect, gameScreen, &spriteObj->dstrect);
+#define RENDER_SPRITE_ALT(spriteObj)  \
+    outputRect = spriteObj->dstrect;  \
+    SDL_BlitSurface(spriteObj->surface, &spriteObj->srcrect, gameScreen, &outputRect);
 
 #define RENDER_SPRITE_AT_RECT(spriteObj, rect) \
-    SDL_BlitSurface(spriteObj.surface, &spriteObj.srcrect, gameScreen, &rect);
+    outputRect = rect;                         \
+    SDL_BlitSurface(spriteObj.surface, &spriteObj.srcrect, gameScreen, &outputRect);
 
 #define RENDER_SPRITE_USING_RECTS(spriteObj, srect, drect) \
-    SDL_BlitSurface(spriteObj.surface, &srect, gameScreen, &drect);
+    outputRect = drect;                                    \
+    SDL_BlitSurface(spriteObj.surface, &srect, gameScreen, &outputRect);
 
 // [SDL1] RENDER_SPRITE() makes color key transparent, but does NOT scale.
 // [SDL1] RENDER_SPRITE_SCALED() does NOT make color key transparent, but does scale. Pick your poison...
 #define RENDER_SPRITE_SCALED(spriteObj) \
-    SDL_SoftStretch(spriteObj.surface, &spriteObj.srcrect, gameScreen, &spriteObj.dstrect);
+    outputRect = spriteObj.dstrect;     \
+    SDL_SoftStretch(spriteObj.surface, &spriteObj.srcrect, gameScreen, &outputRect);
 
 #define RENDER_SPRITE_SCALED_ALT(spriteObj) \
-    SDL_SoftStretch(spriteObj->surface, &spriteObj->srcrect, gameScreen, &spriteObj->dstrect);
+    outputRect = spriteObj->dstrect;        \
+    SDL_SoftStretch(spriteObj->surface, &spriteObj->srcrect, gameScreen, &outputRect);
 
 #define SET_SPRITE_SCALE(spriteObj, scale)                                                             \
     spriteObj.dstrect.w = (int)(spriteObj.srcrect.w * min(GAME_WIDTH_MULT, GAME_HEIGHT_MULT) * scale); \

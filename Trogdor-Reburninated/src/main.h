@@ -800,25 +800,20 @@ void InitializeController() {
 #define RENDER_BACKGROUND() \
 	SDL_BlitSurface(sprite_level_background->surface, NULL, gameScreen, &sprite_level_background->dstrect);
 
-#if !defined(SDL1)
-#define RENDER_TRANSPARENT_FOREGROUND() \
-	DRAW_RECT_WITH_ALPHA(appScreenRect, color_black.r, color_black.g, color_black.b, 0xC8);
-#else
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-#define RENDER_TRANSPARENT_FOREGROUND()                                                   \
-	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_DOUBLEBUF, \
-		GAME_WIDTH, GAME_HEIGHT, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);       \
-	SDL_FillRect(screen_transparent, NULL, 0xC8000000);                                   \
-	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &appScreenRect);               \
+#define RENDER_TRANSPARENT_FOREGROUND()                                               \
+	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(0,                         \
+		GAME_WIDTH, GAME_HEIGHT, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF); \
+	SDL_FillRect(screen_transparent, NULL, 0xC8000000);                               \
+	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &appScreenRect);            \
 	SDL_FreeSurface(screen_transparent);
 #else
-#define RENDER_TRANSPARENT_FOREGROUND()                                                   \
-	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(SDL_HWSURFACE | SDL_DOUBLEBUF, \
-		GAME_WIDTH, GAME_HEIGHT, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);       \
-	SDL_FillRect(screen_transparent, NULL, 0xC8000000);                                   \
-	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &appScreenRect);               \
+#define RENDER_TRANSPARENT_FOREGROUND()                                               \
+	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(0,                         \
+		GAME_WIDTH, GAME_HEIGHT, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000); \
+	SDL_FillRect(screen_transparent, NULL, 0xC8000000);                               \
+	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &appScreenRect);            \
 	SDL_FreeSurface(screen_transparent);
-#endif
 #endif
 
 

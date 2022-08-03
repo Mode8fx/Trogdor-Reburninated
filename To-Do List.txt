@@ -12,9 +12,12 @@ Polish:
 - Refactoring
 	- Change macros to inline functions or constexprs
 	- Fix easy compiler warnings (generally caused by type conversions and signed/unsigned mismatches)
+- Rework sound system to only load chunks of sound as they're needed instead of having all sound loaded into RAM at once
+	- This will reduce load time at the start of the game (while ideally maintaining load times everywhere else) and significantly reduce RAM usage (essential for weaker systems)
 - Adjust end of level flash
 - Add art to Level Beaten and Game Over screens
 - Verify that all game logic matches Flash game (it should already, but it's been so long since I worked on this that I don't remember)
+	- When should knights move both home and offset? Offset only? Neither?
 - Verify that the SDL1 and SDL2 versions look and run equally well
 - Polish controls for all systems
 - Make sure instructions screen is accurate for controls on all systems

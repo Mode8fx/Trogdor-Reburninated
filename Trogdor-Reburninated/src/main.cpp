@@ -26,6 +26,7 @@ MenuManager MM;
 GameManager GM;
 SDL_Rect appScreenRect;
 Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down Left Right Left Right B A
+SDL_Rect outputRect;
 
 /* General-use Variables */
 Sint8 i, j, k;
