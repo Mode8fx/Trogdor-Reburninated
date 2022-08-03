@@ -818,62 +818,56 @@ void InitializeController() {
 
 
 
-#define DESTROY_TEXTCHARS(textChars)       \
-	for (i = 0; i < LEN(textChars); i++) { \
-		DESTROY_SPRITE(textChars[i]);      \
+void destroyTextChars(textChars) {
+	for (i = 0; i < LEN(textChars); i++) {
+		destroySprite(textChars[i]);
 	}
+}
 
-#if defined(PSP)
-#define DESTROY_SPRITE(sprite) \
-	SDL_DestroyTexture(sprite.texture);
-#define CLOSE_CONTROLLER() \
-	if (SDL_JoystickOpened(0)) {     \
-		SDL_JoystickClose(joystick); \
-	}
-#define DESTROY_DISPLAY()          \
-	SDL_DestroyRenderer(renderer); \
-	SDL_DestroyWindow(window);
-#elif !defined(SDL1)
-#define DESTROY_SPRITE(sprite) \
-	SDL_DestroyTexture(sprite.texture);
-#define CLOSE_CONTROLLER() \
-	if (controller != NULL) {                \
-		SDL_GameControllerClose(controller); \
-	}
-#define DESTROY_DISPLAY()          \
-	SDL_DestroyRenderer(renderer); \
-	SDL_DestroyWindow(window);
-#else
-#define DESTROY_SPRITE(sprite) \
+void destroySprite(sprite) {
 	SDL_FreeSurface(sprite.surface);
-#define CLOSE_CONTROLLER() \
-	if (SDL_JoystickOpened(0)) {     \
-		SDL_JoystickClose(joystick); \
+}
+
+void closeController() {
+#if defined(PSP) || defined(SDL1)
+	if (SDL_JoystickOpened(0)) {
+		SDL_JoystickClose(joystick);
 	}
-#define DESTROY_DISPLAY() \
-	SDL_FreeSurface(gameScreen);
+#else
+	if (controller != NULL) {
+		SDL_GameControllerClose(controller);
+	}
 #endif
+}
+
+void destroyDisplay() {
+#if !defined(SDL1)
+	SDL_DestroyRenderer(renderer);
+	SDL_DestroyWindow(window);
+#endif
+	SDL_FreeSurface(gameScreen);
+}
 
 void DestroyAll() {
 	/* Textures */
 	/* Text Chars */
-	//DESTROY_TEXTCHARS(textChars_font_serif_brown_6);
-	//DESTROY_TEXTCHARS(textChars_font_serif_brown_8);
-	//DESTROY_TEXTCHARS(textChars_font_serif_gray_6);
-	////DESTROY_TEXTCHARS(textChars_font_serif_gray_12);
-	//DESTROY_TEXTCHARS(textChars_font_serif_orange_6);
-	//DESTROY_TEXTCHARS(textChars_font_serif_red_6);
-	//DESTROY_TEXTCHARS(textChars_font_serif_red_8);
-	////DESTROY_TEXTCHARS(textChars_font_serif_red_12);
-	//DESTROY_TEXTCHARS(textChars_font_serif_white_6);
-	//DESTROY_TEXTCHARS(textChars_font_serif_white_9);
-	//DESTROY_TEXTCHARS(textChars_font_serif_white_10);
-	//DESTROY_TEXTCHARS(textChars_font_serif_white_14);
-	//DESTROY_TEXTCHARS(textChars_font_nokia_12);
-	////DESTROY_TEXTCHARS(textChars_font_serif_2_bold_black_23);
-	////DESTROY_TEXTCHARS(textChars_font_serif_2_bold_red_23);
-	//DESTROY_TEXTCHARS(textChars_font_serif_2_red_6);
-	//DESTROY_TEXTCHARS(textChars_font_serif_2_red_13);
+	//destroyTextChars(textChars_font_serif_brown_6);
+	//destroyTextChars(textChars_font_serif_brown_8);
+	//destroyTextChars(textChars_font_serif_gray_6);
+	////destroyTextChars(textChars_font_serif_gray_12);
+	//destroyTextChars(textChars_font_serif_orange_6);
+	//destroyTextChars(textChars_font_serif_red_6);
+	//destroyTextChars(textChars_font_serif_red_8);
+	////destroyTextChars(textChars_font_serif_red_12);
+	//destroyTextChars(textChars_font_serif_white_6);
+	//destroyTextChars(textChars_font_serif_white_9);
+	//destroyTextChars(textChars_font_serif_white_10);
+	//destroyTextChars(textChars_font_serif_white_14);
+	//destroyTextChars(textChars_font_nokia_12);
+	////destroyTextChars(textChars_font_serif_2_bold_black_23);
+	////destroyTextChars(textChars_font_serif_2_bold_red_23);
+	//destroyTextChars(textChars_font_serif_2_red_6);
+	//destroyTextChars(textChars_font_serif_2_red_13);
 	/* Sound */
 	if (soundSettings.musicIndex != 0) {
 		Mix_FreeMusic(bgm);
@@ -884,9 +878,9 @@ void DestroyAll() {
 	Mix_Quit();
 #endif
 	/* Controller */
-	CLOSE_CONTROLLER();
+	closeController();
 	/* Renderer/Screen and Window */
-	DESTROY_DISPLAY();
+	destroyDisplay();
 	SDL_Quit();
 	SYSTEM_SPECIFIC_CLOSE();
 }
