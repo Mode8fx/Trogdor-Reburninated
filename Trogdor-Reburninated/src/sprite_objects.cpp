@@ -48,8 +48,8 @@ void renderSpriteScaled(SpriteObject spriteObj) {
 }
 
 void setSpriteScale(SpriteObject *spriteObj, float scale) {
-    spriteObj->dstrect.w = (int)(spriteObj->srcrect.w * min(GAME_WIDTH_MULT, GAME_HEIGHT_MULT) * scale);
-    spriteObj->dstrect.h = (int)(spriteObj->srcrect.h * min(GAME_WIDTH_MULT, GAME_HEIGHT_MULT) * scale);
+    spriteObj->dstrect.w = (int)(spriteObj->srcrect.w * min(gameWidthMult, gameHeightMult) * scale);
+    spriteObj->dstrect.h = (int)(spriteObj->srcrect.h * min(gameWidthMult, gameHeightMult) * scale);
 }
 
 void drawRect(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b) {

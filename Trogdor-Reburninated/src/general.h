@@ -14,7 +14,7 @@ struct Timer {
     double last;
 };
 
-#define PI 3.14159265
+constexpr auto PI = 3.14159265;
 
 #define RANDINT(min, max) \
     (rand() % ((max) - (min) + 1) + min)

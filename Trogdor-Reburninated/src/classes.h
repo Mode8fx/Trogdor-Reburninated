@@ -12,22 +12,22 @@
 
 // for all "directions": 1 = up, 2 = down, 3 = left, 4 = right
 
-#define LEFT_BOUND   17
-#define RIGHT_BOUND 233
-#define UPPER_BOUND  30
-#define LOWER_BOUND 155
-#define LEFT_BOUND_TROG      -2 // LEFT_BOUND  - (39 / 2)
-#define RIGHT_BOUND_TROG    214 // RIGHT_BOUND - (39 / 2)
-#define UPPER_BOUND_TROG      7 // UPPER_BOUND - (46 / 2)
-#define LOWER_BOUND_TROG    132 // LOWER_BOUND - (46 / 2)
-#define LEFT_BOUND_KNIGHT     7 // LEFT_BOUND  - (21 / 2)
-#define RIGHT_BOUND_KNIGHT  223 // RIGHT_BOUND - (21 / 2)
-#define UPPER_BOUND_KNIGHT   18 // UPPER_BOUND - (24 / 2)
-#define LOWER_BOUND_KNIGHT  143 // LOWER_BOUND - (24 / 2)
-#define ARCHER_Y_UPPER       20 //   30 - (20 / 2)
-#define ARCHER_Y_LOWER      145 //  155 - (20 / 2)
-#define ARCHER_LEFT_X        -1 //  179 / 5000 * 250 - (20 / 2)
-#define ARCHER_RIGHT_X      231 // 4829 / 5000 * 250 - (20 / 2)
+constexpr auto LEFT_BOUND = 17;
+constexpr auto RIGHT_BOUND = 233;
+constexpr auto UPPER_BOUND = 30;
+constexpr auto LOWER_BOUND = 155;
+constexpr auto LEFT_BOUND_TROG = -2; // LEFT_BOUND  - (39 / 2)
+constexpr auto RIGHT_BOUND_TROG = 214; // RIGHT_BOUND - (39 / 2)
+constexpr auto UPPER_BOUND_TROG = 7; // UPPER_BOUND - (46 / 2)
+constexpr auto LOWER_BOUND_TROG = 132; // LOWER_BOUND - (46 / 2)
+constexpr auto LEFT_BOUND_KNIGHT = 7; // LEFT_BOUND  - (21 / 2)
+constexpr auto RIGHT_BOUND_KNIGHT = 223; // RIGHT_BOUND - (21 / 2)
+constexpr auto UPPER_BOUND_KNIGHT = 18; // UPPER_BOUND - (24 / 2)
+constexpr auto LOWER_BOUND_KNIGHT = 143; // LOWER_BOUND - (24 / 2)
+constexpr auto ARCHER_Y_UPPER = 20; //   30 - (20 / 2)
+constexpr auto ARCHER_Y_LOWER = 145; //  155 - (20 / 2)
+constexpr auto ARCHER_LEFT_X = -1; //  179 / 5000 * 250 - (20 / 2)
+constexpr auto ARCHER_RIGHT_X = 231; // 4829 / 5000 * 250 - (20 / 2)
 
 extern Uint16 rand_var;
 extern Uint32 frameCounter_global;
@@ -39,13 +39,13 @@ inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
 }
 #endif
 
-#define MAX_NUM_HUTS    6
-#define MAX_NUM_ARROWS  5
+constexpr auto MAX_NUM_HUTS = 6;
+constexpr auto MAX_NUM_ARROWS = 5;
 #define archerR archerArray[0]
 #define archerL archerArray[1]
-#define MAX_NUM_KNIGHTS 2
-#define MAX_NUM_PEASANTS 7
-#define MAX_NUM_LOOT 7
+constexpr auto MAX_NUM_KNIGHTS = 2;
+constexpr auto MAX_NUM_PEASANTS = 7;
+constexpr auto MAX_NUM_LOOT = 7;
 
 class Cottage {
 	public:

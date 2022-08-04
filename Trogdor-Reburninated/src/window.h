@@ -4,9 +4,9 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#define DEFAULT_GAME_WIDTH    250
-#define DEFAULT_GAME_HEIGHT   180
-#define DEFAULT_FRAME_RATE    16
+constexpr auto DEFAULT_GAME_WIDTH = 250;
+constexpr auto DEFAULT_GAME_HEIGHT = 180;
+constexpr auto DEFAULT_FRAME_RATE = 16;
 
 extern Uint16 GAME_WIDTH;
 extern Uint16 GAME_HEIGHT;
@@ -16,9 +16,6 @@ extern Uint16 frameRate;
 
 #define GAME_WIDTH DEFAULT_GAME_WIDTH
 #define GAME_HEIGHT DEFAULT_GAME_HEIGHT
-#define GAME_WIDTH_MULT gameWidthMult
-#define GAME_HEIGHT_MULT gameHeightMult
-#define FRAME_RATE frameRate
 
 #if !defined(PC) || defined(SDL1)
 #define SCALING_WIDTH DEFAULT_GAME_WIDTH
@@ -64,10 +61,10 @@ const Uint16 RESOLUTION_OPTIONS_WIDTH_16_10[3] = { 435,  720, 1152 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_10[3] = { 272,  480,  720 };
 const Uint16 RESOLUTION_OPTIONS_WIDTH_21_9[3] = { 480,  960, 1280 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[3] = { 205,  410,  548 };
-#define DEFAULT_WIDTH  1280
-#define DEFAULT_HEIGHT 720
-#define DEFAULT_RI     5
-#define DEFAULT_ARI    1
+constexpr auto DEFAULT_WIDTH = 1280;
+constexpr auto DEFAULT_HEIGHT = 720;
+constexpr auto DEFAULT_RI = 5;
+constexpr auto DEFAULT_ARI = 1;
 #elif defined(VITA)
 const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[4] = { 320, 362, 640, 725 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[4] = { 240, 272, 480, 544 };
@@ -77,10 +74,10 @@ const Uint16 RESOLUTION_OPTIONS_WIDTH_16_10[2] = { 435, 720 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_10[2] = { 272, 480 };
 const Uint16 RESOLUTION_OPTIONS_WIDTH_21_9[2] = { 480, 960 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[2] = { 205, 410 };
-#define DEFAULT_WIDTH  960
-#define DEFAULT_HEIGHT 544
-#define DEFAULT_RI     3
-#define DEFAULT_ARI    1
+constexpr auto DEFAULT_WIDTH = 960;
+constexpr auto DEFAULT_HEIGHT = 544;
+constexpr auto DEFAULT_RI = 3;
+constexpr auto DEFAULT_ARI = 1;
 #elif defined(SWITCH)
 const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[11] = { 320,  362,  640,  725,  768,  800,  960, 1024, 1152, 1280, 1440 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[11] = { 240,  272,  480,  544,  576,  600,  720,  768,  864,  960, 1080 };
@@ -90,10 +87,10 @@ const Uint16 RESOLUTION_OPTIONS_WIDTH_16_10[7] = { 435,  720, 1152, 1280, 1440, 
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_10[7] = { 272,  480,  720,  800,  900, 1024, 1050 };
 const Uint16 RESOLUTION_OPTIONS_WIDTH_21_9[3] = { 480,  960, 1280 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[3] = { 205,  410,  548 };
-#define DEFAULT_WIDTH  1920
-#define DEFAULT_HEIGHT 1080
-#define DEFAULT_RI     8
-#define DEFAULT_ARI    1
+constexpr auto DEFAULT_WIDTH = 1920;
+constexpr auto DEFAULT_HEIGHT = 1080;
+constexpr auto DEFAULT_RI = 8;
+constexpr auto DEFAULT_ARI = 1;
 #elif defined(PSP)
 const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[2] = { 320, 362 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[2] = { 240, 272 };
@@ -103,10 +100,10 @@ const Uint16 RESOLUTION_OPTIONS_WIDTH_16_10[1] = { 435 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_10[1] = { 272 };
 const Uint16 RESOLUTION_OPTIONS_WIDTH_21_9[1] = { 480 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[1] = { 205 };
-#define DEFAULT_WIDTH  480
-#define DEFAULT_HEIGHT 272
-#define DEFAULT_RI     1
-#define DEFAULT_ARI    1
+constexpr auto DEFAULT_WIDTH = 480;
+constexpr auto DEFAULT_HEIGHT = 272;
+constexpr auto DEFAULT_RI = 1;
+constexpr auto DEFAULT_ARI = 1;
 #elif defined(WII) || defined(GAMECUBE)
 const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[3] = { 320, 362, 640 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[3] = { 240, 272, 480 };
@@ -116,10 +113,10 @@ const Uint16 RESOLUTION_OPTIONS_WIDTH_16_10[2] = { 435, 640 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_10[2] = { 272, 400 };
 const Uint16 RESOLUTION_OPTIONS_WIDTH_21_9[2] = { 480, 640 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[2] = { 205, 274 };
-#define DEFAULT_WIDTH  640
-#define DEFAULT_HEIGHT 480
-#define DEFAULT_RI     2
-#define DEFAULT_ARI    0
+constexpr auto DEFAULT_WIDTH = 640;
+constexpr auto DEFAULT_HEIGHT = 480;
+constexpr auto DEFAULT_RI = 2;
+constexpr auto DEFAULT_ARI = 0;
 #else
 const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[14] = { 320,  362,  640,  725,  768,  800,  960, 1024, 1152, 1280, 1440, 1600, 1920, 2880 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[14] = { 240,  272,  480,  544,  576,  600,  720,  768,  864,  960, 1080, 1200, 1440, 2160 };
@@ -132,13 +129,13 @@ const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[6] = { 205,  410,  548, 1080, 1440, 
 #if defined(ANDROID)
 #define DEFAULT_WIDTH  SYSTEM_WIDTH
 #define DEFAULT_HEIGHT SYSTEM_HEIGHT
-#define DEFAULT_RI     0
-#define DEFAULT_ARI    0
+constexpr auto DEFAULT_RI = 0;
+constexpr auto DEFAULT_ARI = 0;
 #else
-#define DEFAULT_WIDTH  640
-#define DEFAULT_HEIGHT 480
-#define DEFAULT_RI     2
-#define DEFAULT_ARI    0
+constexpr auto DEFAULT_WIDTH = 640;
+constexpr auto DEFAULT_HEIGHT = 480;
+constexpr auto DEFAULT_RI = 2;
+constexpr auto DEFAULT_ARI = 0;
 #endif
 #endif
 

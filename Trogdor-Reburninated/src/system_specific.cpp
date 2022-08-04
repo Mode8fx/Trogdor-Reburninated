@@ -10,9 +10,9 @@ void SYSTEM_SPECIFIC_OPEN() {
 		return 0;
 	}
 	string sdPathStr = "/wiiu/apps/TrogdorRB";
-	const char* sdPathStart = WHBGetSdCardMountPath();
+	const char *sdPathStart = WHBGetSdCardMountPath();
 	sdPathStr = sdPathStart + sdPathStr;
-	const char* sdPath = sdPathStr.c_str();
+	const char *sdPath = sdPathStr.c_str();
 	chdir(sdPath);
 #elif defined(VITA)
 	/* Disable rear touch pad */
