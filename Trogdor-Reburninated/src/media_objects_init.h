@@ -5,8 +5,6 @@
 #ifndef MEDIA_OBJECTS_INIT_H
 #define MEDIA_OBJECTS_INIT_H
 
-extern SDL_Surface *temp;
-
 extern SpriteObject sprite_videlectrix_logo;
 extern SpriteObject sprite_title_screen;
 extern SpriteObject sprite_trogdor_logo;

@@ -30,7 +30,6 @@ bool isRunning = true;
 MenuManager MM;
 GameManager GM;
 Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down Left Right Left Right B A
-SDL_Rect outputRect;
 
 /* General-use Variables */
 Sint8 i, j, k;
@@ -714,15 +713,15 @@ int main(int argv, char** args) {
 						frameState = 18;
 						break;
 				}
-				DRAW_RECT(text_0_loading_censor_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(text_0_loading_censor_rect, color_black.r, color_black.g, color_black.b);
 				break;
 			/* Videlectrix logo */
 			case 1:
 				if (frameState < 65) {
 #if !defined(SDL1)
-					RENDER_SPRITE(sprite_videlectrix_logo);
+					renderSprite(sprite_videlectrix_logo);
 #else
-					RENDER_SPRITE_SCALED(sprite_videlectrix_logo);
+					renderSpriteScaled(sprite_videlectrix_logo);
 #endif
 					renderText(text_1_presents, textChars_font_nokia_12);
 				}
@@ -752,7 +751,7 @@ int main(int argv, char** args) {
 					frameState = 3; // 3 is intentional
 					MM = MenuManager();
 				}
-				RENDER_SPRITE(sprite_title_screen);
+				renderSprite(sprite_title_screen);
 				break;
 			/* Instructions Screen */
 			case 3:
@@ -772,7 +771,7 @@ int main(int argv, char** args) {
 					updateText(&text_4_level_val, to_string(GM.level));
 					sceneState = 4;
 				}
-				RENDER_SPRITE(sprite_trogdor_logo);
+				renderSprite(sprite_trogdor_logo);
 				switch (MM.page) {
 					case 1:
 						renderText(text_3_instructions_1, textChars_font_serif_white_6);
@@ -883,15 +882,15 @@ int main(int argv, char** args) {
 					RENDER_TROGDOR();
 					//RENDER_AND_ANIMATE_LOWER_COTTAGES();
 					if (GM.burnination > 0) {
-						RENDER_SPRITE_USING_RECTS(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
+						renderSpriteUsingRects(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
 					}
 					RENDER_ARCHERS();
 					RENDER_ARROWS();
 					if (GM.dm_visible) {
-						RENDER_SPRITE_USING_RECTS(sprite_death_message, GM.dm_srcrect, GM.dm_dstrect);
+						renderSpriteUsingRects(sprite_death_message, GM.dm_srcrect, GM.dm_dstrect);
 					} else if (GM.b_visible) {
-						RENDER_SPRITE_USING_RECTS(sprite_burninate_fire, GM.bf_srcrect, GM.bf_dstrect);
-						RENDER_SPRITE_USING_RECTS(sprite_burninate_text, GM.bt_srcrect, GM.bt_dstrect);
+						renderSpriteUsingRects(sprite_burninate_fire, GM.bf_srcrect, GM.bf_dstrect);
+						renderSpriteUsingRects(sprite_burninate_text, GM.bt_srcrect, GM.bt_dstrect);
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
@@ -917,7 +916,7 @@ int main(int argv, char** args) {
 			/* Game Over Screen */
 			case 5:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				// TODO: draw Trogdor, "IT'S OVER!", and whatever else needs to be handled for this screen
 				switch (frameState) {
 					case 321:
@@ -985,13 +984,13 @@ int main(int argv, char** args) {
 					RENDER_LOOT();
 					RENDER_TROGDOR();
 					if (GM.burnination > 0) {
-						RENDER_SPRITE_USING_RECTS(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
+						renderSpriteUsingRects(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
 					}
 					if (GM.dm_visible) {
-						RENDER_SPRITE_USING_RECTS(sprite_death_message, GM.dm_srcrect, GM.dm_dstrect);
+						renderSpriteUsingRects(sprite_death_message, GM.dm_srcrect, GM.dm_dstrect);
 					} else if (GM.b_visible) {
-						RENDER_SPRITE_USING_RECTS(sprite_burninate_fire, GM.bf_srcrect, GM.bf_dstrect);
-						RENDER_SPRITE_USING_RECTS(sprite_burninate_text, GM.bt_srcrect, GM.bt_dstrect);
+						renderSpriteUsingRects(sprite_burninate_fire, GM.bf_srcrect, GM.bf_dstrect);
+						renderSpriteUsingRects(sprite_burninate_text, GM.bt_srcrect, GM.bt_dstrect);
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
@@ -1019,7 +1018,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				RENDER_AND_ANIMATE_COTTAGES();
 				if (((frameState - 1) / 2) % 2 == 0) {
-					RENDER_SPRITE(sprite_end_of_level_flash);
+					renderSprite(sprite_end_of_level_flash);
 				}
 				switch (frameState) {
 					case 257:
@@ -1046,12 +1045,12 @@ int main(int argv, char** args) {
 				if (sceneState == 8) {
 					frameState++;
 				}
-				RENDER_SPRITE(sprite_end_of_level_trogdor);
+				renderSprite(sprite_end_of_level_trogdor);
 				break;
 			/* Level Beaten Screen */
 			case 9:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_9_nice_work, textChars_font_serif_white_10);
 				// TODO: draw Trogdor, "LEVEL BEATEN!", smoke, and level fire
 				switch (frameState) {
@@ -1134,7 +1133,7 @@ int main(int argv, char** args) {
 			/* Level 4 Interlude */
 			case 11:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_11_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1155,7 +1154,7 @@ int main(int argv, char** args) {
 			/* Level 8 Interlude */
 			case 12:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_12_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1176,7 +1175,7 @@ int main(int argv, char** args) {
 			/* Level 12 Interlude */
 			case 13:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_13_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1197,7 +1196,7 @@ int main(int argv, char** args) {
 			/* Level 16 Interlude */
 			case 14:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_14_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1218,7 +1217,7 @@ int main(int argv, char** args) {
 			/* Level 20 Interlude */
 			case 15:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_15_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1239,7 +1238,7 @@ int main(int argv, char** args) {
 			/* Level 24 Interlude */
 			case 16:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_16_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1260,7 +1259,7 @@ int main(int argv, char** args) {
 			/* Level 30 Interlude */
 			case 17:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_17_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1281,7 +1280,7 @@ int main(int argv, char** args) {
 			/* Level 34 Interlude */
 			case 18:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_18_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1302,7 +1301,7 @@ int main(int argv, char** args) {
 			/* Level 38 Interlude */
 			case 19:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_19_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1323,7 +1322,7 @@ int main(int argv, char** args) {
 			/* Level 42 Interlude */
 			case 20:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_20_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1344,7 +1343,7 @@ int main(int argv, char** args) {
 			/* Level 46 Interlude */
 			case 21:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_21_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1365,7 +1364,7 @@ int main(int argv, char** args) {
 			/* Level 50 Interlude */
 			case 22:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_22_cutscene, textChars_font_serif_white_9);
 				// TODO: implement cutscene
 				switch (frameState) {
@@ -1386,7 +1385,7 @@ int main(int argv, char** args) {
 			/* Level 100 Interlude (Credits) */
 			case 23:
 				RENDER_TOP_BAR();
-				DRAW_RECT(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				// TODO: implement cutscene
 				break;
 			/* Nothing? (or maybe blank transition from Credits to High Scores Screen) */

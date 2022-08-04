@@ -1387,9 +1387,9 @@ class GameManager {
 			if (GM.hutArray[i].burning && !GM.hutArray[i].burned) {                                                       \
 				GM.hutArray[i].updateFrameState();                                                                        \
 			}                                                                                                             \
-			RENDER_SPRITE_USING_RECTS(sprite_cottage, GM.hutArray[i].srcrect, GM.hutArray[i].dstrect);                    \
+			renderSpriteUsingRects(sprite_cottage, GM.hutArray[i].srcrect, GM.hutArray[i].dstrect);                    \
 			if (GM.hutArray[i].frameState >= 12 && GM.hutArray[i].frameState <= 28) {                                     \
-				RENDER_SPRITE_USING_RECTS(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
+				renderSpriteUsingRects(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
 			}                                                                                                             \
 		}                                                                                                                 \
 	}
@@ -1400,9 +1400,9 @@ class GameManager {
 			if (GM.hutArray[i].burning && !GM.hutArray[i].burned) {                                                       \
 				GM.hutArray[i].updateFrameState();                                                                        \
 			}                                                                                                             \
-			RENDER_SPRITE_USING_RECTS(sprite_cottage, GM.hutArray[i].srcrect, GM.hutArray[i].dstrect);                    \
+			renderSpriteUsingRects(sprite_cottage, GM.hutArray[i].srcrect, GM.hutArray[i].dstrect);                    \
 			if (GM.hutArray[i].frameState >= 12 && GM.hutArray[i].frameState <= 28) {                                     \
-				RENDER_SPRITE_USING_RECTS(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
+				renderSpriteUsingRects(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
 			}                                                                                                             \
 		}                                                                                                                 \
 	}
@@ -1413,41 +1413,41 @@ class GameManager {
 			if (GM.hutArray[i].burning && !GM.hutArray[i].burned) {                                                       \
 				GM.hutArray[i].updateFrameState();                                                                        \
 			}                                                                                                             \
-			RENDER_SPRITE_USING_RECTS(sprite_cottage, GM.hutArray[i].srcrect, GM.hutArray[i].dstrect);                    \
+			renderSpriteUsingRects(sprite_cottage, GM.hutArray[i].srcrect, GM.hutArray[i].dstrect);                    \
 			if (GM.hutArray[i].frameState >= 12 && GM.hutArray[i].frameState <= 28) {                                     \
-				RENDER_SPRITE_USING_RECTS(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
+				renderSpriteUsingRects(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
 			}                                                                                                             \
 		}                                                                                                                 \
 	}
 
 #define RENDER_ARCHERS()                                                                  \
 	if (GM.archerR.active) {                                                              \
-		RENDER_SPRITE_USING_RECTS(sprite_archer, GM.archerR.srcrect, GM.archerR.dstrect); \
+		renderSpriteUsingRects(sprite_archer, GM.archerR.srcrect, GM.archerR.dstrect); \
 	}                                                                                     \
 	if (GM.archerL.active) {                                                              \
-		RENDER_SPRITE_USING_RECTS(sprite_archer, GM.archerL.srcrect, GM.archerL.dstrect); \
+		renderSpriteUsingRects(sprite_archer, GM.archerL.srcrect, GM.archerL.dstrect); \
 	}
 
 #define RENDER_ARROWS()                                                                                    \
 	for (i = 0; i < MAX_NUM_ARROWS; i++) {                                                                 \
 		if (GM.arrowArrayR[i].active) {                                                                    \
-			RENDER_SPRITE_USING_RECTS(sprite_arrow, GM.arrowArrayR[i].srcrect, GM.arrowArrayR[i].dstrect); \
+			renderSpriteUsingRects(sprite_arrow, GM.arrowArrayR[i].srcrect, GM.arrowArrayR[i].dstrect); \
 		}                                                                                                  \
 		if (GM.arrowArrayL[i].active) {                                                                    \
-			RENDER_SPRITE_USING_RECTS(sprite_arrow, GM.arrowArrayL[i].srcrect, GM.arrowArrayL[i].dstrect); \
+			renderSpriteUsingRects(sprite_arrow, GM.arrowArrayL[i].srcrect, GM.arrowArrayL[i].dstrect); \
 		}                                                                                                  \
 	}
 
 #define RENDER_LOOT()                                                                                 \
 	for (i = 0; i < MAX_NUM_LOOT; i++) {                                                              \
 		if (GM.lootArray[i].active) {                                                                 \
-			RENDER_SPRITE_USING_RECTS(sprite_loot, GM.lootArray[i].srcrect, GM.lootArray[i].dstrect); \
+			renderSpriteUsingRects(sprite_loot, GM.lootArray[i].srcrect, GM.lootArray[i].dstrect); \
 		}                                                                                             \
 	}
 
 #define RENDER_KNIGHTS()                                                                                \
 	for (i = 0; i < MAX_NUM_KNIGHTS; i++) {                                                             \
-		RENDER_SPRITE_USING_RECTS(sprite_knight, GM.knightArray[i].srcrect, GM.knightArray[i].dstrect); \
+		renderSpriteUsingRects(sprite_knight, GM.knightArray[i].srcrect, GM.knightArray[i].dstrect); \
 	}
 
 #define RENDER_PEASANTS()                                                                                      \
@@ -1456,16 +1456,16 @@ class GameManager {
 			if (!GM.manually_paused && (!GM.peasantArray[i].waiting || GM.peasantArray[i].stomped)) {          \
 				GM.peasantArray[i].updateFrameState();                                                         \
 			}                                                                                                  \
-			RENDER_SPRITE_USING_RECTS(sprite_peasant, GM.peasantArray[i].srcrect, GM.peasantArray[i].dstrect); \
+			renderSpriteUsingRects(sprite_peasant, GM.peasantArray[i].srcrect, GM.peasantArray[i].dstrect); \
 		}                                                                                                      \
 	}
 
 #define RENDER_TROGDOR()                                                                                      \
 	if (GM.player.visible) {                                                                                  \
 		if (GM.player.frameState >= 19) {                                                                     \
-			RENDER_SPRITE_USING_RECTS(sprite_trogdor_dead, GM.player.death_srcrect, GM.player.death_dstrect); \
+			renderSpriteUsingRects(sprite_trogdor_dead, GM.player.death_srcrect, GM.player.death_dstrect); \
 		} else {                                                                                              \
-			RENDER_SPRITE_USING_RECTS(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);                  \
+			renderSpriteUsingRects(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);                  \
 		}                                                                                                     \
 	}
 
@@ -1478,8 +1478,8 @@ class GameManager {
 	renderText(text_4_level_val, textChars_font_serif_red_6);                                  \
 	/* render peasantometer/burnination meter (depending on their values) */                    \
 	if (GM.burnination > 0) {                                                                   \
-		RENDER_SPRITE(sprite_burnination_meter_empty);                                          \
-		RENDER_SPRITE(sprite_burnination_meter_full);                                           \
+		renderSprite(sprite_burnination_meter_empty);                                          \
+		renderSprite(sprite_burnination_meter_full);                                           \
 	} else {                                                                                    \
 		sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;                 \
 		sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;              \
@@ -1487,7 +1487,7 @@ class GameManager {
 			if (GM.peasantometer == i) {                                                        \
 				sprite_peasantometer_icon.srcrect.x = 0;                                        \
 			}                                                                                   \
-			RENDER_SPRITE(sprite_peasantometer_icon);                                           \
+			renderSprite(sprite_peasantometer_icon);                                           \
 			sprite_peasantometer_icon.dstrect.x += (sprite_peasantometer_icon.dstrect.w * 1.5); \
 		}                                                                                       \
 	}

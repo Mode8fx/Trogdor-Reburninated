@@ -64,7 +64,6 @@ Mix_Chunk *sfx_cutscene;
 Mix_Chunk *sfx_gameover;
 
 /* Sprite Objects */
-SDL_Surface  *temp;
 SpriteObject sprite_videlectrix_logo;
 SpriteObject sprite_title_screen;
 SpriteObject sprite_trogdor_logo;
