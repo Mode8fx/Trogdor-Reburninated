@@ -1,6 +1,5 @@
 #include "config.h"
 #include "general.h"
-#include "system_specific_macros.h"
 #include "window.h"
 
 #ifndef TEXT_OBJECTS_H

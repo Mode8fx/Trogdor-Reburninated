@@ -1,11 +1,7 @@
 #ifndef GENERAL_H
 #define GENERAL_H
 
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
-#define PC 0
-#else
-#define PC 1
-#endif
+#include "system_specific.h"
 
 /* General-use Variables */
 extern Sint8 i, j, k;

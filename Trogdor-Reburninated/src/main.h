@@ -2,7 +2,7 @@
 #define MAIN_H
 
 #include "media_objects_init.h"
-#include "system_specific_macros.h"
+#include "system_specific.h"
 
 SDL_Event event;
 
