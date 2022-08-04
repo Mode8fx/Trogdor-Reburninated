@@ -1,6 +1,10 @@
 #ifndef INPUT_H
 #define INPUT_H
 
+/* General Input */
+extern Uint32 keyInputs;
+extern Uint32 heldKeys;
+
 // A/B/X/Y are Xbox-style
 #define INPUT_UP          (1 <<  0) // up/w
 #define INPUT_DOWN        (1 <<  1) // down/s
@@ -20,13 +24,12 @@
 
 
 
-extern Uint32 keyInputs;
-extern Uint32 heldKeys;
+inline bool keyPressed(Uint16 key) {
+	return (keyInputs & key);
+}
 
-#define KEY_PRESSED(key) \
-    (keyInputs & key)
-
-#define KEY_HELD(button) \
-	(heldKeys & button)
+inline bool keyHeld(Uint16 button) {
+	return (heldKeys & button);
+}
 
 #endif

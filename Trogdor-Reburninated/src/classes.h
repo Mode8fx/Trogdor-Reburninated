@@ -524,11 +524,11 @@ class MenuManager {
 			}
 		}
 		void handlePageChange() {
-			if (KEY_PRESSED(INPUT_LEFT)) {
+			if (keyPressed(INPUT_LEFT)) {
 				page--;
 				if (page < 1) page = 3;
 				UPDATE_TEXT(text_3_page, "("+to_string(page)+"/3)");
-			} else if (KEY_PRESSED(INPUT_RIGHT)) {
+			} else if (keyPressed(INPUT_RIGHT)) {
 				page++;
 				if (page > 3) page = 1;
 				UPDATE_TEXT(text_3_page, "(" + to_string(page) + "/3)");
@@ -724,15 +724,15 @@ class GameManager {
 			player.x_offset = 0;
 			player.y_offset = 0;
 			player.frameStateFlag = 0;
-			if (KEY_HELD(INPUT_UP)) {
+			if (keyHeld(INPUT_UP)) {
 				player.frameStateFlag |= 1;
 				player.y_offset = -player.moveSpeed;
 			}
-			if (KEY_HELD(INPUT_DOWN)) {
+			if (keyHeld(INPUT_DOWN)) {
 				player.frameStateFlag |= 1;
 				player.y_offset = player.moveSpeed;
 			}
-			if (KEY_HELD(INPUT_LEFT)) {
+			if (keyHeld(INPUT_LEFT)) {
 				if (!player.facingRight) {
 					player.frameStateFlag |= 1;
 				} else {
@@ -741,7 +741,7 @@ class GameManager {
 				}
 				player.x_offset = -player.moveSpeed;
 			}
-			if (KEY_HELD(INPUT_RIGHT)) {
+			if (keyHeld(INPUT_RIGHT)) {
 				if (player.facingRight) {
 					player.frameStateFlag |= 1;
 				} else {
@@ -752,17 +752,17 @@ class GameManager {
 			}
 			if (!inTreasureHut) {
 				playerMove(&player, player.x_offset, player.y_offset);
-				if (KEY_HELD(INPUT_START)) {
+				if (keyHeld(INPUT_START)) {
 					startDown = true;
 				}
-				if (startDown && !KEY_HELD(INPUT_START)) {
+				if (startDown && !keyHeld(INPUT_START)) {
 					startDown = false;
 					manually_paused = frameCounter_global;
 				}
 			} else {
 				playerMove_treasureHut(&player, player.x_offset, player.y_offset);
 			}
-			if (KEY_HELD(INPUT_L) && kick_frameState == 0) {
+			if (keyHeld(INPUT_L) && kick_frameState == 0) {
 				kick_frameState = 3;
 			}
 		}

@@ -2,10 +2,14 @@
 #include "config.h"
 #include "general.h"
 #include "classes.h"
-#include "input.h"
+//#include "input.h"
 #include "main.h"
 #include "sound_logic.h"
 #include "sprite_objects.h"
+
+/* General Input */
+Uint32 keyInputs;
+Uint32 heldKeys;
 
 /* Timer */
 Timer timer_global;
@@ -576,10 +580,10 @@ int main(int argv, char** args) {
 		}
 
 		/* Key Presses (Always Active) */
-		if (KEY_PRESSED(INPUT_FULLSCREEN)) {
+		if (keyPressed(INPUT_FULLSCREEN)) {
 			SDL_TOGGLE_FULLSCREEN();
 		}
-		if (KEY_PRESSED(INPUT_R)) {
+		if (keyPressed(INPUT_R)) {
 			SDL_TOGGLE_INTEGER_SCALE();
 		}
 
@@ -727,7 +731,7 @@ int main(int argv, char** args) {
 					sceneState = 2;
 					frameState = 73;
 				}
-				if (KEY_PRESSED(INPUT_START)) {
+				if (keyPressed(INPUT_START)) {
 					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_trogador, 0);
 					sceneState = 3;
 					frameState = 3; // 3 is intentional
@@ -754,7 +758,7 @@ int main(int argv, char** args) {
 				frameState++;
 				MM.typeStuff();
 				MM.handlePageChange();
-				if (KEY_PRESSED(INPUT_A) && MM.page == 1) {
+				if (keyPressed(INPUT_A) && MM.page == 1) {
 					if (MM.contraActive) {
 						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_sfx2, 0);
 						GM = GameManager(30);
@@ -805,10 +809,10 @@ int main(int argv, char** args) {
 			/* Game */
 			case 4:
 				if (!GM.paused && !GM.manually_paused) {
-					if (KEY_PRESSED(INPUT_B)) {
+					if (keyPressed(INPUT_B)) {
 						GM.burninationIncreaseTest();
 					}
-					if (KEY_PRESSED(INPUT_A)) {
+					if (keyPressed(INPUT_A)) {
 						GM.burninationDecreaseTest();
 					}
 
@@ -838,10 +842,10 @@ int main(int argv, char** args) {
 					}
 				} else {
 					if (GM.manually_paused) {
-						if (KEY_HELD(INPUT_START)) {
+						if (keyHeld(INPUT_START)) {
 							GM.startDown = true;
 						}
-						if (GM.startDown && !KEY_HELD(INPUT_START)) {
+						if (GM.startDown && !keyHeld(INPUT_START)) {
 							GM.startDown = false;
 							GM.manually_paused = 0;
 						}
@@ -936,7 +940,7 @@ int main(int argv, char** args) {
 						break;
 				}
 				// TODO: high score-related things here
-				if (KEY_PRESSED(INPUT_START)) { // TODO: placeholder; remove this later
+				if (keyPressed(INPUT_START)) { // TODO: placeholder; remove this later
 					sceneState = 3;
 				}
 				if (sceneState == 5) {
@@ -946,10 +950,10 @@ int main(int argv, char** args) {
 			/* Game (Treasure Hut) */
 			case 6:
 				if (GM.manually_paused) {
-					if (KEY_HELD(INPUT_START)) {
+					if (keyHeld(INPUT_START)) {
 						GM.startDown = true;
 					}
-					if (GM.startDown && !KEY_HELD(INPUT_START)) {
+					if (GM.startDown && !keyHeld(INPUT_START)) {
 						GM.startDown = false;
 						GM.manually_paused = 0;
 					}

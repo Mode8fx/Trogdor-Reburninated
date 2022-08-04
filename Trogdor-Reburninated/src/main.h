@@ -16,9 +16,6 @@ SDL_Rect gameWindowDstRect = { 0, 0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT };
 SDL_Rect appScreenRect;
 SDL_Event event;
 
-/* General Input */
-Uint32 keyInputs;
-
 /* SDL Input */
 #if !defined(SDL1) && !defined(PSP)
 SDL_GameController *controller = nullptr;
@@ -38,7 +35,6 @@ Sint32 mouseInput_x_last;
 Sint32 mouseInput_y;
 Sint32 mouseInput_y_last;
 #endif
-Uint32 heldKeys;
 
 /* Audio */
 SoundSettings soundSettings;
