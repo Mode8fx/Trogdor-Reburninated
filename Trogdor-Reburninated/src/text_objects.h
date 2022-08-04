@@ -33,7 +33,8 @@ struct TextCharObject {
     SDL_Rect dstrect;
 };
 
-//extern void SET_TEXT(const char[], TextObject *, TextCharObject[], Sint16, Sint16);
+extern void setText(const char[], TextObject *, TextCharObject[]);
+extern void setTextPos(TextObject *, Sint16, Sint16);
 extern void updateText(TextObject *, string);
 extern void setTextChar(const char *, TTF_Font *, SDL_Color, TextCharObject *);
 extern void renderTextChar(TextCharObject);
@@ -43,17 +44,10 @@ extern void setTextCharPosY(TextCharObject *, int);
 extern void destroyTextObjectTexture(TextCharObject);
 extern void setFont(TTF_Font *, string, int, int, TextCharObject[], SDL_Color, Uint32, Uint32);
 
-#define SET_TEXT(text, textObj, charArr, pos_x, pos_y)                                                     \
-    textObj.str = text;                                                                                    \
-    STRCPY(tempCharArray, textObj.str.c_str());                                                            \
-    textObj.dstrect.w = 0;                                                                                 \
-    textObj.dstrect.h = 0;                                                                                 \
-    for (uint_i = 0; uint_i < textObj.str.length(); uint_i++) {                                            \
-        textObj.dstrect.w += charArr[tempCharArray[uint_i] - 32].dstrect.w;                                \
-        textObj.dstrect.h = max(textObj.dstrect.h, (Sint16)charArr[tempCharArray[uint_i] - 32].dstrect.h); \
-    }                                                                                                      \
-    textObj.dstrect.x = (Sint16)pos_x;                                                                     \
-    textObj.dstrect.y = (Sint16)pos_y;
+// This should be a macro since pos_x and pos_y may (and likely will) change before they're needed
+#define SET_TEXT(text, textObj, charArr, pos_x, pos_y) \
+    setText(text, &textObj, charArr);                  \
+    setTextPos(&textObj, pos_x, pos_y);
 
 /* Text Objects */
 extern char tempCharArray[64];

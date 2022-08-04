@@ -1,17 +1,20 @@
 #include "text_objects.h"
 
-//void SET_TEXT(const char text[], TextObject *textObj, TextCharObject charArr[], Sint16 pos_x, Sint16 pos_y) {
-//    textObj->str = text;
-//    STRCPY(tempCharArray, textObj->str.c_str());
-//    textObj->dstrect.w = 0;
-//    textObj->dstrect.h = 0;
-//    for (uint_i = 0; uint_i < textObj->str.length(); uint_i++) {
-//        textObj->dstrect.w += charArr[tempCharArray[uint_i] - 32].dstrect.w;
-//        textObj->dstrect.h = max(textObj->dstrect.h, (Sint16)charArr[tempCharArray[uint_i] - 32].dstrect.h);
-//    }
-//    textObj->dstrect.x = pos_x;
-//    textObj->dstrect.y = pos_y;
-//}
+void setText(const char text[], TextObject *textObj, TextCharObject charArr[]) {
+    textObj->str = text;
+    STRCPY(tempCharArray, textObj->str.c_str());
+    textObj->dstrect.w = 0;
+    textObj->dstrect.h = 0;
+    for (uint_i = 0; uint_i < textObj->str.length(); uint_i++) {
+        textObj->dstrect.w += charArr[tempCharArray[uint_i] - 32].dstrect.w;
+        textObj->dstrect.h = max(textObj->dstrect.h, (Sint16)charArr[tempCharArray[uint_i] - 32].dstrect.h);
+    }
+}
+
+void setTextPos(TextObject *textObj, Sint16 pos_x, Sint16 pos_y) {
+    textObj->dstrect.x = pos_x;
+    textObj->dstrect.y = pos_y;
+}
 
 void updateText(TextObject *textObj, string text) {
     textObj->str = text;
