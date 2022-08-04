@@ -1,4 +1,4 @@
-#include "shared.h"
+#include "config.h"
 
 #ifndef SOUND_LOGIC_H
 #define SOUND_LOGIC_H

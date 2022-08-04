@@ -53,7 +53,7 @@ int main(int argv, char** args) {
 		return 1;
 	}
 
-	LOAD_SAVE_FILE();
+	loadSaveFile();
 	InitializeDisplay();
 	appScreenRect = { 0, 0, GAME_WIDTH, GAME_HEIGHT };
 
