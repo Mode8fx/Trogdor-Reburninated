@@ -3,7 +3,7 @@
 SDL_Rect outputRect;
 SDL_Surface *temp;
 
-void prepareSprite(SpriteObject *spriteObj, const char path[], int numSprites_x, int numSprites_y, float scale) {
+void prepareSprite(SpriteObject *spriteObj, const char path[], int numSprites_x, int numSprites_y, double scale) {
     spriteObj->srcrect = { 0, 0, 0, 0 };
     spriteObj->dstrect = { 0, 0, 0, 0 };
     temp = IMG_Load(path);
@@ -47,9 +47,11 @@ void renderSpriteScaled(SpriteObject spriteObj) {
     SDL_SoftStretch(spriteObj.surface, &spriteObj.srcrect, gameScreen, &outputRect);
 }
 
-void setSpriteScale(SpriteObject *spriteObj, float scale) {
-    spriteObj->dstrect.w = (int)(spriteObj->srcrect.w * min(gameWidthMult, gameHeightMult) * scale);
-    spriteObj->dstrect.h = (int)(spriteObj->srcrect.h * min(gameWidthMult, gameHeightMult) * scale);
+void setSpriteScale(SpriteObject *spriteObj, double scale) {
+    if (scale != (double)1) { // probably unnecessary, but this function won't run in a loop, and it's important that there are no precision errors
+        spriteObj->dstrect.w = (int)(spriteObj->srcrect.w * min(gameWidthMult, gameHeightMult) * scale);
+        spriteObj->dstrect.h = (int)(spriteObj->srcrect.h * min(gameWidthMult, gameHeightMult) * scale);
+    }
 }
 
 void drawRect(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b) {

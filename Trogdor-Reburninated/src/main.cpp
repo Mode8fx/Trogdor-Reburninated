@@ -72,7 +72,7 @@ int main(int argv, char** args) {
 		/* Update Timers */
 		timer_global.last = timer_global.now;
 		timer_global.now = SDL_GetTicks();
-		deltaTime = timer_global.now - timer_global.last;
+		deltaTime = (Uint32)(timer_global.now - timer_global.last);
 
 		/* Update Key/Button Presses, Mouse/Touch Input, and Window Resizing */
 #if !defined(SDL1) && !defined(PSP)
@@ -1420,7 +1420,7 @@ int main(int argv, char** args) {
 		/* Cap Framerate */
 		frameCounter_global++;
 		frameTime = SDL_GetTicks() - (Uint32)timer_global.now;
-		if (frameTime < (1000 / frameRate)) {
+		if (frameTime < (Uint32)(1000 / frameRate)) {
 			SDL_Delay((1000 / frameRate) - frameTime);
 		}
 	}

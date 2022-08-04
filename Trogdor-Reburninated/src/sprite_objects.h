@@ -8,13 +8,13 @@ struct SpriteObject {
     SDL_Rect srcrect, dstrect;
 };
 
-extern void prepareSprite(SpriteObject *, const char [], int, int, float);
+extern void prepareSprite(SpriteObject *, const char [], int, int, double);
 extern void setSpritePos(SpriteObject *, int, int);
 extern void renderSprite(SpriteObject);
 extern void renderSpriteAtRect(SpriteObject, SDL_Rect);
 extern void renderSpriteUsingRects(SpriteObject, SDL_Rect, SDL_Rect);
 extern void renderSpriteScaled(SpriteObject);
-extern void setSpriteScale(SpriteObject *, float);
+extern void setSpriteScale(SpriteObject *, double);
 extern void drawRect(SDL_Rect, Uint8, Uint8, Uint8);
 extern void DRAW_RECT_WITH_ALPHA(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
 

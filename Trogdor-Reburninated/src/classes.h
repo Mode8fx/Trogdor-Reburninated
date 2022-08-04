@@ -56,10 +56,10 @@ class Cottage {
 		SDL_Rect fire_dstrect;
 		bool burning;
 		bool burned;
-		Sint8 direction;
+		Sint16 direction;
 		SDL_Rect collision;
 		SDL_Rect fire_collision;
-		Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1) {
+		Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
 			frameState = 9;
 			srcrect = { 0, (dir - 1) * sprite_cottage.dstrect.h, sprite_cottage.dstrect.w, sprite_cottage.dstrect.h };
 			dstrect = { pos_x, pos_y, sprite_cottage.dstrect.w, sprite_cottage.dstrect.h };
@@ -142,7 +142,7 @@ class Knight {
 				collision = { 8 + dstrect.x, 9 + dstrect.y, 9, 13 };
 			}
 		}
-		void updateHome(double knightIncrement) {
+		void updateHome(Sint8 knightIncrement) {
 			if (home_x < LEFT_BOUND_KNIGHT) {
 				direction = rand() % 6;
 				home_x = LEFT_BOUND_KNIGHT + 1;
@@ -232,7 +232,7 @@ class Peasant {
 		bool burning;
 		Sint16 myStartx;
 		Sint16 myStarty;
-		Sint8 direction;
+		Sint16 direction;
 		Sint16 myTargetx;
 		Sint16 myTargety;
 		bool returning;
@@ -564,7 +564,7 @@ class GameManager {
 		Knight knightArray[MAX_NUM_KNIGHTS];    // array of Knight objects
 		Archer archerArray[2];                  // array of Archer objects
 		Trogdor player;                         // the player
-		double knightIncrement;                 // knight movement speed
+		Sint8 knightIncrement;                  // knight movement speed
 		Uint16 extraMansBreak;                  // # of points for an extra life
 		Uint16 extraMansCounter;                // how many extra lives have been earned so far
 		bool arched;                            // previous death was to arrow
@@ -581,7 +581,7 @@ class GameManager {
 		Uint8 kick_frameState;                  // kick the machine
 		bool treasureHutFound;                  // treasure hut has been found in this level
 		bool inTreasureHut;                     // player is currently in treasure hut
-		Uint8 treasureHutIndex;                 // index of hut that contains treasure (0 = no treasure hut)
+		Sint16 treasureHutIndex;                // index of hut that contains treasure (0 = no treasure hut)
 		Sint16 storex;                          // old player X position (used for treasure huts)
 		Sint16 storey;                          // old player Y position (used for treasure huts)
 		Sint16 treasureHut_timer;               // remaining time in treasure hut
@@ -659,8 +659,8 @@ class GameManager {
 				j = (i * 3) + 2;
 				if (levels[levelIndex][j] > 0) {
 					hutArray[i] = Cottage(
-						OBJ_TO_SCREEN_AT_FRACTION_X(sprite_cottage, (levels[levelIndex][j + 1] + 2466) / 5000.0) + 8,
-						OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_cottage, (levels[levelIndex][j + 2] + 2183) / 3600.0) - 11,
+						(Sint16)OBJ_TO_SCREEN_AT_FRACTION_X(sprite_cottage, (levels[levelIndex][j + 1] + 2466) / 5000.0) + 8,
+						(Sint16)OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_cottage, (levels[levelIndex][j + 2] + 2183) / 3600.0) - 11,
 						levels[levelIndex][j]
 					);
 					numHuts++;
@@ -699,7 +699,7 @@ class GameManager {
 			inTreasureHut = false;
 			treasureHutIndex = levels[levelIndex][1];
 		}
-		inline void set_level_background(Uint8 bg_index) {
+		void set_level_background(Sint16 bg_index) {
 			switch (bg_index) {
 				case 1:
 					sprite_level_background = &sprite_level_background_1;
@@ -1488,7 +1488,7 @@ class GameManager {
 				sprite_peasantometer_icon.srcrect.x = 0;                                        \
 			}                                                                                   \
 			renderSprite(sprite_peasantometer_icon);                                           \
-			sprite_peasantometer_icon.dstrect.x += (sprite_peasantometer_icon.dstrect.w * 1.5); \
+			sprite_peasantometer_icon.dstrect.x += (int)(sprite_peasantometer_icon.dstrect.w * 1.5); \
 		}                                                                                       \
 	}
 
