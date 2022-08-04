@@ -7,41 +7,11 @@
 #define SFX_CHANNEL_GAME_MUSIC  6
 #define SFX_CHANNEL_STRONG_BAD  7 // highest channel
 
-#if !defined(PSP)
-#define PLAY_MUSIC(music)     \
-	bgm = Mix_LoadMUS(music); \
-	Mix_PlayMusic(bgm, -1);
-#else
-#define PLAY_MUSIC(music)     \
-	bgm = Mix_LoadMUS(music); \
-	Mix_PlayMusic(bgm, 0);
-#endif
+extern Mix_Music *bgm;
 
-#define PLAY_MUSIC_WITHOUT_LOOP(music) \
-	bgm = Mix_LoadMUS(music);          \
-	Mix_PlayMusic(bgm, 0);
-
-#define PLAY_MUSIC_AT_INDEX(index)       \
-	if (soundSettings.musicIndex != 0) { \
-		Mix_HaltMusic();                 \
-		Mix_FreeMusic(bgm);              \
-	}                                    \
-	soundSettings.musicIndex = index;    \
-	switch (soundSettings.musicIndex) {  \
-		case 1:                          \
-			bgm = Mix_LoadMUS(MUSIC_1);  \
-			Mix_PlayMusic(bgm, -1);      \
-			break;                       \
-		case 2:                          \
-			bgm = Mix_LoadMUS(MUSIC_2);  \
-			Mix_PlayMusic(bgm, -1);      \
-			break;                       \
-		default:                         \
-			break;                       \
-	}
-
-#define STOP_MUSIC() \
-	Mix_HaltMusic(); \
-	Mix_FreeMusic(bgm);
+extern void playMusic(const char *);
+extern void playMusicWithoutLoop(const char *);
+extern void playMusicAtIndex(Uint8);
+extern void stopMusic();
 
 #endif
