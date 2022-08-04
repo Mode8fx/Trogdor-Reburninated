@@ -1,6 +1,7 @@
 #include "include.h"
 #include "config.h"
 #include "general.h"
+#include "window.h"
 #include "classes.h"
 //#include "input.h"
 #include "main.h"
@@ -138,7 +139,7 @@ int main(int argv, char** args) {
 							SDL_SetWindowSize(window, GAME_WIDTH, SDL_GetWindowSurface(window)->h);
 						if (SDL_GetWindowSurface(window)->h < GAME_HEIGHT)
 							SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, GAME_HEIGHT);
-						SET_SCALING();
+						setScaling();
 					}
 					break;
 #endif
@@ -581,10 +582,10 @@ int main(int argv, char** args) {
 
 		/* Key Presses (Always Active) */
 		if (keyPressed(INPUT_FULLSCREEN)) {
-			SDL_TOGGLE_FULLSCREEN();
+			SDL_toggleFullscreen();
 		}
 		if (keyPressed(INPUT_R)) {
-			SDL_TOGGLE_INTEGER_SCALE();
+			SDL_toggleIntegerScale();
 		}
 
 		/* Clear Screen */
@@ -1405,7 +1406,7 @@ int main(int argv, char** args) {
 #endif
 
 		/* Draw Black Rectangles */
-		RENDER_BORDER_RECTS();
+		renderBorderRects();
 
 		/* Update Screen */
 #if !defined(SDL1)

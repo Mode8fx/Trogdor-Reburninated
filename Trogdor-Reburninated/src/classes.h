@@ -3,6 +3,7 @@
 
 #include "config.h"
 #include "general.h"
+#include "window.h"
 #include "input.h"
 #include "level_data.h"
 #include "media_objects_init.h"

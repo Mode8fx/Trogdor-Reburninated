@@ -4,16 +4,6 @@
 #include "media_objects_init.h"
 #include "system_specific_macros.h"
 
-/* SDL Window */
-#if !defined(SDL1)
-SDL_Window *window;
-SDL_Renderer *renderer;
-SDL_Texture *gameTexture;
-#endif
-SDL_Surface *gameScreen;
-const SDL_Rect gameWindowSrcRect = { 0, 0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT };
-SDL_Rect gameWindowDstRect = { 0, 0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT };
-SDL_Rect appScreenRect;
 SDL_Event event;
 
 /* SDL Input */
@@ -301,6 +291,14 @@ string rootDir = "";
 #endif
 
 /* Window */
+#if !defined(SDL1)
+SDL_Window *window;
+SDL_Renderer *renderer;
+SDL_Texture *gameTexture;
+#endif
+SDL_Surface *gameScreen;
+SDL_Rect gameWindowDstRect = { 0, 0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT };
+SDL_Rect appScreenRect;
 SDL_Rect topRect;
 SDL_Rect bottomRect;
 SDL_Rect leftRect;
@@ -441,7 +439,7 @@ void InitializeDisplay() {
 #endif
 	videoSettings.widthSetting = 640;
 	videoSettings.heightSetting = 480;
-	SET_WIDTH_HEIGHT_MULTS();
+	setWidthHeightMults();
 	frameRate = DEFAULT_FRAME_RATE;
 
 	/* Set Window/Renderer */
@@ -469,7 +467,7 @@ void InitializeDisplay() {
 	gameScreen = SDL_CreateRGBSurface(0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT, 24, 0, 0, 0, 0);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
-	SET_SCALING();
+	setScaling();
 }
 
 void InitializeSound() {

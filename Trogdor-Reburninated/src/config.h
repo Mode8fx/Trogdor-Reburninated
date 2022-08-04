@@ -5,32 +5,6 @@
 
 #include "include.h"
 
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
-#define PC 0
-#else
-#define PC 1
-#endif
-
-#define DEFAULT_GAME_WIDTH    250
-#define DEFAULT_GAME_HEIGHT   180
-#define DEFAULT_FRAME_RATE    16
-
-extern Uint16 GAME_WIDTH;
-extern Uint16 GAME_HEIGHT;
-extern double gameWidthMult;
-extern double gameHeightMult;
-extern Uint16 frameRate;
-
-#define GAME_WIDTH DEFAULT_GAME_WIDTH
-#define GAME_HEIGHT DEFAULT_GAME_HEIGHT
-#define GAME_WIDTH_MULT gameWidthMult
-#define GAME_HEIGHT_MULT gameHeightMult
-#define FRAME_RATE frameRate
-
-#define SET_WIDTH_HEIGHT_MULTS()                              \
-	gameWidthMult = ((double)GAME_WIDTH / DEFAULT_GAME_WIDTH); \
-	gameHeightMult = ((double)GAME_HEIGHT / DEFAULT_GAME_HEIGHT);
-
 #define SAVE_FILE (rootDir+"save.bin").c_str()
 
 #define LOAD_SAVE_FILE()                                                \
