@@ -5,6 +5,15 @@
 
 #include "include.h"
 
+/* System-Specific Variables */
+#if defined(VITA)
+const string rootDir = "ux0:data/TrogdorRB/";
+#elif defined(WII) || defined(GAMECUBE)
+const string rootDir = "sd:/apps/TrogdorRB/";
+#else
+const string rootDir = "";
+#endif
+
 #define SAVE_FILE (rootDir+"save.bin").c_str()
 
 #define LOAD_SAVE_FILE()                                                \

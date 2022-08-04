@@ -141,7 +141,7 @@ TextCharObject textChars_font_serif_2_red_13[90 + 1 - 32];
 /* Text Objects */
 char tempCharArray[64];
 Uint8 charCounter;
-Uint16 charWidthCounter;
+Sint16 charWidthCounter;
 std::stringstream ss;
 string tempStr;
 TextObject text_0_loading;
@@ -280,15 +280,6 @@ TextObject text_25_10;
 
 /* SDL Save File */
 SDL_RWops *saveFile;
-
-/* System-Specific Variables */
-#if defined(VITA)
-string rootDir = "ux0:data/TrogdorRB/";
-#elif defined(WII) || defined(GAMECUBE)
-string rootDir = "sd:/apps/TrogdorRB/";
-#else
-string rootDir = "";
-#endif
 
 /* Window */
 #if !defined(SDL1)
@@ -588,54 +579,54 @@ void InitializeSpritesPart2() {
 }
 
 void InitializeTextChars() {
-	SET_FONT(font_serif_brown_6, "fonts/serif_v01.ttf", 6,
+	setFont(font_serif_brown_6, "fonts/serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_brown_6, color_brown, 32, 122);
 	TTF_CloseFont(font_serif_brown_6);
-	SET_FONT(font_serif_brown_8, "fonts/serif_v01.ttf", 8,
+	setFont(font_serif_brown_8, "fonts/serif_v01.ttf", 8,
 		TTF_STYLE_NORMAL, textChars_font_serif_brown_8, color_brown, 32, 126);
 	TTF_CloseFont(font_serif_brown_8);
-	SET_FONT(font_serif_gray_6, "fonts/serif_v01.ttf", 6,
+	setFont(font_serif_gray_6, "fonts/serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_gray_6, color_gray, 32, 126);
 	TTF_CloseFont(font_serif_gray_6);
-	SET_FONT(font_serif_gray_12, "fonts/serif_v01.ttf", 12,
+	setFont(font_serif_gray_12, "fonts/serif_v01.ttf", 12,
 		TTF_STYLE_NORMAL, textChars_font_serif_gray_12, color_gray, 32, 90);
 	TTF_CloseFont(font_serif_gray_12);
-	SET_FONT(font_serif_orange_6, "fonts/serif_v01.ttf", 6,
+	setFont(font_serif_orange_6, "fonts/serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_orange_6, color_orange, 32, 90);
 	TTF_CloseFont(font_serif_orange_6);
-	SET_FONT(font_serif_red_6, "fonts/serif_v01.ttf", 6,
+	setFont(font_serif_red_6, "fonts/serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_red_6, color_red, 32, 126);
 	TTF_CloseFont(font_serif_red_6);
-	SET_FONT(font_serif_red_8, "fonts/serif_v01.ttf", 8,
+	setFont(font_serif_red_8, "fonts/serif_v01.ttf", 8,
 		TTF_STYLE_NORMAL, textChars_font_serif_red_8, color_red, 32, 126);
 	TTF_CloseFont(font_serif_red_8);
-	SET_FONT(font_serif_red_12, "fonts/serif_v01.ttf", 12,
+	setFont(font_serif_red_12, "fonts/serif_v01.ttf", 12,
 		TTF_STYLE_NORMAL, textChars_font_serif_red_12, color_red, 32, 90);
 	TTF_CloseFont(font_serif_red_12);
-	SET_FONT(font_serif_white_6, "fonts/serif_v01.ttf", 6,
+	setFont(font_serif_white_6, "fonts/serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_white_6, color_white, 32, 126);
 	TTF_CloseFont(font_serif_white_6);
-	SET_FONT(font_serif_white_9, "fonts/serif_v01.ttf", 9,
+	setFont(font_serif_white_9, "fonts/serif_v01.ttf", 9,
 		TTF_STYLE_NORMAL, textChars_font_serif_white_9, color_white, 32, 126);
 	TTF_CloseFont(font_serif_white_9);
-	SET_FONT(font_serif_white_10, "fonts/serif_v01.ttf", 10,
+	setFont(font_serif_white_10, "fonts/serif_v01.ttf", 10,
 		TTF_STYLE_NORMAL, textChars_font_serif_white_10, color_white, 32, 126);
 	TTF_CloseFont(font_serif_white_10);
 
-	SET_FONT(font_nokia_12, "fonts/29_NOKIA 5110 FontSet.ttf", 12,
+	setFont(font_nokia_12, "fonts/29_NOKIA 5110 FontSet.ttf", 12,
 		TTF_STYLE_NORMAL, textChars_font_nokia_12, color_white, 97, 126);
 	TTF_CloseFont(font_nokia_12);
 
-	//SET_FONT(font_serif_2_bold_black_23, "fonts/54_serif_v01.ttf", 23,
+	//setFont(font_serif_2_bold_black_23, "fonts/54_serif_v01.ttf", 23,
 	//	TTF_STYLE_BOLD, textChars_font_serif_2_bold_black_23, color_black, 32, 90);
 	//TTF_CloseFont(font_serif_2_bold_black_23);
-	//SET_FONT(font_serif_2_bold_red_23, "fonts/54_serif_v01.ttf", 23,
+	//setFont(font_serif_2_bold_red_23, "fonts/54_serif_v01.ttf", 23,
 	//	TTF_STYLE_BOLD, textChars_font_serif_2_bold_red_23, color_red, 32, 90);
 	//TTF_CloseFont(font_serif_2_bold_red_23);
-	SET_FONT(font_serif_2_red_6, "fonts/54_serif_v01.ttf", 6,
+	setFont(font_serif_2_red_6, "fonts/54_serif_v01.ttf", 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_2_red_6, color_red, 32, 90);
 	TTF_CloseFont(font_serif_2_red_6);
-	SET_FONT(font_serif_2_red_13, "fonts/54_serif_v01.ttf", 13,
+	setFont(font_serif_2_red_13, "fonts/54_serif_v01.ttf", 13,
 		TTF_STYLE_NORMAL, textChars_font_serif_2_red_13, color_red, 32, 90);
 	TTF_CloseFont(font_serif_2_red_13);
 

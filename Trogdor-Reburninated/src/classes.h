@@ -528,11 +528,11 @@ class MenuManager {
 			if (keyPressed(INPUT_LEFT)) {
 				page--;
 				if (page < 1) page = 3;
-				UPDATE_TEXT(text_3_page, "("+to_string(page)+"/3)");
+				updateText(&text_3_page, "("+to_string(page)+"/3)");
 			} else if (keyPressed(INPUT_RIGHT)) {
 				page++;
 				if (page > 3) page = 1;
-				UPDATE_TEXT(text_3_page, "(" + to_string(page) + "/3)");
+				updateText(&text_3_page, "(" + to_string(page) + "/3)");
 			}
 		}
 };
@@ -1010,19 +1010,19 @@ class GameManager {
 				updateMans(1);
 				extraMansCounter++;
 			}
-			UPDATE_TEXT(text_4_score_val, to_string(score));
+			updateText(&text_4_score_val, to_string(score));
 		}
 		inline void updateMans(Sint8 increment) {
 			mans += increment;
-			UPDATE_TEXT(text_4_mans_val, to_string(mans));
+			updateText(&text_4_mans_val, to_string(mans));
 		}
 		inline void setMans(Sint8 val) {
 			mans = val;
-			UPDATE_TEXT(text_4_mans_val, to_string(mans));
+			updateText(&text_4_mans_val, to_string(mans));
 		}
 		inline void updateLevel(Sint8 increment) {
 			level += increment;
-			UPDATE_TEXT(text_4_level_val, to_string(level));
+			updateText(&text_4_level_val, to_string(level));
 		}
 		void clearArrows() {
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
@@ -1470,12 +1470,12 @@ class GameManager {
 	}
 
 #define RENDER_TOP_BAR()                                                                        \
-	RENDER_TEXT(text_4_score, textChars_font_serif_2_red_6);                                    \
-	RENDER_TEXT(text_4_score_val, textChars_font_serif_red_6);                                  \
-	RENDER_TEXT(text_4_mans, textChars_font_serif_2_red_6);                                     \
-	RENDER_TEXT(text_4_mans_val, textChars_font_serif_red_6);                                   \
-	RENDER_TEXT(text_4_level, textChars_font_serif_2_red_6);                                    \
-	RENDER_TEXT(text_4_level_val, textChars_font_serif_red_6);                                  \
+	renderText(text_4_score, textChars_font_serif_2_red_6);                                    \
+	renderText(text_4_score_val, textChars_font_serif_red_6);                                  \
+	renderText(text_4_mans, textChars_font_serif_2_red_6);                                     \
+	renderText(text_4_mans_val, textChars_font_serif_red_6);                                   \
+	renderText(text_4_level, textChars_font_serif_2_red_6);                                    \
+	renderText(text_4_level_val, textChars_font_serif_red_6);                                  \
 	/* render peasantometer/burnination meter (depending on their values) */                    \
 	if (GM.burnination > 0) {                                                                   \
 		RENDER_SPRITE(sprite_burnination_meter_empty);                                          \

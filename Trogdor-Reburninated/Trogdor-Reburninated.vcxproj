@@ -239,6 +239,7 @@
   <ItemGroup>
     <ClCompile Include="src\classes.h" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\text_objects.cpp" />
     <ClCompile Include="src\window.cpp" />
   </ItemGroup>
   <ItemGroup>
