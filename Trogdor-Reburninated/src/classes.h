@@ -682,13 +682,13 @@ class GameManager {
 			for (i = 0; i < LEN(peasantArray); i++) {
 				peasantArray[i] = Peasant();
 			}
-			lootArray[0] = Loot((gameWidth * 0.144), (gameHeight * 0.661));
-			lootArray[1] = Loot((gameWidth * 0.292), (gameHeight * 0.522));
-			lootArray[2] = Loot((gameWidth * 0.284), (gameHeight * 0.806));
-			lootArray[3] = Loot((gameWidth * 0.416), (gameHeight * 0.644));
-			lootArray[4] = Loot((gameWidth * 0.548), (gameHeight * 0.522));
-			lootArray[5] = Loot((gameWidth * 0.548), (gameHeight * 0.783));
-			lootArray[6] = Loot((gameWidth * 0.688), (gameHeight * 0.644));
+			lootArray[0] = Loot((Sint16)(gameWidth * 0.144), (Sint16)(gameHeight * 0.661));
+			lootArray[1] = Loot((Sint16)(gameWidth * 0.292), (Sint16)(gameHeight * 0.522));
+			lootArray[2] = Loot((Sint16)(gameWidth * 0.284), (Sint16)(gameHeight * 0.806));
+			lootArray[3] = Loot((Sint16)(gameWidth * 0.416), (Sint16)(gameHeight * 0.644));
+			lootArray[4] = Loot((Sint16)(gameWidth * 0.548), (Sint16)(gameHeight * 0.522));
+			lootArray[5] = Loot((Sint16)(gameWidth * 0.548), (Sint16)(gameHeight * 0.783));
+			lootArray[6] = Loot((Sint16)(gameWidth * 0.688), (Sint16)(gameHeight * 0.644));
 			archerArray[0] = Archer(ARCHER_LEFT_X, 0, true);   // archerR (on the left, facing right)
 			archerArray[1] = Archer(ARCHER_RIGHT_X, 0, false); // archerL (on the right, facing left)
 			knightArray[0] = Knight(61, 111, 1, false);
@@ -1006,7 +1006,7 @@ class GameManager {
 		inline void updateScore(Uint16 increment) {
 			uint_i = score;
 			score += increment;
-			if ((uint_i < (extraMansBreak * extraMansCounter)) && (score >= (extraMansBreak * extraMansCounter))) {
+			if ((uint_i < (Uint32)(extraMansBreak * extraMansCounter)) && (score >= (Uint32)(extraMansBreak * extraMansCounter))) {
 				updateMans(1);
 				extraMansCounter++;
 			}

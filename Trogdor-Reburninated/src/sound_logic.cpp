@@ -21,10 +21,10 @@ void playMusicAtIndex(Uint8 index) {
 	}
 	soundSettings.musicIndex = index;
 	switch (soundSettings.musicIndex) {
-		//case 1:
+		case 1:
 		//	bgm = Mix_LoadMUS(MUSIC_1);
 		//	Mix_PlayMusic(bgm, -1);
-		//	break;
+			break;
 		default:
 			break;
 	}

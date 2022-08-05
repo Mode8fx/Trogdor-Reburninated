@@ -64,21 +64,21 @@ void snapWindow_x(double val) {
 	double_i = ((float)SDL_GetWindowSurface(window)->w / appWidth);
 	if ((double_i - floor(double_i)) >= pow(1 - val, floor(double_i))) {
 		if ((appWidth * ceil(double_i)) < DM.w) {
-			SDL_SetWindowSize(window, appWidth * ceil(double_i), SDL_GetWindowSurface(window)->h);
+			SDL_SetWindowSize(window, appWidth * (short)(ceil(double_i)), SDL_GetWindowSurface(window)->h);
 		}
-	} else if ((double_i - floor(double_i)) < 1 - pow(1 - val, floor(double_i)) && (SDL_GetWindowSurface(window)->w % appWidth != 0)) {
-		SDL_SetWindowSize(window, appWidth * floor(double_i), SDL_GetWindowSurface(window)->h);
+	} else if ((double_i - floor(double_i)) < 1 - pow(1 - val, (short)(floor(double_i))) && (SDL_GetWindowSurface(window)->w % appWidth != 0)) {
+		SDL_SetWindowSize(window, appWidth * (short)floor(double_i), SDL_GetWindowSurface(window)->h);
 	}
 }
 
 void snapWindow_y(double val) {
 	double_i = ((float)SDL_GetWindowSurface(window)->h / appHeight);
-	if ((double_i - floor(double_i)) >= pow(1 - val, floor(double_i))) {
+	if ((double_i - floor(double_i)) >= pow(1 - val, (short)(floor(double_i)))) {
 		if ((appHeight * ceil(double_i)) < DM.h) {
-			SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight * ceil(double_i));
+			SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight * (short)ceil(double_i));
 		}
-	} else if ((double_i - floor(double_i)) < 1 - pow(1 - val, floor(double_i)) && (SDL_GetWindowSurface(window)->h % appHeight != 0)) {
-		SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight * floor(double_i));
+	} else if ((double_i - floor(double_i)) < 1 - pow(1 - val, (short)(floor(double_i))) && (SDL_GetWindowSurface(window)->h % appHeight != 0)) {
+		SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight * (short)floor(double_i));
 	}
 }
 

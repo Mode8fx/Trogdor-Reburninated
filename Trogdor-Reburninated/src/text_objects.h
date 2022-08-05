@@ -47,7 +47,7 @@ extern void setFont(TTF_Font *, string, int, int, TextCharObject[], SDL_Color, U
 // This should be a macro since pos_x and pos_y may (and likely will) change before they're needed
 #define SET_TEXT(text, textObj, charArr, pos_x, pos_y) \
     setText(text, &textObj, charArr);                  \
-    setTextPos(&textObj, pos_x, pos_y);
+    setTextPos(&textObj, (Sint16)pos_x, (Sint16)pos_y);
 
 /* Text Objects */
 extern char tempCharArray[64];

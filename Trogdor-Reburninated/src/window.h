@@ -1,8 +1,8 @@
-#include "config.h"
-#include "general.h"
-
 #ifndef WINDOW_H
 #define WINDOW_H
+
+#include "config.h"
+#include "general.h"
 
 constexpr auto gameWidth = 250;
 constexpr auto gameHeight = 180;
