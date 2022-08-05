@@ -10,11 +10,9 @@
 #endif
 
 #if defined(SDL1) && !defined(WII) && !defined(GAMECUBE)
-FILE _iob[] = { *stdin, *stdout, *stderr };
+extern FILE _iob[];
 
-extern "C" FILE * __cdecl __iob_func(void) {
-	return _iob;
-}
+extern "C" FILE * __cdecl __iob_func(void);
 #endif
 
 extern void SYSTEM_SPECIFIC_OPEN();

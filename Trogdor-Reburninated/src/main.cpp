@@ -592,7 +592,7 @@ int main(int argv, char** args) {
 
 		/* Clear Screen */
 		SDL_FillRect(gameScreen, NULL, 0x000000);
-		//SDL_FillRect(appScreen, NULL, 0x000000);
+		SDL_FillRect(appScreen, NULL, 0xFF00FF);
 #if !defined(SDL1)
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
@@ -1410,17 +1410,18 @@ int main(int argv, char** args) {
 
 		/* Update Screen */
 #if !defined(SDL1)
-		SDL_FillRect(appScreen, NULL, 0x0000FF);
-		// Render (rest of) App Window
-		outputTexture = SDL_CreateTextureFromSurface(renderer, appScreen);
-		SDL_RenderCopy(renderer, outputTexture, &appSrcRect, &appToWindowDstRect);
-		SDL_DestroyTexture(outputTexture);
+		//SDL_FillRect(appScreen, NULL, 0x0000FF);
 		// Render Game Window
 		outputTexture = SDL_CreateTextureFromSurface(renderer, gameScreen);
 		SDL_RenderCopy(renderer, outputTexture, &gameSrcRect, &gameToWindowDstRect);
 		SDL_DestroyTexture(outputTexture); // there was a memory leak, and freeing the gameScreen crashes, so I guess this is the right way to fix it?
+		// Render (rest of) App Window
+		outputTexture = SDL_CreateTextureFromSurface(renderer, appScreen);
+		SDL_RenderCopy(renderer, outputTexture, &appSrcRect, &appToWindowDstRect);
+		SDL_DestroyTexture(outputTexture);
 		SDL_RenderPresent(renderer);
 #else
+		SDL_Flip(appScreen);
 		SDL_Flip(gameScreen);
 #endif
 		

@@ -8,8 +8,13 @@ void setWidthHeightMults() {
 }
 
 void scaleAppRelativeToWindow() {
+#if defined(PC) && !defined(SDL1)
 	windowWidth = SDL_GetWindowSurface(window)->w;
 	windowHeight = SDL_GetWindowSurface(window)->h;
+#else
+	windowWidth = appWidth;
+	windowHeight = appHeight;
+#endif
 	if (isIntegerScale) {
 		int_i = min((int)(windowWidth / appWidth), (int)(windowHeight / appHeight));
 		if (int_i < 1) int_i = 1;
@@ -61,6 +66,7 @@ void setScaling() {
 }
 
 void snapWindow_x(double val) {
+#if defined(PC) && !defined(SDL1)
 	double_i = ((float)SDL_GetWindowSurface(window)->w / appWidth);
 	if ((double_i - floor(double_i)) >= pow(1 - val, floor(double_i))) {
 		if ((appWidth * ceil(double_i)) < DM.w) {
@@ -69,9 +75,11 @@ void snapWindow_x(double val) {
 	} else if ((double_i - floor(double_i)) < 1 - pow(1 - val, (short)(floor(double_i))) && (SDL_GetWindowSurface(window)->w % appWidth != 0)) {
 		SDL_SetWindowSize(window, appWidth * (short)floor(double_i), SDL_GetWindowSurface(window)->h);
 	}
+#endif
 }
 
 void snapWindow_y(double val) {
+#if defined(PC) && !defined(SDL1)
 	double_i = ((float)SDL_GetWindowSurface(window)->h / appHeight);
 	if ((double_i - floor(double_i)) >= pow(1 - val, (short)(floor(double_i)))) {
 		if ((appHeight * ceil(double_i)) < DM.h) {
@@ -80,6 +88,7 @@ void snapWindow_y(double val) {
 	} else if ((double_i - floor(double_i)) < 1 - pow(1 - val, (short)(floor(double_i))) && (SDL_GetWindowSurface(window)->h % appHeight != 0)) {
 		SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight * (short)floor(double_i));
 	}
+#endif
 }
 
 void SDL_toggleFullscreen() {

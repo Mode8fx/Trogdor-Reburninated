@@ -12,7 +12,7 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], int numSprites_x,
     spriteObj->surface = SDL_ConvertSurfaceFormat(temp, SDL_GetWindowPixelFormat(window), 0);
 #else
     SDL_SetColorKey(temp, SDL_SRCCOLORKEY, 0xFF00FF);
-    spriteObj.surface = SDL_DisplayFormat(temp);
+    spriteObj->surface = SDL_DisplayFormat(temp);
 #endif
     SDL_FreeSurface(temp);
     spriteObj->srcrect.w = spriteObj->surface->w / numSprites_x;

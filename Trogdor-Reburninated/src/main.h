@@ -378,6 +378,11 @@ void InitializeDisplay() {
 	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
+#if !defined(SDL1)
+	SDL_SetColorKey(appScreen, SDL_TRUE, 0xFF00FF);
+#else
+	SDL_SetColorKey(appScreen, SDL_SRCCOLORKEY, 0xFF00FF);
+#endif
 	setScaling();
 }
 

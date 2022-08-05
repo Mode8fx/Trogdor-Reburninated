@@ -1,5 +1,13 @@
 #include "system_specific.h"
 
+#if defined(SDL1) && !defined(WII) && !defined(GAMECUBE)
+FILE _iob[] = { *stdin, *stdout, *stderr };
+
+FILE * __cdecl __iob_func(void) {
+	return _iob;
+}
+#endif
+
 void SYSTEM_SPECIFIC_OPEN() {
 #if defined(WII_U)
 	/* Set SD Card Mount Path */
