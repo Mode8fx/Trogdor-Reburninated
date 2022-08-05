@@ -49,8 +49,11 @@ void renderSpriteScaled(SpriteObject spriteObj) {
 
 void setSpriteScale(SpriteObject *spriteObj, double scale) {
     if (scale != (double)1) { // probably unnecessary, but this function won't run in a loop, and it's important that there are no precision errors
-        spriteObj->dstrect.w = (int)(spriteObj->srcrect.w * min(gameWidthMult, gameHeightMult) * scale);
-        spriteObj->dstrect.h = (int)(spriteObj->srcrect.h * min(gameWidthMult, gameHeightMult) * scale);
+        spriteObj->dstrect.w = (int)(spriteObj->srcrect.w * scale);
+        spriteObj->dstrect.h = (int)(spriteObj->srcrect.h * scale);
+    } else {
+        spriteObj->dstrect.w = (int)(spriteObj->srcrect.w);
+        spriteObj->dstrect.h = (int)(spriteObj->srcrect.h);
     }
 }
 

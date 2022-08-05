@@ -8,6 +8,7 @@ extern Sint8 i, j, k;
 extern int int_i, int_j, int_k;
 extern Uint32 uint_i, uint_j, uint_k;
 extern float float_i;
+extern double double_i;
 
 struct Timer {
     double now;

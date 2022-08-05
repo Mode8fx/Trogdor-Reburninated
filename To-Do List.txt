@@ -2,11 +2,7 @@ To-Do List
 
 Trogdor Alpha [gameplay-complete basic port of Trogdor]:
 Polish:
-- Rework gameWidth/gameHeight/GAME_WIDTH/GAME_HEIGHT/DEFAULT_GAME_WIDTH/DEFAULT_GAME_HEIGHT into three sizes:
-	- GAME_WIDTH/GAME_HEIGHT: The size of the Trogdor game; locked to 250 and 180 respectively
-	- appWidth/appHeight: The size of the program; initialized and locked when the game is first opened, determined by the setting from save data (like what SuDokuL did)
-	- windowWidth/windowHeight: The size of the window; starts out equal to appWidth/appHeight, but can be resized; scaling should scale app relative to window size
-- If window is resized while integer scaling is enabled, snap window size to app multiple if within 10%
+- Fill app screen with transparency so it can be in front of the game screen without covering it up
 - Fix text
 	- It doesn't have to be completely polished for Alpha, but there are some major issues: 6pt font is too blurry but also too big for the 250x180 game window (despite matching the original game?). So even though it won't match the original game, 8pt font should be used instead, and text positions should be adjusted to allow for this. Also, maybe text should go outside the game window? Outside of the 250x180 game window and into the 320x240 full window
 - Rework sound system to only load chunks of sound as they're needed instead of having all sound loaded into RAM at once

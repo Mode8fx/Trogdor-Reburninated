@@ -36,6 +36,7 @@ Sint8 i, j, k;
 int int_i, int_j, int_k;
 Uint32 uint_i, uint_j, uint_k;
 float float_i;
+double double_i;
 
 int main(int argv, char** args) {
 	SYSTEM_SPECIFIC_OPEN();
@@ -54,7 +55,6 @@ int main(int argv, char** args) {
 
 	loadSaveFile();
 	InitializeDisplay();
-	appScreenRect = { 0, 0, GAME_WIDTH, GAME_HEIGHT };
 
 	/* Initialize SDL_ttf and font used for Loading text */
 	TTF_Init();
@@ -134,10 +134,13 @@ int main(int argv, char** args) {
 #if defined(PC) && !defined(SDL1)
 				case SDL_WINDOWEVENT:
 					if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
-						if (SDL_GetWindowSurface(window)->w < GAME_WIDTH)
-							SDL_SetWindowSize(window, GAME_WIDTH, SDL_GetWindowSurface(window)->h);
-						if (SDL_GetWindowSurface(window)->h < GAME_HEIGHT)
-							SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, GAME_HEIGHT);
+						if (SDL_GetWindowSurface(window)->w < appWidth)
+							SDL_SetWindowSize(window, appWidth, SDL_GetWindowSurface(window)->h);
+						if (SDL_GetWindowSurface(window)->h < appHeight)
+							SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight);
+						// If you resize the window to within 6% of an integer ratio, snap to that ratio
+						snapWindow_x(0.06);
+						snapWindow_y(0.06);
 						setScaling();
 					}
 					break;
@@ -419,12 +422,12 @@ int main(int argv, char** args) {
 					}
 					break;
 				case SDL_FINGERDOWN:
-					mouseInput_x = (Sint32)(event.tfinger.x * GAME_WIDTH);
-					mouseInput_y = (Sint32)(event.tfinger.y * GAME_HEIGHT);
+					mouseInput_x = (Sint32)(event.tfinger.x * windowWidth);
+					mouseInput_y = (Sint32)(event.tfinger.y * windowHeight);
 					break;
 				case SDL_FINGERMOTION:
-					mouseInput_x = (Sint32)(event.tfinger.x * GAME_WIDTH);
-					mouseInput_y = (Sint32)(event.tfinger.y * GAME_HEIGHT);
+					mouseInput_x = (Sint32)(event.tfinger.x * windowWidth);
+					mouseInput_y = (Sint32)(event.tfinger.y * windowHeight);
 					break;
 				case SDL_FINGERUP:
 					break;
@@ -589,6 +592,7 @@ int main(int argv, char** args) {
 
 		/* Clear Screen */
 		SDL_FillRect(gameScreen, NULL, 0x000000);
+		//SDL_FillRect(appScreen, NULL, 0x000000);
 #if !defined(SDL1)
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
@@ -1404,14 +1408,17 @@ int main(int argv, char** args) {
 		mouseInput_y_last = mouseInput_y;
 #endif
 
-		/* Draw Black Rectangles */
-		renderBorderRects();
-
 		/* Update Screen */
 #if !defined(SDL1)
-		gameTexture = SDL_CreateTextureFromSurface(renderer, gameScreen);
-		SDL_RenderCopy(renderer, gameTexture, &gameWindowSrcRect, &gameWindowDstRect);
-		SDL_DestroyTexture(gameTexture); // there was a memory leak, and freeing the gameScreen crashes, so I guess this is the right way to fix it?
+		SDL_FillRect(appScreen, NULL, 0x0000FF);
+		// Render (rest of) App Window
+		outputTexture = SDL_CreateTextureFromSurface(renderer, appScreen);
+		SDL_RenderCopy(renderer, outputTexture, &appSrcRect, &appToWindowDstRect);
+		SDL_DestroyTexture(outputTexture);
+		// Render Game Window
+		outputTexture = SDL_CreateTextureFromSurface(renderer, gameScreen);
+		SDL_RenderCopy(renderer, outputTexture, &gameSrcRect, &gameToWindowDstRect);
+		SDL_DestroyTexture(outputTexture); // there was a memory leak, and freeing the gameScreen crashes, so I guess this is the right way to fix it?
 		SDL_RenderPresent(renderer);
 #else
 		SDL_Flip(gameScreen);

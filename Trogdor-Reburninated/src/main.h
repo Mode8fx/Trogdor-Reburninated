@@ -280,23 +280,29 @@ TextObject text_25_10;
 #if !defined(SDL1)
 SDL_Window *window;
 SDL_Renderer *renderer;
-SDL_Texture *gameTexture;
+SDL_Texture *outputTexture;
 #endif
 SDL_Surface *gameScreen;
-SDL_Rect gameWindowDstRect = { 0, 0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT };
-SDL_Rect appScreenRect;
-SDL_Rect topRect;
-SDL_Rect bottomRect;
-SDL_Rect leftRect;
-SDL_Rect rightRect;
+SDL_Rect gameSrcRect = { 0, 0, gameWidth, gameHeight };
+SDL_Rect gameToAppDstRect = { 0, 0, gameWidth, gameHeight };
+SDL_Surface *appScreen;
+SDL_Rect appSrcRect = { 0, 0, appWidth, appHeight };
+SDL_Rect appToWindowDstRect = { 0, 0, appWidth, appHeight };
+SDL_Rect gameToWindowDstRect = { 0, 0, gameWidth, gameHeight };
 bool isWindowed = true;
 double screenScale = 1;
 bool isIntegerScale = true;
 #if !defined(SDL1)
 SDL_DisplayMode DM;
 #endif
+Uint16 appWidth;
+Uint16 appHeight;
 double gameWidthMult;
 double gameHeightMult;
+Uint16 windowWidth;
+Uint16 windowHeight;
+double appWidthMult;
+double appHeightMult;
 Uint16 frameRate;
 
 /* Save File */
@@ -334,34 +340,42 @@ void InitializeDisplay() {
 	videoSettings.heightSetting = SYSTEM_HEIGHT;
 	SDL_SetHint(SDL_HINT_ORIENTATIONS, "Landscape");
 #endif
-	videoSettings.widthSetting = 640;
-	videoSettings.heightSetting = 480;
-	setWidthHeightMults();
+	videoSettings.widthSetting = 320;
+	videoSettings.heightSetting = 240;
+	appWidth = videoSettings.widthSetting;
+	appHeight = videoSettings.heightSetting;
+	appSrcRect = { 0, 0, appWidth, appHeight };
 	frameRate = DEFAULT_FRAME_RATE;
+	setWidthHeightMults();
 
 	/* Set Window/Renderer */
 #if defined(PSP)
 	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	gameSurface = SDL_CreateRGBSurface(0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT, 24, 0, 0, 0, 0);
+	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
+	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID)
 	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	gameSurface = SDL_CreateRGBSurface(0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT, 24, 0, 0, 0, 0);
+	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
+	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII) || defined(GAMECUBE)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	gameScreen = SDL_SetVideoMode(GAME_WIDTH, GAME_HEIGHT, 24, SDL_DOUBLEBUF);
+	gameScreen = SDL_SetVideoMode(gameWidth, gameHeight, 24, SDL_DOUBLEBUF);
+	appScreen = SDL_SetVideoMode(appWidth, appHeight, 24, SDL_DOUBLEBUF);
 #elif defined(SDL1)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	gameScreen = SDL_SetVideoMode(GAME_WIDTH, GAME_HEIGHT, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	gameScreen = SDL_SetVideoMode(gameWidth, gameHeight, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	appScreen = SDL_SetVideoMode(appWidth, appHeight, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
-	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	gameScreen = SDL_CreateRGBSurface(0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT, 24, 0, 0, 0, 0);
+	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
+	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
 	setScaling();
@@ -425,6 +439,10 @@ void InitializeSpritesPart1() {
 	// I'm gonna be lazy and just use the title screen directly instead of its separate components
 	PREPARE_SPRITE(sprite_title_screen, (rootDir + "graphics/title_screen.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_title_screen), OBJ_TO_MID_SCREEN_Y(sprite_title_screen), 1, 1, 1);
+	PRINT(sprite_title_screen.dstrect.x);
+	PRINT(sprite_title_screen.dstrect.y);
+	PRINT(sprite_title_screen.dstrect.w);
+	PRINT(sprite_title_screen.dstrect.h);
 	PREPARE_SPRITE(sprite_trogdor_logo, (rootDir + "graphics/trogdor_logo.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_trogdor_logo), OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_trogdor_logo, 0.1666), 1, 1, 1);
 	// ((2466 + 23) / 5000.0) = 0.4978
@@ -456,7 +474,7 @@ void InitializeSpritesPart2() {
 		0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_peasantometer_icon, (rootDir + "graphics/peasantometer.bmp").c_str(),
 		0, 3, 2, 1, 1);
-	sprite_peasantometer_icon_init_x = (Uint8)(GAME_WIDTH * 66 / 250);
+	sprite_peasantometer_icon_init_x = (Uint8)(gameWidth * 66 / 250);
 	PREPARE_SPRITE(sprite_archer, (rootDir + "graphics/archer.bmp").c_str(),
 		0, 0, 2, 2, 1);
 	PREPARE_SPRITE(sprite_arrow, (rootDir + "graphics/arrow.bmp").c_str(),
@@ -481,7 +499,7 @@ void InitializeSpritesPart2() {
 		OBJ_TO_MID_SCREEN_X(sprite_burninate_fire), OBJ_TO_MID_SCREEN_Y(sprite_burninate_fire), 1, 14, 1);
 	PREPARE_SPRITE(sprite_loot, (rootDir + "graphics/loot.bmp").c_str(),
 		0, 0, 1, 1, 1);
-	divider_level_beaten_rect = { 0, 25, GAME_WIDTH, 2 };
+	divider_level_beaten_rect = { 0, 25, gameWidth, 2 };
 }
 
 void InitializeTextChars() {
@@ -617,7 +635,7 @@ void InitializeTextObjects() {
 	/* 8: End of Level Animation */
 	/* 9: Level Beaten Screen */
 	SET_TEXT("nice work!", text_9_nice_work, textChars_font_serif_white_10,
-		(GAME_WIDTH * 0.55), (GAME_HEIGHT * 0.45));
+		(gameWidth * 0.55), (gameHeight * 0.45));
 	/* 10: Game Over Screen */
 	/* 11: Level 4 Interlude */
 	SET_TEXT("stompin' good!", text_11_cutscene, textChars_font_serif_white_9,
@@ -696,13 +714,13 @@ void renderBackground() {
 void renderTransparentForeground() {
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(0,
-		GAME_WIDTH, GAME_HEIGHT, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+		gameWidth, gameHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
 #else
 	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(0,
-		GAME_WIDTH, GAME_HEIGHT, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+		gameWidth, gameHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 #endif
 	SDL_FillRect(screen_transparent, NULL, 0xC8000000);
-	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &appScreenRect);
+	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &gameSrcRect);
 	SDL_FreeSurface(screen_transparent);
 }
 

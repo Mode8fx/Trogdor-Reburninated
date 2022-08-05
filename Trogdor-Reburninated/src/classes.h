@@ -416,8 +416,8 @@ class Trogdor {
 			frameState = 0;
 			facingRight = true;
 			srcrect = { 0, facingRight * sprite_trogdor.dstrect.h, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
-			spawnPos_x = (Sint16)(2780.0 / 5000 * GAME_WIDTH) - (srcrect.w / 2);
-			spawnPos_y = (Sint16)(2360.0 / 3600 * GAME_HEIGHT) - (srcrect.h / 2);
+			spawnPos_x = (Sint16)(2780.0 / 5000 * gameWidth) - (srcrect.w / 2);
+			spawnPos_y = (Sint16)(2360.0 / 3600 * gameHeight) - (srcrect.h / 2);
 			dstrect = { spawnPos_x, spawnPos_y, sprite_trogdor.dstrect.w, sprite_trogdor.dstrect.h };
 			collision = { 11 + dstrect.x, 11 + dstrect.y, 18, 24 };
 			fire_frameState = 0;
@@ -682,13 +682,13 @@ class GameManager {
 			for (i = 0; i < LEN(peasantArray); i++) {
 				peasantArray[i] = Peasant();
 			}
-			lootArray[0] = Loot((GAME_WIDTH * 0.144), (GAME_HEIGHT * 0.661));
-			lootArray[1] = Loot((GAME_WIDTH * 0.292), (GAME_HEIGHT * 0.522));
-			lootArray[2] = Loot((GAME_WIDTH * 0.284), (GAME_HEIGHT * 0.806));
-			lootArray[3] = Loot((GAME_WIDTH * 0.416), (GAME_HEIGHT * 0.644));
-			lootArray[4] = Loot((GAME_WIDTH * 0.548), (GAME_HEIGHT * 0.522));
-			lootArray[5] = Loot((GAME_WIDTH * 0.548), (GAME_HEIGHT * 0.783));
-			lootArray[6] = Loot((GAME_WIDTH * 0.688), (GAME_HEIGHT * 0.644));
+			lootArray[0] = Loot((gameWidth * 0.144), (gameHeight * 0.661));
+			lootArray[1] = Loot((gameWidth * 0.292), (gameHeight * 0.522));
+			lootArray[2] = Loot((gameWidth * 0.284), (gameHeight * 0.806));
+			lootArray[3] = Loot((gameWidth * 0.416), (gameHeight * 0.644));
+			lootArray[4] = Loot((gameWidth * 0.548), (gameHeight * 0.522));
+			lootArray[5] = Loot((gameWidth * 0.548), (gameHeight * 0.783));
+			lootArray[6] = Loot((gameWidth * 0.688), (gameHeight * 0.644));
 			archerArray[0] = Archer(ARCHER_LEFT_X, 0, true);   // archerR (on the left, facing right)
 			archerArray[1] = Archer(ARCHER_RIGHT_X, 0, false); // archerL (on the right, facing left)
 			knightArray[0] = Knight(61, 111, 1, false);

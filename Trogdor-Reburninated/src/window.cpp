@@ -1,73 +1,101 @@
 #include "window.h"
 
 void setWidthHeightMults() {
-	gameWidthMult = ((double)GAME_WIDTH / DEFAULT_GAME_WIDTH);
-	gameHeightMult = ((double)GAME_HEIGHT / DEFAULT_GAME_HEIGHT);
+	appWidthMult = ((double)windowWidth / appWidth);
+	appHeightMult = ((double)windowHeight / appHeight);
+	gameWidthMult = ((double)appWidth / gameWidth);
+	gameHeightMult = ((double)appHeight / gameHeight);
 }
 
-void updateBorderRects() {
-	topRect.x = -(SCALING_WIDTH - GAME_WIDTH) / 2 - 50;
-	topRect.y = -(SCALING_HEIGHT - GAME_HEIGHT) / 2 - 100;
-	topRect.w = SCALING_WIDTH + 100;
-	topRect.h = (SCALING_HEIGHT - GAME_HEIGHT) / 2 + 100;
-	bottomRect.x = topRect.x;
-	bottomRect.y = GAME_HEIGHT;
-	bottomRect.w = topRect.w;
-	bottomRect.h = topRect.h;
-	leftRect.x = -(SCALING_WIDTH - GAME_WIDTH) / 2 - 100;
-	leftRect.y = -(SCALING_HEIGHT - GAME_HEIGHT) / 2 - 50;
-	leftRect.w = (SCALING_WIDTH - GAME_WIDTH) / 2 + 100;
-	leftRect.h = SCALING_HEIGHT + 100;
-	rightRect.x = GAME_WIDTH;
-	rightRect.y = leftRect.y;
-	rightRect.w = leftRect.w;
-	rightRect.h = leftRect.h;
+void scaleAppRelativeToWindow() {
+	windowWidth = SDL_GetWindowSurface(window)->w;
+	windowHeight = SDL_GetWindowSurface(window)->h;
+	if (isIntegerScale) {
+		int_i = min((int)(windowWidth / appWidth), (int)(windowHeight / appHeight));
+		if (int_i < 1) int_i = 1;
+		appToWindowDstRect.w = appWidth * int_i;
+		appToWindowDstRect.h = appHeight * int_i;
+	} else {
+		screenScale = (double)windowWidth / appWidth;
+		if ((double)windowHeight / appHeight < screenScale) {
+			screenScale = (double)windowHeight / appHeight;
+		}
+		if (screenScale < 1) screenScale = 1;
+		appToWindowDstRect.w = (int)(appWidth * screenScale);
+		appToWindowDstRect.h = (int)(appHeight * screenScale);
+	}
+	appToWindowDstRect.x = max((int)((windowWidth - appToWindowDstRect.w) / 2), 0);
+	appToWindowDstRect.y = max((int)((windowHeight - appToWindowDstRect.h) / 2), 0);
+}
+
+void scaleGameRelativeToApp() {
+	if (isIntegerScale) {
+		int_i = min((int)(appToWindowDstRect.w / appWidth), (int)(appToWindowDstRect.h / appHeight));
+		if (int_i < 1) int_i = 1;
+		gameToAppDstRect.w = gameWidth * int_i;
+		gameToAppDstRect.h = gameHeight * int_i;
+		gameToWindowDstRect.w = gameToAppDstRect.w;
+		gameToWindowDstRect.h = gameToAppDstRect.h;
+	} else {
+		screenScale = (double)appToWindowDstRect.w / appWidth;
+		if ((double)appToWindowDstRect.h / appHeight < screenScale) {
+			screenScale = (double)appToWindowDstRect.h / appHeight;
+		}
+		if (screenScale < 1) screenScale = 1;
+		gameToAppDstRect.w = (int)(gameWidth * screenScale);
+		gameToAppDstRect.h = (int)(gameHeight * screenScale);
+		gameToWindowDstRect.w = gameToAppDstRect.w;
+		gameToWindowDstRect.h = gameToAppDstRect.h;
+	}
+	gameToAppDstRect.x = max((int)((appToWindowDstRect.w - gameToAppDstRect.w) / 2), 0);
+	gameToAppDstRect.y = max((int)((appToWindowDstRect.h - gameToAppDstRect.h) / 2), 0);
+	gameToWindowDstRect.x = gameToAppDstRect.x + appToWindowDstRect.x;
+	gameToWindowDstRect.y = gameToAppDstRect.y + appToWindowDstRect.y;
 }
 
 void setScaling() {
 #if !defined(ANDROID)
-	if (isIntegerScale) {
-		int_i = min((int)(SCALING_WIDTH / GAME_WIDTH), (int)(SCALING_HEIGHT / GAME_HEIGHT));
-		if (int_i < 1) int_i = 1;
-		gameWindowDstRect.w = GAME_WIDTH * int_i;
-		gameWindowDstRect.h = GAME_HEIGHT * int_i;
-	} else {
-		screenScale = (double)SCALING_WIDTH / GAME_WIDTH;
-		if ((double)SCALING_HEIGHT / GAME_HEIGHT < screenScale) {
-			screenScale = (double)SCALING_HEIGHT / GAME_HEIGHT;
-		}
-		if (screenScale < 1) screenScale = 1;
-		gameWindowDstRect.w = (int)(GAME_WIDTH * screenScale);
-		gameWindowDstRect.h = (int)(GAME_HEIGHT * screenScale);
-	}
-	gameWindowDstRect.x = max((int)((SCALING_WIDTH - gameWindowDstRect.w) / 2), 0);
-	gameWindowDstRect.y = max((int)((SCALING_HEIGHT - gameWindowDstRect.h) / 2), 0);
-	updateBorderRects();
-	//SDL_RenderSetClipRect(renderer, &gameWindowDstRect);
+	scaleAppRelativeToWindow();
+	scaleGameRelativeToApp();
 #endif
+}
+
+void snapWindow_x(double val) {
+	double_i = ((float)SDL_GetWindowSurface(window)->w / appWidth);
+	if ((double_i - floor(double_i)) >= pow(1 - val, floor(double_i))) {
+		if ((appWidth * ceil(double_i)) < DM.w) {
+			SDL_SetWindowSize(window, appWidth * ceil(double_i), SDL_GetWindowSurface(window)->h);
+		}
+	} else if ((double_i - floor(double_i)) < 1 - pow(1 - val, floor(double_i)) && (SDL_GetWindowSurface(window)->w % appWidth != 0)) {
+		SDL_SetWindowSize(window, appWidth * floor(double_i), SDL_GetWindowSurface(window)->h);
+	}
+}
+
+void snapWindow_y(double val) {
+	double_i = ((float)SDL_GetWindowSurface(window)->h / appHeight);
+	if ((double_i - floor(double_i)) >= pow(1 - val, floor(double_i))) {
+		if ((appHeight * ceil(double_i)) < DM.h) {
+			SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight * ceil(double_i));
+		}
+	} else if ((double_i - floor(double_i)) < 1 - pow(1 - val, floor(double_i)) && (SDL_GetWindowSurface(window)->h % appHeight != 0)) {
+		SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight * floor(double_i));
+	}
 }
 
 void SDL_toggleFullscreen() {
 #if defined(PC) && !defined(SDL1)
 	isWindowed = !isWindowed;
-	if (isWindowed)
+	if (isWindowed) {
 		SDL_SetWindowFullscreen(window, 0);
-	else
+	} else {
+		SDL_SetWindowSize(window, appWidth, appHeight);
 		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
-	setScaling();
+	}
+	//setScaling();
 #endif
 }
 
 void SDL_toggleIntegerScale() {
 	isIntegerScale = !isIntegerScale;
 	setScaling();
-}
-
-void renderBorderRects() {
-#if !defined(SDL1)
-	SDL_RenderFillRect(renderer, &topRect);
-	SDL_RenderFillRect(renderer, &bottomRect);
-	SDL_RenderFillRect(renderer, &leftRect);
-	SDL_RenderFillRect(renderer, &rightRect);
-#endif
 }

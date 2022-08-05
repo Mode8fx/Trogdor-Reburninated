@@ -23,15 +23,15 @@ extern void DRAW_RECT_WITH_ALPHA(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
     setSpritePos(&spriteObj, rect_x, rect_y);
 
 #define OBJ_TO_MID_SCREEN_X(obj) \
-    ((GAME_WIDTH - obj.dstrect.w) / 2)
+    ((gameWidth - obj.dstrect.w) / 2)
 
 #define OBJ_TO_SCREEN_AT_FRACTION_X(obj, val) \
-    ((GAME_WIDTH * val) - (obj.dstrect.w / 2))
+    ((gameWidth * val) - (obj.dstrect.w / 2))
 
 #define OBJ_TO_MID_SCREEN_Y(obj) \
-    ((GAME_HEIGHT - obj.dstrect.h) / 2)
+    ((gameHeight - obj.dstrect.h) / 2)
 
 #define OBJ_TO_SCREEN_AT_FRACTION_Y(obj, val) \
-    ((GAME_HEIGHT * val) - (obj.dstrect.h / 2))
+    ((gameHeight * val) - (obj.dstrect.h / 2))
 
 #endif

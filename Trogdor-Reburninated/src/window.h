@@ -4,41 +4,33 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-constexpr auto DEFAULT_GAME_WIDTH = 250;
-constexpr auto DEFAULT_GAME_HEIGHT = 180;
+constexpr auto gameWidth = 250;
+constexpr auto gameHeight = 180;
 constexpr auto DEFAULT_FRAME_RATE = 16;
 
-extern Uint16 GAME_WIDTH;
-extern Uint16 GAME_HEIGHT;
-extern double gameWidthMult;
-extern double gameHeightMult;
+extern Uint16 appWidth;
+extern Uint16 appHeight;
+extern double gameWidthMult; // game scaling relative to app
+extern double gameHeightMult; // game scaling relative to app
+extern Uint16 windowWidth;
+extern Uint16 windowHeight;
+extern double appWidthMult; // app scaling relative to window
+extern double appHeightMult; // app scaling relative to window
 extern Uint16 frameRate;
-
-#define GAME_WIDTH DEFAULT_GAME_WIDTH
-#define GAME_HEIGHT DEFAULT_GAME_HEIGHT
-
-#if !defined(PC) || defined(SDL1)
-#define SCALING_WIDTH DEFAULT_GAME_WIDTH
-#define SCALING_HEIGHT DEFAULT_GAME_HEIGHT
-#else
-#define SCALING_WIDTH SDL_GetWindowSurface(window)->w
-#define SCALING_HEIGHT SDL_GetWindowSurface(window)->h
-#endif
 
 #if !defined(SDL1)
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
-extern SDL_Texture *gameTexture;
+extern SDL_Texture *outputTexture;
 #endif
 extern SDL_Surface *gameScreen;
-const SDL_Rect gameWindowSrcRect = { 0, 0, DEFAULT_GAME_WIDTH, DEFAULT_GAME_HEIGHT };
-extern SDL_Rect gameWindowDstRect;
-extern SDL_Rect appScreenRect;
+extern SDL_Rect gameSrcRect;
+extern SDL_Rect gameToAppDstRect; // game screen mapping to app
+extern SDL_Surface *appScreen;
+extern SDL_Rect appSrcRect;
+extern SDL_Rect appToWindowDstRect; // app mapping to window
+extern SDL_Rect gameToWindowDstRect; // game screen mapping to window
 
-extern SDL_Rect topRect;
-extern SDL_Rect bottomRect;
-extern SDL_Rect leftRect;
-extern SDL_Rect rightRect;
 extern bool isWindowed;
 extern double screenScale;
 extern bool isIntegerScale;
@@ -140,10 +132,10 @@ constexpr auto DEFAULT_ARI = 0;
 #endif
 
 extern void setWidthHeightMults();
-extern void updateBorderRects();
 extern void setScaling();
+extern void snapWindow_x(double);
+extern void snapWindow_y(double);
 extern void SDL_toggleFullscreen();
 extern void SDL_toggleIntegerScale();
-extern void renderBorderRects();
 
 #endif
