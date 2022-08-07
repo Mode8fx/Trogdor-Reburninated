@@ -28,39 +28,39 @@ Sint32 mouseInput_y_last;
 
 /* Audio */
 Mix_Music *bgm;
-Mix_Chunk *sfx_burn_hut;
-Mix_Chunk *sfx_goldget;
-Mix_Chunk *sfx_peasantscream;
-Mix_Chunk *sfx_sb1;
-Mix_Chunk *sfx_sb2;
-Mix_Chunk *sfx_sb3;
-Mix_Chunk *sfx_sb4;
-Mix_Chunk *sfx_sb5;
-Mix_Chunk *sfx_sb6;
-Mix_Chunk *sfx_sb7;
-Mix_Chunk *sfx_sbarch;
-Mix_Chunk *sfx_sbarchend;
-Mix_Chunk *sfx_sbbest;
-Mix_Chunk *sfx_sbdooj;
-Mix_Chunk *sfx_sbgameover;
-Mix_Chunk *sfx_sbkerrek;
-Mix_Chunk *sfx_sblevelbeat;
-Mix_Chunk *sfx_sbscore;
-Mix_Chunk *sfx_sbsecret;
-Mix_Chunk *sfx_sbsquish1;
-Mix_Chunk *sfx_sbsquish2;
-Mix_Chunk *sfx_sbwin;
-Mix_Chunk *sfx_sbwin2;
-Mix_Chunk *sfx_sbworst;
-Mix_Chunk *sfx_sfx2;
-Mix_Chunk *sfx_trogador;
-Mix_Chunk *sfx_arrow;
-Mix_Chunk *sfx_squish;
-Mix_Chunk *sfx_death;
-Mix_Chunk *sfx_kick;
-Mix_Chunk *sfx_burninate;
-Mix_Chunk *sfx_cutscene;
-Mix_Chunk *sfx_gameover;
+SoundEffect sfx_burn_hut;
+SoundEffect sfx_goldget;
+SoundEffect sfx_peasantscream;
+SoundEffect sfx_sb1;
+SoundEffect sfx_sb2;
+SoundEffect sfx_sb3;
+SoundEffect sfx_sb4;
+SoundEffect sfx_sb5;
+SoundEffect sfx_sb6;
+SoundEffect sfx_sb7;
+SoundEffect sfx_sbarch;
+SoundEffect sfx_sbarchend;
+SoundEffect sfx_sbbest;
+SoundEffect sfx_sbdooj;
+SoundEffect sfx_sbgameover;
+SoundEffect sfx_sbkerrek;
+SoundEffect sfx_sblevelbeat;
+SoundEffect sfx_sbscore;
+SoundEffect sfx_sbsecret;
+SoundEffect sfx_sbsquish1;
+SoundEffect sfx_sbsquish2;
+SoundEffect sfx_sbwin;
+SoundEffect sfx_sbwin2;
+SoundEffect sfx_sbworst;
+SoundEffect sfx_sfx2;
+SoundEffect sfx_trogador;
+SoundEffect sfx_arrow;
+SoundEffect sfx_squish;
+SoundEffect sfx_death;
+SoundEffect sfx_kick;
+SoundEffect sfx_burninate;
+SoundEffect sfx_cutscene;
+SoundEffect sfx_gameover;
 
 /* Sprite Objects */
 SpriteObject sprite_videlectrix_logo;
@@ -392,7 +392,7 @@ void InitializeSound() {
 #endif
 	}
 	Mix_VolumeMusic((int)(soundSettings.bgmVolume * 128.0 / 100));
-	Mix_AllocateChannels(8);
+	Mix_AllocateChannels(NUM_SOUND_CHANNELS);
 	Mix_Volume(SFX_CHANNEL_GAME, (int)(soundSettings.sfxVolume * 128.0 / 100));
 	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(soundSettings.sfxVolume * 128.0 / 100));
 }
@@ -401,39 +401,75 @@ void InitializeMusic() {
 }
 
 void InitializeSFX() {
-	sfx_burn_hut = Mix_LoadWAV((rootDir + "sfx/burn_hut.wav").c_str());
-	sfx_goldget = Mix_LoadWAV((rootDir + "sfx/trog_goldget.wav").c_str());
-	sfx_peasantscream = Mix_LoadWAV((rootDir + "sfx/trog_peasantscream.wav").c_str());
-	sfx_sb1 = Mix_LoadWAV((rootDir + "sfx/trog_sb1.wav").c_str());
-	sfx_sb2 = Mix_LoadWAV((rootDir + "sfx/trog_sb2.wav").c_str());
-	sfx_sb3 = Mix_LoadWAV((rootDir + "sfx/trog_sb3.wav").c_str());
-	sfx_sb4 = Mix_LoadWAV((rootDir + "sfx/trog_sb4.wav").c_str());
-	sfx_sb5 = Mix_LoadWAV((rootDir + "sfx/trog_sb5.wav").c_str());
-	sfx_sb6 = Mix_LoadWAV((rootDir + "sfx/trog_sb6.wav").c_str());
-	sfx_sb7 = Mix_LoadWAV((rootDir + "sfx/trog_sb7.wav").c_str());
-	sfx_sbarch = Mix_LoadWAV((rootDir + "sfx/trog_sbarch.wav").c_str());
-	sfx_sbarchend = Mix_LoadWAV((rootDir + "sfx/trog_sbarchend.wav").c_str());
-	sfx_sbbest = Mix_LoadWAV((rootDir + "sfx/trog_sbbest.wav").c_str());
-	sfx_sbdooj = Mix_LoadWAV((rootDir + "sfx/trog_sbdooj.wav").c_str());
-	sfx_sbgameover = Mix_LoadWAV((rootDir + "sfx/trog_sbgameover.wav").c_str());
-	sfx_sbkerrek = Mix_LoadWAV((rootDir + "sfx/trog_sbkerrek.wav").c_str());
-	sfx_sblevelbeat = Mix_LoadWAV((rootDir + "sfx/trog_sblevelbeat.wav").c_str());
-	sfx_sbscore = Mix_LoadWAV((rootDir + "sfx/trog_sbscore.wav").c_str());
-	sfx_sbsecret = Mix_LoadWAV((rootDir + "sfx/trog_sbsecret.wav").c_str());
-	sfx_sbsquish1 = Mix_LoadWAV((rootDir + "sfx/trog_sbsquish1.wav").c_str());
-	sfx_sbsquish2 = Mix_LoadWAV((rootDir + "sfx/trog_sbsquish2.wav").c_str());
-	sfx_sbwin = Mix_LoadWAV((rootDir + "sfx/trog_sbwin.wav").c_str());
-	sfx_sbwin2 = Mix_LoadWAV((rootDir + "sfx/trog_sbwin2.wav").c_str());
-	sfx_sbworst = Mix_LoadWAV((rootDir + "sfx/trog_sbworst.wav").c_str());
-	sfx_sfx2 = Mix_LoadWAV((rootDir + "sfx/trog_sfx2.wav").c_str());
-	sfx_trogador = Mix_LoadWAV((rootDir + "sfx/trogador.wav").c_str());
-	sfx_arrow = Mix_LoadWAV((rootDir + "sfx/arrow.wav").c_str());
-	sfx_squish = Mix_LoadWAV((rootDir + "sfx/squish.wav").c_str());
-	sfx_death = Mix_LoadWAV((rootDir + "sfx/death.wav").c_str());
-	sfx_kick = Mix_LoadWAV((rootDir + "sfx/kick.wav").c_str());
-	sfx_burninate = Mix_LoadWAV((rootDir + "sfx/burninate.wav").c_str());
-	sfx_cutscene = Mix_LoadWAV((rootDir + "sfx/cutscene.wav").c_str());
-	sfx_gameover = Mix_LoadWAV((rootDir + "sfx/gameover.wav").c_str());
+	sfxArr[0] = &sfx_burn_hut;
+	sfx_burn_hut.path = "sfx/burn_hut.wav";
+	sfxArr[1] = &sfx_goldget;
+	sfx_goldget.path = "sfx/trog_goldget.wav";
+	sfxArr[2] = &sfx_peasantscream;
+	sfx_peasantscream.path = "sfx/trog_peasantscream.wav";
+	sfxArr[3] = &sfx_sfx2;
+	sfx_sfx2.path = "sfx/trog_sfx2.wav";
+	sfxArr[4] = &sfx_trogador;
+	sfx_trogador.path = "sfx/trogador.wav";
+	sfxArr[5] = &sfx_arrow;
+	sfx_arrow.path = "sfx/arrow.wav";
+	sfxArr[6] = &sfx_squish;
+	sfx_squish.path = "sfx/squish.wav";
+	sfxArr[7] = &sfx_death;
+	sfx_death.path = "sfx/death.wav";
+	sfxArr[8] = &sfx_kick;
+	sfx_kick.path = "sfx/kick.wav";
+	sfxArr[9] = &sfx_burninate;
+	sfx_burninate.path = "sfx/burninate.wav";
+	sfxArr[10] = &sfx_cutscene;
+	sfx_cutscene.path = "sfx/cutscene.wav";
+	sfxArr[11] = &sfx_gameover;
+	sfx_gameover.path = "sfx/gameover.wav";
+	sfxArr_strongBad[0] = &sfx_sb1;
+	sfx_sb1.path = "sfx/trog_sb1.wav";
+	sfxArr_strongBad[1] = &sfx_sb2;
+	sfx_sb2.path = "sfx/trog_sb2.wav";
+	sfxArr_strongBad[2] = &sfx_sb3;
+	sfx_sb3.path = "sfx/trog_sb3.wav";
+	sfxArr_strongBad[3] = &sfx_sb4;
+	sfx_sb4.path = "sfx/trog_sb4.wav";
+	sfxArr_strongBad[4] = &sfx_sb5;
+	sfx_sb5.path = "sfx/trog_sb5.wav";
+	sfxArr_strongBad[5] = &sfx_sb6;
+	sfx_sb6.path = "sfx/trog_sb6.wav";
+	sfxArr_strongBad[6] = &sfx_sb7;
+	sfx_sb7.path = "sfx/trog_sb7.wav";
+	sfxArr_strongBad[7] = &sfx_sbarch;
+	sfx_sbarch.path = "sfx/trog_sbarch.wav";
+	sfxArr_strongBad[8] = &sfx_sbarchend;
+	sfx_sbarchend.path = "sfx/trog_sbarchend.wav";
+	sfxArr_strongBad[9] = &sfx_sbbest;
+	sfx_sbbest.path = "sfx/trog_sbbest.wav";
+	sfxArr_strongBad[10] = &sfx_sbdooj;
+	sfx_sbdooj.path = "sfx/trog_sbdooj.wav";
+	sfxArr_strongBad[11] = &sfx_sbgameover;
+	sfx_sbgameover.path = "sfx/trog_sbgameover.wav";
+	sfxArr_strongBad[12] = &sfx_sbkerrek;
+	sfx_sbkerrek.path = "sfx/trog_sbkerrek.wav";
+	sfxArr_strongBad[13] = &sfx_sblevelbeat;
+	sfx_sblevelbeat.path = "sfx/trog_sblevelbeat.wav";
+	sfxArr_strongBad[14] = &sfx_sbscore;
+	sfx_sbscore.path = "sfx/trog_sbscore.wav";
+	sfxArr_strongBad[15] = &sfx_sbsecret;
+	sfx_sbsecret.path = "sfx/trog_sbsecret.wav";
+	sfxArr_strongBad[16] = &sfx_sbsquish1;
+	sfx_sbsquish1.path = "sfx/trog_sbsquish1.wav";
+	sfxArr_strongBad[17] = &sfx_sbsquish2;
+	sfx_sbsquish2.path = "sfx/trog_sbsquish2.wav";
+	sfxArr_strongBad[18] = &sfx_sbwin;
+	sfx_sbwin.path = "sfx/trog_sbwin.wav";
+	sfxArr_strongBad[19] = &sfx_sbwin2;
+	sfx_sbwin2.path = "sfx/trog_sbwin2.wav";
+	sfxArr_strongBad[20] = &sfx_sbworst;
+	sfx_sbworst.path = "sfx/trog_sbworst.wav";
+	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
+		sfxArr_strongBad[i]->type = 1;
+	}
 }
 
 void InitializeSpritesPart1() {
@@ -442,10 +478,6 @@ void InitializeSpritesPart1() {
 	// I'm gonna be lazy and just use the title screen directly instead of its separate components
 	PREPARE_SPRITE(sprite_title_screen, (rootDir + "graphics/title_screen.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_title_screen), OBJ_TO_MID_SCREEN_Y(sprite_title_screen), 1, 1, 1);
-	PRINT(sprite_title_screen.dstrect.x);
-	PRINT(sprite_title_screen.dstrect.y);
-	PRINT(sprite_title_screen.dstrect.w);
-	PRINT(sprite_title_screen.dstrect.h);
 	PREPARE_SPRITE(sprite_trogdor_logo, (rootDir + "graphics/trogdor_logo.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_trogdor_logo), OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_trogdor_logo, 0.1666), 1, 1, 1);
 	// ((2466 + 23) / 5000.0) = 0.4978
@@ -783,7 +815,7 @@ void DestroyAll() {
 	if (soundSettings.musicIndex != 0) {
 		Mix_FreeMusic(bgm);
 	}
-	Mix_FreeChunk(sfx_trogador);
+	//Mix_FreeChunk(SFX_TROGADOR);
 	Mix_CloseAudio();
 #if !defined(WII) && !defined(GAMECUBE)
 	Mix_Quit();

@@ -94,7 +94,7 @@ class Cottage {
 		void updateFrameState() {
 			frameState++;
 			if (frameState == 10) {
-				Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_burn_hut, 0);
+				loadAndPlaySound(SFX_BURN_HUT);
 			}
 			if (frameState >= 12 && frameState <= 28) {
 				fire_srcrect.x = (((frameState - 12) / 3) % 4) * sprite_cottage_fire.dstrect.w;
@@ -272,14 +272,14 @@ class Peasant {
 				case 8:
 					srcrect.x = 0;
 					srcrect.y = 2 * sprite_peasant.dstrect.h;
-					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_squish, 0);
+					loadAndPlaySound(SFX_SQUISH);
 					rand_var = rand() % 100000;
 					if (rand_var < 3) {
-						Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb2, 0);
+						loadAndPlaySound(SFX_SB2);
 					} else if (rand_var < 6) {
-						Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbsquish1, 0);
+						loadAndPlaySound(SFX_SBSQUISH1);
 					} else if (rand_var < 10) {
-						Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbsquish2, 0);
+						loadAndPlaySound(SFX_SBSQUISH2);
 					}
 					break;
 				case 25:
@@ -353,7 +353,7 @@ class Arrow {
 		void updateFrameState() {
 			frameState++;
 			if (frameState == 1) { // 4?
-				Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_arrow, 0);
+				loadAndPlaySound(SFX_ARROW);
 			}
 			if (facingRight) {
 				dstrect.x += 5;
@@ -449,7 +449,7 @@ class Trogdor {
 					break;
 				case 22:
 				case 52:
-					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_death, 0);
+					loadAndPlaySound(SFX_DEATH);
 					break;
 				case 34:
 				case 38:
@@ -1036,7 +1036,7 @@ class GameManager {
 					hutArray[i].burning = true;
 					rand_var = rand() % 10000;
 					if (rand_var < 500) {
-						Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbdooj, 0);
+						loadAndPlaySound(SFX_SBDOOJ);
 					}
 				}
 			}
@@ -1197,12 +1197,12 @@ class GameManager {
 		void testBurnPeasant() {
 			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 				if (!peasantArray[i].burning && !peasantArray[i].stomped && peasantArray[i].active && SDL_HasIntersection(&player.fire_dstrect, &peasantArray[i].collision)) {
-					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_peasantscream, 0);
+					loadAndPlaySound(SFX_PEASANTSCREAM);
 					if ((rand() % 100) < 40) {
 						if ((rand() % 100) > 50) {
-							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb6, 0);
+							loadAndPlaySound(SFX_SB6);
 						} else {
-							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb6, 0); // These two are the same... I feel like this one is supposed to be sfx_sb7? It's completely unused, and it would fit here
+							loadAndPlaySound(SFX_SB6); // These two are the same... I feel like this one is supposed to be SFX_SB7? It's completely unused, and it would fit here
 						}
 					}
 					peasantArray[i].returning = true;
@@ -1227,9 +1227,9 @@ class GameManager {
 				case 6:
 					if (mans > 0) {
 						if (peasantometer == 9) {
-							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb3, 0);
+							loadAndPlaySound(SFX_SB3);
 						} else if ((rand() % 100) < 20) {
-							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbworst, 0);
+							loadAndPlaySound(SFX_SBWORST);
 						}
 					}
 					break;
@@ -1259,7 +1259,7 @@ class GameManager {
 					break;
 				case 31:
 					if (mans > 0 && (rand() % 100) < 20) {
-						Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbarch, 0);
+						loadAndPlaySound(SFX_SBARCH);
 					}
 					break;
 			}
@@ -1278,13 +1278,13 @@ class GameManager {
 					rand_var = rand() % 100;
 					if (rand_var < 10) {
 						if (rand_var < 50) {
-							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb4, 0);
+							loadAndPlaySound(SFX_SB4);
 						} else {
-							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb5, 0);
+							loadAndPlaySound(SFX_SB5);
 						}
 					}
 					b_visible = true;
-					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_burninate, 0);
+					loadAndPlaySound(SFX_BURNINATE);
 					//player.visible = true;
 					paused = true;
 					break;
@@ -1338,10 +1338,10 @@ class GameManager {
 			kick_frameState++;
 			switch (kick_frameState) {
 				case 4:
-					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_kick, 0);
+					loadAndPlaySound(SFX_KICK);
 					break;
 				case 9:
-					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_trogador, 0);
+					loadAndPlaySound(SFX_TROGADOR);
 					break;
 				case 29:
 					kick_frameState = 0;
@@ -1374,7 +1374,7 @@ class GameManager {
 			for (i = 0; i < MAX_NUM_LOOT; i++) {
 				if (lootArray[i].active && SDL_HasIntersection(&player.dstrect, &lootArray[i].dstrect)) {
 					updateScore(50);
-					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_goldget, 0);
+					loadAndPlaySound(SFX_GOLDGET);
 					lootArray[i].active = false;
 				}
 			}

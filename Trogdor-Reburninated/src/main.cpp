@@ -736,7 +736,7 @@ int main(int argv, char** args) {
 					frameState = 73;
 				}
 				if (keyPressed(INPUT_START)) {
-					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_trogador, 0);
+					loadAndPlaySound(SFX_TROGADOR);
 					sceneState = 3;
 					frameState = 3; // 3 is intentional
 					MM = MenuManager();
@@ -750,7 +750,7 @@ int main(int argv, char** args) {
 				if (frameState < 192) {
 					frameState++;
 				} else {
-					Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_trogador, 0);
+					loadAndPlaySound(SFX_TROGADOR);
 					sceneState = 3;
 					frameState = 3; // 3 is intentional
 					MM = MenuManager();
@@ -764,7 +764,7 @@ int main(int argv, char** args) {
 				MM.handlePageChange();
 				if (keyPressed(INPUT_A) && MM.page == 1) {
 					if (MM.contraActive) {
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_sfx2, 0);
+						loadAndPlaySound(SFX_SFX2);
 						GM = GameManager(30);
 					} else {
 						GM = GameManager(3);
@@ -912,7 +912,7 @@ int main(int argv, char** args) {
 						GM.player.dstrect.y = 118;
 						GM.treasureHut_timer = 110;
 						GM.set_level_background(5);
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_sfx2, 0);
+						loadAndPlaySound(SFX_SFX2);
 						sceneState = 6;
 					}
 					break;
@@ -924,19 +924,19 @@ int main(int argv, char** args) {
 				// TODO: draw Trogdor, "IT'S OVER!", and whatever else needs to be handled for this screen
 				switch (frameState) {
 					case 321:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_gameover, 0);
+						loadAndPlaySound(SFX_GAMEOVER);
 						if (GM.score < 2000) {
 							if (GM.arched) {
 								if ((rand() % 100) < 50) {
-									Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbarchend, 0);
+									loadAndPlaySound(SFX_SBARCHEND);
 								}
 							} else if ((GM.score > 1000) && ((rand() % 100) < 70)) {
-								Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbscore, 0);
+								loadAndPlaySound(SFX_SBSCORE);
 							} else if ((rand() % 100) < 70) {
-								Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbgameover, 0);
+								loadAndPlaySound(SFX_SBGAMEOVER);
 							}
 						} else {
-							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbsecret, 0);
+							loadAndPlaySound(SFX_SBSECRET);
 						}
 						GM.setMans(0);
 						break;
@@ -1028,15 +1028,15 @@ int main(int argv, char** args) {
 					case 257:
 						if ((rand() % 100) < 10) {
 							if ((rand() % 100) < 50) {
-								Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sblevelbeat, 0);
+								loadAndPlaySound(SFX_SBLEVELBEAT);
 							} else {
-								Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sb1, 0);
+								loadAndPlaySound(SFX_SB1);
 							}
 						}
 						break;
 					case 265:
 						if ((rand() % 100) < 10) {
-							Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx_sbbest, 0);
+							loadAndPlaySound(SFX_SBBEST);
 						}
 						break;
 					case 276:
@@ -1059,7 +1059,7 @@ int main(int argv, char** args) {
 				// TODO: draw Trogdor, "LEVEL BEATEN!", smoke, and level fire
 				switch (frameState) {
 					case 277:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_burninate, 0);
+						loadAndPlaySound(SFX_BURNINATE);
 						break;
 					case 285:
 						GM.updateLevel(1);
@@ -1142,7 +1142,7 @@ int main(int argv, char** args) {
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 420:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 492:
 						GM.levelInit();
@@ -1163,7 +1163,7 @@ int main(int argv, char** args) {
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 493:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 566:
 						GM.levelInit();
@@ -1184,7 +1184,7 @@ int main(int argv, char** args) {
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 567:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 640:
 						GM.levelInit();
@@ -1205,7 +1205,7 @@ int main(int argv, char** args) {
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 641:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 709:
 						GM.levelInit();
@@ -1226,7 +1226,7 @@ int main(int argv, char** args) {
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 710:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 779:
 						GM.levelInit();
@@ -1247,7 +1247,7 @@ int main(int argv, char** args) {
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 780:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 850:
 						GM.levelInit();
@@ -1268,7 +1268,7 @@ int main(int argv, char** args) {
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 853:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 924:
 						GM.levelInit();
@@ -1289,7 +1289,7 @@ int main(int argv, char** args) {
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 927:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 997:
 						GM.levelInit();
@@ -1310,7 +1310,7 @@ int main(int argv, char** args) {
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 1000:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 1071:
 						GM.levelInit();
@@ -1331,7 +1331,7 @@ int main(int argv, char** args) {
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 1076:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 1147:
 						GM.levelInit();
@@ -1352,7 +1352,7 @@ int main(int argv, char** args) {
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 1153:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 1222:
 						GM.levelInit();
@@ -1373,7 +1373,7 @@ int main(int argv, char** args) {
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 1226:
-						Mix_PlayChannel(SFX_CHANNEL_GAME, sfx_cutscene, 0);
+						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 1334:
 						GM.levelInit();
@@ -1407,6 +1407,9 @@ int main(int argv, char** args) {
 		mouseInput_x_last = mouseInput_x;
 		mouseInput_y_last = mouseInput_y;
 #endif
+
+		/* Free Sound Effects That Have Finished Playing */
+		if (sceneState > 0) freeFinishedSoundChunks();
 
 		/* Update Screen */
 #if !defined(SDL1)
