@@ -7,6 +7,8 @@ constexpr auto SFX_CHANNEL_GAME = -1; // any free channel
 constexpr auto SFX_CHANNEL_GAME_MUSIC = 6;
 constexpr auto SFX_CHANNEL_STRONG_BAD = 7; // highest channel
 
+constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.wav";
+
 extern Mix_Music *bgm;
 
 extern void playMusic(const char *);

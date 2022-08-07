@@ -745,7 +745,7 @@ int main(int argv, char** args) {
 			/* Title Screen */
 			case 2:
 				if (frameState == 73) {
-					Mix_PlayChannel(SFX_CHANNEL_GAME_MUSIC, music_title_screen, 0);
+					playMusicWithoutLoop(MUSIC_TITLE_SCREEN);
 				}
 				if (frameState < 192) {
 					frameState++;

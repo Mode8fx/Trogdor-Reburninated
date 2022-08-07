@@ -28,7 +28,6 @@ Sint32 mouseInput_y_last;
 
 /* Audio */
 Mix_Music *bgm;
-Mix_Chunk *music_title_screen;
 Mix_Chunk *sfx_burn_hut;
 Mix_Chunk *sfx_goldget;
 Mix_Chunk *sfx_peasantscream;
@@ -399,7 +398,6 @@ void InitializeSound() {
 }
 
 void InitializeMusic() {
-	music_title_screen = Mix_LoadWAV((rootDir + "music/title_screen.wav").c_str());
 }
 
 void InitializeSFX() {

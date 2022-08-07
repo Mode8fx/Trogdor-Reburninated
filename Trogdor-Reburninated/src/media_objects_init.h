@@ -36,7 +36,6 @@ extern SpriteObject sprite_burninate_fire;
 extern SpriteObject sprite_loot;
 extern SDL_Rect     divider_level_beaten_rect;
 
-extern Mix_Chunk *music_title_screen;
 extern Mix_Chunk *sfx_burn_hut;
 extern Mix_Chunk *sfx_goldget;
 extern Mix_Chunk *sfx_peasantscream;

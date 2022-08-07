@@ -1,7 +1,7 @@
 #include "sound_logic.h"
 
-void playMusic(const char *music) {
-	bgm = Mix_LoadMUS(music);
+void playMusic(const char *musicRelPath) {
+	bgm = Mix_LoadMUS((rootDir + musicRelPath).c_str());
 #if !defined(PSP)
 	Mix_PlayMusic(bgm, -1);
 #else
@@ -9,9 +9,9 @@ void playMusic(const char *music) {
 #endif
 }
 
-void playMusicWithoutLoop(const char *music) {
-	bgm = Mix_LoadMUS(music);
-	Mix_PlayMusic(bgm, 0);
+void playMusicWithoutLoop(const char *musicRelPath) {
+	bgm = Mix_LoadMUS((rootDir + musicRelPath).c_str());
+	Mix_PlayMusic(bgm, 1);
 }
 
 void playMusicAtIndex(Uint8 index) {
