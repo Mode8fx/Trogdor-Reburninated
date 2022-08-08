@@ -724,11 +724,7 @@ int main(int argv, char** args) {
 			/* Videlectrix logo */
 			case 1:
 				if (frameState < 65) {
-#if !defined(SDL1)
-					renderSprite(sprite_videlectrix_logo);
-#else
-					renderSpriteScaled(sprite_videlectrix_logo);
-#endif
+					renderSprite_app(sprite_videlectrix_logo);
 					renderText(text_1_presents, textChars_font_nokia_12);
 				}
 				if (frameState < 72) {

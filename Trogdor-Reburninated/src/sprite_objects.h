@@ -13,6 +13,7 @@ extern SDL_Rect outputRect;
 extern void prepareSprite(SpriteObject *, const char [], int, int, double);
 extern void setSpritePos(SpriteObject *, int, int);
 extern void renderSprite(SpriteObject);
+extern void renderSprite_app(SpriteObject);
 extern void renderSpriteAtRect(SpriteObject, SDL_Rect);
 extern void renderSpriteUsingRects(SpriteObject, SDL_Rect, SDL_Rect);
 extern void renderSpriteScaled(SpriteObject);
@@ -27,11 +28,17 @@ extern void DRAW_RECT_WITH_ALPHA(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
 #define OBJ_TO_MID_SCREEN_X(obj) \
     ((gameWidth - obj.dstrect.w) / 2)
 
+#define OBJ_TO_MID_SCREEN_X_APP(obj) \
+    ((appWidth - obj.dstrect.w) / 2)
+
 #define OBJ_TO_SCREEN_AT_FRACTION_X(obj, val) \
     (((double)gameWidth * val) - (obj.dstrect.w / 2))
 
 #define OBJ_TO_MID_SCREEN_Y(obj) \
     ((gameHeight - obj.dstrect.h) / 2)
+
+#define OBJ_TO_MID_SCREEN_Y_APP(obj) \
+    ((appHeight - obj.dstrect.h) / 2)
 
 #define OBJ_TO_SCREEN_AT_FRACTION_Y(obj, val) \
     (((double)gameHeight * val) - (obj.dstrect.h / 2))

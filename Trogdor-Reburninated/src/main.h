@@ -477,8 +477,8 @@ void InitializeSFX() {
 }
 
 void InitializeSpritesPart1() {
-	PREPARE_SPRITE(sprite_videlectrix_logo, (rootDir + "graphics/videlectrix_logo.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_videlectrix_logo), OBJ_TO_MID_SCREEN_Y(sprite_videlectrix_logo), 1, 1, (221.0 / 300));
+	PREPARE_SPRITE(sprite_videlectrix_logo, (rootDir + "graphics/videlectrix_logo_big.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X_APP(sprite_videlectrix_logo), OBJ_TO_MID_SCREEN_Y_APP(sprite_videlectrix_logo), 1, 1, 1);
 	// I'm gonna be lazy and just use the title screen directly instead of its separate components
 	PREPARE_SPRITE(sprite_title_screen, (rootDir + "graphics/title_screen.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(sprite_title_screen), OBJ_TO_MID_SCREEN_Y(sprite_title_screen), 1, 1, 1);

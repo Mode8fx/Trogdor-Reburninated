@@ -30,6 +30,11 @@ void renderSprite(SpriteObject spriteObj) {
     SDL_BlitSurface(spriteObj.surface, &spriteObj.srcrect, gameScreen, &outputRect);
 }
 
+void renderSprite_app(SpriteObject spriteObj) {
+    outputRect = spriteObj.dstrect;
+    SDL_BlitSurface(spriteObj.surface, &spriteObj.srcrect, appScreen, &outputRect);
+}
+
 void renderSpriteAtRect(SpriteObject spriteObj, SDL_Rect rect) {
     outputRect = rect;
     SDL_BlitSurface(spriteObj.surface, &spriteObj.srcrect, gameScreen, &outputRect);
