@@ -280,6 +280,8 @@ TextObject text_25_10;
 SDL_Window *window;
 SDL_Renderer *renderer;
 SDL_Texture *outputTexture;
+#else
+SDL_Surface *windowScreen;
 #endif
 SDL_Surface *gameScreen;
 SDL_Rect gameSrcRect = { 0, 0, gameWidth, gameHeight };
@@ -363,13 +365,15 @@ void InitializeDisplay() {
 #elif defined(WII) || defined(GAMECUBE)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	gameScreen = SDL_SetVideoMode(gameWidth, gameHeight, 24, SDL_DOUBLEBUF);
-	appScreen = SDL_SetVideoMode(appWidth, appHeight, 24, SDL_DOUBLEBUF);
+	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
+	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
+	windowScreen = SDL_SetVideoMode(320, 240, 24, SDL_DOUBLEBUF);
 #elif defined(SDL1)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	gameScreen = SDL_SetVideoMode(gameWidth, gameHeight, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
-	appScreen = SDL_SetVideoMode(appWidth, appHeight, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
+	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
+	windowScreen = SDL_SetVideoMode(640, 480, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
 	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);

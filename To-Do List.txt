@@ -2,9 +2,9 @@ To-Do List
 
 Trogdor Alpha [gameplay-complete basic port of Trogdor]:
 Polish:
-- SDL1's color key and scaling are screwy
 - Fix text
 	- It doesn't have to be completely polished for Alpha, but there are some major issues: 6pt font is too blurry but also too big for the 250x180 game window (despite matching the original game?). So even though it won't match the original game, 8pt font should be used instead, and text positions should be adjusted to allow for this. Also, maybe text should go outside the game window? Outside of the 250x180 game window and into the 320x240 full window
+- Manually scale Videlectrix logo
 - Adjust end of level flash
 - Add art to Level Beaten and Game Over screens
 - Verify that all game logic matches Flash game (it should already, but it's been so long since I worked on this that I don't remember)
@@ -43,6 +43,8 @@ Features:
 - Add achievements
 - Add more detailed credits screen
 - Add History of Trogdor screen
+Polish:
+- Fix scaling in SDL1
 Final:
 - Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
 - Make a trailer?
@@ -60,7 +62,7 @@ Stretch Goals:
 - Port to 3DS
 	- Coolness:   3
 	- Difficulty: 3
-	- Analysis:   I'm not sure how good the 3DS's SDL port is, and the 400x240 top screen resolution could be an issue. At the very least, it would probably look worse than any other version.
+	- Analysis:   I'm not sure how good the 3DS's SDL port is.
 - Port to Xbox (original)
 	- Coolness:   3
 	- Difficulty: 4

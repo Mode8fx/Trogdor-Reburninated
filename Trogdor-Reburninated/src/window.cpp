@@ -8,12 +8,15 @@ void setWidthHeightMults() {
 }
 
 void scaleAppRelativeToWindow() {
-#if defined(PC) && !defined(SDL1)
+#if !defined(SDL1)
 	windowWidth = SDL_GetWindowSurface(window)->w;
 	windowHeight = SDL_GetWindowSurface(window)->h;
+#elif defined(WII) or defined(GAMECUBE)
+	windowWidth = 320;
+	windowHeight = 240;
 #else
-	windowWidth = appWidth;
-	windowHeight = appHeight;
+	windowWidth = SDL_GetVideoInfo()->current_w;
+	windowHeight = SDL_GetVideoInfo()->current_h;
 #endif
 	if (isIntegerScale) {
 		int_i = min((int)(windowWidth / appWidth), (int)(windowHeight / appHeight));

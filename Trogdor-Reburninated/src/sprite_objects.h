@@ -8,6 +8,8 @@ struct SpriteObject {
     SDL_Rect srcrect, dstrect;
 };
 
+extern SDL_Rect outputRect;
+
 extern void prepareSprite(SpriteObject *, const char [], int, int, double);
 extern void setSpritePos(SpriteObject *, int, int);
 extern void renderSprite(SpriteObject);

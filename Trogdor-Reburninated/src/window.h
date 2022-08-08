@@ -22,6 +22,8 @@ extern Uint16 frameRate;
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
 extern SDL_Texture *outputTexture;
+#else
+extern SDL_Surface *windowScreen;
 #endif
 extern SDL_Surface *gameScreen;
 extern SDL_Rect gameSrcRect;

@@ -596,6 +596,8 @@ int main(int argv, char** args) {
 #if !defined(SDL1)
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
+#else
+		SDL_FillRect(windowScreen, NULL, 0x000000);
 #endif
 
 		/* Scene states:
@@ -1424,8 +1426,12 @@ int main(int argv, char** args) {
 		SDL_DestroyTexture(outputTexture);
 		SDL_RenderPresent(renderer);
 #else
-		SDL_Flip(appScreen);
-		SDL_Flip(gameScreen);
+		//SDL_FillRect(appScreen, NULL, 0x0000FF);
+		outputRect = gameToWindowDstRect;
+		SDL_BlitSurface(gameScreen, &gameSrcRect, windowScreen, &outputRect);
+		outputRect = appToWindowDstRect;
+		SDL_BlitSurface(appScreen, &appSrcRect, windowScreen, &outputRect);
+		SDL_Flip(windowScreen);
 #endif
 		
 		/* Cap Framerate */
