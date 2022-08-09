@@ -23,6 +23,7 @@ struct SoundEffect {
 
 extern Mix_Music *bgm;
 extern bool sfxShouldBePlaying;
+extern Uint8 sfxIndex;
 extern SoundEffect *sfxArr[NUM_SOUND_EFFECTS_SFX];
 extern SoundEffect *sfxChannelArr[NUM_SOUND_CHANNELS_SFX];
 //extern SoundEffect *sfxArr_gameMusic[NUM_SOUND_EFFECTS_GAMEMUSIC];

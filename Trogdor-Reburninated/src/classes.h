@@ -559,7 +559,7 @@ class GameManager {
 		Arrow arrowArrayL[MAX_NUM_ARROWS];      // array of Arrow objects (facing left, firing from right to left)
 		Arrow arrowArrayR[MAX_NUM_ARROWS];      // array of Arrow objects (facing right, firing from left to right)
 		Cottage hutArray[MAX_NUM_HUTS];         // array of Cottage objects
-		Uint8 numHuts;
+		Uint8 numHuts;                          // the number of huts
 		Peasant peasantArray[MAX_NUM_PEASANTS]; // array of Peasant objects
 		Knight knightArray[MAX_NUM_KNIGHTS];    // array of Knight objects
 		Archer archerArray[2];                  // array of Archer objects
@@ -673,13 +673,13 @@ class GameManager {
 					hutArray[i].burned = true;
 				}
 			}
-			for (i = 0; i < LEN(arrowArrayL); i++) {
+			for (i = 0; i < MAX_NUM_ARROWS; i++) {
 				arrowArrayL[i] = Arrow(0, 0, false);
 			}
-			for (i = 0; i < LEN(arrowArrayR); i++) {
+			for (i = 0; i < MAX_NUM_ARROWS; i++) {
 				arrowArrayR[i] = Arrow(0, 0, true);
 			}
-			for (i = 0; i < LEN(peasantArray); i++) {
+			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 				peasantArray[i] = Peasant();
 			}
 			lootArray[0] = Loot((Sint16)(gameWidth * 0.144), (Sint16)(gameHeight * 0.661));
@@ -1165,10 +1165,11 @@ class GameManager {
 						} else {
 							peasantArray[i].active = false;
 							peasantArray[i].returning = false;
-							if (peasantArray[i].burning && !hutArray[peasantArray[i].myHome].burning) {
+							// if (peasantArray[i].burning && !hutArray[peasantArray[i].myHome].burning) { // redundant check
+							if (peasantArray[i].burning) {
 								hutArray[peasantArray[i].myHome].burning = true;
-							}
-							if (peasantometer > 0 && !peasantArray[i].burning) { // I added the burning check; this looks like an oversight in the original game (though it's very rare that it would actually affect the player)
+							// if (peasantometer > 0 && !peasantArray[i].burning) { // I added the burning check; this looks like an oversight in the original game (though it's very rare that it would actually affect the player)
+							} else if (peasantometer > 0) {
 								peasantometer--;
 							}
 							peasantArray[i].burning = false;

@@ -1,6 +1,7 @@
 #include "sound_logic.h"
 
 bool sfxShouldBePlaying = false;
+Uint8 sfxIndex = 0;
 SoundEffect *sfxArr[NUM_SOUND_EFFECTS_SFX];
 SoundEffect *sfxChannelArr[NUM_SOUND_CHANNELS_SFX] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 //SoundEffect *sfxArr_gameMusic[NUM_SOUND_EFFECTS_GAMEMUSIC];
@@ -53,8 +54,8 @@ void loadAndPlaySound(SoundEffect *sfx) {
 		sfx->isPlaying = true;
 	}
 	if (sfx->type == 0) {
-		i = Mix_PlayChannel(SFX_CHANNEL_GAME, sfx->chunk, 0);
-		sfxChannelArr[i] = sfx;
+		sfxIndex = Mix_PlayChannel(SFX_CHANNEL_GAME, sfx->chunk, 0);
+		sfxChannelArr[sfxIndex] = sfx;
 	} else {
 		Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx->chunk, 0);
 		sfxChannel_strongBad = sfx;
@@ -62,35 +63,35 @@ void loadAndPlaySound(SoundEffect *sfx) {
 }
 
 void freeFinishedSoundChunks() {
-	for (i = 0; i < NUM_SOUND_CHANNELS_SFX; i++) {
-		if (sfxChannelArr[i] != NULL && !Mix_Playing(i)) {
-			sfxChannelArr[i] = NULL;
+	for (sfxIndex = 0; sfxIndex < NUM_SOUND_CHANNELS_SFX; sfxIndex++) {
+		if (sfxChannelArr[sfxIndex] != NULL && !Mix_Playing(sfxIndex)) {
+			sfxChannelArr[sfxIndex] = NULL;
 		}
 	}
 	if (sfxChannel_strongBad != NULL && !Mix_Playing(SFX_CHANNEL_STRONG_BAD)) {
 		sfxChannel_strongBad = NULL;
 	}
-	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
-		if (sfxArr[i]->isPlaying) {
+	for (sfxIndex = 0; sfxIndex < NUM_SOUND_EFFECTS_SFX; sfxIndex++) {
+		if (sfxArr[sfxIndex]->isPlaying) {
 			sfxShouldBePlaying = false;
 			for (j = 0; j < NUM_SOUND_CHANNELS_SFX; j++) {
-				if (sfxArr[i] == sfxChannelArr[j]) {
+				if (sfxArr[sfxIndex] == sfxChannelArr[j]) {
 					sfxShouldBePlaying = true;
 					break;
 				}
 			}
 			if (!sfxShouldBePlaying) {
-				Mix_FreeChunk(sfxArr[i]->chunk);
-				sfxArr[i]->isPlaying = false;
+				Mix_FreeChunk(sfxArr[sfxIndex]->chunk);
+				sfxArr[sfxIndex]->isPlaying = false;
 			}
 		}
 	}
-	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
-		if (sfxArr_strongBad[i]->isPlaying) {
+	for (sfxIndex = 0; sfxIndex < NUM_SOUND_EFFECTS_STRONG_BAD; sfxIndex++) {
+		if (sfxArr_strongBad[sfxIndex]->isPlaying) {
 			sfxShouldBePlaying = false;
-			if (sfxArr_strongBad[i] != sfxChannel_strongBad) {
-				Mix_FreeChunk(sfxArr_strongBad[i]->chunk);
-				sfxArr_strongBad[i]->isPlaying = false;
+			if (sfxArr_strongBad[sfxIndex] != sfxChannel_strongBad) {
+				Mix_FreeChunk(sfxArr_strongBad[sfxIndex]->chunk);
+				sfxArr_strongBad[sfxIndex]->isPlaying = false;
 			}
 		}
 	}
