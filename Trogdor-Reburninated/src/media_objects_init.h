@@ -6,6 +6,11 @@
 #ifndef MEDIA_OBJECTS_INIT_H
 #define MEDIA_OBJECTS_INIT_H
 
+extern void InitializeTextChars();
+extern void InitializeTextObjects();
+extern void destroyTextChars(TextCharObject, Uint8);
+extern void destroyAllTextChars();
+
 extern SpriteObject sprite_videlectrix_logo;
 extern SpriteObject sprite_title_screen;
 extern SpriteObject sprite_trogdor_logo;
@@ -104,6 +109,12 @@ extern SoundEffect sfx_cutscene;
 extern SoundEffect sfx_gameover;
 
 
+extern SDL_Color color_white;
+extern SDL_Color color_black;
+extern SDL_Color color_red;
+extern SDL_Color color_gray;
+extern SDL_Color color_orange;
+extern SDL_Color color_brown;
 extern TTF_Font *font_serif_brown_6;
 extern TextCharObject textChars_font_serif_brown_6[122 + 1 - 32];
 extern TTF_Font *font_serif_brown_8;

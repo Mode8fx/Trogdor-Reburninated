@@ -19,28 +19,23 @@ extern void renderSpriteUsingRects(SpriteObject, SDL_Rect, SDL_Rect);
 extern void renderSpriteScaled(SpriteObject);
 extern void setSpriteScale(SpriteObject *, double);
 extern void drawRect(SDL_Rect, Uint8, Uint8, Uint8);
+extern void drawRect_gameTextScreen(SDL_Rect, Uint8, Uint8, Uint8);
 extern void drawRectWithAlpha(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
 
 #define PREPARE_SPRITE(spriteObj, path, rect_x, rect_y, numSprites_x, numSprites_y, scale) \
     prepareSprite(&spriteObj, path, numSprites_x, numSprites_y, scale);                    \
     setSpritePos(&spriteObj, (int)rect_x, (int)rect_y);
 
-#define OBJ_TO_MID_SCREEN_X(obj) \
-    ((gameWidth - obj.dstrect.w) / 2)
+#define OBJ_TO_MID_SCREEN_X(width, obj) \
+    ((width - obj.dstrect.w) / 2)
 
-#define OBJ_TO_MID_SCREEN_X_APP(obj) \
-    ((appWidth - obj.dstrect.w) / 2)
+#define OBJ_TO_SCREEN_AT_FRACTION_X(width, obj, val) \
+    (((double)width * val) - (obj.dstrect.w / 2))
 
-#define OBJ_TO_SCREEN_AT_FRACTION_X(obj, val) \
-    (((double)gameWidth * val) - (obj.dstrect.w / 2))
+#define OBJ_TO_MID_SCREEN_Y(height, obj) \
+    ((height - obj.dstrect.h) / 2)
 
-#define OBJ_TO_MID_SCREEN_Y(obj) \
-    ((gameHeight - obj.dstrect.h) / 2)
-
-#define OBJ_TO_MID_SCREEN_Y_APP(obj) \
-    ((appHeight - obj.dstrect.h) / 2)
-
-#define OBJ_TO_SCREEN_AT_FRACTION_Y(obj, val) \
-    (((double)gameHeight * val) - (obj.dstrect.h / 2))
+#define OBJ_TO_SCREEN_AT_FRACTION_Y(height, obj, val) \
+    (((double)height * val) - (obj.dstrect.h / 2))
 
 #endif

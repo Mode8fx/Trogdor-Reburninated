@@ -12,8 +12,8 @@
  * Byte 1:      Background (1, 2, 3, 4) (default to 1)
  * Byte 2:      Treasure Hut Index (1, 2, 3, 4, 5, 6) (0 = no treasure hut)
  * Byte 3:      Cottage #1 Direction (1, 2, 3, 4) (0 = does not exist)
- * Bytes 4-5:   Cottage #1 X (dstrect.x = OBJ_TO_SCREEN_AT_FRACTION_X(cottage, (VAL+2466)/5000.0))
- * Bytes 6-7:   Cottage #1 Y (dstrect.y = OBJ_TO_SCREEN_AT_FRACTION_Y(cottage, (VAL+2183)/3600.0))
+ * Bytes 4-5:   Cottage #1 X (dstrect.x = OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, cottage, (VAL+2466)/5000.0))
+ * Bytes 6-7:   Cottage #1 Y (dstrect.y = OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, cottage, (VAL+2183)/3600.0))
  * ...
  * Byte 28:     Cottage #6 Direction
  * Bytes 29-30: Cottage #6 X

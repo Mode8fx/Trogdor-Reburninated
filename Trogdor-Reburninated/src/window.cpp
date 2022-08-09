@@ -1,10 +1,11 @@
 #include "window.h"
 
 void setWidthHeightMults() {
-	appWidthMult = ((double)windowWidth / appWidth);
-	appHeightMult = ((double)windowHeight / appHeight);
-	gameWidthMult = ((double)appWidth / gameWidth);
-	gameHeightMult = ((double)appHeight / gameHeight);
+	appWidthMult = (double)windowWidth / appWidth;
+	appHeightMult = (double)windowHeight / appHeight;
+	gameWidthMult = (double)appWidth / gameWidth;
+	gameHeightMult = (double)appHeight / gameHeight;
+	gameHiResMult = (double)gameHiResWidth / gameWidth;
 }
 
 void scaleAppRelativeToWindow() {
@@ -59,12 +60,27 @@ void scaleGameRelativeToApp() {
 	gameToAppDstRect.y = max((int)((appToWindowDstRect.h - gameToAppDstRect.h) / 2), 0);
 	gameToWindowDstRect.x = gameToAppDstRect.x + appToWindowDstRect.x;
 	gameToWindowDstRect.y = gameToAppDstRect.y + appToWindowDstRect.y;
+	SDL_FreeSurface(gameHiResScreen);
+	gameHiResScreen = SDL_CreateRGBSurface(0, gameToAppDstRect.w, gameToAppDstRect.h, 24, 0, 0, 0, 0);
+#if !defined(SDL1)
+	SDL_SetColorKey(gameHiResScreen, SDL_TRUE, 0xFF00FF);
+#else
+	SDL_SetColorKey(gameHiResScreen, SDL_SRCCOLORKEY, 0xFF00FF);
+#endif
+	gameHiResWidth = gameToAppDstRect.w;
+	gameHiResHeight = gameToAppDstRect.h;
+	gameHiResSrcRect.w = gameHiResWidth;
+	gameHiResSrcRect.h = gameHiResHeight;
 }
 
 void setScaling() {
 #if !defined(ANDROID)
 	scaleAppRelativeToWindow();
 	scaleGameRelativeToApp();
+	setWidthHeightMults();
+	destroyAllTextChars();
+	InitializeTextChars();
+	InitializeTextObjects();
 #endif
 }
 

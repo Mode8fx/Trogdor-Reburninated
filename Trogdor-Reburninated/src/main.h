@@ -1,6 +1,13 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include "include.h"
+#include "config.h"
+#include "general.h"
+#include "window.h"
+#include "classes.h"
+#include "sound_logic.h"
+#include "sprite_objects.h"
 #include "media_objects_init.h"
 #include "system_specific.h"
 
@@ -286,6 +293,8 @@ SDL_Surface *windowScreen;
 SDL_Surface *gameScreen;
 SDL_Rect gameSrcRect = { 0, 0, gameWidth, gameHeight };
 SDL_Rect gameToAppDstRect = { 0, 0, gameWidth, gameHeight };
+SDL_Surface *gameHiResScreen;
+SDL_Rect gameHiResSrcRect = { 0, 0, gameWidth, gameHeight };
 SDL_Surface *appScreen;
 SDL_Rect appSrcRect = { 0, 0, appWidth, appHeight };
 SDL_Rect appToWindowDstRect = { 0, 0, appWidth, appHeight };
@@ -296,10 +305,13 @@ bool isIntegerScale = true;
 #if !defined(SDL1)
 SDL_DisplayMode DM;
 #endif
+Uint16 gameHiResWidth;
+Uint16 gameHiResHeight;
 Uint16 appWidth;
 Uint16 appHeight;
 double gameWidthMult;
 double gameHeightMult;
+double gameHiResMult;
 Uint16 windowWidth;
 Uint16 windowHeight;
 double appWidthMult;
@@ -351,36 +363,29 @@ void InitializeDisplay() {
 
 	/* Set Window/Renderer */
 #if defined(PSP)
-	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("Trogdor Alpha", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
-	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID)
-	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, 0);
+	window = SDL_CreateWindow("Trogdor Alpha", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
-	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII) || defined(GAMECUBE)
-	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
+	SDL_WM_SetCaption("Trogdor Alpha", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
-	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
 	windowScreen = SDL_SetVideoMode(320, 240, 24, SDL_DOUBLEBUF);
 #elif defined(SDL1)
-	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
+	SDL_WM_SetCaption("Trogdor Alpha", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
-	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
-	windowScreen = SDL_SetVideoMode(640, 480, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	windowScreen = SDL_SetVideoMode(320, 240, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
-	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow("Trogdor Alpha", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
-	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
+	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
+	gameHiResScreen = SDL_CreateRGBSurface(0, gameToAppDstRect.w, gameToAppDstRect.h, 24, 0, 0, 0, 0);
+	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
 #if !defined(SDL1)
 	SDL_SetColorKey(appScreen, SDL_TRUE, 0xFF00FF);
 #else
@@ -478,35 +483,35 @@ void InitializeSFX() {
 
 void InitializeSpritesPart1() {
 	PREPARE_SPRITE(sprite_videlectrix_logo, (rootDir + "graphics/videlectrix_logo_big.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X_APP(sprite_videlectrix_logo), OBJ_TO_MID_SCREEN_Y_APP(sprite_videlectrix_logo), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(appWidth, sprite_videlectrix_logo), OBJ_TO_MID_SCREEN_Y(appHeight, sprite_videlectrix_logo), 1, 1, 1);
 	// I'm gonna be lazy and just use the title screen directly instead of its separate components
 	PREPARE_SPRITE(sprite_title_screen, (rootDir + "graphics/title_screen.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_title_screen), OBJ_TO_MID_SCREEN_Y(sprite_title_screen), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_title_screen), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_title_screen), 1, 1, 1);
 	PREPARE_SPRITE(sprite_trogdor_logo, (rootDir + "graphics/trogdor_logo.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_trogdor_logo), OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_trogdor_logo, 0.1666), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_trogdor_logo), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_trogdor_logo, 0.1666), 1, 1, 1);
 	// ((2466 + 23) / 5000.0) = 0.4978
 	// (2466 / 5000.0) = 0.4932
 	// ((2183 - 133) / 3600.0) = 0.5694
 	// (2183 / 3600.0) = 0.6064
 	PREPARE_SPRITE(sprite_level_background_1, (rootDir + "graphics/backgrounds/1.bmp").c_str(),
-		OBJ_TO_SCREEN_AT_FRACTION_X(sprite_level_background_1, 0.4978), OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_level_background_1, 0.573), 1, 1, 1);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_level_background_1, 0.4978), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_level_background_1, 0.573), 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_2, (rootDir + "graphics/backgrounds/2.bmp").c_str(),
-		OBJ_TO_SCREEN_AT_FRACTION_X(sprite_level_background_2, 0.4978), OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_level_background_2, 0.573), 1, 1, 1);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_level_background_2, 0.4978), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_level_background_2, 0.573), 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_3, (rootDir + "graphics/backgrounds/3.bmp").c_str(),
-		OBJ_TO_SCREEN_AT_FRACTION_X(sprite_level_background_3, 0.4978), OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_level_background_3, 0.573), 1, 1, 1);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_level_background_3, 0.4978), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_level_background_3, 0.573), 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_4, (rootDir + "graphics/backgrounds/4.bmp").c_str(),
-		OBJ_TO_SCREEN_AT_FRACTION_X(sprite_level_background_4, 0.4932), OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_level_background_4, 0.6064), 1, 1, 1);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_level_background_4, 0.4932), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_level_background_4, 0.6064), 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_th, (rootDir + "graphics/backgrounds/treasure_hut.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_level_background_th), OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_level_background_th, 0.567), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_level_background_th), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_level_background_th, 0.567), 1, 1, 1);
 }
 
 void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_trogdor, (rootDir + "graphics/trogdor.bmp").c_str(),
 		0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_burnination_meter_full, (rootDir + "graphics/burnination_meter/full.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_burnination_meter_full), 8, 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_full), 8, 1, 1, 1);
 	PREPARE_SPRITE(sprite_burnination_meter_empty, (rootDir + "graphics/burnination_meter/empty.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_burnination_meter_empty), 8, 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_empty), 8, 1, 1, 1);
 	PREPARE_SPRITE(sprite_cottage, (rootDir + "graphics/cottage.bmp").c_str(),
 		0, 0, 2, 4, 1);
 	PREPARE_SPRITE(sprite_cottage_fire, (rootDir + "graphics/cottage_fire.bmp").c_str(),
@@ -527,205 +532,18 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
 		0, 0, 2, 3, 1);
 	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_end_of_level_flash), OBJ_TO_MID_SCREEN_Y(sprite_end_of_level_flash), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_end_of_level_flash), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_end_of_level_flash), 1, 1, 1);
 	PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_end_of_level_trogdor), OBJ_TO_MID_SCREEN_Y(sprite_end_of_level_trogdor), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_end_of_level_trogdor), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_end_of_level_trogdor), 1, 1, 1);
 	PREPARE_SPRITE(sprite_death_message, (rootDir + "graphics/death_message.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_death_message), OBJ_TO_MID_SCREEN_Y(sprite_death_message), 2, 5, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_death_message), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_death_message), 2, 5, 1);
 	PREPARE_SPRITE(sprite_burninate_text, (rootDir + "graphics/burninate_text.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_burninate_text), OBJ_TO_MID_SCREEN_Y(sprite_burninate_text), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_text), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_text), 1, 1, 1);
 	PREPARE_SPRITE(sprite_burninate_fire, (rootDir + "graphics/burninate_message_fire.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(sprite_burninate_fire), OBJ_TO_MID_SCREEN_Y(sprite_burninate_fire), 1, 14, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_fire), 1, 14, 1);
 	PREPARE_SPRITE(sprite_loot, (rootDir + "graphics/loot.bmp").c_str(),
 		0, 0, 1, 1, 1);
 	divider_level_beaten_rect = { 0, 25, gameWidth, 2 };
-}
-
-void InitializeTextChars() {
-	setFont(font_serif_brown_6, "fonts/serif_v01.ttf", 6,
-		TTF_STYLE_NORMAL, textChars_font_serif_brown_6, color_brown, 32, 122);
-	TTF_CloseFont(font_serif_brown_6);
-	setFont(font_serif_brown_8, "fonts/serif_v01.ttf", 8,
-		TTF_STYLE_NORMAL, textChars_font_serif_brown_8, color_brown, 32, 126);
-	TTF_CloseFont(font_serif_brown_8);
-	setFont(font_serif_gray_6, "fonts/serif_v01.ttf", 6,
-		TTF_STYLE_NORMAL, textChars_font_serif_gray_6, color_gray, 32, 126);
-	TTF_CloseFont(font_serif_gray_6);
-	setFont(font_serif_gray_12, "fonts/serif_v01.ttf", 12,
-		TTF_STYLE_NORMAL, textChars_font_serif_gray_12, color_gray, 32, 90);
-	TTF_CloseFont(font_serif_gray_12);
-	setFont(font_serif_orange_6, "fonts/serif_v01.ttf", 6,
-		TTF_STYLE_NORMAL, textChars_font_serif_orange_6, color_orange, 32, 90);
-	TTF_CloseFont(font_serif_orange_6);
-	setFont(font_serif_red_6, "fonts/serif_v01.ttf", 6,
-		TTF_STYLE_NORMAL, textChars_font_serif_red_6, color_red, 32, 126);
-	TTF_CloseFont(font_serif_red_6);
-	setFont(font_serif_red_8, "fonts/serif_v01.ttf", 8,
-		TTF_STYLE_NORMAL, textChars_font_serif_red_8, color_red, 32, 126);
-	TTF_CloseFont(font_serif_red_8);
-	setFont(font_serif_red_12, "fonts/serif_v01.ttf", 12,
-		TTF_STYLE_NORMAL, textChars_font_serif_red_12, color_red, 32, 90);
-	TTF_CloseFont(font_serif_red_12);
-	setFont(font_serif_white_6, "fonts/serif_v01.ttf", 6,
-		TTF_STYLE_NORMAL, textChars_font_serif_white_6, color_white, 32, 126);
-	TTF_CloseFont(font_serif_white_6);
-	setFont(font_serif_white_9, "fonts/serif_v01.ttf", 9,
-		TTF_STYLE_NORMAL, textChars_font_serif_white_9, color_white, 32, 126);
-	TTF_CloseFont(font_serif_white_9);
-	setFont(font_serif_white_10, "fonts/serif_v01.ttf", 10,
-		TTF_STYLE_NORMAL, textChars_font_serif_white_10, color_white, 32, 126);
-	TTF_CloseFont(font_serif_white_10);
-
-	setFont(font_nokia_12, "fonts/29_NOKIA 5110 FontSet.ttf", 12,
-		TTF_STYLE_NORMAL, textChars_font_nokia_12, color_white, 97, 126);
-	TTF_CloseFont(font_nokia_12);
-
-	//setFont(font_serif_2_bold_black_23, "fonts/54_serif_v01.ttf", 23,
-	//	TTF_STYLE_BOLD, textChars_font_serif_2_bold_black_23, color_black, 32, 90);
-	//TTF_CloseFont(font_serif_2_bold_black_23);
-	//setFont(font_serif_2_bold_red_23, "fonts/54_serif_v01.ttf", 23,
-	//	TTF_STYLE_BOLD, textChars_font_serif_2_bold_red_23, color_red, 32, 90);
-	//TTF_CloseFont(font_serif_2_bold_red_23);
-	setFont(font_serif_2_red_6, "fonts/54_serif_v01.ttf", 6,
-		TTF_STYLE_NORMAL, textChars_font_serif_2_red_6, color_red, 32, 90);
-	TTF_CloseFont(font_serif_2_red_6);
-	setFont(font_serif_2_red_13, "fonts/54_serif_v01.ttf", 13,
-		TTF_STYLE_NORMAL, textChars_font_serif_2_red_13, color_red, 32, 90);
-	TTF_CloseFont(font_serif_2_red_13);
-
-	TTF_Quit();
-}
-
-void InitializeTextObjects() {
-	/* 1: Videlectrix Logo */
-	SET_TEXT("presents", text_1_presents, textChars_font_nokia_12,
-		OBJ_TO_MID_SCREEN_X(text_1_presents), OBJ_TO_SCREEN_AT_FRACTION_Y(text_1_presents, 0.7));
-	/* 2: Title Screen */
-	/* 3: Instructions Screen */
-	SET_TEXT("click anywhere to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8,
-		OBJ_TO_MID_SCREEN_X(text_3_click_anywhere_to_start), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_click_anywhere_to_start, 0.75));
-	// Use a separate credits page instead of these
-	//SET_TEXT("Programmed by Jonathan Howe", text_3_programmed, textChars_font_serif_white_6,
-	//	OBJ_TO_MID_SCREEN_X(text_3_programmed), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_programmed, 0.85));
-	//SET_TEXT("Designed by Mike and Matt", text_3_designed, textChars_font_serif_white_6,
-	//	OBJ_TO_MID_SCREEN_X(text_3_designed), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_designed, 0.93));
-	SET_TEXT("(1/3)", text_3_page, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_page), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_page, 0.95));
-	SET_TEXT("Use the arrow keys to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_instructions_1), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_instructions_1, 0.35));
-	SET_TEXT("Stomp 10 peasants to achieve burnination.", text_3_instructions_2, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_instructions_2), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_instructions_2, 0.43));
-	SET_TEXT("Burn all cottages to advance a level.", text_3_instructions_3, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_instructions_3), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_instructions_3, 0.51));
-	SET_TEXT("Avoid knights and archers!", text_3_instructions_4, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_instructions_4), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_instructions_4, 0.59));
-	SET_TEXT("Press SPACE to pause.", text_3_instructions_5, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_instructions_5), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_instructions_5, 0.67));
-	SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_1), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_1, 0.39));
-	SET_TEXT("-Don't let the peasants return to their cottages", text_3_hints_2, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_2), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_2, 0.51));
-	SET_TEXT("-Once you\'re burninating, you\'re invincible", text_3_hints_3, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_3), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_3, 0.58));
-	SET_TEXT("-Burninated peasants set their cottages on fire", text_3_hints_4, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_4), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_4, 0.65));
-	SET_TEXT("-Get an extra man every 300 points", text_3_hints_5, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_5), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_5, 0.72));
-	SET_TEXT("-What\'s a treasure hut?!?!", text_3_hints_6, textChars_font_serif_red_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_6), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_6, 0.79));
-	SET_TEXT("- Secret Code?!?!", text_3_hints_7, textChars_font_serif_red_6,
-		OBJ_TO_MID_SCREEN_X(text_3_hints_7), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_hints_7, 0.86));
-
-	SET_TEXT("CREDITS", text_3_credits_1, textChars_font_serif_red_6,
-		OBJ_TO_MID_SCREEN_X(text_3_credits_1), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_1, 0.35));
-	SET_TEXT("ORIGINAL FLASH GAME", text_3_credits_2, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_credits_2), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_2, 0.43));
-	SET_TEXT("Programming: Jonathan Howe", text_3_credits_3, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_credits_3), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_3, 0.51));
-	// credits for the HTML5 version will be added when stuff from the HTML5 version is added to this version
-	SET_TEXT("Design: Mike Chapman, Matt Chapman", text_3_credits_4, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_credits_4), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_4, 0.59));
-	SET_TEXT("THIS PORT", text_3_credits_5, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_credits_5), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_5, 0.69));
-	SET_TEXT("Mips96", text_3_credits_6, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_credits_6), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_6, 0.77));
-	SET_TEXT("https://github.com/Mips96/Trogdor-Reburninated", text_3_credits_7, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_3_credits_7), OBJ_TO_SCREEN_AT_FRACTION_Y(text_3_credits_7, 0.85));
-	/* 4: Game */
-	SET_TEXT("SCORE:", text_4_score, textChars_font_serif_2_red_6,
-		10, 1);
-	SET_TEXT("012345", text_4_score_val, textChars_font_serif_red_6,
-		10, 14);
-	SET_TEXT("MANS:", text_4_mans, textChars_font_serif_2_red_6,
-		200, 4);
-	SET_TEXT("67", text_4_mans_val, textChars_font_serif_red_6,
-		230, 1);
-	SET_TEXT("LEVEL:", text_4_level, textChars_font_serif_2_red_6,
-		195, 14);
-	SET_TEXT("89", text_4_level_val, textChars_font_serif_red_6,
-		230, 11);
-	/* 5: Nothing? (or maybe Game) */
-	/* 6: Pause Screen (overlayed on Game) */
-	SET_TEXT("paused", text_6_paused_1, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_6_paused_1), 145);
-	SET_TEXT("press 'SPACE' to resume", text_6_paused_2, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(text_6_paused_2), 160);
-	/* 7: Nothing */
-	/* 8: End of Level Animation */
-	/* 9: Level Beaten Screen */
-	SET_TEXT("nice work!", text_9_nice_work, textChars_font_serif_white_10,
-		(gameWidth * 0.55), (gameHeight * 0.45));
-	/* 10: Game Over Screen */
-	/* 11: Level 4 Interlude */
-	SET_TEXT("stompin' good!", text_11_cutscene, textChars_font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(text_11_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_11_cutscene, 0.25));
-	/* 12: Level 8 Interlude */
-	SET_TEXT("fry 'em up dan.", text_12_cutscene, textChars_font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(text_12_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_12_cutscene, 0.25));
-	/* 13: Level 12 Interlude */
-	SET_TEXT("parade of trogdors", text_13_cutscene, textChars_font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(text_13_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_13_cutscene, 0.25));
-	/* 14: Level 16 Interlude */
-	SET_TEXT("dancin' time", text_14_cutscene, textChars_font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(text_14_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_14_cutscene, 0.25));
-	/* 15: Level 20 Interlude */
-	SET_TEXT("flex it, troggie.", text_15_cutscene, textChars_font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(text_15_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_15_cutscene, 0.25));
-	/* 16: Level 24 Interlude */
-	SET_TEXT("peasant dominoes", text_16_cutscene, textChars_font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(text_16_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_16_cutscene, 0.25));
-	/* 17: Level 30 Interlude */
-	SET_TEXT("trogdor incognito", text_17_cutscene, textChars_font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(text_17_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_17_cutscene, 0.25));
-	/* 18: Level 34 Interlude */
-	SET_TEXT("go trogdor # 2!", text_18_cutscene, textChars_font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(text_18_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_18_cutscene, 0.25));
-	/* 19: Level 38 Interlude */
-	SET_TEXT("forbidden peasant love", text_19_cutscene, textChars_font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(text_19_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_19_cutscene, 0.25));
-	/* 20: Level 42 Interlude */
-	SET_TEXT("2 cottages", text_20_cutscene, textChars_font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(text_20_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_20_cutscene, 0.25));
-	/* 21: Level 46 Interlude */
-	SET_TEXT("a funny joke", text_21_cutscene, textChars_font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(text_21_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_21_cutscene, 0.25));
-	/* 22: Level 50 Interlude */
-	SET_TEXT("smote that kerrek!", text_22_cutscene, textChars_font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(text_22_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(text_22_cutscene, 0.25));
-	/* 23: Level 100 Interlude (Credits) */
-	/* 24: Nothing? (or maybe blank transition from Credits to High Scores Screen) */
-	/* 25: High Scores Screen */
-
-	//SET_TEXT("nice work!", text_nice_work, textChars_font_serif_white_10,
-	//	OBJ_TO_MID_SCREEN_X(text_nice_work), OBJ_TO_MID_SCREEN_Y(text_nice_work));
-	//SET_TEXT("send'em", text_send_em, textChars_font_serif_gray_6,
-	//	OBJ_TO_MID_SCREEN_X(text_send_em), OBJ_TO_MID_SCREEN_Y(text_send_em));
-	//SET_TEXT("stompin' good!", text_stompin_good, textChars_font_serif_white_9,
-	//	OBJ_TO_MID_SCREEN_X(text_stompin_good), OBJ_TO_MID_SCREEN_Y(text_stompin_good));
-	//SET_TEXT("YE       OLDE       HI-SCORES", text_ye_olde_hi_scores, textChars_font_serif_2_red_13,
-	//	OBJ_TO_MID_SCREEN_X(text_ye_olde_hi_scores), OBJ_TO_MID_SCREEN_Y(text_ye_olde_hi_scores));
-	//SET_TEXT("1", text_one, textChars_font_serif_brown_8,
-	//	OBJ_TO_MID_SCREEN_X(text_one), OBJ_TO_MID_SCREEN_Y(text_one));
 }
 
 void InitializeController() {
@@ -764,12 +582,6 @@ void renderTransparentForeground() {
 }
 
 
-
-void destroyTextChars(TextCharObject textChars[]) {
-	for (i = 0; i < LEN(textChars); i++) {
-		SDL_FreeSurface(textChars[i].surface);
-	}
-}
 
 void destroySprite(SpriteObject sprite) {
 	SDL_FreeSurface(sprite.surface);

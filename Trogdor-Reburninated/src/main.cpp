@@ -1,12 +1,4 @@
-#include "include.h"
-#include "config.h"
-#include "general.h"
-#include "window.h"
-#include "classes.h"
-//#include "input.h"
 #include "main.h"
-#include "sound_logic.h"
-#include "sprite_objects.h"
 
 /* General Input */
 Uint32 keyInputs;
@@ -56,15 +48,11 @@ int main(int argv, char** args) {
 	loadSaveFile();
 	InitializeDisplay();
 
-	/* Initialize SDL_ttf and font used for Loading text */
-	TTF_Init();
-	setFont(font_serif_white_14, "fonts/serif_v01.ttf", 14,
-		TTF_STYLE_NORMAL, textChars_font_serif_white_14, color_white, 32, 126);
-	TTF_CloseFont(font_serif_white_14);
+	/* Initialize SDL_ttf, fonts, and text objects */
+	InitializeTextChars();
+	InitializeTextObjects();
 
-	/* Initialize Loading Screen text objects */
-	SET_TEXT("loading...", text_0_loading, textChars_font_serif_white_14,
-		OBJ_TO_MID_SCREEN_X(text_0_loading), OBJ_TO_MID_SCREEN_Y(text_0_loading));
+	/* Initialize Loading Screen rect */
 	text_0_loading_censor_rect = { text_0_loading.dstrect.x, text_0_loading.dstrect.y,
 		(Uint16)text_0_loading.dstrect.w, (Uint16)text_0_loading.dstrect.h };
 
@@ -592,6 +580,7 @@ int main(int argv, char** args) {
 
 		/* Clear Screen */
 		SDL_FillRect(gameScreen, NULL, 0x000000);
+		SDL_FillRect(gameHiResScreen, NULL, 0xFF00FF);
 		SDL_FillRect(appScreen, NULL, 0xFF00FF);
 #if !defined(SDL1)
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
@@ -673,7 +662,6 @@ int main(int argv, char** args) {
 						frameState++;
 						break;
 					case 9:
-						InitializeTextChars();
 						renderText(text_0_loading, textChars_font_serif_white_14);
 						text_0_loading_censor_rect.x += textChars_font_serif_white_14['.' - 32].dstrect.w;
 						frameState++;
@@ -691,7 +679,6 @@ int main(int argv, char** args) {
 						frameState++;
 						break;
 					case 12:
-						InitializeTextObjects();
 						InitializeController();
 						renderText(text_0_loading, textChars_font_serif_white_14);
 						frameState++;
@@ -719,7 +706,7 @@ int main(int argv, char** args) {
 						frameState = 18;
 						break;
 				}
-				drawRect(text_0_loading_censor_rect, color_black.r, color_black.g, color_black.b);
+				drawRect_gameTextScreen(text_0_loading_censor_rect, color_black.r, color_black.g, color_black.b);
 				break;
 			/* Videlectrix logo */
 			case 1:
@@ -1416,6 +1403,10 @@ int main(int argv, char** args) {
 		outputTexture = SDL_CreateTextureFromSurface(renderer, gameScreen);
 		SDL_RenderCopy(renderer, outputTexture, &gameSrcRect, &gameToWindowDstRect);
 		SDL_DestroyTexture(outputTexture); // there was a memory leak, and freeing the gameScreen crashes, so I guess this is the right way to fix it?
+		// Render Game Hi-Res Window
+		outputTexture = SDL_CreateTextureFromSurface(renderer, gameHiResScreen);
+		SDL_RenderCopy(renderer, outputTexture, &gameHiResSrcRect, &gameToWindowDstRect);
+		SDL_DestroyTexture(outputTexture);
 		// Render (rest of) App Window
 		outputTexture = SDL_CreateTextureFromSurface(renderer, appScreen);
 		SDL_RenderCopy(renderer, outputTexture, &appSrcRect, &appToWindowDstRect);
@@ -1425,6 +1416,8 @@ int main(int argv, char** args) {
 		//SDL_FillRect(appScreen, NULL, 0x0000FF);
 		outputRect = gameToWindowDstRect;
 		SDL_BlitSurface(gameScreen, &gameSrcRect, windowScreen, &outputRect);
+		outputRect = gameToWindowDstRect;
+		SDL_BlitSurface(gameHiResScreen, &gameHiResSrcRect, windowScreen, &outputRect);
 		outputRect = appToWindowDstRect;
 		SDL_BlitSurface(appScreen, &appSrcRect, windowScreen, &outputRect);
 		SDL_Flip(windowScreen);

@@ -610,13 +610,13 @@ class GameManager {
 			arched = false;
 			dm_frameState = 0;
 			dm_srcrect = { 0, 0, sprite_death_message.dstrect.w, sprite_death_message.dstrect.h };
-			dm_dstrect = { OBJ_TO_MID_SCREEN_X(sprite_death_message), OBJ_TO_MID_SCREEN_Y(sprite_death_message), sprite_death_message.dstrect.w, sprite_death_message.dstrect.h };
+			dm_dstrect = { OBJ_TO_MID_SCREEN_X(gameWidth, sprite_death_message), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_death_message), sprite_death_message.dstrect.w, sprite_death_message.dstrect.h };
 			dm_visible = false;
 			b_frameState = 0;
 			bt_srcrect = { 0, 0, sprite_burninate_text.dstrect.w, sprite_burninate_text.dstrect.h };
-			bt_dstrect = { OBJ_TO_MID_SCREEN_X(sprite_burninate_text), OBJ_TO_MID_SCREEN_Y(sprite_burninate_text), sprite_burninate_text.dstrect.w, sprite_burninate_text.dstrect.h };
+			bt_dstrect = { OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_text), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_text), sprite_burninate_text.dstrect.w, sprite_burninate_text.dstrect.h };
 			bf_srcrect = { 0, 0, sprite_burninate_fire.dstrect.w, sprite_burninate_fire.dstrect.h };
-			bf_dstrect = { OBJ_TO_MID_SCREEN_X(sprite_burninate_fire), bt_dstrect.y - bf_srcrect.h + 4, sprite_burninate_fire.dstrect.w, sprite_burninate_fire.dstrect.h };
+			bf_dstrect = { OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), bt_dstrect.y - bf_srcrect.h + 4, sprite_burninate_fire.dstrect.w, sprite_burninate_fire.dstrect.h };
 			b_visible = false;
 			kick_frameState = 0;
 			numHuts = 0;
@@ -659,8 +659,8 @@ class GameManager {
 				j = (i * 3) + 2;
 				if (levels[levelIndex][j] > 0) {
 					hutArray[i] = Cottage(
-						(Sint16)OBJ_TO_SCREEN_AT_FRACTION_X(sprite_cottage, (levels[levelIndex][j + 1] + 2466) / 5000.0) + 8,
-						(Sint16)OBJ_TO_SCREEN_AT_FRACTION_Y(sprite_cottage, (levels[levelIndex][j + 2] + 2183) / 3600.0) - 11,
+						(Sint16)OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_cottage, (levels[levelIndex][j + 1] + 2466) / 5000.0) + 8,
+						(Sint16)OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_cottage, (levels[levelIndex][j + 2] + 2183) / 3600.0) - 11,
 						levels[levelIndex][j]
 					);
 					numHuts++;

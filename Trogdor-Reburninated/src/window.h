@@ -3,15 +3,19 @@
 
 #include "config.h"
 #include "general.h"
+#include "media_objects_init.h"
 
 constexpr auto gameWidth = 250;
 constexpr auto gameHeight = 180;
 constexpr auto DEFAULT_FRAME_RATE = 16;
 
+extern Uint16 gameHiResWidth;
+extern Uint16 gameHiResHeight;
 extern Uint16 appWidth;
 extern Uint16 appHeight;
 extern double gameWidthMult; // game scaling relative to app
 extern double gameHeightMult; // game scaling relative to app
+extern double gameHiResMult; // hi-res screen scaling
 extern Uint16 windowWidth;
 extern Uint16 windowHeight;
 extern double appWidthMult; // app scaling relative to window
@@ -28,6 +32,8 @@ extern SDL_Surface *windowScreen;
 extern SDL_Surface *gameScreen;
 extern SDL_Rect gameSrcRect;
 extern SDL_Rect gameToAppDstRect; // game screen mapping to app
+extern SDL_Surface *gameHiResScreen;
+extern SDL_Rect gameHiResSrcRect;
 extern SDL_Surface *appScreen;
 extern SDL_Rect appSrcRect;
 extern SDL_Rect appToWindowDstRect; // app mapping to window

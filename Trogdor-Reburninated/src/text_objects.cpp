@@ -28,7 +28,7 @@ void setTextChar(const char *text, TTF_Font *font, SDL_Color text_color, TextCha
 }
 
 void renderTextChar(TextCharObject textCharObj) {
-    SDL_BlitSurface(textCharObj.surface, NULL, gameScreen, &textCharObj.dstrect);
+    SDL_BlitSurface(textCharObj.surface, NULL, gameHiResScreen, &textCharObj.dstrect);
 }
 
 void renderText(TextObject textObj, TextCharObject charArr[]) {
@@ -55,11 +55,12 @@ void destroyTextObjectTexture(TextCharObject textCharObj) {
 }
 
 void setFont(TTF_Font *font, string fontFile, int size, int style, TextCharObject charArr[], SDL_Color color, Uint32 minIndex, Uint32 maxIndex) {
-    font = TTF_OpenFont((rootDir + fontFile).c_str(), size);
+    font = TTF_OpenFont((rootDir + fontFile).c_str(), (int)(size * gameHiResMult));
     TTF_SetFontStyle(font, style);
     for (uint_i = minIndex; uint_i < (maxIndex + 1); uint_i++) {
         ss.str(std::string());
         ss << static_cast<char>(uint_i);
         setTextChar(ss.str().c_str(), font, color, &charArr[uint_i - 32]);
     }
+    TTF_CloseFont(font);
 }

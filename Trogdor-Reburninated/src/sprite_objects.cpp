@@ -66,6 +66,10 @@ void drawRect(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b) {
     SDL_FillRect(gameScreen, &rect, ((r << 16) + (g << 8) + (b)));
 }
 
+void drawRect_gameTextScreen(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b) {
+    SDL_FillRect(gameHiResScreen, &rect, ((r << 16) + (g << 8) + (b)));
+}
+
 void drawRectWithAlpha(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
     SDL_FillRect(gameScreen, &rect, ((a << 24) + (r << 16) + (g << 8) + (b)));
 }
