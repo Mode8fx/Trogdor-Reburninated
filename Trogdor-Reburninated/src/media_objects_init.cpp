@@ -131,6 +131,9 @@ void InitializeTextObjects() {
 	SET_TEXT("nice work!", text_9_nice_work, textChars_font_serif_white_10,
 		(gameHiResWidth * 0.55), (gameHiResHeight * 0.45));
 	/* 10: Game Over Screen */
+	/* 11-23: Placeholder Message */
+	SET_TEXT("cutscenes aren't finished yet!", text_placeholder_cutscene, textChars_font_serif_red_8,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_placeholder_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_placeholder_cutscene, 0.6));
 	/* 11: Level 4 Interlude */
 	SET_TEXT("stompin' good!", text_11_cutscene, textChars_font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_11_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_11_cutscene, 0.25));
@@ -168,6 +171,34 @@ void InitializeTextObjects() {
 	SET_TEXT("smote that kerrek!", text_22_cutscene, textChars_font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_22_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_22_cutscene, 0.25));
 	/* 23: Level 100 Interlude (Credits) */
+	SET_TEXT("congratulations.", text_23_cutscene_1, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_1, 0.25));
+	SET_TEXT("you got", text_23_cutscene_2, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_2), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_2, 0.35));
+	SET_TEXT("good score", text_23_cutscene_3, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_3), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_3, 0.45));
+	SET_TEXT("cast", text_23_cutscene_4, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_4), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_4, 0.25));
+	SET_TEXT("trogdor", text_23_cutscene_5, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_5), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_5, 0.25));
+	SET_TEXT("perez", text_23_cutscene_6, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_6), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_6, 0.25));
+	SET_TEXT("hackworth", text_23_cutscene_7, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_7), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_7, 0.25));
+	SET_TEXT("\'the steve\'", text_23_cutscene_8, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_8), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_8, 0.25));
+	SET_TEXT("the blue knight", text_23_cutscene_9, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_9), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_9, 0.25));
+	SET_TEXT("the red knight", text_23_cutscene_10, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_10), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_10, 0.25));
+	SET_TEXT("the siamese archers", text_23_cutscene_11, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_11), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_11, 0.25));
+	SET_TEXT("and Wordly Wise", text_23_cutscene_12, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_12), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_12, 0.25));
+	SET_TEXT("as The Kerrek", text_23_cutscene_13, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_13), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_13, 0.25));
+	SET_TEXT("keep playing!", text_23_cutscene_14, textChars_font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_14), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_14, 0.25));
 	/* 24: Nothing? (or maybe blank transition from Credits to High Scores Screen) */
 	/* 25: High Scores Screen */
 
@@ -175,8 +206,6 @@ void InitializeTextObjects() {
 	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_nice_work), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_nice_work));
 	//SET_TEXT("send'em", text_send_em, textChars_font_serif_gray_6,
 	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_send_em), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_send_em));
-	//SET_TEXT("stompin' good!", text_stompin_good, textChars_font_serif_white_9,
-	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_stompin_good), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_stompin_good));
 	//SET_TEXT("YE       OLDE       HI-SCORES", text_ye_olde_hi_scores, textChars_font_serif_2_red_13,
 	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_ye_olde_hi_scores), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_ye_olde_hi_scores));
 	//SET_TEXT("1", text_one, textChars_font_serif_brown_8,

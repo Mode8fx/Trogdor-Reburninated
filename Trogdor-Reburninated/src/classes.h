@@ -32,6 +32,7 @@ constexpr auto ARCHER_RIGHT_X = 231; // 4829 / 5000 * 250 - (20 / 2)
 extern Uint16 rand_var;
 extern Uint32 frameCounter_global;
 extern Uint8 contraArrayKey[10];
+extern Uint8 pacmanArrayKey[11];
 
 #if defined(SDL1)
 inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
@@ -504,10 +505,14 @@ class MenuManager {
 	public:
 		bool contraActive; // Konami code (Contra cheat) is enabled
 		Sint8 contraIndex; // the current index of the Konami code input
+		bool pacmanActive; // super cheat (play Pac-Man on a Ms. Pac-Man + Galaga arcade cabinet) is enabled
+		Sint8 pacmanIndex; // the current index of the super cheat input
 		Sint8 page;        // the current page number
 		MenuManager() {
 			contraActive = false;
 			contraIndex = 0;
+			pacmanActive = false;
+			pacmanIndex = 0;
 			page = 1;
 		}
 		void typeStuff() {
@@ -516,10 +521,24 @@ class MenuManager {
 					if (keyInputs == (1 << (contraArrayKey[contraIndex]))) {
 						contraIndex++;
 						if (contraIndex == LEN(contraArrayKey)) {
+							loadAndPlaySound(SFX_SFX2); // this was originally played upon starting the game, but I'm changing it; it's much clearer this way, especially since the controls are different for each system
 							contraActive = true;
 						}
 					} else {
 						contraIndex = 0;
+					}
+				}
+			}
+			if (!pacmanActive) {
+				if (keyInputs != 0) {
+					if (keyInputs == (1 << (pacmanArrayKey[pacmanIndex]))) {
+						pacmanIndex++;
+						if (pacmanIndex == LEN(pacmanArrayKey)) {
+							loadAndPlaySound(SFX_GOLDGET);
+							pacmanActive = true;
+						}
+					} else {
+						pacmanIndex = 0;
 					}
 				}
 			}
@@ -1349,7 +1368,7 @@ class GameManager {
 					break;
 			}
 		}
-		void burninationIncreaseTest() {
+		void burninationIncreaseCheat() {
 			if (peasantometer < 9) {
 				peasantometer++;
 			} else {
@@ -1357,7 +1376,7 @@ class GameManager {
 				b_frameState = 3;
 			}
 		}
-		void burninationDecreaseTest() {
+		void burninationDecreaseCheat() {
 			if (peasantometer < 10) {
 				peasantometer--;
 				if (peasantometer < 0) {

@@ -22,6 +22,7 @@ bool isRunning = true;
 MenuManager MM;
 GameManager GM;
 Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down Left Right Left Right B A
+Uint8 pacmanArrayKey[11] = { 0, 0, 0, 1, 1, 1, 2, 3, 2, 3, 2 }; // Up Up Up Down Down Down Left Right Left Right Left
 
 /* General-use Variables */
 Sint8 i, j, k;
@@ -574,7 +575,7 @@ int main(int argv, char** args) {
 		if (keyPressed(INPUT_FULLSCREEN)) {
 			SDL_toggleFullscreen();
 		}
-		if (keyPressed(INPUT_R)) {
+		if (keyPressed(INPUT_Y)) {
 			SDL_toggleIntegerScale();
 		}
 
@@ -747,9 +748,9 @@ int main(int argv, char** args) {
 				frameState++;
 				MM.typeStuff();
 				MM.handlePageChange();
-				if (keyPressed(INPUT_A) && MM.page == 1) {
+				if (keyPressed(INPUT_START) && MM.page == 1) {
 					if (MM.contraActive) {
-						loadAndPlaySound(SFX_SFX2);
+						//loadAndPlaySound(SFX_SFX2);
 						GM = GameManager(30);
 					} else {
 						GM = GameManager(3);
@@ -798,11 +799,19 @@ int main(int argv, char** args) {
 			/* Game */
 			case 4:
 				if (!GM.paused && !GM.manually_paused) {
-					if (keyPressed(INPUT_B)) {
-						GM.burninationIncreaseTest();
-					}
-					if (keyPressed(INPUT_A)) {
-						GM.burninationDecreaseTest();
+					if (MM.pacmanActive) {
+						if (keyPressed(INPUT_B)) {
+							GM.burninationIncreaseCheat();
+						}
+						if (keyPressed(INPUT_A)) {
+							GM.burninationDecreaseCheat();
+						}
+						if (keyPressed(INPUT_L) && GM.level > 1) {
+							GM.updateLevel(-1);
+						}
+						if (keyPressed(INPUT_R) && GM.level < 100) {
+							GM.updateLevel(1);
+						}
 					}
 
 					GM.player.invinceCheck();
@@ -811,7 +820,7 @@ int main(int argv, char** args) {
 					GM.getPlayerInput();
 					GM.updateKnightHome();
 					GM.updateKnightOffsetAndMove();
-					if (GM.testWon()) {
+					if (GM.testWon() || (MM.pacmanActive && keyPressed(INPUT_SELECT))) {
 						GM.updateScore(min((20 + ((GM.level / 5) + 1) * 5), 200));
 						GM.clearArrows();
 						sceneState = 8;
@@ -831,7 +840,7 @@ int main(int argv, char** args) {
 					}
 				} else {
 					if (GM.manually_paused) {
-						if (keyHeld(INPUT_START)) {
+						if (keyPressed(INPUT_START)) {
 							GM.startDown = true;
 						}
 						if (GM.startDown && !keyHeld(INPUT_START)) {
@@ -1124,6 +1133,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_11_cutscene, textChars_font_serif_white_9);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 420:
@@ -1145,6 +1155,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_12_cutscene, textChars_font_serif_white_9);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 493:
@@ -1166,6 +1177,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_13_cutscene, textChars_font_serif_white_9);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 567:
@@ -1187,6 +1199,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_14_cutscene, textChars_font_serif_white_9);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 641:
@@ -1208,6 +1221,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_15_cutscene, textChars_font_serif_white_9);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 710:
@@ -1229,6 +1243,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_16_cutscene, textChars_font_serif_white_9);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 780:
@@ -1250,6 +1265,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_17_cutscene, textChars_font_serif_white_9);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 853:
@@ -1271,6 +1287,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_18_cutscene, textChars_font_serif_white_9);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 927:
@@ -1292,6 +1309,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_19_cutscene, textChars_font_serif_white_9);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 1000:
@@ -1313,6 +1331,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_20_cutscene, textChars_font_serif_white_9);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 1076:
@@ -1334,6 +1353,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_21_cutscene, textChars_font_serif_white_9);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 1153:
@@ -1355,6 +1375,7 @@ int main(int argv, char** args) {
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_22_cutscene, textChars_font_serif_white_9);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 1226:
@@ -1375,7 +1396,64 @@ int main(int argv, char** args) {
 			case 23:
 				RENDER_TOP_BAR();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
+				if (keyPressed(INPUT_START)) { // placeholder
+					frameState = 1715;
+				}
+				switch (frameState) {
+					// the uses of renderText here are wrong, but just a placeholder until the animation system is reworked
+					case 1337:
+						break;
+					case 1397:
+						renderText(text_23_cutscene_1, textChars_font_serif_white_9);
+						break;
+					case 1423:
+						renderText(text_23_cutscene_2, textChars_font_serif_white_9);
+						break;
+					case 1440:
+						renderText(text_23_cutscene_3, textChars_font_serif_white_9);
+						break;
+					case 1501:
+						renderText(text_23_cutscene_4, textChars_font_serif_white_9);
+						break;
+					case 1522:
+						renderText(text_23_cutscene_5, textChars_font_serif_white_9);
+						break;
+					case 1543:
+						renderText(text_23_cutscene_6, textChars_font_serif_white_9);
+						break;
+					case 1562:
+						renderText(text_23_cutscene_7, textChars_font_serif_white_9);
+						break;
+					case 1582:
+						renderText(text_23_cutscene_8, textChars_font_serif_white_9);
+						break;
+					case 1601:
+						renderText(text_23_cutscene_9, textChars_font_serif_white_9);
+						break;
+					case 1621:
+						renderText(text_23_cutscene_10, textChars_font_serif_white_9);
+						break;
+					case 1641:
+						renderText(text_23_cutscene_11, textChars_font_serif_white_9);
+						break;
+					case 1660:
+						renderText(text_23_cutscene_12, textChars_font_serif_white_9);
+						break;
+					case 1681:
+						renderText(text_23_cutscene_13, textChars_font_serif_white_9);
+						break;
+					case 1716:
+						GM.levelInit();
+						sceneState = 4;
+						break;
+					default:
+						break;
+				}
+				if (sceneState == 23) {
+					frameState++;
+				}
 				break;
 			/* Nothing? (or maybe blank transition from Credits to High Scores Screen) */
 			case 24:

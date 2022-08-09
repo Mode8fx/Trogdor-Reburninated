@@ -210,6 +210,7 @@ TextObject text_10_hi_scores_red;
 TextObject text_10_view_red;
 TextObject text_10_hi_scores_orange;
 TextObject text_10_view_orange;
+TextObject text_placeholder_cutscene;
 TextObject text_11_cutscene;
 TextObject text_12_cutscene;
 TextObject text_13_cutscene;
@@ -222,21 +223,20 @@ TextObject text_19_cutscene;
 TextObject text_20_cutscene;
 TextObject text_21_cutscene;
 TextObject text_22_cutscene;
-TextObject text_23_congratulations;
-TextObject text_23_you_got;
-TextObject text_23_good_score;
-TextObject text_23_cast;
-TextObject text_23_trogdor;
-TextObject text_23_perez;
-TextObject text_23_hackworth;
-TextObject text_23_the_steve;
-TextObject text_23_the_blue_knight;
-TextObject text_23_the_red_knight;
-TextObject text_23_the_siamese;
-TextObject text_23_archers;
-TextObject text_23_and_wordly_wise;
-TextObject text_23_as_the_kerrek;
-TextObject text_23_keep_playing;
+TextObject text_23_cutscene_1;
+TextObject text_23_cutscene_2;
+TextObject text_23_cutscene_3;
+TextObject text_23_cutscene_4;
+TextObject text_23_cutscene_5;
+TextObject text_23_cutscene_6;
+TextObject text_23_cutscene_7;
+TextObject text_23_cutscene_8;
+TextObject text_23_cutscene_9;
+TextObject text_23_cutscene_10;
+TextObject text_23_cutscene_11;
+TextObject text_23_cutscene_12;
+TextObject text_23_cutscene_13;
+TextObject text_23_cutscene_14;
 TextObject text_25_ye_olde_high_scores;
 TextObject text_25_name;
 TextObject text_25_level;
@@ -494,15 +494,15 @@ void InitializeSpritesPart1() {
 	// ((2183 - 133) / 3600.0) = 0.5694
 	// (2183 / 3600.0) = 0.6064
 	PREPARE_SPRITE(sprite_level_background_1, (rootDir + "graphics/backgrounds/1.bmp").c_str(),
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_level_background_1, 0.4978), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_level_background_1, 0.573), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_level_background_1), 25, 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_2, (rootDir + "graphics/backgrounds/2.bmp").c_str(),
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_level_background_2, 0.4978), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_level_background_2, 0.573), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_level_background_2), 25, 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_3, (rootDir + "graphics/backgrounds/3.bmp").c_str(),
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_level_background_3, 0.4978), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_level_background_3, 0.573), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_level_background_3), 25, 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_4, (rootDir + "graphics/backgrounds/4.bmp").c_str(),
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_level_background_4, 0.4932), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_level_background_4, 0.6064), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_level_background_4), 25, 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_th, (rootDir + "graphics/backgrounds/treasure_hut.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_level_background_th), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_level_background_th, 0.567), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_level_background_th), 25, 1, 1, 1);
 }
 
 void InitializeSpritesPart2() {
