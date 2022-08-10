@@ -179,6 +179,7 @@ TextObject text_3_coming_soon_2;
 TextObject text_3_coming_soon_3;
 TextObject text_3_coming_soon_4;
 TextObject text_3_coming_soon_5;
+TextObject text_3_coming_soon_6;
 TextObject text_4_score_val;
 TextObject text_4_mans_val;
 TextObject text_4_level_val;
@@ -615,23 +616,6 @@ void destroyDisplay() {
 void DestroyAll() {
 	/* Textures */
 	/* Text Chars */
-	//destroyTextChars(textChars_font_serif_brown_6);
-	//destroyTextChars(textChars_font_serif_brown_8);
-	//destroyTextChars(textChars_font_serif_gray_6);
-	////destroyTextChars(textChars_font_serif_gray_12);
-	//destroyTextChars(textChars_font_serif_orange_6);
-	//destroyTextChars(textChars_font_serif_red_6);
-	//destroyTextChars(textChars_font_serif_red_8);
-	////destroyTextChars(textChars_font_serif_red_12);
-	//destroyTextChars(textChars_font_serif_white_6);
-	//destroyTextChars(textChars_font_serif_white_9);
-	//destroyTextChars(textChars_font_serif_white_10);
-	//destroyTextChars(textChars_font_serif_white_14);
-	//destroyTextChars(textChars_font_nokia_12);
-	////destroyTextChars(textChars_font_serif_2_bold_black_23);
-	////destroyTextChars(textChars_font_serif_2_bold_red_23);
-	//destroyTextChars(textChars_font_serif_2_red_6);
-	//destroyTextChars(textChars_font_serif_2_red_13);
 	/* Sound */
 	if (soundSettings.musicIndex != 0) {
 		Mix_FreeMusic(bgm);

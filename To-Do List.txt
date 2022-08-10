@@ -6,7 +6,6 @@ Polish:
 - Fix text positions
 - Adjust end of level flash
 - Add art to Level Beaten and Game Over screens
-- Convert remaining macros in main.h into functions
 - Verify that all game logic matches Flash game
 	- When should knights move both home and offset? Offset only? Neither?
 	- Confirm that Strong Bad voice clips are correct
@@ -30,6 +29,7 @@ Features:
 - Rework cutscene system so that animations are easier to add
 	- It's okay if the implementation has to be slightly inefficient to make this work, this really isn't that intensive of a game
 - Add art and animation to all cutscenes
+- Add an overlay
 - Restore the original game's unused High Scores screen
 - Add basic Records screen
 Polish:

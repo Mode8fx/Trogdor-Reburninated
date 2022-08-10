@@ -111,8 +111,10 @@ void InitializeTextObjects() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_3, 0.59));
 	SET_TEXT("-Level Beaten / Game Over animations!", text_3_coming_soon_4, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_4, 0.67));
-	SET_TEXT("-Restored unused High Scores screen!", text_3_coming_soon_5, textChars_font_serif_white_6,
+	SET_TEXT("-Unused High Scores screen restored!", text_3_coming_soon_5, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_5, 0.75));
+	SET_TEXT("-Some more polish!", text_3_coming_soon_6, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_6, 0.83));
 	/* 4: Game */
 	SET_TEXT("SCORE:", text_4_score, textChars_font_serif_2_red_6,
 		10 * gameHiResWidth / gameWidth, 1 * gameHiResHeight / gameHeight);

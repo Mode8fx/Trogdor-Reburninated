@@ -772,7 +772,7 @@ class GameManager {
 			}
 			if (!inTreasureHut) {
 				playerMove(&player, player.x_offset, player.y_offset);
-				if (keyHeld(INPUT_START)) {
+				if (keyPressed(INPUT_START)) {
 					startDown = true;
 				}
 				if (startDown && !keyHeld(INPUT_START)) {
@@ -1399,117 +1399,91 @@ class GameManager {
 				}
 			}
 		}
+		void renderAndAnimateCottages() {
+			for (i = 0; i < MAX_NUM_HUTS; i++) {
+				if (hutArray[i].direction > 0) {
+					if (hutArray[i].burning && !hutArray[i].burned) {
+						hutArray[i].updateFrameState();
+					}
+					renderSpriteUsingRects(sprite_cottage, hutArray[i].srcrect, hutArray[i].dstrect);
+					if (hutArray[i].frameState >= 12 && hutArray[i].frameState <= 28) {
+						renderSpriteUsingRects(sprite_cottage_fire, hutArray[i].fire_srcrect, hutArray[i].fire_dstrect);
+					}
+				}
+			}
+		}
+		void renderArchers() {
+			if (archerR.active) {
+				renderSpriteUsingRects(sprite_archer, archerR.srcrect, archerR.dstrect);
+			}
+			if (archerL.active) {
+				renderSpriteUsingRects(sprite_archer, archerL.srcrect, archerL.dstrect);
+			}
+		}
+		void renderArrows() {
+			for (i = 0; i < MAX_NUM_ARROWS; i++) {
+				if (arrowArrayR[i].active) {
+					renderSpriteUsingRects(sprite_arrow, arrowArrayR[i].srcrect, arrowArrayR[i].dstrect);
+				}
+				if (arrowArrayL[i].active) {
+					renderSpriteUsingRects(sprite_arrow, arrowArrayL[i].srcrect, arrowArrayL[i].dstrect);
+				}
+			}
+		}
+		void renderLoot() {
+			for (i = 0; i < MAX_NUM_LOOT; i++) {
+				if (lootArray[i].active) {
+					renderSpriteUsingRects(sprite_loot, lootArray[i].srcrect, lootArray[i].dstrect);
+				}
+			}
+		}
+		void renderKnights() {
+			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
+				renderSpriteUsingRects(sprite_knight, knightArray[i].srcrect, knightArray[i].dstrect);
+			}
+		}
+		void renderPeasants() {
+			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
+				if (peasantArray[i].active) {
+					if (!manually_paused && (!peasantArray[i].waiting || peasantArray[i].stomped)) {
+						peasantArray[i].updateFrameState();
+					}
+					renderSpriteUsingRects(sprite_peasant, peasantArray[i].srcrect, peasantArray[i].dstrect);
+				}
+			}
+		}
+		void renderTrogdor() {
+			if (player.visible) {
+				if (player.frameState >= 19) {
+					renderSpriteUsingRects(sprite_trogdor_dead, player.death_srcrect, player.death_dstrect);
+				} else {
+					renderSpriteUsingRects(sprite_trogdor, player.srcrect, player.dstrect);
+				}
+			}
+		}
+		void renderTopBar() {
+			renderText(text_4_score, textChars_font_serif_2_red_6);
+			renderText(text_4_score_val, textChars_font_serif_red_6);
+			renderText(text_4_mans, textChars_font_serif_2_red_6);
+			renderText(text_4_mans_val, textChars_font_serif_red_6);
+			renderText(text_4_level, textChars_font_serif_2_red_6);
+			renderText(text_4_level_val, textChars_font_serif_red_6);
+			// Render peasantometer/burnination meter (depending on their values)
+			if (burnination > 0) {
+				renderSprite(sprite_burnination_meter_empty);
+				renderSprite(sprite_burnination_meter_full);
+			} else {
+				sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;
+				sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;
+				for (i = 0; i < 10; i++) {
+					if (peasantometer == i) {
+						sprite_peasantometer_icon.srcrect.x = 0;
+					}
+					renderSprite(sprite_peasantometer_icon);
+					sprite_peasantometer_icon.dstrect.x += (int)(sprite_peasantometer_icon.dstrect.w * 1.5);
+				}
+			}
+		}
 };
-
-#define RENDER_AND_ANIMATE_COTTAGES()                                                                                     \
-	for (i = 0; i < MAX_NUM_HUTS; i++) {                                                                                  \
-		if (GM.hutArray[i].direction > 0) {                                                                               \
-			if (GM.hutArray[i].burning && !GM.hutArray[i].burned) {                                                       \
-				GM.hutArray[i].updateFrameState();                                                                        \
-			}                                                                                                             \
-			renderSpriteUsingRects(sprite_cottage, GM.hutArray[i].srcrect, GM.hutArray[i].dstrect);                    \
-			if (GM.hutArray[i].frameState >= 12 && GM.hutArray[i].frameState <= 28) {                                     \
-				renderSpriteUsingRects(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
-			}                                                                                                             \
-		}                                                                                                                 \
-	}
-
-#define RENDER_AND_ANIMATE_UPPER_COTTAGES()                                                                               \
-	for (i = 0; i < MAX_NUM_HUTS; i++) {                                                                                  \
-		if (GM.hutArray[i].direction > 0 && GM.hutArray[i].dstrect.y < GM.player.dstrect.y + 9) {                         \
-			if (GM.hutArray[i].burning && !GM.hutArray[i].burned) {                                                       \
-				GM.hutArray[i].updateFrameState();                                                                        \
-			}                                                                                                             \
-			renderSpriteUsingRects(sprite_cottage, GM.hutArray[i].srcrect, GM.hutArray[i].dstrect);                    \
-			if (GM.hutArray[i].frameState >= 12 && GM.hutArray[i].frameState <= 28) {                                     \
-				renderSpriteUsingRects(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
-			}                                                                                                             \
-		}                                                                                                                 \
-	}
-
-#define RENDER_AND_ANIMATE_LOWER_COTTAGES()                                                                               \
-	for (i = 0; i < MAX_NUM_HUTS; i++) {                                                                                  \
-		if (GM.hutArray[i].direction > 0 && GM.hutArray[i].dstrect.y >= GM.player.dstrect.y + 9) {                        \
-			if (GM.hutArray[i].burning && !GM.hutArray[i].burned) {                                                       \
-				GM.hutArray[i].updateFrameState();                                                                        \
-			}                                                                                                             \
-			renderSpriteUsingRects(sprite_cottage, GM.hutArray[i].srcrect, GM.hutArray[i].dstrect);                    \
-			if (GM.hutArray[i].frameState >= 12 && GM.hutArray[i].frameState <= 28) {                                     \
-				renderSpriteUsingRects(sprite_cottage_fire, GM.hutArray[i].fire_srcrect, GM.hutArray[i].fire_dstrect); \
-			}                                                                                                             \
-		}                                                                                                                 \
-	}
-
-#define RENDER_ARCHERS()                                                                  \
-	if (GM.archerR.active) {                                                              \
-		renderSpriteUsingRects(sprite_archer, GM.archerR.srcrect, GM.archerR.dstrect); \
-	}                                                                                     \
-	if (GM.archerL.active) {                                                              \
-		renderSpriteUsingRects(sprite_archer, GM.archerL.srcrect, GM.archerL.dstrect); \
-	}
-
-#define RENDER_ARROWS()                                                                                    \
-	for (i = 0; i < MAX_NUM_ARROWS; i++) {                                                                 \
-		if (GM.arrowArrayR[i].active) {                                                                    \
-			renderSpriteUsingRects(sprite_arrow, GM.arrowArrayR[i].srcrect, GM.arrowArrayR[i].dstrect); \
-		}                                                                                                  \
-		if (GM.arrowArrayL[i].active) {                                                                    \
-			renderSpriteUsingRects(sprite_arrow, GM.arrowArrayL[i].srcrect, GM.arrowArrayL[i].dstrect); \
-		}                                                                                                  \
-	}
-
-#define RENDER_LOOT()                                                                                 \
-	for (i = 0; i < MAX_NUM_LOOT; i++) {                                                              \
-		if (GM.lootArray[i].active) {                                                                 \
-			renderSpriteUsingRects(sprite_loot, GM.lootArray[i].srcrect, GM.lootArray[i].dstrect); \
-		}                                                                                             \
-	}
-
-#define RENDER_KNIGHTS()                                                                                \
-	for (i = 0; i < MAX_NUM_KNIGHTS; i++) {                                                             \
-		renderSpriteUsingRects(sprite_knight, GM.knightArray[i].srcrect, GM.knightArray[i].dstrect); \
-	}
-
-#define RENDER_PEASANTS()                                                                                      \
-	for (i = 0; i < MAX_NUM_PEASANTS; i++) {                                                                   \
-		if (GM.peasantArray[i].active) {                                                                       \
-			if (!GM.manually_paused && (!GM.peasantArray[i].waiting || GM.peasantArray[i].stomped)) {          \
-				GM.peasantArray[i].updateFrameState();                                                         \
-			}                                                                                                  \
-			renderSpriteUsingRects(sprite_peasant, GM.peasantArray[i].srcrect, GM.peasantArray[i].dstrect); \
-		}                                                                                                      \
-	}
-
-#define RENDER_TROGDOR()                                                                                      \
-	if (GM.player.visible) {                                                                                  \
-		if (GM.player.frameState >= 19) {                                                                     \
-			renderSpriteUsingRects(sprite_trogdor_dead, GM.player.death_srcrect, GM.player.death_dstrect); \
-		} else {                                                                                              \
-			renderSpriteUsingRects(sprite_trogdor, GM.player.srcrect, GM.player.dstrect);                  \
-		}                                                                                                     \
-	}
-
-#define RENDER_TOP_BAR()                                                                        \
-	renderText(text_4_score, textChars_font_serif_2_red_6);                                    \
-	renderText(text_4_score_val, textChars_font_serif_red_6);                                  \
-	renderText(text_4_mans, textChars_font_serif_2_red_6);                                     \
-	renderText(text_4_mans_val, textChars_font_serif_red_6);                                   \
-	renderText(text_4_level, textChars_font_serif_2_red_6);                                    \
-	renderText(text_4_level_val, textChars_font_serif_red_6);                                  \
-	/* render peasantometer/burnination meter (depending on their values) */                    \
-	if (GM.burnination > 0) {                                                                   \
-		renderSprite(sprite_burnination_meter_empty);                                          \
-		renderSprite(sprite_burnination_meter_full);                                           \
-	} else {                                                                                    \
-		sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;                 \
-		sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;              \
-		for (i = 0; i < 10; i++) {                                                              \
-			if (GM.peasantometer == i) {                                                        \
-				sprite_peasantometer_icon.srcrect.x = 0;                                        \
-			}                                                                                   \
-			renderSprite(sprite_peasantometer_icon);                                           \
-			sprite_peasantometer_icon.dstrect.x += (int)(sprite_peasantometer_icon.dstrect.w * 1.5); \
-		}                                                                                       \
-	}
 
 #endif

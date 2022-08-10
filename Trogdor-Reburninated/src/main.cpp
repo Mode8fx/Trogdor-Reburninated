@@ -799,6 +799,7 @@ int main(int argv, char** args) {
 						renderText(text_3_coming_soon_3, textChars_font_serif_white_6);
 						renderText(text_3_coming_soon_4, textChars_font_serif_white_6);
 						renderText(text_3_coming_soon_5, textChars_font_serif_white_6);
+						renderText(text_3_coming_soon_6, textChars_font_serif_white_6);
 						break;
 				}
 				renderText(text_3_page, textChars_font_serif_white_6);
@@ -879,18 +880,16 @@ int main(int argv, char** args) {
 					}
 					// render everything
 					renderBackground();
-					RENDER_TOP_BAR();
-					//RENDER_AND_ANIMATE_UPPER_COTTAGES();
-					RENDER_AND_ANIMATE_COTTAGES();
-					RENDER_KNIGHTS();
-					RENDER_PEASANTS();
-					RENDER_TROGDOR();
-					//RENDER_AND_ANIMATE_LOWER_COTTAGES();
+					GM.renderTopBar();
+					GM.renderAndAnimateCottages();
+					GM.renderKnights();
+					GM.renderPeasants();
+					GM.renderTrogdor();
 					if (GM.burnination > 0) {
 						renderSpriteUsingRects(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
 					}
-					RENDER_ARCHERS();
-					RENDER_ARROWS();
+					GM.renderArchers();
+					GM.renderArrows();
 					if (GM.dm_visible) {
 						renderSpriteUsingRects(sprite_death_message, GM.dm_srcrect, GM.dm_dstrect);
 					} else if (GM.b_visible) {
@@ -920,7 +919,7 @@ int main(int argv, char** args) {
 				}
 			/* Game Over Screen */
 			case 5:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				// TODO: draw Trogdor, "IT'S OVER!", and whatever else needs to be handled for this screen
 				switch (frameState) {
@@ -955,7 +954,7 @@ int main(int argv, char** args) {
 			/* Game (Treasure Hut) */
 			case 6:
 				if (GM.manually_paused) {
-					if (keyHeld(INPUT_START)) {
+					if (keyPressed(INPUT_START)) {
 						GM.startDown = true;
 					}
 					if (GM.startDown && !keyHeld(INPUT_START)) {
@@ -985,9 +984,9 @@ int main(int argv, char** args) {
 					}
 					// render everything
 					renderBackground();
-					RENDER_TOP_BAR();
-					RENDER_LOOT();
-					RENDER_TROGDOR();
+					GM.renderTopBar();
+					GM.renderLoot();
+					GM.renderTrogdor();
 					if (GM.burnination > 0) {
 						renderSpriteUsingRects(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
 					}
@@ -1020,8 +1019,8 @@ int main(int argv, char** args) {
 			/* End of Level Animation */
 			case 8:
 				renderBackground();
-				RENDER_TOP_BAR();
-				RENDER_AND_ANIMATE_COTTAGES();
+				GM.renderTopBar();
+				GM.renderAndAnimateCottages();
 				if (((frameState - 1) / 2) % 2 == 0) {
 					renderSprite(sprite_end_of_level_flash);
 				}
@@ -1054,7 +1053,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level Beaten Screen */
 			case 9:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_9_nice_work, textChars_font_serif_white_10);
 				// TODO: draw Trogdor, "LEVEL BEATEN!", smoke, and level fire
@@ -1137,7 +1136,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 4 Interlude */
 			case 11:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_11_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
@@ -1159,7 +1158,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 8 Interlude */
 			case 12:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_12_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
@@ -1181,7 +1180,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 12 Interlude */
 			case 13:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_13_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
@@ -1203,7 +1202,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 16 Interlude */
 			case 14:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_14_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
@@ -1225,7 +1224,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 20 Interlude */
 			case 15:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_15_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
@@ -1247,7 +1246,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 24 Interlude */
 			case 16:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_16_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
@@ -1269,7 +1268,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 30 Interlude */
 			case 17:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_17_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
@@ -1291,7 +1290,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 34 Interlude */
 			case 18:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_18_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
@@ -1313,7 +1312,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 38 Interlude */
 			case 19:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_19_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
@@ -1335,7 +1334,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 42 Interlude */
 			case 20:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_20_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
@@ -1357,7 +1356,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 46 Interlude */
 			case 21:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_21_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
@@ -1379,7 +1378,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 50 Interlude */
 			case 22:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_22_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
@@ -1401,7 +1400,7 @@ int main(int argv, char** args) {
 				break;
 			/* Level 100 Interlude (Credits) */
 			case 23:
-				RENDER_TOP_BAR();
+				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene

@@ -181,6 +181,7 @@ extern TextObject text_3_coming_soon_2;
 extern TextObject text_3_coming_soon_3;
 extern TextObject text_3_coming_soon_4;
 extern TextObject text_3_coming_soon_5;
+extern TextObject text_3_coming_soon_6;
 extern TextObject text_4_score_val;
 extern TextObject text_4_mans_val;
 extern TextObject text_4_level_val;
