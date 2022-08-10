@@ -2,6 +2,7 @@ To-Do List
 
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Polish:
+- Organize includes
 - Update score/lives/level text values when resizing screen
 - Fix text positions
 - Adjust end of level flash
@@ -9,7 +10,6 @@ Polish:
 - Verify that all game logic matches Flash game
 	- When should knights move both home and offset? Offset only? Neither?
 	- Confirm that Strong Bad voice clips are correct
-- Add "Want more?" screen for other system ports
 - Properly destroy all resources when closing game
 - Verify that the SDL1 and SDL2 versions look and run equally well
 - Polish controls for all systems
@@ -21,9 +21,6 @@ Final:
 - ???
 
 Trogdor Classic [faithful recreation of original Trogdor flash game]:
-Polish:
-- If you die then enter a treasure hut while you're blinking, you may be invisible inside the hut
-	- This bug may have also happened in the original game; I'm not sure
 Features:
 - Add animation to Level Beaten and Game Over screens
 - Rework cutscene system so that animations are easier to add
@@ -33,8 +30,12 @@ Features:
 - Restore the original game's unused High Scores screen
 - Add basic Records screen
 Polish:
+- If you die then enter a treasure hut while you're blinking, you may be invisible inside the hut
+	- This bug may have also happened in the original game; I'm not sure
 - Polish title screen graphics
+- Add "Libraries" screen
 - Add "Coming Eventually" screen for Trogdor Reburninated
+- Add "Want more?" screen for other system ports
 Final:
 - Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
 - Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
