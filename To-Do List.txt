@@ -1,6 +1,6 @@
 To-Do List
 
-Trogdor Alpha [gameplay-complete basic port of Trogdor]:
+Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Polish:
 - Update score/lives/level text values when resizing screen
 - Fix text positions
@@ -10,7 +10,6 @@ Polish:
 - Verify that all game logic matches Flash game
 	- When should knights move both home and offset? Offset only? Neither?
 	- Confirm that Strong Bad voice clips are correct
-- Add "Coming Soon(?)" screen for Trogdor Classic
 - Add "Want more?" screen for other system ports
 - Properly destroy all resources when closing game
 - Verify that the SDL1 and SDL2 versions look and run equally well

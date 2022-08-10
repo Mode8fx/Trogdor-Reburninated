@@ -546,12 +546,12 @@ class MenuManager {
 		void handlePageChange() {
 			if (keyPressed(INPUT_LEFT)) {
 				page--;
-				if (page < 1) page = 3;
-				updateText(&text_3_page, "("+to_string(page)+"/3)");
+				if (page < 1) page = 4;
+				updateText(&text_3_page, "("+to_string(page)+"/4)");
 			} else if (keyPressed(INPUT_RIGHT)) {
 				page++;
-				if (page > 3) page = 1;
-				updateText(&text_3_page, "(" + to_string(page) + "/3)");
+				if (page > 4) page = 1;
+				updateText(&text_3_page, "(" + to_string(page) + "/4)");
 			}
 		}
 };

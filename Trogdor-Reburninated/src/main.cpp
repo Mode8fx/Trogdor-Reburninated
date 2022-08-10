@@ -784,7 +784,7 @@ int main(int argv, char** args) {
 						renderText(text_3_hints_6, textChars_font_serif_red_6);
 						renderText(text_3_hints_7, textChars_font_serif_red_6);
 						break;
-					default:
+					case 3:
 						renderText(text_3_credits_1, textChars_font_serif_red_6);
 						renderText(text_3_credits_2, textChars_font_serif_white_6);
 						renderText(text_3_credits_3, textChars_font_serif_white_6);
@@ -792,6 +792,13 @@ int main(int argv, char** args) {
 						renderText(text_3_credits_5, textChars_font_serif_white_6);
 						renderText(text_3_credits_6, textChars_font_serif_white_6);
 						renderText(text_3_credits_7, textChars_font_serif_white_6);
+						break;
+					default:
+						renderText(text_3_coming_soon_1, textChars_font_serif_red_6);
+						renderText(text_3_coming_soon_2, textChars_font_serif_white_6);
+						renderText(text_3_coming_soon_3, textChars_font_serif_white_6);
+						renderText(text_3_coming_soon_4, textChars_font_serif_white_6);
+						renderText(text_3_coming_soon_5, textChars_font_serif_white_6);
 						break;
 				}
 				renderText(text_3_page, textChars_font_serif_white_6);
@@ -895,8 +902,8 @@ int main(int argv, char** args) {
 						// I think it's a mistake? I may add it later, but I'll leave it out for now.
 						renderTransparentForeground();
 						if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
-							renderText(text_6_paused_1, textChars_font_serif_white_6);
-							renderText(text_6_paused_2, textChars_font_serif_white_6);
+							renderText(text_4_paused_1, textChars_font_serif_white_6);
+							renderText(text_4_paused_2, textChars_font_serif_white_6);
 						}
 					}
 					if (GM.inTreasureHut) {
@@ -995,8 +1002,8 @@ int main(int argv, char** args) {
 						// I think it's a mistake? I may add it later, but I'll leave it out for now.
 						renderTransparentForeground();
 						if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
-							renderText(text_6_paused_1, textChars_font_serif_white_6);
-							renderText(text_6_paused_2, textChars_font_serif_white_6);
+							renderText(text_4_paused_1, textChars_font_serif_white_6);
+							renderText(text_4_paused_2, textChars_font_serif_white_6);
 						}
 					}
 					if (!GM.inTreasureHut) {

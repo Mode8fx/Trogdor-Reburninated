@@ -61,7 +61,7 @@ void InitializeTextObjects() {
 	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_programmed), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_programmed, 0.85));
 	//SET_TEXT("Designed by Mike and Matt", text_3_designed, textChars_font_serif_white_6,
 	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_designed), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_designed, 0.93));
-	SET_TEXT("(1/3)", text_3_page, textChars_font_serif_white_6,
+	SET_TEXT("(1/4)", text_3_page, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_page, 0.95));
 	SET_TEXT("Use the arrow keys to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_instructions_1, 0.35));
@@ -103,6 +103,16 @@ void InitializeTextObjects() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_credits_6, 0.77));
 	SET_TEXT("https://github.com/Mips96/Trogdor-Reburninated", text_3_credits_7, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_credits_7, 0.85));
+	SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, textChars_font_serif_red_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_1, 0.35));
+	SET_TEXT("\"Trogdor Classic\"", text_3_coming_soon_2, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_2), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_2, 0.43));
+	SET_TEXT("-Fully implemented cutscenes!", text_3_coming_soon_3, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_3, 0.59));
+	SET_TEXT("-Level Beaten / Game Over animations!", text_3_coming_soon_4, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_4, 0.67));
+	SET_TEXT("-Restored unused High Scores screen!", text_3_coming_soon_5, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_5, 0.75));
 	/* 4: Game */
 	SET_TEXT("SCORE:", text_4_score, textChars_font_serif_2_red_6,
 		10 * gameHiResWidth / gameWidth, 1 * gameHiResHeight / gameHeight);
@@ -116,15 +126,16 @@ void InitializeTextObjects() {
 		195 * gameHiResWidth / gameWidth, 14 * gameHiResHeight / gameHeight);
 	SET_TEXT("??", text_4_level_val, textChars_font_serif_red_6,
 		230 * gameHiResWidth / gameWidth, 11 * gameHiResHeight / gameHeight);
+	SET_TEXT("paused", text_4_paused_1, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 145 * gameHiResHeight / gameHeight);
+	SET_TEXT("press 'SPACE' to resume", text_4_paused_2, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 160 * gameHiResHeight / gameHeight);
 	//updateText(&text_4_score_val, to_string(GM.score));
 	//updateText(&text_4_mans_val, to_string(GM.mans));
 	//updateText(&text_4_level_val, to_string(GM.level));
-	/* 5: Nothing? (or maybe Game) */
-	/* 6: Pause Screen (overlayed on Game) */
-	SET_TEXT("paused", text_6_paused_1, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_6_paused_1), 145 * gameHiResHeight / gameHeight);
-	SET_TEXT("press 'SPACE' to resume", text_6_paused_2, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_6_paused_2), 160 * gameHiResHeight / gameHeight);
+	//updateText(&text_3_page, "("+to_string(GM.page)+"/4)");
+	/* 5: Game Over */
+	/* 6: Game (Treasure Hut) */
 	/* 7: Nothing */
 	/* 8: End of Level Animation */
 	/* 9: Level Beaten Screen */

@@ -174,6 +174,11 @@ TextObject text_3_credits_4;
 TextObject text_3_credits_5;
 TextObject text_3_credits_6;
 TextObject text_3_credits_7;
+TextObject text_3_coming_soon_1;
+TextObject text_3_coming_soon_2;
+TextObject text_3_coming_soon_3;
+TextObject text_3_coming_soon_4;
+TextObject text_3_coming_soon_5;
 TextObject text_4_score_val;
 TextObject text_4_mans_val;
 TextObject text_4_level_val;
@@ -182,8 +187,8 @@ TextObject text_4_mans;
 TextObject text_4_level;
 TextObject text_4_burninate_black;
 TextObject text_4_burninate_red;
-TextObject text_6_paused_1;
-TextObject text_6_paused_2;
+TextObject text_4_paused_1;
+TextObject text_4_paused_2;
 TextObject text_9_level_gray;
 TextObject text_9_beaten_gray;
 TextObject text_9_level_red;
@@ -363,23 +368,23 @@ void InitializeDisplay() {
 
 	/* Set Window/Renderer */
 #if defined(PSP)
-	window = SDL_CreateWindow("Trogdor Alpha", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_SHOWN);
+	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID)
-	window = SDL_CreateWindow("Trogdor Alpha", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, 0);
+	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII) || defined(GAMECUBE)
-	SDL_WM_SetCaption("Trogdor Alpha", NULL);
+	SDL_WM_SetCaption("Trogdor Beta", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
 	windowScreen = SDL_SetVideoMode(320, 240, 24, SDL_DOUBLEBUF);
 #elif defined(SDL1)
-	SDL_WM_SetCaption("Trogdor Alpha", NULL);
+	SDL_WM_SetCaption("Trogdor Beta", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
 	windowScreen = SDL_SetVideoMode(320, 240, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
-	window = SDL_CreateWindow("Trogdor Alpha", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
