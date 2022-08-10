@@ -131,6 +131,10 @@ int main(int argv, char** args) {
 						snapWindow_x(0.06);
 						snapWindow_y(0.06);
 						setScaling();
+						updateText(&text_4_score_val, to_string(GM.score));
+						updateText(&text_4_mans_val, to_string(GM.mans));
+						updateText(&text_4_level_val, to_string(GM.level));
+						updateText(&text_3_page, "("+to_string(MM.page)+"/4)");
 					}
 					break;
 #endif

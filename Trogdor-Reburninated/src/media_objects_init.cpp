@@ -132,10 +132,6 @@ void InitializeTextObjects() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 145 * gameHiResHeight / gameHeight);
 	SET_TEXT("press 'SPACE' to resume", text_4_paused_2, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 160 * gameHiResHeight / gameHeight);
-	//updateText(&text_4_score_val, to_string(GM.score));
-	//updateText(&text_4_mans_val, to_string(GM.mans));
-	//updateText(&text_4_level_val, to_string(GM.level));
-	//updateText(&text_3_page, "("+to_string(GM.page)+"/4)");
 	/* 5: Game Over */
 	/* 6: Game (Treasure Hut) */
 	/* 7: Nothing */

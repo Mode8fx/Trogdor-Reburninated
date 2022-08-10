@@ -2,7 +2,6 @@ To-Do List
 
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Polish:
-- Update score/lives/level text values when resizing screen
 - Fix text positions
 - Change hi-res Trogdor size if screen is resized
 - Adjust positions of end of level flash and Trogdor
