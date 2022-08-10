@@ -3,7 +3,6 @@ To-Do List
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Polish:
 - Fix text positions
-- Change hi-res Trogdor size if screen is resized
 - Adjust positions of end of level flash and Trogdor
 - Add art to Level Beaten and Game Over screens
 - Verify that all game logic matches Flash game
