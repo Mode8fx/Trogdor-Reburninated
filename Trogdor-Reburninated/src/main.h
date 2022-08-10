@@ -533,8 +533,13 @@ void InitializeSpritesPart2() {
 		0, 0, 2, 3, 1);
 	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_end_of_level_flash), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_end_of_level_flash), 1, 1, 1);
-	PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_end_of_level_trogdor), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_end_of_level_trogdor), 1, 1, 1);
+	if (gameHiResMult >= 2) {
+		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_small.bmp").c_str(),
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, sprite_end_of_level_trogdor), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, sprite_end_of_level_trogdor), 1, 1, (int)(ceil(gameHiResMult * 1.5)));
+	} else {
+		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_big.bmp").c_str(),
+			OBJ_TO_MID_SCREEN_X(gameWidth, sprite_end_of_level_trogdor), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_end_of_level_trogdor), 1, 1, 1);
+	}
 	PREPARE_SPRITE(sprite_death_message, (rootDir + "graphics/death_message.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_death_message), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_death_message), 2, 5, 1);
 	PREPARE_SPRITE(sprite_burninate_text, (rootDir + "graphics/burninate_text.bmp").c_str(),

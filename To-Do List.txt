@@ -4,7 +4,8 @@ Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Polish:
 - Update score/lives/level text values when resizing screen
 - Fix text positions
-- Adjust end of level flash
+- Change hi-res Trogdor size if screen is resized
+- Adjust positions of end of level flash and Trogdor
 - Add art to Level Beaten and Game Over screens
 - Verify that all game logic matches Flash game
 	- When should knights move both home and offset? Offset only? Neither?

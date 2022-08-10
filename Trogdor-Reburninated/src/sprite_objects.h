@@ -14,6 +14,7 @@ extern void prepareSprite(SpriteObject *, const char [], int, int, double);
 extern void setSpritePos(SpriteObject *, int, int);
 extern void renderSprite(SpriteObject);
 extern void renderSprite_app(SpriteObject);
+extern void renderSprite_hiRes(SpriteObject);
 extern void renderSpriteAtRect(SpriteObject, SDL_Rect);
 extern void renderSpriteUsingRects(SpriteObject, SDL_Rect, SDL_Rect);
 extern void renderSpriteScaled(SpriteObject);

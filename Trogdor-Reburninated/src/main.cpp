@@ -1049,7 +1049,7 @@ int main(int argv, char** args) {
 				if (sceneState == 8) {
 					frameState++;
 				}
-				renderSprite(sprite_end_of_level_trogdor);
+				renderSprite_hiRes(sprite_end_of_level_trogdor);
 				break;
 			/* Level Beaten Screen */
 			case 9:

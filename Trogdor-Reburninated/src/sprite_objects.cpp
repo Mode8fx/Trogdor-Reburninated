@@ -35,6 +35,15 @@ void renderSprite_app(SpriteObject spriteObj) {
     SDL_BlitSurface(spriteObj.surface, &spriteObj.srcrect, appScreen, &outputRect);
 }
 
+void renderSprite_hiRes(SpriteObject spriteObj) {
+    outputRect = spriteObj.dstrect;
+#if !defined(SDL1)
+    SDL_BlitScaled(spriteObj.surface, &spriteObj.srcrect, gameHiResScreen, &outputRect);
+#else
+    SDL_BlitSurface(spriteObj.surface, &spriteObj.srcrect, gameHiResScreen, &outputRect);
+#endif
+}
+
 void renderSpriteAtRect(SpriteObject spriteObj, SDL_Rect rect) {
     outputRect = rect;
     SDL_BlitSurface(spriteObj.surface, &spriteObj.srcrect, gameScreen, &outputRect);
