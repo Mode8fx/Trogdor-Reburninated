@@ -1,4 +1,3 @@
-#include "config.h"
 #include "general.h"
 #include "window.h"
 

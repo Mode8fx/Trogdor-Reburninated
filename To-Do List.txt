@@ -2,7 +2,6 @@ To-Do List
 
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Polish:
-- Organize includes
 - Update score/lives/level text values when resizing screen
 - Fix text positions
 - Adjust end of level flash

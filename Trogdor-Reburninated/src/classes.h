@@ -2,13 +2,8 @@
 #define CLASSES_H
 
 #include "config.h"
-#include "general.h"
-#include "window.h"
 #include "input.h"
 #include "level_data.h"
-#include "media_objects_init.h"
-#include "sound_logic.h"
-#include "sprite_objects.h"
 
 // for all "directions": 1 = up, 2 = down, 3 = left, 4 = right
 

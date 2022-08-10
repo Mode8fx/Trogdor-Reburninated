@@ -2,7 +2,6 @@
 #define WINDOW_H
 
 #include "config.h"
-#include "general.h"
 #include "media_objects_init.h"
 
 constexpr auto gameWidth = 250;

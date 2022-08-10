@@ -2,13 +2,7 @@
 #define MAIN_H
 
 #include "include.h"
-#include "config.h"
-#include "general.h"
-#include "window.h"
 #include "classes.h"
-#include "sound_logic.h"
-#include "sprite_objects.h"
-#include "media_objects_init.h"
 #include "system_specific.h"
 
 SDL_Event event;
