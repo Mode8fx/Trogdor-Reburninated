@@ -138,7 +138,7 @@ void InitializeTextObjects() {
 	/* 8: End of Level Animation */
 	/* 9: Level Beaten Screen */
 	SET_TEXT("nice work!", text_9_nice_work, textChars_font_serif_white_10,
-		(gameHiResWidth * 0.55), (gameHiResHeight * 0.45));
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_nice_work, 0.77), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_9_nice_work, 0.45));
 	/* 10: Game Over Screen */
 	/* 11-23: Placeholder Message */
 	SET_TEXT("cutscenes aren't finished yet!", text_placeholder_cutscene, textChars_font_serif_red_8,

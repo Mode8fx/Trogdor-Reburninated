@@ -38,6 +38,7 @@ extern SpriteObject sprite_end_of_level_trogdor;
 extern SpriteObject sprite_death_message;
 extern SpriteObject sprite_burninate_text;
 extern SpriteObject sprite_burninate_fire;
+extern SpriteObject sprite_level_beaten_trogdor;
 extern SpriteObject sprite_loot;
 extern SDL_Rect     divider_level_beaten_rect;
 

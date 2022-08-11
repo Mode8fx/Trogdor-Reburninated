@@ -1060,7 +1060,8 @@ int main(int argv, char** args) {
 				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_9_nice_work, textChars_font_serif_white_10);
-				// TODO: draw Trogdor, "LEVEL BEATEN!", smoke, and level fire
+				// TODO: draw "LEVEL BEATEN!", smoke, and level fire
+				renderSprite(sprite_level_beaten_trogdor);
 				switch (frameState) {
 					case 277:
 						loadAndPlaySound(SFX_BURNINATE);

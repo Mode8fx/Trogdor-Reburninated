@@ -4,7 +4,7 @@ Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Polish:
 - Fix text positions
 - Adjust positions of end of level flash and Trogdor
-- Add art to Level Beaten and Game Over screens
+- Add art to Game Over screen
 - Verify that all game logic matches Flash game
 	- When should knights move both home and offset? Offset only? Neither?
 	- Confirm that Strong Bad voice clips are correct
@@ -34,6 +34,7 @@ Polish:
 - Add "Libraries" screen
 - Add "Coming Eventually" screen for Trogdor Reburninated
 - Add "Want more?" screen for other system ports
+- Finalize all text positions
 Final:
 - Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
 - Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP

@@ -91,6 +91,7 @@ SpriteObject sprite_end_of_level_trogdor;
 SpriteObject sprite_death_message;
 SpriteObject sprite_burninate_text;
 SpriteObject sprite_burninate_fire;
+SpriteObject sprite_level_beaten_trogdor;
 SpriteObject sprite_loot;
 SDL_Rect     divider_level_beaten_rect;
 
@@ -488,7 +489,7 @@ void InitializeSpritesPart1() {
 	PREPARE_SPRITE(sprite_title_screen, (rootDir + "graphics/title_screen.bmp").c_str(),
 		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_title_screen), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_title_screen), 1, 1, 1);
 	PREPARE_SPRITE(sprite_trogdor_logo, (rootDir + "graphics/trogdor_logo.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_trogdor_logo), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_trogdor_logo, 0.1666), 1, 1, 1);
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_trogdor_logo), 15, 1, 1, 1);
 	// ((2466 + 23) / 5000.0) = 0.4978
 	// (2466 / 5000.0) = 0.4932
 	// ((2183 - 133) / 3600.0) = 0.5694
@@ -548,6 +549,8 @@ void InitializeSpritesPart2() {
 		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_fire), 1, 14, 1);
 	PREPARE_SPRITE(sprite_loot, (rootDir + "graphics/loot.bmp").c_str(),
 		0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_level_beaten_trogdor, (rootDir + "graphics/level_beaten_trogdor_scaled.bmp").c_str(),
+		-4, 41, 1, 1, 1);
 	divider_level_beaten_rect = { 0, 25, gameWidth, 2 };
 }
 
