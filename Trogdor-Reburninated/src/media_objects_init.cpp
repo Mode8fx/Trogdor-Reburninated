@@ -117,21 +117,21 @@ void InitializeTextObjects() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_6, 0.83));
 	/* 4: Game */
 	SET_TEXT("SCORE:", text_4_score, textChars_font_serif_2_red_6,
-		10 * gameHiResWidth / gameWidth, 1 * gameHiResHeight / gameHeight);
+		5 * gameHiResMult, 5 * gameHiResMult);
 	SET_TEXT("??????", text_4_score_val, textChars_font_serif_red_6,
-		10 * gameHiResWidth / gameWidth, 14 * gameHiResHeight / gameHeight);
+		5 * gameHiResMult, 11 * gameHiResMult);
 	SET_TEXT("MANS:", text_4_mans, textChars_font_serif_2_red_6,
-		200 * gameHiResWidth / gameWidth, 4 * gameHiResHeight / gameHeight);
+		200 * gameHiResMult, 4 * gameHiResMult);
 	SET_TEXT("??", text_4_mans_val, textChars_font_serif_red_6,
-		230 * gameHiResWidth / gameWidth, 1 * gameHiResHeight / gameHeight);
+		230 * gameHiResMult, 1 * gameHiResMult);
 	SET_TEXT("LEVEL:", text_4_level, textChars_font_serif_2_red_6,
-		195 * gameHiResWidth / gameWidth, 14 * gameHiResHeight / gameHeight);
+		195 * gameHiResMult, 14 * gameHiResMult);
 	SET_TEXT("??", text_4_level_val, textChars_font_serif_red_6,
-		230 * gameHiResWidth / gameWidth, 11 * gameHiResHeight / gameHeight);
+		230 * gameHiResMult, 11 * gameHiResMult);
 	SET_TEXT("paused", text_4_paused_1, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 145 * gameHiResHeight / gameHeight);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 145 * gameHiResMult);
 	SET_TEXT("press 'SPACE' to resume", text_4_paused_2, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 160 * gameHiResHeight / gameHeight);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 160 * gameHiResMult);
 	/* 5: Game Over */
 	/* 6: Game (Treasure Hut) */
 	/* 7: Nothing */

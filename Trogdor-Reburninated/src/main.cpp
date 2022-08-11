@@ -925,7 +925,8 @@ int main(int argv, char** args) {
 			case 5:
 				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				// TODO: draw Trogdor, "IT'S OVER!", and whatever else needs to be handled for this screen
+				// TODO: draw "IT'S OVER!" and whatever else needs to be handled for this screen
+				renderSprite(sprite_game_over_trogdor);
 				switch (frameState) {
 					case 321:
 						loadAndPlaySound(SFX_GAMEOVER);
