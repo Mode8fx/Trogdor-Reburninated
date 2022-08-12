@@ -41,7 +41,7 @@ extern void renderText(TextObject, TextCharObject[]);
 extern void setTextCharPosX(TextCharObject *, int);
 extern void setTextCharPosY(TextCharObject *, int);
 extern void destroyTextObjectTexture(TextCharObject);
-extern void setFont(TTF_Font *, string, int, int, TextCharObject[], SDL_Color, Uint32, Uint32);
+extern void setFont(TTF_Font *, string, int, double, int, TextCharObject[], SDL_Color, Uint32, Uint32);
 
 // This should be a macro since pos_x and pos_y may (and likely will) change before they're needed
 #define SET_TEXT(text, textObj, charArr, pos_x, pos_y) \

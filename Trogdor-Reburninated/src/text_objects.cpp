@@ -54,8 +54,8 @@ void destroyTextObjectTexture(TextCharObject textCharObj) {
     SDL_FreeSurface(textCharObj.surface);
 }
 
-void setFont(TTF_Font *font, string fontFile, int size, int style, TextCharObject charArr[], SDL_Color color, Uint32 minIndex, Uint32 maxIndex) {
-    font = TTF_OpenFont((rootDir + fontFile).c_str(), (int)(size * gameHiResMult));
+void setFont(TTF_Font *font, string fontFile, int originalSize, double multSize, int style, TextCharObject charArr[], SDL_Color color, Uint32 minIndex, Uint32 maxIndex) {
+    font = TTF_OpenFont((rootDir + fontFile).c_str(), max(originalSize, (int)(multSize * gameHiResMult)));
     TTF_SetFontStyle(font, style);
     for (uint_i = minIndex; uint_i < (maxIndex + 1); uint_i++) {
         ss.str(std::string());

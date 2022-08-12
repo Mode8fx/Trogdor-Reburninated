@@ -768,45 +768,45 @@ int main(int argv, char** args) {
 				renderSprite(sprite_trogdor_logo);
 				switch (MM.page) {
 					case 1:
-						renderText(text_3_instructions_1, textChars_font_serif_white_6);
-						renderText(text_3_instructions_2, textChars_font_serif_white_6);
-						renderText(text_3_instructions_3, textChars_font_serif_white_6);
-						renderText(text_3_instructions_4, textChars_font_serif_white_6);
-						renderText(text_3_instructions_5, textChars_font_serif_white_6);
+						renderText(text_3_instructions_1, textChars_font_serif_white_6_mult);
+						renderText(text_3_instructions_2, textChars_font_serif_white_6_mult);
+						renderText(text_3_instructions_3, textChars_font_serif_white_6_mult);
+						renderText(text_3_instructions_4, textChars_font_serif_white_6_mult);
+						renderText(text_3_instructions_5, textChars_font_serif_white_6_mult);
 						//renderText(text_3_programmed, textChars_font_serif_white_6);
 						//renderText(text_3_designed, textChars_font_serif_white_6);
 						if (frameState % 4 < 2) {
-							renderText(text_3_click_anywhere_to_start, textChars_font_serif_red_8);
+							renderText(text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult);
 						}
 						break;
 					case 2:
-						renderText(text_3_hints_1, textChars_font_serif_red_6);
-						renderText(text_3_hints_2, textChars_font_serif_white_6);
-						renderText(text_3_hints_3, textChars_font_serif_white_6);
-						renderText(text_3_hints_4, textChars_font_serif_white_6);
-						renderText(text_3_hints_5, textChars_font_serif_white_6);
-						renderText(text_3_hints_6, textChars_font_serif_red_6);
-						renderText(text_3_hints_7, textChars_font_serif_red_6);
+						renderText(text_3_hints_1, textChars_font_serif_red_6_mult);
+						renderText(text_3_hints_2, textChars_font_serif_white_6_mult);
+						renderText(text_3_hints_3, textChars_font_serif_white_6_mult);
+						renderText(text_3_hints_4, textChars_font_serif_white_6_mult);
+						renderText(text_3_hints_5, textChars_font_serif_white_6_mult);
+						renderText(text_3_hints_6, textChars_font_serif_red_6_mult);
+						renderText(text_3_hints_7, textChars_font_serif_red_6_mult);
 						break;
 					case 3:
-						renderText(text_3_credits_1, textChars_font_serif_red_6);
-						renderText(text_3_credits_2, textChars_font_serif_white_6);
-						renderText(text_3_credits_3, textChars_font_serif_white_6);
-						renderText(text_3_credits_4, textChars_font_serif_white_6);
-						renderText(text_3_credits_5, textChars_font_serif_white_6);
-						renderText(text_3_credits_6, textChars_font_serif_white_6);
-						renderText(text_3_credits_7, textChars_font_serif_white_6);
+						renderText(text_3_credits_1, textChars_font_serif_red_6_mult);
+						renderText(text_3_credits_2, textChars_font_serif_white_6_mult);
+						renderText(text_3_credits_3, textChars_font_serif_white_6_mult);
+						renderText(text_3_credits_4, textChars_font_serif_white_6_mult);
+						renderText(text_3_credits_5, textChars_font_serif_white_6_mult);
+						renderText(text_3_credits_6, textChars_font_serif_white_6_mult);
+						renderText(text_3_credits_7, textChars_font_serif_white_6_mult);
 						break;
 					default:
-						renderText(text_3_coming_soon_1, textChars_font_serif_red_6);
-						renderText(text_3_coming_soon_2, textChars_font_serif_white_6);
-						renderText(text_3_coming_soon_3, textChars_font_serif_white_6);
-						renderText(text_3_coming_soon_4, textChars_font_serif_white_6);
-						renderText(text_3_coming_soon_5, textChars_font_serif_white_6);
-						renderText(text_3_coming_soon_6, textChars_font_serif_white_6);
+						renderText(text_3_coming_soon_1, textChars_font_serif_red_6_mult);
+						renderText(text_3_coming_soon_2, textChars_font_serif_white_6_mult);
+						renderText(text_3_coming_soon_3, textChars_font_serif_white_6_mult);
+						renderText(text_3_coming_soon_4, textChars_font_serif_white_6_mult);
+						renderText(text_3_coming_soon_5, textChars_font_serif_white_6_mult);
+						renderText(text_3_coming_soon_6, textChars_font_serif_white_6_mult);
 						break;
 				}
-				renderText(text_3_page, textChars_font_serif_white_6);
+				renderText(text_3_page, textChars_font_serif_white_6_mult);
 				break;
 			/* Game */
 			case 4:
