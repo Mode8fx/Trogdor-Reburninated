@@ -626,18 +626,30 @@ void destroyDisplay() {
 #if !defined(SDL1)
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+#else
+	SDL_FreeSurface(windowScreen);
 #endif
 	SDL_FreeSurface(gameScreen);
+	SDL_FreeSurface(gameHiResScreen);
+	SDL_FreeSurface(appScreen);
 }
 
 void DestroyAll() {
-	/* Textures */
+	/* Surfaces */
 	/* Text Chars */
+	destroyAllTextChars();
 	/* Sound */
-	if (soundSettings.musicIndex != 0) {
-		Mix_FreeMusic(bgm);
+	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
+		if (sfxArr[i]->chunk != NULL) {
+			Mix_FreeChunk(sfxArr[i]->chunk);
+		}
 	}
-	//Mix_FreeChunk(SFX_TROGADOR);
+	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
+		if (sfxArr_strongBad[i]->chunk != NULL) {
+			Mix_FreeChunk(sfxArr_strongBad[i]->chunk);
+		}
+	}
+	Mix_FreeMusic(bgm);
 	Mix_CloseAudio();
 #if !defined(WII) && !defined(GAMECUBE)
 	Mix_Quit();

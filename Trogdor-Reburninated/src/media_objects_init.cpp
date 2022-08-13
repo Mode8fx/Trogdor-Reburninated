@@ -317,3 +317,35 @@ void destroyAllTextChars() {
 	destroyTextChars(textChars_font_serif_2_red_6, 90 + 1 - 32);
 	destroyTextChars(textChars_font_serif_2_red_13, 90 + 1 - 32);
 }
+
+void destroyAllSurfaces() {
+	SDL_FreeSurface(sprite_videlectrix_logo.surface);
+	SDL_FreeSurface(sprite_title_screen.surface);
+	SDL_FreeSurface(sprite_trogdor_logo.surface);
+	SDL_FreeSurface(sprite_level_background_1.surface);
+	SDL_FreeSurface(sprite_level_background_2.surface);
+	SDL_FreeSurface(sprite_level_background_3.surface);
+	SDL_FreeSurface(sprite_level_background_4.surface);
+	SDL_FreeSurface(sprite_level_background_th.surface);
+	//SDL_FreeSurface(sprite_level_background->surface);
+	SDL_FreeSurface(sprite_trogdor.surface);
+	SDL_FreeSurface(sprite_burnination_meter_full.surface);
+	SDL_FreeSurface(sprite_burnination_meter_empty.surface);
+	SDL_FreeSurface(sprite_cottage.surface);
+	SDL_FreeSurface(sprite_cottage_fire.surface);
+	SDL_FreeSurface(sprite_peasantometer_icon.surface);
+	SDL_FreeSurface(sprite_archer.surface);
+	SDL_FreeSurface(sprite_arrow.surface);
+	SDL_FreeSurface(sprite_trogdor_fire.surface);
+	SDL_FreeSurface(sprite_trogdor_dead.surface);
+	SDL_FreeSurface(sprite_knight.surface);
+	SDL_FreeSurface(sprite_peasant.surface);
+	SDL_FreeSurface(sprite_end_of_level_flash.surface);
+	SDL_FreeSurface(sprite_end_of_level_trogdor.surface);
+	SDL_FreeSurface(sprite_death_message.surface);
+	SDL_FreeSurface(sprite_burninate_text.surface);
+	SDL_FreeSurface(sprite_burninate_fire.surface);
+	SDL_FreeSurface(sprite_level_beaten_trogdor.surface);
+	SDL_FreeSurface(sprite_game_over_trogdor.surface);
+	SDL_FreeSurface(sprite_loot.surface);
+}

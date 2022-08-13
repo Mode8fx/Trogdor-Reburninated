@@ -10,6 +10,7 @@ extern void InitializeTextChars();
 extern void InitializeTextObjects();
 extern void destroyTextChars(TextCharObject, Uint8);
 extern void destroyAllTextChars();
+extern void destroyAllSurfaces();
 
 extern SpriteObject sprite_videlectrix_logo;
 extern SpriteObject sprite_title_screen;
