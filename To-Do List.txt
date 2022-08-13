@@ -2,7 +2,7 @@ To-Do List
 
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Polish:
-- Verify that the SDL1 and SDL2 versions look and run equally well
+- Add analog control (just for digital movement)
 - Polish controls for all systems
 Final:
 - Prepare release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP

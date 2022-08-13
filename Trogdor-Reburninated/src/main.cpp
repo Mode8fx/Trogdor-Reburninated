@@ -21,8 +21,10 @@ bool isRunning = true;
 /* Other */
 MenuManager MM;
 GameManager GM;
-Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down Left Right Left Right B A
-Uint8 pacmanArrayKey[11] = { 0, 0, 0, 1, 1, 1, 2, 3, 2, 3, 2 }; // Up Up Up Down Down Down Left Right Left Right Left
+Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down Left Right Left Right B A (Konami code)
+Uint8 pacmanArrayKey[11] = { 0, 0, 0, 1, 1, 1, 2, 3, 2, 3, 2 }; // Up Up Up Down Down Down Left Right Left Right Left (play Pac-Man on a Ms. Pac-Man + Galaga arcade cabinet)
+Uint8 s3kArrayKey[9] = { 2, 2, 2, 3, 3, 3, 0, 0, 0 }; // Left Left Left Right Right Right Up Up Up (Sonic & Knuckles and S3&K level select)
+Uint8 fzxArrayKey[8] = { 2, 5, 3, 0, 1, 2, 3, 4 }; // Left B Right Up Down Left Right A ((roughly) unlock everything in F-Zero X)
 
 /* General-use Variables */
 Sint8 i, j, k;
@@ -760,12 +762,7 @@ int main(int argv, char** args) {
 				MM.typeStuff();
 				MM.handlePageChange();
 				if (keyPressed(INPUT_START) && MM.page == 1) {
-					if (MM.contraActive) {
-						//loadAndPlaySound(SFX_SFX2);
-						GM = GameManager(30);
-					} else {
-						GM = GameManager(3);
-					}
+					GM = GameManager(MM);
 					GM.levelInit();
 					updateText(&text_4_score_val, to_string(GM.score));
 					updateText(&text_4_mans_val, to_string(GM.mans));
@@ -990,16 +987,18 @@ int main(int argv, char** args) {
 						loadAndPlaySound(SFX_GAMEOVER);
 						if (GM.score < 2000) {
 							if (GM.arched) {
-								if ((rand() % 100) < 50) {
+								if ((rand() % 100) < 50 * GM.sbVoiceMult) {
 									loadAndPlaySound(SFX_SBARCHEND);
 								}
-							} else if ((GM.score > 1000) && ((rand() % 100) < 70)) {
+							} else if ((GM.score > 1000) && ((rand() % 100) < 70 * GM.sbVoiceMult)) {
 								loadAndPlaySound(SFX_SBSCORE);
-							} else if ((rand() % 100) < 70) {
+							} else if ((rand() % 100) < 70 * GM.sbVoiceMult) {
 								loadAndPlaySound(SFX_SBGAMEOVER);
 							}
 						} else {
-							loadAndPlaySound(SFX_SBSECRET);
+							if (GM.sbVoiceMult > 0) {
+								loadAndPlaySound(SFX_SBSECRET);
+							}
 						}
 						GM.setMans(0);
 						break;
@@ -1009,6 +1008,7 @@ int main(int argv, char** args) {
 				// TODO: high score-related things here
 				if (keyPressed(INPUT_START)) { // TODO: placeholder; remove this later
 					sceneState = 3;
+					MM = MenuManager();
 				}
 				if (sceneState == 5) {
 					frameState++;
@@ -1089,7 +1089,7 @@ int main(int argv, char** args) {
 				}
 				switch (frameState) {
 					case 257:
-						if ((rand() % 100) < 10) {
+						if ((rand() % 100) < 10 * GM.sbVoiceMult) {
 							if ((rand() % 100) < 50) {
 								loadAndPlaySound(SFX_SBLEVELBEAT);
 							} else {
@@ -1098,7 +1098,7 @@ int main(int argv, char** args) {
 						}
 						break;
 					case 265:
-						if ((rand() % 100) < 10) {
+						if ((rand() % 100) < 10 * GM.sbVoiceMult) {
 							loadAndPlaySound(SFX_SBBEST);
 						}
 						break;
@@ -1452,7 +1452,7 @@ int main(int argv, char** args) {
 						loadAndPlaySound(SFX_CUTSCENE);
 						break;
 					case 1297:
-						if (rand() % 100 < 50) {
+						if (rand() % 100 < 50 * GM.sbVoiceMult) {
 							loadAndPlaySound(SFX_SBKERREK);
 						}
 						break;
@@ -1481,7 +1481,7 @@ int main(int argv, char** args) {
 					case 1337:
 						break;
 					case 1349:
-						if (rand() % 100 < 50) {
+						if (rand() % 100 < 50 * GM.sbVoiceMult) {
 							loadAndPlaySound(SFX_SBWIN);
 						}
 						break;
@@ -1495,7 +1495,7 @@ int main(int argv, char** args) {
 						renderText(text_23_cutscene_3, textChars_font_serif_white_9);
 						break;
 					case 1456:
-						if (rand() % 100 < 50) {
+						if (rand() % 100 < 50 * GM.sbVoiceMult) {
 							loadAndPlaySound(SFX_SBWIN2);
 						}
 						break;

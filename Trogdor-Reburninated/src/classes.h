@@ -28,6 +28,8 @@ extern Uint16 rand_var;
 extern Uint32 frameCounter_global;
 extern Uint8 contraArrayKey[10];
 extern Uint8 pacmanArrayKey[11];
+extern Uint8 s3kArrayKey[9];
+extern Uint8 fzxArrayKey[8];
 
 #if defined(SDL1)
 inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
@@ -258,7 +260,7 @@ class Peasant {
 			timer = 0;
 			collision = { 8 + dstrect.x, 5 + dstrect.y, 8, 19 };
 		}
-		void updateFrameState() {
+		void updateFrameState(Uint8 sbVoiceMult) {
 			frameState++;
 			switch (frameState) {
 				case 1:
@@ -276,11 +278,11 @@ class Peasant {
 					srcrect.y = 2 * sprite_peasant.dstrect.h;
 					loadAndPlaySound(SFX_SQUISH);
 					rand_var = rand() % 1000;
-					if (rand_var < 3) {
+					if (rand_var < 3 * sbVoiceMult) {
 						loadAndPlaySound(SFX_SB2);
-					} else if (rand_var < 6) {
+					} else if (rand_var < 6 * sbVoiceMult) {
 						loadAndPlaySound(SFX_SBSQUISH1);
-					} else if (rand_var < 10) {
+					} else if (rand_var < 10 * sbVoiceMult) {
 						loadAndPlaySound(SFX_SBSQUISH2);
 					}
 					break;
@@ -502,12 +504,31 @@ class Trogdor {
 		}
 };
 
+#define HANDLE_CHEAT(cheatIsActive, cheatArrayKey, cheatIndex, sfx) \
+	if (!cheatIsActive) {                                           \
+		if (keyInputs != 0) {                                       \
+			if (keyInputs == (1 << (cheatArrayKey[cheatIndex]))) {  \
+				cheatIndex++;                                       \
+				if (cheatIndex == LEN(cheatArrayKey)) {             \
+					loadAndPlaySound(sfx); /* this was originally played upon starting the game, but I'm changing it; it's much clearer this way, especially since the controls are different for each system */ \
+					cheatIsActive = true;                           \
+				}                                                   \
+			} else {                                                \
+				cheatIndex = 0;                                     \
+			}                                                       \
+		}                                                           \
+	}
+
 class MenuManager {
 	public:
-		bool contraActive; // Konami code (Contra cheat) is enabled
-		Sint8 contraIndex; // the current index of the Konami code input
-		bool pacmanActive; // super cheat (play Pac-Man on a Ms. Pac-Man + Galaga arcade cabinet) is enabled
-		Sint8 pacmanIndex; // the current index of the super cheat input
+		bool contraActive; // 30 Lives cheat is enabled
+		Sint8 contraIndex; // the current index of the 30 Lives cheat input
+		bool pacmanActive; // Debug Mode cheat is enabled
+		Sint8 pacmanIndex; // the current index of the Debug Mode cheat input
+		bool s3kActive;    // Talkative Strong Bad cheat is enabled
+		Sint8 s3kIndex;    // the current index of the Talkative Strong Bad cheat
+		bool fzxActive;    // Quiet Strong Bad cheat is enabled
+		Sint8 fzxIndex;    // the current index of the Quiet Strong Bad input
 		Sint8 page;        // the current page number
 		Sint8 maxPageNum;  // maxPageNum
 		MenuManager() {
@@ -515,36 +536,18 @@ class MenuManager {
 			contraIndex = 0;
 			pacmanActive = false;
 			pacmanIndex = 0;
+			s3kActive = false;
+			s3kIndex = 0;
+			fzxActive = false;
+			fzxIndex = 0;
 			page = 1;
 			maxPageNum = 4;
 		}
 		void typeStuff() {
-			if (!contraActive) {
-				if (keyInputs != 0) {
-					if (keyInputs == (1 << (contraArrayKey[contraIndex]))) {
-						contraIndex++;
-						if (contraIndex == LEN(contraArrayKey)) {
-							loadAndPlaySound(SFX_SFX2); // this was originally played upon starting the game, but I'm changing it; it's much clearer this way, especially since the controls are different for each system
-							contraActive = true;
-						}
-					} else {
-						contraIndex = 0;
-					}
-				}
-			}
-			if (!pacmanActive) {
-				if (keyInputs != 0) {
-					if (keyInputs == (1 << (pacmanArrayKey[pacmanIndex]))) {
-						pacmanIndex++;
-						if (pacmanIndex == LEN(pacmanArrayKey)) {
-							loadAndPlaySound(SFX_GOLDGET);
-							pacmanActive = true;
-						}
-					} else {
-						pacmanIndex = 0;
-					}
-				}
-			}
+			HANDLE_CHEAT(contraActive, contraArrayKey, contraIndex, SFX_SFX2);
+			HANDLE_CHEAT(pacmanActive, pacmanArrayKey, pacmanIndex, SFX_GOLDGET);
+			HANDLE_CHEAT(s3kActive, s3kArrayKey, s3kIndex, SFX_SBBEST);
+			HANDLE_CHEAT(fzxActive, fzxArrayKey, fzxIndex, SFX_SBWORST);
 		}
 		void handlePageChange() {
 			if (keyPressed(INPUT_LEFT)) {
@@ -608,11 +611,13 @@ class GameManager {
 		Sint16 storey;                          // old player Y position (used for treasure huts)
 		Sint16 treasureHut_timer;               // remaining time in treasure hut
 		Loot lootArray[MAX_NUM_LOOT];           // array of Loot objects
+		Uint8 sbVoiceMult;                      // a multiplier for how often Strong Bad talks
 		GameManager() {
 		}
-		GameManager(Sint8 init_mans) {
+		GameManager(MenuManager mm) {
 			srand(SDL_GetTicks());
-			mans = init_mans;
+			if (mm.contraActive) mans = 30;
+			else mans = 3;
 			score = 0;
 			peasantometer = 0;
 			paused = false;
@@ -648,6 +653,9 @@ class GameManager {
 			storex = 0;
 			storey = 0;
 			treasureHut_timer = 0;
+			if (mm.fzxActive) sbVoiceMult = 0;
+			else if (mm.s3kActive) sbVoiceMult = 2;
+			else sbVoiceMult = 1;
 		}
 		void levelInit() {
 			SET_BURNINATION(0);
@@ -1059,7 +1067,7 @@ class GameManager {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
 				if (!hutArray[i].burning && SDL_HasIntersection(&player.fire_dstrect, &hutArray[i].fire_collision)) {
 					hutArray[i].burning = true;
-					if ((rand() % 100) < 5) {
+					if ((rand() % 100) < 5 * sbVoiceMult) {
 						loadAndPlaySound(SFX_SBDOOJ);
 					}
 				}
@@ -1223,7 +1231,7 @@ class GameManager {
 			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 				if (!peasantArray[i].burning && !peasantArray[i].stomped && peasantArray[i].active && SDL_HasIntersection(&player.fire_dstrect, &peasantArray[i].collision)) {
 					loadAndPlaySound(SFX_PEASANTSCREAM);
-					if ((rand() % 100) < 40) {
+					if ((rand() % 100) < 40 * sbVoiceMult) {
 						if ((rand() % 100) > 50) {
 							loadAndPlaySound(SFX_SB6);
 						} else {
@@ -1252,8 +1260,10 @@ class GameManager {
 				case 6:
 					if (mans > 0) {
 						if (peasantometer == 9) {
-							loadAndPlaySound(SFX_SB3);
-						} else if ((rand() % 100) < 20) {
+							if (sbVoiceMult > 0) {
+								loadAndPlaySound(SFX_SB3);
+							}
+						} else if ((rand() % 100) < 20 * sbVoiceMult) {
 							loadAndPlaySound(SFX_SBWORST);
 						}
 					}
@@ -1283,7 +1293,7 @@ class GameManager {
 					arched = true;
 					break;
 				case 31:
-					if (mans > 0 && (rand() % 100) < 20) {
+					if (mans > 0 && (rand() % 100) < 20 * sbVoiceMult) {
 						loadAndPlaySound(SFX_SBARCH);
 					}
 					break;
@@ -1301,7 +1311,7 @@ class GameManager {
 				case 4:
 					bf_srcrect.y = 0;
 					rand_var = rand() % 100;
-					if (rand_var < 10) {
+					if (rand_var < 10 * sbVoiceMult) {
 						if (rand_var < 5) { // the original game used 50 instead of 5, leaving SFX_SB5 unused
 							loadAndPlaySound(SFX_SB4);
 						} else {
@@ -1451,7 +1461,7 @@ class GameManager {
 			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 				if (peasantArray[i].active) {
 					if (!manually_paused && (!peasantArray[i].waiting || peasantArray[i].stomped)) {
-						peasantArray[i].updateFrameState();
+						peasantArray[i].updateFrameState(sbVoiceMult);
 					}
 					renderSpriteUsingRects(sprite_peasant, peasantArray[i].srcrect, peasantArray[i].dstrect);
 				}
