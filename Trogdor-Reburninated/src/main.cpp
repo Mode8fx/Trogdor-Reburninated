@@ -974,6 +974,7 @@ int main(int argv, char** args) {
 						GM.treasureHut_timer = 110;
 						GM.set_level_background(5);
 						loadAndPlaySound(SFX_SFX2);
+						GM.player.visible = true;
 						sceneState = 6;
 					}
 					break;

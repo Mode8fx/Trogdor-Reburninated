@@ -110,6 +110,8 @@ class Knight {
 		Uint8 frameState;
 		bool moving;      // used in toggleKnightMotion()
 		SDL_Rect srcrect;
+		Sint16 half_src_w;
+		Sint16 half_src_h;
 		SDL_Rect dstrect;
 		Sint8 direction;
 		bool facingRight;
@@ -125,6 +127,8 @@ class Knight {
 			home_x = pos_x;
 			home_y = pos_y;
 			srcrect = { 0, facingRight * sprite_knight.dstrect.h, sprite_knight.dstrect.w, sprite_knight.dstrect.h };
+			half_src_w = sprite_knight.dstrect.w / 2;
+			half_src_h = sprite_knight.dstrect.h / 2 + 4;
 			dstrect = { home_x, home_y, sprite_knight.dstrect.w, sprite_knight.dstrect.h };
 			offset_x = 0;
 			offset_y = 0;
@@ -168,6 +172,8 @@ class Knight {
 				case 5:
 					home_y -= knightIncrement;
 					break;
+				default:
+					break;
 			}
 		}
 		void updateFrameStateAndMove() {
@@ -210,8 +216,8 @@ class Knight {
 				offset_x *= -1;
 			}
 
-			dstrect.x = home_x + offset_x;
-			dstrect.y = home_y + offset_y;
+			dstrect.x = home_x + offset_x - half_src_w;
+			dstrect.y = home_y + offset_y - half_src_h;
 			updateCollision();
 		}
 };
@@ -622,7 +628,7 @@ class GameManager {
 			player.facingRight = true;
 			knightIncrement = 1;
 			extraMansBreak = 300;
-			extraMansCounter = 0;
+			extraMansCounter = 1;
 			arched = false;
 			dm_frameState = 0;
 			dm_srcrect = { 0, 0, sprite_death_message.dstrect.w, sprite_death_message.dstrect.h };

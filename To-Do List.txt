@@ -2,8 +2,6 @@ To-Do List
 
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Polish:
-- Verify that all game logic matches Flash game
-	- It still feels like knights go offscreen too often...
 - Verify that the SDL1 and SDL2 versions look and run equally well
 - Polish controls for all systems
 Final:
@@ -20,8 +18,6 @@ Features:
 - Restore the original game's unused High Scores screen
 - Add basic Records screen
 Polish:
-- If you die then enter a treasure hut while you're blinking, you may be invisible inside the hut
-	- This bug may have also happened in the original game; I'm not sure
 - Polish title screen graphics
 - Add "Libraries" screen
 - Add "Coming Eventually" screen for Trogdor Reburninated
