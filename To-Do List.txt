@@ -4,7 +4,6 @@ Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Polish:
 - Verify that all game logic matches Flash game
 	- When should knights move both home and offset? Offset only? Neither?
-	- Confirm that Strong Bad voice clips are correct
 - Verify that the SDL1 and SDL2 versions look and run equally well
 - Polish controls for all systems
 Final:

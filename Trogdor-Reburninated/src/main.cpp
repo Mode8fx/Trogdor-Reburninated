@@ -1450,6 +1450,11 @@ int main(int argv, char** args) {
 					case 1226:
 						loadAndPlaySound(SFX_CUTSCENE);
 						break;
+					case 1297:
+						if (rand() % 100 < 50) {
+							loadAndPlaySound(SFX_SBKERREK);
+						}
+						break;
 					case 1334:
 						GM.levelInit();
 						sceneState = 4;
@@ -1474,6 +1479,11 @@ int main(int argv, char** args) {
 					// the uses of renderText here are wrong, but just a placeholder until the animation system is reworked
 					case 1337:
 						break;
+					case 1349:
+						if (rand() % 100 < 50) {
+							loadAndPlaySound(SFX_SBWIN);
+						}
+						break;
 					case 1397:
 						renderText(text_23_cutscene_1, textChars_font_serif_white_9);
 						break;
@@ -1482,6 +1492,11 @@ int main(int argv, char** args) {
 						break;
 					case 1440:
 						renderText(text_23_cutscene_3, textChars_font_serif_white_9);
+						break;
+					case 1456:
+						if (rand() % 100 < 50) {
+							loadAndPlaySound(SFX_SBWIN2);
+						}
 						break;
 					case 1501:
 						renderText(text_23_cutscene_4, textChars_font_serif_white_9);

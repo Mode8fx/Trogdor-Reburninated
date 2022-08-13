@@ -269,7 +269,7 @@ class Peasant {
 					srcrect.x = 0;
 					srcrect.y = 2 * sprite_peasant.dstrect.h;
 					loadAndPlaySound(SFX_SQUISH);
-					rand_var = rand() % 100000;
+					rand_var = rand() % 1000;
 					if (rand_var < 3) {
 						loadAndPlaySound(SFX_SB2);
 					} else if (rand_var < 6) {
@@ -1050,8 +1050,7 @@ class GameManager {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
 				if (!hutArray[i].burning && SDL_HasIntersection(&player.fire_dstrect, &hutArray[i].fire_collision)) {
 					hutArray[i].burning = true;
-					rand_var = rand() % 10000;
-					if (rand_var < 500) {
+					if ((rand() % 100) < 5) {
 						loadAndPlaySound(SFX_SBDOOJ);
 					}
 				}
@@ -1219,7 +1218,7 @@ class GameManager {
 						if ((rand() % 100) > 50) {
 							loadAndPlaySound(SFX_SB6);
 						} else {
-							loadAndPlaySound(SFX_SB6); // These two are the same... I feel like this one is supposed to be SFX_SB7? It's completely unused, and it would fit here
+							loadAndPlaySound(SFX_SB7); // This shows as SB6 in the decompiler, but I know this voice clip isn't unused... I hope the decompiler hasn't been wrong about other things
 						}
 					}
 					peasantArray[i].returning = true;
@@ -1294,7 +1293,7 @@ class GameManager {
 					bf_srcrect.y = 0;
 					rand_var = rand() % 100;
 					if (rand_var < 10) {
-						if (rand_var < 50) {
+						if (rand_var < 5) { // the original game used 50 instead of 5, leaving SFX_SB5 unused
 							loadAndPlaySound(SFX_SB4);
 						} else {
 							loadAndPlaySound(SFX_SB5);
