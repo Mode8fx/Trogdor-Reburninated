@@ -232,8 +232,16 @@ void InitializeTextObjects() {
 		230 * gameHiResMult, 11 * gameHiResMult);
 	SET_TEXT("paused", text_4_paused_1, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 145 * gameHiResMult);
-	SET_TEXT("press 'SPACE' to resume", text_4_paused_2, textChars_font_serif_white_6,
+#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
+	SET_TEXT("press 'START' to resume", text_4_paused_2, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 160 * gameHiResMult);
+#elif defined(SWITCH)
+	SET_TEXT("press '+' to resume", text_4_paused_2, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 160 * gameHiResMult);
+#else
+	SET_TEXT("press 'START/ENTER' to resume", text_4_paused_2, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 160 * gameHiResMult);
+#endif
 	/* 5: Game Over */
 	/* 6: Game (Treasure Hut) */
 	/* 7: Nothing */
