@@ -694,10 +694,6 @@ class GameManager {
 						levels[levelIndex][j]
 					);
 					numHuts++;
-					//PRINT("COTTAGE INFO:");
-					//PRINT((int)hutArray[i].direction);
-					//PRINT((int)hutArray[i].dstrect.x);
-					//PRINT((int)hutArray[i].dstrect.y);
 				} else {
 					hutArray[i] = Cottage(0, 0, 0);
 					hutArray[i].burned = true;

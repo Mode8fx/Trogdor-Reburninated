@@ -3,6 +3,10 @@
 /* General Input */
 Uint32 keyInputs;
 Uint32 heldKeys;
+Uint8 dirInputs;
+Uint8 heldDirs;
+Sint32 timer_buttonHold;
+Sint32 timer_buttonHold_repeater;
 
 /* Timer */
 Timer timer_global;
@@ -64,59 +68,58 @@ int main(int argv, char** args) {
 		timer_global.last = timer_global.now;
 		timer_global.now = SDL_GetTicks();
 		deltaTime = (Uint32)(timer_global.now - timer_global.last);
+		if (heldDirs > 0) {
+			timer_buttonHold += deltaTime;
+		} else {
+			timer_buttonHold = 0;
+			timer_buttonHold_repeater = 0;
+		}
 
 		/* Update Key/Button Presses, Mouse/Touch Input, and Window Resizing */
 #if !defined(SDL1) && !defined(PSP)
 		/* Update Controller Axes (SDL2 only; SDL1 axes are handled later) */
 		controllerAxis_leftStickX = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
 		controllerAxis_leftStickY = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);
-		controllerAxis_rightStickX = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_RIGHTX);
-		controllerAxis_rightStickY = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_RIGHTY);
-		controllerAxis_LT = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_TRIGGERLEFT);
-		controllerAxis_RT = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
 		if ((controllerAxis_leftStickX > -STICK_DEADZONE) && (controllerAxis_leftStickX < STICK_DEADZONE)) {
 			controllerAxis_leftStickX = 0;
 		}
 		if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
 			controllerAxis_leftStickY = 0;
 		}
-		if ((controllerAxis_rightStickX > -STICK_DEADZONE) && (controllerAxis_rightStickX < STICK_DEADZONE)) {
-			controllerAxis_rightStickX = 0;
-		}
-		if ((controllerAxis_rightStickY > -STICK_DEADZONE) && (controllerAxis_rightStickY < STICK_DEADZONE)) {
-			controllerAxis_rightStickY = 0;
-		}
-		if (controllerAxis_LT < STICK_DEADZONE) {
-			controllerAxis_LT = 0;
-		}
-		if (controllerAxis_RT < STICK_DEADZONE) {
-			controllerAxis_RT = 0;
-		}
 #else
 		/* Update Controller Hat Positions (SDL1 only; SDL2 D-Pad buttons are handled later) */
 		joystickHat = SDL_JoystickGetHat(joystick, 0);
 		if (joystickHat & SDL_HAT_UP) {
+			dirInputs |= UP_PRESSED;
 			heldKeys |= INPUT_UP;
 		} else {
+			dirInputs |= UP_DEPRESSED;
 			heldKeys &= ~INPUT_UP;
 		}
 		if (joystickHat & SDL_HAT_DOWN) {
+			dirInputs |= DOWN_PRESSED;
 			heldKeys |= INPUT_DOWN;
 		} else {
+			dirInputs |= DOWN_DEPRESSED;
 			heldKeys &= ~INPUT_DOWN;
 		}
 		if (joystickHat & SDL_HAT_LEFT) {
+			dirInputs |= LEFT_PRESSED;
 			heldKeys |= INPUT_LEFT;
 		} else {
+			dirInputs |= LEFT_DEPRESSED;
 			heldKeys &= ~INPUT_LEFT;
 		}
 		if (joystickHat & SDL_HAT_RIGHT) {
+			dirInputs |= RIGHT_PRESSED;
 			heldKeys |= INPUT_RIGHT;
 		} else {
+			dirInputs |= RIGHT_DEPRESSED;
 			heldKeys &= ~INPUT_RIGHT;
 		}
 #endif
 		keyInputs = 0;
+		dirInputs = 0;
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
 				case SDL_QUIT:
@@ -149,22 +152,22 @@ int main(int argv, char** args) {
 #endif
 				case SDL_KEYDOWN: // keycodes
 					if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w) {
-						keyInputs |= INPUT_UP;
+						dirInputs |= UP_PRESSED;
 						heldKeys |= INPUT_UP;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s) {
-						keyInputs |= INPUT_DOWN;
+						dirInputs |= DOWN_PRESSED;
 						heldKeys |= INPUT_DOWN;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a) {
-						keyInputs |= INPUT_LEFT;
+						dirInputs |= LEFT_PRESSED;
 						heldKeys |= INPUT_LEFT;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d) {
-						keyInputs |= INPUT_RIGHT;
+						dirInputs |= RIGHT_PRESSED;
 						heldKeys |= INPUT_RIGHT;
 						break;
 					}
@@ -215,18 +218,22 @@ int main(int argv, char** args) {
 					break;
 				case SDL_KEYUP: // keycodes
 					if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w) {
+						dirInputs |= UP_DEPRESSED;
 						heldKeys &= ~INPUT_UP;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s) {
+						dirInputs |= DOWN_DEPRESSED;
 						heldKeys &= ~INPUT_DOWN;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a) {
+						dirInputs |= LEFT_DEPRESSED;
 						heldKeys &= ~INPUT_LEFT;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d) {
+						dirInputs |= RIGHT_DEPRESSED;
 						heldKeys &= ~INPUT_RIGHT;
 						break;
 					}
@@ -281,22 +288,22 @@ int main(int argv, char** args) {
 #if !defined(SDL1)
 				case SDL_CONTROLLERBUTTONDOWN:
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
-						keyInputs |= INPUT_UP;
+						dirInputs |= UP_PRESSED;
 						heldKeys |= INPUT_UP;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN) {
-						keyInputs |= INPUT_DOWN;
+						dirInputs |= DOWN_PRESSED;
 						heldKeys |= INPUT_DOWN;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) {
-						keyInputs |= INPUT_LEFT;
+						dirInputs |= LEFT_PRESSED;
 						heldKeys |= INPUT_LEFT;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) {
-						keyInputs |= INPUT_RIGHT;
+						dirInputs |= RIGHT_PRESSED;
 						heldKeys |= INPUT_RIGHT;
 						break;
 					}
@@ -359,18 +366,22 @@ int main(int argv, char** args) {
 					break;
 				case SDL_CONTROLLERBUTTONUP:
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
+						dirInputs |= UP_DEPRESSED;
 						heldKeys &= ~INPUT_UP;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN) {
+						dirInputs |= DOWN_DEPRESSED;
 						heldKeys &= ~INPUT_DOWN;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) {
+						dirInputs |= LEFT_DEPRESSED;
 						heldKeys &= ~INPUT_LEFT;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) {
+						dirInputs |= RIGHT_DEPRESSED;
 						heldKeys &= ~INPUT_RIGHT;
 						break;
 					}
@@ -438,27 +449,27 @@ int main(int argv, char** args) {
 #else
 				case SDL_JOYHATMOTION:
 					if (event.jhat.value & SDL_HAT_UP) {
-						keyInputs |= INPUT_UP;
-						break;
+						dirInputs |= UP_PRESSED;
 					} else {
+						dirInputs |= UP_DEPRESSED;
 						heldKeys &= ~INPUT_UP;
 					}
 					if (event.jhat.value & SDL_HAT_DOWN) {
-						keyInputs |= INPUT_DOWN;
-						break;
+						dirInputs |= DOWN_PRESSED;
 					} else {
+						dirInputs |= DOWN_DEPRESSED;
 						heldKeys &= ~INPUT_DOWN;
 					}
 					if (event.jhat.value & SDL_HAT_LEFT) {
-						keyInputs |= INPUT_LEFT;
-						break;
+						dirInputs |= LEFT_PRESSED;
 					} else {
+						dirInputs |= LEFT_DEPRESSED;
 						heldKeys &= ~INPUT_LEFT;
 					}
 					if (event.jhat.value & SDL_HAT_RIGHT) {
-						keyInputs |= INPUT_RIGHT;
-						break;
+						dirInputs |= RIGHT_PRESSED;
 					} else {
+						dirInputs |= RIGHT_DEPRESSED;
 						heldKeys &= ~INPUT_RIGHT;
 					}
 					break;
@@ -552,30 +563,6 @@ int main(int argv, char** args) {
 								controllerAxis_leftStickY = 0;
 							}
 							break;
-						case 2:
-							if (event.jaxis.value > STICK_DEADZONE) {
-								controllerAxis_LT = event.jaxis.value;
-							} else {
-								controllerAxis_LT = 0;
-							}
-							if (event.jaxis.value < -STICK_DEADZONE) {
-								controllerAxis_RT = event.jaxis.value;
-							} else {
-								controllerAxis_RT = 0;
-							}
-							break;
-						case 3:
-							controllerAxis_rightStickY = event.jaxis.value;
-							if ((controllerAxis_rightStickY > -STICK_DEADZONE) && (controllerAxis_rightStickY < STICK_DEADZONE)) {
-								controllerAxis_rightStickY = 0;
-							}
-							break;
-						case 4:
-							controllerAxis_rightStickX = event.jaxis.value;
-							if ((controllerAxis_rightStickX > -STICK_DEADZONE) && (controllerAxis_rightStickX < STICK_DEADZONE)) {
-								controllerAxis_rightStickX = 0;
-							}
-							break;
 						default:
 							break;
 					}
@@ -583,6 +570,9 @@ int main(int argv, char** args) {
 #endif
 			}
 		}
+
+		/* Handle Analog Input */
+		getDirectionInput(deltaTime);
 
 		/* Key Presses (Always Active) */
 		if (keyPressed(INPUT_FULLSCREEN)) {
@@ -1550,6 +1540,8 @@ int main(int argv, char** args) {
 				break;
 		}
 
+		controllerAxis_leftStickX_last = controllerAxis_leftStickX;
+		controllerAxis_leftStickY_last = controllerAxis_leftStickY;
 #if defined(PC)
 		/* Update Mouse Position */
 		mouseInput_x_last = mouseInput_x;
