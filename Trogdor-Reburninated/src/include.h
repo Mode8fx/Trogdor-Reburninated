@@ -1,3 +1,9 @@
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
+#define PC 0
+#else
+#define PC 1
+#endif
+
 #ifndef INCLUDE_H
 #define INCLUDE_H
 

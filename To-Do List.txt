@@ -7,7 +7,6 @@ Polish:
 	- Confirm that Strong Bad voice clips are correct
 - Verify that the SDL1 and SDL2 versions look and run equally well
 - Polish controls for all systems
-- Make sure instructions screen is accurate for controls on all systems
 Final:
 - Prepare release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
 - Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP

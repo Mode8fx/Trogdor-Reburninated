@@ -60,9 +60,14 @@ void InitializeTextObjects() {
 	/* 3: Instructions Screen */
 	if (gameHiResMult < 2) {
 		SET_TEXT("(1/5)", text_3_page, textChars_font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 156 * gameHiResMult);
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
+#if !defined(PC)
+		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
+#else
 		SET_TEXT("Use the arrows to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
+#endif
 		SET_TEXT("Stomp 10 peasants to achieve", text_3_instructions_2, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_2), 73 * gameHiResMult);
 		SET_TEXT("burnination.", text_3_instructions_2a, textChars_font_serif_white_6_mult,
@@ -71,10 +76,22 @@ void InitializeTextObjects() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), 101 * gameHiResMult);
 		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), 115 * gameHiResMult);
-		SET_TEXT("Press SPACE to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
+		SET_TEXT("Press START to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
-		SET_TEXT("click anywhere to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+		SET_TEXT("press START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 143 * gameHiResMult);
+#elif defined(SWITCH)
+		SET_TEXT("Press + to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
+		SET_TEXT("press + to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 143 * gameHiResMult);
+#else
+		SET_TEXT("Press ENTER/START to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
+		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 143 * gameHiResMult);
+#endif
 		SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_1), 59 * gameHiResMult);
 		SET_TEXT("-Don't let the peasants return", text_3_hints_2, textChars_font_serif_white_6_mult,
@@ -128,19 +145,36 @@ void InitializeTextObjects() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 143 * gameHiResMult);
 	} else {
 		SET_TEXT("(1/4)", text_3_page, textChars_font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 156 * gameHiResMult);
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
+#if !defined(PC)
+		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
+#else
 		SET_TEXT("Use the arrow keys to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
+#endif
 		SET_TEXT("Stomp 10 peasants to achieve burnination.", text_3_instructions_2, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_2), 73 * gameHiResMult);
 		SET_TEXT("Burn all cottages to advance a level.", text_3_instructions_3, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), 87 * gameHiResMult);
 		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), 101 * gameHiResMult);
-		SET_TEXT("Press SPACE to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
+		SET_TEXT("Press START to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
-		SET_TEXT("click anywhere to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+		SET_TEXT("press START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
+#elif defined(SWITCH)
+		SET_TEXT("Press + to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
+		SET_TEXT("press + to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
+#else
+		SET_TEXT("Press ENTER/START to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
+		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
+#endif
 		SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_1), 59 * gameHiResMult);
 		SET_TEXT("-Don't let the peasants return to their cottages", text_3_hints_2, textChars_font_serif_white_6_mult,

@@ -1,4 +1,4 @@
-#include "system_specific.h"
+#include "general.h"
 
 #if defined(SDL1) && !defined(WII) && !defined(GAMECUBE)
 FILE _iob[] = { *stdin, *stdout, *stderr };

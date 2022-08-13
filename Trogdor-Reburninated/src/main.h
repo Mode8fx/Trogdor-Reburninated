@@ -3,7 +3,6 @@
 
 #include "include.h"
 #include "classes.h"
-#include "system_specific.h"
 
 SDL_Event event;
 
@@ -640,12 +639,12 @@ void DestroyAll() {
 	destroyAllTextChars();
 	/* Sound */
 	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
-		if (sfxArr[i]->chunk != NULL) {
+		if (sfxArr[i]->chunk != NULL && sfxArr[i]->isPlaying) {
 			Mix_FreeChunk(sfxArr[i]->chunk);
 		}
 	}
 	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
-		if (sfxArr_strongBad[i]->chunk != NULL) {
+		if (sfxArr_strongBad[i]->chunk != NULL && sfxArr_strongBad[i]->isPlaying) {
 			Mix_FreeChunk(sfxArr_strongBad[i]->chunk);
 		}
 	}

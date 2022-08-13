@@ -1,7 +1,7 @@
 #ifndef GENERAL_H
 #define GENERAL_H
 
-#include "system_specific.h"
+#include "include.h"
 
 /* General-use Variables */
 extern Sint8 i, j, k;
@@ -16,6 +16,21 @@ struct Timer {
 };
 
 constexpr auto PI = 3.14159265;
+
+#if defined(SDL1) && !defined(WII) && !defined(GAMECUBE)
+extern FILE _iob[];
+
+extern "C" FILE * __cdecl __iob_func(void);
+#endif
+
+extern void SYSTEM_SPECIFIC_OPEN();
+extern void SYSTEM_SPECIFIC_CLOSE();
+
+#if defined(PC)
+#define STRCPY(dest, src) strcpy_s(dest, src);
+#else
+#define STRCPY(dest, src) strcpy(dest, src);
+#endif
 
 #define RANDINT(min, max) \
     (rand() % ((max) - (min) + 1) + min)
