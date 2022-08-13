@@ -1008,6 +1008,9 @@ class GameManager {
 		inline void toggleKnightMotion(bool hasMotion) {
 			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 				knightArray[i].moving = hasMotion;
+				if (hasMotion) {
+					knightArray[i].frameState = 0;
+				}
 			}
 		}
 		inline bool testWon() {
