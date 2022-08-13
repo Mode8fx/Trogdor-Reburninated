@@ -17,7 +17,7 @@ void InitializeTextChars() {
 		TTF_STYLE_NORMAL, textChars_font_serif_orange_6, color_orange, 32, 90);
 	setFont(font_serif_red_6, "fonts/serif_v01.ttf", 6, 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_red_6, color_red, 32, 126);
-	setFont(font_serif_red_6_mult, "fonts/serif_v01.ttf", 6, 5,
+	setFont(font_serif_red_6_mult, "fonts/serif_v01.ttf", 8, 5,
 		TTF_STYLE_NORMAL, textChars_font_serif_red_6_mult, color_red, 32, 126);
 	setFont(font_serif_red_8, "fonts/serif_v01.ttf", 8, 8,
 		TTF_STYLE_NORMAL, textChars_font_serif_red_8, color_red, 32, 126);
@@ -27,7 +27,7 @@ void InitializeTextChars() {
 		TTF_STYLE_NORMAL, textChars_font_serif_red_12, color_red, 32, 90);
 	setFont(font_serif_white_6, "fonts/serif_v01.ttf", 6, 6,
 		TTF_STYLE_NORMAL, textChars_font_serif_white_6, color_white, 32, 126);
-	setFont(font_serif_white_6_mult, "fonts/serif_v01.ttf", 6, 5,
+	setFont(font_serif_white_6_mult, "fonts/serif_v01.ttf", 8, 5,
 		TTF_STYLE_NORMAL, textChars_font_serif_white_6_mult, color_white, 32, 126);
 	setFont(font_serif_white_9, "fonts/serif_v01.ttf", 9, 9,
 		TTF_STYLE_NORMAL, textChars_font_serif_white_9, color_white, 32, 126);
@@ -58,67 +58,131 @@ void InitializeTextObjects() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents, 0.7));
 	/* 2: Title Screen */
 	/* 3: Instructions Screen */
-	SET_TEXT("click anywhere to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_click_anywhere_to_start, 0.75));
-	// Use a separate credits page instead of these
-	//SET_TEXT("Programmed by Jonathan Howe", text_3_programmed, textChars_font_serif_white_6_mult,
-	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_programmed), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_programmed, 0.85));
-	//SET_TEXT("Designed by Mike and Matt", text_3_designed, textChars_font_serif_white_6_mult,
-	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_designed), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_designed, 0.93));
-	SET_TEXT("(1/4)", text_3_page, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_page, 0.95));
-	SET_TEXT("Use the arrow keys to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_instructions_1, 0.35));
-	SET_TEXT("Stomp 10 peasants to achieve burnination.", text_3_instructions_2, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_2), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_instructions_2, 0.43));
-	SET_TEXT("Burn all cottages to advance a level.", text_3_instructions_3, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_instructions_3, 0.51));
-	SET_TEXT("Avoid knights and archers!", text_3_instructions_4, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_instructions_4, 0.59));
-	SET_TEXT("Press SPACE to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_instructions_5, 0.67));
-	SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_hints_1, 0.39));
-	SET_TEXT("-Don't let the peasants return to their cottages", text_3_hints_2, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_2), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_hints_2, 0.51));
-	SET_TEXT("-Once you\'re burninating, you\'re invincible", text_3_hints_3, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_3), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_hints_3, 0.58));
-	SET_TEXT("-Burninated peasants set their cottages on fire", text_3_hints_4, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_4), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_hints_4, 0.65));
-	SET_TEXT("-Get an extra man every 300 points", text_3_hints_5, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_5), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_hints_5, 0.72));
-	SET_TEXT("-What\'s a treasure hut?!?!", text_3_hints_6, textChars_font_serif_red_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_6), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_hints_6, 0.79));
-	SET_TEXT("- Secret Code?!?!", text_3_hints_7, textChars_font_serif_red_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_7), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_hints_7, 0.86));
-
-	SET_TEXT("CREDITS", text_3_credits_1, textChars_font_serif_red_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_credits_1, 0.35));
-	SET_TEXT("- ORIGINAL FLASH GAME -", text_3_credits_2, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_2), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_credits_2, 0.43));
-	SET_TEXT("Programming: Jonathan Howe", text_3_credits_3, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_3), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_credits_3, 0.51));
-	// credits for the HTML5 version will be added when stuff from the HTML5 version is added to this version
-	SET_TEXT("Design: Mike Chapman, Matt Chapman", text_3_credits_4, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_4), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_credits_4, 0.59));
-	SET_TEXT("- THIS PORT -", text_3_credits_5, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_5), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_credits_5, 0.69));
-	SET_TEXT("Mips96", text_3_credits_6, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_credits_6, 0.77));
-	SET_TEXT("https://github.com/Mips96/Trogdor-Reburninated", text_3_credits_7, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_credits_7, 0.85));
-	SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, textChars_font_serif_red_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_1, 0.35));
-	SET_TEXT("\"Trogdor Classic\"", text_3_coming_soon_2, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_2), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_2, 0.43));
-	SET_TEXT("-Fully implemented cutscenes!", text_3_coming_soon_3, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_3, 0.59));
-	SET_TEXT("-Level Beaten / Game Over animations!", text_3_coming_soon_4, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_4, 0.67));
-	SET_TEXT("-Unused High Scores screen restored!", text_3_coming_soon_5, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_5, 0.75));
-	SET_TEXT("-Some more polish!", text_3_coming_soon_6, textChars_font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_3_coming_soon_6, 0.83));
+	if (gameHiResMult < 2) {
+		SET_TEXT("(1/5)", text_3_page, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 156 * gameHiResMult);
+		SET_TEXT("Use the arrows to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
+		SET_TEXT("Stomp 10 peasants to achieve", text_3_instructions_2, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_2), 73 * gameHiResMult);
+		SET_TEXT("burnination.", text_3_instructions_2a, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_2a), 87 * gameHiResMult);
+		SET_TEXT("Burn all cottages to advance.", text_3_instructions_3, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), 101 * gameHiResMult);
+		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), 115 * gameHiResMult);
+		SET_TEXT("Press SPACE to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
+		SET_TEXT("click anywhere to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 143 * gameHiResMult);
+		SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_1), 59 * gameHiResMult);
+		SET_TEXT("-Don't let the peasants return", text_3_hints_2, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_2), 73 * gameHiResMult);
+		SET_TEXT("to their cottages", text_3_hints_2a, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_2a), 87 * gameHiResMult);
+		SET_TEXT("-Once you\'re burninating,", text_3_hints_3, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_3), 101 * gameHiResMult);
+		SET_TEXT("you\'re invincible", text_3_hints_3a, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_3a), 115 * gameHiResMult);
+		SET_TEXT("-Burninated peasants set their", text_3_hints_4, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_4), 129 * gameHiResMult);
+		SET_TEXT("cottages on fire", text_3_hints_4a, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_4a), 143 * gameHiResMult);
+		SET_TEXT("-Get an extra man every", text_3_hints_5, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_5), 87 * gameHiResMult);
+		SET_TEXT("300 points", text_3_hints_5a, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_5a), 101 * gameHiResMult);
+		SET_TEXT("-What\'s a treasure hut?!?!", text_3_hints_6, textChars_font_serif_red_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_6), 115 * gameHiResMult);
+		SET_TEXT("- Secret Code?!?!", text_3_hints_7, textChars_font_serif_red_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_7), 129 * gameHiResMult);
+		SET_TEXT("CREDITS", text_3_credits_1, textChars_font_serif_red_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_1), 59 * gameHiResMult);
+		SET_TEXT("- ORIGINAL FLASH GAME -", text_3_credits_2, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_2), 73 * gameHiResMult);
+		SET_TEXT("Programming: Jonathan Howe", text_3_credits_3, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_3), 87 * gameHiResMult);
+		// credits for the HTML5 version will be added when stuff from the HTML5 version is added to this version
+		SET_TEXT("Design: Mike & Matt Chapman", text_3_credits_4, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_4), 101 * gameHiResMult);
+		SET_TEXT("- THIS RECREATION -", text_3_credits_5, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_5), 115 * gameHiResMult);
+		SET_TEXT("Mips96", text_3_credits_6, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), 129 * gameHiResMult);
+		SET_TEXT("https://github.com/Mips96", text_3_credits_7, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), 143 * gameHiResMult);
+		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, textChars_font_serif_red_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
+		SET_TEXT("\"Trogdor Classic\"", text_3_coming_soon_2, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_2), 73 * gameHiResMult);
+		SET_TEXT("-Fully implemented cutscenes!", text_3_coming_soon_3, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), 87 * gameHiResMult);
+		SET_TEXT("-Level Beaten / Game Over", text_3_coming_soon_4, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), 101 * gameHiResMult);
+		SET_TEXT("animations!", text_3_coming_soon_4a, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4a), 115 * gameHiResMult);
+		SET_TEXT("-Restored High Scores screen!", text_3_coming_soon_5, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 129 * gameHiResMult);
+		SET_TEXT("-More polish!", text_3_coming_soon_6, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 143 * gameHiResMult);
+	} else {
+		SET_TEXT("(1/4)", text_3_page, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 156 * gameHiResMult);
+		SET_TEXT("Use the arrow keys to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
+		SET_TEXT("Stomp 10 peasants to achieve burnination.", text_3_instructions_2, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_2), 73 * gameHiResMult);
+		SET_TEXT("Burn all cottages to advance a level.", text_3_instructions_3, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), 87 * gameHiResMult);
+		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), 101 * gameHiResMult);
+		SET_TEXT("Press SPACE to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
+		SET_TEXT("click anywhere to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
+		SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_1), 59 * gameHiResMult);
+		SET_TEXT("-Don't let the peasants return to their cottages", text_3_hints_2, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_2), 73 * gameHiResMult);
+		SET_TEXT("-Once you\'re burninating, you\'re invincible", text_3_hints_3, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_3), 87 * gameHiResMult);
+		SET_TEXT("-Burninated peasants set their cottages on fire", text_3_hints_4, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_4), 101 * gameHiResMult);
+		SET_TEXT("-Get an extra man every 300 points", text_3_hints_5, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_5), 115 * gameHiResMult);
+		SET_TEXT("-What\'s a treasure hut?!?!", text_3_hints_6, textChars_font_serif_red_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_6), 129 * gameHiResMult);
+		SET_TEXT("- Secret Code?!?!", text_3_hints_7, textChars_font_serif_red_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_7), 143 * gameHiResMult);
+		SET_TEXT("CREDITS", text_3_credits_1, textChars_font_serif_red_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_1), 59 * gameHiResMult);
+		SET_TEXT("- ORIGINAL FLASH GAME -", text_3_credits_2, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_2), 73 * gameHiResMult);
+		SET_TEXT("Programming: Jonathan Howe", text_3_credits_3, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_3), 87 * gameHiResMult);
+		// credits for the HTML5 version will be added when stuff from the HTML5 version is added to this version
+		SET_TEXT("Design: Mike Chapman, Matt Chapman", text_3_credits_4, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_4), 101 * gameHiResMult);
+		SET_TEXT("- THIS RECREATION -", text_3_credits_5, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_5), 115 * gameHiResMult);
+		SET_TEXT("Mips96", text_3_credits_6, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), 129 * gameHiResMult);
+		SET_TEXT("https://github.com/Mips96/Trogdor-Reburninated", text_3_credits_7, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), 143 * gameHiResMult);
+		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, textChars_font_serif_red_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
+		SET_TEXT("\"Trogdor Classic\"", text_3_coming_soon_2, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_2), 73 * gameHiResMult);
+		SET_TEXT("-Fully implemented cutscenes!", text_3_coming_soon_3, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), 87 * gameHiResMult);
+		SET_TEXT("-Level Beaten / Game Over animations!", text_3_coming_soon_4, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), 101 * gameHiResMult);
+		SET_TEXT("-Unused High Scores screen restored!", text_3_coming_soon_5, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 115 * gameHiResMult);
+		SET_TEXT("-More polish!", text_3_coming_soon_6, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 129 * gameHiResMult);
+	}
 	/* 4: Game */
 	SET_TEXT("SCORE:", text_4_score, textChars_font_serif_2_red_6,
 		5 * gameHiResMult, 5 * gameHiResMult);

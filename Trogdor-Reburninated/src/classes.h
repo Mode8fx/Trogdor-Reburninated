@@ -503,12 +503,14 @@ class MenuManager {
 		bool pacmanActive; // super cheat (play Pac-Man on a Ms. Pac-Man + Galaga arcade cabinet) is enabled
 		Sint8 pacmanIndex; // the current index of the super cheat input
 		Sint8 page;        // the current page number
+		Sint8 maxPageNum;  // maxPageNum
 		MenuManager() {
 			contraActive = false;
 			contraIndex = 0;
 			pacmanActive = false;
 			pacmanIndex = 0;
 			page = 1;
+			maxPageNum = 4;
 		}
 		void typeStuff() {
 			if (!contraActive) {
@@ -541,12 +543,12 @@ class MenuManager {
 		void handlePageChange() {
 			if (keyPressed(INPUT_LEFT)) {
 				page--;
-				if (page < 1) page = 4;
-				updateText(&text_3_page, "("+to_string(page)+"/4)");
+				if (page < 1) page = maxPageNum;
+				updateText(&text_3_page, "("+to_string(page)+"/"+to_string(maxPageNum)+")");
 			} else if (keyPressed(INPUT_RIGHT)) {
 				page++;
-				if (page > 4) page = 1;
-				updateText(&text_3_page, "(" + to_string(page) + "/4)");
+				if (page > maxPageNum) page = 1;
+				updateText(&text_3_page, "("+to_string(page)+"/"+to_string(maxPageNum)+")");
 			}
 		}
 };

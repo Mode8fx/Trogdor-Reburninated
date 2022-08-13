@@ -2,7 +2,6 @@ To-Do List
 
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Polish:
-- Fix text positions
 - Adjust positions of end of level flash and Trogdor
 - Verify that all game logic matches Flash game
 	- When should knights move both home and offset? Offset only? Neither?
