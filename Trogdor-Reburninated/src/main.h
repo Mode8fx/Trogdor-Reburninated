@@ -364,10 +364,8 @@ void InitializeDisplay() {
 	videoSettings.heightSetting = SYSTEM_HEIGHT;
 	SDL_SetHint(SDL_HINT_ORIENTATIONS, "Landscape");
 #endif
-	videoSettings.widthSetting = 320;
-	videoSettings.heightSetting = 240;
-	appWidth = videoSettings.widthSetting;
-	appHeight = videoSettings.heightSetting;
+	appWidth = gameWidth; // for now
+	appHeight = gameHeight;
 	appSrcRect = { 0, 0, appWidth, appHeight };
 	frameRate = DEFAULT_FRAME_RATE;
 	setWidthHeightMults();
@@ -390,7 +388,7 @@ void InitializeDisplay() {
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
 	windowScreen = SDL_SetVideoMode(320, 240, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
-	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE);
+	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
@@ -529,7 +527,7 @@ void InitializeSpritesPart2() {
 		0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_peasantometer_icon, (rootDir + "graphics/peasantometer.bmp").c_str(),
 		0, 3, 2, 1, 1);
-	sprite_peasantometer_icon_init_x = (Uint8)(gameWidth * 66 / 250);
+	sprite_peasantometer_icon_init_x = (Uint8)(gameWidth * 66 / gameWidth);
 	PREPARE_SPRITE(sprite_archer, (rootDir + "graphics/archer.bmp").c_str(),
 		0, 0, 2, 2, 1);
 	PREPARE_SPRITE(sprite_arrow, (rootDir + "graphics/arrow.bmp").c_str(),

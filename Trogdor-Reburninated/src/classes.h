@@ -361,7 +361,7 @@ class Arrow {
 			}
 			if (facingRight) {
 				dstrect.x += 5;
-				if (dstrect.x > 250) { // not exactly the same as the original, but close enough
+				if (dstrect.x > gameWidth) { // not exactly the same as the original, but close enough
 					clear();
 				}
 				collision.x = 2 + dstrect.x;
