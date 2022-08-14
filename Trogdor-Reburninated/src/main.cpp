@@ -1566,7 +1566,14 @@ int main(int argv, char** args) {
 #if !defined(SDL1)
 		//SDL_FillRect(appScreen, NULL, 0x0000FF);
 		// Render Game Window
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
+		gfxScreen = zoomSurface(gameScreen, screenScale, screenScale, SMOOTHING_OFF);
+		SDL_SetColorKey(gfxScreen, SDL_TRUE, 0xFF00FF);
+		outputTexture = SDL_CreateTextureFromSurface(renderer, gfxScreen);
+		SDL_FreeSurface(gfxScreen);
+#else
 		outputTexture = SDL_CreateTextureFromSurface(renderer, gameScreen);
+#endif
 		SDL_RenderCopy(renderer, outputTexture, NULL, &gameToWindowDstRect);
 		SDL_DestroyTexture(outputTexture); // there was a memory leak, and freeing the gameScreen crashes, so I guess this is the right way to fix it?
 		// Render Game Hi-Res Window
@@ -1574,18 +1581,35 @@ int main(int argv, char** args) {
 		SDL_RenderCopy(renderer, outputTexture, NULL, &gameToWindowDstRect);
 		SDL_DestroyTexture(outputTexture);
 		// Render (rest of) App Window
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
+		gfxScreen = zoomSurface(appScreen, screenScale, screenScale, SMOOTHING_OFF);
+		SDL_SetColorKey(gfxScreen, SDL_TRUE, 0xFF00FF);
+		outputTexture = SDL_CreateTextureFromSurface(renderer, gfxScreen);
+		SDL_FreeSurface(gfxScreen);
+#else
 		outputTexture = SDL_CreateTextureFromSurface(renderer, appScreen);
+#endif
 		SDL_RenderCopy(renderer, outputTexture, NULL, &appToWindowDstRect);
 		SDL_DestroyTexture(outputTexture);
+
 		SDL_RenderPresent(renderer);
 #else
 		//SDL_FillRect(appScreen, NULL, 0x0000FF);
 		outputRect = gameToWindowDstRect;
-		SDL_BlitSurface(gameScreen, &gameSrcRect, windowScreen, &outputRect);
+		gfxScreen = zoomSurface(gameScreen, screenScale, screenScale, SMOOTHING_OFF);
+		SDL_SetColorKey(gfxScreen, SDL_SRCCOLORKEY, 0xFF00FF);
+		SDL_BlitSurface(gfxScreen, NULL, windowScreen, &outputRect);
+		SDL_FreeSurface(gfxScreen);
+
 		outputRect = gameToWindowDstRect;
-		SDL_BlitSurface(gameHiResScreen, &gameHiResSrcRect, windowScreen, &outputRect);
+		SDL_BlitSurface(gameHiResScreen, NULL, windowScreen, &outputRect);
+
 		outputRect = appToWindowDstRect;
-		SDL_BlitSurface(appScreen, &appSrcRect, windowScreen, &outputRect);
+		gfxScreen = zoomSurface(appScreen, screenScale, screenScale, SMOOTHING_OFF);
+		SDL_SetColorKey(gfxScreen, SDL_SRCCOLORKEY, 0xFF00FF);
+		SDL_BlitSurface(gfxScreen, NULL, windowScreen, &outputRect);
+		SDL_FreeSurface(gfxScreen);
+
 		SDL_Flip(windowScreen);
 #endif
 		

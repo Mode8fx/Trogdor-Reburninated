@@ -241,6 +241,7 @@
     <ClCompile Include="src\config.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\media_objects_init.cpp" />
+    <ClCompile Include="src\SDL2_rotozoom.c" />
     <ClCompile Include="src\sound_logic.cpp" />
     <ClCompile Include="src\sprite_objects.cpp" />
     <ClCompile Include="src\general.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="src\level_data.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\config.h" />
+    <ClInclude Include="src\SDL2_rotozoom.h" />
     <ClInclude Include="src\sound_logic.h" />
     <ClInclude Include="src\sprite_objects.h" />
     <ClInclude Include="src\media_objects_init.h" />

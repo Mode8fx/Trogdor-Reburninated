@@ -44,8 +44,6 @@ Final:
 - Test and finalize controls
 	- Android
 		- Untested
-	- Switch
-		- Scaling does not work; will likely need to implement SDL_gfx early
 	- Wii U
 		- Untested
 	- Wii

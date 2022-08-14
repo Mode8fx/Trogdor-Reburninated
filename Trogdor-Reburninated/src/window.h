@@ -37,6 +37,7 @@ extern SDL_Surface *appScreen;
 extern SDL_Rect appSrcRect;
 extern SDL_Rect appToWindowDstRect; // app mapping to window
 extern SDL_Rect gameToWindowDstRect; // game screen mapping to window
+extern SDL_Surface *gfxScreen; // surface used for SDL_gfx
 
 extern bool isWindowed;
 extern double screenScale;

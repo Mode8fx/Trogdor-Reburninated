@@ -9,53 +9,45 @@ void setWidthHeightMults() {
 }
 
 void scaleAppRelativeToWindow() {
-#if !defined(SDL1)
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(PSP)
+	windowWidth = DEFAULT_WIDTH;
+	windowHeight = DEFAULT_HEIGHT;
+#elif !defined(SDL1)
 	windowWidth = SDL_GetWindowSurface(window)->w;
 	windowHeight = SDL_GetWindowSurface(window)->h;
-#elif defined(WII) or defined(GAMECUBE)
-	windowWidth = 320;
-	windowHeight = 240;
 #else
 	windowWidth = SDL_GetVideoInfo()->current_w;
 	windowHeight = SDL_GetVideoInfo()->current_h;
 #endif
 	if (isIntegerScale) {
-		int_i = min((int)(windowWidth / appWidth), (int)(windowHeight / appHeight));
-		if (int_i < 1) int_i = 1;
-		appToWindowDstRect.w = appWidth * int_i;
-		appToWindowDstRect.h = appHeight * int_i;
+		screenScale = (double)(min((int)(windowWidth / appWidth), (int)(windowHeight / appHeight)));
 	} else {
 		screenScale = (double)windowWidth / appWidth;
 		if ((double)windowHeight / appHeight < screenScale) {
 			screenScale = (double)windowHeight / appHeight;
 		}
-		if (screenScale < 1) screenScale = 1;
-		appToWindowDstRect.w = (int)(appWidth * screenScale);
-		appToWindowDstRect.h = (int)(appHeight * screenScale);
 	}
+	if (screenScale < 1) screenScale = 1;
+	appToWindowDstRect.w = (int)(appWidth * screenScale);
+	appToWindowDstRect.h = (int)(appHeight * screenScale);
 	appToWindowDstRect.x = max((int)((windowWidth - appToWindowDstRect.w) / 2), 0);
 	appToWindowDstRect.y = max((int)((windowHeight - appToWindowDstRect.h) / 2), 0);
 }
 
 void scaleGameRelativeToApp() {
 	if (isIntegerScale) {
-		int_i = min((int)(appToWindowDstRect.w / appWidth), (int)(appToWindowDstRect.h / appHeight));
-		if (int_i < 1) int_i = 1;
-		gameToAppDstRect.w = gameWidth * int_i;
-		gameToAppDstRect.h = gameHeight * int_i;
-		gameToWindowDstRect.w = gameToAppDstRect.w;
-		gameToWindowDstRect.h = gameToAppDstRect.h;
+		screenScale = (double)(min((int)(appToWindowDstRect.w / appWidth), (int)(appToWindowDstRect.h / appHeight)));
 	} else {
 		screenScale = (double)appToWindowDstRect.w / appWidth;
 		if ((double)appToWindowDstRect.h / appHeight < screenScale) {
 			screenScale = (double)appToWindowDstRect.h / appHeight;
 		}
-		if (screenScale < 1) screenScale = 1;
-		gameToAppDstRect.w = (int)(gameWidth * screenScale);
-		gameToAppDstRect.h = (int)(gameHeight * screenScale);
-		gameToWindowDstRect.w = gameToAppDstRect.w;
-		gameToWindowDstRect.h = gameToAppDstRect.h;
 	}
+	if (screenScale < 1) screenScale = 1;
+	gameToAppDstRect.w = (int)(gameWidth * screenScale);
+	gameToAppDstRect.h = (int)(gameHeight * screenScale);
+	gameToWindowDstRect.w = gameToAppDstRect.w;
+	gameToWindowDstRect.h = gameToAppDstRect.h;
 	gameToAppDstRect.x = max((int)((appToWindowDstRect.w - gameToAppDstRect.w) / 2), 0);
 	gameToAppDstRect.y = max((int)((appToWindowDstRect.h - gameToAppDstRect.h) / 2), 0);
 	gameToWindowDstRect.x = gameToAppDstRect.x + appToWindowDstRect.x;

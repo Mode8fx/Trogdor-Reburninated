@@ -19,6 +19,15 @@
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
 #endif
+
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
+#if !defined(SDL1)
+#include "SDL2_rotozoom.h"
+#else
+#include "SDL_rotozoom.h"
+#endif
+#endif
+
 #include <iostream>
 // #include <stdio.h>
 #include <string.h>

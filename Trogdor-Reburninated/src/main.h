@@ -310,6 +310,7 @@ SDL_Surface *appScreen;
 SDL_Rect appSrcRect = { 0, 0, appWidth, appHeight };
 SDL_Rect appToWindowDstRect = { 0, 0, appWidth, appHeight };
 SDL_Rect gameToWindowDstRect = { 0, 0, gameWidth, gameHeight };
+SDL_Surface *gfxScreen;
 bool isWindowed = true;
 double screenScale = 1;
 bool isIntegerScale = true;
@@ -366,8 +367,6 @@ void InitializeDisplay() {
 #endif
 	appWidth = gameHeight * 16 / 9; // for now
 	appHeight = gameHeight;
-	//videoSettings.widthSetting = appWidth;
-	//videoSettings.heightSetting = appHeight;
 	appSrcRect = { 0, 0, appWidth, appHeight };
 	frameRate = DEFAULT_FRAME_RATE;
 	setWidthHeightMults();
@@ -388,7 +387,7 @@ void InitializeDisplay() {
 #elif defined(SDL1)
 	SDL_WM_SetCaption("Trogdor Beta", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	windowScreen = SDL_SetVideoMode(320, 240, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	windowScreen = SDL_SetVideoMode(640, 480, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
 	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
