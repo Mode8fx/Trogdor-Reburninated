@@ -12,7 +12,7 @@ void loadSaveFile() {
 }
 
 void initializeSaveFileNew() {
-	saveFile = SDL_RWFromFile(SAVE_FILE, "w+b");
+	//saveFile = SDL_RWFromFile(SAVE_FILE, "w+b");
 	if (saveFile != NULL) {
 		videoSettings.resolutionIndex = DEFAULT_RI;
 		videoSettings.aspectRatioIndex = DEFAULT_ARI;
@@ -21,14 +21,14 @@ void initializeSaveFileNew() {
 		soundSettings.musicIndex = 0;
 		soundSettings.bgmVolume = 100;
 		soundSettings.sfxVolume = 100;
-		SDL_RWwrite(saveFile, &videoSettings.resolutionIndex, sizeof(Uint8), 1);
-		SDL_RWwrite(saveFile, &videoSettings.aspectRatioIndex, sizeof(Uint8), 1);
-		SDL_RWwrite(saveFile, &videoSettings.widthSetting, sizeof(Uint16), 1);
-		SDL_RWwrite(saveFile, &videoSettings.heightSetting, sizeof(Uint16), 1);
-		SDL_RWwrite(saveFile, &soundSettings.musicIndex, sizeof(Sint8), 1);
-		SDL_RWwrite(saveFile, &soundSettings.bgmVolume, sizeof(Sint8), 1);
-		SDL_RWwrite(saveFile, &soundSettings.sfxVolume, sizeof(Sint8), 1);
-		SDL_RWclose(saveFile);
+		//SDL_RWwrite(saveFile, &videoSettings.resolutionIndex, sizeof(Uint8), 1);
+		//SDL_RWwrite(saveFile, &videoSettings.aspectRatioIndex, sizeof(Uint8), 1);
+		//SDL_RWwrite(saveFile, &videoSettings.widthSetting, sizeof(Uint16), 1);
+		//SDL_RWwrite(saveFile, &videoSettings.heightSetting, sizeof(Uint16), 1);
+		//SDL_RWwrite(saveFile, &soundSettings.musicIndex, sizeof(Sint8), 1);
+		//SDL_RWwrite(saveFile, &soundSettings.bgmVolume, sizeof(Sint8), 1);
+		//SDL_RWwrite(saveFile, &soundSettings.sfxVolume, sizeof(Sint8), 1);
+		//SDL_RWclose(saveFile);
 	}
 }
 

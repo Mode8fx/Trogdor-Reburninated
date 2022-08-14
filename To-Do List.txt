@@ -1,11 +1,24 @@
 To-Do List
 
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
-Polish:
-- Polish controls for all systems
 Final:
-- Prepare release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
-- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
+- Prepare release materials (icons, descriptions, etc.)
+	- PC
+	- Android
+	- Switch
+	- Wii U
+	- Wii
+	- Vita
+	- PSP
+- Test and finalize controls
+	- Android
+	- Switch
+	- Wii U
+	- Wii
+	- Gamecube
+	- Vita
+	- PSP
+- Package everything up
 
 Trogdor Classic [faithful recreation of original Trogdor flash game]:
 Features:
