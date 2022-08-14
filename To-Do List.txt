@@ -4,12 +4,43 @@ Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Final:
 - Prepare release materials (icons, descriptions, etc.)
 	- PC
+		- Icon (64x64)
 	- Android
+		- Icons (48x48, 72x72, 86x86, 144x144, 192x192)
 	- Switch
+		- Icon (256x256)
 	- Wii U
+		- Icon (256x96)
+		- XML
 	- Wii
+		- Icon (128x48)
+		- XML
 	- Vita
+		- Icon 1 (128x128)
+		- Icon 2 (256x96)
+		- Background (840x500)
 	- PSP
+		- Icon (144x54)
+		- Background (480x272)
+	- Total
+		- Icons (Trogdor)
+			- 48x48
+			- 64x64
+			- 72x72
+			- 86x86
+			- 128x128
+			- 144x144
+			- 192x192
+		- Icons (Logo)
+			- 128x48
+			- 144x54
+			- 256x96
+			- 256x256
+		- Backgrounds
+			- 480x272
+			- 840x500
+		- XML
+
 - Test and finalize controls
 	- Android
 	- Switch

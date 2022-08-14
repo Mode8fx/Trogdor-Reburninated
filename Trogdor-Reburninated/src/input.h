@@ -62,7 +62,7 @@ inline void dirHandler(Uint8 pressedVal, Uint8 depressedVal, Uint16 inputVal) {
 	} 
 }
 
-inline void getDirectionInput(double deltaTime) {
+inline void getDirectionInput(Uint32 deltaTime) {
 	if ((controllerAxis_leftStickY < 0) && !(controllerAxis_leftStickY_last < 0)) {
 		dirInputs |= UP_PRESSED;
 		heldKeys |= INPUT_UP;

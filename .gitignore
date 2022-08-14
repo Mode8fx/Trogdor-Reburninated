@@ -392,6 +392,7 @@ SDL1/
 Release (SDL1)/
 build_wii/
 build_gamecube/
+build_switch/
 save.bin
 docs/
 *.dol
@@ -400,4 +401,6 @@ fonts/
 graphics/
 music/
 sfx/
+Preparation/
 *.dll
+Makefile

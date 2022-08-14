@@ -26,7 +26,7 @@ extern "C" FILE * __cdecl __iob_func(void);
 extern void SYSTEM_SPECIFIC_OPEN();
 extern void SYSTEM_SPECIFIC_CLOSE();
 
-#if defined(PC)
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
 #define STRCPY(dest, src) strcpy_s(dest, src);
 #else
 #define STRCPY(dest, src) strcpy(dest, src);
@@ -41,7 +41,7 @@ extern void SYSTEM_SPECIFIC_CLOSE();
 #define ZERO_OUT_ARRAY(arr) \
     (memset(arr, 0, sizeof(arr)))
 
-#if defined(PC)
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
 #define PRINT(str) \
     cout << str << endl
 #else

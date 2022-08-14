@@ -93,7 +93,7 @@ void setScaling() {
 }
 
 void snapWindow_x(double val) {
-#if defined(PC) && !defined(SDL1)
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)) && !defined(SDL1)
 	double_i = ((float)SDL_GetWindowSurface(window)->w / appWidth);
 	if ((double_i - floor(double_i)) >= pow(1 - val, floor(double_i))) {
 		if ((appWidth * ceil(double_i)) < DM.w) {
@@ -106,7 +106,7 @@ void snapWindow_x(double val) {
 }
 
 void snapWindow_y(double val) {
-#if defined(PC) && !defined(SDL1)
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)) && !defined(SDL1)
 	double_i = ((float)SDL_GetWindowSurface(window)->h / appHeight);
 	if ((double_i - floor(double_i)) >= pow(1 - val, (short)(floor(double_i)))) {
 		if ((appHeight * ceil(double_i)) < DM.h) {
@@ -119,7 +119,7 @@ void snapWindow_y(double val) {
 }
 
 void SDL_toggleFullscreen() {
-#if defined(PC) && !defined(SDL1)
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)) && !defined(SDL1)
 	isWindowed = !isWindowed;
 	if (isWindowed) {
 		SDL_SetWindowFullscreen(window, 0);

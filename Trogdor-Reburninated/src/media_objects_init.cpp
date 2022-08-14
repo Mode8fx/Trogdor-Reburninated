@@ -61,7 +61,7 @@ void InitializeTextObjects() {
 	if (gameHiResMult < 2) {
 		SET_TEXT("(1/5)", text_3_page, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
-#if !defined(PC)
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
 		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
 #else
@@ -146,7 +146,7 @@ void InitializeTextObjects() {
 	} else {
 		SET_TEXT("(1/4)", text_3_page, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
-#if !defined(PC)
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
 		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
 #else

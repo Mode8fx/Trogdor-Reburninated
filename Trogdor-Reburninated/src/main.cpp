@@ -125,7 +125,7 @@ int main(int argv, char** args) {
 				case SDL_QUIT:
 					isRunning = false;
 					break;
-#if defined(PC) && !defined(SDL1)
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)) && !defined(SDL1)
 				case SDL_WINDOWEVENT:
 					if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
 						if (SDL_GetWindowSurface(window)->w < appWidth)
@@ -270,7 +270,7 @@ int main(int argv, char** args) {
 						break;
 					}
 					break;
-#if defined(PC)
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
 				case SDL_MOUSEMOTION:
 					SDL_GetMouseState(&mouseInput_x, &mouseInput_y);
 					break;
@@ -434,6 +434,7 @@ int main(int argv, char** args) {
 						break;
 					}
 					break;
+#if !defined(PSP)
 				case SDL_FINGERDOWN:
 					mouseInput_x = (Sint32)(event.tfinger.x * windowWidth);
 					mouseInput_y = (Sint32)(event.tfinger.y * windowHeight);
@@ -444,6 +445,7 @@ int main(int argv, char** args) {
 					break;
 				case SDL_FINGERUP:
 					break;
+#endif
 				default:
 					break;
 #else
@@ -1542,7 +1544,7 @@ int main(int argv, char** args) {
 
 		controllerAxis_leftStickX_last = controllerAxis_leftStickX;
 		controllerAxis_leftStickY_last = controllerAxis_leftStickY;
-#if defined(PC)
+#if !(defined(GAMECUBE)|| defined(PSP))
 		/* Update Mouse Position */
 		mouseInput_x_last = mouseInput_x;
 		mouseInput_y_last = mouseInput_y;
