@@ -1,0 +1,30 @@
+PSP_LARGE_MEMORY=1
+
+TARGET = trogdor
+OBJS = main.o config.o general.o media_objects_init.o sound_logic.o sprite_objects.o text_objects.o window.o
+
+INCDIR =
+CFLAGS = -G0 -O2 -DPSP
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti -fpermissive
+ASFLAGS = $(CFLAGS)
+
+LIBDIR =
+LDFLAGS =
+LIBS = -lSDL2main -lSDL2_image -lpng -ljpeg -lSDL2_mixer -lstdc++ -lSDL2_ttf -lSDL2 -lGL -lGLU -lglut -lfreetype -lz -lpspmp3 -lmad -logg -lvorbisenc -lvorbisidec -lvorbis -lvorbisfile -lmikmod \
+         -lpspvfpu -lpsphprm -lpspsdk -lpspctrl -lpspumd -lpsprtc -lpsppower -lpspgum -lpspgu -lpspaudiolib -lpspaudio \
+         -lm -lpspvram
+
+# -lpsphttp -lpspssl -lpspwlan -lpspnet_adhocmatching -lpspnet_adhoc -lpspnet_adhocctl
+
+EXTRA_TARGETS = EBOOT.PBP
+PSP_EBOOT_TITLE = trogdor-beta
+PSP_EBOOT_ICON=icon.png
+PSP_EBOOT_PIC1=pic.png
+# psp sound file: PSP_EBOOT_SND0=SND0.at3
+
+PSPSDK=$(shell psp-config --pspsdk-path)
+include $(PSPSDK)/lib/build.mak
+#PSPSDK=/usr/local/pspdev/psp/sdk
+
+#PSPSDK=C:/pspsdk/psp/sdk
+#include C:/pspsdk/psp/sdk/lib/build.mak
