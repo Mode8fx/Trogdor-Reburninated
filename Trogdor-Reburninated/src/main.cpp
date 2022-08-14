@@ -858,12 +858,21 @@ int main(int argv, char** args) {
 			case 4:
 				if (!GM.paused && !GM.manually_paused) {
 					if (MM.pacmanActive) {
+#if defined(WII_U) || defined(SWITCH)
+						if (keyPressed(INPUT_A)) {
+							GM.burninationIncreaseCheat();
+						}
+						if (keyPressed(INPUT_B)) {
+							GM.burninationDecreaseCheat();
+						}
+#else
 						if (keyPressed(INPUT_B)) {
 							GM.burninationIncreaseCheat();
 						}
 						if (keyPressed(INPUT_A)) {
 							GM.burninationDecreaseCheat();
 						}
+#endif
 						if (keyPressed(INPUT_L) && GM.level > 1) {
 							GM.updateLevel(-1);
 						}
@@ -1558,15 +1567,15 @@ int main(int argv, char** args) {
 		//SDL_FillRect(appScreen, NULL, 0x0000FF);
 		// Render Game Window
 		outputTexture = SDL_CreateTextureFromSurface(renderer, gameScreen);
-		SDL_RenderCopy(renderer, outputTexture, &gameSrcRect, &gameToWindowDstRect);
+		SDL_RenderCopy(renderer, outputTexture, NULL, &gameToWindowDstRect);
 		SDL_DestroyTexture(outputTexture); // there was a memory leak, and freeing the gameScreen crashes, so I guess this is the right way to fix it?
 		// Render Game Hi-Res Window
 		outputTexture = SDL_CreateTextureFromSurface(renderer, gameHiResScreen);
-		SDL_RenderCopy(renderer, outputTexture, &gameHiResSrcRect, &gameToWindowDstRect);
+		SDL_RenderCopy(renderer, outputTexture, NULL, &gameToWindowDstRect);
 		SDL_DestroyTexture(outputTexture);
 		// Render (rest of) App Window
 		outputTexture = SDL_CreateTextureFromSurface(renderer, appScreen);
-		SDL_RenderCopy(renderer, outputTexture, &appSrcRect, &appToWindowDstRect);
+		SDL_RenderCopy(renderer, outputTexture, NULL, &appToWindowDstRect);
 		SDL_DestroyTexture(outputTexture);
 		SDL_RenderPresent(renderer);
 #else

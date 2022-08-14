@@ -364,8 +364,10 @@ void InitializeDisplay() {
 	videoSettings.heightSetting = SYSTEM_HEIGHT;
 	SDL_SetHint(SDL_HINT_ORIENTATIONS, "Landscape");
 #endif
-	appWidth = gameWidth; // for now
+	appWidth = gameHeight * 16 / 9; // for now
 	appHeight = gameHeight;
+	//videoSettings.widthSetting = appWidth;
+	//videoSettings.heightSetting = appHeight;
 	appSrcRect = { 0, 0, appWidth, appHeight };
 	frameRate = DEFAULT_FRAME_RATE;
 	setWidthHeightMults();

@@ -404,3 +404,5 @@ sfx/
 Preparation/
 *.dll
 Makefile
+*.nacp
+*.nro
