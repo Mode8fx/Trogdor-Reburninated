@@ -1566,7 +1566,7 @@ int main(int argv, char** args) {
 #if !defined(SDL1)
 		//SDL_FillRect(appScreen, NULL, 0x0000FF);
 		// Render Game Window
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP))
 		gfxScreen = zoomSurface(gameScreen, screenScale, screenScale, SMOOTHING_OFF);
 		SDL_SetColorKey(gfxScreen, SDL_TRUE, 0xFF00FF);
 		outputTexture = SDL_CreateTextureFromSurface(renderer, gfxScreen);
@@ -1581,7 +1581,7 @@ int main(int argv, char** args) {
 		SDL_RenderCopy(renderer, outputTexture, NULL, &gameToWindowDstRect);
 		SDL_DestroyTexture(outputTexture);
 		// Render (rest of) App Window
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP))
 		gfxScreen = zoomSurface(appScreen, screenScale, screenScale, SMOOTHING_OFF);
 		SDL_SetColorKey(gfxScreen, SDL_TRUE, 0xFF00FF);
 		outputTexture = SDL_CreateTextureFromSurface(renderer, gfxScreen);
@@ -1600,6 +1600,7 @@ int main(int argv, char** args) {
 		SDL_SetColorKey(gfxScreen, SDL_SRCCOLORKEY, 0xFF00FF);
 		SDL_BlitSurface(gfxScreen, NULL, windowScreen, &outputRect);
 		SDL_FreeSurface(gfxScreen);
+		//SDL_BlitSurface(gameScreen, NULL, windowScreen, &outputRect);
 
 		outputRect = gameToWindowDstRect;
 		SDL_BlitSurface(gameHiResScreen, NULL, windowScreen, &outputRect);
@@ -1609,6 +1610,7 @@ int main(int argv, char** args) {
 		SDL_SetColorKey(gfxScreen, SDL_SRCCOLORKEY, 0xFF00FF);
 		SDL_BlitSurface(gfxScreen, NULL, windowScreen, &outputRect);
 		SDL_FreeSurface(gfxScreen);
+		//SDL_BlitSurface(appScreen, NULL, windowScreen, &outputRect);
 
 		SDL_Flip(windowScreen);
 #endif

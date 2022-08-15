@@ -47,9 +47,9 @@ Final:
 	- Wii U
 		- Untested
 	- Wii
-		- Untested
+		- Compiles and runs, but SDL_gfx's zoomSurface() is too slow to be used every frame, so a new approach is required; controls are untested but likely need to be changed
 	- Gamecube
-		- Untested
+		- Compiles, seems to run in Dolphin, but unplayable; it likely can't see assets (it probably works fine on a real system)
 	- Vita
 		- Untested
 	- PSP

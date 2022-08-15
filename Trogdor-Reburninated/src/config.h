@@ -27,8 +27,10 @@ extern VideoSettings videoSettings;
 /* System-Specific Variables */
 #if defined(VITA)
 const string rootDir = "ux0:data/Trogdor-Beta/";
-#elif defined(WII) || defined(GAMECUBE)
+#elif defined(WII)
 const string rootDir = "sd:/apps/Trogdor-Beta/";
+#elif defined(GAMECUBE)
+const string rootDir = "sd:/Trogdor-Beta/"
 #else
 const string rootDir = "";
 #endif

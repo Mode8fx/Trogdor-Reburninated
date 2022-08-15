@@ -382,8 +382,7 @@ void InitializeDisplay() {
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII) || defined(GAMECUBE)
 	SDL_WM_SetCaption("Trogdor Beta", NULL);
-	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	windowScreen = SDL_SetVideoMode(320, 240, 24, SDL_DOUBLEBUF);
+	windowScreen = SDL_SetVideoMode(videoSettings.widthSetting, videoSettings.heightSetting, 24, SDL_DOUBLEBUF);
 #elif defined(SDL1)
 	SDL_WM_SetCaption("Trogdor Beta", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
