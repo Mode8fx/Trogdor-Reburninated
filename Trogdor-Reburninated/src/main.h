@@ -310,7 +310,6 @@ SDL_Surface *appScreen;
 SDL_Rect appSrcRect = { 0, 0, appWidth, appHeight };
 SDL_Rect appToWindowDstRect = { 0, 0, appWidth, appHeight };
 SDL_Rect gameToWindowDstRect = { 0, 0, gameWidth, gameHeight };
-SDL_Surface *gfxScreen;
 bool isWindowed = true;
 double screenScale = 1;
 bool isIntegerScale = true;
