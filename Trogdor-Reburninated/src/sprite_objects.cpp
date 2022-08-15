@@ -3,9 +3,7 @@
 SDL_Rect outputRect;
 SDL_Surface *temp;
 
-void prepareSprite(SpriteObject *spriteObj, const char path[], int numSprites_x, int numSprites_y, double scale) {
-    spriteObj->srcrect = { 0, 0, 0, 0 };
-    spriteObj->dstrect = { 0, 0, 0, 0 };
+void prepareSprite(SpriteObject *spriteObj, const char path[], int numSprites_x, int numSprites_y) {
     temp = IMG_Load(path);
 #if !defined(SDL1)
     SDL_SetColorKey(temp, SDL_TRUE, 0xFF00FF);
@@ -15,9 +13,15 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], int numSprites_x,
     spriteObj->surface = SDL_DisplayFormat(temp);
 #endif
     SDL_FreeSurface(temp);
+    spriteObj->srcrect = { 0, 0, 0, 0 };
     spriteObj->srcrect.w = spriteObj->surface->w / numSprites_x;
     spriteObj->srcrect.h = spriteObj->surface->h / numSprites_y;
-    setSpriteScale(spriteObj, scale);
+}
+
+void setSpriteScale(SpriteObject *spriteObj, double scale) {
+    spriteObj->dstrect = { 0, 0, 0, 0 };
+    spriteObj->dstrect.w = (int)(spriteObj->srcrect.w * scale);
+    spriteObj->dstrect.h = (int)(spriteObj->srcrect.h * scale);
 }
 
 void setSpritePos(SpriteObject *spriteObj, int rect_x, int rect_y) {
@@ -59,16 +63,6 @@ void renderSpriteUsingRects(SpriteObject spriteObj, SDL_Rect srect, SDL_Rect dre
 void renderSpriteScaled(SpriteObject spriteObj) {
     outputRect = spriteObj.dstrect;
     SDL_SoftStretch(spriteObj.surface, &spriteObj.srcrect, gameScreen, &outputRect);
-}
-
-void setSpriteScale(SpriteObject *spriteObj, double scale) {
-    if (scale != (double)1) { // probably unnecessary, but this function won't run in a loop, and it's important that there are no precision errors
-        spriteObj->dstrect.w = (int)(spriteObj->srcrect.w * scale);
-        spriteObj->dstrect.h = (int)(spriteObj->srcrect.h * scale);
-    } else {
-        spriteObj->dstrect.w = (int)(spriteObj->srcrect.w);
-        spriteObj->dstrect.h = (int)(spriteObj->srcrect.h);
-    }
 }
 
 void drawRect(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b) {
