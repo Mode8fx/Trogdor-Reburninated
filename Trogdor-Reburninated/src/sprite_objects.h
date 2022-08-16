@@ -17,6 +17,8 @@ extern SDL_Rect outputRect;
 extern void prepareSprite(SpriteObject *, const char [], Sint8, Sint8);
 extern void setSpriteScale(SpriteObject *, double);
 extern void setSpritePos(SpriteObject *, int, int);
+extern int  spriteFrame(SpriteObject, Uint8);
+extern int  spriteForm(SpriteObject, Uint8);
 extern void renderSprite(SpriteObject, SDL_Rect, SDL_Surface *, SDL_Rect);
 extern void renderSprite_static(SpriteObject, SDL_Surface *);
 extern void renderSprite_static_hiRes(SpriteObject);

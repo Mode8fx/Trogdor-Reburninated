@@ -30,6 +30,14 @@ void setSpritePos(SpriteObject *spriteObj, int rect_x, int rect_y) {
     spriteObj->dstrect.y = (int)rect_y;
 }
 
+inline int spriteFrame(SpriteObject spriteObj, Uint8 frameNum) {
+    return spriteObj.frame_w * frameNum;
+}
+
+inline int spriteForm(SpriteObject spriteObj, Uint8 formNum) {
+    return spriteObj.frame_h * formNum;
+}
+
 void renderSprite(SpriteObject spriteObj, SDL_Rect srect, SDL_Surface *screen, SDL_Rect drect) {
     outputRect = drect;
     SDL_BlitSurface(spriteObj.surface, &srect, screen, &outputRect);
