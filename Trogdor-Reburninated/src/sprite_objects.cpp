@@ -30,11 +30,11 @@ void setSpritePos(SpriteObject *spriteObj, int rect_x, int rect_y) {
     spriteObj->dstrect.y = (int)rect_y;
 }
 
-inline int spriteFrame(SpriteObject spriteObj, Uint8 frameNum) {
+inline Sint16 spriteFrame(SpriteObject spriteObj, Sint8 frameNum) {
     return spriteObj.frame_w * frameNum;
 }
 
-inline int spriteForm(SpriteObject spriteObj, Uint8 formNum) {
+inline Sint16 spriteForm(SpriteObject spriteObj, Sint8 formNum) {
     return spriteObj.frame_h * formNum;
 }
 
