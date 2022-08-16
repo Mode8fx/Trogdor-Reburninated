@@ -24,7 +24,6 @@ Uint32 frameCounter_global;
 Sint8 sceneState = 0;
 Sint16 frameState = 1;
 Uint16 rand_var;
-bool isRunning = true;
 
 /* Other */
 MenuManager MM;
@@ -42,6 +41,7 @@ float float_i;
 double double_i;
 
 int main(int argv, char** args) {
+	isRunning = true;
 	SYSTEM_SPECIFIC_OPEN();
 
 	/* Initialize SDL */
@@ -79,457 +79,31 @@ int main(int argv, char** args) {
 			timer_buttonHold_repeater = 0;
 		}
 
-		keyInputs = 0;
-		/* Update Key/Button Presses, Mouse/Touch Input, and Window Resizing */
-#if !defined(SDL1) && !defined(PSP)
-		/* Update Controller Axes (SDL2 only; SDL1 axes are handled later) */
-		controllerAxis_leftStickX = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
-		controllerAxis_leftStickY = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);
-		if ((controllerAxis_leftStickX > -STICK_DEADZONE) && (controllerAxis_leftStickX < STICK_DEADZONE)) {
-			controllerAxis_leftStickX = 0;
-		}
-		if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
-			controllerAxis_leftStickY = 0;
-		}
-#else
-		/* Update Controller Hat Positions (SDL1 only; SDL2 D-Pad buttons are handled later) */
-		joystickHat = SDL_JoystickGetHat(joystick, 0);
-		if (joystickHat & SDL_HAT_UP) {
-			heldDirs_dpad |= INPUT_UP;
-		} else {
-			heldDirs_dpad &= ~INPUT_UP;
-		}
-		if (joystickHat & SDL_HAT_DOWN) {
-			heldDirs_dpad |= INPUT_DOWN;
-		} else {
-			heldDirs_dpad &= ~INPUT_DOWN;
-		}
-		if (joystickHat & SDL_HAT_LEFT) {
-			heldDirs_dpad |= INPUT_LEFT;
-		} else {
-			heldDirs_dpad &= ~INPUT_LEFT;
-		}
-		if (joystickHat & SDL_HAT_RIGHT) {
-			heldDirs_dpad |= INPUT_RIGHT;
-		} else {
-			heldDirs_dpad &= ~INPUT_RIGHT;
-		}
-#endif
-		while (SDL_PollEvent(&event)) {
-			switch (event.type) {
-				case SDL_QUIT:
-					isRunning = false;
-					break;
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)) && !defined(SDL1)
-				case SDL_WINDOWEVENT:
-					if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
-						if (SDL_GetWindowSurface(window)->w < appWidth)
-							SDL_SetWindowSize(window, appWidth, SDL_GetWindowSurface(window)->h);
-						if (SDL_GetWindowSurface(window)->h < appHeight)
-							SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight);
-						// If you resize the window to within 6% of an integer ratio, snap to that ratio
-						snapWindow_x(0.06);
-						snapWindow_y(0.06);
-						setScaling();
-						updateText(&text_4_score_val, to_string(GM.score));
-						updateText(&text_4_mans_val, to_string(GM.mans));
-						updateText(&text_4_level_val, to_string(GM.level));
-						if (gameHiResMult < 2) {
-							MM.maxPageNum = 5;
-							updateText(&text_3_page, "("+to_string(MM.page)+"/"+to_string(MM.maxPageNum)+")");
-						} else {
-							MM.maxPageNum = 4;
-							if (MM.page > MM.maxPageNum) MM.page = MM.maxPageNum;
-							updateText(&text_3_page, "("+to_string(MM.page)+"/"+to_string(MM.maxPageNum)+")");
-						}
-					}
-					break;
-#endif
-				case SDL_KEYDOWN: // keycodes
-					if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w) {
-						heldDirs_kb |= INPUT_UP;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s) {
-						heldDirs_kb |= INPUT_DOWN;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a) {
-						heldDirs_kb |= INPUT_LEFT;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d) {
-						heldDirs_kb |= INPUT_RIGHT;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_z) {
-						heldKeys |= INPUT_A;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_x) {
-						heldKeys |= INPUT_B;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_c) {
-						heldKeys |= INPUT_X;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_v) {
-						heldKeys |= INPUT_Y;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_q) {
-						heldKeys |= INPUT_L;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_e) {
-						heldKeys |= INPUT_R;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_RETURN) {
-						heldKeys |= INPUT_START;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_BACKQUOTE) {
-						heldKeys |= INPUT_SELECT;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_f) {
-						heldKeys |= INPUT_FULLSCREEN;
-						break;
-					}
-					break;
-				case SDL_KEYUP: // keycodes
-					if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w) {
-						heldDirs_kb &= ~INPUT_UP;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s) {
-						heldDirs_kb &= ~INPUT_DOWN;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a) {
-						heldDirs_kb &= ~INPUT_LEFT;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d) {
-						heldDirs_kb &= ~INPUT_RIGHT;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_z) {
-						heldKeys &= ~INPUT_A;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_x) {
-						heldKeys &= ~INPUT_B;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_c) {
-						heldKeys &= ~INPUT_X;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_v) {
-						heldKeys &= ~INPUT_Y;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_q) {
-						heldKeys &= ~INPUT_L;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_e) {
-						heldKeys &= ~INPUT_R;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_RETURN) {
-						heldKeys &= ~INPUT_START;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_BACKQUOTE) {
-						heldKeys &= ~INPUT_SELECT;
-						break;
-					}
-					if (event.key.keysym.sym == SDLK_f) {
-						heldKeys &= ~INPUT_FULLSCREEN;
-						break;
-					}
-					break;
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
-				case SDL_MOUSEMOTION:
-					SDL_GetMouseState(&mouseInput_x, &mouseInput_y);
-					break;
-				case SDL_MOUSEBUTTONDOWN:
-					if (event.button.button == SDL_BUTTON_LEFT) {
-						break;
-					}
-					if (event.button.button == SDL_BUTTON_RIGHT) {
-						break;
-					}
-					break;
-				case SDL_MOUSEBUTTONUP:
-					break;
-#endif
-#if !defined(SDL1)
-				case SDL_CONTROLLERBUTTONDOWN:
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
-						heldDirs_dpad |= INPUT_UP;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN) {
-						heldDirs_dpad |= INPUT_DOWN;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) {
-						heldDirs_dpad |= INPUT_LEFT;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) {
-						heldDirs_dpad |= INPUT_RIGHT;
-						break;
-					}
-#if defined(WII_U) || defined(SWITCH)
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
-#else
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
-#endif
-						heldKeys |= INPUT_A;
-						break;
-					}
-#if defined(WII_U) || defined(SWITCH)
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
-#else
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
-#endif
-						heldKeys |= INPUT_B;
-						break;
-					}
-#if defined(WII_U) || defined(SWITCH)
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
-#else
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
-#endif
-						heldKeys |= INPUT_X;
-						break;
-					}
-#if defined(WII_U) || defined(SWITCH)
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
-#else
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
-#endif
-						heldKeys |= INPUT_Y;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_LEFTSHOULDER) {
-						heldKeys |= INPUT_L;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
-						heldKeys |= INPUT_R;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
-						heldKeys |= INPUT_START;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
-						heldKeys |= INPUT_SELECT;
-						break;
-					}
-					break;
-				case SDL_CONTROLLERBUTTONUP:
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
-						heldDirs_dpad &= ~INPUT_UP;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN) {
-						heldDirs_dpad &= ~INPUT_DOWN;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) {
-						heldDirs_dpad &= ~INPUT_LEFT;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) {
-						heldDirs_dpad &= ~INPUT_RIGHT;
-						break;
-					}
-#if defined(WII_U) || defined(SWITCH)
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
-#else
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
-#endif
-						heldKeys &= ~INPUT_A;
-						break;
-					}
-#if defined(WII_U) || defined(SWITCH)
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
-#else
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
-#endif
-						heldKeys &= ~INPUT_B;
-						break;
-					}
-#if defined(WII_U) || defined(SWITCH)
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
-#else
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
-#endif
-						heldKeys &= ~INPUT_X;
-						break;
-					}
-#if defined(WII_U) || defined(SWITCH)
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
-#else
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
-#endif
-						heldKeys &= ~INPUT_Y;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_LEFTSHOULDER) {
-						heldKeys &= ~INPUT_L;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
-						heldKeys &= ~INPUT_R;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
-						heldKeys &= ~INPUT_START;
-						break;
-					}
-					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
-						heldKeys &= ~INPUT_SELECT;
-						break;
-					}
-					break;
-#if !defined(PSP)
-				case SDL_FINGERDOWN:
-					mouseInput_x = (Sint32)(event.tfinger.x * windowWidth);
-					mouseInput_y = (Sint32)(event.tfinger.y * windowHeight);
-					break;
-				case SDL_FINGERMOTION:
-					mouseInput_x = (Sint32)(event.tfinger.x * windowWidth);
-					mouseInput_y = (Sint32)(event.tfinger.y * windowHeight);
-					break;
-				case SDL_FINGERUP:
-					break;
-#endif
-				default:
-					break;
-#else
-				case SDL_JOYBUTTONDOWN:
-					if (event.jbutton.button == 0) {
-						heldKeys |= INPUT_A;
-						break;
-					}
-					if (event.jbutton.button == 1) {
-						heldKeys |= INPUT_B;
-						break;
-					}
-					if (event.jbutton.button == 2) {
-						heldKeys |= INPUT_X;
-						break;
-					}
-					if (event.jbutton.button == 3) {
-						heldKeys |= INPUT_Y;
-						break;
-					}
-					if (event.jbutton.button == 4) {
-						heldKeys |= INPUT_L;
-						break;
-					}
-					if (event.jbutton.button == 5) {
-						heldKeys |= INPUT_R;
-						break;
-					}
-					if (event.jbutton.button == 7) {
-						heldKeys |= INPUT_START;
-						break;
-					}
-					if (event.jbutton.button == 6) {
-						heldKeys |= INPUT_SELECT;
-						break;
-					}
-					break;
-				case SDL_JOYBUTTONUP:
-					if (event.jbutton.button == 0) {
-						heldKeys &= ~INPUT_A;
-						break;
-					}
-					if (event.jbutton.button == 1) {
-						heldKeys &= ~INPUT_B;
-						break;
-					}
-					if (event.jbutton.button == 2) {
-						heldKeys &= ~INPUT_X;
-						break;
-					}
-					if (event.jbutton.button == 3) {
-						heldKeys &= ~INPUT_Y;
-						break;
-					}
-					if (event.jbutton.button == 4) {
-						heldKeys &= ~INPUT_L;
-						break;
-					}
-					if (event.jbutton.button == 5) {
-						heldKeys &= ~INPUT_R;
-						break;
-					}
-					if (event.jbutton.button == 7) {
-						heldKeys &= ~INPUT_START;
-						break;
-					}
-					if (event.jbutton.button == 6) {
-						heldKeys &= ~INPUT_SELECT;
-						break;
-					}
-					break;
-				case SDL_JOYAXISMOTION:
-					switch (event.jaxis.axis) {
-						case 0:
-							controllerAxis_leftStickX = event.jaxis.value;
-							if ((controllerAxis_leftStickX > -STICK_DEADZONE) && (controllerAxis_leftStickX < STICK_DEADZONE)) {
-								controllerAxis_leftStickX = 0;
-							}
-							break;
-						case 1:
-							controllerAxis_leftStickY = event.jaxis.value;
-							if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
-								controllerAxis_leftStickY = 0;
-							}
-							break;
-						default:
-							break;
-					}
-					break;
-#endif
+		handleInput();
+
+		/* Handle Window Size Changes */
+		if (windowSizeChanged) {
+			if (SDL_GetWindowSurface(window)->w < appWidth)
+				SDL_SetWindowSize(window, appWidth, SDL_GetWindowSurface(window)->h);
+			if (SDL_GetWindowSurface(window)->h < appHeight)
+				SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight);
+			// If you resize the window to within 6% of an integer ratio, snap to that ratio
+			snapWindow_x(0.06);
+			snapWindow_y(0.06);
+			setScaling();
+			updateText(&text_4_score_val, to_string(GM.score));
+			updateText(&text_4_mans_val, to_string(GM.mans));
+			updateText(&text_4_level_val, to_string(GM.level));
+			if (gameHiResMult < 2) {
+				MM.maxPageNum = 5;
+				updateText(&text_3_page, "("+to_string(MM.page)+"/"+to_string(MM.maxPageNum)+")");
+			} else {
+				MM.maxPageNum = 4;
+				if (MM.page > MM.maxPageNum) MM.page = MM.maxPageNum;
+				updateText(&text_3_page, "("+to_string(MM.page)+"/"+to_string(MM.maxPageNum)+")");
 			}
+			windowSizeChanged = false;
 		}
-
-		/* Handle Analog Input */
-		if (controllerAxis_leftStickY < 0) {
-			heldDirs_stick |= INPUT_UP;
-		} else {
-			heldDirs_stick &= ~INPUT_UP;
-		}
-		if (controllerAxis_leftStickY > 0) {
-			heldDirs_stick |= INPUT_DOWN;
-		} else {
-			heldDirs_stick &= ~INPUT_DOWN;
-		}
-		if (controllerAxis_leftStickX < 0) {
-			heldDirs_stick |= INPUT_LEFT;
-		} else {
-			heldDirs_stick &= ~INPUT_LEFT;
-		}
-		if (controllerAxis_leftStickX > 0) {
-			heldDirs_stick |= INPUT_RIGHT;
-		} else {
-			heldDirs_stick &= ~INPUT_RIGHT;
-		}
-		handleKeyPresses(deltaTime);
-
-		/* Key Presses (Always Active) */
 		if (keyPressed(INPUT_FULLSCREEN)) {
 			SDL_toggleFullscreen();
 		}
@@ -554,12 +128,12 @@ int main(int argv, char** args) {
 		 *  2: Title Screen
 		 *  3: Instructions Screen
 		 *  4: Game
-		 *  5: Nothing? (or maybe Game)
-		 *  6: Pause Screen (overlayed on Game)
+		 *  5: Game Over Screen
+		 *  6: Game (Treasure Hut)
 		 *  7: Nothing
 		 *  8: End of Level Animation
 		 *  9: Level Beaten Screen
-		 * 10: Game Over Screen
+		 * 10: Nothing
 		 * 11: Level 4 Interlude
 		 * 12: Level 8 Interlude
 		 * 13: Level 12 Interlude
@@ -811,27 +385,7 @@ int main(int argv, char** args) {
 			case 4:
 				if (!GM.paused && !GM.manually_paused) {
 					if (MM.pacmanActive) {
-#if defined(WII_U) || defined(SWITCH)
-						if (keyPressed(INPUT_A)) {
-							GM.burninationIncreaseCheat();
-						}
-						if (keyPressed(INPUT_B)) {
-							GM.burninationDecreaseCheat();
-						}
-#else
-						if (keyPressed(INPUT_B)) {
-							GM.burninationIncreaseCheat();
-						}
-						if (keyPressed(INPUT_A)) {
-							GM.burninationDecreaseCheat();
-						}
-#endif
-						if (keyPressed(INPUT_L) && GM.level > 1) {
-							GM.updateLevel(-1);
-						}
-						if (keyPressed(INPUT_R) && GM.level < 100) {
-							GM.updateLevel(1);
-						}
+						GM.handleDebugCheat();
 					}
 
 					GM.player.invinceCheck();
@@ -1010,7 +564,7 @@ int main(int argv, char** args) {
 						renderSprite(sprite_trogdor_fire, GM.player.fire_srcrect, gameScreen, GM.player.fire_dstrect);
 					}
 					if (GM.dm_visible) {
-						renderSprite_static(sprite_death_message, gameScreen);
+						renderSprite(sprite_death_message, GM.dm_srcrect, gameScreen, sprite_death_message.dstrect);
 					} else if (GM.b_visible) {
 						renderSprite(sprite_burninate_fire, GM.bf_srcrect, gameScreen, GM.bf_dstrect);
 						renderSprite_static(sprite_burninate_text, gameScreen);

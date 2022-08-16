@@ -1402,6 +1402,29 @@ class GameManager {
 				}
 			}
 		}
+		void handleDebugCheat() {
+#if defined(WII_U) || defined(SWITCH)
+			if (keyPressed(INPUT_A)) {
+				burninationIncreaseCheat();
+			}
+			if (keyPressed(INPUT_B)) {
+				burninationDecreaseCheat();
+			}
+#else
+			if (keyPressed(INPUT_B)) {
+				burninationIncreaseCheat();
+			}
+			if (keyPressed(INPUT_A)) {
+				burninationDecreaseCheat();
+			}
+#endif
+			if (keyPressed(INPUT_L) && level > 1) {
+				updateLevel(-1);
+			}
+			if (keyPressed(INPUT_R) && level < 100) {
+				updateLevel(1);
+			}
+		}
 		void testLootHit() {
 			for (i = 0; i < MAX_NUM_LOOT; i++) {
 				if (lootArray[i].active && SDL_HasIntersection(&player.dstrect, &lootArray[i].dstrect)) {

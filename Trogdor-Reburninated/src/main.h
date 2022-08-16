@@ -1,7 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "include.h"
 #include "classes.h"
 
 SDL_Event event;
