@@ -449,32 +449,6 @@ int main(int argv, char** args) {
 				default:
 					break;
 #else
-				case SDL_JOYHATMOTION:
-					if (event.jhat.value & SDL_HAT_UP) {
-						dirInputs |= UP_PRESSED;
-					} else {
-						dirInputs |= UP_DEPRESSED;
-						heldKeys &= ~INPUT_UP;
-					}
-					if (event.jhat.value & SDL_HAT_DOWN) {
-						dirInputs |= DOWN_PRESSED;
-					} else {
-						dirInputs |= DOWN_DEPRESSED;
-						heldKeys &= ~INPUT_DOWN;
-					}
-					if (event.jhat.value & SDL_HAT_LEFT) {
-						dirInputs |= LEFT_PRESSED;
-					} else {
-						dirInputs |= LEFT_DEPRESSED;
-						heldKeys &= ~INPUT_LEFT;
-					}
-					if (event.jhat.value & SDL_HAT_RIGHT) {
-						dirInputs |= RIGHT_PRESSED;
-					} else {
-						dirInputs |= RIGHT_DEPRESSED;
-						heldKeys &= ~INPUT_RIGHT;
-					}
-					break;
 				case SDL_JOYBUTTONDOWN:
 					if (event.jbutton.button == 0) {
 						keyInputs |= INPUT_A;
@@ -913,6 +887,7 @@ int main(int argv, char** args) {
 						if (GM.startDown && !keyHeld(INPUT_START)) {
 							GM.startDown = false;
 							GM.manually_paused = 0;
+							SDL_FreeSurface(transparentScreen);
 						}
 					} else {
 						GM.updateKnightOffsetAndMove();
@@ -950,10 +925,10 @@ int main(int argv, char** args) {
 					GM.renderArchers();
 					GM.renderArrows();
 					if (GM.dm_visible) {
-						renderSprite(sprite_death_message, GM.dm_srcrect, gameScreen, GM.dm_dstrect);
+						renderSprite(sprite_death_message, GM.dm_srcrect, gameScreen, sprite_death_message.dstrect);
 					} else if (GM.b_visible) {
 						renderSprite(sprite_burninate_fire, GM.bf_srcrect, gameScreen, GM.bf_dstrect);
-						renderSprite(sprite_burninate_text, GM.bt_srcrect, gameScreen, GM.bt_dstrect);
+						renderSprite_static(sprite_burninate_text, gameScreen);
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
@@ -1024,6 +999,7 @@ int main(int argv, char** args) {
 					if (GM.startDown && !keyHeld(INPUT_START)) {
 						GM.startDown = false;
 						GM.manually_paused = 0;
+						SDL_FreeSurface(transparentScreen);
 					}
 				} else {
 					GM.handle_treasure_hut();
@@ -1055,10 +1031,10 @@ int main(int argv, char** args) {
 						renderSprite(sprite_trogdor_fire, GM.player.fire_srcrect, gameScreen, GM.player.fire_dstrect);
 					}
 					if (GM.dm_visible) {
-						renderSprite(sprite_death_message, GM.dm_srcrect, gameScreen, GM.dm_dstrect);
+						renderSprite_static(sprite_death_message, gameScreen);
 					} else if (GM.b_visible) {
 						renderSprite(sprite_burninate_fire, GM.bf_srcrect, gameScreen, GM.bf_dstrect);
-						renderSprite(sprite_burninate_text, GM.bt_srcrect, gameScreen, GM.bt_dstrect);
+						renderSprite_static(sprite_burninate_text, gameScreen);
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...

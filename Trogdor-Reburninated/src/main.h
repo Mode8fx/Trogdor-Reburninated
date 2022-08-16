@@ -310,12 +310,15 @@ SDL_Surface *appScreen;
 SDL_Rect appSrcRect = { 0, 0, appWidth, appHeight };
 SDL_Rect appToWindowDstRect = { 0, 0, appWidth, appHeight };
 SDL_Rect gameToWindowDstRect = { 0, 0, gameWidth, gameHeight };
+SDL_Surface *transparentScreen;
 bool isWindowed = true;
 double screenScale = 1;
 bool isIntegerScale = true;
 #if !defined(SDL1)
 SDL_DisplayMode DM;
 #endif
+Uint16 gameWidth_screenScaled = gameWidth;
+Uint16 gameHeight_screenScaled = gameHeight;
 Uint16 gameHiResWidth;
 Uint16 gameHiResHeight;
 Uint16 appWidth;
@@ -502,24 +505,37 @@ void InitializeSpritesPart1() {
 	// ((2183 - 133) / 3600.0) = 0.5694
 	// (2183 / 3600.0) = 0.6064
 	PREPARE_SPRITE(sprite_level_background_1, (rootDir + "graphics/backgrounds/1.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_level_background_1), 25, 1, 1, 1);
+		0, 25, 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_2, (rootDir + "graphics/backgrounds/2.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_level_background_2), 25, 1, 1, 1);
+		0, 25, 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_3, (rootDir + "graphics/backgrounds/3.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_level_background_3), 25, 1, 1, 1);
+		0, 25, 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_4, (rootDir + "graphics/backgrounds/4.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_level_background_4), 25, 1, 1, 1);
+		0, 25, 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_background_th, (rootDir + "graphics/backgrounds/treasure_hut.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_level_background_th), 25, 1, 1, 1);
+		0, 25, 1, 1, 1);
+	PREPARE_SPRITE(sprite_burnination_meter_full, (rootDir + "graphics/burnination_meter/full.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_full), 8, 1, 1, 1);
+	PREPARE_SPRITE(sprite_burnination_meter_empty, (rootDir + "graphics/burnination_meter/empty.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_empty), 8, 1, 1, 1);
+	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
+		65, 53, 1, 1, 1);
+	PREPARE_SPRITE(sprite_death_message, (rootDir + "graphics/death_message.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_death_message), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_death_message), 5, 2, 1);
+	PREPARE_SPRITE(sprite_burninate_text, (rootDir + "graphics/burninate_text.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_text), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_text), 1, 1, 1);
+	PREPARE_SPRITE(sprite_burninate_fire, (rootDir + "graphics/burninate_message_fire.bmp").c_str(),
+		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_fire), 1, 14, 1);
+	PREPARE_SPRITE(sprite_level_beaten_trogdor, (rootDir + "graphics/level_beaten_trogdor_scaled.bmp").c_str(),
+		-5, 41, 1, 1, 1);
+	PREPARE_SPRITE(sprite_game_over_trogdor, (rootDir + "graphics/game_over_trogdor.bmp").c_str(),
+		-13, 75, 1, 1, 1);
+	divider_level_beaten_rect = { 0, 25, gameWidth_screenScaled, 2 };
 }
 
 void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_trogdor, (rootDir + "graphics/trogdor.bmp").c_str(),
 		0, 0, 4, 2, 1);
-	PREPARE_SPRITE(sprite_burnination_meter_full, (rootDir + "graphics/burnination_meter/full.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_full), 8, 1, 1, 1);
-	PREPARE_SPRITE(sprite_burnination_meter_empty, (rootDir + "graphics/burnination_meter/empty.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_empty), 8, 1, 1, 1);
 	PREPARE_SPRITE(sprite_cottage, (rootDir + "graphics/cottage.bmp").c_str(),
 		0, 0, 2, 4, 1);
 	PREPARE_SPRITE(sprite_cottage_fire, (rootDir + "graphics/cottage_fire.bmp").c_str(),
@@ -539,8 +555,6 @@ void InitializeSpritesPart2() {
 		0, 0, 3, 2, 1);
 	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
 		0, 0, 2, 3, 1);
-	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
-		65, 53, 1, 1, 1);
 	if (gameHiResMult >= 2) {
 		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_small.bmp").c_str(),
 			OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, (int)(ceil(gameHiResMult * 1.5)));
@@ -548,19 +562,8 @@ void InitializeSpritesPart2() {
 		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_big.bmp").c_str(),
 			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, 1);
 	}
-	PREPARE_SPRITE(sprite_death_message, (rootDir + "graphics/death_message.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_death_message), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_death_message), 2, 5, 1);
-	PREPARE_SPRITE(sprite_burninate_text, (rootDir + "graphics/burninate_text.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_text), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_text), 1, 1, 1);
-	PREPARE_SPRITE(sprite_burninate_fire, (rootDir + "graphics/burninate_message_fire.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_fire), 1, 14, 1);
 	PREPARE_SPRITE(sprite_loot, (rootDir + "graphics/loot.bmp").c_str(),
 		0, 0, 1, 1, 1);
-	PREPARE_SPRITE(sprite_level_beaten_trogdor, (rootDir + "graphics/level_beaten_trogdor_scaled.bmp").c_str(),
-		-5, 41, 1, 1, 1);
-	PREPARE_SPRITE(sprite_game_over_trogdor, (rootDir + "graphics/game_over_trogdor.bmp").c_str(),
-		-13, 75, 1, 1, 1);
-	divider_level_beaten_rect = { 0, 25, gameWidth, 2 };
 }
 
 void InitializeController() {
@@ -582,20 +585,13 @@ void InitializeController() {
 }
 
 void renderBackground() {
-	SDL_BlitSurface(sprite_level_background->surface, NULL, gameScreen, &sprite_level_background->dstrect);
+	outputRect = sprite_level_background->dstrect;
+	SDL_BlitSurface(sprite_level_background->surface, NULL, gameScreen, &outputRect);
 }
 
 void renderTransparentForeground() {
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(0,
-		gameWidth, gameHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
-#else
-	SDL_Surface *screen_transparent = SDL_CreateRGBSurface(0,
-		gameWidth, gameHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-#endif
-	SDL_FillRect(screen_transparent, NULL, 0xC8000000);
-	SDL_BlitSurface(screen_transparent, NULL, gameScreen, &gameSrcRect);
-	SDL_FreeSurface(screen_transparent);
+	outputRect = gameSrcRect;
+	SDL_BlitSurface(transparentScreen, NULL, gameScreen, &outputRect);
 }
 
 

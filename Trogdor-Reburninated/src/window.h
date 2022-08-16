@@ -6,6 +6,8 @@
 
 constexpr auto gameWidth = 250;
 constexpr auto gameHeight = 180;
+extern Uint16 gameWidth_screenScaled;
+extern Uint16 gameHeight_screenScaled;
 constexpr auto DEFAULT_FRAME_RATE = 16;
 
 extern Uint16 gameHiResWidth;
@@ -37,6 +39,7 @@ extern SDL_Surface *appScreen;
 extern SDL_Rect appSrcRect;
 extern SDL_Rect appToWindowDstRect; // app mapping to window
 extern SDL_Rect gameToWindowDstRect; // game screen mapping to window
+extern SDL_Surface *transparentScreen;
 
 extern bool isWindowed;
 extern double screenScale;

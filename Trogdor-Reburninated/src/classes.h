@@ -590,11 +590,8 @@ class GameManager {
 		bool arched;                            // previous death was to arrow
 		Uint8 dm_frameState;                    // Death Message ("SWORDED!", "ARROWED!")
 		SDL_Rect dm_srcrect;                    // Death Message ("SWORDED!", "ARROWED!")
-		SDL_Rect dm_dstrect;                    // Death Message ("SWORDED!", "ARROWED!")
 		bool dm_visible;                        // Death Message ("SWORDED!", "ARROWED!")
 		Uint8 b_frameState;                     // BURNINATE! Message
-		SDL_Rect bt_srcrect;                    // BURNINATE! Message Text
-		SDL_Rect bt_dstrect;                    // BURNINATE! Message Text
 		SDL_Rect bf_srcrect;                    // BURNINATE! Message Fire
 		SDL_Rect bf_dstrect;                    // BURNINATE! Message Fire
 		bool b_visible;                         // BURNINATE! Message
@@ -619,7 +616,7 @@ class GameManager {
 			peasantometer = 0;
 			paused = false;
 			startDown = false;
-			manually_paused = false;
+			manually_paused = 0;
 			gameOver = false;
 			level = 1;
 			levelIndex = 1;
@@ -633,14 +630,11 @@ class GameManager {
 			extraMansCounter = 1;
 			arched = false;
 			dm_frameState = 0;
-			dm_srcrect = { 0, 0, sprite_death_message.dstrect.w, sprite_death_message.dstrect.h };
-			dm_dstrect = { OBJ_TO_MID_SCREEN_X(gameWidth, sprite_death_message), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_death_message), sprite_death_message.dstrect.w, sprite_death_message.dstrect.h };
+			dm_srcrect = { 0, 0, (Uint16)sprite_death_message.frame_w, (Uint16)sprite_death_message.frame_h };
 			dm_visible = false;
 			b_frameState = 0;
-			bt_srcrect = { 0, 0, sprite_burninate_text.dstrect.w, sprite_burninate_text.dstrect.h };
-			bt_dstrect = { OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_text), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_text), sprite_burninate_text.dstrect.w, sprite_burninate_text.dstrect.h };
-			bf_srcrect = { 0, 0, sprite_burninate_fire.dstrect.w, sprite_burninate_fire.dstrect.h };
-			bf_dstrect = { OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), bt_dstrect.y - bf_srcrect.h + 4, sprite_burninate_fire.dstrect.w, sprite_burninate_fire.dstrect.h };
+			bf_srcrect = { 0, 0, (Uint16)sprite_burninate_fire.frame_w, (Uint16)sprite_burninate_fire.frame_h };
+			bf_dstrect = { OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), sprite_burninate_text.dstrect.y - bf_srcrect.h + 4, (Uint16)sprite_burninate_fire.frame_w, (Uint16)sprite_burninate_fire.frame_h };
 			b_visible = false;
 			bmFull_srcrect = { 0, 0, (Uint16)sprite_burnination_meter_full.frame_w, (Uint16)sprite_burnination_meter_full.frame_h };
 			pm_srcrect = { 0, 0, (Uint16)sprite_peasantometer_icon.frame_w, (Uint16)sprite_peasantometer_icon.frame_h };
@@ -784,6 +778,14 @@ class GameManager {
 				if (startDown && !keyHeld(INPUT_START)) {
 					startDown = false;
 					manually_paused = frameCounter_global;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+					transparentScreen = SDL_CreateRGBSurface(0,
+						gameWidth, gameHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+#else
+					transparentScreen = SDL_CreateRGBSurface(0,
+						gameWidth, gameHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+#endif
+					SDL_FillRect(transparentScreen, NULL, 0xC8000000);
 				}
 			} else {
 				playerMove_treasureHut(&player, player.x_offset, player.y_offset);
@@ -1245,8 +1247,8 @@ class GameManager {
 			dm_frameState++;
 			switch (dm_frameState) {
 				case 4:
-					dm_srcrect.x = 0;
-					//dm_srcrect.y = 0;
+					//dm_srcrect.x = 0;
+					dm_srcrect.y = 0;
 					dm_visible = true;
 					player.frameState = 19;
 					paused = true;
@@ -1280,7 +1282,7 @@ class GameManager {
 					dm_frameState = 0;
 					break;
 				case 29:
-					dm_srcrect.x = sprite_death_message.dstrect.w;
+					dm_srcrect.y = spriteForm(sprite_death_message, 1);
 					//dm_srcrect.y = 0;
 					dm_visible = true;
 					player.frameState = 49;
@@ -1294,9 +1296,9 @@ class GameManager {
 					break;
 			}
 			if (dm_frameState < 28) {
-				dm_srcrect.y = (((dm_frameState -  4) / 2) % 5) * dm_dstrect.h;
+				dm_srcrect.x = spriteFrame(sprite_death_message, (((dm_frameState -  4) / 2) % 5));
 			} else {
-				dm_srcrect.y = (((dm_frameState - 29) / 2) % 5) * dm_dstrect.h;
+				dm_srcrect.x = spriteFrame(sprite_death_message, (((dm_frameState - 29) / 2) % 5));
 			}
 		}
 		void b_updateFrameState() { // burninate message
