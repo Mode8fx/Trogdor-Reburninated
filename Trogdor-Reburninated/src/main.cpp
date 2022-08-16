@@ -717,7 +717,7 @@ int main(int argv, char** args) {
 			/* Videlectrix logo */
 			case 1:
 				if (frameState < 65) {
-					renderSprite_app(sprite_videlectrix_logo);
+					renderSprite_static(sprite_videlectrix_logo, appScreen);
 					renderText(text_1_presents, textChars_font_nokia_12);
 				}
 				if (frameState < 72) {
@@ -746,7 +746,7 @@ int main(int argv, char** args) {
 					frameState = 3; // 3 is intentional
 					MM = MenuManager();
 				}
-				renderSprite(sprite_title_screen);
+				renderSprite_static(sprite_title_screen, gameScreen);
 				break;
 			/* Instructions Screen */
 			case 3:
@@ -761,7 +761,7 @@ int main(int argv, char** args) {
 					updateText(&text_4_level_val, to_string(GM.level));
 					sceneState = 4;
 				}
-				renderSprite(sprite_trogdor_logo);
+				renderSprite_static(sprite_trogdor_logo, gameScreen);
 				if (gameHiResMult < 2) {
 					switch (MM.page) {
 						case 1:
@@ -945,15 +945,15 @@ int main(int argv, char** args) {
 					GM.renderPeasants();
 					GM.renderTrogdor();
 					if (GM.burnination > 0) {
-						renderSpriteUsingRects(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
+						renderSprite(sprite_trogdor_fire, GM.player.fire_srcrect, gameScreen, GM.player.fire_dstrect);
 					}
 					GM.renderArchers();
 					GM.renderArrows();
 					if (GM.dm_visible) {
-						renderSpriteUsingRects(sprite_death_message, GM.dm_srcrect, GM.dm_dstrect);
+						renderSprite(sprite_death_message, GM.dm_srcrect, gameScreen, GM.dm_dstrect);
 					} else if (GM.b_visible) {
-						renderSpriteUsingRects(sprite_burninate_fire, GM.bf_srcrect, GM.bf_dstrect);
-						renderSpriteUsingRects(sprite_burninate_text, GM.bt_srcrect, GM.bt_dstrect);
+						renderSprite(sprite_burninate_fire, GM.bf_srcrect, gameScreen, GM.bf_dstrect);
+						renderSprite(sprite_burninate_text, GM.bt_srcrect, gameScreen, GM.bt_dstrect);
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
@@ -982,7 +982,7 @@ int main(int argv, char** args) {
 				GM.renderTopBar();
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				// TODO: draw "IT'S OVER!" and whatever else needs to be handled for this screen
-				renderSprite(sprite_game_over_trogdor);
+				renderSprite_static(sprite_game_over_trogdor, gameScreen);
 				switch (frameState) {
 					case 321:
 						loadAndPlaySound(SFX_GAMEOVER);
@@ -1052,13 +1052,13 @@ int main(int argv, char** args) {
 					GM.renderLoot();
 					GM.renderTrogdor();
 					if (GM.burnination > 0) {
-						renderSpriteUsingRects(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
+						renderSprite(sprite_trogdor_fire, GM.player.fire_srcrect, gameScreen, GM.player.fire_dstrect);
 					}
 					if (GM.dm_visible) {
-						renderSpriteUsingRects(sprite_death_message, GM.dm_srcrect, GM.dm_dstrect);
+						renderSprite(sprite_death_message, GM.dm_srcrect, gameScreen, GM.dm_dstrect);
 					} else if (GM.b_visible) {
-						renderSpriteUsingRects(sprite_burninate_fire, GM.bf_srcrect, GM.bf_dstrect);
-						renderSpriteUsingRects(sprite_burninate_text, GM.bt_srcrect, GM.bt_dstrect);
+						renderSprite(sprite_burninate_fire, GM.bf_srcrect, gameScreen, GM.bf_dstrect);
+						renderSprite(sprite_burninate_text, GM.bt_srcrect, gameScreen, GM.bt_dstrect);
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
@@ -1086,7 +1086,7 @@ int main(int argv, char** args) {
 				GM.renderTopBar();
 				GM.renderAndAnimateCottages();
 				if (((frameState - 1) / 2) % 2 == 0) {
-					renderSprite(sprite_end_of_level_flash);
+					renderSprite_static(sprite_end_of_level_flash, gameScreen);
 				}
 				switch (frameState) {
 					case 257:
@@ -1113,7 +1113,7 @@ int main(int argv, char** args) {
 				if (sceneState == 8) {
 					frameState++;
 				}
-				renderSprite_hiRes(sprite_end_of_level_trogdor);
+				renderSprite_static_hiRes(sprite_end_of_level_trogdor);
 				break;
 			/* Level Beaten Screen */
 			case 9:
@@ -1121,7 +1121,7 @@ int main(int argv, char** args) {
 				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_9_nice_work, textChars_font_serif_white_10);
 				// TODO: draw "LEVEL BEATEN!", smoke, and level fire
-				renderSprite(sprite_level_beaten_trogdor);
+				renderSprite_static(sprite_level_beaten_trogdor, gameScreen);
 				switch (frameState) {
 					case 277:
 						loadAndPlaySound(SFX_BURNINATE);

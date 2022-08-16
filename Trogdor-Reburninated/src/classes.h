@@ -447,7 +447,7 @@ class Trogdor {
 					death_dstrect.y = dstrect.y + (dstrect.h - sprite_trogdor_dead.dstrect.h);
 					break;
 				case 50: // arrowed
-					death_srcrect.x = sprite_trogdor_dead.srcrect.w;
+					death_srcrect.x = sprite_trogdor_dead.frame_w;
 					death_dstrect.x = dstrect.x + ((dstrect.w - sprite_trogdor_dead.dstrect.w) / 2);
 					death_dstrect.y = dstrect.y + (dstrect.h - sprite_trogdor_dead.dstrect.h);
 					break;
@@ -562,11 +562,6 @@ class MenuManager {
 		}
 };
 
-#define SET_BURNINATION(num)                                                                                         \
-	burnination = num;                                                                                               \
-	sprite_burnination_meter_full.srcrect.w = (int)(sprite_burnination_meter_empty.dstrect.w * burnination / 100.0); \
-	sprite_burnination_meter_full.dstrect.w = sprite_burnination_meter_full.srcrect.w;
-
 class GameManager {
 	public:
 		Sint16 mans;                            // lives
@@ -603,6 +598,8 @@ class GameManager {
 		SDL_Rect bf_srcrect;                    // BURNINATE! Message Fire
 		SDL_Rect bf_dstrect;                    // BURNINATE! Message Fire
 		bool b_visible;                         // BURNINATE! Message
+		SDL_Rect bmFull_srcrect;                // srcrect used for burnination meter
+		SDL_Rect pm_srcrect;                    // srcrect used for peasantometer
 		Uint8 kick_frameState;                  // kick the machine
 		bool treasureHutFound;                  // treasure hut has been found in this level
 		bool inTreasureHut;                     // player is currently in treasure hut
@@ -626,7 +623,7 @@ class GameManager {
 			gameOver = false;
 			level = 1;
 			levelIndex = 1;
-			SET_BURNINATION(0);
+			setBurnination(0);
 			archerFrequency = 0;
 			burnRate = 0;
 			player = Trogdor();
@@ -645,6 +642,8 @@ class GameManager {
 			bf_srcrect = { 0, 0, sprite_burninate_fire.dstrect.w, sprite_burninate_fire.dstrect.h };
 			bf_dstrect = { OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), bt_dstrect.y - bf_srcrect.h + 4, sprite_burninate_fire.dstrect.w, sprite_burninate_fire.dstrect.h };
 			b_visible = false;
+			bmFull_srcrect = { 0, 0, sprite_burnination_meter_full.frame_w, sprite_burnination_meter_full.frame_h };
+			pm_srcrect = { 0, 0, sprite_peasantometer_icon.frame_w, sprite_peasantometer_icon.frame_h };
 			kick_frameState = 0;
 			numHuts = 0;
 			treasureHutFound = false;
@@ -658,7 +657,7 @@ class GameManager {
 			else sbVoiceMult = 1;
 		}
 		void levelInit() {
-			SET_BURNINATION(0);
+			setBurnination(0);
 			if (level > 25) {
 				archerFrequency = 400; // 4
 				burnRate = 1.3;
@@ -1070,9 +1069,9 @@ class GameManager {
 			}
 		}
 		inline void updateBurnmeter() {
-			SET_BURNINATION(burnination - burnRate);
+			setBurnination(burnination - burnRate);
 			if (burnination <= 0) {
-				SET_BURNINATION(0);
+				setBurnination(0);
 				peasantometer = 0;
 			}
 		}
@@ -1359,7 +1358,7 @@ class GameManager {
 					b_visible = false;
 					paused = false;
 					peasantometer = 10;
-					SET_BURNINATION(100);
+					setBurnination(100);
 					player.updateBreathLoc();
 					b_frameState = 0;
 					break;
@@ -1394,9 +1393,9 @@ class GameManager {
 					peasantometer = 0;
 				}
 			} else {
-				SET_BURNINATION(burnination - 2);
+				setBurnination(burnination - 2);
 				if (burnination <= 0) {
-					SET_BURNINATION(0);
+					setBurnination(0);
 					peasantometer = 0;
 				}
 			}
@@ -1416,41 +1415,41 @@ class GameManager {
 					if (hutArray[i].burning && !hutArray[i].burned) {
 						hutArray[i].updateFrameState();
 					}
-					renderSpriteUsingRects(sprite_cottage, hutArray[i].srcrect, hutArray[i].dstrect);
+					renderSprite(sprite_cottage, hutArray[i].srcrect, gameScreen, hutArray[i].dstrect);
 					if (hutArray[i].frameState >= 12 && hutArray[i].frameState <= 28) {
-						renderSpriteUsingRects(sprite_cottage_fire, hutArray[i].fire_srcrect, hutArray[i].fire_dstrect);
+						renderSprite(sprite_cottage_fire, hutArray[i].fire_srcrect, gameScreen, hutArray[i].fire_dstrect);
 					}
 				}
 			}
 		}
 		void renderArchers() {
 			if (archerR.active) {
-				renderSpriteUsingRects(sprite_archer, archerR.srcrect, archerR.dstrect);
+				renderSprite(sprite_archer, archerR.srcrect, gameScreen, archerR.dstrect);
 			}
 			if (archerL.active) {
-				renderSpriteUsingRects(sprite_archer, archerL.srcrect, archerL.dstrect);
+				renderSprite(sprite_archer, archerL.srcrect, gameScreen, archerL.dstrect);
 			}
 		}
 		void renderArrows() {
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
 				if (arrowArrayR[i].active) {
-					renderSpriteUsingRects(sprite_arrow, arrowArrayR[i].srcrect, arrowArrayR[i].dstrect);
+					renderSprite(sprite_arrow, arrowArrayR[i].srcrect, gameScreen, arrowArrayR[i].dstrect);
 				}
 				if (arrowArrayL[i].active) {
-					renderSpriteUsingRects(sprite_arrow, arrowArrayL[i].srcrect, arrowArrayL[i].dstrect);
+					renderSprite(sprite_arrow, arrowArrayL[i].srcrect, gameScreen, arrowArrayL[i].dstrect);
 				}
 			}
 		}
 		void renderLoot() {
 			for (i = 0; i < MAX_NUM_LOOT; i++) {
 				if (lootArray[i].active) {
-					renderSpriteUsingRects(sprite_loot, lootArray[i].srcrect, lootArray[i].dstrect);
+					renderSprite(sprite_loot, lootArray[i].srcrect, gameScreen, lootArray[i].dstrect);
 				}
 			}
 		}
 		void renderKnights() {
 			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
-				renderSpriteUsingRects(sprite_knight, knightArray[i].srcrect, knightArray[i].dstrect);
+				renderSprite(sprite_knight, knightArray[i].srcrect, gameScreen, knightArray[i].dstrect);
 			}
 		}
 		void renderPeasants() {
@@ -1459,18 +1458,23 @@ class GameManager {
 					if (!manually_paused && (!peasantArray[i].waiting || peasantArray[i].stomped)) {
 						peasantArray[i].updateFrameState(sbVoiceMult);
 					}
-					renderSpriteUsingRects(sprite_peasant, peasantArray[i].srcrect, peasantArray[i].dstrect);
+					renderSprite(sprite_peasant, peasantArray[i].srcrect, gameScreen, peasantArray[i].dstrect);
 				}
 			}
 		}
 		void renderTrogdor() {
 			if (player.visible) {
 				if (player.frameState >= 19) {
-					renderSpriteUsingRects(sprite_trogdor_dead, player.death_srcrect, player.death_dstrect);
+					renderSprite(sprite_trogdor_dead, player.death_srcrect, gameScreen, player.death_dstrect);
 				} else {
-					renderSpriteUsingRects(sprite_trogdor, player.srcrect, player.dstrect);
+					renderSprite(sprite_trogdor, player.srcrect, gameScreen, player.dstrect);
 				}
 			}
+		}
+		void setBurnination(double num) {
+			burnination = num;
+			bmFull_srcrect.w = (int)(sprite_burnination_meter_empty.dstrect.w * burnination / 100.0);
+			sprite_burnination_meter_full.dstrect.w = bmFull_srcrect.w;
 		}
 		void renderTopBar() {
 			renderText(text_4_score, textChars_font_serif_2_red_6);
@@ -1481,17 +1485,17 @@ class GameManager {
 			renderText(text_4_level_val, textChars_font_serif_red_6);
 			// Render peasantometer/burnination meter (depending on their values)
 			if (burnination > 0) {
-				renderSprite(sprite_burnination_meter_empty);
-				renderSprite(sprite_burnination_meter_full);
+				renderSprite_static(sprite_burnination_meter_empty, gameScreen);
+				renderSprite(sprite_burnination_meter_full, bmFull_srcrect, gameScreen, sprite_burnination_meter_full.dstrect);
 			} else {
 				sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;
-				sprite_peasantometer_icon.srcrect.x = sprite_peasantometer_icon.srcrect.w;
+				pm_srcrect.x = pm_srcrect.w;
 				for (i = 0; i < 10; i++) {
 					if (peasantometer == i) {
-						sprite_peasantometer_icon.srcrect.x = 0;
+						pm_srcrect.x = 0;
 					}
-					renderSprite(sprite_peasantometer_icon);
-					sprite_peasantometer_icon.dstrect.x += (int)(sprite_peasantometer_icon.dstrect.w * 1.5);
+					renderSprite(sprite_peasantometer_icon, pm_srcrect, gameScreen, sprite_peasantometer_icon.dstrect);
+					sprite_peasantometer_icon.dstrect.x += (int)(sprite_peasantometer_icon.frame_w * 1.5);
 				}
 			}
 		}
