@@ -3,8 +3,12 @@
 /* General Input */
 Uint32 keyInputs;
 Uint32 heldKeys;
-Uint8 dirInputs;
-Uint8 heldDirs;
+Uint32 heldKeys_last;
+Uint8  heldDirs;
+Uint8  heldDirs_last;
+Uint8  heldDirs_kb;
+Uint8  heldDirs_dpad;
+Uint8  heldDirs_stick;
 Sint32 timer_buttonHold;
 Sint32 timer_buttonHold_repeater;
 
@@ -75,6 +79,7 @@ int main(int argv, char** args) {
 			timer_buttonHold_repeater = 0;
 		}
 
+		keyInputs = 0;
 		/* Update Key/Button Presses, Mouse/Touch Input, and Window Resizing */
 #if !defined(SDL1) && !defined(PSP)
 		/* Update Controller Axes (SDL2 only; SDL1 axes are handled later) */
@@ -90,36 +95,26 @@ int main(int argv, char** args) {
 		/* Update Controller Hat Positions (SDL1 only; SDL2 D-Pad buttons are handled later) */
 		joystickHat = SDL_JoystickGetHat(joystick, 0);
 		if (joystickHat & SDL_HAT_UP) {
-			dirInputs |= UP_PRESSED;
-			heldKeys |= INPUT_UP;
+			heldDirs_dpad |= INPUT_UP;
 		} else {
-			dirInputs |= UP_DEPRESSED;
-			heldKeys &= ~INPUT_UP;
+			heldDirs_dpad &= ~INPUT_UP;
 		}
 		if (joystickHat & SDL_HAT_DOWN) {
-			dirInputs |= DOWN_PRESSED;
-			heldKeys |= INPUT_DOWN;
+			heldDirs_dpad |= INPUT_DOWN;
 		} else {
-			dirInputs |= DOWN_DEPRESSED;
-			heldKeys &= ~INPUT_DOWN;
+			heldDirs_dpad &= ~INPUT_DOWN;
 		}
 		if (joystickHat & SDL_HAT_LEFT) {
-			dirInputs |= LEFT_PRESSED;
-			heldKeys |= INPUT_LEFT;
+			heldDirs_dpad |= INPUT_LEFT;
 		} else {
-			dirInputs |= LEFT_DEPRESSED;
-			heldKeys &= ~INPUT_LEFT;
+			heldDirs_dpad &= ~INPUT_LEFT;
 		}
 		if (joystickHat & SDL_HAT_RIGHT) {
-			dirInputs |= RIGHT_PRESSED;
-			heldKeys |= INPUT_RIGHT;
+			heldDirs_dpad |= INPUT_RIGHT;
 		} else {
-			dirInputs |= RIGHT_DEPRESSED;
-			heldKeys &= ~INPUT_RIGHT;
+			heldDirs_dpad &= ~INPUT_RIGHT;
 		}
 #endif
-		keyInputs = 0;
-		dirInputs = 0;
 		while (SDL_PollEvent(&event)) {
 			switch (event.type) {
 				case SDL_QUIT:
@@ -152,89 +147,73 @@ int main(int argv, char** args) {
 #endif
 				case SDL_KEYDOWN: // keycodes
 					if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w) {
-						dirInputs |= UP_PRESSED;
-						heldKeys |= INPUT_UP;
+						heldDirs_kb |= INPUT_UP;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s) {
-						dirInputs |= DOWN_PRESSED;
-						heldKeys |= INPUT_DOWN;
+						heldDirs_kb |= INPUT_DOWN;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a) {
-						dirInputs |= LEFT_PRESSED;
-						heldKeys |= INPUT_LEFT;
+						heldDirs_kb |= INPUT_LEFT;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d) {
-						dirInputs |= RIGHT_PRESSED;
-						heldKeys |= INPUT_RIGHT;
+						heldDirs_kb |= INPUT_RIGHT;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_z) {
-						keyInputs |= INPUT_A;
 						heldKeys |= INPUT_A;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_x) {
-						keyInputs |= INPUT_B;
 						heldKeys |= INPUT_B;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_c) {
-						keyInputs |= INPUT_X;
 						heldKeys |= INPUT_X;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_v) {
-						keyInputs |= INPUT_Y;
 						heldKeys |= INPUT_Y;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_q) {
-						keyInputs |= INPUT_L;
 						heldKeys |= INPUT_L;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_e) {
-						keyInputs |= INPUT_R;
 						heldKeys |= INPUT_R;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_RETURN) {
-						keyInputs |= INPUT_START;
 						heldKeys |= INPUT_START;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_BACKQUOTE) {
-						keyInputs |= INPUT_SELECT;
 						heldKeys |= INPUT_SELECT;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_f) {
-						keyInputs |= INPUT_FULLSCREEN;
+						heldKeys |= INPUT_FULLSCREEN;
 						break;
 					}
 					break;
 				case SDL_KEYUP: // keycodes
 					if (event.key.keysym.sym == SDLK_UP || event.key.keysym.sym == SDLK_w) {
-						dirInputs |= UP_DEPRESSED;
-						heldKeys &= ~INPUT_UP;
+						heldDirs_kb &= ~INPUT_UP;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_DOWN || event.key.keysym.sym == SDLK_s) {
-						dirInputs |= DOWN_DEPRESSED;
-						heldKeys &= ~INPUT_DOWN;
+						heldDirs_kb &= ~INPUT_DOWN;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a) {
-						dirInputs |= LEFT_DEPRESSED;
-						heldKeys &= ~INPUT_LEFT;
+						heldDirs_kb &= ~INPUT_LEFT;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d) {
-						dirInputs |= RIGHT_DEPRESSED;
-						heldKeys &= ~INPUT_RIGHT;
+						heldDirs_kb &= ~INPUT_RIGHT;
 						break;
 					}
 					if (event.key.keysym.sym == SDLK_z) {
@@ -269,6 +248,10 @@ int main(int argv, char** args) {
 						heldKeys &= ~INPUT_SELECT;
 						break;
 					}
+					if (event.key.keysym.sym == SDLK_f) {
+						heldKeys &= ~INPUT_FULLSCREEN;
+						break;
+					}
 					break;
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
 				case SDL_MOUSEMOTION:
@@ -288,23 +271,19 @@ int main(int argv, char** args) {
 #if !defined(SDL1)
 				case SDL_CONTROLLERBUTTONDOWN:
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
-						dirInputs |= UP_PRESSED;
-						heldKeys |= INPUT_UP;
+						heldDirs_dpad |= INPUT_UP;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN) {
-						dirInputs |= DOWN_PRESSED;
-						heldKeys |= INPUT_DOWN;
+						heldDirs_dpad |= INPUT_DOWN;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) {
-						dirInputs |= LEFT_PRESSED;
-						heldKeys |= INPUT_LEFT;
+						heldDirs_dpad |= INPUT_LEFT;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) {
-						dirInputs |= RIGHT_PRESSED;
-						heldKeys |= INPUT_RIGHT;
+						heldDirs_dpad |= INPUT_RIGHT;
 						break;
 					}
 #if defined(WII_U) || defined(SWITCH)
@@ -312,7 +291,6 @@ int main(int argv, char** args) {
 #else
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
 #endif
-						keyInputs |= INPUT_A;
 						heldKeys |= INPUT_A;
 						break;
 					}
@@ -321,7 +299,6 @@ int main(int argv, char** args) {
 #else
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
 #endif
-						keyInputs |= INPUT_B;
 						heldKeys |= INPUT_B;
 						break;
 					}
@@ -330,7 +307,6 @@ int main(int argv, char** args) {
 #else
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
 #endif
-						keyInputs |= INPUT_X;
 						heldKeys |= INPUT_X;
 						break;
 					}
@@ -339,50 +315,41 @@ int main(int argv, char** args) {
 #else
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
 #endif
-						keyInputs |= INPUT_Y;
 						heldKeys |= INPUT_Y;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_LEFTSHOULDER) {
-						keyInputs |= INPUT_L;
 						heldKeys |= INPUT_L;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) {
-						keyInputs |= INPUT_R;
 						heldKeys |= INPUT_R;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_START) {
-						keyInputs |= INPUT_START;
 						heldKeys |= INPUT_START;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
-						keyInputs |= INPUT_SELECT;
 						heldKeys |= INPUT_SELECT;
 						break;
 					}
 					break;
 				case SDL_CONTROLLERBUTTONUP:
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
-						dirInputs |= UP_DEPRESSED;
-						heldKeys &= ~INPUT_UP;
+						heldDirs_dpad &= ~INPUT_UP;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_DOWN) {
-						dirInputs |= DOWN_DEPRESSED;
-						heldKeys &= ~INPUT_DOWN;
+						heldDirs_dpad &= ~INPUT_DOWN;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_LEFT) {
-						dirInputs |= LEFT_DEPRESSED;
-						heldKeys &= ~INPUT_LEFT;
+						heldDirs_dpad &= ~INPUT_LEFT;
 						break;
 					}
 					if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_RIGHT) {
-						dirInputs |= RIGHT_DEPRESSED;
-						heldKeys &= ~INPUT_RIGHT;
+						heldDirs_dpad &= ~INPUT_RIGHT;
 						break;
 					}
 #if defined(WII_U) || defined(SWITCH)
@@ -451,42 +418,34 @@ int main(int argv, char** args) {
 #else
 				case SDL_JOYBUTTONDOWN:
 					if (event.jbutton.button == 0) {
-						keyInputs |= INPUT_A;
 						heldKeys |= INPUT_A;
 						break;
 					}
 					if (event.jbutton.button == 1) {
-						keyInputs |= INPUT_B;
 						heldKeys |= INPUT_B;
 						break;
 					}
 					if (event.jbutton.button == 2) {
-						keyInputs |= INPUT_X;
 						heldKeys |= INPUT_X;
 						break;
 					}
 					if (event.jbutton.button == 3) {
-						keyInputs |= INPUT_Y;
 						heldKeys |= INPUT_Y;
 						break;
 					}
 					if (event.jbutton.button == 4) {
-						keyInputs |= INPUT_L;
 						heldKeys |= INPUT_L;
 						break;
 					}
 					if (event.jbutton.button == 5) {
-						keyInputs |= INPUT_R;
 						heldKeys |= INPUT_R;
 						break;
 					}
 					if (event.jbutton.button == 7) {
-						keyInputs |= INPUT_START;
 						heldKeys |= INPUT_START;
 						break;
 					}
 					if (event.jbutton.button == 6) {
-						keyInputs |= INPUT_SELECT;
 						heldKeys |= INPUT_SELECT;
 						break;
 					}
@@ -548,7 +507,27 @@ int main(int argv, char** args) {
 		}
 
 		/* Handle Analog Input */
-		getDirectionInput(deltaTime);
+		if (controllerAxis_leftStickY < 0) {
+			heldDirs_stick |= INPUT_UP;
+		} else {
+			heldDirs_stick &= ~INPUT_UP;
+		}
+		if (controllerAxis_leftStickY > 0) {
+			heldDirs_stick |= INPUT_DOWN;
+		} else {
+			heldDirs_stick &= ~INPUT_DOWN;
+		}
+		if (controllerAxis_leftStickX < 0) {
+			heldDirs_stick |= INPUT_LEFT;
+		} else {
+			heldDirs_stick &= ~INPUT_LEFT;
+		}
+		if (controllerAxis_leftStickX > 0) {
+			heldDirs_stick |= INPUT_RIGHT;
+		} else {
+			heldDirs_stick &= ~INPUT_RIGHT;
+		}
+		handleKeyPresses(deltaTime);
 
 		/* Key Presses (Always Active) */
 		if (keyPressed(INPUT_FULLSCREEN)) {
@@ -1527,8 +1506,8 @@ int main(int argv, char** args) {
 				break;
 		}
 
-		controllerAxis_leftStickX_last = controllerAxis_leftStickX;
-		controllerAxis_leftStickY_last = controllerAxis_leftStickY;
+		heldKeys_last = heldKeys;
+		heldDirs_last = heldDirs;
 #if !(defined(GAMECUBE)|| defined(PSP))
 		/* Update Mouse Position */
 		mouseInput_x_last = mouseInput_x;

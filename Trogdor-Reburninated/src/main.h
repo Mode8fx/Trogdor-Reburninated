@@ -14,9 +14,7 @@ SDL_Joystick *joystick = nullptr;
 Uint8 joystickHat;
 #endif
 Sint16 controllerAxis_leftStickX;
-Sint16 controllerAxis_leftStickX_last;
 Sint16 controllerAxis_leftStickY;
-Sint16 controllerAxis_leftStickY_last;
 #if !(defined(GAMECUBE) || defined(PSP))
 Sint32 mouseInput_x;
 Sint32 mouseInput_x_last;
