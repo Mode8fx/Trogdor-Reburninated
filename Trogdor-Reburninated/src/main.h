@@ -590,10 +590,10 @@ void InitializeController() {
 void renderBackground() {
 	outputRect = sprite_level_background->dstrect;
 #if defined(SDL1)
-	outputRect.x *= screenScale;
-	outputRect.y *= screenScale;
-	outputRect.w *= screenScale;
-	outputRect.h *= screenScale;
+	outputRect.x = (Sint16)(outputRect.x * screenScale);
+	outputRect.y = (Sint16)(outputRect.y * screenScale);
+	outputRect.w = (Uint16)(outputRect.w * screenScale);
+	outputRect.h = (Uint16)(outputRect.h * screenScale);
 #endif
 	SDL_BlitSurface(sprite_level_background->surface, NULL, gameScreen, &outputRect);
 }
@@ -601,10 +601,10 @@ void renderBackground() {
 void renderTransparentForeground() {
 	outputRect = gameSrcRect;
 #if defined(SDL1)
-	outputRect.x *= screenScale;
-	outputRect.y *= screenScale;
-	outputRect.w *= screenScale;
-	outputRect.h *= screenScale;
+	outputRect.x = (Sint16)(outputRect.x * screenScale);
+	outputRect.y = (Sint16)(outputRect.y * screenScale);
+	outputRect.w = (Uint16)(outputRect.w * screenScale);
+	outputRect.h = (Uint16)(outputRect.h * screenScale);
 #endif
 	SDL_BlitSurface(transparentScreen, NULL, gameScreen, &outputRect);
 }
