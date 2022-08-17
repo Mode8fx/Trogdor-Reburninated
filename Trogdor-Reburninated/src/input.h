@@ -446,7 +446,7 @@ inline void handleInput() {
 			default:
 				break;
 #else
-			// SDL1 controller inputs are designed with a sideways Wii Remote in mind
+#if defined(WII)
 			case SDL_JOYBUTTONDOWN:
 				if (event.jbutton.button == 0) {
 					heldKeys |= INPUT_R;
@@ -515,6 +515,76 @@ inline void handleInput() {
 					break;
 				}
 				break;
+#else
+			case SDL_JOYBUTTONDOWN:
+				if (event.jbutton.button == 0) {
+					heldKeys |= INPUT_A;
+					break;
+				}
+				if (event.jbutton.button == 1) {
+					heldKeys |= INPUT_B;
+					break;
+				}
+				if (event.jbutton.button == 2) {
+					heldKeys |= INPUT_X;
+					break;
+				}
+				if (event.jbutton.button == 3) {
+					heldKeys |= INPUT_Y;
+					break;
+				}
+				if (event.jbutton.button == 4) {
+					heldKeys |= INPUT_SELECT;
+					break;
+				}
+				if (event.jbutton.button == 5) {
+					heldKeys |= INPUT_R;
+					break;
+				}
+				if (event.jbutton.button == 6) {
+					heldKeys |= INPUT_L;
+					break;
+				}
+				if (event.jbutton.button == 7) {
+					heldKeys |= INPUT_START;
+					break;
+				}
+				break;
+			case SDL_JOYBUTTONUP:
+				if (event.jbutton.button == 0) {
+					heldKeys &= ~INPUT_A;
+					break;
+				}
+				if (event.jbutton.button == 1) {
+					heldKeys &= ~INPUT_B;
+					break;
+				}
+				if (event.jbutton.button == 2) {
+					heldKeys &= ~INPUT_X;
+					break;
+				}
+				if (event.jbutton.button == 3) {
+					heldKeys &= ~INPUT_Y;
+					break;
+				}
+				if (event.jbutton.button == 4) {
+					heldKeys &= ~INPUT_SELECT;
+					break;
+				}
+				if (event.jbutton.button == 5) {
+					heldKeys &= ~INPUT_R;
+					break;
+				}
+				if (event.jbutton.button == 6) {
+					heldKeys &= ~INPUT_L;
+					break;
+				}
+				if (event.jbutton.button == 7) {
+					heldKeys &= ~INPUT_START;
+					break;
+				}
+				break;
+#endif
 			case SDL_JOYAXISMOTION:
 				switch (event.jaxis.axis) {
 					case 0:
