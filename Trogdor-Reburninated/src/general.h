@@ -9,7 +9,9 @@ struct Timer {
 };
 
 static bool isRunning;
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)) && !defined(SDL1)
 static bool windowSizeChanged;
+#endif
 extern SDL_Event event;
 
 /* General-use Variables */

@@ -46,8 +46,6 @@ Final:
 		- Untested
 	- Wii U
 		- Untested
-	- Wii
-		- Controls need to be changed
 	- Gamecube
 		- Compiles, seems to run in Dolphin, but unplayable; it likely can't see assets (it probably works fine on a real system)
 	- Vita
@@ -60,7 +58,6 @@ Trogdor Classic [faithful recreation of original Trogdor flash game]:
 Features:
 - Add animation to Level Beaten and Game Over screens
 - Rework cutscene system so that animations are easier to add
-	- It's okay if the implementation has to be slightly inefficient to make this work, this really isn't that intensive of a game
 - Add art and animation to all cutscenes
 - Add an overlay
 - Restore the original game's unused High Scores screen

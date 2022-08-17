@@ -38,11 +38,11 @@ void setSpritePos(SpriteObject *spriteObj, int rect_x, int rect_y) {
     spriteObj->dstrect.y = (int)rect_y;
 }
 
-inline Sint16 spriteFrame(SpriteObject spriteObj, Sint8 frameNum) {
+Sint16 spriteFrame(SpriteObject spriteObj, Sint8 frameNum) {
     return spriteObj.scaled_w * frameNum;
 }
 
-inline Sint16 spriteForm(SpriteObject spriteObj, Sint8 formNum) {
+Sint16 spriteForm(SpriteObject spriteObj, Sint8 formNum) {
     return spriteObj.scaled_h * formNum;
 }
 

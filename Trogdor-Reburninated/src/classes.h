@@ -1404,7 +1404,7 @@ class GameManager {
 			}
 		}
 		void handleDebugCheat() {
-#if defined(WII_U) || defined(SWITCH)
+#if defined(WII_U) || defined(SWITCH) || defined(WII) || defined(GAMECUBE)
 			if (keyPressed(INPUT_A)) {
 				burninationIncreaseCheat();
 			}

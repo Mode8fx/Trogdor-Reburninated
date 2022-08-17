@@ -119,6 +119,28 @@ inline void handleInput() {
 #else
 	/* Update Controller Hat Positions (SDL1 only; SDL2 D-Pad buttons are handled later) */
 	joystickHat = SDL_JoystickGetHat(joystick, 0);
+#if defined(WII)
+	if (joystickHat & SDL_HAT_UP) {
+		heldDirs_dpad |= INPUT_LEFT;
+	} else {
+		heldDirs_dpad &= ~INPUT_LEFT;
+	}
+	if (joystickHat & SDL_HAT_DOWN) {
+		heldDirs_dpad |= INPUT_RIGHT;
+	} else {
+		heldDirs_dpad &= ~INPUT_RIGHT;
+	}
+	if (joystickHat & SDL_HAT_LEFT) {
+		heldDirs_dpad |= INPUT_DOWN;
+	} else {
+		heldDirs_dpad &= ~INPUT_DOWN;
+	}
+	if (joystickHat & SDL_HAT_RIGHT) {
+		heldDirs_dpad |= INPUT_UP;
+	} else {
+		heldDirs_dpad &= ~INPUT_UP;
+	}
+#else
 	if (joystickHat & SDL_HAT_UP) {
 		heldDirs_dpad |= INPUT_UP;
 	} else {
@@ -139,6 +161,7 @@ inline void handleInput() {
 	} else {
 		heldDirs_dpad &= ~INPUT_RIGHT;
 	}
+#endif
 #endif
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -423,71 +446,72 @@ inline void handleInput() {
 			default:
 				break;
 #else
+			// SDL1 controller inputs are designed with a sideways Wii Remote in mind
 			case SDL_JOYBUTTONDOWN:
 				if (event.jbutton.button == 0) {
-					heldKeys |= INPUT_A;
+					heldKeys |= INPUT_R;
 					break;
 				}
 				if (event.jbutton.button == 1) {
-					heldKeys |= INPUT_B;
-					break;
-				}
-				if (event.jbutton.button == 2) {
-					heldKeys |= INPUT_X;
-					break;
-				}
-				if (event.jbutton.button == 3) {
-					heldKeys |= INPUT_Y;
-					break;
-				}
-				if (event.jbutton.button == 4) {
 					heldKeys |= INPUT_L;
 					break;
 				}
+				if (event.jbutton.button == 2) {
+					heldKeys |= INPUT_B;
+					break;
+				}
+				if (event.jbutton.button == 3) {
+					heldKeys |= INPUT_A;
+					break;
+				}
+				if (event.jbutton.button == 4) {
+					heldKeys |= INPUT_SELECT;
+					break;
+				}
 				if (event.jbutton.button == 5) {
-					heldKeys |= INPUT_R;
+					heldKeys |= INPUT_START;
+					break;
+				}
+				if (event.jbutton.button == 6) {
+					heldKeys |= INPUT_L;
 					break;
 				}
 				if (event.jbutton.button == 7) {
 					heldKeys |= INPUT_START;
 					break;
 				}
-				if (event.jbutton.button == 6) {
-					heldKeys |= INPUT_SELECT;
-					break;
-				}
 				break;
 			case SDL_JOYBUTTONUP:
 				if (event.jbutton.button == 0) {
-					heldKeys &= ~INPUT_A;
-					break;
-				}
-				if (event.jbutton.button == 1) {
-					heldKeys &= ~INPUT_B;
-					break;
-				}
-				if (event.jbutton.button == 2) {
-					heldKeys &= ~INPUT_X;
-					break;
-				}
-				if (event.jbutton.button == 3) {
-					heldKeys &= ~INPUT_Y;
-					break;
-				}
-				if (event.jbutton.button == 4) {
-					heldKeys &= ~INPUT_L;
-					break;
-				}
-				if (event.jbutton.button == 5) {
 					heldKeys &= ~INPUT_R;
 					break;
 				}
-				if (event.jbutton.button == 7) {
+				if (event.jbutton.button == 1) {
+					heldKeys &= ~INPUT_L;
+					break;
+				}
+				if (event.jbutton.button == 2) {
+					heldKeys &= ~INPUT_B;
+					break;
+				}
+				if (event.jbutton.button == 3) {
+					heldKeys &= ~INPUT_A;
+					break;
+				}
+				if (event.jbutton.button == 4) {
+					heldKeys &= ~INPUT_SELECT;
+					break;
+				}
+				if (event.jbutton.button == 5) {
 					heldKeys &= ~INPUT_START;
 					break;
 				}
 				if (event.jbutton.button == 6) {
-					heldKeys &= ~INPUT_SELECT;
+					heldKeys &= ~INPUT_L;
+					break;
+				}
+				if (event.jbutton.button == 7) {
+					heldKeys &= ~INPUT_START;
 					break;
 				}
 				break;

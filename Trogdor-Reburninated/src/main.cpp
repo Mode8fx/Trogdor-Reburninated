@@ -55,6 +55,9 @@ int main(int argv, char** args) {
 #endif
 		return 1;
 	}
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
+	SDL_ShowCursor(SDL_DISABLE);
+#endif
 
 	loadSaveFile();
 	InitializeDisplay();
@@ -490,7 +493,7 @@ int main(int argv, char** args) {
 			/* Game Over Screen */
 			case 5:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				// TODO: draw "IT'S OVER!" and whatever else needs to be handled for this screen
 				renderSprite_static(sprite_game_over_trogdor, gameScreen);
 				switch (frameState) {
@@ -629,7 +632,7 @@ int main(int argv, char** args) {
 			/* Level Beaten Screen */
 			case 9:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_9_nice_work, textChars_font_serif_white_10);
 				// TODO: draw "LEVEL BEATEN!", smoke, and level fire
 				renderSprite_static(sprite_level_beaten_trogdor, gameScreen);
@@ -713,7 +716,7 @@ int main(int argv, char** args) {
 			/* Level 4 Interlude */
 			case 11:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_11_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
@@ -735,7 +738,7 @@ int main(int argv, char** args) {
 			/* Level 8 Interlude */
 			case 12:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_12_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
@@ -757,7 +760,7 @@ int main(int argv, char** args) {
 			/* Level 12 Interlude */
 			case 13:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_13_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
@@ -779,7 +782,7 @@ int main(int argv, char** args) {
 			/* Level 16 Interlude */
 			case 14:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_14_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
@@ -801,7 +804,7 @@ int main(int argv, char** args) {
 			/* Level 20 Interlude */
 			case 15:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_15_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
@@ -823,7 +826,7 @@ int main(int argv, char** args) {
 			/* Level 24 Interlude */
 			case 16:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_16_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
@@ -845,7 +848,7 @@ int main(int argv, char** args) {
 			/* Level 30 Interlude */
 			case 17:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_17_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
@@ -867,7 +870,7 @@ int main(int argv, char** args) {
 			/* Level 34 Interlude */
 			case 18:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_18_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
@@ -889,7 +892,7 @@ int main(int argv, char** args) {
 			/* Level 38 Interlude */
 			case 19:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_19_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
@@ -911,7 +914,7 @@ int main(int argv, char** args) {
 			/* Level 42 Interlude */
 			case 20:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_20_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
@@ -933,7 +936,7 @@ int main(int argv, char** args) {
 			/* Level 46 Interlude */
 			case 21:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_21_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
@@ -955,7 +958,7 @@ int main(int argv, char** args) {
 			/* Level 50 Interlude */
 			case 22:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_22_cutscene, textChars_font_serif_white_9);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
@@ -982,7 +985,7 @@ int main(int argv, char** args) {
 			/* Level 100 Interlude (Credits) */
 			case 23:
 				GM.renderTopBar();
-				drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
+				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
 				// TODO: implement cutscene
 				if (keyPressed(INPUT_START)) { // placeholder
