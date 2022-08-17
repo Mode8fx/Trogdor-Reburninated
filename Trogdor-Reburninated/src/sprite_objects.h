@@ -5,11 +5,13 @@
 
 struct SpriteObject {
     SDL_Surface *surface;
-    Sint16 frame_w;      // the width of a single frame
-    Sint16 frame_h;      // the height of a single animation frame
+    Sint16 frame_w;      // the original width of a single animation frame
+    Sint16 frame_h;      // the original height of a single animation frame
+    Uint16 scaled_w;     // the scaled (actual) width of a single animation frame
+    Uint16 scaled_h;     // the scaled (actual) height of a single animation frame
     Sint8 numAnimFrames; // e.g. Trogdor has four frames in his walking animation
     Sint8 numForms;      // e.g. Trogdor has two forms (facing left, facing right)
-    SDL_Rect dstrect;    // only used for static, singular objects (like logos), not objects that are represented by a class (like peasants)
+    SDL_Rect dstrect;    // represents the size of a sprite, even if it was resized
 };
 
 extern SDL_Rect outputRect;
@@ -42,5 +44,17 @@ extern void drawRectWithAlpha(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
 
 #define OBJ_TO_SCREEN_AT_FRACTION_Y(height, obj, val) \
     (((double)height * val) - (obj.dstrect.h / 2))
+
+#define OBJ_FRAME_TO_MID_SCREEN_X(width, obj) \
+    ((width - obj.frame_w) / 2)
+
+#define OBJ_FRAME_TO_SCREEN_AT_FRACTION_X(width, obj, val) \
+    (((double)width * val) - (obj.frame_w / 2))
+
+#define OBJ_FRAME_TO_MID_SCREEN_Y(height, obj) \
+    ((height - obj.frame_h) / 2)
+
+#define OBJ_FRAME_TO_SCREEN_AT_FRACTION_Y(height, obj, val) \
+    (((double)height * val) - (obj.frame_h / 2))
 
 #endif

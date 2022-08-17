@@ -56,6 +56,7 @@ SoundEffect sfx_kick;
 SoundEffect sfx_burninate;
 SoundEffect sfx_cutscene;
 SoundEffect sfx_gameover;
+SoundEffect sfx_shutup;
 
 /* Sprite Objects */
 SpriteObject sprite_videlectrix_logo;
@@ -314,8 +315,6 @@ bool isIntegerScale = true;
 #if !defined(SDL1)
 SDL_DisplayMode DM;
 #endif
-Uint16 gameWidth_screenScaled = gameWidth;
-Uint16 gameHeight_screenScaled = gameHeight;
 Uint16 gameHiResWidth;
 Uint16 gameHiResHeight;
 Uint16 appWidth;
@@ -442,6 +441,8 @@ void InitializeSFX() {
 	sfx_cutscene.path = "sfx/cutscene.wav";
 	sfxArr[11] = &sfx_gameover;
 	sfx_gameover.path = "sfx/gameover.wav";
+	sfxArr[12] = &sfx_shutup;
+	sfx_shutup.path = "sfx/shutup.wav";
 	sfxArr_strongBad[0] = &sfx_sb1;
 	sfx_sb1.path = "sfx/trog_sb1.wav";
 	sfxArr_strongBad[1] = &sfx_sb2;
@@ -491,12 +492,12 @@ void InitializeSFX() {
 
 void InitializeSpritesPart1() {
 	PREPARE_SPRITE(sprite_videlectrix_logo, (rootDir + "graphics/videlectrix_logo_big.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(appWidth, sprite_videlectrix_logo), OBJ_TO_MID_SCREEN_Y(appHeight, sprite_videlectrix_logo), 1, 1, 1);
+		OBJ_FRAME_TO_MID_SCREEN_X(appWidth, sprite_videlectrix_logo), OBJ_FRAME_TO_MID_SCREEN_Y(appHeight, sprite_videlectrix_logo), 1, 1, 1);
 	// I'm gonna be lazy and just use the title screen directly instead of its separate components
 	PREPARE_SPRITE(sprite_title_screen, (rootDir + "graphics/title_screen.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_title_screen), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_title_screen), 1, 1, 1);
+		0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_trogdor_logo, (rootDir + "graphics/trogdor_logo.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_trogdor_logo), 15, 1, 1, 1);
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_trogdor_logo), 15, 1, 1, 1);
 	// ((2466 + 23) / 5000.0) = 0.4978
 	// (2466 / 5000.0) = 0.4932
 	// ((2183 - 133) / 3600.0) = 0.5694
@@ -512,22 +513,22 @@ void InitializeSpritesPart1() {
 	PREPARE_SPRITE(sprite_level_background_th, (rootDir + "graphics/backgrounds/treasure_hut.bmp").c_str(),
 		0, 25, 1, 1, 1);
 	PREPARE_SPRITE(sprite_burnination_meter_full, (rootDir + "graphics/burnination_meter/full.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_full), 8, 1, 1, 1);
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_full), 8, 1, 1, 1);
 	PREPARE_SPRITE(sprite_burnination_meter_empty, (rootDir + "graphics/burnination_meter/empty.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_empty), 8, 1, 1, 1);
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_empty), 8, 1, 1, 1);
 	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
 		65, 53, 1, 1, 1);
 	PREPARE_SPRITE(sprite_death_message, (rootDir + "graphics/death_message.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_death_message), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_death_message), 5, 2, 1);
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_death_message), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_death_message), 5, 2, 1);
 	PREPARE_SPRITE(sprite_burninate_text, (rootDir + "graphics/burninate_text.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_text), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_text), 1, 1, 1);
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_text), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_text), 1, 1, 1);
 	PREPARE_SPRITE(sprite_burninate_fire, (rootDir + "graphics/burninate_message_fire.bmp").c_str(),
-		OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_fire), 1, 14, 1);
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_fire), 1, 14, 1);
 	PREPARE_SPRITE(sprite_level_beaten_trogdor, (rootDir + "graphics/level_beaten_trogdor_scaled.bmp").c_str(),
 		-5, 41, 1, 1, 1);
 	PREPARE_SPRITE(sprite_game_over_trogdor, (rootDir + "graphics/game_over_trogdor.bmp").c_str(),
 		-13, 75, 1, 1, 1);
-	divider_level_beaten_rect = { 0, 25, gameWidth_screenScaled, 2 };
+	divider_level_beaten_rect = { 0, 25, gameWidth, 2 };
 }
 
 void InitializeSpritesPart2() {
@@ -553,8 +554,13 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
 		0, 0, 2, 3, 1);
 	if (gameHiResMult >= 2) {
+#if !defined(SDL1)
 		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_small.bmp").c_str(),
 			OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, (int)(ceil(gameHiResMult * 1.5)));
+#else
+		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_big.bmp").c_str(), // TODO: This CAN be given proper scaling with small
+			OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, 1);
+#endif
 	} else {
 		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_big.bmp").c_str(),
 			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, 1);
@@ -583,11 +589,23 @@ void InitializeController() {
 
 void renderBackground() {
 	outputRect = sprite_level_background->dstrect;
+#if defined(SDL1)
+	outputRect.x *= screenScale;
+	outputRect.y *= screenScale;
+	outputRect.w *= screenScale;
+	outputRect.h *= screenScale;
+#endif
 	SDL_BlitSurface(sprite_level_background->surface, NULL, gameScreen, &outputRect);
 }
 
 void renderTransparentForeground() {
 	outputRect = gameSrcRect;
+#if defined(SDL1)
+	outputRect.x *= screenScale;
+	outputRect.y *= screenScale;
+	outputRect.w *= screenScale;
+	outputRect.h *= screenScale;
+#endif
 	SDL_BlitSurface(transparentScreen, NULL, gameScreen, &outputRect);
 }
 

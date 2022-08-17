@@ -71,10 +71,15 @@ void setScaling() {
 	scaleGameRelativeToApp();
 	setWidthHeightMults();
 #if defined(SDL1)
-	//SDL_FreeSurface(gameScreen);
-	//gameScreen = SDL_CreateRGBSurface(0, gameToAppDstRect.w, gameToAppDstRect.h, 24, 0, 0, 0, 0);
-	gameWidth_screenScaled = (Uint16)(gameWidth * screenScale);
-	gameHeight_screenScaled = (Uint16)(gameHeight * screenScale);
+	SDL_FreeSurface(gameScreen);
+	gameScreen = SDL_CreateRGBSurface(0, gameToAppDstRect.w, gameToAppDstRect.h, 24, 0, 0, 0, 0);
+	SDL_FreeSurface(appScreen);
+	appScreen = SDL_CreateRGBSurface(0, appToWindowDstRect.w, appToWindowDstRect.h, 24, 0, 0, 0, 0);
+#if !defined(SDL1)
+	SDL_SetColorKey(appScreen, SDL_TRUE, 0xFF00FF);
+#else
+	SDL_SetColorKey(appScreen, SDL_SRCCOLORKEY, 0xFF00FF);
+#endif
 #endif
 	destroyAllTextChars();
 	InitializeTextChars();

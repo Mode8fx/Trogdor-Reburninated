@@ -81,6 +81,7 @@ int main(int argv, char** args) {
 
 		handleInput();
 
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)) && !defined(SDL1)
 		/* Handle Window Size Changes */
 		if (windowSizeChanged) {
 			if (SDL_GetWindowSurface(window)->w < appWidth)
@@ -104,6 +105,7 @@ int main(int argv, char** args) {
 			}
 			windowSizeChanged = false;
 		}
+#endif
 		if (keyPressed(INPUT_FULLSCREEN)) {
 			SDL_toggleFullscreen();
 		}

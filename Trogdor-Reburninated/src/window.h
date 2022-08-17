@@ -6,8 +6,6 @@
 
 constexpr auto gameWidth = 250;
 constexpr auto gameHeight = 180;
-extern Uint16 gameWidth_screenScaled;
-extern Uint16 gameHeight_screenScaled;
 constexpr auto DEFAULT_FRAME_RATE = 16;
 
 extern Uint16 gameHiResWidth;

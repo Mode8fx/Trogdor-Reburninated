@@ -59,9 +59,9 @@ class Cottage {
 		SDL_Rect fire_collision;
 		Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
 			frameState = 9;
-			srcrect = { 0, spriteForm(sprite_cottage, (dir - 1)), (Uint16)sprite_cottage.frame_w, (Uint16)sprite_cottage.frame_h };
+			srcrect = { 0, spriteForm(sprite_cottage, (dir - 1)), sprite_cottage.scaled_w, sprite_cottage.scaled_h };
 			dstrect = { pos_x, pos_y, (Uint16)sprite_cottage.frame_w, (Uint16)sprite_cottage.frame_h };
-			fire_srcrect = { 0, 0, (Uint16)sprite_cottage_fire.frame_w, (Uint16)sprite_cottage_fire.frame_h };
+			fire_srcrect = { 0, 0, sprite_cottage_fire.scaled_w, sprite_cottage_fire.scaled_h };
 			fire_dstrect = { dstrect.x + 5, dstrect.y - 5, (Uint16)sprite_cottage_fire.frame_w, (Uint16)sprite_cottage_fire.frame_h };
 			burning = false;
 			burned = false;
@@ -98,7 +98,7 @@ class Cottage {
 				fire_srcrect.x = spriteFrame(sprite_cottage_fire, (((frameState - 12) / 3) % 4));
 				fire_srcrect.y = spriteForm(sprite_cottage_fire, (direction == 3));
 				if (frameState == 26) {
-					srcrect.x = dstrect.w;
+					srcrect.x = spriteFrame(sprite_cottage, 1);
 				}
 			}
 			if (frameState == 30) {
@@ -128,7 +128,7 @@ class Knight {
 			facingRight = fr;
 			home_x = pos_x;
 			home_y = pos_y;
-			srcrect = { 0, facingRight * sprite_knight.frame_h, (Uint16)sprite_knight.frame_w, (Uint16)sprite_knight.frame_h };
+			srcrect = { 0, spriteForm(sprite_knight, facingRight), sprite_knight.scaled_w, sprite_knight.scaled_h };
 			half_src_w = sprite_knight.frame_w / 2;
 			half_src_h = sprite_knight.frame_h / 2 + 4;
 			dstrect = { home_x, home_y, (Uint16)sprite_knight.frame_w, (Uint16)sprite_knight.frame_h };
@@ -244,7 +244,7 @@ class Peasant {
 		SDL_Rect collision;
 		Peasant() {
 			frameState = 0;
-			srcrect = { 0, 0, (Uint16)sprite_peasant.frame_w, (Uint16)sprite_peasant.frame_h };
+			srcrect = { 0, 0, sprite_peasant.scaled_w, sprite_peasant.scaled_h };
 			dstrect = { 0, 0, (Uint16)sprite_peasant.frame_w, (Uint16)sprite_peasant.frame_h };
 			active = false;
 			myHome = 0;
@@ -315,7 +315,7 @@ class Archer {
 		Archer(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 			frameState = 0;
 			facingRight = fr;
-			srcrect = { 0, spriteForm(sprite_archer, facingRight), (Uint16)sprite_archer.frame_w, (Uint16)sprite_archer.frame_h };
+			srcrect = { 0, spriteForm(sprite_archer, facingRight), sprite_archer.scaled_w, sprite_archer.scaled_h };
 			dstrect = { pos_x, pos_y, (Uint16)sprite_archer.frame_w, (Uint16)sprite_archer.frame_h };
 			active = false;
 		}
@@ -349,7 +349,7 @@ class Arrow {
 		Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 			frameState = 0;
 			facingRight = fr;
-			srcrect = { 0, spriteForm(sprite_arrow, facingRight), (Uint16)sprite_arrow.frame_w, (Uint16)sprite_arrow.frame_h };
+			srcrect = { 0, spriteForm(sprite_arrow, facingRight), sprite_arrow.scaled_w, sprite_arrow.scaled_h };
 			dstrect = { pos_x, pos_y, (Uint16)sprite_arrow.frame_w, (Uint16)sprite_arrow.frame_h };
 			active = false;
 			collision = { 1 + facingRight + dstrect.x, 1 + dstrect.y, 12, 3 };
@@ -390,7 +390,7 @@ class Loot {
 		Loot() {
 		}
 		Loot(Sint16 x_pos, Sint16 y_pos) {
-			srcrect = { 0, 0, (Uint16)sprite_loot.frame_w, (Uint16)sprite_loot.frame_h };
+			srcrect = { 0, 0, sprite_loot.scaled_w, sprite_loot.scaled_h };
 			dstrect = { x_pos, y_pos, (Uint16)sprite_loot.frame_w, (Uint16)sprite_loot.frame_h };
 			active = false;
 		}
@@ -419,15 +419,15 @@ class Trogdor {
 		Trogdor() {
 			frameState = 0;
 			facingRight = true;
-			srcrect = { 0, spriteForm(sprite_trogdor, facingRight), (Uint16)sprite_trogdor.frame_w, (Uint16)sprite_trogdor.frame_h };
-			spawnPos_x = (Sint16)(2780.0 / 5000 * gameWidth) - (srcrect.w / 2);
-			spawnPos_y = (Sint16)(2360.0 / 3600 * gameHeight) - (srcrect.h / 2);
+			srcrect = { 0, spriteForm(sprite_trogdor, facingRight), sprite_trogdor.scaled_w, sprite_trogdor.scaled_h };
+			spawnPos_x = (Sint16)(2780.0 / 5000 * gameWidth) - (sprite_trogdor.frame_w / 2);
+			spawnPos_y = (Sint16)(2360.0 / 3600 * gameHeight) - (sprite_trogdor.frame_h / 2);
 			dstrect = { spawnPos_x, spawnPos_y, (Uint16)sprite_trogdor.frame_w, (Uint16)sprite_trogdor.frame_h };
 			collision = { 11 + dstrect.x, 11 + dstrect.y, 18, 24 };
 			fire_frameState = 0;
-			fire_srcrect = { 0, spriteForm(sprite_trogdor_fire, facingRight), (Uint16)sprite_trogdor_fire.frame_w, (Uint16)sprite_trogdor_fire.frame_h };
+			fire_srcrect = { 0, spriteForm(sprite_trogdor_fire, facingRight), sprite_trogdor_fire.scaled_w, sprite_trogdor_fire.scaled_h };
 			fire_dstrect = { dstrect.x - 24 + (facingRight * 62), dstrect.y + 10, (Uint16)sprite_trogdor_fire.frame_w, (Uint16)sprite_trogdor_fire.frame_h };
-			death_srcrect = { 0, 0, (Uint16)sprite_trogdor_dead.frame_w, (Uint16)sprite_trogdor_dead.frame_h };
+			death_srcrect = { 0, 0, sprite_trogdor_dead.scaled_w, sprite_trogdor_dead.scaled_h };
 			death_dstrect = { dstrect.x + ((dstrect.w + sprite_trogdor_dead.frame_w) / 2), dstrect.y + (dstrect.h - sprite_trogdor_dead.frame_h), (Uint16)sprite_trogdor_dead.frame_w, (Uint16)sprite_trogdor_dead.frame_h };
 			invince = 0;
 			visible = true;
@@ -443,13 +443,13 @@ class Trogdor {
 			switch (frameState) {
 				case 20: // sworded
 					death_srcrect.x = 0;
-					death_dstrect.x = dstrect.x + ((dstrect.w - sprite_trogdor_dead.dstrect.w) / 2);
-					death_dstrect.y = dstrect.y + (dstrect.h - sprite_trogdor_dead.dstrect.h);
+					death_dstrect.x = dstrect.x + ((dstrect.w - sprite_trogdor_dead.frame_w) / 2);
+					death_dstrect.y = dstrect.y + (dstrect.h - sprite_trogdor_dead.frame_h);
 					break;
 				case 50: // arrowed
 					death_srcrect.x = spriteFrame(sprite_trogdor_dead, 1);
-					death_dstrect.x = dstrect.x + ((dstrect.w - sprite_trogdor_dead.dstrect.w) / 2);
-					death_dstrect.y = dstrect.y + (dstrect.h - sprite_trogdor_dead.dstrect.h);
+					death_dstrect.x = dstrect.x + ((dstrect.w - sprite_trogdor_dead.frame_w) / 2);
+					death_dstrect.y = dstrect.y + (dstrect.h - sprite_trogdor_dead.frame_h);
 					break;
 				case 22:
 				case 52:
@@ -478,7 +478,7 @@ class Trogdor {
 		}
 		void resetPos(bool giveInvince) {
 			facingRight = true;
-			srcrect = { 0, spriteForm(sprite_trogdor, facingRight), (Uint16)sprite_trogdor.frame_w, (Uint16)sprite_trogdor.frame_h };
+			srcrect = { 0, spriteForm(sprite_trogdor, facingRight), sprite_trogdor.scaled_w, sprite_trogdor.scaled_h };
 			dstrect = { spawnPos_x, spawnPos_y, (Uint16)sprite_trogdor.frame_w, (Uint16)sprite_trogdor.frame_h };
 			collision = { 11 + dstrect.x, 11 + dstrect.y, 18, 24 };
 			if (giveInvince) {
@@ -547,7 +547,7 @@ class MenuManager {
 			HANDLE_CHEAT(contraActive, contraArrayKey, contraIndex, SFX_SFX2);
 			HANDLE_CHEAT(pacmanActive, pacmanArrayKey, pacmanIndex, SFX_GOLDGET);
 			HANDLE_CHEAT(s3kActive, s3kArrayKey, s3kIndex, SFX_SBBEST);
-			HANDLE_CHEAT(fzxActive, fzxArrayKey, fzxIndex, SFX_SBWORST);
+			HANDLE_CHEAT(fzxActive, fzxArrayKey, fzxIndex, SFX_SHUTUP);
 		}
 		void handlePageChange() {
 			if (keyPressed(INPUT_LEFT)) {
@@ -630,14 +630,14 @@ class GameManager {
 			extraMansCounter = 1;
 			arched = false;
 			dm_frameState = 0;
-			dm_srcrect = { 0, 0, (Uint16)sprite_death_message.frame_w, (Uint16)sprite_death_message.frame_h };
+			dm_srcrect = { 0, 0, sprite_death_message.scaled_w, sprite_death_message.scaled_h };
 			dm_visible = false;
 			b_frameState = 0;
-			bf_srcrect = { 0, 0, (Uint16)sprite_burninate_fire.frame_w, (Uint16)sprite_burninate_fire.frame_h };
-			bf_dstrect = { OBJ_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), sprite_burninate_text.dstrect.y - bf_srcrect.h + 4, (Uint16)sprite_burninate_fire.frame_w, (Uint16)sprite_burninate_fire.frame_h };
+			bf_srcrect = { 0, 0, sprite_burninate_fire.scaled_w, sprite_burninate_fire.scaled_h };
+			bf_dstrect = { OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), sprite_burninate_text.dstrect.y - sprite_burninate_fire.frame_h + 4, (Uint16)sprite_burninate_fire.frame_w, (Uint16)sprite_burninate_fire.frame_h };
 			b_visible = false;
-			bmFull_srcrect = { 0, 0, (Uint16)sprite_burnination_meter_full.frame_w, (Uint16)sprite_burnination_meter_full.frame_h };
-			pm_srcrect = { 0, 0, (Uint16)sprite_peasantometer_icon.frame_w, (Uint16)sprite_peasantometer_icon.frame_h };
+			bmFull_srcrect = { 0, 0, sprite_burnination_meter_full.scaled_w, sprite_burnination_meter_full.scaled_h };
+			pm_srcrect = { 0, 0, sprite_peasantometer_icon.scaled_w, sprite_peasantometer_icon.scaled_h };
 			kick_frameState = 0;
 			numHuts = 0;
 			treasureHutFound = false;
@@ -682,8 +682,8 @@ class GameManager {
 				j = (i * 3) + 2;
 				if (levels[levelIndex][j] > 0) {
 					hutArray[i] = Cottage(
-						(Sint16)OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_cottage, (levels[levelIndex][j + 1] + 2466) / 5000.0) + 8,
-						(Sint16)OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_cottage, (levels[levelIndex][j + 2] + 2183) / 3600.0) - 11,
+						(Sint16)(gameWidth * (((double)levels[levelIndex][j + 1] + 2466) / 5000.0) - 21.5) + 8,
+						(Sint16)(gameHeight * (((double)levels[levelIndex][j + 2] + 2183) / 3600.0) - 18.5) - 11,
 						levels[levelIndex][j]
 					);
 					numHuts++;
@@ -1102,6 +1102,7 @@ class GameManager {
 						j = rand() % numHuts; // j = hutChoice
 						peasantArray[i].myHome = j;
 						peasantArray[i].returning = false;
+						peasantArray[i].burning = false; // this wasn't in the original game, and caused a bug where a squished burning peasant will, upon respawning, immediately burn its cottage
 						peasantArray[i].waiting = false;
 						peasantArray[i].stomped = false;
 						peasantArray[i].direction = hutArray[j].direction;
