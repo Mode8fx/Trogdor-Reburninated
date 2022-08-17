@@ -165,6 +165,7 @@ extern TextObject text_0_loading;
 extern SDL_Rect text_0_loading_censor_rect;
 extern TextObject text_1_presents;
 extern TextObject text_3_click_anywhere_to_start;
+extern TextObject text_3_quit;
 //extern TextObject text_3_programmed;
 //extern TextObject text_3_designed;
 extern TextObject text_3_page;

@@ -285,13 +285,17 @@ int main(int argv, char** args) {
 				frameState++;
 				MM.typeStuff();
 				MM.handlePageChange();
-				if (keyPressed(INPUT_START) && MM.page == 1) {
-					GM = GameManager(MM);
-					GM.levelInit();
-					updateText(&text_4_score_val, to_string(GM.score));
-					updateText(&text_4_mans_val, to_string(GM.mans));
-					updateText(&text_4_level_val, to_string(GM.level));
-					sceneState = 4;
+				if (MM.page == 1) {
+					if (keyPressed(INPUT_START)) {
+						GM = GameManager(MM);
+						GM.levelInit();
+						updateText(&text_4_score_val, to_string(GM.score));
+						updateText(&text_4_mans_val, to_string(GM.mans));
+						updateText(&text_4_level_val, to_string(GM.level));
+						sceneState = 4;
+					} else if (keyPressed(INPUT_SELECT)) {
+						isRunning = false;
+					}
 				}
 				renderSprite_static(sprite_trogdor_logo, gameScreen);
 				if (gameHiResMult < 2) {
@@ -355,6 +359,7 @@ int main(int argv, char** args) {
 							if (frameState % 4 < 2) {
 								renderText(text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult);
 							}
+							renderText(text_3_quit, textChars_font_serif_white_6_mult);
 							break;
 						case 2:
 							renderText(text_3_hints_1, textChars_font_serif_red_6_mult);

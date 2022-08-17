@@ -81,16 +81,27 @@ void InitializeTextObjects() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
 		SET_TEXT("press START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 143 * gameHiResMult);
+#if defined(GAMECUBE)
+		SET_TEXT("Press Z to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 157 * gameHiResMult);
+#else
+		SET_TEXT("Press SELECT to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 157 * gameHiResMult);
+#endif
 #elif defined(SWITCH)
 		SET_TEXT("Press + to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
 		SET_TEXT("press + to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 143 * gameHiResMult);
+		SET_TEXT("Press - to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 157 * gameHiResMult);
 #else
 		SET_TEXT("Press ENTER/START to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
 		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 143 * gameHiResMult);
+		SET_TEXT("Press SELECT/BACKQUOTE to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 157 * gameHiResMult);
 #endif
 		SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_1), 59 * gameHiResMult);
@@ -164,16 +175,27 @@ void InitializeTextObjects() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
 		SET_TEXT("press START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
+#if defined(GAMECUBE)
+		SET_TEXT("Press Z to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
+#else
+		SET_TEXT("Press SELECT to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
+#endif
 #elif defined(SWITCH)
 		SET_TEXT("Press + to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
 		SET_TEXT("press + to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
+		SET_TEXT("Press - to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #else
 		SET_TEXT("Press ENTER/START to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
 		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
+		SET_TEXT("Press SELECT/BACKQUOTE to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #endif
 		SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_1), 59 * gameHiResMult);
