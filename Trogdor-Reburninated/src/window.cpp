@@ -70,7 +70,6 @@ void setScaling() {
 	scaleAppRelativeToWindow();
 	scaleGameRelativeToApp();
 	setWidthHeightMults();
-#if defined(SDL1)
 	SDL_FreeSurface(gameScreen);
 	gameScreen = SDL_CreateRGBSurface(0, gameToAppDstRect.w, gameToAppDstRect.h, 24, 0, 0, 0, 0);
 	SDL_FreeSurface(appScreen);
@@ -80,18 +79,12 @@ void setScaling() {
 #else
 	SDL_SetColorKey(appScreen, SDL_SRCCOLORKEY, 0xFF00FF);
 #endif
-#endif
+	destroyAllSprites();
+	InitializeSpritesPart1();
+	InitializeSpritesPart2();
 	destroyAllTextChars();
 	InitializeTextChars();
 	InitializeTextObjects();
-	SDL_FreeSurface(sprite_end_of_level_trogdor.surface);
-	if (gameHiResMult >= 2) {
-		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_small.bmp").c_str(),
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, sprite_end_of_level_trogdor), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, sprite_end_of_level_trogdor), 1, 1, (int)(ceil(gameHiResMult * 1.5)));
-	} else {
-		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_big.bmp").c_str(),
-			OBJ_TO_MID_SCREEN_X(gameWidth, sprite_end_of_level_trogdor), OBJ_TO_MID_SCREEN_Y(gameHeight, sprite_end_of_level_trogdor), 1, 1, 1);
-	}
 #endif
 }
 

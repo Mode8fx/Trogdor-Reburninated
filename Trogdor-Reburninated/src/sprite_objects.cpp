@@ -7,9 +7,11 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
     temp = IMG_Load(path);
 #if !defined(SDL1)
     SDL_SetColorKey(temp, SDL_TRUE, 0xFF00FF);
-    spriteObj->surface = SDL_ConvertSurfaceFormat(temp, SDL_GetWindowPixelFormat(window), 0);
-    spriteObj->frame_w = spriteObj->surface->w / numAnimFrames;
-    spriteObj->frame_h = spriteObj->surface->h / numForms;
+    if (screenScale > 1) {
+        spriteObj->surface = zoomSurface(temp, screenScale, screenScale, SMOOTHING_OFF);
+    } else {
+        spriteObj->surface = SDL_ConvertSurfaceFormat(temp, SDL_GetWindowPixelFormat(window), 0);
+    }
 #else
     SDL_SetColorKey(temp, SDL_SRCCOLORKEY, 0xFF00FF);
     if (screenScale > 1) {
@@ -17,9 +19,9 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
     } else {
         spriteObj->surface = SDL_DisplayFormat(temp);
     }
+#endif
     spriteObj->frame_w = (Sint16)(spriteObj->surface->w / screenScale / numAnimFrames);
     spriteObj->frame_h = (Sint16)(spriteObj->surface->h / screenScale / numForms);
-#endif
     spriteObj->scaled_w = spriteObj->surface->w / numAnimFrames;
     spriteObj->scaled_h = spriteObj->surface->h / numForms;
     SDL_FreeSurface(temp);
@@ -48,23 +50,19 @@ Sint16 spriteForm(SpriteObject spriteObj, Sint8 formNum) {
 
 void renderSprite(SpriteObject spriteObj, SDL_Rect srect, SDL_Surface *screen, SDL_Rect drect) {
     outputRect = drect;
-#if defined(SDL1)
     if (screen != gameHiResScreen) {
         outputRect.x = (Sint16)(outputRect.x * screenScale);
         outputRect.y = (Sint16)(outputRect.y * screenScale);
         outputRect.w = (Uint16)(outputRect.w * screenScale);
         outputRect.h = (Uint16)(outputRect.h * screenScale);
     }
-#endif
     SDL_BlitSurface(spriteObj.surface, &srect, screen, &outputRect);
 }
 
 void renderSprite_static(SpriteObject spriteObj, SDL_Surface *screen) {
     outputRect = spriteObj.dstrect;
-#if defined(SDL1)
     outputRect.x = (Sint16)(outputRect.x * screenScale);
     outputRect.y = (Sint16)(outputRect.y * screenScale);
-#endif
     SDL_BlitSurface(spriteObj.surface, NULL, screen, &outputRect);
 }
 
@@ -79,12 +77,10 @@ void renderSprite_static_hiRes(SpriteObject spriteObj) {
 
 void drawRect(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b) {
     outputRect = rect;
-#if defined(SDL1)
     outputRect.x = (Sint16)(outputRect.x * screenScale);
     outputRect.y = (Sint16)(outputRect.y * screenScale);
     outputRect.w = (Uint16)(outputRect.w * screenScale);
     outputRect.h = (Uint16)(outputRect.h * screenScale);
-#endif
     SDL_FillRect(gameScreen, &rect, ((r << 16) + (g << 8) + (b)));
 }
 

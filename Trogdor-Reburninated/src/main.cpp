@@ -62,9 +62,13 @@ int main(int argv, char** args) {
 	loadSaveFile();
 	InitializeDisplay();
 
-	/* Initialize SDL_ttf, fonts, and text objects */
+#if defined(ANDROID)
+	/* Initialize SDL_ttf, fonts, text objects, and sprite objects (already done for other systems in InitializeDisplay() via setScaling() */
 	InitializeTextChars();
 	InitializeTextObjects();
+	InitializeSpritesPart1();
+	InitializeSpritesPart2();
+#endif
 
 	/* Initialize Loading Screen rect */
 	text_0_loading_censor_rect = { text_0_loading.dstrect.x, text_0_loading.dstrect.y,
@@ -227,12 +231,10 @@ int main(int argv, char** args) {
 						frameState++;
 						break;
 					case 14:
-						InitializeSpritesPart1();
 						renderText(text_0_loading, textChars_font_serif_white_14);
 						frameState++;
 						break;
 					case 15:
-						InitializeSpritesPart2();
 						renderText(text_0_loading, textChars_font_serif_white_14);
 						frameState++;
 						break;

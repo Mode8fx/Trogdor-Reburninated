@@ -353,6 +353,197 @@ void InitializeTextObjects() {
 	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_one), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_one));
 }
 
+void InitializeMusic() {
+}
+
+void InitializeSFX() {
+	sfxArr[0] = &sfx_burn_hut;
+	sfx_burn_hut.path = "sfx/burn_hut.wav";
+	sfxArr[1] = &sfx_goldget;
+	sfx_goldget.path = "sfx/trog_goldget.wav";
+	sfxArr[2] = &sfx_peasantscream;
+	sfx_peasantscream.path = "sfx/trog_peasantscream.wav";
+	sfxArr[3] = &sfx_sfx2;
+	sfx_sfx2.path = "sfx/trog_sfx2.wav";
+	sfxArr[4] = &sfx_trogador;
+	sfx_trogador.path = "sfx/trogador.wav";
+	sfxArr[5] = &sfx_arrow;
+	sfx_arrow.path = "sfx/arrow.wav";
+	sfxArr[6] = &sfx_squish;
+	sfx_squish.path = "sfx/squish.wav";
+	sfxArr[7] = &sfx_death;
+	sfx_death.path = "sfx/death.wav";
+	sfxArr[8] = &sfx_kick;
+	sfx_kick.path = "sfx/kick.wav";
+	sfxArr[9] = &sfx_burninate;
+	sfx_burninate.path = "sfx/burninate.wav";
+	sfxArr[10] = &sfx_cutscene;
+	sfx_cutscene.path = "sfx/cutscene.wav";
+	sfxArr[11] = &sfx_gameover;
+	sfx_gameover.path = "sfx/gameover.wav";
+	sfxArr[12] = &sfx_shutup;
+	sfx_shutup.path = "sfx/shutup.wav";
+	sfxArr_strongBad[0] = &sfx_sb1;
+	sfx_sb1.path = "sfx/trog_sb1.wav";
+	sfxArr_strongBad[1] = &sfx_sb2;
+	sfx_sb2.path = "sfx/trog_sb2.wav";
+	sfxArr_strongBad[2] = &sfx_sb3;
+	sfx_sb3.path = "sfx/trog_sb3.wav";
+	sfxArr_strongBad[3] = &sfx_sb4;
+	sfx_sb4.path = "sfx/trog_sb4.wav";
+	sfxArr_strongBad[4] = &sfx_sb5;
+	sfx_sb5.path = "sfx/trog_sb5.wav";
+	sfxArr_strongBad[5] = &sfx_sb6;
+	sfx_sb6.path = "sfx/trog_sb6.wav";
+	sfxArr_strongBad[6] = &sfx_sb7;
+	sfx_sb7.path = "sfx/trog_sb7.wav";
+	sfxArr_strongBad[7] = &sfx_sbarch;
+	sfx_sbarch.path = "sfx/trog_sbarch.wav";
+	sfxArr_strongBad[8] = &sfx_sbarchend;
+	sfx_sbarchend.path = "sfx/trog_sbarchend.wav";
+	sfxArr_strongBad[9] = &sfx_sbbest;
+	sfx_sbbest.path = "sfx/trog_sbbest.wav";
+	sfxArr_strongBad[10] = &sfx_sbdooj;
+	sfx_sbdooj.path = "sfx/trog_sbdooj.wav";
+	sfxArr_strongBad[11] = &sfx_sbgameover;
+	sfx_sbgameover.path = "sfx/trog_sbgameover.wav";
+	sfxArr_strongBad[12] = &sfx_sbkerrek;
+	sfx_sbkerrek.path = "sfx/trog_sbkerrek.wav";
+	sfxArr_strongBad[13] = &sfx_sblevelbeat;
+	sfx_sblevelbeat.path = "sfx/trog_sblevelbeat.wav";
+	sfxArr_strongBad[14] = &sfx_sbscore;
+	sfx_sbscore.path = "sfx/trog_sbscore.wav";
+	sfxArr_strongBad[15] = &sfx_sbsecret;
+	sfx_sbsecret.path = "sfx/trog_sbsecret.wav";
+	sfxArr_strongBad[16] = &sfx_sbsquish1;
+	sfx_sbsquish1.path = "sfx/trog_sbsquish1.wav";
+	sfxArr_strongBad[17] = &sfx_sbsquish2;
+	sfx_sbsquish2.path = "sfx/trog_sbsquish2.wav";
+	sfxArr_strongBad[18] = &sfx_sbwin;
+	sfx_sbwin.path = "sfx/trog_sbwin.wav";
+	sfxArr_strongBad[19] = &sfx_sbwin2;
+	sfx_sbwin2.path = "sfx/trog_sbwin2.wav";
+	sfxArr_strongBad[20] = &sfx_sbworst;
+	sfx_sbworst.path = "sfx/trog_sbworst.wav";
+	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
+		sfxArr_strongBad[i]->type = 1;
+	}
+}
+
+void InitializeSpritesPart1() {
+	PREPARE_SPRITE(sprite_videlectrix_logo, (rootDir + "graphics/videlectrix_logo_big.bmp").c_str(),
+		OBJ_FRAME_TO_MID_SCREEN_X(appWidth, sprite_videlectrix_logo), OBJ_FRAME_TO_MID_SCREEN_Y(appHeight, sprite_videlectrix_logo), 1, 1, 1);
+	// I'm gonna be lazy and just use the title screen directly instead of its separate components
+	PREPARE_SPRITE(sprite_title_screen, (rootDir + "graphics/title_screen.bmp").c_str(),
+		0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_trogdor_logo, (rootDir + "graphics/trogdor_logo.bmp").c_str(),
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_trogdor_logo), 15, 1, 1, 1);
+	// ((2466 + 23) / 5000.0) = 0.4978
+	// (2466 / 5000.0) = 0.4932
+	// ((2183 - 133) / 3600.0) = 0.5694
+	// (2183 / 3600.0) = 0.6064
+	PREPARE_SPRITE(sprite_level_background_1, (rootDir + "graphics/backgrounds/1.bmp").c_str(),
+		0, 25, 1, 1, 1);
+	PREPARE_SPRITE(sprite_level_background_2, (rootDir + "graphics/backgrounds/2.bmp").c_str(),
+		0, 25, 1, 1, 1);
+	PREPARE_SPRITE(sprite_level_background_3, (rootDir + "graphics/backgrounds/3.bmp").c_str(),
+		0, 25, 1, 1, 1);
+	PREPARE_SPRITE(sprite_level_background_4, (rootDir + "graphics/backgrounds/4.bmp").c_str(),
+		0, 25, 1, 1, 1);
+	PREPARE_SPRITE(sprite_level_background_th, (rootDir + "graphics/backgrounds/treasure_hut.bmp").c_str(),
+		0, 25, 1, 1, 1);
+	PREPARE_SPRITE(sprite_burnination_meter_full, (rootDir + "graphics/burnination_meter/full.bmp").c_str(),
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_full), 8, 1, 1, 1);
+	PREPARE_SPRITE(sprite_burnination_meter_empty, (rootDir + "graphics/burnination_meter/empty.bmp").c_str(),
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_empty), 8, 1, 1, 1);
+	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
+		65, 53, 1, 1, 1);
+	PREPARE_SPRITE(sprite_death_message, (rootDir + "graphics/death_message.bmp").c_str(),
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_death_message), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_death_message), 5, 2, 1);
+	PREPARE_SPRITE(sprite_burninate_text, (rootDir + "graphics/burninate_text.bmp").c_str(),
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_text), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_text), 1, 1, 1);
+	PREPARE_SPRITE(sprite_burninate_fire, (rootDir + "graphics/burninate_message_fire.bmp").c_str(),
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_fire), 1, 14, 1);
+	PREPARE_SPRITE(sprite_level_beaten_trogdor, (rootDir + "graphics/level_beaten_trogdor_scaled.bmp").c_str(),
+		-5, 41, 1, 1, 1);
+	PREPARE_SPRITE(sprite_game_over_trogdor, (rootDir + "graphics/game_over_trogdor.bmp").c_str(),
+		-13, 75, 1, 1, 1);
+	divider_level_beaten_rect = { 0, 25, gameWidth, 2 };
+}
+
+void InitializeSpritesPart2() {
+	PREPARE_SPRITE(sprite_trogdor, (rootDir + "graphics/trogdor.bmp").c_str(),
+		0, 0, 4, 2, 1);
+	PREPARE_SPRITE(sprite_cottage, (rootDir + "graphics/cottage.bmp").c_str(),
+		0, 0, 2, 4, 1);
+	PREPARE_SPRITE(sprite_cottage_fire, (rootDir + "graphics/cottage_fire.bmp").c_str(),
+		0, 0, 4, 2, 1);
+	PREPARE_SPRITE(sprite_peasantometer_icon, (rootDir + "graphics/peasantometer.bmp").c_str(),
+		0, 3, 2, 1, 1);
+	sprite_peasantometer_icon_init_x = (Uint8)(gameWidth * 66 / gameWidth);
+	PREPARE_SPRITE(sprite_archer, (rootDir + "graphics/archer.bmp").c_str(),
+		0, 0, 2, 2, 1);
+	PREPARE_SPRITE(sprite_arrow, (rootDir + "graphics/arrow.bmp").c_str(),
+		0, 0, 1, 2, 1);
+	PREPARE_SPRITE(sprite_trogdor_fire, (rootDir + "graphics/trogdor_fire.bmp").c_str(),
+		0, 0, 4, 2, 1);
+	PREPARE_SPRITE(sprite_trogdor_dead, (rootDir + "graphics/trogdor_dead.bmp").c_str(),
+		0, 0, 2, 1, 1);
+	PREPARE_SPRITE(sprite_knight, (rootDir + "graphics/knight.bmp").c_str(),
+		0, 0, 3, 2, 1);
+	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
+		0, 0, 2, 3, 1);
+	if (gameHiResMult >= 2) {
+#if !defined(SDL1)
+		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_small.bmp").c_str(),
+			OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, (int)(ceil(gameHiResMult * 1.5)));
+#else
+		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_big.bmp").c_str(), // TODO: This CAN be given proper scaling with small
+			OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, 1);
+#endif
+	} else {
+		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_big.bmp").c_str(),
+			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, 1);
+	}
+	PREPARE_SPRITE(sprite_loot, (rootDir + "graphics/loot.bmp").c_str(),
+		0, 0, 1, 1, 1);
+}
+
+void destroySprite(SpriteObject sprite) {
+	SDL_FreeSurface(sprite.surface);
+}
+
+void destroyAllSprites() {
+	destroySprite(sprite_videlectrix_logo);
+	destroySprite(sprite_title_screen);
+	destroySprite(sprite_trogdor_logo);
+	destroySprite(sprite_level_background_1);
+	destroySprite(sprite_level_background_2);
+	destroySprite(sprite_level_background_3);
+	destroySprite(sprite_level_background_4);
+	destroySprite(sprite_level_background_th);
+	destroySprite(sprite_burnination_meter_full);
+	destroySprite(sprite_burnination_meter_empty);
+	destroySprite(sprite_end_of_level_flash);
+	destroySprite(sprite_death_message);
+	destroySprite(sprite_burninate_text);
+	destroySprite(sprite_burninate_fire);
+	destroySprite(sprite_level_beaten_trogdor);
+	destroySprite(sprite_game_over_trogdor);
+	destroySprite(sprite_trogdor);
+	destroySprite(sprite_cottage);
+	destroySprite(sprite_cottage_fire);
+	destroySprite(sprite_peasantometer_icon);
+	destroySprite(sprite_archer);
+	destroySprite(sprite_arrow);
+	destroySprite(sprite_trogdor_fire);
+	destroySprite(sprite_trogdor_dead);
+	destroySprite(sprite_knight);
+	destroySprite(sprite_peasant);
+	destroySprite(sprite_end_of_level_trogdor);
+	destroySprite(sprite_loot);
+}
+
 void destroyTextChars(TextCharObject textChars[], Uint8 numChars) {
 	for (i = 0; i < numChars; i++) {
 		SDL_FreeSurface(textChars[i].surface);

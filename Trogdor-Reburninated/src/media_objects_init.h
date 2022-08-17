@@ -8,6 +8,12 @@
 
 extern void InitializeTextChars();
 extern void InitializeTextObjects();
+extern void InitializeMusic();
+extern void InitializeSFX();
+extern void InitializeSpritesPart1();
+extern void InitializeSpritesPart2();
+extern void destroySprite(SpriteObject);
+extern void destroyAllSprites();
 extern void destroyTextChars(TextCharObject, Uint8);
 extern void destroyAllTextChars();
 extern void destroyAllSurfaces();
