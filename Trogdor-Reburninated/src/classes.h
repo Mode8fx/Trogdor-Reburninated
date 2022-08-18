@@ -431,8 +431,6 @@ class Trogdor {
 			death_dstrect = { dstrect.x + ((dstrect.w + sprite_trogdor_dead.frame_w) / 2), dstrect.y + (dstrect.h - sprite_trogdor_dead.frame_h), (Uint16)sprite_trogdor_dead.frame_w, (Uint16)sprite_trogdor_dead.frame_h };
 			invince = 0;
 			visible = true;
-			srcrect.x = 0;
-			srcrect.y = srcrect.h;
 			x_offset = 0;
 			y_offset = 0;
 			moveSpeed = 3;
@@ -649,6 +647,34 @@ class GameManager {
 			if (mm.fzxActive) sbVoiceMult = 0;
 			else if (mm.s3kActive) sbVoiceMult = 2;
 			else sbVoiceMult = 1;
+		}
+		void resetAllSrcRects() {
+			for (i = 0; i < MAX_NUM_HUTS; i++) {
+				hutArray[i].srcrect = { 0, spriteForm(sprite_cottage, (hutArray[i].direction - 1)), sprite_cottage.scaled_w, sprite_cottage.scaled_h };
+			}
+			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
+				knightArray[i].srcrect = { 0, spriteForm(sprite_knight, knightArray[i].facingRight), sprite_knight.scaled_w, sprite_knight.scaled_h };
+			}
+			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
+				peasantArray[i].srcrect = { 0, 0, sprite_peasant.scaled_w, sprite_peasant.scaled_h };
+			}
+			for (i = 0; i < 2; i++) {
+				archerArray[i].srcrect = { 0, spriteForm(sprite_archer, archerArray[i].facingRight), sprite_archer.scaled_w, sprite_archer.scaled_h };
+			}
+			for (i = 0; i < MAX_NUM_ARROWS; i++) {
+				arrowArrayL[i].srcrect = { 0, spriteForm(sprite_arrow, arrowArrayL[i].facingRight), sprite_arrow.scaled_w, sprite_arrow.scaled_h };
+				arrowArrayR[i].srcrect = { 0, spriteForm(sprite_arrow, arrowArrayR[i].facingRight), sprite_arrow.scaled_w, sprite_arrow.scaled_h };
+			}
+			for (i = 0; i < MAX_NUM_LOOT; i++) {
+				lootArray[i].srcrect = { 0, 0, sprite_loot.scaled_w, sprite_loot.scaled_h };
+			}
+			player.srcrect = { 0, spriteForm(sprite_trogdor, player.facingRight), sprite_trogdor.scaled_w, sprite_trogdor.scaled_h };
+			player.fire_srcrect = { 0, spriteForm(sprite_trogdor_fire, player.facingRight), sprite_trogdor_fire.scaled_w, sprite_trogdor_fire.scaled_h };
+			player.death_srcrect = { 0, 0, sprite_trogdor_dead.scaled_w, sprite_trogdor_dead.scaled_h };
+			dm_srcrect = { 0, 0, sprite_death_message.scaled_w, sprite_death_message.scaled_h };
+			bf_srcrect = { 0, 0, sprite_burninate_fire.scaled_w, sprite_burninate_fire.scaled_h };
+			bmFull_srcrect = { 0, 0, sprite_burnination_meter_full.scaled_w, sprite_burnination_meter_full.scaled_h };
+			pm_srcrect = { 0, 0, sprite_peasantometer_icon.scaled_w, sprite_peasantometer_icon.scaled_h };
 		}
 		void levelInit() {
 			setBurnination(0);

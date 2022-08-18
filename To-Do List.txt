@@ -2,7 +2,7 @@ To-Do List
 
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Polish:
-- Adjust sprite loading so screen size can be changed mid-game; this was broken by SDL_gfx, but it can be fixed
+- Fix extra lines appearing at high resolutions
 - Get rid of gameHiResScreen; it's no longer needed thanks to SDL_gfx
 - Fix end of level Trogdor scaling (again)
 Final:
