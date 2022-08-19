@@ -19,48 +19,57 @@ void scaleAppRelativeToWindow() {
 	windowWidth = SDL_GetVideoInfo()->current_w;
 	windowHeight = SDL_GetVideoInfo()->current_h;
 #endif
+	screenScale = (double)windowWidth / appWidth;
+	if ((double)windowHeight / appHeight < screenScale) {
+		screenScale = (double)windowHeight / appHeight;
+	}
+	// In SDL2, non-integer scaling is handled by render scaling
+#if !defined(SDL1)
+	screenScale = (int)screenScale;
+#endif
+	if (screenScale < 1) screenScale = 1;
+	trueScreenScaleFull = screenScale;
+	trueScreenScaleInt = (int)trueScreenScaleFull;
+#if !defined(SDL1)
+	if (screenScale > 2) screenScale = 2;
+#endif
+	//allowHiRes = (screenScale >= 2);
+#if !defined(SDL1)
+	screenScale = 1;
+	allowHiRes = false;
+#endif
 	if (isIntegerScale) {
-		screenScale = (double)(min((int)(windowWidth / appWidth), (int)(windowHeight / appHeight)));
-	} else {
-		screenScale = (double)windowWidth / appWidth;
-		if ((double)windowHeight / appHeight < screenScale) {
-			screenScale = (double)windowHeight / appHeight;
+		screenScale = (int)screenScale;
+		if (allowHiRes) {
+			trueScreenScaleFull = (double)trueScreenScaleInt - (trueScreenScaleInt % 2); // integer scale relative to hi-res
+		} else {
+			trueScreenScaleFull = (double)trueScreenScaleInt;
 		}
 	}
-	if (screenScale < 1) screenScale = 1;
-	appToWindowDstRect.w = (int)(appWidth * screenScale);
-	appToWindowDstRect.h = (int)(appHeight * screenScale);
+	gameSrcRect.w = (int)(gameWidth * screenScale);
+	gameSrcRect.h = (int)(gameHeight * screenScale);
+	appSrcRect.w = (int)(appWidth * screenScale);
+	appSrcRect.h = (int)(appHeight * screenScale);
+	appToWindowDstRect.w = (int)(appWidth * trueScreenScaleFull);
+	appToWindowDstRect.h = (int)(appHeight * trueScreenScaleFull);
 	appToWindowDstRect.x = max((int)((windowWidth - appToWindowDstRect.w) / 2), 0);
 	appToWindowDstRect.y = max((int)((windowHeight - appToWindowDstRect.h) / 2), 0);
 }
 
 void scaleGameRelativeToApp() {
-	if (isIntegerScale) {
-		screenScale = (double)(min((int)(appToWindowDstRect.w / appWidth), (int)(appToWindowDstRect.h / appHeight)));
-	} else {
-		screenScale = (double)appToWindowDstRect.w / appWidth;
-		if ((double)appToWindowDstRect.h / appHeight < screenScale) {
-			screenScale = (double)appToWindowDstRect.h / appHeight;
-		}
-	}
-	if (screenScale < 1) screenScale = 1;
-	gameToAppDstRect.w = (int)(gameWidth * screenScale);
-	gameToAppDstRect.h = (int)(gameHeight * screenScale);
-	gameToWindowDstRect.w = gameToAppDstRect.w;
-	gameToWindowDstRect.h = gameToAppDstRect.h;
-	gameToAppDstRect.x = max((int)((appToWindowDstRect.w - gameToAppDstRect.w) / 2), 0);
-	gameToAppDstRect.y = max((int)((appToWindowDstRect.h - gameToAppDstRect.h) / 2), 0);
-	gameToWindowDstRect.x = gameToAppDstRect.x + appToWindowDstRect.x;
-	gameToWindowDstRect.y = gameToAppDstRect.y + appToWindowDstRect.y;
+	gameToWindowDstRect.w = (int)(gameWidth * trueScreenScaleFull);
+	gameToWindowDstRect.h = (int)(gameHeight * trueScreenScaleFull);
+	gameToWindowDstRect.x = max((int)((windowWidth - gameToWindowDstRect.w) / 2), 0);
+	gameToWindowDstRect.y = max((int)((windowHeight - gameToWindowDstRect.h) / 2), 0);
 	SDL_FreeSurface(gameHiResScreen);
-	gameHiResScreen = SDL_CreateRGBSurface(0, gameToAppDstRect.w, gameToAppDstRect.h, 24, 0, 0, 0, 0);
+	gameHiResScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 24, 0, 0, 0, 0);
 #if !defined(SDL1)
 	SDL_SetColorKey(gameHiResScreen, SDL_TRUE, 0xFF00FF);
 #else
 	SDL_SetColorKey(gameHiResScreen, SDL_SRCCOLORKEY, 0xFF00FF);
 #endif
-	gameHiResWidth = gameToAppDstRect.w;
-	gameHiResHeight = gameToAppDstRect.h;
+	gameHiResWidth = gameToWindowDstRect.w;
+	gameHiResHeight = gameToWindowDstRect.h;
 	gameHiResSrcRect.w = gameHiResWidth;
 	gameHiResSrcRect.h = gameHiResHeight;
 }
@@ -71,7 +80,7 @@ void setScaling() {
 	scaleGameRelativeToApp();
 	setWidthHeightMults();
 	SDL_FreeSurface(gameScreen);
-	gameScreen = SDL_CreateRGBSurface(0, gameToAppDstRect.w, gameToAppDstRect.h, 24, 0, 0, 0, 0);
+	gameScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 24, 0, 0, 0, 0);
 	SDL_FreeSurface(appScreen);
 	appScreen = SDL_CreateRGBSurface(0, appToWindowDstRect.w, appToWindowDstRect.h, 24, 0, 0, 0, 0);
 #if !defined(SDL1)

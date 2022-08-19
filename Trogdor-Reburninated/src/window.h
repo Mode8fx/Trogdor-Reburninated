@@ -30,7 +30,7 @@ extern SDL_Surface *windowScreen;
 #endif
 extern SDL_Surface *gameScreen;
 extern SDL_Rect gameSrcRect;
-extern SDL_Rect gameToAppDstRect; // game screen mapping to app
+//extern SDL_Rect gameToAppDstRect; // game screen mapping to app
 extern SDL_Surface *gameHiResScreen;
 extern SDL_Rect gameHiResSrcRect;
 extern SDL_Surface *appScreen;
@@ -40,7 +40,10 @@ extern SDL_Rect gameToWindowDstRect; // game screen mapping to window
 extern SDL_Surface *transparentScreen;
 
 extern bool isWindowed;
-extern double screenScale;
+extern double screenScale; // the multiplier by which graphics should be scaled via SDL_gfx; caps out at 2
+extern int trueScreenScaleInt; // the multiplier by which the screen should be scaled via renderer
+extern double trueScreenScaleFull; // the multiplier by which the screen should be scaled via renderer
+extern bool allowHiRes;
 extern bool isIntegerScale;
 #if !defined(SDL1)
 extern SDL_DisplayMode DM;

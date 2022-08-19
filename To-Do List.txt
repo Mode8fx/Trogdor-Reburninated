@@ -1,10 +1,6 @@
 To-Do List
 
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
-Polish:
-- Fix extra lines appearing at high resolutions
-- Get rid of gameHiResScreen; it's no longer needed thanks to SDL_gfx
-- Fix end of level Trogdor scaling (again)
 Final:
 - Prepare release materials (icons, descriptions, etc.)
 	- PC

@@ -1089,15 +1089,15 @@ int main(int argv, char** args) {
 		//SDL_FillRect(appScreen, NULL, 0x0000FF);
 		// Render Game Window
 		outputTexture = SDL_CreateTextureFromSurface(renderer, gameScreen);
-		SDL_RenderCopy(renderer, outputTexture, NULL, &gameToWindowDstRect);
+		SDL_RenderCopy(renderer, outputTexture, &gameSrcRect, &gameToWindowDstRect);
 		SDL_DestroyTexture(outputTexture); // there was a memory leak, and freeing the gameScreen crashes, so I guess this is the right way to fix it?
 		// Render Game Hi-Res Window
 		outputTexture = SDL_CreateTextureFromSurface(renderer, gameHiResScreen);
-		SDL_RenderCopy(renderer, outputTexture, NULL, &gameToWindowDstRect);
+		SDL_RenderCopy(renderer, outputTexture, &gameHiResSrcRect, &gameToWindowDstRect);
 		SDL_DestroyTexture(outputTexture);
 		// Render (rest of) App Window
 		outputTexture = SDL_CreateTextureFromSurface(renderer, appScreen);
-		SDL_RenderCopy(renderer, outputTexture, NULL, &appToWindowDstRect);
+		SDL_RenderCopy(renderer, outputTexture, &appSrcRect, &appToWindowDstRect);
 		SDL_DestroyTexture(outputTexture);
 
 		SDL_RenderPresent(renderer);

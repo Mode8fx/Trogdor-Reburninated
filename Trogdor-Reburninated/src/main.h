@@ -302,7 +302,7 @@ SDL_Surface *windowScreen;
 #endif
 SDL_Surface *gameScreen;
 SDL_Rect gameSrcRect = { 0, 0, gameWidth, gameHeight };
-SDL_Rect gameToAppDstRect = { 0, 0, gameWidth, gameHeight };
+//SDL_Rect gameToAppDstRect = { 0, 0, gameWidth, gameHeight };
 SDL_Surface *gameHiResScreen;
 SDL_Rect gameHiResSrcRect = { 0, 0, gameWidth, gameHeight };
 SDL_Surface *appScreen;
@@ -312,6 +312,9 @@ SDL_Rect gameToWindowDstRect = { 0, 0, gameWidth, gameHeight };
 SDL_Surface *transparentScreen;
 bool isWindowed = true;
 double screenScale = 1;
+int trueScreenScaleInt = 1;
+double trueScreenScaleFull = 1;
+bool allowHiRes = true;
 bool isIntegerScale = true;
 #if !defined(SDL1)
 SDL_DisplayMode DM;
@@ -392,7 +395,7 @@ void InitializeDisplay() {
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
 	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
-	gameHiResScreen = SDL_CreateRGBSurface(0, gameToAppDstRect.w, gameToAppDstRect.h, 24, 0, 0, 0, 0);
+	gameHiResScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 24, 0, 0, 0, 0);
 	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
 #if !defined(SDL1)
 	SDL_SetColorKey(appScreen, SDL_TRUE, 0xFF00FF);

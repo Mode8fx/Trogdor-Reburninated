@@ -3,19 +3,19 @@
 SDL_Rect outputRect;
 SDL_Surface *temp;
 
-void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFrames, Sint8 numForms) {
+void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFrames, Sint8 numForms, double zoomMult) {
     temp = IMG_Load(path);
 #if !defined(SDL1)
     SDL_SetColorKey(temp, SDL_TRUE, 0xFF00FF);
     if (screenScale > 1) {
-        spriteObj->surface = zoomSurface(temp, screenScale, screenScale, SMOOTHING_OFF);
+        spriteObj->surface = zoomSurface(temp, screenScale * zoomMult, screenScale * zoomMult, SMOOTHING_OFF);
     } else {
         spriteObj->surface = SDL_ConvertSurfaceFormat(temp, SDL_GetWindowPixelFormat(window), 0);
     }
 #else
     SDL_SetColorKey(temp, SDL_SRCCOLORKEY, 0xFF00FF);
     if (screenScale > 1) {
-        spriteObj->surface = zoomSurface(temp, screenScale, screenScale, SMOOTHING_OFF);
+        spriteObj->surface = zoomSurface(temp, screenScale * zoomMult, screenScale * zoomMult, SMOOTHING_OFF);
     } else {
         spriteObj->surface = SDL_DisplayFormat(temp);
     }
