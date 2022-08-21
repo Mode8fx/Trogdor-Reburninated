@@ -143,7 +143,6 @@ TextCharObject textChars_font_serif_2_red_13[90 + 1 - 32];
 char tempCharArray[64];
 Uint8 charCounter;
 Sint16 charWidthCounter;
-std::stringstream ss;
 string tempStr;
 TextObject text_0_loading;
 SDL_Rect text_0_loading_censor_rect;
@@ -456,7 +455,9 @@ void renderTransparentForeground() {
 
 
 void closeController() {
-#if defined(PSP) || defined(SDL1)
+#if defined(PSP)
+	SDL_JoystickClose(joystick);
+#elif defined(SDL1)
 	if (SDL_JoystickOpened(0)) {
 		SDL_JoystickClose(joystick);
 	}

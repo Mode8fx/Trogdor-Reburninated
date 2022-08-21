@@ -20,13 +20,14 @@
 #include <SDL_mixer.h>
 #endif
 
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP)
-#elif !defined(SDL1)
-#include "SDL2_rotozoom.h"
-#elif defined(WII)
+#if defined(WII)
 #include <SDL/SDL_rotozoom.h>
 #elif defined(GAMECUBE)
 #include <SDL_rotozoom.h>
+#elif defined(PSP)
+#include <SDL2/SDL2_rotozoom.h>
+#elif !defined(SDL1)
+#include "SDL2_rotozoom.h"
 #else
 #include "SDL_rotozoom.h"
 #endif

@@ -1,5 +1,7 @@
 #include "text_objects.h"
 
+char tempCharArr[2];
+
 void setText(const char text[], TextObject *textObj, TextCharObject charArr[]) {
     textObj->str = text;
     STRCPY(tempCharArray, textObj->str.c_str());
@@ -57,10 +59,9 @@ void destroyTextObjectTexture(TextCharObject textCharObj) {
 void setFont(TTF_Font *font, string fontFile, int originalSize, double multSize, int style, TextCharObject charArr[], SDL_Color color, Uint32 minIndex, Uint32 maxIndex) {
     font = TTF_OpenFont((rootDir + fontFile).c_str(), max(originalSize, (int)(multSize * gameHiResMult)));
     TTF_SetFontStyle(font, style);
-    for (uint_i = minIndex; uint_i < (maxIndex + 1); uint_i++) {
-        ss.str(std::string());
-        ss << static_cast<char>(uint_i);
-        setTextChar(ss.str().c_str(), font, color, &charArr[uint_i - 32]);
+    for (k = (Sint8)minIndex; k < ((Sint8)maxIndex + 1); k++) {
+        tempCharArr[0] = k;
+        setTextChar(tempCharArr, font, color, &charArr[k - 32]);
     }
     TTF_CloseFont(font);
 }

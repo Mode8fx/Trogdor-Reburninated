@@ -28,7 +28,6 @@ Features:
 - Restore the original game's unused High Scores screen
 - Add basic Records screen
 Polish:
-- Polish title screen graphics
 - Add "Libraries" screen
 - Add "Coming Eventually" screen for Trogdor Reburninated
 - Add "Want more?" screen for other system ports

@@ -10,7 +10,7 @@ ASFLAGS = $(CFLAGS)
 
 LIBDIR =
 LDFLAGS =
-LIBS = -lSDL2main -lSDL2_image -lpng -ljpeg -lSDL2_mixer -lstdc++ -lSDL2_ttf -lSDL2 -lGL -lGLU -lglut -lfreetype -lz -lpspmp3 -lmad -logg -lvorbisenc -lvorbisidec -lvorbis -lvorbisfile -lmikmod \
+LIBS = -lSDL2main -lSDL2_image -lpng -ljpeg -lSDL2_mixer -lstdc++ -lSDL2_ttf -lSDL2_gfx -lSDL2 -lGL -lGLU -lglut -lfreetype -lz -lpspmp3 -lmad -logg -lvorbisenc -lvorbisidec -lvorbis -lvorbisfile -lmikmod \
          -lpspvfpu -lpsphprm -lpspsdk -lpspctrl -lpspumd -lpsprtc -lpsppower -lpspgum -lpspgu -lpspaudiolib -lpspaudio \
          -lm -lpspvram
 
@@ -18,8 +18,8 @@ LIBS = -lSDL2main -lSDL2_image -lpng -ljpeg -lSDL2_mixer -lstdc++ -lSDL2_ttf -lS
 
 EXTRA_TARGETS = EBOOT.PBP
 PSP_EBOOT_TITLE = trogdor-beta
-PSP_EBOOT_ICON=icon.png
-PSP_EBOOT_PIC1=pic.png
+PSP_EBOOT_ICON=logo_icon_psp.png
+PSP_EBOOT_PIC1=background_psp.png
 # psp sound file: PSP_EBOOT_SND0=SND0.at3
 
 PSPSDK=$(shell psp-config --pspsdk-path)
