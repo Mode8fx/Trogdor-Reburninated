@@ -31,7 +31,7 @@ extern Uint32 frameCounter_global;
 
 constexpr auto PI = 3.14159265;
 
-#if defined(SDL1) && !defined(WII) && !defined(GAMECUBE)
+#if defined(SDL1) && !defined(WII) && !defined(GAMECUBE) && !defined(PSP)
 extern FILE _iob[];
 
 extern "C" FILE * __cdecl __iob_func(void);

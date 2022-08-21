@@ -4,32 +4,37 @@
 // to fix conflicting int32_t and uint32_t definitions, comment their typedefs out in `include/SDL/SDL_config_wii.h`
 
 #if defined(PSP)
+#if !defined(SDL1)
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
 #include <SDL2/SDL_mixer.h>
+#include <SDL2/SDL2_rotozoom.h>
+#else
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
+#include <SDL/SDL_mixer.h>
+#include <SDL/SDL_rotozoom.h>
+#endif
 #elif defined(WII)
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_ttf.h>
 #include <SDL/SDL_mixer.h>
+#include <SDL/SDL_rotozoom.h>
 #else
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
-#endif
-
-#if defined(WII)
-#include <SDL/SDL_rotozoom.h>
-#elif defined(GAMECUBE)
+#if defined(GAMECUBE)
 #include <SDL_rotozoom.h>
-#elif defined(PSP)
-#include <SDL2/SDL2_rotozoom.h>
 #elif !defined(SDL1)
 #include "SDL2_rotozoom.h"
 #else
 #include "SDL_rotozoom.h"
+#endif
 #endif
 
 #include <iostream>

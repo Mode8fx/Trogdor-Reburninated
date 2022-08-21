@@ -374,9 +374,14 @@ void InitializeDisplay() {
 
 	/* Set Window/Renderer */
 #if defined(PSP)
+#if !defined(SDL1)
 	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
+#else
+	SDL_WM_SetCaption("Trogdor Beta", NULL);
+	windowScreen = SDL_SetVideoMode(videoSettings.widthSetting, videoSettings.heightSetting, 32, SDL_DOUBLEBUF);
+#endif
 #elif defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID)
 	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -393,9 +398,15 @@ void InitializeDisplay() {
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
+#if !defined(PSP)
 	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
 	gameHiResScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 24, 0, 0, 0, 0);
 	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
+#else
+	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 32, 0, 0, 0, 0);
+	gameHiResScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 32, 0, 0, 0, 0);
+	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 32, 0, 0, 0, 0);
+#endif
 #if !defined(SDL1)
 	SDL_SetColorKey(appScreen, SDL_TRUE, 0xFF00FF);
 #else
@@ -417,13 +428,13 @@ void InitializeSound() {
 }
 
 void InitializeController() {
-#if defined(PSP)
+#if defined(SDL1) // also applies to PSP SDL1
+	SDL_JoystickEventState(SDL_ENABLE);
+	joystick = SDL_JoystickOpen(0);
+	SDL_JoystickEventState(SDL_ENABLE);
+#elif defined(PSP)
 	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
 	joystick = SDL_JoystickOpen(0);
-#elif defined(SDL1)
-	SDL_JoystickEventState(SDL_ENABLE);
-	joystick = SDL_JoystickOpen(0);
-	SDL_JoystickEventState(SDL_ENABLE);
 #else
 	for (i = 0; i < SDL_NumJoysticks(); i++) {
 		if (SDL_IsGameController(i)) {

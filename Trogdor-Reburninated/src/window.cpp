@@ -61,13 +61,6 @@ void scaleGameRelativeToApp() {
 	gameToWindowDstRect.h = (int)(gameHeight * trueScreenScaleFull);
 	gameToWindowDstRect.x = max((int)((windowWidth - gameToWindowDstRect.w) / 2), 0);
 	gameToWindowDstRect.y = max((int)((windowHeight - gameToWindowDstRect.h) / 2), 0);
-	SDL_FreeSurface(gameHiResScreen);
-	gameHiResScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 24, 0, 0, 0, 0);
-#if !defined(SDL1)
-	SDL_SetColorKey(gameHiResScreen, SDL_TRUE, 0xFF00FF);
-#else
-	SDL_SetColorKey(gameHiResScreen, SDL_SRCCOLORKEY, 0xFF00FF);
-#endif
 	gameHiResWidth = gameToWindowDstRect.w;
 	gameHiResHeight = gameToWindowDstRect.h;
 	gameHiResSrcRect.w = gameHiResWidth;
@@ -80,13 +73,23 @@ void setScaling() {
 	scaleGameRelativeToApp();
 	setWidthHeightMults();
 	SDL_FreeSurface(gameScreen);
-	gameScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 24, 0, 0, 0, 0);
 	SDL_FreeSurface(appScreen);
+	SDL_FreeSurface(gameHiResScreen);
+#if !defined(PSP)
+	gameScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 24, 0, 0, 0, 0);
 	appScreen = SDL_CreateRGBSurface(0, appToWindowDstRect.w, appToWindowDstRect.h, 24, 0, 0, 0, 0);
+	gameHiResScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 24, 0, 0, 0, 0);
+#else
+	gameScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 32, 0, 0, 0, 0);
+	appScreen = SDL_CreateRGBSurface(0, appToWindowDstRect.w, appToWindowDstRect.h, 32, 0, 0, 0, 0);
+	gameHiResScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 32, 0, 0, 0, 0);
+#endif
 #if !defined(SDL1)
 	SDL_SetColorKey(appScreen, SDL_TRUE, 0xFF00FF);
+	SDL_SetColorKey(gameHiResScreen, SDL_TRUE, 0xFF00FF);
 #else
 	SDL_SetColorKey(appScreen, SDL_SRCCOLORKEY, 0xFF00FF);
+	SDL_SetColorKey(gameHiResScreen, SDL_SRCCOLORKEY, 0xFF00FF);
 #endif
 	destroyAllSprites();
 	InitializeSpritesPart1();
