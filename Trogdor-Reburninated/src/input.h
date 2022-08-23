@@ -298,7 +298,7 @@ inline void handleInput() {
 			case SDL_MOUSEBUTTONUP:
 				break;
 #endif
-#if !defined(SDL1)
+#if !defined(SDL1) && !defined(PSP)
 			case SDL_CONTROLLERBUTTONDOWN:
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
 					heldDirs_dpad |= INPUT_UP;
@@ -515,7 +515,7 @@ inline void handleInput() {
 					break;
 				}
 				break;
-#else
+#elif defined(GAMECUBE)
 			case SDL_JOYBUTTONDOWN:
 				if (event.jbutton.button == 0) {
 					heldKeys |= INPUT_A;
@@ -581,6 +581,107 @@ inline void handleInput() {
 				}
 				if (event.jbutton.button == 7) {
 					heldKeys &= ~INPUT_START;
+					break;
+				}
+				break;
+#else // PSP
+			case SDL_JOYBUTTONDOWN:
+				if (event.jbutton.button == 8) { // Up
+					heldDirs_dpad |= INPUT_UP;
+					break;
+				}
+				if (event.jbutton.button == 6) { // Down
+					heldDirs_dpad |= INPUT_DOWN;
+					break;
+				}
+				if (event.jbutton.button == 7) { // Left
+					heldDirs_dpad |= INPUT_LEFT;
+					break;
+				}
+				if (event.jbutton.button == 9) { // Right
+					heldDirs_dpad |= INPUT_RIGHT;
+					break;
+				}
+				if (event.jbutton.button == 1) { // O
+					heldKeys |= INPUT_B;
+					break;
+				}
+				if (event.jbutton.button == 2) { // X
+					heldKeys |= INPUT_A;
+					break;
+				}
+				if (event.jbutton.button == 11) { // Start
+					heldKeys |= INPUT_START;
+					break;
+				}
+				if (event.jbutton.button == 10) { // Select
+					heldKeys |= INPUT_SELECT;
+					break;
+				}
+				if (event.jbutton.button == 0) { // Triangle
+					heldKeys |= INPUT_Y;
+					break;
+				}
+				if (event.jbutton.button == 3) { // Square
+					heldKeys |= INPUT_X;
+					break;
+				}
+				if (event.jbutton.button == 4) { // L
+					heldKeys |= INPUT_L;
+					break;
+				}
+				if (event.jbutton.button == 5) { // R
+					heldKeys |= INPUT_R;
+					break;
+				}
+				break;
+			case SDL_JOYBUTTONUP:
+				if (event.jbutton.button == 8) { // Up
+					heldDirs_dpad &= ~INPUT_UP;
+					break;
+				}
+				if (event.jbutton.button == 6) { // Down
+					heldDirs_dpad &= ~INPUT_DOWN;
+					break;
+				}
+				if (event.jbutton.button == 7) { // Left
+					heldDirs_dpad &= ~INPUT_LEFT;
+					break;
+				}
+				if (event.jbutton.button == 9) { // Right
+					heldDirs_dpad &= ~INPUT_RIGHT;
+					break;
+				}
+				if (event.jbutton.button == 1) { // O
+					heldKeys &= ~INPUT_B;
+					break;
+				}
+				if (event.jbutton.button == 2) { // X
+					heldKeys &= ~INPUT_A;
+					break;
+				}
+				if (event.jbutton.button == 11) { // Start
+					heldKeys &= ~INPUT_START;
+					break;
+				}
+				if (event.jbutton.button == 10) { // Select
+					heldKeys &= ~INPUT_SELECT;
+					break;
+				}
+				if (event.jbutton.button == 0) { // Triangle
+					heldKeys &= ~INPUT_Y;
+					break;
+				}
+				if (event.jbutton.button == 3) { // Square
+					heldKeys &= ~INPUT_X;
+					break;
+				}
+				if (event.jbutton.button == 4) { // L
+					heldKeys &= ~INPUT_L;
+					break;
+				}
+				if (event.jbutton.button == 5) { // R
+					heldKeys &= ~INPUT_R;
 					break;
 				}
 				break;

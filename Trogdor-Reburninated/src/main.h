@@ -398,19 +398,12 @@ void InitializeDisplay() {
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
-#if !defined(PSP)
+#if defined(ANDROID)
 	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
 	gameHiResScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 24, 0, 0, 0, 0);
 	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
-#else
-	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 32, 0, 0, 0, 0);
-	gameHiResScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 32, 0, 0, 0, 0);
-	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 32, 0, 0, 0, 0);
-#endif
-#if !defined(SDL1)
 	SDL_SetColorKey(appScreen, SDL_TRUE, 0xFF00FF);
-#else
-	SDL_SetColorKey(appScreen, SDL_SRCCOLORKEY, 0xFF00FF);
+	SDL_SetColorKey(gameHiResScreen, SDL_TRUE, 0xFF00FF);
 #endif
 	setScaling();
 }

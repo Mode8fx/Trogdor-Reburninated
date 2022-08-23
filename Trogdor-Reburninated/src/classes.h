@@ -539,7 +539,11 @@ class MenuManager {
 			fzxActive = false;
 			fzxIndex = 0;
 			page = 1;
-			maxPageNum = 4;
+			if (gameHiResMult < 2) {
+				maxPageNum = 5;
+			} else {
+				maxPageNum = 4;
+			}
 		}
 		void typeStuff() {
 			HANDLE_CHEAT(contraActive, contraArrayKey, contraIndex, SFX_SFX2);

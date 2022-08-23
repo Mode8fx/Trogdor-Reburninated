@@ -6,17 +6,18 @@ Final:
 	- Android
 		- Untested
 	- Switch
-		- Partially tested
+		- Partially tested, seems to work fine
 	- Wii U
 		- Untested
 	- Wii
-		- Partially tested
+		- Partially tested, seems to work fine
 	- Gamecube
 		- I can't test this, but it compiles
 	- Vita
 		- Untested
 	- PSP
-		- Untested
+		- Fix color key not working (convert color keyed surface using SDL_DisplayFormatAlpha())
+		- Fix sound being really screwy and corrupting graphics
 - Package everything up
 
 Trogdor Classic [faithful recreation of original Trogdor flash game]:
