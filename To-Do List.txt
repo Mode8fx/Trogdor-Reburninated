@@ -1,10 +1,13 @@
 To-Do List
 
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
+Polish:
+- Add version number to title screen
+- Add Quit to Menu button to game
 Final:
 - Test and finalize controls
-	- Android
-		- Untested
+	- PC
+		- Finalize testing
 	- Switch
 		- Partially tested, seems to work fine
 	- Wii U
@@ -15,9 +18,6 @@ Final:
 		- I can't test this, but it compiles
 	- Vita
 		- Untested
-	- PSP
-		- Fix color key not working (convert color keyed surface using SDL_DisplayFormatAlpha())
-		- Fix sound being really screwy and corrupting graphics
 - Package everything up
 
 Trogdor Classic [faithful recreation of original Trogdor flash game]:
@@ -26,17 +26,46 @@ Features:
 - Rework cutscene system so that animations are easier to add
 - Add art and animation to all cutscenes
 - Add an overlay
-- Restore the original game's unused High Scores screen
-- Add basic Records screen
+- Add a simple Options menu with a few customizable settings
+	- Starting Level
+	- Starting Lives
+	- Extra Lives Interval
+	- Peasant Penalty
+	- Archer Frequency
+	- Treasure Hut Accessibility
+	- Strong Bad Commentary Frequency
+	- Debug Cheat Toggle
 Polish:
+- Add "failed to load asset" error screen
+	- The game currently crashes if an asset is missing/fails to load; there should be a dedicated error screen instead
 - Add "Libraries" screen
-- Add "Coming Eventually" screen for Trogdor Reburninated
+- Add "Coming Eventually" screen for Trogdor Plus
 - Add "Want more?" screen for other system ports
 - Finalize all text positions
+Additional Ports:
+- Android
 Final:
-- Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
+- Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita
 - Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
-- ???
+
+Trogdor Plus [an update to be developed between Classic and Reburninated]
+Features:
+- Restore the original game's unused High Scores screen
+- Add basic Records screen
+- Add Hi-Res Sprite Mode and AI upscale existing sprites
+	- Since resources are openly editable, an artist can replace these AI upscales with actual new art by simply replacing the files
+- Add save data support
+Polish:
+- Add "Coming Eventually" screen for Trogdor Reburninated
+Additional Ports:
+- PSP (already compiles, but there are major issues)
+	- Rework graphics loading for PSP version to use SDL2 textures instead of SDL1 surfaces
+	- Rework art assets from BMP with color key to PNG with alpha channel
+	- Sound may have to be reworked to use something besides SDL_mixer
+- Libretro
+Final:
+- Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, LibRetro
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
 
 Trogdor Reburninated [enhanced port of Trogdor with additional options, achievements, and more; mainly inspired by XBLA ports of arcade games]:
 Features:
@@ -53,10 +82,6 @@ Final:
 - ???
 
 Stretch Goals:
-- Port to LibRetro core
-	- Coolness:   5
-	- Difficulty: 4?
-	- Analysis:   Well worth the trouble. This would likely lead to the game running on many devices it wasn't originally designed for. Difficulty depends on how easily SDL 1.2 apps can be ported to a core.
 - Port to Miyoo Mini (and other retro handhelds?)
 	- Coolness:   3
 	- Difficulty: 2
