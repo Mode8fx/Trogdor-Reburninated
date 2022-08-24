@@ -100,7 +100,7 @@ void InitializeTextObjects() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
 		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 143 * gameHiResMult);
-		SET_TEXT("Press SELECT/BACKQUOTE to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press SELECT/BACKSPACE to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 157 * gameHiResMult);
 #endif
 		SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6_mult,
@@ -140,6 +140,8 @@ void InitializeTextObjects() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), 129 * gameHiResMult);
 		SET_TEXT("https://github.com/Mips96", text_3_credits_7, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), 143 * gameHiResMult);
+		SET_TEXT("v0.9", text_3_credits_8, textChars_font_serif_white_6_mult,
+			gameHiResWidth - (text_3_credits_8.dstrect.w * 1.5), gameHiResHeight - (text_3_credits_8.dstrect.h * 1.5));
 		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, textChars_font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
 		SET_TEXT("\"Trogdor Classic\"", text_3_coming_soon_2, textChars_font_serif_white_6_mult,
@@ -150,7 +152,7 @@ void InitializeTextObjects() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), 101 * gameHiResMult);
 		SET_TEXT("animations!", text_3_coming_soon_4a, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4a), 115 * gameHiResMult);
-		SET_TEXT("-Restored High Scores screen!", text_3_coming_soon_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Customizable options!", text_3_coming_soon_5, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 129 * gameHiResMult);
 		SET_TEXT("-More polish!", text_3_coming_soon_6, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 143 * gameHiResMult);
@@ -194,7 +196,7 @@ void InitializeTextObjects() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
 		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press SELECT/BACKQUOTE to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press SELECT/BACKSPACE to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #endif
 		SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6_mult,
@@ -226,6 +228,8 @@ void InitializeTextObjects() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), 129 * gameHiResMult);
 		SET_TEXT("https://github.com/Mips96/Trogdor-Reburninated", text_3_credits_7, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), 143 * gameHiResMult);
+		SET_TEXT("v0.9", text_3_credits_8, textChars_font_serif_white_6_mult,
+			gameHiResWidth - (text_3_credits_8.dstrect.w * 1.5), gameHiResHeight - (text_3_credits_8.dstrect.h * 1.5));
 		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, textChars_font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
 		SET_TEXT("\"Trogdor Classic\"", text_3_coming_soon_2, textChars_font_serif_white_6_mult,
@@ -234,7 +238,7 @@ void InitializeTextObjects() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), 87 * gameHiResMult);
 		SET_TEXT("-Level Beaten / Game Over animations!", text_3_coming_soon_4, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), 101 * gameHiResMult);
-		SET_TEXT("-Unused High Scores screen restored!", text_3_coming_soon_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Customizable options!", text_3_coming_soon_5, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 115 * gameHiResMult);
 		SET_TEXT("-More polish!", text_3_coming_soon_6, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 129 * gameHiResMult);
@@ -253,16 +257,22 @@ void InitializeTextObjects() {
 	SET_TEXT("??", text_4_level_val, textChars_font_serif_red_6,
 		230 * gameHiResMult, 11 * gameHiResMult);
 	SET_TEXT("paused", text_4_paused_1, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 145 * gameHiResMult);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 130 * gameHiResMult);
 #if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 160 * gameHiResMult);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
+	SET_TEXT("press 'A+SELECT' to quit", text_4_paused_3, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(SWITCH)
 	SET_TEXT("press '+' to resume", text_4_paused_2, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 160 * gameHiResMult);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
+	SET_TEXT("press 'A and -' to quit", text_4_paused_3, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #else
 	SET_TEXT("press 'START/ENTER' to resume", text_4_paused_2, textChars_font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 160 * gameHiResMult);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
+	SET_TEXT("press 'A+SELECT/Z+BACKSPACE' to quit", text_4_paused_3, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #endif
 	/* 5: Game Over */
 	/* 6: Game (Treasure Hut) */

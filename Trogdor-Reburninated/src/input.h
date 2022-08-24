@@ -43,7 +43,7 @@ constexpr auto INPUT_Y          = (1 <<  7); // v
 constexpr auto INPUT_L          = (1 <<  8); // q
 constexpr auto INPUT_R          = (1 <<  9); // e
 constexpr auto INPUT_START      = (1 << 10); // enter
-constexpr auto INPUT_SELECT     = (1 << 11); // ` (backquote)
+constexpr auto INPUT_SELECT     = (1 << 11); // backspace
 constexpr auto INPUT_FULLSCREEN = (1 << 12); // f
 constexpr auto INPUT_ALL_DIRS   = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIGHT;
 
@@ -220,7 +220,7 @@ inline void handleInput() {
 					heldKeys |= INPUT_START;
 					break;
 				}
-				if (event.key.keysym.sym == SDLK_BACKQUOTE) {
+				if (event.key.keysym.sym == SDLK_BACKSPACE) {
 					heldKeys |= INPUT_SELECT;
 					break;
 				}
@@ -274,7 +274,7 @@ inline void handleInput() {
 					heldKeys &= ~INPUT_START;
 					break;
 				}
-				if (event.key.keysym.sym == SDLK_BACKQUOTE) {
+				if (event.key.keysym.sym == SDLK_BACKSPACE) {
 					heldKeys &= ~INPUT_SELECT;
 					break;
 				}

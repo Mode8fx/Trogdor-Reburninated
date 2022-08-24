@@ -88,16 +88,26 @@ int main(int argv, char** args) {
 
 		handleInput();
 
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)) && !defined(SDL1)
+		if (keyPressed(INPUT_FULLSCREEN)) {
+			SDL_toggleFullscreen();
+		}
+		if (keyPressed(INPUT_Y)) {
+			isIntegerScale = !isIntegerScale;
+			windowSizeChanged = true;
+		}
 		/* Handle Window Size Changes */
 		if (windowSizeChanged) {
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)) && !defined(SDL1)
 			if (SDL_GetWindowSurface(window)->w < appWidth)
 				SDL_SetWindowSize(window, appWidth, SDL_GetWindowSurface(window)->h);
 			if (SDL_GetWindowSurface(window)->h < appHeight)
 				SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight);
 			// If you resize the window to within 6% of an integer ratio, snap to that ratio
-			snapWindow_x(0.06);
-			snapWindow_y(0.06);
+			if (isIntegerScale) {
+				snapWindow_x(0.06);
+				snapWindow_y(0.06);
+			}
+#endif
 			setScaling();
 			updateText(&text_4_score_val, to_string(GM.score));
 			updateText(&text_4_mans_val, to_string(GM.mans));
@@ -112,13 +122,6 @@ int main(int argv, char** args) {
 			}
 			GM.resetAllSrcRects();
 			windowSizeChanged = false;
-		}
-#endif
-		if (keyPressed(INPUT_FULLSCREEN)) {
-			SDL_toggleFullscreen();
-		}
-		if (keyPressed(INPUT_Y)) {
-			SDL_toggleIntegerScale();
 		}
 
 		/* Clear Screen */
@@ -338,6 +341,7 @@ int main(int argv, char** args) {
 							renderText(text_3_credits_5, textChars_font_serif_white_6_mult);
 							renderText(text_3_credits_6, textChars_font_serif_white_6_mult);
 							renderText(text_3_credits_7, textChars_font_serif_white_6_mult);
+							renderText(text_3_credits_8, textChars_font_serif_white_6_mult);
 							break;
 						case 5:
 							renderText(text_3_coming_soon_1, textChars_font_serif_red_6_mult);
@@ -381,6 +385,7 @@ int main(int argv, char** args) {
 							renderText(text_3_credits_5, textChars_font_serif_white_6_mult);
 							renderText(text_3_credits_6, textChars_font_serif_white_6_mult);
 							renderText(text_3_credits_7, textChars_font_serif_white_6_mult);
+							renderText(text_3_credits_8, textChars_font_serif_white_6_mult);
 							break;
 						default:
 							renderText(text_3_coming_soon_1, textChars_font_serif_red_6_mult);
@@ -483,6 +488,11 @@ int main(int argv, char** args) {
 						if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
 							renderText(text_4_paused_1, textChars_font_serif_white_6);
 							renderText(text_4_paused_2, textChars_font_serif_white_6);
+							renderText(text_4_paused_3, textChars_font_serif_white_6);
+						}
+						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
+							sceneState = 3;
+							MM = MenuManager();
 						}
 					}
 					if (GM.inTreasureHut) {
@@ -589,6 +599,11 @@ int main(int argv, char** args) {
 						if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
 							renderText(text_4_paused_1, textChars_font_serif_white_6);
 							renderText(text_4_paused_2, textChars_font_serif_white_6);
+							renderText(text_4_paused_3, textChars_font_serif_white_6);
+						}
+						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
+							sceneState = 3;
+							MM = MenuManager();
 						}
 					}
 					if (!GM.inTreasureHut) {

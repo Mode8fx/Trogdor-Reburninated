@@ -147,6 +147,5 @@ extern void setScaling();
 extern void snapWindow_x(double);
 extern void snapWindow_y(double);
 extern void SDL_toggleFullscreen();
-extern void SDL_toggleIntegerScale();
 
 #endif

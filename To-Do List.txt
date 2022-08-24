@@ -1,9 +1,6 @@
 To-Do List
 
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
-Polish:
-- Add version number to title screen
-- Add Quit to Menu button to game
 Final:
 - Test and finalize controls
 	- PC

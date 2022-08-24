@@ -23,21 +23,10 @@ void scaleAppRelativeToWindow() {
 	if ((double)windowHeight / appHeight < screenScale) {
 		screenScale = (double)windowHeight / appHeight;
 	}
-	// In SDL2, non-integer scaling is handled by render scaling
-#if !defined(SDL1)
-	screenScale = (int)screenScale;
-#endif
 	if (screenScale < 1) screenScale = 1;
-	trueScreenScaleFull = screenScale;
-	trueScreenScaleInt = (int)trueScreenScaleFull;
-#if !defined(SDL1)
-	if (screenScale > 2) screenScale = 2;
-#endif
+	trueScreenScaleInt = (int)screenScale;
 	//allowHiRes = (screenScale >= 2);
-#if !defined(SDL1)
-	screenScale = 1;
 	allowHiRes = false;
-#endif
 	if (isIntegerScale) {
 		screenScale = (int)screenScale;
 		if (allowHiRes) {
@@ -45,7 +34,16 @@ void scaleAppRelativeToWindow() {
 		} else {
 			trueScreenScaleFull = (double)trueScreenScaleInt;
 		}
+	} else {
+		trueScreenScaleFull = screenScale;
 	}
+	PRINT(trueScreenScaleFull);
+#if !defined(SDL1)
+	// In SDL2, non-integer game screen scaling is handled by render scaling
+	screenScale = (int)screenScale;
+	if (screenScale > 2) screenScale = 2;
+	screenScale = 1; // temporary
+#endif
 	gameSrcRect.w = (int)(gameWidth * screenScale);
 	gameSrcRect.h = (int)(gameHeight * screenScale);
 	appSrcRect.w = (int)(appWidth * screenScale);
@@ -137,9 +135,4 @@ void SDL_toggleFullscreen() {
 	}
 	//setScaling();
 #endif
-}
-
-void SDL_toggleIntegerScale() {
-	isIntegerScale = !isIntegerScale;
-	setScaling();
 }
