@@ -22,7 +22,6 @@ Features:
 - Add animation to Level Beaten and Game Over screens
 - Rework cutscene system so that animations are easier to add
 - Add art and animation to all cutscenes
-- Add an overlay
 - Add a simple Options menu with a few customizable settings
 	- Starting Level
 	- Starting Lives
@@ -43,7 +42,7 @@ Additional Ports:
 - Android
 Final:
 - Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita
-- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita
 
 Trogdor Plus [an update to be developed between Classic and Reburninated]
 Features:
@@ -62,7 +61,7 @@ Additional Ports:
 - Libretro
 Final:
 - Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, LibRetro
-- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, LibRetro
 
 Trogdor Reburninated [enhanced port of Trogdor with additional options, achievements, and more; mainly inspired by XBLA ports of arcade games]:
 Features:

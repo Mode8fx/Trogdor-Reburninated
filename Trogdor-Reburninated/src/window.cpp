@@ -19,6 +19,13 @@ void scaleAppRelativeToWindow() {
 	windowWidth = SDL_GetVideoInfo()->current_w;
 	windowHeight = SDL_GetVideoInfo()->current_h;
 #endif
+	if (!isIntegerScale) {
+		appWidth = gameWidth;
+		appHeight = gameHeight;
+	} else {
+		appWidth = 320;
+		appHeight = 240;
+	}
 	screenScale = (double)windowWidth / appWidth;
 	if ((double)windowHeight / appHeight < screenScale) {
 		screenScale = (double)windowHeight / appHeight;

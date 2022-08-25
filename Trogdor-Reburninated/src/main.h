@@ -89,6 +89,7 @@ SpriteObject sprite_burninate_fire;
 SpriteObject sprite_level_beaten_trogdor;
 SpriteObject sprite_game_over_trogdor;
 SpriteObject sprite_loot;
+SpriteObject sprite_overlay_basement;
 SDL_Rect     divider_level_beaten_rect;
 
 /* Fonts */
@@ -368,8 +369,8 @@ void InitializeDisplay() {
 	videoSettings.heightSetting = SYSTEM_HEIGHT;
 	SDL_SetHint(SDL_HINT_ORIENTATIONS, "Landscape");
 #endif
-	appWidth = gameHeight * 16 / 9; // for now
-	appHeight = gameHeight;
+	appWidth = 320;
+	appHeight = 240;
 	appSrcRect = { 0, 0, appWidth, appHeight };
 	frameRate = DEFAULT_FRAME_RATE;
 	setWidthHeightMults();

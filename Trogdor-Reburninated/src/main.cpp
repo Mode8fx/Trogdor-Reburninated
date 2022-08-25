@@ -1099,6 +1099,9 @@ int main(int argv, char** args) {
 		/* Free Sound Effects That Have Finished Playing */
 		if (sceneState > 0) freeFinishedSoundChunks();
 
+		/* Draw Overlay (this can and probably should be optimized later) */
+		if (sceneState >= 2 && isIntegerScale) renderSprite_static(sprite_overlay_basement, appScreen);
+
 		/* Update Screen */
 #if !defined(SDL1)
 		//SDL_FillRect(appScreen, NULL, 0x0000FF);

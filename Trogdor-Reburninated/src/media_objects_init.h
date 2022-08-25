@@ -16,7 +16,6 @@ extern void destroySprite(SpriteObject);
 extern void destroyAllSprites();
 extern void destroyTextChars(TextCharObject, Uint8);
 extern void destroyAllTextChars();
-extern void destroyAllSurfaces();
 
 extern SpriteObject sprite_videlectrix_logo;
 extern SpriteObject sprite_title_screen;
@@ -48,6 +47,7 @@ extern SpriteObject sprite_burninate_fire;
 extern SpriteObject sprite_level_beaten_trogdor;
 extern SpriteObject sprite_game_over_trogdor;
 extern SpriteObject sprite_loot;
+extern SpriteObject sprite_overlay_basement;
 extern SDL_Rect     divider_level_beaten_rect;
 
 #define SFX_BURN_HUT      sfxArr[0]
