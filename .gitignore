@@ -408,3 +408,4 @@ Makefile
 *.nacp
 *.nro
 *.o
+*.lnk

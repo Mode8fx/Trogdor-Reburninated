@@ -44,7 +44,6 @@ void scaleAppRelativeToWindow() {
 	} else {
 		trueScreenScaleFull = screenScale;
 	}
-	PRINT(trueScreenScaleFull);
 #if !defined(SDL1)
 	// In SDL2, non-integer game screen scaling is handled by render scaling
 	screenScale = (int)screenScale;

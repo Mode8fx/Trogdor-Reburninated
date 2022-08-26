@@ -30,7 +30,7 @@ const string rootDir = "ux0:data/Trogdor-Beta/";
 #elif defined(WII)
 const string rootDir = "sd:/apps/Trogdor-Beta/";
 #elif defined(GAMECUBE)
-const string rootDir = "sd:/Trogdor-Beta/"
+const string rootDir = "sd:/Trogdor-Beta/";
 #else
 const string rootDir = "";
 #endif

@@ -1137,8 +1137,8 @@ int main(int argv, char** args) {
 		/* Cap Framerate */
 		frameCounter_global++;
 		frameTime = SDL_GetTicks() - (Uint32)timer_global.now;
-		if (frameTime < (Uint32)(1000 / frameRate)) {
-			SDL_Delay((1000 / frameRate) - frameTime);
+		if (frameTime < ticksPerFrame) {
+			SDL_Delay(ticksPerFrame - frameTime);
 		}
 	}
 

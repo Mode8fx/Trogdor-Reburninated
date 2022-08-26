@@ -3,8 +3,6 @@ To-Do List
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Final:
 - Test and finalize controls
-	- PC
-		- Finalize testing
 	- Switch
 		- Partially tested, seems to work fine
 	- Wii U

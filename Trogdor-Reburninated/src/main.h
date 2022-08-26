@@ -333,6 +333,7 @@ Uint16 windowHeight;
 double appWidthMult;
 double appHeightMult;
 Uint16 frameRate;
+Uint32 ticksPerFrame;
 
 /* Save File */
 SDL_RWops *saveFile;
@@ -373,6 +374,7 @@ void InitializeDisplay() {
 	appHeight = 240;
 	appSrcRect = { 0, 0, appWidth, appHeight };
 	frameRate = DEFAULT_FRAME_RATE;
+	ticksPerFrame = (Uint32)(1000 / frameRate);
 	setWidthHeightMults();
 
 	/* Set Window/Renderer */
