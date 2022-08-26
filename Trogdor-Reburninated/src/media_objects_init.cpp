@@ -140,7 +140,7 @@ void InitializeTextObjects() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), 129 * gameHiResMult);
 		SET_TEXT("https://github.com/Mips96", text_3_credits_7, textChars_font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), 143 * gameHiResMult);
-		SET_TEXT("v0.9", text_3_credits_8, textChars_font_serif_white_6_mult,
+		SET_TEXT("v0.8", text_3_credits_8, textChars_font_serif_white_6_mult,
 			gameHiResWidth - (text_3_credits_8.dstrect.w * 1.5), gameHiResHeight - (text_3_credits_8.dstrect.h * 1.5));
 		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, textChars_font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
@@ -258,10 +258,15 @@ void InitializeTextObjects() {
 		230 * gameHiResMult, 11 * gameHiResMult);
 	SET_TEXT("paused", text_4_paused_1, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 130 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
+#if defined(WII_U) || defined(WII) || defined(GAMECUBE) || defined(ANDROID)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
 	SET_TEXT("press 'A+SELECT' to quit", text_4_paused_3, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
+#elif defined(VITA) || defined(PSP)
+	SET_TEXT("press 'START' to resume", text_4_paused_2, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
+	SET_TEXT("press 'X+SELECT' to quit", text_4_paused_3, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(SWITCH)
 	SET_TEXT("press '+' to resume", text_4_paused_2, textChars_font_serif_white_6,

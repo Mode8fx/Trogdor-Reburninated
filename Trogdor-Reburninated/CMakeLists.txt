@@ -57,7 +57,7 @@ if (VITA)
 	# find_package(PkgConfig REQUIRED)
 	add_definitions(-DVITA)
 	
-	set(VITA_APP_NAME "trogdorbeta")
+	set(VITA_APP_NAME "Trogdor Beta")
 	set(VITA_TITLEID  "TROG23820")
 	set(VITA_VERSION  "01.00")
 
