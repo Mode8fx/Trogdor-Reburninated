@@ -35,8 +35,8 @@ extern FILE _iob[];
 extern "C" FILE * __cdecl __iob_func(void);
 #endif
 
-extern void SYSTEM_SPECIFIC_OPEN();
-extern void SYSTEM_SPECIFIC_CLOSE();
+extern void systemSpecificOpen();
+extern void systemSpecificClose();
 
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
 #define STRCPY(dest, src) strcpy_s(dest, src);

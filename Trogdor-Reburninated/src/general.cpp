@@ -8,15 +8,11 @@ FILE * __cdecl __iob_func(void) {
 }
 #endif
 
-void SYSTEM_SPECIFIC_OPEN() {
+void systemSpecificOpen() {
 #if defined(WII_U)
 	/* Set SD Card Mount Path */
-	if (!WHBMountSdCard()) {
-		return 0;
-	}
-	if (WHBGetSdCardMountPath() == NULL) {
-		return 0;
-	}
+	WHBMountSdCard();
+	WHBGetSdCardMountPath();
 	string sdPathStr = "/wiiu/apps/Trogdor-Beta";
 	const char *sdPathStart = WHBGetSdCardMountPath();
 	sdPathStr = sdPathStart + sdPathStr;
@@ -34,7 +30,7 @@ void SYSTEM_SPECIFIC_OPEN() {
 #endif
 }
 
-void SYSTEM_SPECIFIC_CLOSE() {
+void systemSpecificClose() {
 #if defined(WII_U)
 	/* Unmount SD Card */
 	WHBUnmountSdCard();

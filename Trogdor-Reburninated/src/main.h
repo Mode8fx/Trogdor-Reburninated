@@ -515,7 +515,7 @@ void DestroyAll() {
 	/* Renderer/Screen and Window */
 	destroyDisplay();
 	SDL_Quit();
-	SYSTEM_SPECIFIC_CLOSE();
+	systemSpecificClose();
 }
 
 #endif

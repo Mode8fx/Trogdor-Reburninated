@@ -42,7 +42,7 @@ double double_i;
 
 int main(int argv, char** args) {
 	isRunning = true;
-	SYSTEM_SPECIFIC_OPEN();
+	systemSpecificOpen();
 
 	/* Initialize SDL */
 #if defined(SDL1) || defined(PSP)
