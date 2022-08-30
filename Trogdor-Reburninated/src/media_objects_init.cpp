@@ -258,10 +258,15 @@ void InitializeTextObjects() {
 		230 * gameHiResMult, 11 * gameHiResMult);
 	SET_TEXT("paused", text_4_paused_1, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 130 * gameHiResMult);
-#if defined(WII_U) || defined(WII) || defined(GAMECUBE) || defined(ANDROID)
+#if defined(WII_U) || defined(GAMECUBE) || defined(ANDROID)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
 	SET_TEXT("press 'A+SELECT' to quit", text_4_paused_3, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
+#elif defined(WII)
+	SET_TEXT("press 'START' to resume", text_4_paused_2, textChars_font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
+	SET_TEXT("press '2+SELECT' to quit", text_4_paused_3, textChars_font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(VITA) || defined(PSP)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, textChars_font_serif_white_6,

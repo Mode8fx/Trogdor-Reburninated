@@ -4,27 +4,38 @@ SDL_Rect outputRect;
 SDL_Surface *temp_sprite;
 
 void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFrames, Sint8 numForms, double zoomMult) {
+#if !defined(SDL1)
+    if (spriteObj->texture == NULL) {
+        temp_sprite = IMG_Load(path);
+        spriteObj->frame_w = (Sint16)(temp_sprite->w / numAnimFrames);
+        spriteObj->frame_h = (Sint16)(temp_sprite->h / numForms);
+        spriteObj->numAnimFrames = numAnimFrames;
+        spriteObj->numForms = numForms;
+        SDL_SetColorKey(temp_sprite, SDL_TRUE, 0xFF00FF);
+        spriteObj->texture = SDL_CreateTextureFromSurface(renderer, temp_sprite);
+        SDL_FreeSurface(temp_sprite);
+        spriteObj->scaled_w = (Uint16)(spriteObj->frame_w);
+        spriteObj->scaled_h = (Uint16)(spriteObj->frame_h);
+    }
+#else
+    if (spriteObj->surface != NULL) {
+        SDL_FreeSurface(spriteObj->surface);
+    }
     temp_sprite = IMG_Load(path);
     spriteObj->frame_w = (Sint16)(temp_sprite->w / numAnimFrames);
     spriteObj->frame_h = (Sint16)(temp_sprite->h / numForms);
     spriteObj->numAnimFrames = numAnimFrames;
     spriteObj->numForms = numForms;
-#if !defined(SDL1)
-    SDL_SetColorKey(temp_sprite, SDL_TRUE, 0xFF00FF);
-    spriteObj->texture = SDL_CreateTextureFromSurface(renderer, temp_sprite);
-    spriteObj->scaled_w = (Uint16)(spriteObj->frame_w);
-    spriteObj->scaled_h = (Uint16)(spriteObj->frame_h);
-#else
     SDL_SetColorKey(temp_sprite, SDL_SRCCOLORKEY, 0xFF00FF);
     if (screenScale > 1) {
         spriteObj->surface = zoomSurface(temp_sprite, screenScale * zoomMult, screenScale * zoomMult, SMOOTHING_OFF);
     } else {
         spriteObj->surface = SDL_DisplayFormat(temp_sprite);
     }
+    SDL_FreeSurface(temp_sprite);
     spriteObj->scaled_w = (Uint16)(spriteObj->frame_w * screenScale);
     spriteObj->scaled_h = (Uint16)(spriteObj->frame_h * screenScale);
 #endif
-    SDL_FreeSurface(temp_sprite);
 }
 
 void setSpriteScale(SpriteObject *spriteObj, double scale) {

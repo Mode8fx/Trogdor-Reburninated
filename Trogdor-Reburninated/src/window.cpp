@@ -75,10 +75,8 @@ void setScaling() {
 	scaleAppRelativeToWindow();
 	scaleGameRelativeToApp();
 	setWidthHeightMults();
-	destroyAllSprites();
 	InitializeSpritesPart1();
 	InitializeSpritesPart2();
-	destroyAllTextChars();
 	InitializeTextChars();
 	InitializeTextObjects();
 #endif

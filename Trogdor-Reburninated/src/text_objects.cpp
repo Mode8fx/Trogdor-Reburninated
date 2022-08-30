@@ -27,10 +27,16 @@ void updateText(TextObject *textObj, string text) {
 
 void setTextChar(const char *text, TTF_Font *font, SDL_Color text_color, TextCharObject *textCharObj) {
 #if !defined(SDL1)
+    if (textCharObj->texture != NULL) {
+        SDL_DestroyTexture(textCharObj->texture);
+    }
     temp_text = TTF_RenderText_Solid(font, text, text_color);
     textCharObj->texture = SDL_CreateTextureFromSurface(renderer, temp_text);
     SDL_FreeSurface(temp_text);
 #else
+    if (textCharObj->surface != NULL) {
+        SDL_FreeSurface(textCharObj->surface);
+    }
     textCharObj->surface = TTF_RenderText_Solid(font, text, text_color);
 #endif
     TTF_SizeText(font, text, &charTempX, &charTempY);
