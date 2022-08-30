@@ -2,20 +2,25 @@ To-Do List
 
 Trogdor Beta [gameplay-complete basic port of Trogdor]:
 Final:
-- Test and finalize controls
+- Test and finalize
+	- Switch
+		- Untested
 	- Wii U
-		- Real console: Framerate is unplayably slow
-		- Cemu: Game screen isn't scaled up (but app screen is), and hi-res screen is either not scaled up or completely gone (I can't tell); game screen scales properly with non-integer scaling
+		- Toggling integer scaling takes a long time (~10 seconds)
+		- Pause transparency doesn't work
 	- Wii
-		- Slightly too slow, no pause transparency
-			- This is almost definitely caused by SDL_gfx, since an old non-gfx build ran at full speed; that's probably causing the slowdown on Wii U, as well
-				- Skipping the app screen and hi-res screen blits brought the game back to full speed
-		- Gamecube controller doesn't work
+		- End of level Trogdor is in the wrong place
+		- Pause transparency doesn't work
+		- "A+SELECT" should say "2+SELECT"
 	- Vita
-		- Also unplayably slow; as bad as Wii U
-	- Conclusion:
-		- There is too much surface blitting. Objects/text are blitted to the game screen, the app screen, and the hi-res screen on every frame; then, all three of those screens are rendered to the renderer (SDL2) or blitted to the window screen to be flipped (SDL1). These three screens need to be consolidated into one screen. I believe this will be enough to bring the Wii version up to full screen.
-		- Additionally, SDL2 seems to not handle surfaces as well as SDL1. I need to rework the SDL2 graphics (again...) to utilize textures instead of surfaces, like SuDokuL. This should fix performance issues on all SDL2 devices, including PSP.
+		- Untested
+	- PSP
+		- All sound takes extremely long to load; the best solution may be to use something other than SDL_mixer (unfortunately)
+		- Spaces show up as periods in integer scaling for some reason...
+		- D-pad input stutters (but analog input is fine)
+		- ARROWED/SWORDED text doesn't show up? Or maybe the slow music load is moving past it?
+		- Toggling integer scaling takes a long time (~10 seconds)
+		- Pause transparency is misaligned
 - Package everything up
 
 Trogdor Classic [faithful recreation of original Trogdor flash game]:
