@@ -46,9 +46,8 @@ void scaleAppRelativeToWindow() {
 	}
 #if !defined(SDL1)
 	// In SDL2, non-integer game screen scaling is handled by render scaling
-	screenScale = (int)screenScale;
-	if (screenScale > 2) screenScale = 2;
-	screenScale = 1; // temporary
+	//screenScale = (int)screenScale;
+	//if (screenScale > 2) screenScale = 2;
 #endif
 	gameSrcRect.w = (int)(gameWidth * screenScale);
 	gameSrcRect.h = (int)(gameHeight * screenScale);
@@ -76,25 +75,6 @@ void setScaling() {
 	scaleAppRelativeToWindow();
 	scaleGameRelativeToApp();
 	setWidthHeightMults();
-	SDL_FreeSurface(gameScreen);
-	SDL_FreeSurface(appScreen);
-	SDL_FreeSurface(gameHiResScreen);
-#if !defined(PSP)
-	gameScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 24, 0, 0, 0, 0);
-	appScreen = SDL_CreateRGBSurface(0, appToWindowDstRect.w, appToWindowDstRect.h, 24, 0, 0, 0, 0);
-	gameHiResScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 24, 0, 0, 0, 0);
-#else
-	gameScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 32, 0, 0, 0, 0);
-	appScreen = SDL_CreateRGBSurface(0, appToWindowDstRect.w, appToWindowDstRect.h, 32, 0, 0, 0, 0);
-	gameHiResScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 32, 0, 0, 0, 0);
-#endif
-#if !defined(SDL1)
-	SDL_SetColorKey(appScreen, SDL_TRUE, 0xFF00FF);
-	SDL_SetColorKey(gameHiResScreen, SDL_TRUE, 0xFF00FF);
-#else
-	SDL_SetColorKey(appScreen, SDL_SRCCOLORKEY, 0xFF00FF);
-	SDL_SetColorKey(gameHiResScreen, SDL_SRCCOLORKEY, 0xFF00FF);
-#endif
 	destroyAllSprites();
 	InitializeSpritesPart1();
 	InitializeSpritesPart2();

@@ -527,7 +527,11 @@ void InitializeSpritesPart2() {
 }
 
 void destroySprite(SpriteObject sprite) {
+#if !defined(SDL1)
+	SDL_DestroyTexture(sprite.texture);
+#else
 	SDL_FreeSurface(sprite.surface);
+#endif
 }
 
 void destroyAllSprites() {
@@ -564,7 +568,11 @@ void destroyAllSprites() {
 
 void destroyTextChars(TextCharObject textChars[], Uint8 numChars) {
 	for (i = 0; i < numChars; i++) {
+#if !defined(SDL1)
+		SDL_DestroyTexture(textChars[i].texture);
+#else
 		SDL_FreeSurface(textChars[i].surface);
+#endif
 	}
 }
 

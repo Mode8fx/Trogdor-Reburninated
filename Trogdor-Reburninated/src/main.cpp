@@ -125,9 +125,6 @@ int main(int argv, char** args) {
 		}
 
 		/* Clear Screen */
-		SDL_FillRect(gameScreen, NULL, 0x000000);
-		SDL_FillRect(gameHiResScreen, NULL, 0xFF00FF);
-		SDL_FillRect(appScreen, NULL, 0xFF00FF);
 #if !defined(SDL1)
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
@@ -255,7 +252,7 @@ int main(int argv, char** args) {
 			/* Videlectrix logo */
 			case 1:
 				if (frameState < 65) {
-					renderSprite_static(sprite_videlectrix_logo, appScreen);
+					renderSprite_static_app(sprite_videlectrix_logo);
 					renderText(text_1_presents, textChars_font_nokia_12);
 				}
 				if (frameState < 72) {
@@ -284,7 +281,7 @@ int main(int argv, char** args) {
 					frameState = 3; // 3 is intentional
 					MM = MenuManager();
 				}
-				renderSprite_static(sprite_title_screen, gameScreen);
+				renderSprite_static_game(sprite_title_screen);
 				break;
 			/* Instructions Screen */
 			case 3:
@@ -303,7 +300,7 @@ int main(int argv, char** args) {
 						isRunning = false;
 					}
 				}
-				renderSprite_static(sprite_trogdor_logo, gameScreen);
+				renderSprite_static_game(sprite_trogdor_logo);
 				if (gameHiResMult < 2) {
 					switch (MM.page) {
 						case 1:
@@ -438,7 +435,9 @@ int main(int argv, char** args) {
 						if (GM.startDown && !keyHeld(INPUT_START)) {
 							GM.startDown = false;
 							GM.manually_paused = 0;
+#if defined(SDL1)
 							SDL_FreeSurface(transparentScreen);
+#endif
 						}
 					} else {
 						GM.updateKnightOffsetAndMove();
@@ -471,15 +470,15 @@ int main(int argv, char** args) {
 					GM.renderPeasants();
 					GM.renderTrogdor();
 					if (GM.burnination > 0) {
-						renderSprite(sprite_trogdor_fire, GM.player.fire_srcrect, gameScreen, GM.player.fire_dstrect);
+						renderSprite_game(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
 					}
 					GM.renderArchers();
 					GM.renderArrows();
 					if (GM.dm_visible) {
-						renderSprite(sprite_death_message, GM.dm_srcrect, gameScreen, sprite_death_message.dstrect);
+						renderSprite_game(sprite_death_message, GM.dm_srcrect, sprite_death_message.dstrect);
 					} else if (GM.b_visible) {
-						renderSprite(sprite_burninate_fire, GM.bf_srcrect, gameScreen, GM.bf_dstrect);
-						renderSprite_static(sprite_burninate_text, gameScreen);
+						renderSprite_game(sprite_burninate_fire, GM.bf_srcrect, GM.bf_dstrect);
+						renderSprite_static_game(sprite_burninate_text);
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
@@ -513,7 +512,7 @@ int main(int argv, char** args) {
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				// TODO: draw "IT'S OVER!" and whatever else needs to be handled for this screen
-				renderSprite_static(sprite_game_over_trogdor, gameScreen);
+				renderSprite_static_game(sprite_game_over_trogdor);
 				switch (frameState) {
 					case 321:
 						loadAndPlaySound(SFX_GAMEOVER);
@@ -555,7 +554,9 @@ int main(int argv, char** args) {
 					if (GM.startDown && !keyHeld(INPUT_START)) {
 						GM.startDown = false;
 						GM.manually_paused = 0;
+#if defined(SDL1)
 						SDL_FreeSurface(transparentScreen);
+#endif
 					}
 				} else {
 					GM.handle_treasure_hut();
@@ -584,13 +585,13 @@ int main(int argv, char** args) {
 					GM.renderLoot();
 					GM.renderTrogdor();
 					if (GM.burnination > 0) {
-						renderSprite(sprite_trogdor_fire, GM.player.fire_srcrect, gameScreen, GM.player.fire_dstrect);
+						renderSprite_game(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
 					}
 					if (GM.dm_visible) {
-						renderSprite(sprite_death_message, GM.dm_srcrect, gameScreen, sprite_death_message.dstrect);
+						renderSprite_game(sprite_death_message, GM.dm_srcrect, sprite_death_message.dstrect);
 					} else if (GM.b_visible) {
-						renderSprite(sprite_burninate_fire, GM.bf_srcrect, gameScreen, GM.bf_dstrect);
-						renderSprite_static(sprite_burninate_text, gameScreen);
+						renderSprite_game(sprite_burninate_fire, GM.bf_srcrect, GM.bf_dstrect);
+						renderSprite_static_game(sprite_burninate_text);
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
@@ -623,7 +624,7 @@ int main(int argv, char** args) {
 				GM.renderTopBar();
 				GM.renderAndAnimateCottages();
 				if (((frameState - 1) / 2) % 2 == 0) {
-					renderSprite_static(sprite_end_of_level_flash, gameScreen);
+					renderSprite_static_game(sprite_end_of_level_flash);
 				}
 				switch (frameState) {
 					case 257:
@@ -658,7 +659,7 @@ int main(int argv, char** args) {
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				renderText(text_9_nice_work, textChars_font_serif_white_10);
 				// TODO: draw "LEVEL BEATEN!", smoke, and level fire
-				renderSprite_static(sprite_level_beaten_trogdor, gameScreen);
+				renderSprite_static_game(sprite_level_beaten_trogdor);
 				switch (frameState) {
 					case 277:
 						loadAndPlaySound(SFX_BURNINATE);
@@ -1100,37 +1101,14 @@ int main(int argv, char** args) {
 		if (sceneState > 0) freeFinishedSoundChunks();
 
 		/* Draw Overlay (this can and probably should be optimized later) */
-		if (sceneState >= 2 && isIntegerScale) renderSprite_static(sprite_overlay_basement, appScreen);
+		if (sceneState >= 2 && isIntegerScale) {
+			renderSprite_static_app(sprite_overlay_basement);
+		}
 
 		/* Update Screen */
 #if !defined(SDL1)
-		//SDL_FillRect(appScreen, NULL, 0x0000FF);
-		// Render Game Window
-		outputTexture = SDL_CreateTextureFromSurface(renderer, gameScreen);
-		SDL_RenderCopy(renderer, outputTexture, &gameSrcRect, &gameToWindowDstRect);
-		SDL_DestroyTexture(outputTexture); // there was a memory leak, and freeing the gameScreen crashes, so I guess this is the right way to fix it?
-		// Render Game Hi-Res Window
-		outputTexture = SDL_CreateTextureFromSurface(renderer, gameHiResScreen);
-		SDL_RenderCopy(renderer, outputTexture, &gameHiResSrcRect, &gameToWindowDstRect);
-		SDL_DestroyTexture(outputTexture);
-		// Render (rest of) App Window
-		outputTexture = SDL_CreateTextureFromSurface(renderer, appScreen);
-		SDL_RenderCopy(renderer, outputTexture, &appSrcRect, &appToWindowDstRect);
-		SDL_DestroyTexture(outputTexture);
-
 		SDL_RenderPresent(renderer);
 #else
-		//SDL_FillRect(appScreen, NULL, 0x0000FF);
-		// Blit Game Window
-		outputRect = gameToWindowDstRect;
-		SDL_BlitSurface(gameScreen, NULL, windowScreen, &outputRect);
-		// Blit Game Hi-Res Window
-		outputRect = gameToWindowDstRect;
-		SDL_BlitSurface(gameHiResScreen, NULL, windowScreen, &outputRect);
-		// Blit (rest of) App Window
-		outputRect = appToWindowDstRect;
-		SDL_BlitSurface(appScreen, NULL, windowScreen, &outputRect);
-
 		SDL_Flip(windowScreen);
 #endif
 		

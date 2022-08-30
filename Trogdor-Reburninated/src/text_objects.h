@@ -28,7 +28,11 @@ struct TextObject {
 
 /* Single Characters */
 struct TextCharObject {
+#if !defined(SDL1)
+    SDL_Texture *texture;
+#else
     SDL_Surface *surface;
+#endif
     SDL_Rect dstrect;
 };
 
@@ -52,6 +56,5 @@ extern void setFont(TTF_Font *, string, int, double, int, TextCharObject[], SDL_
 extern char tempCharArray[64];
 extern Uint8 charCounter;
 extern Sint16 charWidthCounter;
-extern std::stringstream ss;
 
 #endif

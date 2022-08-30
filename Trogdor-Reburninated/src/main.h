@@ -298,20 +298,16 @@ TextObject text_25_10;
 #if !defined(SDL1)
 SDL_Window *window;
 SDL_Renderer *renderer;
-SDL_Texture *outputTexture;
 #else
 SDL_Surface *windowScreen;
+SDL_Surface *transparentScreen;
 #endif
-SDL_Surface *gameScreen;
 SDL_Rect gameSrcRect = { 0, 0, gameWidth, gameHeight };
 //SDL_Rect gameToAppDstRect = { 0, 0, gameWidth, gameHeight };
-SDL_Surface *gameHiResScreen;
 SDL_Rect gameHiResSrcRect = { 0, 0, gameWidth, gameHeight };
-SDL_Surface *appScreen;
 SDL_Rect appSrcRect = { 0, 0, appWidth, appHeight };
 SDL_Rect appToWindowDstRect = { 0, 0, appWidth, appHeight };
 SDL_Rect gameToWindowDstRect = { 0, 0, gameWidth, gameHeight };
-SDL_Surface *transparentScreen;
 bool isWindowed = true;
 double screenScale = 1;
 int trueScreenScaleInt = 1;
@@ -403,13 +399,6 @@ void InitializeDisplay() {
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
-#if defined(ANDROID)
-	gameScreen = SDL_CreateRGBSurface(0, gameWidth, gameHeight, 24, 0, 0, 0, 0);
-	gameHiResScreen = SDL_CreateRGBSurface(0, gameToWindowDstRect.w, gameToWindowDstRect.h, 24, 0, 0, 0, 0);
-	appScreen = SDL_CreateRGBSurface(0, appWidth, appHeight, 24, 0, 0, 0, 0);
-	SDL_SetColorKey(appScreen, SDL_TRUE, 0xFF00FF);
-	SDL_SetColorKey(gameHiResScreen, SDL_TRUE, 0xFF00FF);
-#endif
 	setScaling();
 }
 
@@ -445,20 +434,29 @@ void InitializeController() {
 
 void renderBackground() {
 	outputRect = sprite_level_background->dstrect;
-	outputRect.x = (Sint16)(outputRect.x * screenScale);
-	outputRect.y = (Sint16)(outputRect.y * screenScale);
+	outputRect.x = (Sint16)(outputRect.x * screenScale) + gameToWindowDstRect.x;
+	outputRect.y = (Sint16)(outputRect.y * screenScale) + gameToWindowDstRect.y;
 	outputRect.w = (Uint16)(outputRect.w * screenScale);
 	outputRect.h = (Uint16)(outputRect.h * screenScale);
-	SDL_BlitSurface(sprite_level_background->surface, NULL, gameScreen, &outputRect);
+#if !defined(SDL1)
+	SDL_RenderCopy(renderer, sprite_level_background->texture, NULL, &outputRect);
+#else
+	SDL_BlitSurface(sprite_level_background->surface, NULL, windowScreen, &outputRect);
+#endif
 }
 
 void renderTransparentForeground() {
-	outputRect = gameSrcRect;
-	outputRect.x = (Sint16)(outputRect.x * screenScale);
-	outputRect.y = (Sint16)(outputRect.y * screenScale);
+	outputRect = gameToWindowDstRect;
+	outputRect.x = (Sint16)(outputRect.x * screenScale) + gameToWindowDstRect.x;
+	outputRect.y = (Sint16)(outputRect.y * screenScale) + gameToWindowDstRect.y;
 	outputRect.w = (Uint16)(outputRect.w * screenScale);
 	outputRect.h = (Uint16)(outputRect.h * screenScale);
-	SDL_BlitSurface(transparentScreen, NULL, gameScreen, &outputRect);
+#if !defined(SDL1)
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 200);
+	SDL_RenderFillRect(renderer, &outputRect);
+#else
+	SDL_BlitSurface(transparentScreen, NULL, windowScreen, &outputRect);
+#endif
 }
 
 
@@ -484,9 +482,6 @@ void destroyDisplay() {
 #else
 	SDL_FreeSurface(windowScreen);
 #endif
-	SDL_FreeSurface(gameScreen);
-	SDL_FreeSurface(gameHiResScreen);
-	SDL_FreeSurface(appScreen);
 }
 
 void DestroyAll() {

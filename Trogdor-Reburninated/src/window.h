@@ -24,20 +24,16 @@ extern Uint16 frameRate;
 #if !defined(SDL1)
 extern SDL_Window *window;
 extern SDL_Renderer *renderer;
-extern SDL_Texture *outputTexture;
 #else
 extern SDL_Surface *windowScreen;
+extern SDL_Surface *transparentScreen;
 #endif
-extern SDL_Surface *gameScreen;
 extern SDL_Rect gameSrcRect;
 //extern SDL_Rect gameToAppDstRect; // game screen mapping to app
-extern SDL_Surface *gameHiResScreen;
 extern SDL_Rect gameHiResSrcRect;
-extern SDL_Surface *appScreen;
 extern SDL_Rect appSrcRect;
 extern SDL_Rect appToWindowDstRect; // app mapping to window
 extern SDL_Rect gameToWindowDstRect; // game screen mapping to window
-extern SDL_Surface *transparentScreen;
 
 extern bool isWindowed;
 extern double screenScale; // the multiplier by which graphics should be scaled via SDL_gfx; caps out at 2

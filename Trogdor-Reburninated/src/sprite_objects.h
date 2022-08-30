@@ -4,7 +4,11 @@
 #define SPRITE_OBJECTS_H
 
 struct SpriteObject {
+#if !defined(SDL1)
+    SDL_Texture *texture;
+#else
     SDL_Surface *surface;
+#endif
     Sint16 frame_w;      // the original width of a single animation frame
     Sint16 frame_h;      // the original height of a single animation frame
     Uint16 scaled_w;     // the scaled (actual) width of a single animation frame
@@ -21,9 +25,12 @@ extern void setSpriteScale(SpriteObject *, double);
 extern void setSpritePos(SpriteObject *, int, int);
 extern Sint16 spriteFrame(SpriteObject, Sint8);
 extern Sint16 spriteForm(SpriteObject, Sint8);
-extern void renderSprite(SpriteObject, SDL_Rect, SDL_Surface *, SDL_Rect);
-extern void renderSprite_static(SpriteObject, SDL_Surface *);
+extern void renderSprite_game(SpriteObject, SDL_Rect, SDL_Rect);
+extern void renderSprite_hiRes(SpriteObject, SDL_Rect, SDL_Rect);
+extern void renderSprite_app(SpriteObject, SDL_Rect, SDL_Rect);
+extern void renderSprite_static_game(SpriteObject);
 extern void renderSprite_static_hiRes(SpriteObject);
+extern void renderSprite_static_app(SpriteObject);
 extern void drawRect(SDL_Rect, Uint8, Uint8, Uint8);
 extern void drawRect_gameTextScreen(SDL_Rect, Uint8, Uint8, Uint8);
 extern void drawRectWithAlpha(SDL_Rect, Uint8, Uint8, Uint8, Uint8);

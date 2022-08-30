@@ -808,6 +808,7 @@ class GameManager {
 				if (startDown && !keyHeld(INPUT_START)) {
 					startDown = false;
 					manually_paused = frameCounter_global;
+#if defined(SDL1)
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
 					transparentScreen = SDL_CreateRGBSurface(0,
 						gameWidth, gameHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
@@ -816,6 +817,7 @@ class GameManager {
 						gameWidth, gameHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 #endif
 					SDL_FillRect(transparentScreen, NULL, 0xC8000000);
+#endif
 				}
 			} else {
 				playerMove_treasureHut(&player, player.x_offset, player.y_offset);
@@ -1471,41 +1473,41 @@ class GameManager {
 					if (hutArray[i].burning && !hutArray[i].burned) {
 						hutArray[i].updateFrameState();
 					}
-					renderSprite(sprite_cottage, hutArray[i].srcrect, gameScreen, hutArray[i].dstrect);
+					renderSprite_game(sprite_cottage, hutArray[i].srcrect, hutArray[i].dstrect);
 					if (hutArray[i].frameState >= 12 && hutArray[i].frameState <= 28) {
-						renderSprite(sprite_cottage_fire, hutArray[i].fire_srcrect, gameScreen, hutArray[i].fire_dstrect);
+						renderSprite_game(sprite_cottage_fire, hutArray[i].fire_srcrect, hutArray[i].fire_dstrect);
 					}
 				}
 			}
 		}
 		void renderArchers() {
 			if (archerR.active) {
-				renderSprite(sprite_archer, archerR.srcrect, gameScreen, archerR.dstrect);
+				renderSprite_game(sprite_archer, archerR.srcrect, archerR.dstrect);
 			}
 			if (archerL.active) {
-				renderSprite(sprite_archer, archerL.srcrect, gameScreen, archerL.dstrect);
+				renderSprite_game(sprite_archer, archerL.srcrect, archerL.dstrect);
 			}
 		}
 		void renderArrows() {
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
 				if (arrowArrayR[i].active) {
-					renderSprite(sprite_arrow, arrowArrayR[i].srcrect, gameScreen, arrowArrayR[i].dstrect);
+					renderSprite_game(sprite_arrow, arrowArrayR[i].srcrect, arrowArrayR[i].dstrect);
 				}
 				if (arrowArrayL[i].active) {
-					renderSprite(sprite_arrow, arrowArrayL[i].srcrect, gameScreen, arrowArrayL[i].dstrect);
+					renderSprite_game(sprite_arrow, arrowArrayL[i].srcrect, arrowArrayL[i].dstrect);
 				}
 			}
 		}
 		void renderLoot() {
 			for (i = 0; i < MAX_NUM_LOOT; i++) {
 				if (lootArray[i].active) {
-					renderSprite(sprite_loot, lootArray[i].srcrect, gameScreen, lootArray[i].dstrect);
+					renderSprite_game(sprite_loot, lootArray[i].srcrect, lootArray[i].dstrect);
 				}
 			}
 		}
 		void renderKnights() {
 			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
-				renderSprite(sprite_knight, knightArray[i].srcrect, gameScreen, knightArray[i].dstrect);
+				renderSprite_game(sprite_knight, knightArray[i].srcrect, knightArray[i].dstrect);
 			}
 		}
 		void renderPeasants() {
@@ -1514,16 +1516,16 @@ class GameManager {
 					if (!manually_paused && (!peasantArray[i].waiting || peasantArray[i].stomped)) {
 						peasantArray[i].updateFrameState(sbVoiceMult);
 					}
-					renderSprite(sprite_peasant, peasantArray[i].srcrect, gameScreen, peasantArray[i].dstrect);
+					renderSprite_game(sprite_peasant, peasantArray[i].srcrect, peasantArray[i].dstrect);
 				}
 			}
 		}
 		void renderTrogdor() {
 			if (player.visible) {
 				if (player.frameState >= 19) {
-					renderSprite(sprite_trogdor_dead, player.death_srcrect, gameScreen, player.death_dstrect);
+					renderSprite_game(sprite_trogdor_dead, player.death_srcrect, player.death_dstrect);
 				} else {
-					renderSprite(sprite_trogdor, player.srcrect, gameScreen, player.dstrect);
+					renderSprite_game(sprite_trogdor, player.srcrect, player.dstrect);
 				}
 			}
 		}
@@ -1541,8 +1543,8 @@ class GameManager {
 			renderText(text_4_level_val, textChars_font_serif_red_6);
 			// Render peasantometer/burnination meter (depending on their values)
 			if (burnination > 0) {
-				renderSprite_static(sprite_burnination_meter_empty, gameScreen);
-				renderSprite(sprite_burnination_meter_full, bmFull_srcrect, gameScreen, sprite_burnination_meter_full.dstrect);
+				renderSprite_static_game(sprite_burnination_meter_empty);
+				renderSprite_game(sprite_burnination_meter_full, bmFull_srcrect, sprite_burnination_meter_full.dstrect);
 			} else {
 				sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;
 				pm_srcrect.x = pm_srcrect.w;
@@ -1550,7 +1552,7 @@ class GameManager {
 					if (peasantometer == i) {
 						pm_srcrect.x = 0;
 					}
-					renderSprite(sprite_peasantometer_icon, pm_srcrect, gameScreen, sprite_peasantometer_icon.dstrect);
+					renderSprite_game(sprite_peasantometer_icon, pm_srcrect, sprite_peasantometer_icon.dstrect);
 					sprite_peasantometer_icon.dstrect.x += (int)(sprite_peasantometer_icon.frame_w * 1.5);
 				}
 			}

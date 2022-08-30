@@ -1,6 +1,9 @@
 #include "text_objects.h"
 
 char tempCharArr[2];
+#if !defined(SDL1)
+SDL_Surface *temp_text;
+#endif
 
 void setText(const char text[], TextObject *textObj, TextCharObject charArr[]) {
     textObj->str = text;
@@ -23,14 +26,27 @@ void updateText(TextObject *textObj, string text) {
 }
 
 void setTextChar(const char *text, TTF_Font *font, SDL_Color text_color, TextCharObject *textCharObj) {
+#if !defined(SDL1)
+    temp_text = TTF_RenderText_Solid(font, text, text_color);
+    textCharObj->texture = SDL_CreateTextureFromSurface(renderer, temp_text);
+    SDL_FreeSurface(temp_text);
+#else
     textCharObj->surface = TTF_RenderText_Solid(font, text, text_color);
+#endif
     TTF_SizeText(font, text, &charTempX, &charTempY);
     textCharObj->dstrect.w = charTempX;
     textCharObj->dstrect.h = charTempY;
 }
 
 void renderTextChar(TextCharObject textCharObj) {
-    SDL_BlitSurface(textCharObj.surface, NULL, gameHiResScreen, &textCharObj.dstrect);
+    outputRect = textCharObj.dstrect;
+    outputRect.x += gameToWindowDstRect.x;
+    outputRect.y += gameToWindowDstRect.y;
+#if !defined(SDL1)
+    SDL_RenderCopy(renderer, textCharObj.texture, NULL, &outputRect);
+#else
+    SDL_BlitSurface(textCharObj.surface, NULL, windowScreen, &outputRect);
+#endif
 }
 
 void renderText(TextObject textObj, TextCharObject charArr[]) {
@@ -53,7 +69,11 @@ void setTextCharPosY(TextCharObject *textCharObj, int pos_y) {
 }
 
 void destroyTextObjectTexture(TextCharObject textCharObj) {
+#if !defined(SDL1)
+    SDL_DestroyTexture(textCharObj.texture);
+#else
     SDL_FreeSurface(textCharObj.surface);
+#endif
 }
 
 void setFont(TTF_Font *font, string fontFile, int originalSize, double multSize, int style, TextCharObject charArr[], SDL_Color color, Uint32 minIndex, Uint32 maxIndex) {
