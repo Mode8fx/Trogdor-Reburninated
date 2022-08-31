@@ -16,6 +16,7 @@ extern void destroySprite(SpriteObject);
 extern void destroyAllSprites();
 extern void destroyTextChars(TextCharObject, Uint8);
 extern void destroyAllTextChars();
+extern void closeAllFonts();
 
 extern SpriteObject sprite_videlectrix_logo;
 extern SpriteObject sprite_title_screen;

@@ -34,6 +34,7 @@ struct TextCharObject {
 
 struct FontObject {
 	string path;
+    TTF_Font *font;
 	int size;
 	int style;
 	SDL_Color color;

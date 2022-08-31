@@ -1,7 +1,6 @@
 #include "text_objects.h"
 
 char tempCharArr[2];
-TTF_Font *temp_font;
 #if !defined(SDL1)
 SDL_Surface *temp_text;
 #endif
@@ -18,19 +17,11 @@ void setText(const char text[], TextObject *textObj, FontObject *fontObj) {
 #else
 		if (fontObj->textChars[i].surface == NULL) {
 #endif
-			if (temp_font == NULL) {
-				temp_font = TTF_OpenFont((rootDir + fontObj->path).c_str(), fontObj->size);
-				TTF_SetFontStyle(temp_font, fontObj->style);
-			}
 			tempCharArr[0] = i + 32;
-			setTextChar(tempCharArr, temp_font, fontObj->color, &fontObj->textChars[i]);
+			setTextChar(tempCharArr, fontObj->font, fontObj->color, &fontObj->textChars[i]);
 		}
 		textObj->dstrect.w += fontObj->textChars[i].dstrect.w;
 		textObj->dstrect.h = max(textObj->dstrect.h, (Sint16)fontObj->textChars[i].dstrect.h);
-	}
-	if (temp_font != NULL) {
-		TTF_CloseFont(temp_font);
-		temp_font = NULL;
 	}
 }
 
@@ -99,6 +90,8 @@ void setFont(FontObject *fontObj, string path, int originalSize, double multSize
 	fontObj->size = max(originalSize, (int)(multSize * gameHiResMult));
 	fontObj->style = style;
 	fontObj->color = color;
+	fontObj->font = TTF_OpenFont((rootDir + fontObj->path).c_str(), fontObj->size);
+	TTF_SetFontStyle(fontObj->font, fontObj->style);
 }
 
 void initializeFont_numbers(FontObject *fontObj) {
@@ -110,16 +103,8 @@ void initializeFont_numbers(FontObject *fontObj) {
 #else
 		if (fontObj->textChars[i].surface == NULL) {
 #endif
-			if (temp_font == NULL) {
-				temp_font = TTF_OpenFont((rootDir + fontObj->path).c_str(), fontObj->size);
-				TTF_SetFontStyle(temp_font, fontObj->style);
-			}
 			tempCharArr[0] = i + 32;
-			setTextChar(tempCharArr, temp_font, fontObj->color, &fontObj->textChars[i]);
+			setTextChar(tempCharArr, fontObj->font, fontObj->color, &fontObj->textChars[i]);
 		}
-	}
-	if (temp_font != NULL) {
-		TTF_CloseFont(temp_font);
-		temp_font = NULL;
 	}
 }

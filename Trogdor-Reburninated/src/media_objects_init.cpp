@@ -1,6 +1,8 @@
 #include "media_objects_init.h"
 
 void InitializeFontObjects() {
+	TTF_Init();
+
 	setFont(&font_serif_white_14, "fonts/serif_v01.ttf", 14, 14, TTF_STYLE_NORMAL, color_white);
 	setFont(&font_serif_brown_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_brown);
 	setFont(&font_serif_brown_8, "fonts/serif_v01.ttf", 8, 8, TTF_STYLE_NORMAL, color_brown);
@@ -26,10 +28,9 @@ void InitializeFontObjects() {
 }
 
 void InitializeTextObjects() {
-	TTF_Init();
-
 	initializeFont_numbers(&font_serif_red_6);
 	initializeFont_numbers(&font_serif_2_red_6);
+	initializeFont_numbers(&font_serif_white_6_mult);
 	/* 0: Loading Screen */
 	SET_TEXT("loading...", text_0_loading, font_serif_white_14,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_0_loading), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_0_loading));
@@ -352,6 +353,7 @@ void InitializeTextObjects() {
 	//SET_TEXT("1", text_one, font_serif_brown_8,
 	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_one), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_one));
 
+	closeAllFonts();
 	TTF_Quit();
 }
 
@@ -590,4 +592,27 @@ void destroyAllTextChars() {
 	//destroyTextChars(&font_serif_2_bold_red_23);
 	destroyTextChars(&font_serif_2_red_6);
 	destroyTextChars(&font_serif_2_red_13);
+}
+
+void closeAllFonts() {
+	TTF_CloseFont(font_serif_brown_6.font);
+	TTF_CloseFont(font_serif_brown_8.font);
+	TTF_CloseFont(font_serif_gray_6.font);
+	TTF_CloseFont(font_serif_gray_12.font);
+	TTF_CloseFont(font_serif_orange_6.font);
+	TTF_CloseFont(font_serif_red_6.font);
+	TTF_CloseFont(font_serif_red_6_mult.font);
+	TTF_CloseFont(font_serif_red_8.font);
+	TTF_CloseFont(font_serif_red_8_mult.font);
+	TTF_CloseFont(font_serif_red_12.font);
+	TTF_CloseFont(font_serif_white_6.font);
+	TTF_CloseFont(font_serif_white_6_mult.font);
+	TTF_CloseFont(font_serif_white_9.font);
+	TTF_CloseFont(font_serif_white_10.font);
+	TTF_CloseFont(font_serif_white_14.font);
+	TTF_CloseFont(font_nokia_12.font);
+	//TTF_CloseFont(font_serif_2_bold_black_23.font);
+	//TTF_CloseFont(font_serif_2_bold_red_23.font);
+	TTF_CloseFont(font_serif_2_red_6.font);
+	TTF_CloseFont(font_serif_2_red_13.font);
 }
