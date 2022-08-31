@@ -1535,12 +1535,12 @@ class GameManager {
 			sprite_burnination_meter_full.dstrect.w = bmFull_srcrect.w;
 		}
 		void renderTopBar() {
-			renderText(text_4_score, textChars_font_serif_2_red_6);
-			renderText(text_4_score_val, textChars_font_serif_red_6);
-			renderText(text_4_mans, textChars_font_serif_2_red_6);
-			renderText(text_4_mans_val, textChars_font_serif_red_6);
-			renderText(text_4_level, textChars_font_serif_2_red_6);
-			renderText(text_4_level_val, textChars_font_serif_red_6);
+			renderText(text_4_score, font_serif_2_red_6);
+			renderText(text_4_score_val, font_serif_red_6);
+			renderText(text_4_mans, font_serif_2_red_6);
+			renderText(text_4_mans_val, font_serif_red_6);
+			renderText(text_4_level, font_serif_2_red_6);
+			renderText(text_4_level_val, font_serif_red_6);
 			// Render peasantometer/burnination meter (depending on their values)
 			if (burnination > 0) {
 				renderSprite_static_game(sprite_burnination_meter_empty);

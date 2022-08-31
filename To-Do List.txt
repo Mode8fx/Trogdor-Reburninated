@@ -6,7 +6,6 @@ Final:
 	- Switch
 		- Untested
 	- Wii U
-		- Toggling integer scaling takes a long time (~10 seconds)
 		- Pause transparency doesn't work
 	- Wii
 		- End of level Trogdor is in the wrong place
@@ -18,7 +17,6 @@ Final:
 		- Spaces show up as periods in integer scaling for some reason...
 		- D-pad input stutters (but analog input is fine)
 		- ARROWED/SWORDED text doesn't show up? Or maybe the slow music load is moving past it?
-		- Toggling integer scaling takes a long time (~10 seconds)
 		- Pause transparency is misaligned
 - Package everything up
 

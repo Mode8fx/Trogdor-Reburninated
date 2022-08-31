@@ -64,7 +64,7 @@ int main(int argv, char** args) {
 
 #if defined(ANDROID)
 	/* Initialize SDL_ttf, fonts, text objects, and sprite objects (already done for other systems in InitializeDisplay() via setScaling() */
-	InitializeTextChars();
+	InitializeFontObjects();
 	InitializeTextObjects();
 	InitializeSpritesPart1();
 	InitializeSpritesPart2();
@@ -165,78 +165,78 @@ int main(int argv, char** args) {
 			case 0:
 				switch (frameState) {
 					case 1:
-						renderText(text_0_loading, textChars_font_serif_white_14);
+						renderText(text_0_loading, font_serif_white_14);
 						text_0_loading_censor_rect.x = text_0_loading.dstrect.x;
 						frameState++;
 						break;
 					case 2:
-						renderText(text_0_loading, textChars_font_serif_white_14);
-						text_0_loading_censor_rect.x += textChars_font_serif_white_14['l' - 32].dstrect.w;
+						renderText(text_0_loading, font_serif_white_14);
+						text_0_loading_censor_rect.x += font_serif_white_14.textChars['l' - 32].dstrect.w;
 						frameState++;
 						break;
 					case 3:
-						renderText(text_0_loading, textChars_font_serif_white_14);
-						text_0_loading_censor_rect.x += textChars_font_serif_white_14['o' - 32].dstrect.w;
+						renderText(text_0_loading, font_serif_white_14);
+						text_0_loading_censor_rect.x += font_serif_white_14.textChars['o' - 32].dstrect.w;
 						frameState++;
 						break;
 					case 4:
-						renderText(text_0_loading, textChars_font_serif_white_14);
-						text_0_loading_censor_rect.x += textChars_font_serif_white_14['a' - 32].dstrect.w;
+						renderText(text_0_loading, font_serif_white_14);
+						text_0_loading_censor_rect.x += font_serif_white_14.textChars['a' - 32].dstrect.w;
 						frameState++;
 						break;
 					case 5:
-						renderText(text_0_loading, textChars_font_serif_white_14);
-						text_0_loading_censor_rect.x += textChars_font_serif_white_14['d' - 32].dstrect.w;
+						renderText(text_0_loading, font_serif_white_14);
+						text_0_loading_censor_rect.x += font_serif_white_14.textChars['d' - 32].dstrect.w;
 						frameState++;
 						break;
 					case 6:
-						renderText(text_0_loading, textChars_font_serif_white_14);
-						text_0_loading_censor_rect.x += textChars_font_serif_white_14['i' - 32].dstrect.w;
+						renderText(text_0_loading, font_serif_white_14);
+						text_0_loading_censor_rect.x += font_serif_white_14.textChars['i' - 32].dstrect.w;
 						frameState++;
 						break;
 					case 7:
-						renderText(text_0_loading, textChars_font_serif_white_14);
-						text_0_loading_censor_rect.x += textChars_font_serif_white_14['n' - 32].dstrect.w;
+						renderText(text_0_loading, font_serif_white_14);
+						text_0_loading_censor_rect.x += font_serif_white_14.textChars['n' - 32].dstrect.w;
 						frameState++;
 						break;
 					case 8:
-						renderText(text_0_loading, textChars_font_serif_white_14);
-						text_0_loading_censor_rect.x += textChars_font_serif_white_14['g' - 32].dstrect.w;
+						renderText(text_0_loading, font_serif_white_14);
+						text_0_loading_censor_rect.x += font_serif_white_14.textChars['g' - 32].dstrect.w;
 						frameState++;
 						break;
 					case 9:
-						renderText(text_0_loading, textChars_font_serif_white_14);
-						text_0_loading_censor_rect.x += textChars_font_serif_white_14['.' - 32].dstrect.w;
+						renderText(text_0_loading, font_serif_white_14);
+						text_0_loading_censor_rect.x += font_serif_white_14.textChars['.' - 32].dstrect.w;
 						frameState++;
 						break;
 					case 10:
 						InitializeSound();
-						renderText(text_0_loading, textChars_font_serif_white_14);
-						text_0_loading_censor_rect.x += textChars_font_serif_white_14['.' - 32].dstrect.w;
+						renderText(text_0_loading, font_serif_white_14);
+						text_0_loading_censor_rect.x += font_serif_white_14.textChars['.' - 32].dstrect.w;
 						frameState++;
 						break;
 					case 11:
 						InitializeMusic();
-						renderText(text_0_loading, textChars_font_serif_white_14);
-						text_0_loading_censor_rect.x += textChars_font_serif_white_14['.' - 32].dstrect.w;
+						renderText(text_0_loading, font_serif_white_14);
+						text_0_loading_censor_rect.x += font_serif_white_14.textChars['.' - 32].dstrect.w;
 						frameState++;
 						break;
 					case 12:
 						InitializeController();
-						renderText(text_0_loading, textChars_font_serif_white_14);
+						renderText(text_0_loading, font_serif_white_14);
 						frameState++;
 						break;
 					case 13:
 						InitializeSFX();
-						renderText(text_0_loading, textChars_font_serif_white_14);
+						renderText(text_0_loading, font_serif_white_14);
 						frameState++;
 						break;
 					case 14:
-						renderText(text_0_loading, textChars_font_serif_white_14);
+						renderText(text_0_loading, font_serif_white_14);
 						frameState++;
 						break;
 					case 15:
-						renderText(text_0_loading, textChars_font_serif_white_14);
+						renderText(text_0_loading, font_serif_white_14);
 						frameState++;
 						break;
 					case 16:
@@ -253,7 +253,7 @@ int main(int argv, char** args) {
 			case 1:
 				if (frameState < 65) {
 					renderSprite_static_app(sprite_videlectrix_logo);
-					renderText(text_1_presents, textChars_font_nokia_12);
+					renderText(text_1_presents, font_nokia_12);
 				}
 				if (frameState < 72) {
 					frameState++;
@@ -304,50 +304,50 @@ int main(int argv, char** args) {
 				if (gameHiResMult < 2) {
 					switch (MM.page) {
 						case 1:
-							renderText(text_3_instructions_1, textChars_font_serif_white_6_mult);
-							renderText(text_3_instructions_2, textChars_font_serif_white_6_mult);
-							renderText(text_3_instructions_2a, textChars_font_serif_white_6_mult);
-							renderText(text_3_instructions_3, textChars_font_serif_white_6_mult);
-							renderText(text_3_instructions_4, textChars_font_serif_white_6_mult);
-							renderText(text_3_instructions_5, textChars_font_serif_white_6_mult);
+							renderText(text_3_instructions_1, font_serif_white_6_mult);
+							renderText(text_3_instructions_2, font_serif_white_6_mult);
+							renderText(text_3_instructions_2a, font_serif_white_6_mult);
+							renderText(text_3_instructions_3, font_serif_white_6_mult);
+							renderText(text_3_instructions_4, font_serif_white_6_mult);
+							renderText(text_3_instructions_5, font_serif_white_6_mult);
 							if (frameState % 4 < 2) {
-								renderText(text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult);
+								renderText(text_3_click_anywhere_to_start, font_serif_red_8_mult);
 							}
 							break;
 						case 2:
-							renderText(text_3_hints_1, textChars_font_serif_red_6_mult);
-							renderText(text_3_hints_2, textChars_font_serif_white_6_mult);
-							renderText(text_3_hints_2a, textChars_font_serif_white_6_mult);
-							renderText(text_3_hints_3, textChars_font_serif_white_6_mult);
-							renderText(text_3_hints_3a, textChars_font_serif_white_6_mult);
-							renderText(text_3_hints_4, textChars_font_serif_white_6_mult);
-							renderText(text_3_hints_4a, textChars_font_serif_white_6_mult);
+							renderText(text_3_hints_1, font_serif_red_6_mult);
+							renderText(text_3_hints_2, font_serif_white_6_mult);
+							renderText(text_3_hints_2a, font_serif_white_6_mult);
+							renderText(text_3_hints_3, font_serif_white_6_mult);
+							renderText(text_3_hints_3a, font_serif_white_6_mult);
+							renderText(text_3_hints_4, font_serif_white_6_mult);
+							renderText(text_3_hints_4a, font_serif_white_6_mult);
 							break;
 						case 3:
-							renderText(text_3_hints_1, textChars_font_serif_red_6_mult);
-							renderText(text_3_hints_5, textChars_font_serif_white_6_mult);
-							renderText(text_3_hints_5a, textChars_font_serif_white_6_mult);
-							renderText(text_3_hints_6, textChars_font_serif_red_6_mult);
-							renderText(text_3_hints_7, textChars_font_serif_red_6_mult);
+							renderText(text_3_hints_1, font_serif_red_6_mult);
+							renderText(text_3_hints_5, font_serif_white_6_mult);
+							renderText(text_3_hints_5a, font_serif_white_6_mult);
+							renderText(text_3_hints_6, font_serif_red_6_mult);
+							renderText(text_3_hints_7, font_serif_red_6_mult);
 							break;
 						case 4:
-							renderText(text_3_credits_1, textChars_font_serif_red_6_mult);
-							renderText(text_3_credits_2, textChars_font_serif_white_6_mult);
-							renderText(text_3_credits_3, textChars_font_serif_white_6_mult);
-							renderText(text_3_credits_4, textChars_font_serif_white_6_mult);
-							renderText(text_3_credits_5, textChars_font_serif_white_6_mult);
-							renderText(text_3_credits_6, textChars_font_serif_white_6_mult);
-							renderText(text_3_credits_7, textChars_font_serif_white_6_mult);
-							renderText(text_3_credits_8, textChars_font_serif_white_6_mult);
+							renderText(text_3_credits_1, font_serif_red_6_mult);
+							renderText(text_3_credits_2, font_serif_white_6_mult);
+							renderText(text_3_credits_3, font_serif_white_6_mult);
+							renderText(text_3_credits_4, font_serif_white_6_mult);
+							renderText(text_3_credits_5, font_serif_white_6_mult);
+							renderText(text_3_credits_6, font_serif_white_6_mult);
+							renderText(text_3_credits_7, font_serif_white_6_mult);
+							renderText(text_3_credits_8, font_serif_white_6_mult);
 							break;
 						case 5:
-							renderText(text_3_coming_soon_1, textChars_font_serif_red_6_mult);
-							renderText(text_3_coming_soon_2, textChars_font_serif_white_6_mult);
-							renderText(text_3_coming_soon_3, textChars_font_serif_white_6_mult);
-							renderText(text_3_coming_soon_4, textChars_font_serif_white_6_mult);
-							renderText(text_3_coming_soon_4a, textChars_font_serif_white_6_mult);
-							renderText(text_3_coming_soon_5, textChars_font_serif_white_6_mult);
-							renderText(text_3_coming_soon_6, textChars_font_serif_white_6_mult);
+							renderText(text_3_coming_soon_1, font_serif_red_6_mult);
+							renderText(text_3_coming_soon_2, font_serif_white_6_mult);
+							renderText(text_3_coming_soon_3, font_serif_white_6_mult);
+							renderText(text_3_coming_soon_4, font_serif_white_6_mult);
+							renderText(text_3_coming_soon_4a, font_serif_white_6_mult);
+							renderText(text_3_coming_soon_5, font_serif_white_6_mult);
+							renderText(text_3_coming_soon_6, font_serif_white_6_mult);
 							break;
 						default:
 							break;
@@ -355,46 +355,46 @@ int main(int argv, char** args) {
 				} else {
 					switch (MM.page) {
 						case 1:
-							renderText(text_3_instructions_1, textChars_font_serif_white_6_mult);
-							renderText(text_3_instructions_2, textChars_font_serif_white_6_mult);
-							renderText(text_3_instructions_3, textChars_font_serif_white_6_mult);
-							renderText(text_3_instructions_4, textChars_font_serif_white_6_mult);
-							renderText(text_3_instructions_5, textChars_font_serif_white_6_mult);
+							renderText(text_3_instructions_1, font_serif_white_6_mult);
+							renderText(text_3_instructions_2, font_serif_white_6_mult);
+							renderText(text_3_instructions_3, font_serif_white_6_mult);
+							renderText(text_3_instructions_4, font_serif_white_6_mult);
+							renderText(text_3_instructions_5, font_serif_white_6_mult);
 							if (frameState % 4 < 2) {
-								renderText(text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult);
+								renderText(text_3_click_anywhere_to_start, font_serif_red_8_mult);
 							}
-							renderText(text_3_quit, textChars_font_serif_white_6_mult);
+							renderText(text_3_quit, font_serif_white_6_mult);
 							break;
 						case 2:
-							renderText(text_3_hints_1, textChars_font_serif_red_6_mult);
-							renderText(text_3_hints_2, textChars_font_serif_white_6_mult);
-							renderText(text_3_hints_3, textChars_font_serif_white_6_mult);
-							renderText(text_3_hints_4, textChars_font_serif_white_6_mult);
-							renderText(text_3_hints_5, textChars_font_serif_white_6_mult);
-							renderText(text_3_hints_6, textChars_font_serif_red_6_mult);
-							renderText(text_3_hints_7, textChars_font_serif_red_6_mult);
+							renderText(text_3_hints_1, font_serif_red_6_mult);
+							renderText(text_3_hints_2, font_serif_white_6_mult);
+							renderText(text_3_hints_3, font_serif_white_6_mult);
+							renderText(text_3_hints_4, font_serif_white_6_mult);
+							renderText(text_3_hints_5, font_serif_white_6_mult);
+							renderText(text_3_hints_6, font_serif_red_6_mult);
+							renderText(text_3_hints_7, font_serif_red_6_mult);
 							break;
 						case 3:
-							renderText(text_3_credits_1, textChars_font_serif_red_6_mult);
-							renderText(text_3_credits_2, textChars_font_serif_white_6_mult);
-							renderText(text_3_credits_3, textChars_font_serif_white_6_mult);
-							renderText(text_3_credits_4, textChars_font_serif_white_6_mult);
-							renderText(text_3_credits_5, textChars_font_serif_white_6_mult);
-							renderText(text_3_credits_6, textChars_font_serif_white_6_mult);
-							renderText(text_3_credits_7, textChars_font_serif_white_6_mult);
-							renderText(text_3_credits_8, textChars_font_serif_white_6_mult);
+							renderText(text_3_credits_1, font_serif_red_6_mult);
+							renderText(text_3_credits_2, font_serif_white_6_mult);
+							renderText(text_3_credits_3, font_serif_white_6_mult);
+							renderText(text_3_credits_4, font_serif_white_6_mult);
+							renderText(text_3_credits_5, font_serif_white_6_mult);
+							renderText(text_3_credits_6, font_serif_white_6_mult);
+							renderText(text_3_credits_7, font_serif_white_6_mult);
+							renderText(text_3_credits_8, font_serif_white_6_mult);
 							break;
 						default:
-							renderText(text_3_coming_soon_1, textChars_font_serif_red_6_mult);
-							renderText(text_3_coming_soon_2, textChars_font_serif_white_6_mult);
-							renderText(text_3_coming_soon_3, textChars_font_serif_white_6_mult);
-							renderText(text_3_coming_soon_4, textChars_font_serif_white_6_mult);
-							renderText(text_3_coming_soon_5, textChars_font_serif_white_6_mult);
-							renderText(text_3_coming_soon_6, textChars_font_serif_white_6_mult);
+							renderText(text_3_coming_soon_1, font_serif_red_6_mult);
+							renderText(text_3_coming_soon_2, font_serif_white_6_mult);
+							renderText(text_3_coming_soon_3, font_serif_white_6_mult);
+							renderText(text_3_coming_soon_4, font_serif_white_6_mult);
+							renderText(text_3_coming_soon_5, font_serif_white_6_mult);
+							renderText(text_3_coming_soon_6, font_serif_white_6_mult);
 							break;
 					}
 				}
-				renderText(text_3_page, textChars_font_serif_white_6_mult);
+				renderText(text_3_page, font_serif_white_6_mult);
 				break;
 			/* Game */
 			case 4:
@@ -485,9 +485,9 @@ int main(int argv, char** args) {
 						// I think it's a mistake? I may add it later, but I'll leave it out for now.
 						renderTransparentForeground();
 						if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
-							renderText(text_4_paused_1, textChars_font_serif_white_6);
-							renderText(text_4_paused_2, textChars_font_serif_white_6);
-							renderText(text_4_paused_3, textChars_font_serif_white_6);
+							renderText(text_4_paused_1, font_serif_white_6);
+							renderText(text_4_paused_2, font_serif_white_6);
+							renderText(text_4_paused_3, font_serif_white_6);
 						}
 						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
 							sceneState = 3;
@@ -598,9 +598,9 @@ int main(int argv, char** args) {
 						// I think it's a mistake? I may add it later, but I'll leave it out for now.
 						renderTransparentForeground();
 						if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
-							renderText(text_4_paused_1, textChars_font_serif_white_6);
-							renderText(text_4_paused_2, textChars_font_serif_white_6);
-							renderText(text_4_paused_3, textChars_font_serif_white_6);
+							renderText(text_4_paused_1, font_serif_white_6);
+							renderText(text_4_paused_2, font_serif_white_6);
+							renderText(text_4_paused_3, font_serif_white_6);
 						}
 						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
 							sceneState = 3;
@@ -657,7 +657,7 @@ int main(int argv, char** args) {
 			case 9:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_9_nice_work, textChars_font_serif_white_10);
+				renderText(text_9_nice_work, font_serif_white_10);
 				// TODO: draw "LEVEL BEATEN!", smoke, and level fire
 				renderSprite_static_game(sprite_level_beaten_trogdor);
 				switch (frameState) {
@@ -741,8 +741,8 @@ int main(int argv, char** args) {
 			case 11:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_11_cutscene, textChars_font_serif_white_9);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_11_cutscene, font_serif_white_9);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 420:
@@ -763,8 +763,8 @@ int main(int argv, char** args) {
 			case 12:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_12_cutscene, textChars_font_serif_white_9);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_12_cutscene, font_serif_white_9);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 493:
@@ -785,8 +785,8 @@ int main(int argv, char** args) {
 			case 13:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_13_cutscene, textChars_font_serif_white_9);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_13_cutscene, font_serif_white_9);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 567:
@@ -807,8 +807,8 @@ int main(int argv, char** args) {
 			case 14:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_14_cutscene, textChars_font_serif_white_9);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_14_cutscene, font_serif_white_9);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 641:
@@ -829,8 +829,8 @@ int main(int argv, char** args) {
 			case 15:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_15_cutscene, textChars_font_serif_white_9);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_15_cutscene, font_serif_white_9);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 710:
@@ -851,8 +851,8 @@ int main(int argv, char** args) {
 			case 16:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_16_cutscene, textChars_font_serif_white_9);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_16_cutscene, font_serif_white_9);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 780:
@@ -873,8 +873,8 @@ int main(int argv, char** args) {
 			case 17:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_17_cutscene, textChars_font_serif_white_9);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_17_cutscene, font_serif_white_9);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 853:
@@ -895,8 +895,8 @@ int main(int argv, char** args) {
 			case 18:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_18_cutscene, textChars_font_serif_white_9);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_18_cutscene, font_serif_white_9);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 927:
@@ -917,8 +917,8 @@ int main(int argv, char** args) {
 			case 19:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_19_cutscene, textChars_font_serif_white_9);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_19_cutscene, font_serif_white_9);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 1000:
@@ -939,8 +939,8 @@ int main(int argv, char** args) {
 			case 20:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_20_cutscene, textChars_font_serif_white_9);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_20_cutscene, font_serif_white_9);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 1076:
@@ -961,8 +961,8 @@ int main(int argv, char** args) {
 			case 21:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_21_cutscene, textChars_font_serif_white_9);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_21_cutscene, font_serif_white_9);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 1153:
@@ -983,8 +983,8 @@ int main(int argv, char** args) {
 			case 22:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_22_cutscene, textChars_font_serif_white_9);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_22_cutscene, font_serif_white_9);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				switch (frameState) {
 					case 1226:
@@ -1010,7 +1010,7 @@ int main(int argv, char** args) {
 			case 23:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_placeholder_cutscene, textChars_font_serif_red_8);
+				renderText(text_placeholder_cutscene, font_serif_red_8);
 				// TODO: implement cutscene
 				if (keyPressed(INPUT_START)) { // placeholder
 					frameState = 1715;
@@ -1025,13 +1025,13 @@ int main(int argv, char** args) {
 						}
 						break;
 					case 1397:
-						renderText(text_23_cutscene_1, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_1, font_serif_white_9);
 						break;
 					case 1423:
-						renderText(text_23_cutscene_2, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_2, font_serif_white_9);
 						break;
 					case 1440:
-						renderText(text_23_cutscene_3, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_3, font_serif_white_9);
 						break;
 					case 1456:
 						if (rand() % 100 < 50 * GM.sbVoiceMult) {
@@ -1039,34 +1039,34 @@ int main(int argv, char** args) {
 						}
 						break;
 					case 1501:
-						renderText(text_23_cutscene_4, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_4, font_serif_white_9);
 						break;
 					case 1522:
-						renderText(text_23_cutscene_5, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_5, font_serif_white_9);
 						break;
 					case 1543:
-						renderText(text_23_cutscene_6, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_6, font_serif_white_9);
 						break;
 					case 1562:
-						renderText(text_23_cutscene_7, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_7, font_serif_white_9);
 						break;
 					case 1582:
-						renderText(text_23_cutscene_8, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_8, font_serif_white_9);
 						break;
 					case 1601:
-						renderText(text_23_cutscene_9, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_9, font_serif_white_9);
 						break;
 					case 1621:
-						renderText(text_23_cutscene_10, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_10, font_serif_white_9);
 						break;
 					case 1641:
-						renderText(text_23_cutscene_11, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_11, font_serif_white_9);
 						break;
 					case 1660:
-						renderText(text_23_cutscene_12, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_12, font_serif_white_9);
 						break;
 					case 1681:
-						renderText(text_23_cutscene_13, textChars_font_serif_white_9);
+						renderText(text_23_cutscene_13, font_serif_white_9);
 						break;
 					case 1716:
 						GM.levelInit();

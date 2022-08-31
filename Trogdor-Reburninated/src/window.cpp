@@ -77,7 +77,8 @@ void setScaling() {
 	setWidthHeightMults();
 	InitializeSpritesPart1();
 	InitializeSpritesPart2();
-	InitializeTextChars();
+	destroyAllTextChars();
+	InitializeFontObjects();
 	InitializeTextObjects();
 #endif
 }

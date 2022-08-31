@@ -22,10 +22,6 @@ struct TextObject {
 
 #define CHAR_AT_INDEX(index, charArr) charArr[tempCharArray[index] - 32]
 
-/* ################# */
-/* # Standard Text # */
-/* ################# */
-
 /* Single Characters */
 struct TextCharObject {
 #if !defined(SDL1)
@@ -36,20 +32,29 @@ struct TextCharObject {
     SDL_Rect dstrect;
 };
 
-extern void setText(const char[], TextObject *, TextCharObject[]);
+struct FontObject {
+	string path;
+	int size;
+	int style;
+	SDL_Color color;
+	TextCharObject textChars[126 + 1 - 32];
+};
+
+extern void setText(const char[], TextObject *, FontObject *);
 extern void setTextPos(TextObject *, Sint16, Sint16);
 extern void updateText(TextObject *, string);
 extern void setTextChar(const char *, TTF_Font *, SDL_Color, TextCharObject *);
 extern void renderTextChar(TextCharObject);
-extern void renderText(TextObject, TextCharObject[]);
+extern void renderText(TextObject, FontObject);
 extern void setTextCharPosX(TextCharObject *, int);
 extern void setTextCharPosY(TextCharObject *, int);
 extern void destroyTextObjectTexture(TextCharObject);
-extern void setFont(TTF_Font *, string, int, double, int, TextCharObject[], SDL_Color, Uint32, Uint32);
+extern void setFont(FontObject *, string, int, double, int, SDL_Color);
+extern void initializeFont_numbers(FontObject *);
 
 // This should be a macro since pos_x and pos_y may (and likely will) change before they're needed
-#define SET_TEXT(text, textObj, charArr, pos_x, pos_y) \
-    setText(text, &textObj, charArr);                  \
+#define SET_TEXT(text, textObj, fontObj, pos_x, pos_y) \
+    setText(text, &textObj, &fontObj);                 \
     setTextPos(&textObj, (Sint16)(pos_x), (Sint16)(pos_y));
 
 /* Text Objects */

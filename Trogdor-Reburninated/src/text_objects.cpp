@@ -1,19 +1,37 @@
 #include "text_objects.h"
 
 char tempCharArr[2];
+TTF_Font *temp_font;
 #if !defined(SDL1)
 SDL_Surface *temp_text;
 #endif
 
-void setText(const char text[], TextObject *textObj, TextCharObject charArr[]) {
-    textObj->str = text;
-    STRCPY(tempCharArray, textObj->str.c_str());
-    textObj->dstrect.w = 0;
-    textObj->dstrect.h = 0;
-    for (uint_i = 0; uint_i < textObj->str.length(); uint_i++) {
-        textObj->dstrect.w += charArr[tempCharArray[uint_i] - 32].dstrect.w;
-        textObj->dstrect.h = max(textObj->dstrect.h, (Sint16)charArr[tempCharArray[uint_i] - 32].dstrect.h);
-    }
+void setText(const char text[], TextObject *textObj, FontObject *fontObj) {
+	textObj->str = text;
+	STRCPY(tempCharArray, textObj->str.c_str());
+	textObj->dstrect.w = 0;
+	textObj->dstrect.h = 0;
+	for (uint_i = 0; uint_i < textObj->str.length(); uint_i++) {
+		i = tempCharArray[uint_i] - 32;
+#if !defined(SDL1)
+		if (fontObj->textChars[i].texture == NULL) {
+#else
+		if (fontObj->textChars[i].surface == NULL) {
+#endif
+			if (temp_font == NULL) {
+				temp_font = TTF_OpenFont((rootDir + fontObj->path).c_str(), fontObj->size);
+				TTF_SetFontStyle(temp_font, fontObj->style);
+			}
+			tempCharArr[0] = i + 32;
+			setTextChar(tempCharArr, temp_font, fontObj->color, &fontObj->textChars[i]);
+		}
+		textObj->dstrect.w += fontObj->textChars[i].dstrect.w;
+		textObj->dstrect.h = max(textObj->dstrect.h, (Sint16)fontObj->textChars[i].dstrect.h);
+	}
+	if (temp_font != NULL) {
+		TTF_CloseFont(temp_font);
+		temp_font = NULL;
+	}
 }
 
 void setTextPos(TextObject *textObj, Sint16 pos_x, Sint16 pos_y) {
@@ -27,16 +45,10 @@ void updateText(TextObject *textObj, string text) {
 
 void setTextChar(const char *text, TTF_Font *font, SDL_Color text_color, TextCharObject *textCharObj) {
 #if !defined(SDL1)
-    if (textCharObj->texture != NULL) {
-        SDL_DestroyTexture(textCharObj->texture);
-    }
     temp_text = TTF_RenderText_Solid(font, text, text_color);
     textCharObj->texture = SDL_CreateTextureFromSurface(renderer, temp_text);
     SDL_FreeSurface(temp_text);
 #else
-    if (textCharObj->surface != NULL) {
-        SDL_FreeSurface(textCharObj->surface);
-    }
     textCharObj->surface = TTF_RenderText_Solid(font, text, text_color);
 #endif
     TTF_SizeText(font, text, &charTempX, &charTempY);
@@ -55,15 +67,15 @@ void renderTextChar(TextCharObject textCharObj) {
 #endif
 }
 
-void renderText(TextObject textObj, TextCharObject charArr[]) {
-    STRCPY(tempCharArray, textObj.str.c_str());
-    charWidthCounter = 0;
-    for (charCounter = 0; charCounter < textObj.str.length(); charCounter++) {
-        setTextCharPosX(&CHAR_AT_INDEX(charCounter, charArr), (textObj.dstrect.x + charWidthCounter));
-        setTextCharPosY(&CHAR_AT_INDEX(charCounter, charArr), textObj.dstrect.y);
-        renderTextChar(CHAR_AT_INDEX(charCounter, charArr));
-        charWidthCounter += CHAR_AT_INDEX(charCounter, charArr).dstrect.w;
-    }
+void renderText(TextObject textObj, FontObject fontObj) {
+	STRCPY(tempCharArray, textObj.str.c_str());
+	charWidthCounter = 0;
+	for (charCounter = 0; charCounter < textObj.str.length(); charCounter++) {
+		setTextCharPosX(&CHAR_AT_INDEX(charCounter, fontObj.textChars), (textObj.dstrect.x + charWidthCounter));
+		setTextCharPosY(&CHAR_AT_INDEX(charCounter, fontObj.textChars), textObj.dstrect.y);
+		renderTextChar(CHAR_AT_INDEX(charCounter, fontObj.textChars));
+		charWidthCounter += CHAR_AT_INDEX(charCounter, fontObj.textChars).dstrect.w;
+	}
 }
 
 void setTextCharPosX(TextCharObject *textCharObj, int pos_x) {
@@ -82,12 +94,32 @@ void destroyTextObjectTexture(TextCharObject textCharObj) {
 #endif
 }
 
-void setFont(TTF_Font *font, string fontFile, int originalSize, double multSize, int style, TextCharObject charArr[], SDL_Color color, Uint32 minIndex, Uint32 maxIndex) {
-    font = TTF_OpenFont((rootDir + fontFile).c_str(), max(originalSize, (int)(multSize * gameHiResMult)));
-    TTF_SetFontStyle(font, style);
-    for (k = (Sint8)minIndex; k < ((Sint8)maxIndex + 1); k++) {
-        tempCharArr[0] = k;
-        setTextChar(tempCharArr, font, color, &charArr[k - 32]);
-    }
-    TTF_CloseFont(font);
+void setFont(FontObject *fontObj, string path, int originalSize, double multSize, int style, SDL_Color color) {
+	fontObj->path = path;
+	fontObj->size = max(originalSize, (int)(multSize * gameHiResMult));
+	fontObj->style = style;
+	fontObj->color = color;
+}
+
+void initializeFont_numbers(FontObject *fontObj) {
+	STRCPY(tempCharArray, "0123456789");
+	for (uint_i = 0; uint_i < 10; uint_i++) {
+		i = tempCharArray[uint_i] - 32;
+#if !defined(SDL1)
+		if (fontObj->textChars[i].texture == NULL) {
+#else
+		if (fontObj->textChars[i].surface == NULL) {
+#endif
+			if (temp_font == NULL) {
+				temp_font = TTF_OpenFont((rootDir + fontObj->path).c_str(), fontObj->size);
+				TTF_SetFontStyle(temp_font, fontObj->style);
+			}
+			tempCharArr[0] = i + 32;
+			setTextChar(tempCharArr, temp_font, fontObj->color, &fontObj->textChars[i]);
+		}
+	}
+	if (temp_font != NULL) {
+		TTF_CloseFont(temp_font);
+		temp_font = NULL;
+	}
 }

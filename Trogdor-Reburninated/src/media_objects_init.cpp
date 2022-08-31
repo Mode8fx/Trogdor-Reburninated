@@ -1,287 +1,267 @@
 #include "media_objects_init.h"
 
-void InitializeTextChars() {
-	TTF_Init();
+void InitializeFontObjects() {
+	setFont(&font_serif_white_14, "fonts/serif_v01.ttf", 14, 14, TTF_STYLE_NORMAL, color_white);
+	setFont(&font_serif_brown_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_brown);
+	setFont(&font_serif_brown_8, "fonts/serif_v01.ttf", 8, 8, TTF_STYLE_NORMAL, color_brown);
+	setFont(&font_serif_gray_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_gray);
+	setFont(&font_serif_gray_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_gray);
+	setFont(&font_serif_orange_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_orange);
+	setFont(&font_serif_red_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_red);
+	setFont(&font_serif_red_6_mult, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_red);
+	setFont(&font_serif_red_8, "fonts/serif_v01.ttf", 8, 8, TTF_STYLE_NORMAL, color_red);
+	setFont(&font_serif_red_8_mult, "fonts/serif_v01.ttf", 8, 6.666, TTF_STYLE_NORMAL, color_red);
+	setFont(&font_serif_red_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_red);
+	setFont(&font_serif_white_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_white);
+	setFont(&font_serif_white_6_mult, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white);
+	setFont(&font_serif_white_9, "fonts/serif_v01.ttf", 9, 9, TTF_STYLE_NORMAL, color_white);
+	setFont(&font_serif_white_10, "fonts/serif_v01.ttf", 10, 10, TTF_STYLE_NORMAL, color_white);
 
-	setFont(font_serif_white_14, "fonts/serif_v01.ttf", 14, 14,
-		TTF_STYLE_NORMAL, textChars_font_serif_white_14, color_white, 32, 126);
-	setFont(font_serif_brown_6, "fonts/serif_v01.ttf", 6, 6,
-		TTF_STYLE_NORMAL, textChars_font_serif_brown_6, color_brown, 32, 122);
-	setFont(font_serif_brown_8, "fonts/serif_v01.ttf", 8, 8,
-		TTF_STYLE_NORMAL, textChars_font_serif_brown_8, color_brown, 32, 126);
-	setFont(font_serif_gray_6, "fonts/serif_v01.ttf", 6, 6,
-		TTF_STYLE_NORMAL, textChars_font_serif_gray_6, color_gray, 32, 126);
-	setFont(font_serif_gray_12, "fonts/serif_v01.ttf", 12, 12,
-		TTF_STYLE_NORMAL, textChars_font_serif_gray_12, color_gray, 32, 90);
-	setFont(font_serif_orange_6, "fonts/serif_v01.ttf", 6, 6,
-		TTF_STYLE_NORMAL, textChars_font_serif_orange_6, color_orange, 32, 90);
-	setFont(font_serif_red_6, "fonts/serif_v01.ttf", 6, 6,
-		TTF_STYLE_NORMAL, textChars_font_serif_red_6, color_red, 32, 126);
-	setFont(font_serif_red_6_mult, "fonts/serif_v01.ttf", 8, 5,
-		TTF_STYLE_NORMAL, textChars_font_serif_red_6_mult, color_red, 32, 126);
-	setFont(font_serif_red_8, "fonts/serif_v01.ttf", 8, 8,
-		TTF_STYLE_NORMAL, textChars_font_serif_red_8, color_red, 32, 126);
-	setFont(font_serif_red_8_mult, "fonts/serif_v01.ttf", 8, 6.666,
-		TTF_STYLE_NORMAL, textChars_font_serif_red_8_mult, color_red, 32, 126);
-	setFont(font_serif_red_12, "fonts/serif_v01.ttf", 12, 12,
-		TTF_STYLE_NORMAL, textChars_font_serif_red_12, color_red, 32, 90);
-	setFont(font_serif_white_6, "fonts/serif_v01.ttf", 6, 6,
-		TTF_STYLE_NORMAL, textChars_font_serif_white_6, color_white, 32, 126);
-	setFont(font_serif_white_6_mult, "fonts/serif_v01.ttf", 8, 5,
-		TTF_STYLE_NORMAL, textChars_font_serif_white_6_mult, color_white, 32, 126);
-	setFont(font_serif_white_9, "fonts/serif_v01.ttf", 9, 9,
-		TTF_STYLE_NORMAL, textChars_font_serif_white_9, color_white, 32, 126);
-	setFont(font_serif_white_10, "fonts/serif_v01.ttf", 10, 10,
-		TTF_STYLE_NORMAL, textChars_font_serif_white_10, color_white, 32, 126);
+	setFont(&font_nokia_12, "fonts/29_NOKIA 5110 FontSet.ttf", 12, 12, TTF_STYLE_NORMAL, color_white);
 
-	setFont(font_nokia_12, "fonts/29_NOKIA 5110 FontSet.ttf", 12, 12,
-		TTF_STYLE_NORMAL, textChars_font_nokia_12, color_white, 97, 126);
-
-	//setFont(font_serif_2_bold_black_23, "fonts/54_serif_v01.ttf", 23, 23,
-	//	TTF_STYLE_BOLD, textChars_font_serif_2_bold_black_23, color_black, 32, 90);
-	//setFont(font_serif_2_bold_red_23, "fonts/54_serif_v01.ttf", 23, 23,
-	//	TTF_STYLE_BOLD, textChars_font_serif_2_bold_red_23, color_red, 32, 90);
-	setFont(font_serif_2_red_6, "fonts/54_serif_v01.ttf", 6, 6,
-		TTF_STYLE_NORMAL, textChars_font_serif_2_red_6, color_red, 32, 90);
-	setFont(font_serif_2_red_13, "fonts/54_serif_v01.ttf", 13, 13,
-		TTF_STYLE_NORMAL, textChars_font_serif_2_red_13, color_red, 32, 90);
-
-	TTF_Quit();
+	//setFont(font_serif_2_bold_black_23, "fonts/54_serif_v01.ttf", 23, 23, TTF_STYLE_BOLD, color_black);
+	//setFont(font_serif_2_bold_red_23, "fonts/54_serif_v01.ttf", 23, 23, TTF_STYLE_BOLD, color_red);
+	setFont(&font_serif_2_red_6, "fonts/54_serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_red);
+	setFont(&font_serif_2_red_13, "fonts/54_serif_v01.ttf", 13, 13, TTF_STYLE_NORMAL, color_red);
 }
 
 void InitializeTextObjects() {
+	TTF_Init();
+
+	initializeFont_numbers(&font_serif_red_6);
+	initializeFont_numbers(&font_serif_2_red_6);
 	/* 0: Loading Screen */
-	SET_TEXT("loading...", text_0_loading, textChars_font_serif_white_14,
+	SET_TEXT("loading...", text_0_loading, font_serif_white_14,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_0_loading), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_0_loading));
 	/* 1: Videlectrix Logo */
-	SET_TEXT("presents", text_1_presents, textChars_font_nokia_12,
+	SET_TEXT("presents", text_1_presents, font_nokia_12,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents, 0.7));
 	/* 2: Title Screen */
 	/* 3: Instructions Screen */
 	if (gameHiResMult < 2) {
-		SET_TEXT("(1/5)", text_3_page, textChars_font_serif_white_6_mult,
+		SET_TEXT("(1/5)", text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
 #if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
-		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
+		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
 #else
-		SET_TEXT("Use the arrows to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
+		SET_TEXT("Use the arrows to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
 #endif
-		SET_TEXT("Stomp 10 peasants to achieve", text_3_instructions_2, textChars_font_serif_white_6_mult,
+		SET_TEXT("Stomp 10 peasants to achieve", text_3_instructions_2, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_2), 73 * gameHiResMult);
-		SET_TEXT("burnination.", text_3_instructions_2a, textChars_font_serif_white_6_mult,
+		SET_TEXT("burnination.", text_3_instructions_2a, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_2a), 87 * gameHiResMult);
-		SET_TEXT("Burn all cottages to advance.", text_3_instructions_3, textChars_font_serif_white_6_mult,
+		SET_TEXT("Burn all cottages to advance.", text_3_instructions_3, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), 101 * gameHiResMult);
-		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, textChars_font_serif_white_6_mult,
+		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), 115 * gameHiResMult);
 #if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
-		SET_TEXT("Press START to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press START to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
-		SET_TEXT("press START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+		SET_TEXT("press START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 143 * gameHiResMult);
 #if defined(GAMECUBE)
-		SET_TEXT("Press Z to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press Z to QUIT.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 157 * gameHiResMult);
 #else
-		SET_TEXT("Press SELECT to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press SELECT to QUIT.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 157 * gameHiResMult);
 #endif
 #elif defined(SWITCH)
-		SET_TEXT("Press + to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press + to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
-		SET_TEXT("press + to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+		SET_TEXT("press + to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 143 * gameHiResMult);
-		SET_TEXT("Press - to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press - to QUIT.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 157 * gameHiResMult);
 #else
-		SET_TEXT("Press ENTER/START to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press ENTER/START to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
-		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 143 * gameHiResMult);
-		SET_TEXT("Press SELECT/BACKSPACE to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press SELECT/BACKSPACE to QUIT.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 157 * gameHiResMult);
 #endif
-		SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6_mult,
+		SET_TEXT("SECRET HINTS!!", text_3_hints_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_1), 59 * gameHiResMult);
-		SET_TEXT("-Don't let the peasants return", text_3_hints_2, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Don't let the peasants return", text_3_hints_2, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_2), 73 * gameHiResMult);
-		SET_TEXT("to their cottages", text_3_hints_2a, textChars_font_serif_white_6_mult,
+		SET_TEXT("to their cottages", text_3_hints_2a, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_2a), 87 * gameHiResMult);
-		SET_TEXT("-Once you\'re burninating,", text_3_hints_3, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Once you\'re burninating,", text_3_hints_3, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_3), 101 * gameHiResMult);
-		SET_TEXT("you\'re invincible", text_3_hints_3a, textChars_font_serif_white_6_mult,
+		SET_TEXT("you\'re invincible", text_3_hints_3a, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_3a), 115 * gameHiResMult);
-		SET_TEXT("-Burninated peasants set their", text_3_hints_4, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Burninated peasants set their", text_3_hints_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_4), 129 * gameHiResMult);
-		SET_TEXT("cottages on fire", text_3_hints_4a, textChars_font_serif_white_6_mult,
+		SET_TEXT("cottages on fire", text_3_hints_4a, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_4a), 143 * gameHiResMult);
-		SET_TEXT("-Get an extra man every", text_3_hints_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Get an extra man every", text_3_hints_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_5), 87 * gameHiResMult);
-		SET_TEXT("300 points", text_3_hints_5a, textChars_font_serif_white_6_mult,
+		SET_TEXT("300 points", text_3_hints_5a, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_5a), 101 * gameHiResMult);
-		SET_TEXT("-What\'s a treasure hut?!?!", text_3_hints_6, textChars_font_serif_red_6_mult,
+		SET_TEXT("-What\'s a treasure hut?!?!", text_3_hints_6, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_6), 115 * gameHiResMult);
-		SET_TEXT("- Secret Code?!?!", text_3_hints_7, textChars_font_serif_red_6_mult,
+		SET_TEXT("- Secret Code?!?!", text_3_hints_7, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_7), 129 * gameHiResMult);
-		SET_TEXT("CREDITS", text_3_credits_1, textChars_font_serif_red_6_mult,
+		SET_TEXT("CREDITS", text_3_credits_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_1), 59 * gameHiResMult);
-		SET_TEXT("- ORIGINAL FLASH GAME -", text_3_credits_2, textChars_font_serif_white_6_mult,
+		SET_TEXT("- ORIGINAL FLASH GAME -", text_3_credits_2, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_2), 73 * gameHiResMult);
-		SET_TEXT("Programming: Jonathan Howe", text_3_credits_3, textChars_font_serif_white_6_mult,
+		SET_TEXT("Programming: Jonathan Howe", text_3_credits_3, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_3), 87 * gameHiResMult);
 		// credits for the HTML5 version will be added when stuff from the HTML5 version is added to this version
-		SET_TEXT("Design: Mike & Matt Chapman", text_3_credits_4, textChars_font_serif_white_6_mult,
+		SET_TEXT("Design: Mike & Matt Chapman", text_3_credits_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_4), 101 * gameHiResMult);
-		SET_TEXT("- THIS RECREATION -", text_3_credits_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("- THIS RECREATION -", text_3_credits_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_5), 115 * gameHiResMult);
-		SET_TEXT("Mips96", text_3_credits_6, textChars_font_serif_white_6_mult,
+		SET_TEXT("Mips96", text_3_credits_6, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), 129 * gameHiResMult);
-		SET_TEXT("https://github.com/Mips96", text_3_credits_7, textChars_font_serif_white_6_mult,
+		SET_TEXT("https://github.com/Mips96", text_3_credits_7, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), 143 * gameHiResMult);
-		SET_TEXT("v0.8", text_3_credits_8, textChars_font_serif_white_6_mult,
+		SET_TEXT("v0.8", text_3_credits_8, font_serif_white_6_mult,
 			gameHiResWidth - (text_3_credits_8.dstrect.w * 1.5), gameHiResHeight - (text_3_credits_8.dstrect.h * 1.5));
-		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, textChars_font_serif_red_6_mult,
+		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
-		SET_TEXT("\"Trogdor Classic\"", text_3_coming_soon_2, textChars_font_serif_white_6_mult,
+		SET_TEXT("\"Trogdor Classic\"", text_3_coming_soon_2, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_2), 73 * gameHiResMult);
-		SET_TEXT("-Fully implemented cutscenes!", text_3_coming_soon_3, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Fully implemented cutscenes!", text_3_coming_soon_3, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), 87 * gameHiResMult);
-		SET_TEXT("-Level Beaten / Game Over", text_3_coming_soon_4, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Level Beaten / Game Over", text_3_coming_soon_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), 101 * gameHiResMult);
-		SET_TEXT("animations!", text_3_coming_soon_4a, textChars_font_serif_white_6_mult,
+		SET_TEXT("animations!", text_3_coming_soon_4a, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4a), 115 * gameHiResMult);
-		SET_TEXT("-Customizable options!", text_3_coming_soon_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Customizable options!", text_3_coming_soon_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 129 * gameHiResMult);
-		SET_TEXT("-More polish!", text_3_coming_soon_6, textChars_font_serif_white_6_mult,
+		SET_TEXT("-More polish!", text_3_coming_soon_6, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 143 * gameHiResMult);
 	} else {
-		SET_TEXT("(1/4)", text_3_page, textChars_font_serif_white_6_mult,
+		SET_TEXT("(1/4)", text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
 #if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
-		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
+		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
 #else
-		SET_TEXT("Use the arrow keys to control Trogdor", text_3_instructions_1, textChars_font_serif_white_6_mult,
+		SET_TEXT("Use the arrow keys to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
 #endif
-		SET_TEXT("Stomp 10 peasants to achieve burnination.", text_3_instructions_2, textChars_font_serif_white_6_mult,
+		SET_TEXT("Stomp 10 peasants to achieve burnination.", text_3_instructions_2, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_2), 73 * gameHiResMult);
-		SET_TEXT("Burn all cottages to advance a level.", text_3_instructions_3, textChars_font_serif_white_6_mult,
+		SET_TEXT("Burn all cottages to advance a level.", text_3_instructions_3, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), 87 * gameHiResMult);
-		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, textChars_font_serif_white_6_mult,
+		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), 101 * gameHiResMult);
 #if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
-		SET_TEXT("Press START to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press START to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
-		SET_TEXT("press START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+		SET_TEXT("press START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
 #if defined(GAMECUBE)
-		SET_TEXT("Press Z to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press Z to QUIT.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #else
-		SET_TEXT("Press SELECT to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press SELECT to QUIT.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #endif
 #elif defined(SWITCH)
-		SET_TEXT("Press + to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press + to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
-		SET_TEXT("press + to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+		SET_TEXT("press + to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press - to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press - to QUIT.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #else
-		SET_TEXT("Press ENTER/START to pause.", text_3_instructions_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press ENTER/START to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
-		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, textChars_font_serif_red_8_mult,
+		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press SELECT/BACKSPACE to QUIT.", text_3_quit, textChars_font_serif_white_6_mult,
+		SET_TEXT("Press SELECT/BACKSPACE to QUIT.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #endif
-		SET_TEXT("SECRET HINTS!!", text_3_hints_1, textChars_font_serif_red_6_mult,
+		SET_TEXT("SECRET HINTS!!", text_3_hints_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_1), 59 * gameHiResMult);
-		SET_TEXT("-Don't let the peasants return to their cottages", text_3_hints_2, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Don't let the peasants return to their cottages", text_3_hints_2, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_2), 73 * gameHiResMult);
-		SET_TEXT("-Once you\'re burninating, you\'re invincible", text_3_hints_3, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Once you\'re burninating, you\'re invincible", text_3_hints_3, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_3), 87 * gameHiResMult);
-		SET_TEXT("-Burninated peasants set their cottages on fire", text_3_hints_4, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Burninated peasants set their cottages on fire", text_3_hints_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_4), 101 * gameHiResMult);
-		SET_TEXT("-Get an extra man every 300 points", text_3_hints_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Get an extra man every 300 points", text_3_hints_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_5), 115 * gameHiResMult);
-		SET_TEXT("-What\'s a treasure hut?!?!", text_3_hints_6, textChars_font_serif_red_6_mult,
+		SET_TEXT("-What\'s a treasure hut?!?!", text_3_hints_6, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_6), 129 * gameHiResMult);
-		SET_TEXT("- Secret Code?!?!", text_3_hints_7, textChars_font_serif_red_6_mult,
+		SET_TEXT("- Secret Code?!?!", text_3_hints_7, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_7), 143 * gameHiResMult);
-		SET_TEXT("CREDITS", text_3_credits_1, textChars_font_serif_red_6_mult,
+		SET_TEXT("CREDITS", text_3_credits_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_1), 59 * gameHiResMult);
-		SET_TEXT("- ORIGINAL FLASH GAME -", text_3_credits_2, textChars_font_serif_white_6_mult,
+		SET_TEXT("- ORIGINAL FLASH GAME -", text_3_credits_2, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_2), 73 * gameHiResMult);
-		SET_TEXT("Programming: Jonathan Howe", text_3_credits_3, textChars_font_serif_white_6_mult,
+		SET_TEXT("Programming: Jonathan Howe", text_3_credits_3, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_3), 87 * gameHiResMult);
 		// credits for the HTML5 version will be added when stuff from the HTML5 version is added to this version
-		SET_TEXT("Design: Mike Chapman, Matt Chapman", text_3_credits_4, textChars_font_serif_white_6_mult,
+		SET_TEXT("Design: Mike Chapman, Matt Chapman", text_3_credits_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_4), 101 * gameHiResMult);
-		SET_TEXT("- THIS RECREATION -", text_3_credits_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("- THIS RECREATION -", text_3_credits_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_5), 115 * gameHiResMult);
-		SET_TEXT("Mips96", text_3_credits_6, textChars_font_serif_white_6_mult,
+		SET_TEXT("Mips96", text_3_credits_6, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), 129 * gameHiResMult);
-		SET_TEXT("https://github.com/Mips96/Trogdor-Reburninated", text_3_credits_7, textChars_font_serif_white_6_mult,
+		SET_TEXT("https://github.com/Mips96/Trogdor-Reburninated", text_3_credits_7, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), 143 * gameHiResMult);
-		SET_TEXT("v0.9", text_3_credits_8, textChars_font_serif_white_6_mult,
+		SET_TEXT("v0.9", text_3_credits_8, font_serif_white_6_mult,
 			gameHiResWidth - (text_3_credits_8.dstrect.w * 1.5), gameHiResHeight - (text_3_credits_8.dstrect.h * 1.5));
-		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, textChars_font_serif_red_6_mult,
+		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
-		SET_TEXT("\"Trogdor Classic\"", text_3_coming_soon_2, textChars_font_serif_white_6_mult,
+		SET_TEXT("\"Trogdor Classic\"", text_3_coming_soon_2, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_2), 73 * gameHiResMult);
-		SET_TEXT("-Fully implemented cutscenes!", text_3_coming_soon_3, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Fully implemented cutscenes!", text_3_coming_soon_3, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), 87 * gameHiResMult);
-		SET_TEXT("-Level Beaten / Game Over animations!", text_3_coming_soon_4, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Level Beaten / Game Over animations!", text_3_coming_soon_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), 101 * gameHiResMult);
-		SET_TEXT("-Customizable options!", text_3_coming_soon_5, textChars_font_serif_white_6_mult,
+		SET_TEXT("-Customizable options!", text_3_coming_soon_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 115 * gameHiResMult);
-		SET_TEXT("-More polish!", text_3_coming_soon_6, textChars_font_serif_white_6_mult,
+		SET_TEXT("-More polish!", text_3_coming_soon_6, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 129 * gameHiResMult);
 	}
 	/* 4: Game */
-	SET_TEXT("SCORE:", text_4_score, textChars_font_serif_2_red_6,
+	SET_TEXT("SCORE:", text_4_score, font_serif_2_red_6,
 		5 * gameHiResMult, 5 * gameHiResMult);
-	SET_TEXT("??????", text_4_score_val, textChars_font_serif_red_6,
+	SET_TEXT("??????", text_4_score_val, font_serif_red_6,
 		5 * gameHiResMult, 11 * gameHiResMult);
-	SET_TEXT("MANS:", text_4_mans, textChars_font_serif_2_red_6,
+	SET_TEXT("MANS:", text_4_mans, font_serif_2_red_6,
 		200 * gameHiResMult, 4 * gameHiResMult);
-	SET_TEXT("??", text_4_mans_val, textChars_font_serif_red_6,
+	SET_TEXT("??", text_4_mans_val, font_serif_red_6,
 		230 * gameHiResMult, 1 * gameHiResMult);
-	SET_TEXT("LEVEL:", text_4_level, textChars_font_serif_2_red_6,
+	SET_TEXT("LEVEL:", text_4_level, font_serif_2_red_6,
 		195 * gameHiResMult, 14 * gameHiResMult);
-	SET_TEXT("??", text_4_level_val, textChars_font_serif_red_6,
+	SET_TEXT("??", text_4_level_val, font_serif_red_6,
 		230 * gameHiResMult, 11 * gameHiResMult);
-	SET_TEXT("paused", text_4_paused_1, textChars_font_serif_white_6,
+	SET_TEXT("paused", text_4_paused_1, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 130 * gameHiResMult);
 #if defined(WII_U) || defined(GAMECUBE) || defined(ANDROID)
-	SET_TEXT("press 'START' to resume", text_4_paused_2, textChars_font_serif_white_6,
+	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'A+SELECT' to quit", text_4_paused_3, textChars_font_serif_white_6,
+	SET_TEXT("press 'A+SELECT' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(WII)
-	SET_TEXT("press 'START' to resume", text_4_paused_2, textChars_font_serif_white_6,
+	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press '2+SELECT' to quit", text_4_paused_3, textChars_font_serif_white_6,
+	SET_TEXT("press '2+SELECT' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(VITA) || defined(PSP)
-	SET_TEXT("press 'START' to resume", text_4_paused_2, textChars_font_serif_white_6,
+	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'X+SELECT' to quit", text_4_paused_3, textChars_font_serif_white_6,
+	SET_TEXT("press 'X+SELECT' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(SWITCH)
-	SET_TEXT("press '+' to resume", text_4_paused_2, textChars_font_serif_white_6,
+	SET_TEXT("press '+' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'A and -' to quit", text_4_paused_3, textChars_font_serif_white_6,
+	SET_TEXT("press 'A and -' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #else
-	SET_TEXT("press 'START/ENTER' to resume", text_4_paused_2, textChars_font_serif_white_6,
+	SET_TEXT("press 'START/ENTER' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'A+SELECT/Z+BACKSPACE' to quit", text_4_paused_3, textChars_font_serif_white_6,
+	SET_TEXT("press 'A+SELECT/Z+BACKSPACE' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #endif
 	/* 5: Game Over */
@@ -289,88 +269,90 @@ void InitializeTextObjects() {
 	/* 7: Nothing */
 	/* 8: End of Level Animation */
 	/* 9: Level Beaten Screen */
-	SET_TEXT("nice work!", text_9_nice_work, textChars_font_serif_white_10,
+	SET_TEXT("nice work!", text_9_nice_work, font_serif_white_10,
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_nice_work, 0.77), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_9_nice_work, 0.45));
 	/* 10: Game Over Screen */
 	/* 11-23: Placeholder Message */
-	SET_TEXT("cutscenes aren't finished yet!", text_placeholder_cutscene, textChars_font_serif_red_8,
+	SET_TEXT("cutscenes aren't finished yet!", text_placeholder_cutscene, font_serif_red_8,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_placeholder_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_placeholder_cutscene, 0.6));
 	/* 11: Level 4 Interlude */
-	SET_TEXT("stompin' good!", text_11_cutscene, textChars_font_serif_white_9,
+	SET_TEXT("stompin' good!", text_11_cutscene, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_11_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_11_cutscene, 0.25));
 	/* 12: Level 8 Interlude */
-	SET_TEXT("fry 'em up dan.", text_12_cutscene, textChars_font_serif_white_9,
+	SET_TEXT("fry 'em up dan.", text_12_cutscene, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_12_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_12_cutscene, 0.25));
 	/* 13: Level 12 Interlude */
-	SET_TEXT("parade of trogdors", text_13_cutscene, textChars_font_serif_white_9,
+	SET_TEXT("parade of trogdors", text_13_cutscene, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_13_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_13_cutscene, 0.25));
 	/* 14: Level 16 Interlude */
-	SET_TEXT("dancin' time", text_14_cutscene, textChars_font_serif_white_9,
+	SET_TEXT("dancin' time", text_14_cutscene, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_14_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_14_cutscene, 0.25));
 	/* 15: Level 20 Interlude */
-	SET_TEXT("flex it, troggie.", text_15_cutscene, textChars_font_serif_white_9,
+	SET_TEXT("flex it, troggie.", text_15_cutscene, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_15_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_15_cutscene, 0.25));
 	/* 16: Level 24 Interlude */
-	SET_TEXT("peasant dominoes", text_16_cutscene, textChars_font_serif_white_9,
+	SET_TEXT("peasant dominoes", text_16_cutscene, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_16_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_16_cutscene, 0.25));
 	/* 17: Level 30 Interlude */
-	SET_TEXT("trogdor incognito", text_17_cutscene, textChars_font_serif_white_9,
+	SET_TEXT("trogdor incognito", text_17_cutscene, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_17_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_17_cutscene, 0.25));
 	/* 18: Level 34 Interlude */
-	SET_TEXT("go trogdor # 2!", text_18_cutscene, textChars_font_serif_white_9,
+	SET_TEXT("go trogdor # 2!", text_18_cutscene, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_18_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_18_cutscene, 0.25));
 	/* 19: Level 38 Interlude */
-	SET_TEXT("forbidden peasant love", text_19_cutscene, textChars_font_serif_white_9,
+	SET_TEXT("forbidden peasant love", text_19_cutscene, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_19_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_19_cutscene, 0.25));
 	/* 20: Level 42 Interlude */
-	SET_TEXT("2 cottages", text_20_cutscene, textChars_font_serif_white_9,
+	SET_TEXT("2 cottages", text_20_cutscene, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_20_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_20_cutscene, 0.25));
 	/* 21: Level 46 Interlude */
-	SET_TEXT("a funny joke", text_21_cutscene, textChars_font_serif_white_9,
+	SET_TEXT("a funny joke", text_21_cutscene, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_21_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_21_cutscene, 0.25));
 	/* 22: Level 50 Interlude */
-	SET_TEXT("smote that kerrek!", text_22_cutscene, textChars_font_serif_white_9,
+	SET_TEXT("smote that kerrek!", text_22_cutscene, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_22_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_22_cutscene, 0.25));
 	/* 23: Level 100 Interlude (Credits) */
-	SET_TEXT("congratulations.", text_23_cutscene_1, textChars_font_serif_white_9,
+	SET_TEXT("congratulations.", text_23_cutscene_1, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_1, 0.25));
-	SET_TEXT("you got", text_23_cutscene_2, textChars_font_serif_white_9,
+	SET_TEXT("you got", text_23_cutscene_2, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_2), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_2, 0.35));
-	SET_TEXT("good score", text_23_cutscene_3, textChars_font_serif_white_9,
+	SET_TEXT("good score", text_23_cutscene_3, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_3), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_3, 0.45));
-	SET_TEXT("cast", text_23_cutscene_4, textChars_font_serif_white_9,
+	SET_TEXT("cast", text_23_cutscene_4, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_4), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_4, 0.25));
-	SET_TEXT("trogdor", text_23_cutscene_5, textChars_font_serif_white_9,
+	SET_TEXT("trogdor", text_23_cutscene_5, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_5), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_5, 0.25));
-	SET_TEXT("perez", text_23_cutscene_6, textChars_font_serif_white_9,
+	SET_TEXT("perez", text_23_cutscene_6, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_6), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_6, 0.25));
-	SET_TEXT("hackworth", text_23_cutscene_7, textChars_font_serif_white_9,
+	SET_TEXT("hackworth", text_23_cutscene_7, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_7), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_7, 0.25));
-	SET_TEXT("\'the steve\'", text_23_cutscene_8, textChars_font_serif_white_9,
+	SET_TEXT("\'the steve\'", text_23_cutscene_8, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_8), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_8, 0.25));
-	SET_TEXT("the blue knight", text_23_cutscene_9, textChars_font_serif_white_9,
+	SET_TEXT("the blue knight", text_23_cutscene_9, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_9), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_9, 0.25));
-	SET_TEXT("the red knight", text_23_cutscene_10, textChars_font_serif_white_9,
+	SET_TEXT("the red knight", text_23_cutscene_10, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_10), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_10, 0.25));
-	SET_TEXT("the siamese archers", text_23_cutscene_11, textChars_font_serif_white_9,
+	SET_TEXT("the siamese archers", text_23_cutscene_11, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_11), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_11, 0.25));
-	SET_TEXT("and Wordly Wise", text_23_cutscene_12, textChars_font_serif_white_9,
+	SET_TEXT("and Wordly Wise", text_23_cutscene_12, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_12), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_12, 0.25));
-	SET_TEXT("as The Kerrek", text_23_cutscene_13, textChars_font_serif_white_9,
+	SET_TEXT("as The Kerrek", text_23_cutscene_13, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_13), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_13, 0.25));
-	SET_TEXT("keep playing!", text_23_cutscene_14, textChars_font_serif_white_9,
+	SET_TEXT("keep playing!", text_23_cutscene_14, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_14), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_23_cutscene_14, 0.25));
 	/* 24: Nothing? (or maybe blank transition from Credits to High Scores Screen) */
 	/* 25: High Scores Screen */
 
-	//SET_TEXT("nice work!", text_nice_work, textChars_font_serif_white_10,
+	//SET_TEXT("nice work!", text_nice_work, font_serif_white_10,
 	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_nice_work), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_nice_work));
-	//SET_TEXT("send'em", text_send_em, textChars_font_serif_gray_6,
+	//SET_TEXT("send'em", text_send_em, font_serif_gray_6,
 	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_send_em), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_send_em));
-	//SET_TEXT("YE       OLDE       HI-SCORES", text_ye_olde_hi_scores, textChars_font_serif_2_red_13,
+	//SET_TEXT("YE       OLDE       HI-SCORES", text_ye_olde_hi_scores, font_serif_2_red_13,
 	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_ye_olde_hi_scores), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_ye_olde_hi_scores));
-	//SET_TEXT("1", text_one, textChars_font_serif_brown_8,
+	//SET_TEXT("1", text_one, font_serif_brown_8,
 	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_one), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_one));
+
+	TTF_Quit();
 }
 
 void InitializeMusic() {
@@ -571,35 +553,41 @@ void destroyAllSprites() {
 	destroySprite(sprite_overlay_basement);
 }
 
-void destroyTextChars(TextCharObject textChars[], Uint8 numChars) {
-	for (i = 0; i < numChars; i++) {
+void destroyTextChars(FontObject *fontObj) {
+	for (i = 0; i < (126 + 1 - 32); i++) {
 #if !defined(SDL1)
-		SDL_DestroyTexture(textChars[i].texture);
+		if (fontObj->textChars[i].texture != NULL) {
+			SDL_DestroyTexture(fontObj->textChars[i].texture);
+			fontObj->textChars[i].texture = NULL;
+		}
 #else
-		SDL_FreeSurface(textChars[i].surface);
+		if (fontObj->textChars[i].surface != NULL) {
+			SDL_FreeSurface(fontObj->textChars[i].surface);
+			fontObj->textChars[i].surface = NULL;
+		}
 #endif
 	}
 }
 
 void destroyAllTextChars() {
-	destroyTextChars(textChars_font_serif_brown_6, 122 + 1 - 32);
-	destroyTextChars(textChars_font_serif_brown_8, 126 + 1 - 32);
-	destroyTextChars(textChars_font_serif_gray_6, 126 + 1 - 32);
-	destroyTextChars(textChars_font_serif_gray_12, 90 + 1 - 32);
-	destroyTextChars(textChars_font_serif_orange_6, 90 + 1 - 32);
-	destroyTextChars(textChars_font_serif_red_6, 126 + 1 - 32);
-	destroyTextChars(textChars_font_serif_red_6_mult, 126 + 1 - 32);
-	destroyTextChars(textChars_font_serif_red_8, 126 + 1 - 32);
-	destroyTextChars(textChars_font_serif_red_8_mult, 126 + 1 - 32);
-	destroyTextChars(textChars_font_serif_red_12, 90 + 1 - 32);
-	destroyTextChars(textChars_font_serif_white_6, 126 + 1 - 32);
-	destroyTextChars(textChars_font_serif_white_6_mult, 126 + 1 - 32);
-	destroyTextChars(textChars_font_serif_white_9, 126 + 1 - 32);
-	destroyTextChars(textChars_font_serif_white_10, 126 + 1 - 32);
-	destroyTextChars(textChars_font_serif_white_14, 126 + 1 - 32);
-	destroyTextChars(textChars_font_nokia_12, 126 + 1 - 32);
-	//destroyTextChars(textChars_font_serif_2_bold_black_23, 90 + 1 - 32);
-	//destroyTextChars(textChars_font_serif_2_bold_red_23, 90 + 1 - 32);
-	destroyTextChars(textChars_font_serif_2_red_6, 90 + 1 - 32);
-	destroyTextChars(textChars_font_serif_2_red_13, 90 + 1 - 32);
+	destroyTextChars(&font_serif_brown_6);
+	destroyTextChars(&font_serif_brown_8);
+	destroyTextChars(&font_serif_gray_6);
+	destroyTextChars(&font_serif_gray_12);
+	destroyTextChars(&font_serif_orange_6);
+	destroyTextChars(&font_serif_red_6);
+	destroyTextChars(&font_serif_red_6_mult);
+	destroyTextChars(&font_serif_red_8);
+	destroyTextChars(&font_serif_red_8_mult);
+	destroyTextChars(&font_serif_red_12);
+	destroyTextChars(&font_serif_white_6);
+	destroyTextChars(&font_serif_white_6_mult);
+	destroyTextChars(&font_serif_white_9);
+	destroyTextChars(&font_serif_white_10);
+	destroyTextChars(&font_serif_white_14);
+	destroyTextChars(&font_nokia_12);
+	//destroyTextChars(&font_serif_2_bold_black_23);
+	//destroyTextChars(&font_serif_2_bold_red_23);
+	destroyTextChars(&font_serif_2_red_6);
+	destroyTextChars(&font_serif_2_red_13);
 }
