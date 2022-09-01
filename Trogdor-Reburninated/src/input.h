@@ -473,7 +473,7 @@ inline void handleInput() {
 					break;
 				}
 				if (event.jbutton.button == 6) {
-					heldKeys |= INPUT_L;
+					heldKeys |= INPUT_Y;
 					break;
 				}
 				if (event.jbutton.button == 7) {
@@ -507,7 +507,7 @@ inline void handleInput() {
 					break;
 				}
 				if (event.jbutton.button == 6) {
-					heldKeys &= ~INPUT_L;
+					heldKeys &= ~INPUT_Y;
 					break;
 				}
 				if (event.jbutton.button == 7) {

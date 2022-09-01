@@ -808,14 +808,17 @@ class GameManager {
 				if (startDown && !keyHeld(INPUT_START)) {
 					startDown = false;
 					manually_paused = frameCounter_global;
-#if defined(SDL1)
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-					transparentScreen = SDL_CreateRGBSurface(0,
-						gameWidth, gameHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
-#else
-					transparentScreen = SDL_CreateRGBSurface(0,
-						gameWidth, gameHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-#endif
+#if defined(WII) && (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+					transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 24, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+					SDL_FillRect(transparentScreen, NULL, 0x000000C8);
+#elif defined(WII)
+					transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 24, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+					SDL_FillRect(transparentScreen, NULL, 0xC8000000);
+#elif defined(SDL1) && (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+					transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+					SDL_FillRect(transparentScreen, NULL, 0x000000C8);
+#elif defined(SDL1)
+					transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 					SDL_FillRect(transparentScreen, NULL, 0xC8000000);
 #endif
 				}
@@ -834,7 +837,7 @@ class GameManager {
 			player.dstrect.y += dy;
 			player.collision.y = 11 + player.dstrect.y;
 		}
-		inline void handle_treasure_hut_entry(Trogdor* trog, Sint8 delta_x, Sint8 delta_y) {
+		inline void handle_treasure_hut_entry(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
 			// Technically, the original treasure_button collision is different from the hut fire collision used here, but it's both negligible and inconsistent between huts (seems like a bug), so I'm not gonna bother
 			if (treasureHutIndex && !treasureHutFound && !hutArray[treasureHutIndex - 1].burned && SDL_HasIntersection(&trog->dstrect, &hutArray[treasureHutIndex - 1].collision)) {
 				inTreasureHut = true;

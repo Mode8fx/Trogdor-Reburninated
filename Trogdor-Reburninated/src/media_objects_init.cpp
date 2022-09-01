@@ -121,7 +121,7 @@ void InitializeTextObjects() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), 129 * gameHiResMult);
 		SET_TEXT("https://github.com/Mips96", text_3_credits_7, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), 143 * gameHiResMult);
-		SET_TEXT("v0.8", text_3_credits_8, font_serif_white_6_mult,
+		SET_TEXT("v0.9", text_3_credits_8, font_serif_white_6_mult,
 			gameHiResWidth - (text_3_credits_8.dstrect.w * 1.5), gameHiResHeight - (text_3_credits_8.dstrect.h * 1.5));
 		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
@@ -499,17 +499,12 @@ void InitializeSpritesPart2() {
 		0, 0, 3, 2, 1);
 	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
 		0, 0, 2, 3, 1);
-	if (gameHiResMult >= 2) {
-#if !defined(SDL1)
+	if (gameHiResMult < 1.5) {
 		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_small.bmp").c_str(),
-			OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, (int)(ceil(gameHiResMult * 1.5)));
-#else
-		PREPARE_SPRITE_HIRES(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_small.bmp").c_str(), // TODO: This CAN be given proper scaling with small
-			OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, 1, 1.5);
-#endif
-	} else {
-		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_big.bmp").c_str(),
-			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, 1);
+			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, 2);
+	} else { // TODO: this could be polished a bit further for (1.5 <= gameHiResMult < 2)
+		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_small.bmp").c_str(),
+			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, 1.5);
 	}
 	PREPARE_SPRITE(sprite_loot, (rootDir + "graphics/loot.bmp").c_str(),
 		0, 0, 1, 1, 1);

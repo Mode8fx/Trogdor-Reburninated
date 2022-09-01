@@ -427,10 +427,6 @@ void renderBackground() {
 
 void renderTransparentForeground() {
 	outputRect = gameToWindowDstRect;
-	outputRect.x = (Sint16)(outputRect.x * screenScale) + gameToWindowDstRect.x;
-	outputRect.y = (Sint16)(outputRect.y * screenScale) + gameToWindowDstRect.y;
-	outputRect.w = (Uint16)(outputRect.w * screenScale);
-	outputRect.h = (Uint16)(outputRect.h * screenScale);
 #if !defined(SDL1)
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 200);
 	SDL_RenderFillRect(renderer, &outputRect);
