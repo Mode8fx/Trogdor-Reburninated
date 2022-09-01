@@ -395,6 +395,8 @@ build_gamecube/
 build_switch/
 build_wii_u/
 build_vita/
+music_wav/
+sfx_wav/
 save.bin
 docs/
 *.dol

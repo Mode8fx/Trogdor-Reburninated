@@ -33,7 +33,6 @@ struct TextCharObject {
 };
 
 struct FontObject {
-	string path;
     TTF_Font *font;
 	int size;
 	int style;
@@ -41,7 +40,7 @@ struct FontObject {
 	TextCharObject textChars[126 + 1 - 32];
 };
 
-extern void setText(const char[], TextObject *, FontObject *);
+extern void setText(const char [], TextObject *, FontObject *);
 extern void setTextPos(TextObject *, Sint16, Sint16);
 extern void updateText(TextObject *, string);
 extern void setTextChar(const char *, TTF_Font *, SDL_Color, TextCharObject *);
@@ -50,7 +49,7 @@ extern void renderText(TextObject, FontObject);
 extern void setTextCharPosX(TextCharObject *, int);
 extern void setTextCharPosY(TextCharObject *, int);
 extern void destroyTextObjectTexture(TextCharObject);
-extern void setFont(FontObject *, string, int, double, int, SDL_Color);
+extern void setFont(FontObject *, const char *, int, double, int, SDL_Color);
 extern void initializeFont_numbers(FontObject *);
 
 // This should be a macro since pos_x and pos_y may (and likely will) change before they're needed
