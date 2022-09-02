@@ -15,7 +15,6 @@ Final:
 	- PSP
 		- All sound takes extremely long to load; the best solution may be to use something other than SDL_mixer (unfortunately)
 		- Spaces aren't created properly; they appear as other characters, usually with colored dots
-		- D-pad input stutters (but analog input is fine)
 		- ARROWED/SWORDED text doesn't show up for some reason
 - Package everything up
 

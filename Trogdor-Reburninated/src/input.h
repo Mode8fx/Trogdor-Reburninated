@@ -140,7 +140,7 @@ inline void handleInput() {
 	} else {
 		heldDirs_dpad &= ~INPUT_UP;
 	}
-#else
+#elif defined(GAMECUBE)
 	if (joystickHat & SDL_HAT_UP) {
 		heldDirs_dpad |= INPUT_UP;
 	} else {
