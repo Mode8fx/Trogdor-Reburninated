@@ -11,11 +11,11 @@ Final:
 		- At non-integer scaling, srcrects may be off by 1 pixel due to the way zoomSurface is used
 		- Final testing needed
 	- Vita
+		- All sound takes a split second to load; either sound effects should be loaded into RAM at the start, or a different audio library should be used
 		- Final testing needed
 	- PSP
 		- All sound takes extremely long to load; the best solution may be to use something other than SDL_mixer (unfortunately)
-		- Spaces aren't created properly; they appear as other characters, usually with colored dots
-		- ARROWED/SWORDED text doesn't show up for some reason
+		- Final testing needed
 - Package everything up
 
 Trogdor Classic [faithful recreation of original Trogdor flash game]:

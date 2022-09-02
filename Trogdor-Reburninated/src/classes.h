@@ -1283,7 +1283,7 @@ class GameManager {
 			dm_frameState++;
 			switch (dm_frameState) {
 				case 4:
-					//dm_srcrect.x = 0;
+					dm_srcrect.x = 0;
 					dm_srcrect.y = 0;
 					dm_visible = true;
 					player.frameState = 19;
@@ -1318,8 +1318,8 @@ class GameManager {
 					dm_frameState = 0;
 					break;
 				case 29:
-					dm_srcrect.y = spriteForm(sprite_death_message, 1);
-					//dm_srcrect.y = 0;
+					dm_srcrect.x = spriteFrame(sprite_death_message, 1);
+					dm_srcrect.y = 0;
 					dm_visible = true;
 					player.frameState = 49;
 					paused = true;
@@ -1332,9 +1332,9 @@ class GameManager {
 					break;
 			}
 			if (dm_frameState < 28) {
-				dm_srcrect.x = spriteFrame(sprite_death_message, (((dm_frameState -  4) / 2) % 5));
+				dm_srcrect.y = spriteForm(sprite_death_message, (((dm_frameState -  4) / 2) % 5));
 			} else {
-				dm_srcrect.x = spriteFrame(sprite_death_message, (((dm_frameState - 29) / 2) % 5));
+				dm_srcrect.y = spriteForm(sprite_death_message, (((dm_frameState - 29) / 2) % 5));
 			}
 		}
 		void b_updateFrameState() { // burninate message

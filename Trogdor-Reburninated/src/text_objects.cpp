@@ -34,9 +34,17 @@ void updateText(TextObject *textObj, string text) {
     textObj->str = text;
 }
 
-void setTextChar(const char *text, TTF_Font *font, SDL_Color text_color, TextCharObject *textCharObj) {
+void setTextChar(const char* text, TTF_Font* font, SDL_Color text_color, TextCharObject* textCharObj) {
 #if !defined(SDL1)
-    temp_text = TTF_RenderText_Solid(font, text, text_color);
+#if !defined(PSP)
+	temp_text = TTF_RenderText_Solid(font, text, text_color);
+#else
+	if (int(text[0]) != 32) {
+		temp_text = TTF_RenderText_Solid(font, text, text_color);
+	} else {
+		temp_text = TTF_RenderText_Solid(font, "", text_color);
+	}
+#endif
 	textCharObj->texture = SDL_CreateTextureFromSurface(renderer, temp_text);
     SDL_FreeSurface(temp_text);
 #else

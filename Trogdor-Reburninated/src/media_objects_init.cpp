@@ -201,22 +201,22 @@ void InitializeFontsAndText() {
 	TTF_CloseFont(font_serif_red_6_mult.font);
 	TTF_CloseFont(font_serif_red_8_mult.font);
 
-	setFont(&font_serif_brown_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_brown);
-	TTF_CloseFont(font_serif_brown_6.font);
+	//setFont(&font_serif_brown_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_brown);
+	//TTF_CloseFont(font_serif_brown_6.font);
 
-	setFont(&font_serif_brown_8, "fonts/serif_v01.ttf", 8, 8, TTF_STYLE_NORMAL, color_brown);
-	TTF_CloseFont(font_serif_brown_8.font);
+	//setFont(&font_serif_brown_8, "fonts/serif_v01.ttf", 8, 8, TTF_STYLE_NORMAL, color_brown);
+	//TTF_CloseFont(font_serif_brown_8.font);
 
-	setFont(&font_serif_gray_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_gray);
-	TTF_CloseFont(font_serif_gray_6.font);
+	//setFont(&font_serif_gray_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_gray);
+	//TTF_CloseFont(font_serif_gray_6.font);
 
-	setFont(&font_serif_gray_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_gray);
-	TTF_CloseFont(font_serif_gray_12.font);
+	//setFont(&font_serif_gray_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_gray);
+	//TTF_CloseFont(font_serif_gray_12.font);
 
-	setFont(&font_serif_orange_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_orange);
-	TTF_CloseFont(font_serif_orange_6.font);
+	//setFont(&font_serif_orange_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_orange);
+	//TTF_CloseFont(font_serif_orange_6.font);
 
-	setFont(&font_serif_red_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_red);
+	setFont(&font_serif_red_6, "fonts/serif_v01.ttf", 8, 6, TTF_STYLE_NORMAL, color_red);
 	initializeFont_numbers(&font_serif_red_6);
 	SET_TEXT("??????", text_4_score_val, font_serif_red_6,
 		5 * gameHiResMult, 11 * gameHiResMult);
@@ -224,6 +224,11 @@ void InitializeFontsAndText() {
 		230 * gameHiResMult, 1 * gameHiResMult);
 	SET_TEXT("??", text_4_level_val, font_serif_red_6,
 		230 * gameHiResMult, 11 * gameHiResMult);
+	if (font_serif_red_6.size == 8) {
+		text_4_score_val.dstrect.y -= 1;
+		text_4_mans_val.dstrect.y -= 2;
+		text_4_level_val.dstrect.y -= 1;
+	}
 	TTF_CloseFont(font_serif_red_6.font);
 
 	setFont(&font_serif_red_8, "fonts/serif_v01.ttf", 8, 8, TTF_STYLE_NORMAL, color_red);
@@ -232,8 +237,8 @@ void InitializeFontsAndText() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_placeholder_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_placeholder_cutscene, 0.6));
 	TTF_CloseFont(font_serif_red_8.font);
 
-	setFont(&font_serif_red_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_red);
-	TTF_CloseFont(font_serif_red_12.font);
+	//setFont(&font_serif_red_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_red);
+	//TTF_CloseFont(font_serif_red_12.font);
 
 	setFont(&font_serif_white_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_white);
 	SET_TEXT("paused", text_4_paused_1, font_serif_white_6,
@@ -346,17 +351,24 @@ void InitializeFontsAndText() {
 
 	//setFont(font_serif_2_bold_black_23, "fonts/54_serif_v01.ttf", 23, 23, TTF_STYLE_BOLD, color_black);
 	//setFont(font_serif_2_bold_red_23, "fonts/54_serif_v01.ttf", 23, 23, TTF_STYLE_BOLD, color_red);
-	setFont(&font_serif_2_red_6, "fonts/54_serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_red);
+	setFont(&font_serif_2_red_6, "fonts/serif_v01.ttf", 8, 6, TTF_STYLE_NORMAL, color_red);
 	SET_TEXT("SCORE:", text_4_score, font_serif_2_red_6,
-		5 * gameHiResMult, 5 * gameHiResMult);
+		5 * gameHiResMult, 1 * gameHiResMult);
 	SET_TEXT("MANS:", text_4_mans, font_serif_2_red_6,
-		200 * gameHiResMult, 4 * gameHiResMult);
+		200 * gameHiResMult, 1 * gameHiResMult);
 	SET_TEXT("LEVEL:", text_4_level, font_serif_2_red_6,
-		195 * gameHiResMult, 14 * gameHiResMult);
+		195 * gameHiResMult, 11 * gameHiResMult);
+	if (font_serif_2_red_6.size == 8) {
+		text_4_score.dstrect.y -= 2;
+		text_4_mans.dstrect.x -= font_serif_2_red_6.size;
+		text_4_mans.dstrect.y -= 2;
+		text_4_level.dstrect.x -= font_serif_2_red_6.size;
+		text_4_level.dstrect.y -= 1;
+	}
 	TTF_CloseFont(font_serif_2_red_6.font);
 
-	setFont(&font_serif_2_red_13, "fonts/54_serif_v01.ttf", 13, 13, TTF_STYLE_NORMAL, color_red);
-	TTF_CloseFont(font_serif_2_red_13.font);
+	//setFont(&font_serif_2_red_13, "fonts/54_serif_v01.ttf", 13, 13, TTF_STYLE_NORMAL, color_red);
+	//TTF_CloseFont(font_serif_2_red_13.font);
 
 	//SET_TEXT("nice work!", text_nice_work, font_serif_white_10,
 	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_nice_work), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_nice_work));
@@ -476,7 +488,7 @@ void InitializeSpritesPart1() {
 	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
 		65, 53, 1, 1, 1);
 	PREPARE_SPRITE(sprite_death_message, (rootDir + "graphics/death_message.bmp").c_str(),
-		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_death_message), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_death_message), 5, 2, 1);
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_death_message), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_death_message), 2, 5, 1);
 	PREPARE_SPRITE(sprite_burninate_text, (rootDir + "graphics/burninate_text.bmp").c_str(),
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_text), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_text), 1, 1, 1);
 	PREPARE_SPRITE(sprite_burninate_fire, (rootDir + "graphics/burninate_message_fire.bmp").c_str(),
