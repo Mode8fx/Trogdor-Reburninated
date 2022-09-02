@@ -457,6 +457,14 @@ void InitializeSFX() {
 	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
 		sfxArr_strongBad[i]->type = 1;
 	}
+#if defined(VITA)
+	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
+		sfxArr[i]->chunk = Mix_LoadWAV((rootDir + sfxArr[i]->path).c_str());
+	}
+	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
+		sfxArr_strongBad[i]->chunk = Mix_LoadWAV((rootDir + sfxArr_strongBad[i]->path).c_str());
+	}
+#endif
 }
 
 void InitializeSpritesPart1() {

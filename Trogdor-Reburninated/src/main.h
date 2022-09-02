@@ -467,12 +467,12 @@ void DestroyAll() {
 	destroyAllTextChars();
 	/* Sound */
 	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
-		if (sfxArr[i]->chunk != NULL && sfxArr[i]->isPlaying) {
+		if (sfxArr[i]->chunk != NULL) {
 			Mix_FreeChunk(sfxArr[i]->chunk);
 		}
 	}
 	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
-		if (sfxArr_strongBad[i]->chunk != NULL && sfxArr_strongBad[i]->isPlaying) {
+		if (sfxArr_strongBad[i]->chunk != NULL) {
 			Mix_FreeChunk(sfxArr_strongBad[i]->chunk);
 		}
 	}

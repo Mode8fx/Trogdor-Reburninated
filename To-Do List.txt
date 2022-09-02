@@ -11,7 +11,6 @@ Final:
 		- At non-integer scaling, srcrects may be off by 1 pixel due to the way zoomSurface is used
 		- Final testing needed
 	- Vita
-		- All sound takes a split second to load; either sound effects should be loaded into RAM at the start, or a different audio library should be used
 		- Final testing needed
 	- PSP
 		- All sound takes extremely long to load; the best solution may be to use something other than SDL_mixer (unfortunately)
@@ -43,7 +42,7 @@ Polish:
 Additional Ports:
 - Android
 Final:
-- Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita
+- Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
 - Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita
 
 Trogdor Plus [an update to be developed between Classic and Reburninated]
@@ -56,10 +55,6 @@ Features:
 Polish:
 - Add "Coming Eventually" screen for Trogdor Reburninated
 Additional Ports:
-- PSP (already compiles, but there are major issues)
-	- Rework graphics loading for PSP version to use SDL2 textures instead of SDL1 surfaces
-	- Rework art assets from BMP with color key to PNG with alpha channel
-	- Sound may have to be reworked to use something besides SDL_mixer
 - Libretro
 Final:
 - Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, LibRetro

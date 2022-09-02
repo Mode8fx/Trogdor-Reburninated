@@ -50,7 +50,9 @@ void pauseMusic() {
 
 void loadAndPlaySound(SoundEffect *sfx) {
 	if (!sfx->isPlaying) {
+#if !defined(VITA)
 		sfx->chunk = Mix_LoadWAV((rootDir + sfx->path).c_str());
+#endif
 		sfx->isPlaying = true;
 	}
 	if (sfx->type == 0) {
@@ -81,7 +83,9 @@ void freeFinishedSoundChunks() {
 				}
 			}
 			if (!sfxShouldBePlaying) {
+#if !defined(VITA)
 				Mix_FreeChunk(sfxArr[sfxIndex]->chunk);
+#endif
 				sfxArr[sfxIndex]->isPlaying = false;
 			}
 		}
@@ -90,7 +94,9 @@ void freeFinishedSoundChunks() {
 		if (sfxArr_strongBad[sfxIndex]->isPlaying) {
 			sfxShouldBePlaying = false;
 			if (sfxArr_strongBad[sfxIndex] != sfxChannel_strongBad) {
+#if !defined(VITA)
 				Mix_FreeChunk(sfxArr_strongBad[sfxIndex]->chunk);
+#endif
 				sfxArr_strongBad[sfxIndex]->isPlaying = false;
 			}
 		}
