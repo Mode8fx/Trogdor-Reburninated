@@ -6,8 +6,7 @@
 #ifndef MEDIA_OBJECTS_INIT_H
 #define MEDIA_OBJECTS_INIT_H
 
-extern void InitializeFontObjects();
-extern void InitializeTextObjects();
+extern void InitializeFontsAndText();
 extern void InitializeMusic();
 extern void InitializeSFX();
 extern void InitializeSpritesPart1();

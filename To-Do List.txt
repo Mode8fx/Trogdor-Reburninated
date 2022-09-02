@@ -13,7 +13,6 @@ Final:
 	- Vita
 		- Final testing needed
 	- PSP
-		- Crashing due to font-related issues(?)
 		- All sound takes extremely long to load; the best solution may be to use something other than SDL_mixer (unfortunately)
 		- Colored dots appear around text for some reason
 		- Spaces show up as periods in integer scaling for some reason

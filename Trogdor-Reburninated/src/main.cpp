@@ -64,8 +64,7 @@ int main(int argv, char** args) {
 
 #if defined(ANDROID)
 	/* Initialize SDL_ttf, fonts, text objects, and sprite objects (already done for other systems in InitializeDisplay() via setScaling() */
-	InitializeFontObjects();
-	InitializeTextObjects();
+	InitializeFontsAndText();
 	InitializeSpritesPart1();
 	InitializeSpritesPart2();
 #endif
