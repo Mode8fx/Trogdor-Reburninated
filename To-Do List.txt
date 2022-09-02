@@ -14,11 +14,9 @@ Final:
 		- Final testing needed
 	- PSP
 		- All sound takes extremely long to load; the best solution may be to use something other than SDL_mixer (unfortunately)
-		- Colored dots appear around text for some reason
-		- Spaces show up as periods in integer scaling for some reason
+		- Spaces aren't created properly; they appear as other characters, usually with colored dots
 		- D-pad input stutters (but analog input is fine)
 		- ARROWED/SWORDED text doesn't show up for some reason
-		- "Press Select to quit" text doesn't appear on low resolutions
 - Package everything up
 
 Trogdor Classic [faithful recreation of original Trogdor flash game]:

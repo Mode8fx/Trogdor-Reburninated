@@ -308,10 +308,11 @@ int main(int argv, char** args) {
 							renderText(text_3_instructions_2a, font_serif_white_6_mult);
 							renderText(text_3_instructions_3, font_serif_white_6_mult);
 							renderText(text_3_instructions_4, font_serif_white_6_mult);
-							renderText(text_3_instructions_5, font_serif_white_6_mult);
+							//renderText(text_3_instructions_5, font_serif_white_6_mult);
 							if (frameState % 4 < 2) {
 								renderText(text_3_click_anywhere_to_start, font_serif_red_8_mult);
 							}
+							renderText(text_3_quit, font_serif_white_6_mult);
 							break;
 						case 2:
 							renderText(text_3_hints_1, font_serif_red_6_mult);

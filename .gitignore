@@ -397,6 +397,8 @@ build_wii_u/
 build_vita/
 music_wav/
 sfx_wav/
+music_ogg/
+sfx_ogg/
 save.bin
 docs/
 *.dol
