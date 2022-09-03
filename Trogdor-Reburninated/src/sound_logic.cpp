@@ -85,6 +85,7 @@ void freeFinishedSoundChunks() {
 			if (!sfxShouldBePlaying) {
 #if !defined(VITA)
 				Mix_FreeChunk(sfxArr[sfxIndex]->chunk);
+				sfxArr[sfxIndex]->chunk = NULL;
 #endif
 				sfxArr[sfxIndex]->isPlaying = false;
 			}
@@ -96,6 +97,7 @@ void freeFinishedSoundChunks() {
 			if (sfxArr_strongBad[sfxIndex] != sfxChannel_strongBad) {
 #if !defined(VITA)
 				Mix_FreeChunk(sfxArr_strongBad[sfxIndex]->chunk);
+				sfxArr_strongBad[sfxIndex]->chunk = NULL;
 #endif
 				sfxArr_strongBad[sfxIndex]->isPlaying = false;
 			}

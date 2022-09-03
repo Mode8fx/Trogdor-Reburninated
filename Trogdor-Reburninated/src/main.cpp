@@ -9,6 +9,10 @@ Uint8  heldDirs_last;
 Uint8  heldDirs_kb;
 Uint8  heldDirs_dpad;
 Uint8  heldDirs_stick;
+#if defined(WII)
+Uint32 wii_keysDown;
+Uint32 wii_keysUp;
+#endif
 Sint32 timer_buttonHold;
 Sint32 timer_buttonHold_repeater;
 

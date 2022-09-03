@@ -6,11 +6,11 @@
   <release_date>202208222100</release_date>
   <short_description>Burninate the countryside!</short_description>
   <long_description>A recreation of the Homestar Runner Flash game "Trogdor" made with SDL. Currently in beta.
-  Intended to be played with a sideways Wiimote, but a Gamecube controller also works.
+  In-game button prompts are for Wii Remote, but a Gamecube controller also works.
   
   https://github.com/Mips96/Trogdor-Reburninated
   
-  Trogdor is originally created and owned by the Brothers Chaps; credits are listed in-game.
+  Trogdor is originally created and owned by the Brothers Chaps, and programmed by Jonathan Howe; credits are listed in-game.
   </long_description>
 </app>
 

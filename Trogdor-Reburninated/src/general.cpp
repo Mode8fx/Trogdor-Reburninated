@@ -27,6 +27,8 @@ void systemSpecificOpen() {
 #elif defined(WII) || defined(GAMECUBE)
 	/* Initialize SD Card */
 	fatInitDefault();
+	/* Initialize Controller */
+	PAD_Init();
 #endif
 }
 

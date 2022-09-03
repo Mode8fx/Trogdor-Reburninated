@@ -24,6 +24,10 @@ extern Sint32 timer_buttonHold;
 extern Sint32 timer_buttonHold_repeater;
 extern Sint16 controllerAxis_leftStickX;
 extern Sint16 controllerAxis_leftStickY;
+#if defined(WII)
+extern Uint32 wii_keysDown;
+extern Uint32 wii_keysUp;
+#endif
 #if !(defined(GAMECUBE) || defined(PSP))
 extern Sint32 mouseInput_x;
 extern Sint32 mouseInput_x_last;
@@ -103,6 +107,41 @@ inline void handleHeldKeys(Uint32 deltaTime) {
 	}
 }
 
+#if defined(WII)
+inline void wii_mapWiiDir(Uint32 wiimoteInput, Uint32 ccInput, Uint32 output) {
+	if (wii_keysDown & wiimoteInput || wii_keysDown & ccInput) {
+		heldDirs_dpad |= output;
+	} else if (wii_keysUp & wiimoteInput || wii_keysUp & ccInput) {
+		heldDirs_dpad &= ~output;
+	}
+}
+
+inline void wii_mapWiiButton(Uint32 wiimoteInput, Uint32 ccInput, Uint32 output) {
+	if (wii_keysDown & wiimoteInput || wii_keysDown & ccInput) {
+		heldKeys |= output;
+	} else if (wii_keysUp & wiimoteInput || wii_keysUp & ccInput) {
+		heldKeys &= ~output;
+	}
+}
+
+inline void wii_mapGCDir(Uint32 gcInput, Uint32 output) {
+	if (wii_keysDown & gcInput) {
+		heldDirs_dpad |= output;
+	} else if (wii_keysUp & gcInput) {
+		heldDirs_dpad &= ~output;
+	}
+}
+
+inline void wii_mapGCButton(Uint32 gcInput, Uint32 output) {
+	if (wii_keysDown & gcInput) {
+		heldKeys |= output;
+	} else if (wii_keysUp & gcInput) {
+		heldKeys &= ~output;
+	}
+}
+#endif
+
+#if !defined(WII)
 inline void handleInput() {
 	keyInputs = 0;
 	/* Update Key/Button Presses, Mouse/Touch Input, and Window Resizing */
@@ -116,31 +155,9 @@ inline void handleInput() {
 	if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
 		controllerAxis_leftStickY = 0;
 	}
-#else
 	/* Update Controller Hat Positions (SDL1 only; SDL2 D-Pad buttons are handled later) */
-	joystickHat = SDL_JoystickGetHat(joystick, 0);
-#if defined(WII)
-	if (joystickHat & SDL_HAT_UP) {
-		heldDirs_dpad |= INPUT_LEFT;
-	} else {
-		heldDirs_dpad &= ~INPUT_LEFT;
-	}
-	if (joystickHat & SDL_HAT_DOWN) {
-		heldDirs_dpad |= INPUT_RIGHT;
-	} else {
-		heldDirs_dpad &= ~INPUT_RIGHT;
-	}
-	if (joystickHat & SDL_HAT_LEFT) {
-		heldDirs_dpad |= INPUT_DOWN;
-	} else {
-		heldDirs_dpad &= ~INPUT_DOWN;
-	}
-	if (joystickHat & SDL_HAT_RIGHT) {
-		heldDirs_dpad |= INPUT_UP;
-	} else {
-		heldDirs_dpad &= ~INPUT_UP;
-	}
 #elif defined(GAMECUBE)
+	joystickHat = SDL_JoystickGetHat(joystick, 0);
 	if (joystickHat & SDL_HAT_UP) {
 		heldDirs_dpad |= INPUT_UP;
 	} else {
@@ -161,7 +178,6 @@ inline void handleInput() {
 	} else {
 		heldDirs_dpad &= ~INPUT_RIGHT;
 	}
-#endif
 #endif
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
@@ -446,76 +462,7 @@ inline void handleInput() {
 			default:
 				break;
 #else
-#if defined(WII)
-			case SDL_JOYBUTTONDOWN:
-				if (event.jbutton.button == 0) {
-					heldKeys |= INPUT_R;
-					break;
-				}
-				if (event.jbutton.button == 1) {
-					heldKeys |= INPUT_L;
-					break;
-				}
-				if (event.jbutton.button == 2) {
-					heldKeys |= INPUT_B;
-					break;
-				}
-				if (event.jbutton.button == 3) {
-					heldKeys |= INPUT_A;
-					break;
-				}
-				if (event.jbutton.button == 4) {
-					heldKeys |= INPUT_SELECT;
-					break;
-				}
-				if (event.jbutton.button == 5) {
-					heldKeys |= INPUT_START;
-					break;
-				}
-				if (event.jbutton.button == 6) {
-					heldKeys |= INPUT_Y;
-					break;
-				}
-				if (event.jbutton.button == 7) {
-					heldKeys |= INPUT_START;
-					break;
-				}
-				break;
-			case SDL_JOYBUTTONUP:
-				if (event.jbutton.button == 0) {
-					heldKeys &= ~INPUT_R;
-					break;
-				}
-				if (event.jbutton.button == 1) {
-					heldKeys &= ~INPUT_L;
-					break;
-				}
-				if (event.jbutton.button == 2) {
-					heldKeys &= ~INPUT_B;
-					break;
-				}
-				if (event.jbutton.button == 3) {
-					heldKeys &= ~INPUT_A;
-					break;
-				}
-				if (event.jbutton.button == 4) {
-					heldKeys &= ~INPUT_SELECT;
-					break;
-				}
-				if (event.jbutton.button == 5) {
-					heldKeys &= ~INPUT_START;
-					break;
-				}
-				if (event.jbutton.button == 6) {
-					heldKeys &= ~INPUT_Y;
-					break;
-				}
-				if (event.jbutton.button == 7) {
-					heldKeys &= ~INPUT_START;
-					break;
-				}
-				break;
-#elif defined(GAMECUBE)
+#if defined(GAMECUBE)
 			case SDL_JOYBUTTONDOWN:
 				if (event.jbutton.button == 0) {
 					heldKeys |= INPUT_A;
@@ -710,5 +657,50 @@ inline void handleInput() {
 	handleAnalogInput();
 	handleHeldKeys(deltaTime);
 }
+#else // Wii
+inline void handleInput() {
+	WPAD_ScanPads();
+	wii_keysDown = WPAD_ButtonsDown(0);
+	wii_keysUp = WPAD_ButtonsUp(0);
+	wii_mapWiiDir(WPAD_BUTTON_UP, WPAD_CLASSIC_BUTTON_LEFT, INPUT_LEFT);
+	wii_mapWiiDir(WPAD_BUTTON_DOWN, WPAD_CLASSIC_BUTTON_RIGHT, INPUT_RIGHT);
+	wii_mapWiiDir(WPAD_BUTTON_LEFT, WPAD_CLASSIC_BUTTON_DOWN, INPUT_DOWN);
+	wii_mapWiiDir(WPAD_BUTTON_RIGHT, WPAD_CLASSIC_BUTTON_UP, INPUT_UP);
+	wii_mapWiiButton(WPAD_BUTTON_A, WPAD_CLASSIC_BUTTON_FULL_R, INPUT_R);
+	wii_mapWiiButton(WPAD_BUTTON_B, WPAD_CLASSIC_BUTTON_FULL_L, INPUT_L);
+	wii_mapWiiButton(WPAD_BUTTON_1, WPAD_CLASSIC_BUTTON_B, INPUT_B);
+	wii_mapWiiButton(WPAD_BUTTON_2, WPAD_CLASSIC_BUTTON_A, INPUT_A);
+	wii_mapWiiButton(WPAD_BUTTON_PLUS, WPAD_CLASSIC_BUTTON_PLUS, INPUT_START);
+	wii_mapWiiButton(WPAD_BUTTON_MINUS, WPAD_CLASSIC_BUTTON_MINUS, INPUT_SELECT);
+	wii_mapWiiButton(WPAD_BUTTON_HOME, WPAD_CLASSIC_BUTTON_HOME, INPUT_Y);
+
+	PAD_ScanPads();
+	wii_keysDown = PAD_ButtonsDown(0);
+	wii_keysUp = PAD_ButtonsUp(0);
+	wii_mapGCDir(PAD_BUTTON_UP, INPUT_UP);
+	wii_mapGCDir(PAD_BUTTON_DOWN, INPUT_DOWN);
+	wii_mapGCDir(PAD_BUTTON_LEFT, INPUT_LEFT);
+	wii_mapGCDir(PAD_BUTTON_RIGHT, INPUT_RIGHT);
+	wii_mapGCButton(PAD_BUTTON_A, INPUT_A);
+	wii_mapGCButton(PAD_BUTTON_B, INPUT_B);
+	wii_mapGCButton(PAD_BUTTON_X, INPUT_X);
+	wii_mapGCButton(PAD_BUTTON_Y, INPUT_Y);
+	wii_mapGCButton(PAD_TRIGGER_L, INPUT_L);
+	wii_mapGCButton(PAD_TRIGGER_R, INPUT_R);
+	wii_mapGCButton(PAD_TRIGGER_Z, INPUT_SELECT);
+	wii_mapGCButton(PAD_BUTTON_START, INPUT_START);
+	controllerAxis_leftStickX = PAD_StickX(0) * 256;
+	controllerAxis_leftStickY = PAD_StickY(0) * -256;
+	if ((controllerAxis_leftStickX > -STICK_DEADZONE) && (controllerAxis_leftStickX < STICK_DEADZONE)) {
+		controllerAxis_leftStickX = 0;
+	}
+	if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
+		controllerAxis_leftStickY = 0;
+	}
+
+	handleAnalogInput();
+	handleHeldKeys(deltaTime);
+}
+#endif
 
 #endif

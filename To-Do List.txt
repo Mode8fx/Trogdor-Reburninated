@@ -43,7 +43,7 @@ Additional Ports:
 - Android
 Final:
 - Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
-- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
 
 Trogdor Plus [an update to be developed between Classic and Reburninated]
 Features:

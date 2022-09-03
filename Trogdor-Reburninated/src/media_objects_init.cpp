@@ -600,16 +600,16 @@ void destroyTextChars(FontObject *fontObj) {
 }
 
 void destroyAllTextChars() {
-	destroyTextChars(&font_serif_brown_6);
-	destroyTextChars(&font_serif_brown_8);
-	destroyTextChars(&font_serif_gray_6);
-	destroyTextChars(&font_serif_gray_12);
-	destroyTextChars(&font_serif_orange_6);
+	//destroyTextChars(&font_serif_brown_6);
+	//destroyTextChars(&font_serif_brown_8);
+	//destroyTextChars(&font_serif_gray_6);
+	//destroyTextChars(&font_serif_gray_12);
+	//destroyTextChars(&font_serif_orange_6);
 	destroyTextChars(&font_serif_red_6);
 	destroyTextChars(&font_serif_red_6_mult);
 	destroyTextChars(&font_serif_red_8);
 	destroyTextChars(&font_serif_red_8_mult);
-	destroyTextChars(&font_serif_red_12);
+	//destroyTextChars(&font_serif_red_12);
 	destroyTextChars(&font_serif_white_6);
 	destroyTextChars(&font_serif_white_6_mult);
 	destroyTextChars(&font_serif_white_9);
@@ -619,7 +619,7 @@ void destroyAllTextChars() {
 	//destroyTextChars(&font_serif_2_bold_black_23);
 	//destroyTextChars(&font_serif_2_bold_red_23);
 	destroyTextChars(&font_serif_2_red_6);
-	destroyTextChars(&font_serif_2_red_13);
+	//destroyTextChars(&font_serif_2_red_13);
 }
 
 void closeAllFonts() {
