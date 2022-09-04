@@ -415,3 +415,5 @@ Makefile
 *.nro
 *.o
 *.lnk
+*.SFO
+*.PBP
