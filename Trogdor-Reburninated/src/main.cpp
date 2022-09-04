@@ -274,7 +274,7 @@ int main(int argv, char** args) {
 			/* Title Screen */
 			case 2:
 				if (frameState == 73) {
-					playMusicWithoutLoop(MUSIC_TITLE_SCREEN);
+					playMusic(MUSIC_TITLE_SCREEN, false);
 				}
 				if (frameState < 192) {
 					frameState++;

@@ -399,6 +399,7 @@ music_wav/
 sfx_wav/
 music_ogg/
 sfx_ogg/
+music_psp/
 save.bin
 docs/
 *.dol
@@ -409,6 +410,7 @@ music/
 sfx/
 Preparation/
 dist/
+OSLibAudio/
 *.dll
 Makefile
 *.nacp

@@ -388,18 +388,23 @@ void InitializeMusic() {
 void InitializeSFX() {
 	sfxArr[0] = &sfx_burn_hut;
 	sfx_burn_hut.path = "sfx/burn_hut.wav";
+	makeSoundStatic(sfxArr[0]);
 	sfxArr[1] = &sfx_goldget;
 	sfx_goldget.path = "sfx/trog_goldget.wav";
+	makeSoundStatic(sfxArr[1]);
 	sfxArr[2] = &sfx_peasantscream;
 	sfx_peasantscream.path = "sfx/trog_peasantscream.wav";
+	makeSoundStatic(sfxArr[2]);
 	sfxArr[3] = &sfx_sfx2;
 	sfx_sfx2.path = "sfx/trog_sfx2.wav";
 	sfxArr[4] = &sfx_trogador;
 	sfx_trogador.path = "sfx/trogador.wav";
 	sfxArr[5] = &sfx_arrow;
 	sfx_arrow.path = "sfx/arrow.wav";
+	makeSoundStatic(sfxArr[5]);
 	sfxArr[6] = &sfx_squish;
 	sfx_squish.path = "sfx/squish.wav";
+	makeSoundStatic(sfxArr[6]);
 	sfxArr[7] = &sfx_death;
 	sfx_death.path = "sfx/death.wav";
 	sfxArr[8] = &sfx_kick;
@@ -459,10 +464,10 @@ void InitializeSFX() {
 	}
 #if defined(VITA)
 	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
-		sfxArr[i]->chunk = Mix_LoadWAV((rootDir + sfxArr[i]->path).c_str());
+		makeSoundStatic(sfxArr[i]);
 	}
 	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
-		sfxArr_strongBad[i]->chunk = Mix_LoadWAV((rootDir + sfxArr_strongBad[i]->path).c_str());
+		makeSoundStatic(sfxArr_strongBad[i]);
 	}
 #endif
 }

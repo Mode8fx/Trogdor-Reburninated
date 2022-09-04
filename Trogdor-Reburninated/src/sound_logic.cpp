@@ -3,30 +3,49 @@
 bool sfxShouldBePlaying = false;
 Uint8 sfxIndex = 0;
 SoundEffect *sfxArr[NUM_SOUND_EFFECTS_SFX];
-SoundEffect *sfxChannelArr[NUM_SOUND_CHANNELS_SFX] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+SoundEffect *sfxChannelArr[NUM_SOUND_CHANNELS_SFX] = { NULL, NULL, NULL, NULL, NULL, NULL };
 //SoundEffect *sfxArr_gameMusic[NUM_SOUND_EFFECTS_GAMEMUSIC];
 //SoundEffect *sfxChannel_gameMusic = NULL;
 SoundEffect *sfxArr_strongBad[NUM_SOUND_EFFECTS_STRONG_BAD];
 SoundEffect *sfxChannel_strongBad = NULL;
 
-void playMusic(const char *musicRelPath) {
-	bgm = Mix_LoadMUS((rootDir + musicRelPath).c_str());
 #if !defined(PSP)
-	Mix_PlayMusic(bgm, -1);
+#define LOAD_MUSIC(path)       Mix_LoadMUS((rootDir + path).c_str())
+#define STOP_MUSIC()           Mix_HaltMusic()
+#define FREE_MUSIC()           Mix_FreeMusic(bgm)
+#define PAUSE_MUSIC()          Mix_PauseMusic()
+#define LOAD_SFX(path)         Mix_LoadWAV((rootDir + path).c_str())
+#define PLAY_SFX(sfx, channel) Mix_PlayChannel(channel, sfx->chunk, 0)
+#define FREE_SFX(sfx)          Mix_FreeChunk(sfx->chunk)
 #else
-	Mix_PlayMusic(bgm, 0);
+#define LOAD_MUSIC(path)       oslLoadSoundFile((rootDir + path).c_str(), OSL_FMT_STREAM);
+#define STOP_MUSIC()           oslStopSound(bgm)
+#define FREE_MUSIC()           oslDeleteSound(bgm)
+#define PAUSE_MUSIC()          oslPauseSound(bgm, 1)
+#define LOAD_SFX(path)         oslLoadSoundFile((rootDir + path).c_str(), OSL_FMT_NONE)
+#define PLAY_SFX(sfx, channel) oslPlaySound(sfx->chunk, channel)
+#define FREE_SFX(sfx)          oslDeleteSound(sfx->chunk)
 #endif
-}
 
-void playMusicWithoutLoop(const char *musicRelPath) {
-	bgm = Mix_LoadMUS((rootDir + musicRelPath).c_str());
-	Mix_PlayMusic(bgm, 1);
+void playMusic(const char *musicRelPath, bool loop) {
+	bgm = LOAD_MUSIC(musicRelPath);
+#if !defined(PSP)
+	if (loop) {
+		Mix_PlayMusic(bgm, -1);
+	} else {
+		Mix_PlayMusic(bgm, 1);
+	}
+#else
+	if (loop) {
+		oslSetSoundLoop(bgm, true);
+	}
+	oslPlaySound(bgm, SFX_CHANNEL_GAME_MUSIC);
+#endif
 }
 
 void playMusicAtIndex(Uint8 index) {
 	if (soundSettings.musicIndex != 0) {
-		Mix_HaltMusic();
-		Mix_FreeMusic(bgm);
+		stopMusic();
 	}
 	soundSettings.musicIndex = index;
 	switch (soundSettings.musicIndex) {
@@ -40,38 +59,62 @@ void playMusicAtIndex(Uint8 index) {
 }
 
 void stopMusic() {
-	Mix_HaltMusic();
-	Mix_FreeMusic(bgm);
+	STOP_MUSIC();
+	FREE_MUSIC();
 }
 
 void pauseMusic() {
-	Mix_PauseMusic();
+	PAUSE_MUSIC();
 }
 
 void loadAndPlaySound(SoundEffect *sfx) {
 	if (!sfx->isPlaying) {
-#if !defined(VITA)
-		sfx->chunk = Mix_LoadWAV((rootDir + sfx->path).c_str());
-#endif
+		if (!sfx->isStatic) {
+			sfx->chunk = LOAD_SFX(sfx->path);
+		}
 		sfx->isPlaying = true;
 	}
 	if (sfx->type == 0) {
-		sfxIndex = Mix_PlayChannel(SFX_CHANNEL_GAME, sfx->chunk, 0);
+#if !defined(PSP)
+		sfxIndex = PLAY_SFX(sfx, SFX_CHANNEL_GAME);
+#else
+		sfxIndex = (sfxIndex + 1) % SFX_CHANNEL_GAME_MUSIC;
+		PLAY_SFX(sfx, sfxIndex);
+#endif
 		sfxChannelArr[sfxIndex] = sfx;
 	} else {
-		Mix_PlayChannel(SFX_CHANNEL_STRONG_BAD, sfx->chunk, 0);
+		PLAY_SFX(sfx, SFX_CHANNEL_STRONG_BAD);
 		sfxChannel_strongBad = sfx;
+	}
+}
+
+void makeSoundStatic(SoundEffect *sfx) {
+	if (!sfx->isStatic) {
+		sfx->isStatic = true;
+		sfx->chunk = LOAD_SFX(sfx->path);
 	}
 }
 
 void freeFinishedSoundChunks() {
 	for (sfxIndex = 0; sfxIndex < NUM_SOUND_CHANNELS_SFX; sfxIndex++) {
-		if (sfxChannelArr[sfxIndex] != NULL && !Mix_Playing(sfxIndex)) {
-			sfxChannelArr[sfxIndex] = NULL;
+		if (sfxChannelArr[sfxIndex] != NULL) {
+#if !defined(PSP)
+			if (!Mix_Playing(sfxIndex)) {
+#else
+			if (oslGetSoundChannel(sfxChannelArr[sfxIndex]->chunk) < 0) {
+#endif
+				sfxChannelArr[sfxIndex] = NULL;
+			}
 		}
 	}
-	if (sfxChannel_strongBad != NULL && !Mix_Playing(SFX_CHANNEL_STRONG_BAD)) {
-		sfxChannel_strongBad = NULL;
+	if (sfxChannel_strongBad != NULL) {
+#if !defined(PSP)
+		if (!Mix_Playing(SFX_CHANNEL_STRONG_BAD)) {
+#else
+		if (oslGetSoundChannel(sfxChannel_strongBad->chunk) < 0) {
+#endif
+			sfxChannel_strongBad = NULL;
+		}
 	}
 	for (sfxIndex = 0; sfxIndex < NUM_SOUND_EFFECTS_SFX; sfxIndex++) {
 		if (sfxArr[sfxIndex]->isPlaying) {
@@ -83,10 +126,10 @@ void freeFinishedSoundChunks() {
 				}
 			}
 			if (!sfxShouldBePlaying) {
-#if !defined(VITA)
-				Mix_FreeChunk(sfxArr[sfxIndex]->chunk);
-				sfxArr[sfxIndex]->chunk = NULL;
-#endif
+				if (!sfxArr[sfxIndex]->isStatic) {
+					FREE_SFX(sfxArr[sfxIndex]);
+					sfxArr[sfxIndex]->chunk = NULL;
+				}
 				sfxArr[sfxIndex]->isPlaying = false;
 			}
 		}
@@ -95,10 +138,10 @@ void freeFinishedSoundChunks() {
 		if (sfxArr_strongBad[sfxIndex]->isPlaying) {
 			sfxShouldBePlaying = false;
 			if (sfxArr_strongBad[sfxIndex] != sfxChannel_strongBad) {
-#if !defined(VITA)
-				Mix_FreeChunk(sfxArr_strongBad[sfxIndex]->chunk);
-				sfxArr_strongBad[sfxIndex]->chunk = NULL;
-#endif
+				if (!sfxArr_strongBad[sfxIndex]->isStatic) {
+					FREE_SFX(sfxArr_strongBad[sfxIndex]);
+					sfxArr_strongBad[sfxIndex]->chunk = NULL;
+				}
 				sfxArr_strongBad[sfxIndex]->isPlaying = false;
 			}
 		}

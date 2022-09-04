@@ -22,7 +22,11 @@ Sint32 mouseInput_y_last;
 #endif
 
 /* Audio */
+#if !defined(PSP)
 Mix_Music *bgm;
+#else
+OSL_SOUND *bgm;
+#endif
 SoundEffect sfx_burn_hut;
 SoundEffect sfx_goldget;
 SoundEffect sfx_peasantscream;
@@ -355,14 +359,9 @@ void InitializeDisplay() {
 
 	/* Set Window/Renderer */
 #if defined(PSP)
-#if !defined(SDL1)
 	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-#else
-	SDL_WM_SetCaption("Trogdor Beta", NULL);
-	windowScreen = SDL_SetVideoMode(videoSettings.widthSetting, videoSettings.heightSetting, 32, SDL_DOUBLEBUF);
-#endif
 #elif defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID)
 	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
@@ -383,6 +382,7 @@ void InitializeDisplay() {
 }
 
 void InitializeSound() {
+#if !defined(PSP)
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 #if !defined(SDL1) && !defined(ANDROID)
 		SDL_Log(Mix_GetError());
@@ -392,6 +392,9 @@ void InitializeSound() {
 	Mix_AllocateChannels(NUM_SOUND_CHANNELS);
 	Mix_Volume(SFX_CHANNEL_GAME, (int)(soundSettings.sfxVolume * 128.0 / 100));
 	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(soundSettings.sfxVolume * 128.0 / 100));
+#else
+	oslInitAudio();
+#endif
 }
 
 void InitializeController() {
@@ -468,18 +471,33 @@ void DestroyAll() {
 	/* Sound */
 	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
 		if (sfxArr[i]->chunk != NULL) {
+#if !defined(PSP)
 			Mix_FreeChunk(sfxArr[i]->chunk);
+#else
+			oslDeleteSound(sfxArr[i]->chunk);
+#endif
 		}
 	}
 	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
 		if (sfxArr_strongBad[i]->chunk != NULL) {
+#if !defined(PSP)
 			Mix_FreeChunk(sfxArr_strongBad[i]->chunk);
+#else
+			oslDeleteSound(sfxArr_strongBad[i]->chunk);
+#endif
 		}
 	}
+#if defined(PSP)
+	if (bgm != NULL) {
+		oslDeleteSound(bgm);
+	}
+	oslDeinitAudio();
+#else
 	Mix_FreeMusic(bgm);
 	Mix_CloseAudio();
 #if !defined(WII) && !defined(GAMECUBE)
 	Mix_Quit();
+#endif
 #endif
 	/* Controller */
 	closeController();

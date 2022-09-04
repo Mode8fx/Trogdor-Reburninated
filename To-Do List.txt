@@ -9,11 +9,11 @@ Final:
 		- Final testing needed
 	- Wii
 		- At non-integer scaling, srcrects may be off by 1 pixel due to the way zoomSurface is used
+		- Add analog input to Classic Controller
 		- Final testing needed
 	- Vita
 		- Final testing needed
 	- PSP
-		- All sound takes extremely long to load; the best solution may be to use something other than SDL_mixer (unfortunately)
 		- Final testing needed
 - Package everything up
 

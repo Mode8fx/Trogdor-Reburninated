@@ -1,7 +1,7 @@
 PSP_LARGE_MEMORY=1
 
-TARGET =	trogdor
-BUILD  =	build_psp
+TARGET	=	trogdor
+BUILD 	=	build_psp
 OBJS   =	src/main.o \
 			src/config.o \
 			src/general.o \
@@ -9,7 +9,11 @@ OBJS   =	src/main.o \
 			src/sound_logic.o \
 			src/sprite_objects.o \
 			src/text_objects.o \
-			src/window.o
+			src/window.o \
+			src/OSLibAudio/audio.o \
+			src/OSLibAudio/bgm.o \
+			src/OSLibAudio/vfsFile.o \
+			src/OSLibAudio/VirtualFile.o
 
 INCDIR =
 CFLAGS = -G0 -O2 -DPSP
