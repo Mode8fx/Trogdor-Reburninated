@@ -1,20 +1,5 @@
 To-Do List
 
-Trogdor Beta [gameplay-complete basic port of Trogdor]:
-Final:
-- Test and finalize
-	- Switch
-		- Untested
-	- Wii U
-		- Final testing needed
-	- Wii
-		- Final testing needed
-	- Vita
-		- Final testing needed
-	- PSP
-		- Final testing needed
-- Package everything up
-
 Trogdor Classic [faithful recreation of original Trogdor flash game]:
 Features:
 - Add animation to Level Beaten and Game Over screens
