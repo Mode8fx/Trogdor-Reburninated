@@ -47,7 +47,7 @@ INCLUDES	:=	include
 APP_TITLE   := Trogdor Beta
 APP_AUTHOR  := Mips96
 APP_VERSION := 0.9
-ICON        := logo_icon_switch.jpg
+ICON        := release-resources/logo_icon_switch.jpg
 
 #---------------------------------------------------------------------------------
 # options for code generation
