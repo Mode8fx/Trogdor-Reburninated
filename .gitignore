@@ -395,6 +395,7 @@ build_gamecube/
 build_switch/
 build_wii_u/
 build_vita/
+build_3ds/
 music_wav/
 sfx_wav/
 music_ogg/
@@ -419,3 +420,5 @@ Makefile
 *.lnk
 *.SFO
 *.PBP
+*.3dsx
+*.smdh

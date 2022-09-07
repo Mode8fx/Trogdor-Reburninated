@@ -59,7 +59,7 @@ int main(int argv, char** args) {
 #endif
 		return 1;
 	}
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
 	SDL_ShowCursor(SDL_DISABLE);
 #endif
 
@@ -100,7 +100,7 @@ int main(int argv, char** args) {
 		}
 		/* Handle Window Size Changes */
 		if (windowSizeChanged) {
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)) && !defined(SDL1)
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)) && !defined(SDL1)
 			if (SDL_GetWindowSurface(window)->w < appWidth)
 				SDL_SetWindowSize(window, appWidth, SDL_GetWindowSurface(window)->h);
 			if (SDL_GetWindowSurface(window)->h < appHeight)

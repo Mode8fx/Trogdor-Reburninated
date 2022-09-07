@@ -21,7 +21,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
-#if defined(GAMECUBE)
+#if defined(GAMECUBE) || defined(THREEDS)
 #include <SDL_rotozoom.h>
 #elif !defined(SDL1)
 #include "SDL2_rotozoom.h"

@@ -15,7 +15,7 @@ void InitializeFontsAndText() {
 	if (gameHiResMult < 2) {
 		SET_TEXT("(1/5)", text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
 		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
 #else
@@ -30,7 +30,7 @@ void InitializeFontsAndText() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), 101 * gameHiResMult);
 		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), 115 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
+#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
 		SET_TEXT("Press START to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
 		SET_TEXT("press START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
@@ -113,7 +113,7 @@ void InitializeFontsAndText() {
 	} else {
 		SET_TEXT("(1/4)", text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
 		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
 #else
@@ -126,7 +126,7 @@ void InitializeFontsAndText() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), 87 * gameHiResMult);
 		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), 101 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)
+#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
 		SET_TEXT("Press START to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
 		SET_TEXT("press START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
@@ -508,6 +508,12 @@ void InitializeSpritesPart1() {
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_fire), 1, 14, 1);
 	PREPARE_SPRITE(sprite_level_beaten_trogdor, (rootDir + "graphics/level_beaten_trogdor_scaled.bmp").c_str(),
 		-5, 41, 1, 1, 1);
+	PREPARE_SPRITE(sprite_level_beaten_smoke_1, (rootDir + "graphics/level_beaten_smoke_1.bmp").c_str(),
+		100, 100, 9, 1, 1);
+	PREPARE_SPRITE(sprite_level_beaten_smoke_2, (rootDir + "graphics/level_beaten_smoke_2.bmp").c_str(),
+		100, 100, 11, 1, 1);
+	PREPARE_SPRITE(sprite_level_beaten_smoke_3, (rootDir + "graphics/level_beaten_smoke_3.bmp").c_str(),
+		100, 100, 11, 1, 1);
 	PREPARE_SPRITE(sprite_game_over_trogdor, (rootDir + "graphics/game_over_trogdor.bmp").c_str(),
 		-13, 75, 1, 1, 1);
 	PREPARE_SPRITE(sprite_overlay_basement, (rootDir + "graphics/overlays/basement.bmp").c_str(),
@@ -572,6 +578,9 @@ void destroyAllSprites() {
 	destroySprite(sprite_burninate_text);
 	destroySprite(sprite_burninate_fire);
 	destroySprite(sprite_level_beaten_trogdor);
+	destroySprite(sprite_level_beaten_smoke_1);
+	destroySprite(sprite_level_beaten_smoke_2);
+	destroySprite(sprite_level_beaten_smoke_3);
 	destroySprite(sprite_game_over_trogdor);
 	destroySprite(sprite_trogdor);
 	destroySprite(sprite_cottage);

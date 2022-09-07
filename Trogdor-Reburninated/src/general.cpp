@@ -1,6 +1,6 @@
 #include "general.h"
 
-#if defined(SDL1) && !defined(WII) && !defined(GAMECUBE) && !defined(PSP)
+#if defined(SDL1) && !defined(WII) && !defined(GAMECUBE) && !defined(PSP) && !defined(THREEDS)
 FILE _iob[] = { *stdin, *stdout, *stderr };
 
 FILE * __cdecl __iob_func(void) {

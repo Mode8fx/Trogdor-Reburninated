@@ -116,6 +116,19 @@ constexpr auto DEFAULT_WIDTH = 640;
 constexpr auto DEFAULT_HEIGHT = 480;
 constexpr auto DEFAULT_RI = 2;
 constexpr auto DEFAULT_ARI = 0;
+#elif defined(THREEDS)
+const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[1] = { 320 };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[1] = { 240 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_9[1] = { 400 }; // actually, this is 15:9
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_9[1] = { 240 };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_16_10[0] = {  };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_16_10[0] = {  };
+const Uint16 RESOLUTION_OPTIONS_WIDTH_21_9[0] = {  };
+const Uint16 RESOLUTION_OPTIONS_HEIGHT_21_9[0] = {  };
+constexpr auto DEFAULT_WIDTH = 400;
+constexpr auto DEFAULT_HEIGHT = 240;
+constexpr auto DEFAULT_RI = 0;
+constexpr auto DEFAULT_ARI = 1;
 #else
 const Uint16 RESOLUTION_OPTIONS_WIDTH_4_3[14] = { 320,  362,  640,  725,  768,  800,  960, 1024, 1152, 1280, 1440, 1600, 1920, 2880 };
 const Uint16 RESOLUTION_OPTIONS_HEIGHT_4_3[14] = { 240,  272,  480,  544,  576,  600,  720,  768,  864,  960, 1080, 1200, 1440, 2160 };

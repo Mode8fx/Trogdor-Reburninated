@@ -184,7 +184,7 @@ inline void handleInput() {
 			case SDL_QUIT:
 				isRunning = false;
 				break;
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP)) && !defined(SDL1)
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)) && !defined(SDL1)
 			case SDL_WINDOWEVENT:
 				if (event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED) {
 					windowSizeChanged = true;
@@ -299,7 +299,7 @@ inline void handleInput() {
 					break;
 				}
 				break;
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS))
 			case SDL_MOUSEMOTION:
 				SDL_GetMouseState(&mouseInput_x, &mouseInput_y);
 				break;

@@ -29,7 +29,7 @@ extern Uint32 frameCounter_global;
 
 constexpr auto PI = 3.14159265;
 
-#if defined(SDL1) && !defined(WII) && !defined(GAMECUBE) && !defined(PSP)
+#if defined(SDL1) && !defined(WII) && !defined(GAMECUBE) && !defined(PSP) && !defined(THREEDS)
 extern FILE _iob[];
 
 extern "C" FILE * __cdecl __iob_func(void);
@@ -38,7 +38,7 @@ extern "C" FILE * __cdecl __iob_func(void);
 extern void systemSpecificOpen();
 extern void systemSpecificClose();
 
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS))
 #define STRCPY(dest, src) strcpy_s(dest, src);
 #else
 #define STRCPY(dest, src) strcpy(dest, src);
@@ -53,7 +53,7 @@ extern void systemSpecificClose();
 #define ZERO_OUT_ARRAY(arr) \
     (memset(arr, 0, sizeof(arr)))
 
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP))
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS))
 #define PRINT(str) \
     cout << str << endl
 #else

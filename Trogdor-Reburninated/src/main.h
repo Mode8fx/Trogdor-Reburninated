@@ -91,6 +91,9 @@ SpriteObject sprite_death_message;
 SpriteObject sprite_burninate_text;
 SpriteObject sprite_burninate_fire;
 SpriteObject sprite_level_beaten_trogdor;
+SpriteObject sprite_level_beaten_smoke_1;
+SpriteObject sprite_level_beaten_smoke_2;
+SpriteObject sprite_level_beaten_smoke_3;
 SpriteObject sprite_game_over_trogdor;
 SpriteObject sprite_loot;
 SpriteObject sprite_overlay_basement;
@@ -366,7 +369,7 @@ void InitializeDisplay() {
 	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-#elif defined(WII) || defined(GAMECUBE)
+#elif defined(WII) || defined(GAMECUBE) || defined(THREEDS)
 	SDL_WM_SetCaption("Trogdor Beta", NULL);
 	windowScreen = SDL_SetVideoMode(videoSettings.widthSetting, videoSettings.heightSetting, 24, SDL_DOUBLEBUF);
 #elif defined(SDL1)

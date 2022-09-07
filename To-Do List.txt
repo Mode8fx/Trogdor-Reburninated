@@ -51,9 +51,10 @@ Features:
 - Add achievements
 - Add more detailed credits screen
 - Add History of Trogdor screen
+- Add secret game
 Final:
-- Prepare release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
-- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
+- Prepare release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, LibRetro
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, LibRetro
 - Make a trailer?
 - ???
 
