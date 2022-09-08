@@ -1,5 +1,5 @@
 # Trogdor Reburninated
-This project aims to be an enhanced recreation of the Homestar Runner Flash game, Trogdor. It is currently available for PC, Switch, Wii U, Wii, Gamecube, Vita, and PSP.
+This project aims to be an enhanced recreation of the Homestar Runner Flash game, _Trogdor_. It is currently available for PC, Switch, Wii U, Wii, Gamecube, 3DS, Vita, and PSP.
 This project will be released in four phases, described below.
 
 **Trogdor Beta (available now)**
