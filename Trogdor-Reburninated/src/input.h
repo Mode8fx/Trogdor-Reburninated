@@ -156,7 +156,7 @@ inline void handleInput() {
 		controllerAxis_leftStickY = 0;
 	}
 	/* Update Controller Hat Positions (SDL1 only; SDL2 D-Pad buttons are handled later) */
-#elif defined(GAMECUBE)
+#elif defined(GAMECUBE) || defined(THREEDS)
 	joystickHat = SDL_JoystickGetHat(joystick, 0);
 	if (joystickHat & SDL_HAT_UP) {
 		heldDirs_dpad |= INPUT_UP;
@@ -528,6 +528,75 @@ inline void handleInput() {
 				}
 				if (event.jbutton.button == 7) {
 					heldKeys &= ~INPUT_START;
+					break;
+				}
+				break;
+#elif defined(THREEDS)
+			case SDL_JOYBUTTONDOWN:
+				if (event.jbutton.button == 0) {
+					heldKeys |= INPUT_START;
+					break;
+				}
+				if (event.jbutton.button == 1) {
+					heldKeys |= INPUT_A;
+					break;
+				}
+				if (event.jbutton.button == 2) {
+					heldKeys |= INPUT_B;
+					break;
+				}
+				if (event.jbutton.button == 3) {
+					heldKeys |= INPUT_X;
+					break;
+				}
+				if (event.jbutton.button == 4) {
+					heldKeys |= INPUT_Y;
+					break;
+				}
+				if (event.jbutton.button == 5) {
+					heldKeys |= INPUT_L;
+					break;
+				}
+				if (event.jbutton.button == 6) {
+					heldKeys |= INPUT_R;
+					break;
+				}
+				if (event.jbutton.button == 7) {
+					heldKeys |= INPUT_SELECT;
+					break;
+				}
+				break;
+			case SDL_JOYBUTTONUP:
+				if (event.jbutton.button == 0) {
+					heldKeys &= ~INPUT_START;
+					break;
+				}
+				if (event.jbutton.button == 1) {
+					heldKeys &= ~INPUT_A;
+					break;
+				}
+				if (event.jbutton.button == 2) {
+					heldKeys &= ~INPUT_B;
+					break;
+				}
+				if (event.jbutton.button == 3) {
+					heldKeys &= ~INPUT_X;
+					break;
+				}
+				if (event.jbutton.button == 4) {
+					heldKeys &= ~INPUT_Y;
+					break;
+				}
+				if (event.jbutton.button == 5) {
+					heldKeys &= ~INPUT_L;
+					break;
+				}
+				if (event.jbutton.button == 6) {
+					heldKeys &= ~INPUT_R;
+					break;
+				}
+				if (event.jbutton.button == 7) {
+					heldKeys &= ~INPUT_SELECT;
 					break;
 				}
 				break;

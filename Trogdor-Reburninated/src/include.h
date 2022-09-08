@@ -62,6 +62,8 @@
 #include <pspkernel.h>
 #include <pspdebug.h>
 #include <pspctrl.h>
+#elif defined(THREEDS)
+#include <3ds.h>
 #endif
 
 using namespace std;
