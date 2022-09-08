@@ -43,6 +43,7 @@ GFXBUILD		:=
 APP_TITLE		:=	Trogdor Beta
 APP_DESCRIPTION	:=	Burninate the countryside!
 APP_AUTHOR		:=	Mips96
+ICON			:=	release-resources/logo_icon_android_48.png
 
 #---------------------------------------------------------------------------------
 # options for code generation

@@ -462,7 +462,7 @@ void InitializeSFX() {
 	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
 		sfxArr_strongBad[i]->type = 1;
 	}
-#if defined(VITA)
+#if defined(VITA) || defined(THREEDS)
 	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
 		makeSoundStatic(sfxArr[i]);
 	}
