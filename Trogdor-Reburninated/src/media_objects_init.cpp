@@ -524,8 +524,14 @@ void InitializeSpritesPart1() {
 		100, 100, 11, 1, 1);
 	PREPARE_SPRITE(sprite_game_over_trogdor, (rootDir + "graphics/game_over_trogdor.bmp").c_str(),
 		-13, 75, 1, 1, 1);
-	PREPARE_SPRITE(sprite_overlay_basement, (rootDir + "graphics/overlays/basement.bmp").c_str(),
+	PREPARE_SPRITE(sprite_overlay_basement_top, (rootDir + "graphics/overlays/basement_top.bmp").c_str(),
 		0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_basement_bottom, (rootDir + "graphics/overlays/basement_bottom.bmp").c_str(),
+		0, 210, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_basement_left, (rootDir + "graphics/overlays/basement_left.bmp").c_str(),
+		0, 30, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_basement_right, (rootDir + "graphics/overlays/basement_right.bmp").c_str(),
+		285, 30, 1, 1, 1);
 	divider_level_beaten_rect = { 0, 25, gameWidth, 2 };
 }
 
@@ -610,7 +616,10 @@ void destroyAllSprites() {
 	destroySprite(sprite_peasant);
 	destroySprite(sprite_end_of_level_trogdor);
 	destroySprite(sprite_loot);
-	destroySprite(sprite_overlay_basement);
+	destroySprite(sprite_overlay_basement_top);
+	destroySprite(sprite_overlay_basement_bottom);
+	destroySprite(sprite_overlay_basement_left);
+	destroySprite(sprite_overlay_basement_right);
 }
 
 void destroyTextChars(FontObject *fontObj) {

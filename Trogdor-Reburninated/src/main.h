@@ -96,7 +96,10 @@ SpriteObject sprite_level_beaten_smoke_2;
 SpriteObject sprite_level_beaten_smoke_3;
 SpriteObject sprite_game_over_trogdor;
 SpriteObject sprite_loot;
-SpriteObject sprite_overlay_basement;
+SpriteObject sprite_overlay_basement_top;
+SpriteObject sprite_overlay_basement_bottom;
+SpriteObject sprite_overlay_basement_left;
+SpriteObject sprite_overlay_basement_right;
 SDL_Rect     divider_level_beaten_rect;
 
 /* Fonts */

@@ -15,6 +15,7 @@ Features:
 	- Strong Bad Commentary Frequency
 	- Debug Cheat Toggle
 Polish:
+- Add all-black "pseudo-overlay" when overlay is disabled
 - Fix non-integer scaling in SDL1
 - Add multiple types of scaling (integer game, integer app, non-integer game, non-integer app)
 - Add "Libraries" screen

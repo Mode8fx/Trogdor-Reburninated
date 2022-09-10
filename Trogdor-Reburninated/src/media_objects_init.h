@@ -54,7 +54,10 @@ extern SpriteObject sprite_level_beaten_smoke_2;
 extern SpriteObject sprite_level_beaten_smoke_3;
 extern SpriteObject sprite_game_over_trogdor;
 extern SpriteObject sprite_loot;
-extern SpriteObject sprite_overlay_basement;
+extern SpriteObject sprite_overlay_basement_top;
+extern SpriteObject sprite_overlay_basement_bottom;
+extern SpriteObject sprite_overlay_basement_left;
+extern SpriteObject sprite_overlay_basement_right;
 extern SDL_Rect     divider_level_beaten_rect;
 
 #define SFX_BURN_HUT      sfxArr[0]

@@ -1110,7 +1110,10 @@ int main(int argv, char** args) {
 
 		/* Draw Overlay (this can and probably should be optimized later) */
 		if (showOverlay && isIntegerScale) {
-			renderSprite_static_app(sprite_overlay_basement);
+			renderSprite_static_app(sprite_overlay_basement_top);
+			renderSprite_static_app(sprite_overlay_basement_bottom);
+			renderSprite_static_app(sprite_overlay_basement_left);
+			renderSprite_static_app(sprite_overlay_basement_right);
 		}
 
 		/* Update Screen */
