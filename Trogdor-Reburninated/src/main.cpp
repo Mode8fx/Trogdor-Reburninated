@@ -36,6 +36,7 @@ Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down 
 Uint8 pacmanArrayKey[11] = { 0, 0, 0, 1, 1, 1, 2, 3, 2, 3, 2 }; // Up Up Up Down Down Down Left Right Left Right Left (play Pac-Man on a Ms. Pac-Man + Galaga arcade cabinet)
 Uint8 s3kArrayKey[9] = { 2, 2, 2, 3, 3, 3, 0, 0, 0 }; // Left Left Left Right Right Right Up Up Up (Sonic & Knuckles and S3&K level select)
 Uint8 fzxArrayKey[8] = { 2, 5, 3, 0, 1, 2, 3, 4 }; // Left B Right Up Down Left Right A ((roughly) unlock everything in F-Zero X)
+bool showOverlay;
 
 /* General-use Variables */
 Sint8 i, j, k;
@@ -276,6 +277,7 @@ int main(int argv, char** args) {
 			case 2:
 				if (frameState == 73) {
 					playMusic(MUSIC_TITLE_SCREEN, false);
+					showOverlay = true;
 				}
 				if (frameState < 192) {
 					frameState++;
@@ -290,6 +292,7 @@ int main(int argv, char** args) {
 			/* Instructions Screen */
 			case 3:
 				frameState++;
+				showOverlay = true;
 				MM.typeStuff();
 				MM.handlePageChange();
 				if (MM.page == 1) {
@@ -1106,7 +1109,7 @@ int main(int argv, char** args) {
 		if (sceneState > 0) freeFinishedSoundChunks();
 
 		/* Draw Overlay (this can and probably should be optimized later) */
-		if (sceneState >= 2 && isIntegerScale) {
+		if (showOverlay && isIntegerScale) {
 			renderSprite_static_app(sprite_overlay_basement);
 		}
 
