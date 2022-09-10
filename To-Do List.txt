@@ -17,8 +17,6 @@ Features:
 Polish:
 - Fix non-integer scaling in SDL1
 - Add multiple types of scaling (integer game, integer app, non-integer game, non-integer app)
-- Add "failed to load asset" error screen
-	- The game currently crashes if an asset is missing/fails to load; there should be a dedicated error screen instead
 - Add "Libraries" screen
 - Add "Coming Eventually" screen for Trogdor Plus
 - Add "Want more?" screen for other system ports

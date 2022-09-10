@@ -11,11 +11,15 @@ extern void InitializeMusic();
 extern void InitializeSFX();
 extern void InitializeSpritesPart1();
 extern void InitializeSpritesPart2();
+extern void exceptMissingFile(const char *);
 extern void destroySprite(SpriteObject);
 extern void destroyAllSprites();
 extern void destroyTextChars(TextCharObject, Uint8);
 extern void destroyAllTextChars();
 extern void closeAllFonts();
+extern void quickErrorTextRender_1(const char *, double);
+extern void quickErrorTextRender_2(const char *, double);
+extern void HandleErrorText(const char *);
 
 extern SpriteObject sprite_videlectrix_logo;
 extern SpriteObject sprite_title_screen;
@@ -149,6 +153,8 @@ extern FontObject font_nokia_12;
 //extern FontObject font_serif_2_bold_red_23;
 extern FontObject font_serif_2_red_6;
 extern FontObject font_serif_2_red_13;
+extern FontObject font_commodore_error_1;
+extern FontObject font_commodore_error_2;
 
 extern TextObject text_0_loading;
 extern SDL_Rect text_0_loading_censor_rect;
@@ -298,5 +304,7 @@ extern TextObject text_25_name_10_val;
 extern TextObject text_25_level_10_val;
 extern TextObject text_25_score_10_val;
 extern TextObject text_25_10;
+extern TextObject text_error_1;
+extern TextObject text_error_2;
 
 #endif

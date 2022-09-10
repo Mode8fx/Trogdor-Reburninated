@@ -126,6 +126,8 @@ FontObject font_nokia_12;
 //FontObject font_serif_2_bold_red_23;
 FontObject font_serif_2_red_6;
 FontObject font_serif_2_red_13;
+FontObject font_commodore_error_1;
+FontObject font_commodore_error_2;
 
 /* Text Objects */
 char tempCharArray[64];
@@ -280,6 +282,8 @@ TextObject text_25_name_10_val;
 TextObject text_25_level_10_val;
 TextObject text_25_score_10_val;
 TextObject text_25_10;
+TextObject text_error_1;
+TextObject text_error_2;
 
 /* Window */
 #if !defined(SDL1)

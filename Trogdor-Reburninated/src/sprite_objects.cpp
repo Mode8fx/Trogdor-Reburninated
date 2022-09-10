@@ -7,6 +7,9 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
 #if !defined(SDL1)
     if (spriteObj->texture == NULL) {
         temp_sprite = IMG_Load(path);
+        if (temp_sprite == NULL) {
+            throw(path);
+        }
         spriteObj->frame_w = (Sint16)(temp_sprite->w / numAnimFrames);
         spriteObj->frame_h = (Sint16)(temp_sprite->h / numForms);
         spriteObj->numAnimFrames = numAnimFrames;
@@ -14,6 +17,7 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
         SDL_SetColorKey(temp_sprite, SDL_TRUE, 0xFF00FF);
         spriteObj->texture = SDL_CreateTextureFromSurface(renderer, temp_sprite);
         SDL_FreeSurface(temp_sprite);
+        temp_sprite = NULL;
         spriteObj->scaled_w = (Uint16)(spriteObj->frame_w);
         spriteObj->scaled_h = (Uint16)(spriteObj->frame_h);
     }
@@ -22,6 +26,9 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
         SDL_FreeSurface(spriteObj->surface);
     }
     temp_sprite = IMG_Load(path);
+    if (temp_sprite == NULL) {
+        throw(path);
+    }
     spriteObj->frame_w = (Sint16)(temp_sprite->w * scale / numAnimFrames);
     spriteObj->frame_h = (Sint16)(temp_sprite->h * scale / numForms);
     spriteObj->numAnimFrames = numAnimFrames;
@@ -33,6 +40,7 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
         spriteObj->surface = SDL_DisplayFormat(temp_sprite);
     }
     SDL_FreeSurface(temp_sprite);
+    temp_sprite = NULL;
     spriteObj->scaled_w = (Uint16)(spriteObj->frame_w * screenScale);
     spriteObj->scaled_h = (Uint16)(spriteObj->frame_h * screenScale);
 #endif

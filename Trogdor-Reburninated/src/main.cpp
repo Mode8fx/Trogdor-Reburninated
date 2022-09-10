@@ -62,7 +62,9 @@ int main(int argv, char** args) {
 #if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
 	SDL_ShowCursor(SDL_DISABLE);
 #endif
+	InitializeController();
 
+	try {
 	loadSaveFile();
 	InitializeDisplay();
 
@@ -225,7 +227,6 @@ int main(int argv, char** args) {
 						frameState++;
 						break;
 					case 12:
-						InitializeController();
 						renderText(text_0_loading, font_serif_white_14);
 						frameState++;
 						break;
@@ -1128,4 +1129,31 @@ int main(int argv, char** args) {
 	DestroyAll();
 
 	return 0;
+
+	} catch (const char *badPath) {
+#if !defined(SDL1)
+		SDL_SetRenderDrawColor(renderer, 69, 95, 216, 255);
+		SDL_RenderClear(renderer);
+#else
+		SDL_FillRect(windowScreen, NULL, 0x455FD8);
+#endif
+
+		isRunning = true;
+		HandleErrorText(badPath);
+
+#if !defined(SDL1)
+		SDL_RenderPresent(renderer);
+#else
+		SDL_Flip(windowScreen);
+#endif
+
+		while (1) {
+			handleInput();
+			if (!isRunning || keyPressed(INPUT_START)) {
+				break;
+			}
+		}
+
+		return -1;
+	}
 }

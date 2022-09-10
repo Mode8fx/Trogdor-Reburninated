@@ -77,6 +77,26 @@ void renderText(TextObject textObj, FontObject fontObj) {
 	}
 }
 
+void renderTextChar_app(TextCharObject textCharObj) {
+	outputRect = textCharObj.dstrect;
+#if !defined(SDL1)
+	SDL_RenderCopy(renderer, textCharObj.texture, NULL, &outputRect);
+#else
+	SDL_BlitSurface(textCharObj.surface, NULL, windowScreen, &outputRect);
+#endif
+}
+
+void renderText_app(TextObject textObj, FontObject fontObj) {
+	STRCPY(tempCharArray, textObj.str.c_str());
+	charWidthCounter = 0;
+	for (charCounter = 0; charCounter < textObj.str.length(); charCounter++) {
+		setTextCharPosX(&CHAR_AT_INDEX(charCounter, fontObj.textChars), (textObj.dstrect.x + charWidthCounter));
+		setTextCharPosY(&CHAR_AT_INDEX(charCounter, fontObj.textChars), textObj.dstrect.y);
+		renderTextChar_app(CHAR_AT_INDEX(charCounter, fontObj.textChars));
+		charWidthCounter += CHAR_AT_INDEX(charCounter, fontObj.textChars).dstrect.w;
+	}
+}
+
 void setTextCharPosX(TextCharObject *textCharObj, int pos_x) {
     textCharObj->dstrect.x = pos_x;
 }
@@ -98,6 +118,9 @@ void setFont(FontObject *fontObj, const char *path, int originalSize, double mul
 	fontObj->style = style;
 	fontObj->color = color;
 	fontObj->font = TTF_OpenFont((rootDir + path).c_str(), fontObj->size);
+	if (fontObj->font == NULL) {
+		throw((rootDir + path).c_str());
+	}
 	TTF_SetFontStyle(fontObj->font, fontObj->style);
 }
 

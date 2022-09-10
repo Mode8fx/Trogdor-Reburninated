@@ -1,5 +1,7 @@
 #include "media_objects_init.h"
 
+ifstream ifile;
+
 void InitializeFontsAndText() {
 	TTF_Init();
 
@@ -94,7 +96,7 @@ void InitializeFontsAndText() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), 129 * gameHiResMult);
 		SET_TEXT("https://github.com/Mips96", text_3_credits_7, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), 143 * gameHiResMult);
-		SET_TEXT("v0.9", text_3_credits_8, font_serif_white_6_mult,
+		SET_TEXT("v1.0", text_3_credits_8, font_serif_white_6_mult,
 			gameHiResWidth - (text_3_credits_8.dstrect.w * 1.5), gameHiResHeight - (text_3_credits_8.dstrect.h * 1.5));
 		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
@@ -266,7 +268,7 @@ void InitializeFontsAndText() {
 #else
 	SET_TEXT("press 'START/ENTER' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'A+SELECT/Z+BACKSPACE' to quit", text_4_paused_3, font_serif_white_6,
+	SET_TEXT("press 'Z+BACKSPACE/A+SELECT' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #endif
 	TTF_CloseFont(font_serif_white_6.font);
@@ -470,6 +472,12 @@ void InitializeSFX() {
 		makeSoundStatic(sfxArr_strongBad[i]);
 	}
 #endif
+	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
+		exceptMissingFile(sfxArr[i]->path);
+	}
+	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
+		exceptMissingFile(sfxArr_strongBad[i]->path);
+	}
 }
 
 void InitializeSpritesPart1() {
@@ -554,6 +562,14 @@ void InitializeSpritesPart2() {
 		0, 0, 1, 1, 1);
 }
 
+void exceptMissingFile(const char *path) {
+	ifile.open(path);
+	if (!ifile) {
+		throw(path);
+	}
+	ifile.close();
+}
+
 void destroySprite(SpriteObject sprite) {
 #if !defined(SDL1)
 	SDL_DestroyTexture(sprite.texture);
@@ -634,6 +650,8 @@ void destroyAllTextChars() {
 	//destroyTextChars(&font_serif_2_bold_red_23);
 	destroyTextChars(&font_serif_2_red_6);
 	//destroyTextChars(&font_serif_2_red_13);
+	destroyTextChars(&font_commodore_error_1);
+	destroyTextChars(&font_commodore_error_2);
 }
 
 void closeAllFonts() {
@@ -657,4 +675,64 @@ void closeAllFonts() {
 	//TTF_CloseFont(font_serif_2_bold_red_23.font);
 	TTF_CloseFont(font_serif_2_red_6.font);
 	TTF_CloseFont(font_serif_2_red_13.font);
+	TTF_CloseFont(font_commodore_error_1.font);
+	TTF_CloseFont(font_commodore_error_2.font);
+}
+
+void quickErrorTextRender_1(const char *text, double fraction) {
+	SET_TEXT(text, text_error_1, font_commodore_error_1,
+		OBJ_TO_MID_SCREEN_X(windowWidth, text_error_1), OBJ_TO_SCREEN_AT_FRACTION_Y(windowHeight, text_error_1, fraction));
+	renderText_app(text_error_1, font_commodore_error_1);
+}
+
+void quickErrorTextRender_2(const char *text, double fraction) {
+	SET_TEXT(text, text_error_2, font_commodore_error_2,
+		OBJ_TO_MID_SCREEN_X(windowWidth, text_error_2), OBJ_TO_SCREEN_AT_FRACTION_Y(windowHeight, text_error_2, fraction));
+	renderText_app(text_error_2, font_commodore_error_2);
+}
+
+void HandleErrorText(const char *badPath) {
+	char tempCharArrayError[250];
+
+	TTF_Init();
+
+	STRCPY(tempCharArrayError, badPath);
+	setFont(&font_commodore_error_1, "fonts/Commodore Pixelized v1.2.ttf", 10, 10, TTF_STYLE_NORMAL, color_white);
+	setFont(&font_commodore_error_2, "fonts/Commodore Pixelized v1.2.ttf", 10, 9, TTF_STYLE_NORMAL, color_orange);
+	uint_i = (rand() % 5);
+	switch (uint_i) {
+		case 0:
+			quickErrorTextRender_1("Oops! You bwoke it.", 0.1);
+			break;
+		case 1:
+			quickErrorTextRender_1("404'd!", 0.1);
+			break;
+		case 2:
+			quickErrorTextRender_1("FLAGRANT SYSTEM ERROR", 0.1);
+			break;
+		case 3:
+			quickErrorTextRender_1("Scan Complete! 423,827 Viruses Found", 0.1);
+			break;
+		default:
+			quickErrorTextRender_1("The System Is Down", 0.1);
+			break;
+	}
+	quickErrorTextRender_1("If you're seeing this, the", 0.2);
+	quickErrorTextRender_1("game just crashed due to a", 0.275);
+	quickErrorTextRender_1("missing/invalid asset:", 0.35);
+	quickErrorTextRender_2(tempCharArrayError, 0.475);
+	quickErrorTextRender_1("Make sure you have the correct", 0.6);
+	quickErrorTextRender_1("assets installed and try again.", 0.675);
+#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
+	quickErrorTextRender_1("Press START to quit.", 0.75);
+#elif defined(SWITCH)
+	quickErrorTextRender_1("Press + to quit.", 0.75);
+#else
+	quickErrorTextRender_1("Press ENTER/START to quit.", 0.825);
+#endif
+	quickErrorTextRender_2("[Trogdor Classic v1.0]", 0.9);
+	TTF_CloseFont(font_commodore_error_1.font);
+	TTF_CloseFont(font_commodore_error_2.font);
+
+	TTF_Quit();
 }
