@@ -100,18 +100,16 @@ void InitializeFontsAndText() {
 			gameHiResWidth - (text_3_credits_8.dstrect.w * 1.5), gameHiResHeight - (text_3_credits_8.dstrect.h * 1.5));
 		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
-		SET_TEXT("\"Trogdor Classic\"", text_3_coming_soon_2, font_serif_white_6_mult,
+		SET_TEXT("\"Version 1.5\"", text_3_coming_soon_2, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_2), 73 * gameHiResMult);
-		SET_TEXT("-Fully implemented cutscenes!", text_3_coming_soon_3, font_serif_white_6_mult,
+		SET_TEXT("-Restored High Scores screen!", text_3_coming_soon_3, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), 87 * gameHiResMult);
-		SET_TEXT("-Level Beaten / Game Over", text_3_coming_soon_4, font_serif_white_6_mult,
+		SET_TEXT("-Hi-res sprite mode!", text_3_coming_soon_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), 101 * gameHiResMult);
-		SET_TEXT("animations!", text_3_coming_soon_4a, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4a), 115 * gameHiResMult);
-		SET_TEXT("-Customizable options!", text_3_coming_soon_5, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 129 * gameHiResMult);
-		SET_TEXT("-More polish!", text_3_coming_soon_6, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 143 * gameHiResMult);
+		SET_TEXT("-More options!", text_3_coming_soon_5, font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 115 * gameHiResMult);
+		SET_TEXT("-Save data support!", text_3_coming_soon_6, font_serif_white_6_mult,
+			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 129 * gameHiResMult);
 	} else {
 		SET_TEXT("(1/4)", text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
@@ -188,15 +186,15 @@ void InitializeFontsAndText() {
 			gameHiResWidth - (text_3_credits_8.dstrect.w * 1.5), gameHiResHeight - (text_3_credits_8.dstrect.h * 1.5));
 		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
-		SET_TEXT("\"Trogdor Classic\"", text_3_coming_soon_2, font_serif_white_6_mult,
+		SET_TEXT("\"Version 1.5\"", text_3_coming_soon_2, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_2), 73 * gameHiResMult);
-		SET_TEXT("-Fully implemented cutscenes!", text_3_coming_soon_3, font_serif_white_6_mult,
+		SET_TEXT("-Restored High Scores screen!", text_3_coming_soon_3, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), 87 * gameHiResMult);
-		SET_TEXT("-Level Beaten / Game Over animations!", text_3_coming_soon_4, font_serif_white_6_mult,
+		SET_TEXT("-Hi-res sprite mode!", text_3_coming_soon_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), 101 * gameHiResMult);
-		SET_TEXT("-Customizable options!", text_3_coming_soon_5, font_serif_white_6_mult,
+		SET_TEXT("-More options!", text_3_coming_soon_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 115 * gameHiResMult);
-		SET_TEXT("-More polish!", text_3_coming_soon_6, font_serif_white_6_mult,
+		SET_TEXT("-Save data support!", text_3_coming_soon_6, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 129 * gameHiResMult);
 	}
 	TTF_CloseFont(font_serif_white_6_mult.font);
@@ -739,7 +737,7 @@ void HandleErrorText(const char *badPath) {
 #else
 	quickErrorTextRender_1("Press ENTER/START to quit.", 0.825);
 #endif
-	quickErrorTextRender_2("[Trogdor Classic v1.0]", 0.9);
+	quickErrorTextRender_2("[Trogdor Reburninated v1.0]", 0.9);
 	TTF_CloseFont(font_commodore_error_1.font);
 	TTF_CloseFont(font_commodore_error_2.font);
 

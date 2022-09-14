@@ -1,6 +1,6 @@
 To-Do List
 
-Trogdor Classic [faithful recreation of original Trogdor flash game]:
+Version 1.0 [faithful recreation of original Trogdor flash game]:
 Features:
 - Add animation to Level Beaten and Game Over screens
 - Rework cutscene system so that animations are easier to add
@@ -17,7 +17,6 @@ Features:
 Polish:
 - Fix non-integer scaling in SDL1
 - Add "Libraries" screen
-- Add "Coming Eventually" screen for Trogdor Plus
 - Add "Want more?" screen for other system ports
 Additional Ports:
 - Android
@@ -25,7 +24,7 @@ Final:
 - Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS
 - Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS
 
-Trogdor Plus [an update to be developed between Classic and Reburninated]
+Version 1.5 [an update to be developed between Classic and Reburninated]
 Features:
 - Restore the original game's unused High Scores screen
 - Add basic Records screen
@@ -33,14 +32,14 @@ Features:
 	- Since resources are openly editable, an artist can replace these AI upscales with actual new art by simply replacing the files
 - Add save data support
 Polish:
-- Add "Coming Eventually" screen for Trogdor Reburninated
+- Add "Coming Eventually" screen for v2.0
 Additional Ports:
 - Libretro
 Final:
 - Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, LibRetro
 - Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, LibRetro
 
-Trogdor Reburninated [enhanced port of Trogdor with additional options, achievements, and more; mainly inspired by XBLA ports of arcade games]:
+Version 2.0 [enhanced port of Trogdor with additional options, achievements, and more; mainly inspired by XBLA ports of arcade games]:
 Features:
 - Add new title screen
 - Add new main menu
