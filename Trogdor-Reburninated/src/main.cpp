@@ -36,7 +36,8 @@ Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down 
 Uint8 pacmanArrayKey[11] = { 0, 0, 0, 1, 1, 1, 2, 3, 2, 3, 2 }; // Up Up Up Down Down Down Left Right Left Right Left (play Pac-Man on a Ms. Pac-Man + Galaga arcade cabinet)
 Uint8 s3kArrayKey[9] = { 2, 2, 2, 3, 3, 3, 0, 0, 0 }; // Left Left Left Right Right Right Up Up Up (Sonic & Knuckles and S3&K level select)
 Uint8 fzxArrayKey[8] = { 2, 5, 3, 0, 1, 2, 3, 4 }; // Left B Right Up Down Left Right A ((roughly) unlock everything in F-Zero X)
-bool showOverlay;
+bool renderOverlay;
+bool showOverlay = true;
 
 /* General-use Variables */
 Sint8 i, j, k;
@@ -98,8 +99,11 @@ int main(int argv, char** args) {
 			SDL_toggleFullscreen();
 		}
 		if (keyPressed(INPUT_Y)) {
-			isIntegerScale = !isIntegerScale;
+			scalingType = (scalingType + 1) % 4;
 			windowSizeChanged = true;
+		}
+		if (keyPressed(INPUT_X)) {
+			showOverlay = !showOverlay;
 		}
 		/* Handle Window Size Changes */
 		if (windowSizeChanged) {
@@ -109,7 +113,7 @@ int main(int argv, char** args) {
 			if (SDL_GetWindowSurface(window)->h < appHeight)
 				SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight);
 			// If you resize the window to within 6% of an integer ratio, snap to that ratio
-			if (isIntegerScale) {
+			if (scalingType < 2) {
 				snapWindow_x(0.06);
 				snapWindow_y(0.06);
 			}
@@ -277,7 +281,7 @@ int main(int argv, char** args) {
 			case 2:
 				if (frameState == 73) {
 					playMusic(MUSIC_TITLE_SCREEN, false);
-					showOverlay = true;
+					renderOverlay = true;
 				}
 				if (frameState < 192) {
 					frameState++;
@@ -292,7 +296,7 @@ int main(int argv, char** args) {
 			/* Instructions Screen */
 			case 3:
 				frameState++;
-				showOverlay = true;
+				renderOverlay = true;
 				MM.typeStuff();
 				MM.handlePageChange();
 				if (MM.page == 1) {
@@ -1108,12 +1112,22 @@ int main(int argv, char** args) {
 		/* Free Sound Effects That Have Finished Playing */
 		if (sceneState > 0) freeFinishedSoundChunks();
 
-		/* Draw Overlay (this can and probably should be optimized later) */
-		if (showOverlay && isIntegerScale) {
-			renderSprite_static_app(sprite_overlay_basement_top);
-			renderSprite_static_app(sprite_overlay_basement_bottom);
-			renderSprite_static_app(sprite_overlay_basement_left);
-			renderSprite_static_app(sprite_overlay_basement_right);
+		/* Draw Overlay */
+		if (renderOverlay) {
+			if (showOverlay) {
+				renderSprite_overlay(sprite_overlay_basement_top);
+				renderSprite_overlay(sprite_overlay_basement_bottom);
+				renderSprite_overlay(sprite_overlay_basement_left);
+				renderSprite_overlay(sprite_overlay_basement_right);
+			} else {
+#if !defined(SDL1)
+				SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+#endif
+				renderEmptyOverlay(sprite_overlay_basement_top);
+				renderEmptyOverlay(sprite_overlay_basement_bottom);
+				renderEmptyOverlay(sprite_overlay_basement_left);
+				renderEmptyOverlay(sprite_overlay_basement_right);
+			}
 		}
 
 		/* Update Screen */

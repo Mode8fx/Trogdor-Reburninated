@@ -8,7 +8,25 @@ void setWidthHeightMults() {
 	gameHiResMult = (double)gameHiResWidth / gameWidth;
 }
 
-void scaleAppRelativeToWindow() {
+void scaleGameByApp() {
+	screenScale = (double)windowWidth / appWidth;
+	if ((double)windowHeight / appHeight < screenScale) {
+		screenScale = (double)windowHeight / appHeight;
+	}
+	if (screenScale < 1) screenScale = 1;
+	trueScreenScaleInt = (int)screenScale;
+}
+
+void scaleAppByGame() {
+	screenScale = (double)windowWidth / gameWidth;
+	if ((double)windowHeight / gameHeight < screenScale) {
+		screenScale = (double)windowHeight / gameHeight;
+	}
+	if (screenScale < 1) screenScale = 1;
+	trueScreenScaleInt = (int)screenScale;
+}
+
+void scaleGameAndApp() {
 #if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(PSP) || defined(THREEDS)
 	windowWidth = DEFAULT_WIDTH;
 	windowHeight = DEFAULT_HEIGHT;
@@ -19,36 +37,36 @@ void scaleAppRelativeToWindow() {
 	windowWidth = SDL_GetVideoInfo()->current_w;
 	windowHeight = SDL_GetVideoInfo()->current_h;
 #endif
-	if (!isIntegerScale) {
-		appWidth = gameWidth;
-		appHeight = gameHeight;
-	} else {
-		appWidth = 320;
-		appHeight = 240;
-	}
-	screenScale = (double)windowWidth / appWidth;
-	if ((double)windowHeight / appHeight < screenScale) {
-		screenScale = (double)windowHeight / appHeight;
-	}
-	if (screenScale < 1) screenScale = 1;
-	trueScreenScaleInt = (int)screenScale;
 	//allowHiRes = (screenScale >= 2);
 	allowHiRes = false;
-	if (isIntegerScale) {
-		screenScale = (int)screenScale;
-		if (allowHiRes) {
-			trueScreenScaleFull = (double)trueScreenScaleInt - (trueScreenScaleInt % 2); // integer scale relative to hi-res
-		} else {
-			trueScreenScaleFull = (double)trueScreenScaleInt;
-		}
-	} else {
-		trueScreenScaleFull = screenScale;
+	switch (scalingType) {
+		case 0:  // integer app
+			scaleGameByApp();
+			screenScale = (int)screenScale;
+			if (allowHiRes) {
+				trueScreenScaleFull = (double)trueScreenScaleInt - (trueScreenScaleInt % 2); // integer scale relative to hi-res
+			} else {
+				trueScreenScaleFull = (double)trueScreenScaleInt;
+			}
+			break;
+		case 1:  // integer game
+			scaleAppByGame();
+			screenScale = (int)screenScale;
+			if (allowHiRes) {
+				trueScreenScaleFull = (double)trueScreenScaleInt - (trueScreenScaleInt % 2); // integer scale relative to hi-res
+			} else {
+				trueScreenScaleFull = (double)trueScreenScaleInt;
+			}
+			break;
+		case 2:  // non-integer app
+			scaleGameByApp();
+			trueScreenScaleFull = screenScale;
+			break;
+		default: // non-integer game
+			scaleAppByGame();
+			trueScreenScaleFull = screenScale;
+			break;
 	}
-#if !defined(SDL1)
-	// In SDL2, non-integer game screen scaling is handled by render scaling
-	//screenScale = (int)screenScale;
-	//if (screenScale > 2) screenScale = 2;
-#endif
 	gameSrcRect.w = (int)(gameWidth * screenScale);
 	gameSrcRect.h = (int)(gameHeight * screenScale);
 	appSrcRect.w = (int)(appWidth * screenScale);
@@ -57,9 +75,6 @@ void scaleAppRelativeToWindow() {
 	appToWindowDstRect.h = (int)(appHeight * trueScreenScaleFull);
 	appToWindowDstRect.x = max((int)((windowWidth - appToWindowDstRect.w) / 2), 0);
 	appToWindowDstRect.y = max((int)((windowHeight - appToWindowDstRect.h) / 2), 0);
-}
-
-void scaleGameRelativeToApp() {
 	gameToWindowDstRect.w = (int)(gameWidth * trueScreenScaleFull);
 	gameToWindowDstRect.h = (int)(gameHeight * trueScreenScaleFull);
 	gameToWindowDstRect.x = max((int)((windowWidth - gameToWindowDstRect.w) / 2), 0);
@@ -70,13 +85,24 @@ void scaleGameRelativeToApp() {
 	gameHiResSrcRect.h = gameHiResHeight;
 }
 
+void repositionOverlay() {
+	sprite_overlay_basement_top.dstrect.x = gameToWindowDstRect.x - (int)(sprite_overlay_basement_left.dstrect.w * screenScale);
+	sprite_overlay_basement_top.dstrect.y = gameToWindowDstRect.y - (int)(sprite_overlay_basement_top.dstrect.h * screenScale);
+	sprite_overlay_basement_bottom.dstrect.x = sprite_overlay_basement_top.dstrect.x;
+	sprite_overlay_basement_bottom.dstrect.y = gameToWindowDstRect.y + gameToWindowDstRect.h;
+	sprite_overlay_basement_left.dstrect.x = sprite_overlay_basement_top.dstrect.x;
+	sprite_overlay_basement_left.dstrect.y = gameToWindowDstRect.y;
+	sprite_overlay_basement_right.dstrect.x = gameToWindowDstRect.x + gameToWindowDstRect.w;
+	sprite_overlay_basement_right.dstrect.y = sprite_overlay_basement_left.dstrect.y;
+}
+
 void setScaling() {
 #if !defined(ANDROID)
-	scaleAppRelativeToWindow();
-	scaleGameRelativeToApp();
+	scaleGameAndApp();
 	setWidthHeightMults();
 	InitializeSpritesPart1();
 	InitializeSpritesPart2();
+	repositionOverlay();
 	destroyAllTextChars();
 	InitializeFontsAndText();
 #endif

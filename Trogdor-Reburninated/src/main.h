@@ -307,7 +307,7 @@ double screenScale = 1;
 int trueScreenScaleInt = 1;
 double trueScreenScaleFull = 1;
 bool allowHiRes = true;
-bool isIntegerScale = true;
+Sint8 scalingType = 0;
 #if !defined(SDL1)
 SDL_DisplayMode DM;
 #endif

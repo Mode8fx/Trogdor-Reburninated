@@ -29,6 +29,8 @@ extern void renderSprite_game(SpriteObject, SDL_Rect, SDL_Rect);
 extern void renderSprite_app(SpriteObject, SDL_Rect, SDL_Rect);
 extern void renderSprite_static_game(SpriteObject);
 extern void renderSprite_static_app(SpriteObject);
+extern void renderSprite_overlay(SpriteObject);
+extern void renderEmptyOverlay(SpriteObject spriteObj);
 extern void drawRect(SDL_Rect, Uint8, Uint8, Uint8);
 extern void drawRect_gameTextScreen(SDL_Rect, Uint8, Uint8, Uint8);
 extern void drawRectWithAlpha(SDL_Rect, Uint8, Uint8, Uint8, Uint8);

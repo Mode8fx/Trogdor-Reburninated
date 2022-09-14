@@ -15,17 +15,15 @@ Features:
 	- Strong Bad Commentary Frequency
 	- Debug Cheat Toggle
 Polish:
-- Add all-black "pseudo-overlay" when overlay is disabled
 - Fix non-integer scaling in SDL1
-- Add multiple types of scaling (integer game, integer app, non-integer game, non-integer app)
 - Add "Libraries" screen
 - Add "Coming Eventually" screen for Trogdor Plus
 - Add "Want more?" screen for other system ports
 Additional Ports:
 - Android
 Final:
-- Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
-- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP
+- Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS
 
 Trogdor Plus [an update to be developed between Classic and Reburninated]
 Features:
@@ -39,8 +37,8 @@ Polish:
 Additional Ports:
 - Libretro
 Final:
-- Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, LibRetro
-- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, LibRetro
+- Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, LibRetro
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, LibRetro
 
 Trogdor Reburninated [enhanced port of Trogdor with additional options, achievements, and more; mainly inspired by XBLA ports of arcade games]:
 Features:
@@ -52,8 +50,8 @@ Features:
 - Add History of Trogdor screen
 - Add secret game
 Final:
-- Prepare release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, LibRetro
-- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, LibRetro
+- Prepare release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, LibRetro
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, LibRetro
 - Make a trailer?
 - ???
 

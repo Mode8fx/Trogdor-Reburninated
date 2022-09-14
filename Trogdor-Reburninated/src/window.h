@@ -40,7 +40,7 @@ extern double screenScale; // the multiplier by which graphics should be scaled 
 extern int trueScreenScaleInt; // the multiplier by which the screen should be scaled via renderer
 extern double trueScreenScaleFull; // the multiplier by which the screen should be scaled via renderer
 extern bool allowHiRes;
-extern bool isIntegerScale;
+extern Sint8 scalingType;
 #if !defined(SDL1)
 extern SDL_DisplayMode DM;
 #endif

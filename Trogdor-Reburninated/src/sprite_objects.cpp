@@ -122,6 +122,28 @@ void renderSprite_static_app(SpriteObject spriteObj) {
 #endif
 }
 
+void renderSprite_overlay(SpriteObject spriteObj) {
+    outputRect = spriteObj.dstrect;
+    outputRect.w = (int)(outputRect.w * screenScale);
+    outputRect.h = (int)(outputRect.h * screenScale);
+#if !defined(SDL1)
+    SDL_RenderCopy(renderer, spriteObj.texture, NULL, &outputRect);
+#else
+    SDL_BlitSurface(spriteObj.surface, NULL, windowScreen, &outputRect);
+#endif
+}
+
+void renderEmptyOverlay(SpriteObject spriteObj) {
+    outputRect = spriteObj.dstrect;
+    outputRect.w = (int)(outputRect.w * screenScale);
+    outputRect.h = (int)(outputRect.h * screenScale);
+#if !defined(SDL1)
+    SDL_RenderFillRect(renderer, &outputRect);
+#else
+    SDL_FillRect(windowScreen, &outputRect, 0);
+#endif
+}
+
 void drawRect(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b) {
     outputRect = rect;
     outputRect.x = (Sint16)(outputRect.x * screenScale) + appToWindowDstRect.x;
