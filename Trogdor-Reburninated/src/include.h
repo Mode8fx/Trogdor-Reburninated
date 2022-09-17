@@ -23,9 +23,7 @@
 #include <SDL_mixer.h>
 #if defined(GAMECUBE) || defined(THREEDS)
 #include <SDL_rotozoom.h>
-#elif !defined(SDL1)
-#include "SDL2_rotozoom.h"
-#else
+#elif defined(SDL1)
 #include "SDL_rotozoom.h"
 #endif
 #endif

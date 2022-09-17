@@ -11,11 +11,9 @@ Features:
 	- Extra Lives Interval
 	- Peasant Penalty
 	- Archer Frequency
-	- Treasure Hut Accessibility
 	- Strong Bad Commentary Frequency
 	- Debug Cheat Toggle
 Polish:
-- Fix non-integer scaling in SDL1
 - Add "Libraries" screen
 - Add "Want more?" screen for other system ports
 Additional Ports:
@@ -31,6 +29,8 @@ Features:
 - Add Hi-Res Sprite Mode and AI upscale existing sprites
 	- Since resources are openly editable, an artist can replace these AI upscales with actual new art by simply replacing the files
 - Add save data support
+- Add option for treasure hut accessibility
+- Add option for more overlays
 Polish:
 - Add "Coming Eventually" screen for v2.0
 Additional Ports:

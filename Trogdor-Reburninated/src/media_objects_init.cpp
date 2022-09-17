@@ -706,19 +706,16 @@ void HandleErrorText(const char *badPath) {
 	STRCPY(tempCharArrayError, badPath);
 	setFont(&font_commodore_error_1, "fonts/Commodore Pixelized v1.2.ttf", 10, 10, TTF_STYLE_NORMAL, color_white);
 	setFont(&font_commodore_error_2, "fonts/Commodore Pixelized v1.2.ttf", 10, 9, TTF_STYLE_NORMAL, color_orange);
-	uint_i = (rand() % 5);
+	uint_i = (rand() % 4);
 	switch (uint_i) {
 		case 0:
-			quickErrorTextRender_1("Oops! You bwoke it.", 0.1);
-			break;
-		case 1:
 			quickErrorTextRender_1("404'd!", 0.1);
 			break;
-		case 2:
+		case 1:
 			quickErrorTextRender_1("FLAGRANT SYSTEM ERROR", 0.1);
 			break;
-		case 3:
-			quickErrorTextRender_1("Scan Complete! 423,827 Viruses Found", 0.1);
+		case 2:
+			quickErrorTextRender_1("I'm afraid I've got some bad news, boys.", 0.1);
 			break;
 		default:
 			quickErrorTextRender_1("The System Is Down", 0.1);
