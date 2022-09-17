@@ -336,28 +336,9 @@ void InitializeDisplay() {
 #if !defined(SDL1)
 	SDL_GetCurrentDisplayMode(0, &DM);
 #endif
-#if !defined(ANDROID)
-	switch (videoSettings.aspectRatioIndex) {
-		case 1:
-			videoSettings.widthSetting = RESOLUTION_OPTIONS_WIDTH_16_9[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_WIDTH_16_9)];
-			videoSettings.heightSetting = RESOLUTION_OPTIONS_HEIGHT_16_9[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_HEIGHT_16_9)];
-			break;
-		case 2:
-			videoSettings.widthSetting = RESOLUTION_OPTIONS_WIDTH_16_10[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_WIDTH_16_10)];
-			videoSettings.heightSetting = RESOLUTION_OPTIONS_HEIGHT_16_10[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_HEIGHT_16_10)];
-			break;
-		case 3:
-			videoSettings.widthSetting = RESOLUTION_OPTIONS_WIDTH_21_9[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_WIDTH_21_9)];
-			videoSettings.heightSetting = RESOLUTION_OPTIONS_HEIGHT_21_9[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_HEIGHT_21_9)];
-			break;
-		default:
-			videoSettings.widthSetting = RESOLUTION_OPTIONS_WIDTH_4_3[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_WIDTH_4_3)];
-			videoSettings.heightSetting = RESOLUTION_OPTIONS_HEIGHT_4_3[videoSettings.resolutionIndex % LEN(RESOLUTION_OPTIONS_HEIGHT_4_3)];
-			break;
-	}
-#else
-	videoSettings.widthSetting = SYSTEM_WIDTH;
-	videoSettings.heightSetting = SYSTEM_HEIGHT;
+	videoSettings.widthSetting = DEFAULT_WIDTH;
+	videoSettings.heightSetting = DEFAULT_HEIGHT;
+#if defined(ANDROID)
 	SDL_SetHint(SDL_HINT_ORIENTATIONS, "Landscape");
 #endif
 	appWidth = 320;

@@ -93,6 +93,9 @@ void repositionOverlay() {
 	sprite_overlay_basement_left.dstrect.x = sprite_overlay_basement_top.dstrect.x;
 	sprite_overlay_basement_left.dstrect.y = gameToWindowDstRect.y;
 	sprite_overlay_basement_right.dstrect.x = gameToWindowDstRect.x + gameToWindowDstRect.w;
+	uint_i = sprite_overlay_basement_top.dstrect.x + (int)(sprite_overlay_basement_top.dstrect.w * screenScale);
+	uint_j = sprite_overlay_basement_right.dstrect.x + (int)(sprite_overlay_basement_right.dstrect.w * screenScale);
+	sprite_overlay_basement_right.dstrect.x += (uint_i - uint_j);
 	sprite_overlay_basement_right.dstrect.y = sprite_overlay_basement_left.dstrect.y;
 }
 
@@ -108,28 +111,28 @@ void setScaling() {
 #endif
 }
 
-void snapWindow_x(double val) {
+void snapWindow_x(double range, Uint16 size) {
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)) && !defined(SDL1)
-	double_i = ((float)SDL_GetWindowSurface(window)->w / appWidth);
-	if ((double_i - floor(double_i)) >= pow(1 - val, floor(double_i))) {
-		if ((appWidth * ceil(double_i)) < DM.w) {
-			SDL_SetWindowSize(window, appWidth * (short)(ceil(double_i)), SDL_GetWindowSurface(window)->h);
+	double_i = ((float)SDL_GetWindowSurface(window)->w / size);
+	if ((double_i - floor(double_i)) >= pow(1 - range, floor(double_i))) {
+		if ((size * ceil(double_i)) < DM.w) {
+			SDL_SetWindowSize(window, size * (short)(ceil(double_i)), SDL_GetWindowSurface(window)->h);
 		}
-	} else if ((double_i - floor(double_i)) < 1 - pow(1 - val, (short)(floor(double_i))) && (SDL_GetWindowSurface(window)->w % appWidth != 0)) {
-		SDL_SetWindowSize(window, appWidth * (short)floor(double_i), SDL_GetWindowSurface(window)->h);
+	} else if ((double_i - floor(double_i)) < 1 - pow(1 - range, (short)(floor(double_i))) && (SDL_GetWindowSurface(window)->w % size != 0)) {
+		SDL_SetWindowSize(window, size * (short)floor(double_i), SDL_GetWindowSurface(window)->h);
 	}
 #endif
 }
 
-void snapWindow_y(double val) {
+void snapWindow_y(double range, Uint16 size) {
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)) && !defined(SDL1)
-	double_i = ((float)SDL_GetWindowSurface(window)->h / appHeight);
-	if ((double_i - floor(double_i)) >= pow(1 - val, (short)(floor(double_i)))) {
-		if ((appHeight * ceil(double_i)) < DM.h) {
-			SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight * (short)ceil(double_i));
+	double_i = ((float)SDL_GetWindowSurface(window)->h / size);
+	if ((double_i - floor(double_i)) >= pow(1 - range, (short)(floor(double_i)))) {
+		if ((size * ceil(double_i)) < DM.h) {
+			SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, size * (short)ceil(double_i));
 		}
-	} else if ((double_i - floor(double_i)) < 1 - pow(1 - val, (short)(floor(double_i))) && (SDL_GetWindowSurface(window)->h % appHeight != 0)) {
-		SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight * (short)floor(double_i));
+	} else if ((double_i - floor(double_i)) < 1 - pow(1 - range, (short)(floor(double_i))) && (SDL_GetWindowSurface(window)->h % size != 0)) {
+		SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, size * (short)floor(double_i));
 	}
 #endif
 }

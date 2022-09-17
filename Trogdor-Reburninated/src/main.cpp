@@ -108,14 +108,24 @@ int main(int argv, char** args) {
 		/* Handle Window Size Changes */
 		if (windowSizeChanged) {
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)) && !defined(SDL1)
-			if (SDL_GetWindowSurface(window)->w < appWidth)
-				SDL_SetWindowSize(window, appWidth, SDL_GetWindowSurface(window)->h);
-			if (SDL_GetWindowSurface(window)->h < appHeight)
-				SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight);
+			if (scalingType % 2 == 0) {
+				if (SDL_GetWindowSurface(window)->w < appWidth)
+					SDL_SetWindowSize(window, appWidth, SDL_GetWindowSurface(window)->h);
+				if (SDL_GetWindowSurface(window)->h < appHeight)
+					SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight);
+			} else {
+				if (SDL_GetWindowSurface(window)->w < gameWidth)
+					SDL_SetWindowSize(window, gameWidth, SDL_GetWindowSurface(window)->h);
+				if (SDL_GetWindowSurface(window)->h < gameHeight)
+					SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, gameHeight);
+			}
 			// If you resize the window to within 6% of an integer ratio, snap to that ratio
-			if (scalingType < 2) {
-				snapWindow_x(0.06);
-				snapWindow_y(0.06);
+			if (scalingType == 0) {
+				snapWindow_x(0.06, appWidth);
+				snapWindow_y(0.06, appHeight);
+			} else if (scalingType == 1) {
+				snapWindow_x(0.06, gameWidth);
+				snapWindow_y(0.06, gameHeight);
 			}
 #endif
 			setScaling();

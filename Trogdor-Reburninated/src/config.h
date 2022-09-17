@@ -13,8 +13,6 @@ struct SoundSettings {
 };
 
 struct VideoSettings {
-	Sint8 resolutionIndex;
-	Sint8 aspectRatioIndex;
 	Uint16 widthSetting;
 	Uint16 heightSetting;
 };
