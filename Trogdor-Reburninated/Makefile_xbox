@@ -1,0 +1,24 @@
+XBE_TITLE = Trogdor\ Beta
+GEN_XISO = $(XBE_TITLE).iso
+SRCS =	$(CURDIR)/src/main.c \
+		$(CURDIR)/src/config.c \
+		$(CURDIR)/src/general.c \
+		$(CURDIR)/src/media_objects_init.c \
+		$(CURDIR)/src/sound_logic.c \
+		$(CURDIR)/src/sprite_objects.c \
+		$(CURDIR)/src/text_objects.c \
+		$(CURDIR)/src/window.c
+
+NXDK_DIR ?= $(CURDIR)/../..
+NXDK_SDL = y
+
+NXDK_CXX = y
+
+CFLAGS += -O2 -DXBOX
+
+include $(NXDK_DIR)/Makefile
+
+TARGET += $(OUTPUT_DIR)/fonts/Commodore\ Pixelized\ v1.2.ttf
+$(GEN_XISO): $(OUTPUT_DIR)/fonts/Commodore\ Pixelized\ v1.2.ttf
+$(OUTPUT_DIR)/fonts/Commodore\ Pixelized\ v1.2.ttf: $(CURDIR)/fonts/Commodore\ Pixelized\ v1.2.ttf $(OUTPUT_DIR)
+	$(VE)cp '$<' '$@'

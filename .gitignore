@@ -422,3 +422,7 @@ Makefile
 *.PBP
 *.3dsx
 *.smdh
+*.d
+*.iso
+*.exe
+*.lib

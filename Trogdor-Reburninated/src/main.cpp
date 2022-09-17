@@ -61,12 +61,14 @@ int main(int argv, char** args) {
 #endif
 		return 1;
 	}
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 	SDL_ShowCursor(SDL_DISABLE);
 #endif
 	InitializeController();
 
+#if !defined(XBOX)
 	try {
+#endif
 	loadSaveFile();
 	InitializeDisplay();
 
@@ -107,7 +109,7 @@ int main(int argv, char** args) {
 		}
 		/* Handle Window Size Changes */
 		if (windowSizeChanged) {
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)) && !defined(SDL1)
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)) && !defined(SDL1)
 			if (scalingType % 2 == 0) {
 				if (SDL_GetWindowSurface(window)->w < appWidth)
 					SDL_SetWindowSize(window, appWidth, SDL_GetWindowSurface(window)->h);
@@ -1160,6 +1162,7 @@ int main(int argv, char** args) {
 
 	return 0;
 
+#if !defined(XBOX)
 	} catch (const char *badPath) {
 #if !defined(SDL1)
 		SDL_SetRenderDrawColor(renderer, 69, 95, 216, 255);
@@ -1186,4 +1189,5 @@ int main(int argv, char** args) {
 
 		return -1;
 	}
+#endif
 }

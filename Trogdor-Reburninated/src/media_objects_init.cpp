@@ -17,7 +17,7 @@ void InitializeFontsAndText() {
 	if (gameHiResMult < 2) {
 		SET_TEXT("(1/5)", text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
 #else
@@ -32,7 +32,7 @@ void InitializeFontsAndText() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), 101 * gameHiResMult);
 		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), 115 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
+#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 		SET_TEXT("Press START to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
 		SET_TEXT("press START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
@@ -113,7 +113,7 @@ void InitializeFontsAndText() {
 	} else {
 		SET_TEXT("(1/4)", text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
 #else
@@ -126,7 +126,7 @@ void InitializeFontsAndText() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), 87 * gameHiResMult);
 		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), 101 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
+#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 		SET_TEXT("Press START to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
 		SET_TEXT("press START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
@@ -243,7 +243,7 @@ void InitializeFontsAndText() {
 	setFont(&font_serif_white_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_white);
 	SET_TEXT("paused", text_4_paused_1, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 130 * gameHiResMult);
-#if defined(WII_U) || defined(GAMECUBE) || defined(ANDROID) || defined(THREEDS)
+#if defined(WII_U) || defined(GAMECUBE) || defined(ANDROID) || defined(THREEDS) || defined(XBOX)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
 	SET_TEXT("press 'A+SELECT' to quit", text_4_paused_3, font_serif_white_6,
@@ -567,11 +567,13 @@ void InitializeSpritesPart2() {
 }
 
 void exceptMissingFile(const char *path) {
+#if !defined(XBOX)
 	ifile.open(path);
 	if (!ifile) {
 		throw(path);
 	}
 	ifile.close();
+#endif
 }
 
 void destroySprite(SpriteObject sprite) {
@@ -727,7 +729,7 @@ void HandleErrorText(const char *badPath) {
 	quickErrorTextRender_2(tempCharArrayError, 0.475);
 	quickErrorTextRender_1("Make sure you have the correct", 0.6);
 	quickErrorTextRender_1("assets installed and try again.", 0.675);
-#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS)
+#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 	quickErrorTextRender_1("Press START to quit.", 0.75);
 #elif defined(SWITCH)
 	quickErrorTextRender_1("Press + to quit.", 0.75);

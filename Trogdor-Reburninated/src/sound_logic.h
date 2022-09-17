@@ -23,17 +23,21 @@ struct SoundEffect {
 	Uint8 type = 0;
 	bool isStatic = false;
 	const char *path;
-#if !defined(PSP)
-	Mix_Chunk *chunk;
-#else
+#if defined(PSP)
 	OSL_SOUND *chunk;
+#elif defined(XBOX)
+	int *chunk;
+#else
+	Mix_Chunk *chunk;
 #endif
 };
 
-#if !defined(PSP)
-extern Mix_Music *bgm;
-#else
+#if defined(PSP)
 extern OSL_SOUND *bgm;
+#elif defined(XBOX)
+extern int *bgm;
+#else
+extern Mix_Music *bgm;
 #endif
 extern bool sfxShouldBePlaying;
 extern Uint8 sfxIndex;

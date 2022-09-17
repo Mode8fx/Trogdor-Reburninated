@@ -38,7 +38,7 @@ extern "C" FILE * __cdecl __iob_func(void);
 extern void systemSpecificOpen();
 extern void systemSpecificClose();
 
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS))
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 #define STRCPY(dest, src) strcpy_s(dest, src);
 #else
 #define STRCPY(dest, src) strcpy(dest, src);
@@ -53,7 +53,7 @@ extern void systemSpecificClose();
 #define ZERO_OUT_ARRAY(arr) \
     (memset(arr, 0, sizeof(arr)))
 
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS))
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 #define PRINT(str) \
     cout << str << endl
 #else

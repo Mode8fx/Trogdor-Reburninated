@@ -9,7 +9,6 @@
 #include <SDL2/SDL_ttf.h>
 //#include <SDL2/SDL_mixer.h>
 #include "oslibAudio/oslib.h"
-#include <SDL2/SDL2_rotozoom.h>
 #elif defined(WII)
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
@@ -20,7 +19,11 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
+#if defined(XBOX)
+#include <hal/audio.h>
+#else
 #include <SDL_mixer.h>
+#endif
 #if defined(GAMECUBE) || defined(THREEDS)
 #include <SDL_rotozoom.h>
 #elif defined(SDL1)
@@ -30,7 +33,7 @@
 
 #include <fstream>
 #include <iostream>
-// #include <stdio.h>
+//#include <stdio.h>
 #include <string.h>
 #include <sstream>
 #include <stdbool.h>
@@ -63,6 +66,11 @@
 #include <pspctrl.h>
 #elif defined(THREEDS)
 #include <3ds.h>
+#elif defined(XBOX)
+#include <hal/debug.h>
+#include <hal/xbox.h>
+#include <hal/video.h>
+#include <windows.h>
 #endif
 
 using namespace std;

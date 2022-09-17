@@ -63,7 +63,7 @@ constexpr auto DEFAULT_HEIGHT = 1080;
 #elif defined(PSP)
 constexpr auto DEFAULT_WIDTH = 480;
 constexpr auto DEFAULT_HEIGHT = 272;
-#elif defined(WII) || defined(GAMECUBE)
+#elif defined(WII) || defined(GAMECUBE) || defined(XBOX)
 constexpr auto DEFAULT_WIDTH = 640;
 constexpr auto DEFAULT_HEIGHT = 480;
 #elif defined(THREEDS)

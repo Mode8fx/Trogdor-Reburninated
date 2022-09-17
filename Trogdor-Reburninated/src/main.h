@@ -22,10 +22,12 @@ Sint32 mouseInput_y_last;
 #endif
 
 /* Audio */
-#if !defined(PSP)
-Mix_Music *bgm;
-#else
+#if defined(PSP)
 OSL_SOUND *bgm;
+#elif defined(XBOX)
+int *bgm;
+#else
+Mix_Music *bgm;
 #endif
 SoundEffect sfx_burn_hut;
 SoundEffect sfx_goldget;
@@ -136,7 +138,6 @@ FontObject font_commodore_error_2;
 char tempCharArray[64];
 Uint8 charCounter;
 Sint16 charWidthCounter;
-string tempStr;
 TextObject text_0_loading;
 SDL_Rect text_0_loading_censor_rect;
 TextObject text_1_presents;
@@ -353,7 +354,7 @@ void InitializeDisplay() {
 	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_SHOWN);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-#elif defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID)
+#elif defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(XBOX)
 	window = SDL_CreateWindow("Trogdor Beta", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, 0);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
@@ -373,7 +374,10 @@ void InitializeDisplay() {
 }
 
 void InitializeSound() {
-#if !defined(PSP)
+#if defined(PSP)
+	oslInitAudio();
+#elif defined(XBOX)
+#else
 	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 #if !defined(SDL1) && !defined(ANDROID)
 		SDL_Log(Mix_GetError());
@@ -383,8 +387,6 @@ void InitializeSound() {
 	Mix_AllocateChannels(NUM_SOUND_CHANNELS);
 	Mix_Volume(SFX_CHANNEL_GAME, (int)(soundSettings.sfxVolume * 128.0 / 100));
 	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(soundSettings.sfxVolume * 128.0 / 100));
-#else
-	oslInitAudio();
 #endif
 }
 
@@ -464,19 +466,21 @@ void DestroyAll() {
 	/* Sound */
 	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
 		if (sfxArr[i]->chunk != NULL) {
-#if !defined(PSP)
-			Mix_FreeChunk(sfxArr[i]->chunk);
-#else
+#if defined(PSP)
 			oslDeleteSound(sfxArr[i]->chunk);
+#elif defined(XBOX)
+#else
+			Mix_FreeChunk(sfxArr[i]->chunk);
 #endif
 		}
 	}
 	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
 		if (sfxArr_strongBad[i]->chunk != NULL) {
-#if !defined(PSP)
-			Mix_FreeChunk(sfxArr_strongBad[i]->chunk);
-#else
+#if defined(PSP)
 			oslDeleteSound(sfxArr_strongBad[i]->chunk);
+#elif defined(XBOX)
+#else
+			Mix_FreeChunk(sfxArr_strongBad[i]->chunk);
 #endif
 		}
 	}
@@ -485,6 +489,7 @@ void DestroyAll() {
 		oslDeleteSound(bgm);
 	}
 	oslDeinitAudio();
+#elif defined(XBOX)
 #else
 	Mix_FreeMusic(bgm);
 	Mix_CloseAudio();

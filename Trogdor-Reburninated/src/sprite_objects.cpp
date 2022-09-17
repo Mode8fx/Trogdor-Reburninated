@@ -14,9 +14,11 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
 #if !defined(SDL1)
     if (spriteObj->texture == NULL) {
         temp_sprite = IMG_Load(path);
+#if !defined(XBOX)
         if (temp_sprite == NULL) {
             throw(path);
         }
+#endif
         spriteObj->frame_w = (Sint16)(temp_sprite->w / numAnimFrames);
         spriteObj->frame_h = (Sint16)(temp_sprite->h / numForms);
         spriteObj->scaled_w = (Uint16)(spriteObj->frame_w);

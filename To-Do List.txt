@@ -22,7 +22,7 @@ Final:
 - Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS
 - Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS
 
-Version 1.5 [an update to be developed between Classic and Reburninated]
+Version 1.5 [an update that adds a few more features and an additional port]
 Features:
 - Restore the original game's unused High Scores screen
 - Add basic Records screen

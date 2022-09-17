@@ -29,6 +29,8 @@ void systemSpecificOpen() {
 	fatInitDefault();
 	/* Initialize Controller */
 	PAD_Init();
+#elif defined(XBOX)
+	XVideoSetMode(640, 480, 32, REFRESH_DEFAULT);
 #endif
 }
 

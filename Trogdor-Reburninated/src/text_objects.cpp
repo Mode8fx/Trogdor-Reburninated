@@ -118,9 +118,11 @@ void setFont(FontObject *fontObj, const char *path, int originalSize, double mul
 	fontObj->style = style;
 	fontObj->color = color;
 	fontObj->font = TTF_OpenFont((rootDir + path).c_str(), fontObj->size);
+#if !defined(XBOX)
 	if (fontObj->font == NULL) {
 		throw((rootDir + path).c_str());
 	}
+#endif
 	TTF_SetFontStyle(fontObj->font, fontObj->style);
 }
 
