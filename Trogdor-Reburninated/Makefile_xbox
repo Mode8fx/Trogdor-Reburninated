@@ -1,13 +1,14 @@
 XBE_TITLE = Trogdor\ Beta
 GEN_XISO = $(XBE_TITLE).iso
-SRCS =	$(CURDIR)/src/main.c \
-		$(CURDIR)/src/config.c \
-		$(CURDIR)/src/general.c \
-		$(CURDIR)/src/media_objects_init.c \
-		$(CURDIR)/src/sound_logic.c \
-		$(CURDIR)/src/sprite_objects.c \
-		$(CURDIR)/src/text_objects.c \
-		$(CURDIR)/src/window.c
+SRCS =	$(CURDIR)/src/main.cpp \
+		$(CURDIR)/src/config.cpp \
+		$(CURDIR)/src/cutscenes.cpp \
+		$(CURDIR)/src/general.cpp \
+		$(CURDIR)/src/media_objects_init.cpp \
+		$(CURDIR)/src/sound_logic.cpp \
+		$(CURDIR)/src/sprite_objects.cpp \
+		$(CURDIR)/src/text_objects.cpp \
+		$(CURDIR)/src/window.cpp
 
 NXDK_DIR ?= $(CURDIR)/../..
 NXDK_SDL = y

@@ -24,7 +24,6 @@ constexpr auto ARCHER_Y_LOWER = 145; //  155 - (20 / 2)
 constexpr auto ARCHER_LEFT_X = -1; //  179 / 5000 * 250 - (20 / 2)
 constexpr auto ARCHER_RIGHT_X = 231; // 4829 / 5000 * 250 - (20 / 2)
 
-extern Uint16 rand_var;
 extern Uint32 frameCounter_global;
 extern Uint8 contraArrayKey[10];
 extern Uint8 pacmanArrayKey[11];

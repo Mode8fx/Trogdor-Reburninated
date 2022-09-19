@@ -24,11 +24,6 @@ Uint32 deltaTime;
 Uint32 frameTime;
 Uint32 frameCounter_global;
 
-/* Program State */
-Sint8 sceneState = 0;
-Sint16 frameState = 1;
-Uint16 rand_var;
-
 /* Other */
 MenuManager MM;
 GameManager GM;
@@ -38,6 +33,7 @@ Uint8 s3kArrayKey[9] = { 2, 2, 2, 3, 3, 3, 0, 0, 0 }; // Left Left Left Right Ri
 Uint8 fzxArrayKey[8] = { 2, 5, 3, 0, 1, 2, 3, 4 }; // Left B Right Up Down Left Right A ((roughly) unlock everything in F-Zero X)
 bool renderOverlay;
 bool showOverlay = true;
+bool cutsceneIsPlaying = false;
 
 /* General-use Variables */
 Sint8 i, j, k;
@@ -48,6 +44,8 @@ double double_i;
 
 int main(int argv, char** args) {
 	isRunning = true;
+	sceneState = 0;
+	frameState = 1;
 	systemSpecificOpen();
 
 	/* Initialize SDL */
@@ -78,6 +76,8 @@ int main(int argv, char** args) {
 	InitializeSpritesPart1();
 	InitializeSpritesPart2();
 #endif
+
+	InitializeCutsceneObjects();
 
 	/* Initialize Loading Screen rect */
 	text_0_loading_censor_rect = { text_0_loading.dstrect.x, text_0_loading.dstrect.y,
@@ -765,19 +765,10 @@ int main(int argv, char** args) {
 			case 11:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_11_cutscene, font_serif_white_9);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
-				switch (frameState) {
-					case 420:
-						loadAndPlaySound(SFX_CUTSCENE);
-						break;
-					case 492:
-						GM.levelInit();
-						sceneState = 4;
-						break;
-					default:
-						break;
+				cutscene_level_4();
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 11) {
 					frameState++;

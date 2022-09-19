@@ -19,9 +19,7 @@
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
-#if defined(XBOX)
-#include <hal/audio.h>
-#else
+#if !defined(XBOX)
 #include <SDL_mixer.h>
 #endif
 #if defined(GAMECUBE) || defined(THREEDS)
@@ -70,7 +68,9 @@
 #include <hal/debug.h>
 #include <hal/xbox.h>
 #include <hal/video.h>
+#include <hal/audio.h>
 #include <windows.h>
+#include <xboxkrnl/xboxkrnl.h>
 #endif
 
 using namespace std;

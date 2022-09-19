@@ -239,6 +239,7 @@
   <ItemGroup>
     <ClCompile Include="src\classes.h" />
     <ClCompile Include="src\config.cpp" />
+    <ClCompile Include="src\cutscenes.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\media_objects_init.cpp" />
     <ClCompile Include="src\sound_logic.cpp" />
@@ -249,6 +250,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="src\cutscenes.h" />
     <ClInclude Include="src\general.h" />
     <ClInclude Include="src\include.h" />
     <ClInclude Include="src\input.h" />

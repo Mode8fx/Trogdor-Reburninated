@@ -2,7 +2,11 @@
 #define MAIN_H
 
 #include "classes.h"
+#include "cutscenes.h"
 
+Sint8 sceneState;
+Sint16 frameState;
+Uint16 rand_var;
 SDL_Event event;
 
 /* SDL Input */

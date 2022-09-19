@@ -8,6 +8,11 @@ struct Timer {
     double last;
 };
 
+/* Program State */
+extern Sint8 sceneState;
+extern Sint16 frameState;
+extern Uint16 rand_var;
+
 static bool isRunning;
 static bool windowSizeChanged;
 extern SDL_Event event;

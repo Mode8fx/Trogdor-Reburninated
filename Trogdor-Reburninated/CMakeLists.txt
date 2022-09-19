@@ -7,6 +7,8 @@ add_executable(trogdorbeta
 	"src/classes.h"
 	"src/config.cpp"
 	"src/config.h"
+	"src/cutscenes.cpp"
+	"src/cutscenes.h"
 	"src/general.cpp"
 	"src/general.h"
 	"src/include.h"
