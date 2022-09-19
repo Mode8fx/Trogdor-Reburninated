@@ -3,7 +3,6 @@ To-Do List
 Version 1.0 [faithful recreation of original Trogdor flash game]:
 Features:
 - Add animation to Level Beaten and Game Over screens
-- Rework cutscene system so that animations are easier to add
 - Add art and animation to all cutscenes
 - Add a simple Options menu with a few customizable settings
 	- Starting Level
