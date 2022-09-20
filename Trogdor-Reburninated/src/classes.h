@@ -182,30 +182,8 @@ class Knight {
 			if (frameState > 60) { // a while loop isn't necessary; it'll never go that far above 60
 				frameState -= 60;
 			}
-			switch (frameState) {
-				case 1:
-				case 9:
-				case 17:
-				case 25:
-				case 33:
-				case 41:
-				case 49:
-				case 57:
-					srcrect.x = 0;
-					break;
-				case 5:
-				case 29:
-				case 53:
-					srcrect.x = spriteFrame(sprite_knight, 1);
-					break;
-				case 13:
-				case 21:
-				case 37:
-				case 45:
-					srcrect.x = spriteFrame(sprite_knight, 2);
-					break;
-				default:
-					break;
+			if ((frameState - 1) % 4 == 0) {
+				srcrect.x = spriteFrame(sprite_knight, (frameState - 1) / 4);
 			}
 			if (frameState <= 30) {
 				offset_x = frameState * 34 / 30;

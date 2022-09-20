@@ -20,8 +20,8 @@ extern void InitializeCutsceneObjects();
 extern void prepareCSO(CutsceneObject *, SpriteObject *);
 extern void enterCSO(CutsceneObject *, int, int, Sint8, Sint8, Sint8, Sint8, Sint8);
 extern void renderCSO(CutsceneObject *);
-extern void updateCSOFrame(CutsceneObject *);
-extern void updateCSOForm(CutsceneObject *);
+extern void updateCSOFrame(CutsceneObject *, Sint8);
+extern void updateCSOForm(CutsceneObject *, Sint8);
 extern void setCSOPos(CutsceneObject *, int, int);
 extern void cutscene_level_4();
 
