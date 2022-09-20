@@ -569,6 +569,8 @@ void InitializeSpritesPart2() {
 	}
 	PREPARE_SPRITE(sprite_loot, (rootDir + "graphics/loot.bmp").c_str(),
 		0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_trogdor_flexing, (rootDir + "graphics/trogdor_flexing.bmp").c_str(),
+		0, 0, 4, 1, 1);
 }
 
 void exceptMissingFile(const char *path) {
@@ -621,6 +623,7 @@ void destroyAllSprites() {
 	destroySprite(sprite_peasant);
 	destroySprite(sprite_end_of_level_trogdor);
 	destroySprite(sprite_loot);
+	destroySprite(sprite_trogdor_flexing);
 	destroySprite(sprite_overlay_basement_top);
 	destroySprite(sprite_overlay_basement_bottom);
 	destroySprite(sprite_overlay_basement_left);

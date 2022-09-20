@@ -791,19 +791,10 @@ int main(int argv, char** args) {
 			case 13:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_13_cutscene, font_serif_white_9);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
-				switch (frameState) {
-					case 567:
-						loadAndPlaySound(SFX_CUTSCENE);
-						break;
-					case 640:
-						GM.levelInit();
-						sceneState = 4;
-						break;
-					default:
-						break;
+				cutscene_level_12();
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 13) {
 					frameState++;
@@ -813,19 +804,10 @@ int main(int argv, char** args) {
 			case 14:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_14_cutscene, font_serif_white_9);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
-				switch (frameState) {
-					case 641:
-						loadAndPlaySound(SFX_CUTSCENE);
-						break;
-					case 709:
-						GM.levelInit();
-						sceneState = 4;
-						break;
-					default:
-						break;
+				cutscene_level_16();
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 14) {
 					frameState++;
@@ -835,19 +817,10 @@ int main(int argv, char** args) {
 			case 15:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_15_cutscene, font_serif_white_9);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
-				switch (frameState) {
-					case 710:
-						loadAndPlaySound(SFX_CUTSCENE);
-						break;
-					case 779:
-						GM.levelInit();
-						sceneState = 4;
-						break;
-					default:
-						break;
+				cutscene_level_20();
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 15) {
 					frameState++;
@@ -857,19 +830,10 @@ int main(int argv, char** args) {
 			case 16:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_16_cutscene, font_serif_white_9);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
-				switch (frameState) {
-					case 780:
-						loadAndPlaySound(SFX_CUTSCENE);
-						break;
-					case 850:
-						GM.levelInit();
-						sceneState = 4;
-						break;
-					default:
-						break;
+				cutscene_level_24();
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 16) {
 					frameState++;
@@ -879,19 +843,10 @@ int main(int argv, char** args) {
 			case 17:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_17_cutscene, font_serif_white_9);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
-				switch (frameState) {
-					case 853:
-						loadAndPlaySound(SFX_CUTSCENE);
-						break;
-					case 924:
-						GM.levelInit();
-						sceneState = 4;
-						break;
-					default:
-						break;
+				cutscene_level_30();
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 17) {
 					frameState++;
@@ -901,9 +856,6 @@ int main(int argv, char** args) {
 			case 18:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_18_cutscene, font_serif_white_9);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
 				switch (frameState) {
 					case 927:
 						loadAndPlaySound(SFX_CUTSCENE);
@@ -923,9 +875,6 @@ int main(int argv, char** args) {
 			case 19:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_19_cutscene, font_serif_white_9);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
 				switch (frameState) {
 					case 1000:
 						loadAndPlaySound(SFX_CUTSCENE);
@@ -945,9 +894,6 @@ int main(int argv, char** args) {
 			case 20:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_20_cutscene, font_serif_white_9);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
 				switch (frameState) {
 					case 1076:
 						loadAndPlaySound(SFX_CUTSCENE);
@@ -967,9 +913,6 @@ int main(int argv, char** args) {
 			case 21:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_21_cutscene, font_serif_white_9);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
 				switch (frameState) {
 					case 1153:
 						loadAndPlaySound(SFX_CUTSCENE);
@@ -989,9 +932,6 @@ int main(int argv, char** args) {
 			case 22:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_22_cutscene, font_serif_white_9);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
 				switch (frameState) {
 					case 1226:
 						loadAndPlaySound(SFX_CUTSCENE);
