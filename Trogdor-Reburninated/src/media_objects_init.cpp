@@ -263,7 +263,7 @@ void InitializeFontsAndText() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
 	SET_TEXT("press 'A and -' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
-#if defined(XBOX)
+#elif defined(XBOX)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
 	SET_TEXT("press 'A+BACK' to quit", text_4_paused_3, font_serif_white_6,

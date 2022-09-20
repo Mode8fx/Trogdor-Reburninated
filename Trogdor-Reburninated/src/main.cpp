@@ -778,19 +778,10 @@ int main(int argv, char** args) {
 			case 12:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_12_cutscene, font_serif_white_9);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
-				switch (frameState) {
-					case 493:
-						loadAndPlaySound(SFX_CUTSCENE);
-						break;
-					case 566:
-						GM.levelInit();
-						sceneState = 4;
-						break;
-					default:
-						break;
+				cutscene_level_8();
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 12) {
 					frameState++;

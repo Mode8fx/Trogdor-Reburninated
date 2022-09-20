@@ -24,6 +24,7 @@ extern void updateCSOFrame(CutsceneObject *, Sint8);
 extern void updateCSOForm(CutsceneObject *, Sint8);
 extern void setCSOPos(CutsceneObject *, int, int);
 extern void cutscene_level_4();
+extern void cutscene_level_8();
 
 extern bool cutsceneIsPlaying;
 extern Sint16 frameState;
