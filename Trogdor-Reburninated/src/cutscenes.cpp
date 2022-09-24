@@ -1,5 +1,7 @@
 #include "cutscenes.h"
 
+CutsceneObject cutscene_level_beaten_smoke;
+CutsceneObject cutscene_cottage_fire;
 CutsceneObject cutscene_peasant_1;
 CutsceneObject cutscene_peasant_2;
 CutsceneObject cutscene_peasant_3;
@@ -18,6 +20,8 @@ CutsceneObject cutscene_knight_2;
 SpriteObject *spritePtr;
 
 void InitializeCutsceneObjects() {
+	prepareCSO(&cutscene_level_beaten_smoke, &sprite_level_beaten_smoke);
+	prepareCSO(&cutscene_cottage_fire, &sprite_cottage_fire);
 	prepareCSO(&cutscene_peasant_1, &sprite_peasant);
 	prepareCSO(&cutscene_peasant_2, &sprite_peasant);
 	prepareCSO(&cutscene_peasant_3, &sprite_peasant);
@@ -38,8 +42,8 @@ void prepareCSO(CutsceneObject *csObj, SpriteObject *spriteObj) {
 	csObj->sprite = spriteObj;
 	csObj->srcrect.w = csObj->sprite->frame_w;
 	csObj->srcrect.h = csObj->sprite->frame_h;
-	csObj->dstrect.w = csObj->sprite->frame_w;
-	csObj->dstrect.h = csObj->sprite->frame_h;
+	csObj->dstrect.w = csObj->sprite->dstrect.w;
+	csObj->dstrect.h = csObj->sprite->dstrect.h;
 }
 
 void enterCSO(CutsceneObject *csObj, int x, int y, Sint8 frame, Sint8 form, Sint8 frameTime, Sint8 vel_x, Sint8 vel_y) {
@@ -83,6 +87,45 @@ void setCSOPos(CutsceneObject *csObj, int x, int y) {
 	csObj->dstrect.y = y;
 }
 
+void cutscene_level_beaten() {
+	switch (frameState) {
+		case 277:
+			//cutsceneIsPlaying = true;
+			loadAndPlaySound(SFX_BURNINATE);
+			cutscene_level_beaten_smoke.isVisible = false;
+			cutscene_cottage_fire.isVisible = false;
+			enterCSO(&cutscene_level_beaten_smoke, 125, 83 - cutscene_level_beaten_smoke.sprite->dstrect.h, 0, 0, 1, 0, 0);
+			break;
+		case 281:
+			enterCSO(&cutscene_cottage_fire, 222, 0, 0, 0, 2, 0, 0);
+			break;
+		case 285:
+			updateCSOForm(&cutscene_level_beaten_smoke, 1);
+			break;
+		case 289:
+			cutscene_cottage_fire.isVisible = false;
+		case 293:
+			updateCSOForm(&cutscene_level_beaten_smoke, 2);
+			break;
+		case 301:
+			updateCSOForm(&cutscene_level_beaten_smoke, 3);
+			break;
+		case 308:
+			cutscene_level_beaten_smoke.isVisible = false;
+			break;
+		default:
+			break;
+	}
+	renderSprite_static_game(sprite_level_beaten_trogdor);
+	renderCSO(&cutscene_level_beaten_smoke);
+	renderCSO(&cutscene_cottage_fire);
+	renderText(text_9_nice_work, font_serif_white_10);
+	renderText(text_9_level_gray, font_serif_gray_12);
+	renderText(text_9_beaten_gray, font_serif_gray_12);
+	renderText(text_9_level_red, font_serif_red_12);
+	renderText(text_9_beaten_red, font_serif_red_12);
+}
+
 void cutscene_level_4() {
 	switch (frameState) {
 		case 420:
@@ -94,7 +137,7 @@ void cutscene_level_4() {
 			cutscene_knight_1.isVisible = false;
 			cutscene_knight_2.isVisible = false;
 			enterCSO(&cutscene_peasant_1, 21, 82, 1, 0, 0, 0, 0);
-			enterCSO(&cutscene_trogdor_1, 246, 70, 0, 0, 0, -8, 0);
+			enterCSO(&cutscene_trogdor_1, 246, 70, 0, 0, 2, -8, 0);
 			break;
 		case 427:
 			enterCSO(&cutscene_knight_1, 241, 75, 0, 0, 4, -7, 0);
@@ -106,7 +149,7 @@ void cutscene_level_4() {
 			enterCSO(&cutscene_peasant_1, 24, 81, 0, 2, 0, 0, 0);
 			break;
 		case 449:
-			enterCSO(&cutscene_trogdor_1, 25, 70, 0, 1, 0, 8, 0);
+			enterCSO(&cutscene_trogdor_1, 25, 70, 0, 1, 2, 8, 0);
 			enterCSO(&cutscene_trogdor_fire, 63, 78, 0, 1, 0, 8, 0);
 			updateCSOFrame(&cutscene_knight_1, 0);
 			updateCSOFrame(&cutscene_knight_2, 0);
@@ -234,31 +277,31 @@ void cutscene_level_12() {
 			cutscene_trogdor_4.isVisible = false;
 			cutscene_trogdor_5.isVisible = false;
 			cutscene_trogdor_6.isVisible = false;
-			enterCSO(&cutscene_trogdor_1, 193, 70, 0, 0, 0, -9, 0);
+			enterCSO(&cutscene_trogdor_1, 193, 70, 0, 0, 2, -9, 0);
 			break;
 		case 570:
-			enterCSO(&cutscene_trogdor_2, 218, 70, 0, 0, 0, -9, 0);
+			enterCSO(&cutscene_trogdor_2, 218, 70, 0, 0, 2, -9, 0);
 			break;
 		case 575:
-			enterCSO(&cutscene_trogdor_3, 218, 70, 0, 0, 0, -9, 0);
+			enterCSO(&cutscene_trogdor_3, 218, 70, 0, 0, 2, -9, 0);
 			break;
 		case 580:
-			enterCSO(&cutscene_trogdor_4, 218, 70, 0, 0, 0, -9, 0);
+			enterCSO(&cutscene_trogdor_4, 218, 70, 0, 0, 2, -9, 0);
 			break;
 		case 585:
-			enterCSO(&cutscene_trogdor_5, 218, 70, 0, 0, 0, -9, 0);
+			enterCSO(&cutscene_trogdor_5, 218, 70, 0, 0, 2, -9, 0);
 			break;
 		case 590:
-			enterCSO(&cutscene_trogdor_6, 218, 70, 0, 0, 0, -9, 0);
+			enterCSO(&cutscene_trogdor_6, 218, 70, 0, 0, 2, -9, 0);
 			break;
 		case 595:
-			enterCSO(&cutscene_trogdor_1, 218, 70, 0, 0, 0, -9, 0);
+			enterCSO(&cutscene_trogdor_1, 218, 70, 0, 0, 2, -9, 0);
 			break;
 		case 600:
-			enterCSO(&cutscene_trogdor_2, 218, 70, 0, 0, 0, -9, 0);
+			enterCSO(&cutscene_trogdor_2, 218, 70, 0, 0, 2, -9, 0);
 			break;
 		case 605:
-			enterCSO(&cutscene_trogdor_3, 218, 70, 0, 0, 0, -9, 0);
+			enterCSO(&cutscene_trogdor_3, 218, 70, 0, 0, 2, -9, 0);
 			break;
 		case 640:
 			cutsceneIsPlaying = false;

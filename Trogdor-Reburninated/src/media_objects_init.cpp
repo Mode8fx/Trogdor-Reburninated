@@ -210,8 +210,12 @@ void InitializeFontsAndText() {
 	//setFont(&font_serif_gray_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_gray);
 	//TTF_CloseFont(font_serif_gray_6.font);
 
-	//setFont(&font_serif_gray_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_gray);
-	//TTF_CloseFont(font_serif_gray_12.font);
+	setFont(&font_serif_gray_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_gray);
+	SET_TEXT("LEVEL", text_9_level_gray, font_serif_gray_12,
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_level_gray, 0.77) - 2, (111 + 1) * gameHiResMult);
+	SET_TEXT("BEATEN!", text_9_beaten_gray, font_serif_gray_12,
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_beaten_gray, 0.77) - 2, (132 + 1) * gameHiResMult);
+	TTF_CloseFont(font_serif_gray_12.font);
 
 	//setFont(&font_serif_orange_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_orange);
 	//TTF_CloseFont(font_serif_orange_6.font);
@@ -237,8 +241,12 @@ void InitializeFontsAndText() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_placeholder_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_placeholder_cutscene, 0.6));
 	TTF_CloseFont(font_serif_red_8.font);
 
-	//setFont(&font_serif_red_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_red);
-	//TTF_CloseFont(font_serif_red_12.font);
+	setFont(&font_serif_red_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_red);
+	SET_TEXT("LEVEL", text_9_level_red, font_serif_red_12,
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_level_red, 0.77), 111 * gameHiResMult);
+	SET_TEXT("BEATEN!", text_9_beaten_red, font_serif_red_12,
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_beaten_red, 0.77), 132 * gameHiResMult);
+	TTF_CloseFont(font_serif_red_12.font);
 
 	setFont(&font_serif_white_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_white);
 	SET_TEXT("paused", text_4_paused_1, font_serif_white_6,
@@ -519,12 +527,8 @@ void InitializeSpritesPart1() {
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_fire), 1, 14, 1);
 	PREPARE_SPRITE(sprite_level_beaten_trogdor, (rootDir + "graphics/level_beaten_trogdor_scaled.bmp").c_str(),
 		-5, 41, 1, 1, 1);
-	PREPARE_SPRITE(sprite_level_beaten_smoke_1, (rootDir + "graphics/level_beaten_smoke_1.bmp").c_str(),
-		100, 100, 9, 1, 1);
-	PREPARE_SPRITE(sprite_level_beaten_smoke_2, (rootDir + "graphics/level_beaten_smoke_2.bmp").c_str(),
-		100, 100, 11, 1, 1);
-	PREPARE_SPRITE(sprite_level_beaten_smoke_3, (rootDir + "graphics/level_beaten_smoke_3.bmp").c_str(),
-		100, 100, 11, 1, 1);
+	PREPARE_SPRITE(sprite_level_beaten_smoke, (rootDir + "graphics/level_beaten_smoke.bmp").c_str(),
+		100, 100, 8, 4, 0.6666);
 	PREPARE_SPRITE(sprite_game_over_trogdor, (rootDir + "graphics/game_over_trogdor.bmp").c_str(),
 		-13, 75, 1, 1, 1);
 	PREPARE_SPRITE(sprite_overlay_basement_top, (rootDir + "graphics/overlays/basement_top.bmp").c_str(),
@@ -607,9 +611,7 @@ void destroyAllSprites() {
 	destroySprite(sprite_burninate_text);
 	destroySprite(sprite_burninate_fire);
 	destroySprite(sprite_level_beaten_trogdor);
-	destroySprite(sprite_level_beaten_smoke_1);
-	destroySprite(sprite_level_beaten_smoke_2);
-	destroySprite(sprite_level_beaten_smoke_3);
+	destroySprite(sprite_level_beaten_smoke);
 	destroySprite(sprite_game_over_trogdor);
 	destroySprite(sprite_trogdor);
 	destroySprite(sprite_cottage);
@@ -650,13 +652,13 @@ void destroyAllTextChars() {
 	//destroyTextChars(&font_serif_brown_6);
 	//destroyTextChars(&font_serif_brown_8);
 	//destroyTextChars(&font_serif_gray_6);
-	//destroyTextChars(&font_serif_gray_12);
+	destroyTextChars(&font_serif_gray_12);
 	//destroyTextChars(&font_serif_orange_6);
 	destroyTextChars(&font_serif_red_6);
 	destroyTextChars(&font_serif_red_6_mult);
 	destroyTextChars(&font_serif_red_8);
 	destroyTextChars(&font_serif_red_8_mult);
-	//destroyTextChars(&font_serif_red_12);
+	destroyTextChars(&font_serif_red_12);
 	destroyTextChars(&font_serif_white_6);
 	destroyTextChars(&font_serif_white_6_mult);
 	destroyTextChars(&font_serif_white_9);

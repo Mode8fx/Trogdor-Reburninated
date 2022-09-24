@@ -681,13 +681,8 @@ int main(int argv, char** args) {
 			case 9:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_9_nice_work, font_serif_white_10);
-				// TODO: draw "LEVEL BEATEN!", smoke, and level fire
-				renderSprite_static_game(sprite_level_beaten_trogdor);
+				cutscene_level_beaten();
 				switch (frameState) {
-					case 277:
-						loadAndPlaySound(SFX_BURNINATE);
-						break;
 					case 285:
 						GM.updateLevel(1);
 						break;

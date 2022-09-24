@@ -2,7 +2,7 @@ To-Do List
 
 Version 1.0 [faithful recreation of original Trogdor flash game]:
 Features:
-- Add animation to Level Beaten and Game Over screens
+- Finish Game Over screen
 - Add art and animation to all cutscenes
 - Add a simple Options menu with a few customizable settings
 	- Starting Level
@@ -13,8 +13,10 @@ Features:
 	- Strong Bad Commentary Frequency
 	- Debug Cheat Toggle
 Polish:
-- Add "Libraries" screen
-- Add "Want more?" screen for other system ports
+- Move Credits screen, Coming Soon screen, and Quit functionality to Options menu
+- Add "Libraries" screen to Options menu
+- Add "Want more?" screen for other system ports to Options menu
+- Change internal name to "Trogdor Reburninated"
 Additional Ports:
 - Android
 Final:
@@ -30,6 +32,7 @@ Features:
 - Add save data support
 - Add option for treasure hut accessibility
 - Add option for more overlays
+- Add Theater setting to Options menu where you can watch cutscenes
 Polish:
 - Add "Coming Eventually" screen for v2.0
 Additional Ports:
