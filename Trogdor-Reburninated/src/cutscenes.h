@@ -14,11 +14,13 @@ struct CutsceneObject {
 	Sint8 animForm;
 	Sint8 animFrameTime;
 	Uint8 animFrameCounter;
+	Sint8 animFormTime;
+	Uint8 animFormCounter;
 };
 
 extern void InitializeCutsceneObjects();
 extern void prepareCSO(CutsceneObject *, SpriteObject *);
-extern void enterCSO(CutsceneObject *, int, int, Sint8, Sint8, Sint8, Sint8, Sint8);
+extern void enterCSO(CutsceneObject *, int, int, Sint8, Sint8, Sint8, Sint8, Sint8, Sint8);
 extern void renderCSO(CutsceneObject *);
 extern void updateCSOFrame(CutsceneObject *, Sint8);
 extern void updateCSOForm(CutsceneObject *, Sint8);

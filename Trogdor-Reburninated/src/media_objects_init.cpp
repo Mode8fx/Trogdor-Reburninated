@@ -563,7 +563,7 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_knight, (rootDir + "graphics/knight.bmp").c_str(),
 		0, 0, 6, 2, 1);
 	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
-		0, 0, 2, 3, 1);
+		0, 0, 2, 4, 1);
 	if (gameHiResMult < 1.5) {
 		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_small.bmp").c_str(),
 			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, 2);

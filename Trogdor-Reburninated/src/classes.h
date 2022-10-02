@@ -274,7 +274,7 @@ class Peasant {
 					break;
 				case 8:
 					srcrect.x = 0;
-					srcrect.y = spriteForm(sprite_peasant, 2);
+					srcrect.y = spriteForm(sprite_peasant, 3);
 					loadAndPlaySound(SFX_SQUISH);
 					rand_var = rand() % 1000;
 					if (rand_var < 3 * sbVoiceMult) {
