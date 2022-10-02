@@ -25,6 +25,8 @@ CutsceneObject cutscene_knight_2;
 
 SpriteObject *spritePtr;
 
+Sint8 cutscene_level_100_screen_counter;
+
 void InitializeCutsceneObjects() {
 	prepareCSO(&cutscene_level_beaten_smoke, &sprite_level_beaten_smoke);
 	prepareCSO(&cutscene_cottage_fire, &sprite_cottage_fire);
@@ -469,4 +471,174 @@ void cutscene_level_30() {
 			break;
 	}
 	renderText(text_17_cutscene, font_serif_white_9);
+}
+
+void cutscene_level_34() {
+	switch (frameState) {
+		case 927:
+			cutsceneIsPlaying = true;
+			loadAndPlaySound(SFX_CUTSCENE);
+			break;
+		case 997:
+			cutsceneIsPlaying = false;
+			break;
+		default:
+			break;
+	}
+	renderText(text_18_cutscene, font_serif_white_9);
+}
+
+void cutscene_level_38() {
+	switch (frameState) {
+		case 1000:
+			cutsceneIsPlaying = true;
+			loadAndPlaySound(SFX_CUTSCENE);
+			break;
+		case 1071:
+			cutsceneIsPlaying = false;
+			break;
+		default:
+			break;
+	}
+	renderText(text_19_cutscene, font_serif_white_9);
+}
+
+void cutscene_level_42() {
+	switch (frameState) {
+		case 1076:
+			cutsceneIsPlaying = true;
+			loadAndPlaySound(SFX_CUTSCENE);
+			break;
+		case 1147:
+			cutsceneIsPlaying = false;
+			break;
+		default:
+			break;
+	}
+	renderText(text_20_cutscene, font_serif_white_9);
+}
+
+void cutscene_level_46() {
+	switch (frameState) {
+		case 1153:
+			cutsceneIsPlaying = true;
+			loadAndPlaySound(SFX_CUTSCENE);
+			break;
+		case 1222:
+			cutsceneIsPlaying = false;
+			break;
+		default:
+			break;
+	}
+	renderText(text_21_cutscene, font_serif_white_9);
+}
+
+void cutscene_level_50() {
+	switch (frameState) {
+		case 1226:
+			cutsceneIsPlaying = true;
+			loadAndPlaySound(SFX_CUTSCENE);
+			break;
+		case 1334:
+			cutsceneIsPlaying = false;
+			break;
+		default:
+			break;
+	}
+	renderText(text_22_cutscene, font_serif_white_9);
+}
+
+void cutscene_level_100() {
+	switch (frameState) {
+		case 1337:
+			cutsceneIsPlaying = true;
+			loadAndPlaySound(SFX_CUTSCENE);
+			cutscene_level_100_screen_counter = 0;
+			break;
+		case 1397:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1423:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1440:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1501:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1522:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1543:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1562:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1582:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1601:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1621:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1641:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1660:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1681:
+			cutscene_level_100_screen_counter++;
+			break;
+		case 1716:
+			cutsceneIsPlaying = false;
+			break;
+		default:
+			break;
+	}
+	switch (cutscene_level_100_screen_counter) {
+		case 1:
+			renderText(text_23_cutscene_1, font_serif_white_9);
+			break;
+		case 2:
+			renderText(text_23_cutscene_2, font_serif_white_9);
+			break;
+		case 3:
+			renderText(text_23_cutscene_3, font_serif_white_9);
+			break;
+		case 4:
+			renderText(text_23_cutscene_4, font_serif_white_9);
+			break;
+		case 5:
+			renderText(text_23_cutscene_5, font_serif_white_9);
+			break;
+		case 6:
+			renderText(text_23_cutscene_6, font_serif_white_9);
+			break;
+		case 7:
+			renderText(text_23_cutscene_7, font_serif_white_9);
+			break;
+		case 8:
+			renderText(text_23_cutscene_8, font_serif_white_9);
+			break;
+		case 9:
+			renderText(text_23_cutscene_9, font_serif_white_9);
+			break;
+		case 10:
+			renderText(text_23_cutscene_10, font_serif_white_9);
+			break;
+		case 11:
+			renderText(text_23_cutscene_11, font_serif_white_9);
+			break;
+		case 12:
+			renderText(text_23_cutscene_12, font_serif_white_9);
+			break;
+		case 13:
+			renderText(text_23_cutscene_13, font_serif_white_9);
+			break;
+	}
 }

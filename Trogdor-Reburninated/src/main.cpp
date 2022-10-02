@@ -851,16 +851,10 @@ int main(int argv, char** args) {
 			case 18:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				switch (frameState) {
-					case 927:
-						loadAndPlaySound(SFX_CUTSCENE);
-						break;
-					case 997:
-						GM.levelInit();
-						sceneState = 4;
-						break;
-					default:
-						break;
+				cutscene_level_34();
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 18) {
 					frameState++;
@@ -870,16 +864,10 @@ int main(int argv, char** args) {
 			case 19:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				switch (frameState) {
-					case 1000:
-						loadAndPlaySound(SFX_CUTSCENE);
-						break;
-					case 1071:
-						GM.levelInit();
-						sceneState = 4;
-						break;
-					default:
-						break;
+				cutscene_level_38();
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 19) {
 					frameState++;
@@ -889,16 +877,10 @@ int main(int argv, char** args) {
 			case 20:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				switch (frameState) {
-					case 1076:
-						loadAndPlaySound(SFX_CUTSCENE);
-						break;
-					case 1147:
-						GM.levelInit();
-						sceneState = 4;
-						break;
-					default:
-						break;
+				cutscene_level_42();
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 20) {
 					frameState++;
@@ -908,16 +890,10 @@ int main(int argv, char** args) {
 			case 21:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				switch (frameState) {
-					case 1153:
-						loadAndPlaySound(SFX_CUTSCENE);
-						break;
-					case 1222:
-						GM.levelInit();
-						sceneState = 4;
-						break;
-					default:
-						break;
+				cutscene_level_46();
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 21) {
 					frameState++;
@@ -927,21 +903,10 @@ int main(int argv, char** args) {
 			case 22:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				switch (frameState) {
-					case 1226:
-						loadAndPlaySound(SFX_CUTSCENE);
-						break;
-					case 1297:
-						if (rand() % 100 < 50 * GM.sbVoiceMult) {
-							loadAndPlaySound(SFX_SBKERREK);
-						}
-						break;
-					case 1334:
-						GM.levelInit();
-						sceneState = 4;
-						break;
-					default:
-						break;
+				cutscene_level_50();
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 22) {
 					frameState++;
@@ -951,70 +916,24 @@ int main(int argv, char** args) {
 			case 23:
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				renderText(text_placeholder_cutscene, font_serif_red_8);
-				// TODO: implement cutscene
-				if (keyPressed(INPUT_START)) { // placeholder
-					frameState = 1715;
-				}
+				cutscene_level_100();
 				switch (frameState) {
-					// the uses of renderText here are wrong, but just a placeholder until the animation system is reworked
-					case 1337:
-						break;
 					case 1349:
 						if (rand() % 100 < 50 * GM.sbVoiceMult) {
 							loadAndPlaySound(SFX_SBWIN);
 						}
-						break;
-					case 1397:
-						renderText(text_23_cutscene_1, font_serif_white_9);
-						break;
-					case 1423:
-						renderText(text_23_cutscene_2, font_serif_white_9);
-						break;
-					case 1440:
-						renderText(text_23_cutscene_3, font_serif_white_9);
 						break;
 					case 1456:
 						if (rand() % 100 < 50 * GM.sbVoiceMult) {
 							loadAndPlaySound(SFX_SBWIN2);
 						}
 						break;
-					case 1501:
-						renderText(text_23_cutscene_4, font_serif_white_9);
-						break;
-					case 1522:
-						renderText(text_23_cutscene_5, font_serif_white_9);
-						break;
-					case 1543:
-						renderText(text_23_cutscene_6, font_serif_white_9);
-						break;
-					case 1562:
-						renderText(text_23_cutscene_7, font_serif_white_9);
-						break;
-					case 1582:
-						renderText(text_23_cutscene_8, font_serif_white_9);
-						break;
-					case 1601:
-						renderText(text_23_cutscene_9, font_serif_white_9);
-						break;
-					case 1621:
-						renderText(text_23_cutscene_10, font_serif_white_9);
-						break;
-					case 1641:
-						renderText(text_23_cutscene_11, font_serif_white_9);
-						break;
-					case 1660:
-						renderText(text_23_cutscene_12, font_serif_white_9);
-						break;
-					case 1681:
-						renderText(text_23_cutscene_13, font_serif_white_9);
-						break;
-					case 1716:
-						GM.levelInit();
-						sceneState = 4;
-						break;
 					default:
 						break;
+				}
+				if (!cutsceneIsPlaying) {
+					GM.levelInit();
+					sceneState = 4;
 				}
 				if (sceneState == 23) {
 					frameState++;
