@@ -341,7 +341,6 @@ void cutscene_level_12() {
 	renderText(text_13_cutscene, font_serif_white_9);
 }
 
-// trogdor switches forms once every two frames, knights are animated with frameTime=2, and peasant are mirrored and animated at frameTime=1
 void cutscene_level_16() {
 	switch (frameState) {
 		case 641:
@@ -448,6 +447,70 @@ void cutscene_level_24() {
 		case 780:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
+			cutscene_trogdor_1.isVisible = false;
+			cutscene_trogdor_fire.isVisible = false;
+			cutscene_peasant_1.isVisible = false;
+			cutscene_peasant_2.isVisible = false;
+			cutscene_peasant_3.isVisible = false;
+			cutscene_peasant_4.isVisible = false;
+			cutscene_peasant_5.isVisible = false;
+			cutscene_peasant_6.isVisible = false;
+			cutscene_peasant_7.isVisible = false;
+			enterCSO(&cutscene_trogdor_1, 175, 72, 0, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_1, 28, 90, 1, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_2, 46, 90, 1, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_3, 65, 90, 1, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_4, 83, 90, 1, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_5, 102, 90, 1, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_6, 120, 90, 1, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_7, 138, 90, 1, 0, 0, 0, 0, 0);
+			break;
+		case 798:
+			enterCSO(&cutscene_trogdor_fire, 154, 83, 0, 0, 0, 0, 0, 0);
+			break;
+		case 801:
+			enterCSO(&cutscene_peasant_7, 138, 90, 0, 1, 0, 0, 0, 0);
+			break;
+		case 803:
+			updateCSOForm(&cutscene_peasant_7, 3);
+			enterCSO(&cutscene_peasant_6, 120, 90, 0, 1, 0, 0, 0, 0);
+			break;
+		case 805:
+			updateCSOForm(&cutscene_peasant_6, 3);
+			enterCSO(&cutscene_peasant_5, 102, 90, 0, 1, 0, 0, 0, 0);
+			break;
+		case 807:
+			cutscene_trogdor_fire.isVisible = false;
+			updateCSOForm(&cutscene_peasant_5, 3);
+			enterCSO(&cutscene_peasant_4, 83, 90, 0, 1, 0, 0, 0, 0);
+			break;
+		case 809:
+			updateCSOForm(&cutscene_peasant_4, 3);
+			enterCSO(&cutscene_peasant_3, 65, 90, 0, 1, 0, 0, 0, 0);
+			break;
+		case 811:
+			updateCSOForm(&cutscene_peasant_3, 3);
+			enterCSO(&cutscene_peasant_2, 46, 90, 0, 1, 0, 0, 0, 0);
+			break;
+		case 813:
+			updateCSOForm(&cutscene_peasant_2, 3);
+			enterCSO(&cutscene_peasant_1, 28, 90, 0, 1, 0, 0, 0, 0);
+			break;
+		case 815:
+			updateCSOForm(&cutscene_peasant_1, 3);
+			break;
+		case 833:
+		case 837:
+		case 841:
+		case 845:
+		case 849:
+			cutscene_trogdor_1.dstrect.y = 69;
+			break;
+		case 835:
+		case 839:
+		case 843:
+		case 847:
+			cutscene_trogdor_1.dstrect.y = 72;
 			break;
 		case 850:
 			cutsceneIsPlaying = false;
@@ -455,6 +518,15 @@ void cutscene_level_24() {
 		default:
 			break;
 	}
+	renderCSO(&cutscene_trogdor_1);
+	renderCSO(&cutscene_peasant_1);
+	renderCSO(&cutscene_peasant_2);
+	renderCSO(&cutscene_peasant_3);
+	renderCSO(&cutscene_peasant_4);
+	renderCSO(&cutscene_peasant_5);
+	renderCSO(&cutscene_peasant_6);
+	renderCSO(&cutscene_peasant_7);
+	renderCSO(&cutscene_trogdor_fire);
 	renderText(text_16_cutscene, font_serif_white_9);
 }
 
