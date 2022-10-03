@@ -22,6 +22,8 @@ CutsceneObject cutscene_trogdor_fire;
 CutsceneObject cutscene_trogdor_flexing;
 CutsceneObject cutscene_knight_1;
 CutsceneObject cutscene_knight_2;
+CutsceneObject cutscene_cottage_1;
+CutsceneObject cutscene_cottage_2;
 
 SpriteObject *spritePtr;
 
@@ -50,6 +52,8 @@ void InitializeCutsceneObjects() {
 	prepareCSO(&cutscene_trogdor_flexing, &sprite_trogdor_flexing);
 	prepareCSO(&cutscene_knight_1, &sprite_knight);
 	prepareCSO(&cutscene_knight_2, &sprite_knight);
+	prepareCSO(&cutscene_cottage_1, &sprite_cottage);
+	prepareCSO(&cutscene_cottage_2, &sprite_cottage);
 }
 
 void prepareCSO(CutsceneObject *csObj, SpriteObject *spriteObj) {
@@ -618,6 +622,10 @@ void cutscene_level_42() {
 		case 1076:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
+			cutscene_cottage_1.isVisible = false;
+			cutscene_cottage_2.isVisible = false;
+			enterCSO(&cutscene_cottage_1, 81, 79, 0, 3, 0, 0, 0, 0);
+			enterCSO(&cutscene_cottage_2, 131, 79, 0, 2, 0, 0, 0, 0);
 			break;
 		case 1147:
 			cutsceneIsPlaying = false;
@@ -625,6 +633,8 @@ void cutscene_level_42() {
 		default:
 			break;
 	}
+	renderCSO(&cutscene_cottage_1);
+	renderCSO(&cutscene_cottage_2);
 	renderText(text_20_cutscene, font_serif_white_9);
 }
 
