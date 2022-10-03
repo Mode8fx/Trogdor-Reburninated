@@ -44,7 +44,7 @@ DATA		:=	data
 INCLUDES	:=	include
 # ROMFS		:=	romfs
 
-APP_TITLE   := Trogdor Beta
+APP_TITLE   := Trogdor Reburninated
 APP_AUTHOR  := Mips96
 APP_VERSION := 0.9
 ICON        := release-resources/logo_icon_switch.jpg

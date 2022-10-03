@@ -1,4 +1,4 @@
-XBE_TITLE = Trogdor\ Beta
+XBE_TITLE = Trogdor\ Reburninated
 GEN_XISO = $(XBE_TITLE).iso
 SRCS =	$(CURDIR)/src/main.cpp \
 		$(CURDIR)/src/config.cpp \

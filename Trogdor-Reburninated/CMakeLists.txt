@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.2)
-project(trogdorbeta CXX)
+project(trogdorrb CXX)
 
-add_executable(trogdorbeta
+add_executable(trogdorrb
 	"src/main.cpp"
 	"src/main.h"
 	"src/classes.h"
@@ -31,14 +31,14 @@ if (WIIU)
 	find_package(PkgConfig REQUIRED)
 	add_definitions(-DWII_U)
 
-	target_link_libraries(trogdorbeta -L${DEVKITPRO}/portlibs/wiiu/lib -L${DEVKITPRO}/portlibs/ppc/lib -L${DEVKITPRO}/wut/lib)
-	# target_link_libraries(trogdorbeta -lSDL2_ttf -lSDL2_mixer -lmodplug -lvorbisfile -lvorbis -logg -lSDL2_gfx -lSDL2_image -lSDL2 -lfreetype -lpng -lmpg123 -lbz2 -ljpeg -lz -lwut)
+	target_link_libraries(trogdorrb -L${DEVKITPRO}/portlibs/wiiu/lib -L${DEVKITPRO}/portlibs/ppc/lib -L${DEVKITPRO}/wut/lib)
+	# target_link_libraries(trogdorrb -lSDL2_ttf -lSDL2_mixer -lmodplug -lvorbisfile -lvorbis -logg -lSDL2_gfx -lSDL2_image -lSDL2 -lfreetype -lpng -lmpg123 -lbz2 -ljpeg -lz -lwut)
 	pkg_check_modules(SDL2 REQUIRED IMPORTED_TARGET SDL2)
 	pkg_check_modules(SDL2_image REQUIRED IMPORTED_TARGET SDL2_image)
 	pkg_check_modules(SDL2_mixer REQUIRED IMPORTED_TARGET SDL2_mixer)
 	pkg_check_modules(SDL2_ttf REQUIRED IMPORTED_TARGET SDL2_ttf)
 	pkg_check_modules(SDL2_gfx REQUIRED IMPORTED_TARGET SDL2_gfx)
-	target_link_libraries(trogdorbeta PkgConfig::SDL2 PkgConfig::SDL2_image PkgConfig::SDL2_mixer PkgConfig::SDL2_ttf PkgConfig::SDL2_gfx)
+	target_link_libraries(trogdorrb PkgConfig::SDL2 PkgConfig::SDL2_image PkgConfig::SDL2_mixer PkgConfig::SDL2_ttf PkgConfig::SDL2_gfx)
 
 	set(SDL2_INCLUDE_DIRS
 	"${DEVKITPRO}/portlibs/wiiu/include/SDL2;\
@@ -48,9 +48,9 @@ if (WIIU)
 	)
 	include_directories(${SDL2_INCLUDE_DIRS})
 
-	wut_create_rpx(trogdorbeta)
+	wut_create_rpx(trogdorrb)
 
-	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/trogdorbeta.rpx"
+	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/trogdorrb.rpx"
 			DESTINATION "${CMAKE_INSTALL_PREFIX}")
 endif()
 
@@ -59,14 +59,14 @@ if (VITA)
 	# find_package(PkgConfig REQUIRED)
 	add_definitions(-DVITA)
 	
-	set(VITA_APP_NAME "Trogdor Beta")
-	set(VITA_TITLEID  "TROG23820")
+	set(VITA_APP_NAME "Trogdor Reburninated")
+	set(VITA_TITLEID  "TROG73287")
 	set(VITA_VERSION  "01.00")
 
-	target_link_libraries(trogdorbeta SDL2_ttf SDL2_mixer SDL2_image SDL2_gfx SDL2 freetype png png16 bz2 jpeg z mikmod mpg123 FLAC vorbisfile vorbis ogg webp pthread)
+	target_link_libraries(trogdorrb SDL2_ttf SDL2_mixer SDL2_image SDL2_gfx SDL2 freetype png png16 bz2 jpeg z mikmod mpg123 FLAC vorbisfile vorbis ogg webp pthread)
 	# find_package(SDL2 REQUIRED)
-	# target_link_libraries(trogdorbeta SDL2_ttf SDL2_mixer SDL2_image SDL2_gfx SDL2)
-	target_link_libraries(trogdorbeta
+	# target_link_libraries(trogdorrb SDL2_ttf SDL2_mixer SDL2_image SDL2_gfx SDL2)
+	target_link_libraries(trogdorrb
 		SceDisplay_stub
 		SceCtrl_stub
 		SceAudio_stub
@@ -82,8 +82,8 @@ if (VITA)
 
 	include_directories("${VITASDK}/arm-vita-eabi/include;${VITASDK}/arm-vita-eabi/include/SDL2;")
 
-	vita_create_self(trogdorbeta.self trogdorbeta)
-	vita_create_vpk(trogdorbeta.vpk ${VITA_TITLEID} trogdorbeta.self
+	vita_create_self(trogdorrb.self trogdorrb)
+	vita_create_vpk(trogdorrb.vpk ${VITA_TITLEID} trogdorrb.self
 		VERSION ${VITA_VERSION}
 		NAME ${VITA_APP_NAME}
 		FILE release-resources/logo_icon_vita.png sce_sys/icon0.png

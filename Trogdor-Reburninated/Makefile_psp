@@ -30,7 +30,7 @@ LIBS = -lSDL2main -lSDL2_image -lpng -ljpeg -lSDL2_mixer -lstdc++ -lSDL2_ttf -lS
 # -lpsphttp -lpspssl -lpspwlan -lpspnet_adhocmatching -lpspnet_adhoc -lpspnet_adhocctl
 
 EXTRA_TARGETS = EBOOT.PBP
-PSP_EBOOT_TITLE = trogdor-beta
+PSP_EBOOT_TITLE = trogdor-reburninated
 PSP_EBOOT_ICON = release-resources/logo_icon_psp.png
 PSP_EBOOT_PIC1 = release-resources/background_psp.png
 # psp sound file: PSP_EBOOT_SND0=SND0.at3

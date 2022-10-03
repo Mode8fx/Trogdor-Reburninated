@@ -13,7 +13,7 @@ void systemSpecificOpen() {
 	/* Set SD Card Mount Path */
 	WHBMountSdCard();
 	WHBGetSdCardMountPath();
-	string sdPathStr = "/wiiu/apps/Trogdor-Beta";
+	string sdPathStr = "/wiiu/apps/Trogdor-RB";
 	const char *sdPathStart = WHBGetSdCardMountPath();
 	sdPathStr = sdPathStart + sdPathStr;
 	const char *sdPath = sdPathStr.c_str();
@@ -23,7 +23,7 @@ void systemSpecificOpen() {
 	SDL_setenv("VITA_DISABLE_TOUCH_BACK", "1", 1);
 #elif defined(SWITCH)
 	/* Set SD Card mount path */
-	chdir("/switch/Trogdor-Beta");
+	chdir("/switch/Trogdor-RB");
 #elif defined(WII) || defined(GAMECUBE)
 	/* Initialize SD Card */
 	fatInitDefault();
