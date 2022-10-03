@@ -7,9 +7,11 @@ struct CutsceneObject {
 	SpriteObject *sprite;
 	SDL_Rect srcrect;
 	SDL_Rect dstrect;
+	double x_actual;
+	double y_actual;
 	bool isVisible = false;
-	Sint8 velocity_x;
-	Sint8 velocity_y;
+	double velocity_x;
+	double velocity_y;
 	Sint8 animFrame;
 	Sint8 animForm;
 	Sint8 animFrameTime;
@@ -20,7 +22,7 @@ struct CutsceneObject {
 
 extern void InitializeCutsceneObjects();
 extern void prepareCSO(CutsceneObject *, SpriteObject *);
-extern void enterCSO(CutsceneObject *, int, int, Sint8, Sint8, Sint8, Sint8, Sint8, Sint8);
+extern void enterCSO(CutsceneObject *, int, int, Sint8, Sint8, Sint8, Sint8, double, double);
 extern void renderCSO(CutsceneObject *);
 extern void updateCSOFrame(CutsceneObject *, Sint8);
 extern void updateCSOForm(CutsceneObject *, Sint8);
