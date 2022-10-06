@@ -610,10 +610,10 @@ void cutscene_level_34() {
 			enterCSO(&cutscene_peasant_7, 162, 90, 1, 0, 0, 0, 0, 0);
 			break;
 		case 931:
-			enterCSO(&cutscene_trogdor_1, 9, 87, 0, 1, 0, 0, 2, 0);
+			enterCSO(&cutscene_trogdor_1, 9, 87, 0, 1, 2, 0, 2, 0);
 			break;
 		case 936:
-			enterCSO(&cutscene_trogdor_2, 4, 101, 0, 1, 0, 0, 3.544, 0); // 202.0 / 57
+			enterCSO(&cutscene_trogdor_2, 4, 101, 0, 1, 2, 0, 3.544, 0); // 202.0 / 57
 			break;
 		case 941:
 			cutscene_trogdor_1.velocity_x = 6.667; // 60.0 / 9
@@ -688,6 +688,14 @@ void cutscene_level_38() {
 		case 1000:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
+			cutscene_peasant_1.isVisible = false;
+			cutscene_peasant_2.isVisible = false;
+			enterCSO(&cutscene_peasant_1, 190, 95, 1, 0, 0, 0, -2.732, 0);
+			enterCSO(&cutscene_peasant_2, 204, 95, 1, 0, 0, 0, -2.732, 0);
+			break;
+		case 1041:
+			cutscene_peasant_1.velocity_x = 0;
+			cutscene_peasant_2.velocity_x = 0;
 			break;
 		case 1071:
 			cutsceneIsPlaying = false;
