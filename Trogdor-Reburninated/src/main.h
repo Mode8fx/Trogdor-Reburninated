@@ -101,6 +101,7 @@ SpriteObject sprite_level_beaten_smoke;
 SpriteObject sprite_game_over_trogdor;
 SpriteObject sprite_loot;
 SpriteObject sprite_trogdor_flexing;
+SpriteObject sprite_heart;
 SpriteObject sprite_overlay_basement_top;
 SpriteObject sprite_overlay_basement_bottom;
 SpriteObject sprite_overlay_basement_left;

@@ -287,69 +287,69 @@ void InitializeFontsAndText() {
 	setFont(&font_serif_white_9, "fonts/serif_v01.ttf", 9, 9, TTF_STYLE_NORMAL, color_white);
 	/* 11: Level 4 Interlude */
 	SET_TEXT("stompin' good!", text_11_cutscene, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_11_cutscene, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_11_cutscene, 0.48), 46 * gameHiResMult);
 	/* 12: Level 8 Interlude */
 	SET_TEXT("fry 'em up dan.", text_12_cutscene, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_12_cutscene, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_12_cutscene, 0.48), 46 * gameHiResMult);
 	/* 13: Level 12 Interlude */
 	SET_TEXT("parade of trogdors", text_13_cutscene, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_13_cutscene, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_13_cutscene, 0.48), 46 * gameHiResMult);
 	/* 14: Level 16 Interlude */
 	SET_TEXT("dancin' time", text_14_cutscene, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_14_cutscene, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_14_cutscene, 0.48), 46 * gameHiResMult);
 	/* 15: Level 20 Interlude */
 	SET_TEXT("flex it, troggie.", text_15_cutscene, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_15_cutscene, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_15_cutscene, 0.48), 46 * gameHiResMult);
 	/* 16: Level 24 Interlude */
 	SET_TEXT("peasant dominoes", text_16_cutscene, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_16_cutscene, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_16_cutscene, 0.48), 46 * gameHiResMult);
 	/* 17: Level 30 Interlude */
 	SET_TEXT("trogdor incognito", text_17_cutscene, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_17_cutscene, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_17_cutscene, 0.48), 46 * gameHiResMult);
 	/* 18: Level 34 Interlude */
 	SET_TEXT("go trogdor # 2!", text_18_cutscene, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_18_cutscene, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_18_cutscene, 0.48), 46 * gameHiResMult);
 	/* 19: Level 38 Interlude */
 	SET_TEXT("forbidden peasant love", text_19_cutscene, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_19_cutscene, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_19_cutscene, 0.48), 46 * gameHiResMult);
 	/* 20: Level 42 Interlude */
 	SET_TEXT("2 cottages", text_20_cutscene, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_20_cutscene, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_20_cutscene, 0.48), 46 * gameHiResMult);
 	/* 21: Level 46 Interlude */
 	SET_TEXT("a funny joke", text_21_cutscene, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_21_cutscene, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_21_cutscene, 0.48), 46 * gameHiResMult);
 	/* 22: Level 50 Interlude */
 	SET_TEXT("smote that kerrek!", text_22_cutscene, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_22_cutscene, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_22_cutscene, 0.48), 46 * gameHiResMult);
 	/* 23: Level 100 Interlude (Credits) */
 	SET_TEXT("congratulations.", text_23_cutscene_1, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_1, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_1, 0.48), 46 * gameHiResMult);
 	SET_TEXT("you got", text_23_cutscene_2, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_2, 0.48), 57);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_2, 0.48), 57 * gameHiResMult);
 	SET_TEXT("good score", text_23_cutscene_3, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_3, 0.48), 68);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_3, 0.48), 68 * gameHiResMult);
 	SET_TEXT("cast", text_23_cutscene_4, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_4, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_4, 0.48), 46 * gameHiResMult);
 	SET_TEXT("trogdor", text_23_cutscene_5, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_5, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_5, 0.48), 46 * gameHiResMult);
 	SET_TEXT("perez", text_23_cutscene_6, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_6, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_6, 0.48), 46 * gameHiResMult);
 	SET_TEXT("hackworth", text_23_cutscene_7, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_7, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_7, 0.48), 46 * gameHiResMult);
 	SET_TEXT("\'the steve\'", text_23_cutscene_8, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_8, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_8, 0.48), 46 * gameHiResMult);
 	SET_TEXT("the blue knight", text_23_cutscene_9, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_9, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_9, 0.48), 46 * gameHiResMult);
 	SET_TEXT("the red knight", text_23_cutscene_10, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_10, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_10, 0.48), 46 * gameHiResMult);
 	SET_TEXT("the siamese archers", text_23_cutscene_11, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_11, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_11, 0.48), 46 * gameHiResMult);
 	SET_TEXT("and Wordly Wise", text_23_cutscene_12, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_12, 0.48), 46);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_12, 0.48), 46 * gameHiResMult);
 	SET_TEXT("as The Kerrek", text_23_cutscene_13, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_13, 0.48), 57);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_13, 0.48), 57 * gameHiResMult);
 	SET_TEXT("keep playing!", text_23_cutscene_14, font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_14), 46);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_14), 46 * gameHiResMult);
 	TTF_CloseFont(font_serif_white_9.font);
 
 	setFont(&font_serif_white_10, "fonts/serif_v01.ttf", 10, 10, TTF_STYLE_NORMAL, color_white);
@@ -575,6 +575,8 @@ void InitializeSpritesPart2() {
 		0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_trogdor_flexing, (rootDir + "graphics/trogdor_flexing.bmp").c_str(),
 		0, 0, 4, 1, 1);
+	PREPARE_SPRITE(sprite_heart, (rootDir + "graphics/heart.bmp").c_str(),
+		0, 0, 5, 1, 1);
 }
 
 void exceptMissingFile(const char *path) {
@@ -626,6 +628,7 @@ void destroyAllSprites() {
 	destroySprite(sprite_end_of_level_trogdor);
 	destroySprite(sprite_loot);
 	destroySprite(sprite_trogdor_flexing);
+	destroySprite(sprite_heart);
 	destroySprite(sprite_overlay_basement_top);
 	destroySprite(sprite_overlay_basement_bottom);
 	destroySprite(sprite_overlay_basement_left);

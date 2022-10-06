@@ -53,6 +53,7 @@ extern SpriteObject sprite_level_beaten_smoke;
 extern SpriteObject sprite_game_over_trogdor;
 extern SpriteObject sprite_loot;
 extern SpriteObject sprite_trogdor_flexing;
+extern SpriteObject sprite_heart;
 extern SpriteObject sprite_overlay_basement_top;
 extern SpriteObject sprite_overlay_basement_bottom;
 extern SpriteObject sprite_overlay_basement_left;

@@ -20,6 +20,7 @@ CutsceneObject cutscene_trogdor_5;
 CutsceneObject cutscene_trogdor_6;
 CutsceneObject cutscene_trogdor_fire;
 CutsceneObject cutscene_trogdor_flexing;
+CutsceneObject cutscene_heart;
 CutsceneObject cutscene_knight_1;
 CutsceneObject cutscene_knight_2;
 CutsceneObject cutscene_cottage_1;
@@ -50,6 +51,7 @@ void InitializeCutsceneObjects() {
 	prepareCSO(&cutscene_trogdor_6, &sprite_trogdor);
 	prepareCSO(&cutscene_trogdor_fire, &sprite_trogdor_fire);
 	prepareCSO(&cutscene_trogdor_flexing, &sprite_trogdor_flexing);
+	prepareCSO(&cutscene_heart, &sprite_heart);
 	prepareCSO(&cutscene_knight_1, &sprite_knight);
 	prepareCSO(&cutscene_knight_2, &sprite_knight);
 	prepareCSO(&cutscene_cottage_1, &sprite_cottage);
@@ -690,19 +692,47 @@ void cutscene_level_38() {
 			loadAndPlaySound(SFX_CUTSCENE);
 			cutscene_peasant_1.isVisible = false;
 			cutscene_peasant_2.isVisible = false;
+			cutscene_heart.isVisible = false;
+			cutscene_knight_1.isVisible = false;
 			enterCSO(&cutscene_peasant_1, 190, 95, 1, 0, 0, 0, -2.732, 0);
 			enterCSO(&cutscene_peasant_2, 204, 95, 1, 0, 0, 0, -2.732, 0);
+			enterCSO(&cutscene_heart, 197, 85, 0, 0, 0, 0, -2.732, 0);
+			break;
+		case 1021:
+			enterCSO(&cutscene_knight_1, 224, 95, 1, 0, 4, 0, -8.316, 0);
+			break;
+		case 1040:
+			cutscene_knight_1.velocity_x = 0;
 			break;
 		case 1041:
 			cutscene_peasant_1.velocity_x = 0;
 			cutscene_peasant_2.velocity_x = 0;
+			cutscene_heart.velocity_x = 0;
+			cutscene_knight_1.dstrect.x = 66;
+			updateCSOForm(&cutscene_knight_1, 1);
+			break;
+		case 1046:
+			cutscene_knight_1.velocity_x = 9.867;
+			cutscene_peasant_1.velocity_x = 10.067;
+			break;
+		case 1062:
+			cutscene_peasant_1.isVisible = false;
+			cutscene_knight_1.isVisible = false;
+			break;
+		case 1066:
+			cutscene_heart.animFrameTime = 1;
 			break;
 		case 1071:
+			cutscene_heart.isVisible = false;
 			cutsceneIsPlaying = false;
 			break;
 		default:
 			break;
 	}
+	renderCSO(&cutscene_peasant_1);
+	renderCSO(&cutscene_peasant_2);
+	renderCSO(&cutscene_heart);
+	renderCSO(&cutscene_knight_1);
 	renderText(text_19_cutscene, font_serif_white_9);
 }
 
