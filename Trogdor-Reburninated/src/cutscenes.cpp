@@ -592,6 +592,52 @@ void cutscene_level_34() {
 		case 927:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
+			cutscene_peasant_1.isVisible = false;
+			cutscene_peasant_2.isVisible = false;
+			cutscene_peasant_3.isVisible = false;
+			cutscene_peasant_4.isVisible = false;
+			cutscene_peasant_5.isVisible = false;
+			cutscene_peasant_6.isVisible = false;
+			cutscene_peasant_7.isVisible = false;
+			cutscene_trogdor_1.isVisible = false;
+			cutscene_trogdor_2.isVisible = false;
+			enterCSO(&cutscene_peasant_1, 52, 90, 1, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_2, 70, 90, 1, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_3, 89, 90, 1, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_4, 107, 90, 1, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_5, 126, 90, 1, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_6, 144, 90, 1, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_7, 162, 90, 1, 0, 0, 0, 0, 0);
+			break;
+		case 931:
+			enterCSO(&cutscene_trogdor_1, 9, 87, 0, 1, 0, 0, 2, 0);
+			break;
+		case 936:
+			enterCSO(&cutscene_trogdor_2, 4, 101, 0, 1, 0, 0, 3.544, 0); // 202.0 / 57
+			break;
+		case 941:
+			cutscene_trogdor_1.velocity_x = 6.667; // 60.0 / 9
+			break;
+		case 950:
+			cutscene_trogdor_1.velocity_x = 1.667; // 5.0 / 3
+			break;
+		case 962:
+			cutscene_trogdor_1.velocity_x = 2.692; // 35.0 / 13
+			break;
+		case 975:
+			cutscene_trogdor_1.velocity_x = 5.455; // 60.0 / 11
+			break;
+		case 987:
+			cutscene_trogdor_1.isVisible = false;
+			break;
+		case 994:
+			cutscene_trogdor_2.isVisible = false;
+			break;
+		case 995:
+			cutscene_peasant_2.dstrect.y = 88;
+			cutscene_peasant_4.dstrect.y = 90;
+			cutscene_peasant_5.dstrect.y = 90;
+			cutscene_peasant_6.dstrect.y = 88;
 			break;
 		case 997:
 			cutsceneIsPlaying = false;
@@ -599,6 +645,41 @@ void cutscene_level_34() {
 		default:
 			break;
 	}
+	if (frameState <= 992) {
+		switch ((frameState - 927) % 6) {
+			case 0:
+				cutscene_peasant_1.dstrect.y = 88;
+				cutscene_peasant_3.dstrect.y = 88;
+				cutscene_peasant_4.dstrect.y = 90;
+				cutscene_peasant_5.dstrect.y = 90;
+				cutscene_peasant_7.dstrect.y = 88;
+				break;
+			case 2:
+				cutscene_peasant_1.dstrect.y = 90;
+				cutscene_peasant_2.dstrect.y = 88;
+				cutscene_peasant_3.dstrect.y = 90;
+				cutscene_peasant_6.dstrect.y = 88;
+				cutscene_peasant_7.dstrect.y = 90;
+				break;
+			case 4:
+				cutscene_peasant_2.dstrect.y = 90;
+				cutscene_peasant_4.dstrect.y = 88;
+				cutscene_peasant_5.dstrect.y = 88;
+				cutscene_peasant_6.dstrect.y = 90;
+				break;
+			default:
+				break;
+		}
+	}
+	renderCSO(&cutscene_peasant_1);
+	renderCSO(&cutscene_peasant_2);
+	renderCSO(&cutscene_peasant_3);
+	renderCSO(&cutscene_peasant_4);
+	renderCSO(&cutscene_peasant_5);
+	renderCSO(&cutscene_peasant_6);
+	renderCSO(&cutscene_peasant_7);
+	renderCSO(&cutscene_trogdor_1);
+	renderCSO(&cutscene_trogdor_2);
 	renderText(text_18_cutscene, font_serif_white_9);
 }
 

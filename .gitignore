@@ -412,6 +412,7 @@ sfx/
 Preparation/
 dist/
 OSLibAudio/
+Helpful Scripts/
 *.dll
 Makefile
 *.nacp
