@@ -577,6 +577,12 @@ void InitializeSpritesPart2() {
 		0, 0, 4, 1, 1);
 	PREPARE_SPRITE(sprite_heart, (rootDir + "graphics/heart.bmp").c_str(),
 		0, 0, 5, 1, 1);
+	PREPARE_SPRITE(sprite_knight_funnyjoke, (rootDir + "graphics/knight_funnyjoke.bmp").c_str(),
+		0, 0, 3, 1, 1);
+	PREPARE_SPRITE(sprite_kerrek, (rootDir + "graphics/kerrek.bmp").c_str(),
+		0, 0, 8, 1, 1);
+	PREPARE_SPRITE(sprite_kerrek_smoked, (rootDir + "graphics/kerrek_smoked.bmp").c_str(),
+		0, 0, 5, 1, 1);
 }
 
 void exceptMissingFile(const char *path) {
@@ -629,6 +635,9 @@ void destroyAllSprites() {
 	destroySprite(sprite_loot);
 	destroySprite(sprite_trogdor_flexing);
 	destroySprite(sprite_heart);
+	destroySprite(sprite_knight_funnyjoke);
+	destroySprite(sprite_kerrek);
+	destroySprite(sprite_kerrek_smoked);
 	destroySprite(sprite_overlay_basement_top);
 	destroySprite(sprite_overlay_basement_bottom);
 	destroySprite(sprite_overlay_basement_left);

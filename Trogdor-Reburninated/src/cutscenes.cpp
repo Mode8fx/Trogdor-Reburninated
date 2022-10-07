@@ -23,6 +23,9 @@ CutsceneObject cutscene_trogdor_flexing;
 CutsceneObject cutscene_heart;
 CutsceneObject cutscene_knight_1;
 CutsceneObject cutscene_knight_2;
+CutsceneObject cutscene_knight_funnyjoke;
+CutsceneObject cutscene_kerrek;
+CutsceneObject cutscene_kerrek_smoked;
 CutsceneObject cutscene_cottage_1;
 CutsceneObject cutscene_cottage_2;
 
@@ -54,6 +57,9 @@ void InitializeCutsceneObjects() {
 	prepareCSO(&cutscene_heart, &sprite_heart);
 	prepareCSO(&cutscene_knight_1, &sprite_knight);
 	prepareCSO(&cutscene_knight_2, &sprite_knight);
+	prepareCSO(&cutscene_knight_funnyjoke, &sprite_knight_funnyjoke);
+	prepareCSO(&cutscene_kerrek, &sprite_kerrek);
+	prepareCSO(&cutscene_kerrek_smoked, &sprite_kerrek_smoked);
 	prepareCSO(&cutscene_cottage_1, &sprite_cottage);
 	prepareCSO(&cutscene_cottage_2, &sprite_cottage);
 }
@@ -762,6 +768,10 @@ void cutscene_level_46() {
 		case 1153:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
+			cutscene_knight_funnyjoke.isVisible = false;
+			cutscene_knight_1.isVisible = false;
+			enterCSO(&cutscene_knight_funnyjoke, 58, 91, 0, 0, 0, 0, 0, 0);
+			enterCSO(&cutscene_knight_1, 55, 93, 0, 0, 0, 0, 0, 0);
 			break;
 		case 1222:
 			cutsceneIsPlaying = false;
@@ -769,6 +779,8 @@ void cutscene_level_46() {
 		default:
 			break;
 	}
+	renderCSO(&cutscene_knight_funnyjoke);
+	renderCSO(&cutscene_knight_1);
 	renderText(text_21_cutscene, font_serif_white_9);
 }
 
