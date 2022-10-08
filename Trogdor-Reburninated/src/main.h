@@ -103,6 +103,7 @@ SpriteObject sprite_loot;
 SpriteObject sprite_trogdor_flexing;
 SpriteObject sprite_heart;
 SpriteObject sprite_knight_funnyjoke;
+SpriteObject sprite_arrow_funnyjoke;
 SpriteObject sprite_kerrek;
 SpriteObject sprite_kerrek_smoked;
 SpriteObject sprite_overlay_basement_top;

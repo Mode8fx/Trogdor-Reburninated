@@ -39,6 +39,7 @@ extern void cutscene_level_34();
 extern void cutscene_level_38();
 extern void cutscene_level_42();
 extern void cutscene_level_46();
+extern void cutscene_level_46_arrow_helper(CutsceneObject *, Sint16);
 extern void cutscene_level_50();
 extern void cutscene_level_100();
 

@@ -55,6 +55,7 @@ extern SpriteObject sprite_loot;
 extern SpriteObject sprite_trogdor_flexing;
 extern SpriteObject sprite_heart;
 extern SpriteObject sprite_knight_funnyjoke;
+extern SpriteObject sprite_arrow_funnyjoke;
 extern SpriteObject sprite_kerrek;
 extern SpriteObject sprite_kerrek_smoked;
 extern SpriteObject sprite_overlay_basement_top;

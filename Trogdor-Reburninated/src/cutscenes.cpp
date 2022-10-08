@@ -28,6 +28,11 @@ CutsceneObject cutscene_kerrek;
 CutsceneObject cutscene_kerrek_smoked;
 CutsceneObject cutscene_cottage_1;
 CutsceneObject cutscene_cottage_2;
+CutsceneObject cutscene_archer_1;
+CutsceneObject cutscene_archer_2;
+CutsceneObject cutscene_arrow_1;
+CutsceneObject cutscene_arrow_2;
+CutsceneObject cutscene_arrow_3;
 
 SpriteObject *spritePtr;
 
@@ -62,6 +67,11 @@ void InitializeCutsceneObjects() {
 	prepareCSO(&cutscene_kerrek_smoked, &sprite_kerrek_smoked);
 	prepareCSO(&cutscene_cottage_1, &sprite_cottage);
 	prepareCSO(&cutscene_cottage_2, &sprite_cottage);
+	prepareCSO(&cutscene_archer_1, &sprite_archer);
+	prepareCSO(&cutscene_archer_2, &sprite_archer);
+	prepareCSO(&cutscene_arrow_1, &sprite_arrow_funnyjoke);
+	prepareCSO(&cutscene_arrow_2, &sprite_arrow_funnyjoke);
+	prepareCSO(&cutscene_arrow_3, &sprite_arrow_funnyjoke);
 }
 
 void prepareCSO(CutsceneObject *csObj, SpriteObject *spriteObj) {
@@ -763,6 +773,38 @@ void cutscene_level_42() {
 	renderText(text_20_cutscene, font_serif_white_9);
 }
 
+void cutscene_level_46_arrow_helper(CutsceneObject *arrowObj, Sint16 startingFrame) {
+	switch (frameState - startingFrame) {
+		case 0:
+			updateCSOFrame(&cutscene_archer_1, 1);
+			// arrow prepare
+			break;
+		case 3:
+			updateCSOFrame(&cutscene_archer_1, 0);
+			// arrow fire
+			break;
+		case 11:
+			updateCSOFrame(&cutscene_knight_funnyjoke, 1);
+			// arrow bounce 1
+			break;
+		case 12:
+			updateCSOFrame(&cutscene_knight_funnyjoke, 0);
+			// arrow bounce 2
+			break;
+		case 13:
+			// arrow bounce 3
+			break;
+		case 14:
+			// arrow bounce 4
+			break;
+		case 15:
+			// arrow disable
+			break;
+		default:
+			break;
+	}
+}
+
 void cutscene_level_46() {
 	switch (frameState) {
 		case 1153:
@@ -770,8 +812,27 @@ void cutscene_level_46() {
 			loadAndPlaySound(SFX_CUTSCENE);
 			cutscene_knight_funnyjoke.isVisible = false;
 			cutscene_knight_1.isVisible = false;
+			cutscene_archer_1.isVisible = false;
 			enterCSO(&cutscene_knight_funnyjoke, 58, 91, 0, 0, 0, 0, 0, 0);
-			enterCSO(&cutscene_knight_1, 55, 93, 0, 0, 0, 0, 0, 0);
+			break;
+		case 1166:
+			enterCSO(&cutscene_archer_1, 246, 90, 0, 0, 0, 0, -3.6, 0);
+			break;
+		case 1171:
+			cutscene_archer_1.velocity_x = 0;
+			break;
+		case 1212:
+			cutscene_archer_1.velocity_x = 9.5;
+			break;
+		case 1215:
+			cutscene_archer_1.isVisible = false;
+			break;
+		case 1216:
+			updateCSOFrame(&cutscene_knight_funnyjoke, 2);
+			break;
+		case 1217:
+			cutscene_knight_funnyjoke.isVisible = false;
+			enterCSO(&cutscene_knight_1, 59, 93, 0, 1, 0, 0, 0, 0);
 			break;
 		case 1222:
 			cutsceneIsPlaying = false;
@@ -779,8 +840,14 @@ void cutscene_level_46() {
 		default:
 			break;
 	}
+	cutscene_level_46_arrow_helper(&cutscene_arrow_1, 1173);
+	cutscene_level_46_arrow_helper(&cutscene_arrow_2, 1180);
+	cutscene_level_46_arrow_helper(&cutscene_arrow_3, 1187);
+	cutscene_level_46_arrow_helper(&cutscene_arrow_1, 1194);
+	cutscene_level_46_arrow_helper(&cutscene_arrow_2, 1201);
 	renderCSO(&cutscene_knight_funnyjoke);
 	renderCSO(&cutscene_knight_1);
+	renderCSO(&cutscene_archer_1);
 	renderText(text_21_cutscene, font_serif_white_9);
 }
 
