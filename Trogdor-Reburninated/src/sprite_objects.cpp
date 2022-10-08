@@ -103,6 +103,16 @@ void setSpriteScale(SpriteObject *spriteObj, double scale) {
 #endif
 }
 
+void setSpriteFrame(SpriteInstance *sprite, SpriteObject spriteObj, Sint8 frame) {
+    sprite->animFrame = frame;
+    sprite->srcrect.x = spriteFrame(spriteObj, frame);
+}
+
+void setSpriteForm(SpriteInstance *sprite, SpriteObject spriteObj, Sint8 form) {
+    sprite->animForm = form;
+    sprite->srcrect.y = spriteForm(spriteObj, form);
+}
+
 void setSpritePos(SpriteObject *spriteObj, int rect_x, int rect_y) {
     spriteObj->dstrect.x = (int)rect_x;
     spriteObj->dstrect.y = (int)rect_y;

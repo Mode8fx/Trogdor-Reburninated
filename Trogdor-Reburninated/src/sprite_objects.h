@@ -18,6 +18,20 @@ struct SpriteObject {
     SDL_Rect dstrect;    // represents the size of a sprite, even if it was resized
 };
 
+struct SpriteSubObject {
+#if !defined(SDL1)
+    SDL_Texture *texture;
+#else
+    SDL_Surface *surface;
+#endif
+    Sint8 x_offset_left;
+    Sint8 y_offset_left;
+    Sint8 x_offset_right;
+    Sint8 y_offset_right;
+    Sint8 x_center;
+    Sint8 y_center;
+};
+
 struct SpriteInstance {
     SDL_Rect srcrect;
     SDL_Rect dstrect;
@@ -32,6 +46,8 @@ extern SDL_Rect outputRect;
 
 extern void prepareSprite(SpriteObject *, const char [], Sint8, Sint8, double);
 extern void setSpriteScale(SpriteObject *, double);
+extern void setSpriteFrame(SpriteInstance *, SpriteObject, Sint8);
+extern void setSpriteForm(SpriteInstance *, SpriteObject, Sint8);
 extern void setSpritePos(SpriteObject *, int, int);
 extern Sint16 spriteFrame(SpriteObject, Sint8);
 extern Sint16 spriteForm(SpriteObject, Sint8);

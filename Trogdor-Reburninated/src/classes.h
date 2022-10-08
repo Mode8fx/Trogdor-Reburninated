@@ -54,7 +54,8 @@ class Cottage {
 		Sint16 direction;
 		Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
 			frameState = 9;
-			sprite.srcrect = { 0, spriteForm(sprite_cottage, (dir - 1)), sprite_cottage.scaled_w, sprite_cottage.scaled_h };
+			sprite.srcrect = { 0, 0, sprite_cottage.scaled_w, sprite_cottage.scaled_h };
+			setSpriteForm(&sprite, sprite_cottage, (dir - 1));
 			sprite.dstrect = { pos_x, pos_y, (Uint16)sprite_cottage.frame_w, (Uint16)sprite_cottage.frame_h };
 			sprite_fire.srcrect = { 0, 0, sprite_cottage_fire.scaled_w, sprite_cottage_fire.scaled_h };
 			sprite_fire.dstrect = { sprite.dstrect.x + 5, sprite.dstrect.y - 5, (Uint16)sprite_cottage_fire.frame_w, (Uint16)sprite_cottage_fire.frame_h };
@@ -90,10 +91,10 @@ class Cottage {
 				loadAndPlaySound(SFX_BURN_HUT);
 			}
 			if (frameState >= 12 && frameState <= 28) {
-				sprite_fire.srcrect.x = spriteFrame(sprite_cottage_fire, (((frameState - 12) / 3) % 4));
-				sprite_fire.srcrect.y = spriteForm(sprite_cottage_fire, (direction == 3));
+				setSpriteFrame(&sprite_fire, sprite_cottage_fire, (((frameState - 12) / 3) % 4));
+				setSpriteForm(&sprite_fire, sprite_cottage_fire, (direction == 3));
 				if (frameState == 26) {
-					sprite.srcrect.x = spriteFrame(sprite_cottage, 1);
+					setSpriteFrame(&sprite, sprite_cottage, 1);
 				}
 			}
 			if (frameState == 30) {
@@ -120,7 +121,8 @@ class Knight {
 			sprite.facingRight = fr;
 			home_x = pos_x;
 			home_y = pos_y;
-			sprite.srcrect = { 0, spriteForm(sprite_knight, sprite.facingRight), sprite_knight.scaled_w, sprite_knight.scaled_h };
+			sprite.srcrect = { 0, 0, sprite_knight.scaled_w, sprite_knight.scaled_h };
+			setSpriteForm(&sprite, sprite_knight, sprite.facingRight);
 			half_src_w = sprite_knight.frame_w / 2;
 			half_src_h = sprite_knight.frame_h / 2 + 4;
 			sprite.dstrect = { home_x, home_y, (Uint16)sprite_knight.frame_w, (Uint16)sprite_knight.frame_h };
@@ -189,13 +191,13 @@ class Knight {
 				case 5:
 				case 29:
 				case 53:
-					sprite.srcrect.x = spriteFrame(sprite_knight, 1);
+					setSpriteFrame(&sprite, sprite_knight, 1);
 					break;
 				case 13:
 				case 21:
 				case 37:
 				case 45:
-					sprite.srcrect.x = spriteFrame(sprite_knight, 3);
+					setSpriteFrame(&sprite, sprite_knight, 3);
 					break;
 				default:
 					break;
@@ -257,14 +259,14 @@ class Peasant {
 					sprite.srcrect.y = 0;
 					break;
 				case 4:
-					sprite.srcrect.x = spriteFrame(sprite_peasant, 1);
+					setSpriteFrame(&sprite, sprite_peasant, 1);
 					break;
 				case 6:
 					frameState = 0;
 					break;
 				case 8:
 					sprite.srcrect.x = 0;
-					sprite.srcrect.y = spriteForm(sprite_peasant, 3);
+					setSpriteForm(&sprite, sprite_peasant, 3);
 					loadAndPlaySound(SFX_SQUISH);
 					rand_var = rand() % 1000;
 					if (rand_var < 3 * sbVoiceMult) {
@@ -282,10 +284,10 @@ class Peasant {
 					break;
 				case 26:
 					sprite.srcrect.x = 0;
-					sprite.srcrect.y = spriteForm(sprite_peasant, 1);
+					setSpriteForm(&sprite, sprite_peasant, 1);
 					break;
 				case 27:
-					sprite.srcrect.x = spriteFrame(sprite_peasant, 1);
+					setSpriteFrame(&sprite, sprite_peasant, 1);
 					frameState = 25;
 					break;
 				default:
@@ -301,7 +303,8 @@ class Archer {
 		Archer(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 			frameState = 0;
 			sprite.facingRight = fr;
-			sprite.srcrect = { 0, spriteForm(sprite_archer, sprite.facingRight), sprite_archer.scaled_w, sprite_archer.scaled_h };
+			sprite.srcrect = { 0, 0, sprite_archer.scaled_w, sprite_archer.scaled_h };
+			setSpriteForm(&sprite, sprite_archer, sprite.facingRight);
 			sprite.dstrect = { pos_x, pos_y, (Uint16)sprite_archer.frame_w, (Uint16)sprite_archer.frame_h };
 			sprite.isActive = false;
 		}
@@ -309,7 +312,7 @@ class Archer {
 			frameState++;
 			switch (frameState) {
 				case 14:
-					sprite.srcrect.x = spriteForm(sprite_archer, 1);
+					setSpriteForm(&sprite, sprite_archer, 1);
 					break;
 				case 20:
 					sprite.srcrect.x = 0;
@@ -331,7 +334,8 @@ class Arrow {
 		Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 			frameState = 0;
 			sprite.facingRight = fr;
-			sprite.srcrect = { 0, spriteForm(sprite_arrow, sprite.facingRight), sprite_arrow.scaled_w, sprite_arrow.scaled_h };
+			sprite.srcrect = { 0, 0, sprite_arrow.scaled_w, sprite_arrow.scaled_h };
+			setSpriteForm(&sprite, sprite_arrow, sprite.facingRight);
 			sprite.dstrect = { pos_x, pos_y, (Uint16)sprite_arrow.frame_w, (Uint16)sprite_arrow.frame_h };
 			sprite.isActive = false;
 			sprite.collision = { 1 + sprite.facingRight + sprite.dstrect.x, 1 + sprite.dstrect.y, 12, 3 };
@@ -368,6 +372,7 @@ class Loot {
 	public:
 		SpriteInstance sprite;
 		Loot() {
+			Loot(0, 0);
 		}
 		Loot(Sint16 x_pos, Sint16 y_pos) {
 			sprite.srcrect = { 0, 0, sprite_loot.scaled_w, sprite_loot.scaled_h };
@@ -393,13 +398,15 @@ class Trogdor {
 		Trogdor() {
 			frameState = 0;
 			sprite.facingRight = true;
-			sprite.srcrect = { 0, spriteForm(sprite_trogdor, sprite.facingRight), sprite_trogdor.scaled_w, sprite_trogdor.scaled_h };
+			sprite.srcrect = { 0, 0, sprite_trogdor.scaled_w, sprite_trogdor.scaled_h };
+			setSpriteForm(&sprite, sprite_trogdor, sprite.facingRight);
 			spawnPos_x = (Sint16)(2780.0 / 5000 * gameWidth) - (sprite_trogdor.frame_w / 2);
 			spawnPos_y = (Sint16)(2360.0 / 3600 * gameHeight) - (sprite_trogdor.frame_h / 2);
 			sprite.dstrect = { spawnPos_x, spawnPos_y, (Uint16)sprite_trogdor.frame_w, (Uint16)sprite_trogdor.frame_h };
 			sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
 			fire_frameState = 0;
-			sprite_fire.srcrect = { 0, spriteForm(sprite_trogdor_fire, sprite.facingRight), sprite_trogdor_fire.scaled_w, sprite_trogdor_fire.scaled_h };
+			sprite_fire.srcrect = { 0, 0, sprite_trogdor_fire.scaled_w, sprite_trogdor_fire.scaled_h };
+			setSpriteForm(&sprite, sprite_trogdor_fire, sprite.facingRight);
 			sprite_fire.dstrect = { sprite.dstrect.x - 24 + (sprite.facingRight * 62), sprite.dstrect.y + 10, (Uint16)sprite_trogdor_fire.frame_w, (Uint16)sprite_trogdor_fire.frame_h };
 			sprite_death.srcrect = { 0, 0, sprite_trogdor_dead.scaled_w, sprite_trogdor_dead.scaled_h };
 			sprite_death.dstrect = { sprite.dstrect.x + ((sprite.dstrect.w + sprite_trogdor_dead.frame_w) / 2), sprite.dstrect.y + (sprite.dstrect.h - sprite_trogdor_dead.frame_h), (Uint16)sprite_trogdor_dead.frame_w, (Uint16)sprite_trogdor_dead.frame_h };
@@ -419,7 +426,7 @@ class Trogdor {
 					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.dstrect.h - sprite_trogdor_dead.frame_h);
 					break;
 				case 50: // arrowed
-					sprite_death.srcrect.x = spriteFrame(sprite_trogdor_dead, 1);
+					setSpriteFrame(&sprite_death, sprite_trogdor_dead, 1);
 					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.dstrect.w - sprite_trogdor_dead.frame_w) / 2);
 					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.dstrect.h - sprite_trogdor_dead.frame_h);
 					break;
@@ -450,7 +457,8 @@ class Trogdor {
 		}
 		void resetPos(bool giveInvince) {
 			sprite.facingRight = true;
-			sprite.srcrect = { 0, spriteForm(sprite_trogdor, sprite.facingRight), sprite_trogdor.scaled_w, sprite_trogdor.scaled_h };
+			sprite.srcrect = { 0, 0, sprite_trogdor.scaled_w, sprite_trogdor.scaled_h };
+			setSpriteForm(&sprite, sprite_trogdor, sprite.facingRight);
 			sprite.dstrect = { spawnPos_x, spawnPos_y, (Uint16)sprite_trogdor.frame_w, (Uint16)sprite_trogdor.frame_h };
 			sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
 			if (giveInvince) {
@@ -628,26 +636,33 @@ class GameManager {
 		}
 		void resetAllSrcRects() {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
-				hutArray[i].sprite.srcrect = { 0, spriteForm(sprite_cottage, (hutArray[i].direction - 1)), sprite_cottage.scaled_w, sprite_cottage.scaled_h };
+				hutArray[i].sprite.srcrect = { 0, 0, sprite_cottage.scaled_w, sprite_cottage.scaled_h };
+				setSpriteForm(&hutArray[i].sprite, sprite_cottage, (hutArray[i].direction - 1));
 			}
 			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
-				knightArray[i].sprite.srcrect = { 0, spriteForm(sprite_knight, knightArray[i].sprite.facingRight), sprite_knight.scaled_w, sprite_knight.scaled_h };
+				knightArray[i].sprite.srcrect = { 0, 0, sprite_knight.scaled_w, sprite_knight.scaled_h };
+				setSpriteForm(&knightArray[i].sprite, sprite_knight, knightArray[i].sprite.facingRight);
 			}
 			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 				peasantArray[i].sprite.srcrect = { 0, 0, sprite_peasant.scaled_w, sprite_peasant.scaled_h };
 			}
 			for (i = 0; i < 2; i++) {
-				archerArray[i].sprite.srcrect = { 0, spriteForm(sprite_archer, archerArray[i].sprite.facingRight), sprite_archer.scaled_w, sprite_archer.scaled_h };
+				archerArray[i].sprite.srcrect = { 0, 0, sprite_archer.scaled_w, sprite_archer.scaled_h };
+				setSpriteForm(&archerArray[i].sprite, sprite_archer, archerArray[i].sprite.facingRight);
 			}
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
-				arrowArrayL[i].sprite.srcrect = { 0, spriteForm(sprite_arrow, arrowArrayL[i].sprite.facingRight), sprite_arrow.scaled_w, sprite_arrow.scaled_h };
-				arrowArrayR[i].sprite.srcrect = { 0, spriteForm(sprite_arrow, arrowArrayR[i].sprite.facingRight), sprite_arrow.scaled_w, sprite_arrow.scaled_h };
+				arrowArrayL[i].sprite.srcrect = { 0, 0, sprite_arrow.scaled_w, sprite_arrow.scaled_h };
+				setSpriteForm(&arrowArrayL[i].sprite, sprite_arrow, arrowArrayL[i].sprite.facingRight);
+				arrowArrayR[i].sprite.srcrect = { 0, 0, sprite_arrow.scaled_w, sprite_arrow.scaled_h };
+				setSpriteForm(&arrowArrayR[i].sprite, sprite_arrow, arrowArrayR[i].sprite.facingRight);
 			}
 			for (i = 0; i < MAX_NUM_LOOT; i++) {
 				lootArray[i].sprite.srcrect = { 0, 0, sprite_loot.scaled_w, sprite_loot.scaled_h };
 			}
-			player.sprite.srcrect = { 0, spriteForm(sprite_trogdor, player.sprite.facingRight), sprite_trogdor.scaled_w, sprite_trogdor.scaled_h };
-			player.sprite_fire.srcrect = { 0, spriteForm(sprite_trogdor_fire, player.sprite.facingRight), sprite_trogdor_fire.scaled_w, sprite_trogdor_fire.scaled_h };
+			player.sprite.srcrect = { 0, 0, sprite_trogdor.scaled_w, sprite_trogdor.scaled_h };
+			setSpriteForm(&player.sprite, sprite_trogdor, player.sprite.facingRight);
+			player.sprite_fire.srcrect = { 0, 0, sprite_trogdor_fire.scaled_w, sprite_trogdor_fire.scaled_h };
+			setSpriteForm(&player.sprite_fire, sprite_trogdor_fire, player.sprite.facingRight);
 			player.sprite_death.srcrect = { 0, 0, sprite_trogdor_dead.scaled_w, sprite_trogdor_dead.scaled_h };
 			dm_srcrect = { 0, 0, sprite_death_message.scaled_w, sprite_death_message.scaled_h };
 			bf_srcrect = { 0, 0, sprite_burninate_fire.scaled_w, sprite_burninate_fire.scaled_h };
@@ -865,10 +880,10 @@ class GameManager {
 			if (trog->frameStateFlag & 2) {
 				trog->frameState = 0;
 				trog->sprite.srcrect.x = 0;
-				trog->sprite.srcrect.y = spriteForm(sprite_trogdor, trog->sprite.facingRight);
+				setSpriteForm(&trog->sprite, sprite_trogdor, trog->sprite.facingRight);
 			} else if (trog->frameStateFlag & 1) {
 				trog->frameState = (++trog->frameState % 8);
-				trog->sprite.srcrect.x = spriteFrame(sprite_trogdor, (trog->frameState / 2));
+				setSpriteFrame(&trog->sprite, sprite_trogdor, (trog->frameState / 2));
 			}
 			if (burnination > 0) {
 				trog->updateBreathLoc();
@@ -876,10 +891,10 @@ class GameManager {
 				if (trog->frameStateFlag & 2) {
 					trog->fire_frameState = 0;
 					trog->sprite_fire.srcrect.x = 0;
-					trog->sprite_fire.srcrect.y = spriteForm(sprite_trogdor_fire, trog->sprite.facingRight);
+					setSpriteForm(&trog->sprite_fire, sprite_trogdor_fire, trog->sprite.facingRight);
 				} else {
 					trog->fire_frameState = (++trog->fire_frameState % 12);
-					trog->sprite_fire.srcrect.x = spriteFrame(sprite_trogdor_fire, (trog->fire_frameState / 3));
+					setSpriteFrame(&trog->sprite_fire, sprite_trogdor_fire, (trog->fire_frameState / 3));
 				}
 			}
 		}
@@ -904,10 +919,10 @@ class GameManager {
 			if (trog->frameStateFlag & 2) {
 				trog->frameState = 0;
 				trog->sprite.srcrect.x = 0;
-				trog->sprite.srcrect.y = spriteForm(sprite_trogdor, trog->sprite.facingRight);
+				setSpriteForm(&trog->sprite, sprite_trogdor, trog->sprite.facingRight);
 			} else if (trog->frameStateFlag & 1) {
 				trog->frameState = (++trog->frameState % 8);
-				trog->sprite.srcrect.x = spriteFrame(sprite_trogdor, (trog->frameState / 2));
+				setSpriteFrame(&trog->sprite, sprite_trogdor, (trog->frameState / 2));
 			}
 			if (burnination > 0) {
 				trog->updateBreathLoc();
@@ -915,10 +930,10 @@ class GameManager {
 				if (trog->frameStateFlag & 2) {
 					trog->fire_frameState = 0;
 					trog->sprite_fire.srcrect.x = 0;
-					trog->sprite_fire.srcrect.y = spriteForm(sprite_trogdor_fire, trog->sprite.facingRight);
+					setSpriteForm(&trog->sprite_fire, sprite_trogdor_fire, trog->sprite.facingRight);
 				} else {
 					trog->fire_frameState = (++trog->fire_frameState % 12);
-					trog->sprite_fire.srcrect.x = spriteFrame(sprite_trogdor_fire, (trog->fire_frameState / 3));
+					setSpriteFrame(&trog->sprite_fire, sprite_trogdor_fire, (trog->fire_frameState / 3));
 				}
 			}
 		}
