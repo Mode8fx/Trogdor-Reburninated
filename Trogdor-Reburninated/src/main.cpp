@@ -494,7 +494,7 @@ int main(int argv, char** args) {
 					GM.renderPeasants();
 					GM.renderTrogdor();
 					if (GM.burnination > 0) {
-						renderSprite_game(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
+						renderSprite_game(sprite_trogdor_fire, GM.player.sprite_fire.srcrect, GM.player.sprite_fire.dstrect);
 					}
 					GM.renderArchers();
 					GM.renderArrows();
@@ -521,12 +521,12 @@ int main(int argv, char** args) {
 					if (GM.inTreasureHut) {
 						GM.paused = true;
 						GM.treasureHutFound = true;
-						GM.player.dstrect.x = 211;
-						GM.player.dstrect.y = 118;
+						GM.player.sprite.dstrect.x = 211;
+						GM.player.sprite.dstrect.y = 118;
 						GM.treasureHut_timer = 110;
 						GM.set_level_background(5);
 						loadAndPlaySound(SFX_SFX2);
-						GM.player.visible = true;
+						GM.player.sprite.isActive = true;
 						sceneState = 6;
 					}
 					break;
@@ -609,7 +609,7 @@ int main(int argv, char** args) {
 					GM.renderLoot();
 					GM.renderTrogdor();
 					if (GM.burnination > 0) {
-						renderSprite_game(sprite_trogdor_fire, GM.player.fire_srcrect, GM.player.fire_dstrect);
+						renderSprite_game(sprite_trogdor_fire, GM.player.sprite_fire.srcrect, GM.player.sprite_fire.dstrect);
 					}
 					if (GM.dm_visible) {
 						renderSprite_game(sprite_death_message, GM.dm_srcrect, sprite_death_message.dstrect);
@@ -633,8 +633,8 @@ int main(int argv, char** args) {
 					}
 					if (!GM.inTreasureHut) {
 						GM.paused = false;
-						GM.player.dstrect.x = GM.storex;
-						GM.player.dstrect.y = GM.storey;
+						GM.player.sprite.dstrect.x = GM.storex;
+						GM.player.sprite.dstrect.y = GM.storey;
 						GM.set_level_background(levels[GM.levelIndex][0]);
 						sceneState = 4;
 					}

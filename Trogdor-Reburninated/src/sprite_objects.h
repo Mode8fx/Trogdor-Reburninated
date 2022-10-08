@@ -18,6 +18,16 @@ struct SpriteObject {
     SDL_Rect dstrect;    // represents the size of a sprite, even if it was resized
 };
 
+struct SpriteInstance {
+    SDL_Rect srcrect;
+    SDL_Rect dstrect;
+    Sint8 animFrame;
+    Sint8 animForm;
+    SDL_Rect collision;
+    bool isActive;
+    bool facingRight;
+};
+
 extern SDL_Rect outputRect;
 
 extern void prepareSprite(SpriteObject *, const char [], Sint8, Sint8, double);

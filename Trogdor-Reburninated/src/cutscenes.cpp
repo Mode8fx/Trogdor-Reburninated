@@ -196,7 +196,7 @@ void cutscene_level_4() {
 			enterCSO(&cutscene_knight_2, 240, 86, 1, 0, 4, 0, -7, 0);
 			break;
 		case 448:
-			enterCSO(&cutscene_peasant_1, 24, 81, 0, 2, 0, 0, 0, 0);
+			enterCSO(&cutscene_peasant_1, 24, 81, 0, 3, 0, 0, 0, 0);
 			break;
 		case 449:
 			enterCSO(&cutscene_trogdor_1, 25, 70, 0, 1, 2, 0, 8, 0);
