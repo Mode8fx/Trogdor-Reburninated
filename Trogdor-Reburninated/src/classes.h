@@ -1328,6 +1328,7 @@ class GameManager {
 			// hardcoded is messier, but faster
 			switch (b_frameState) {
 				case 4:
+					bf_srcrect.x = 0;
 					bf_srcrect.y = 0;
 					rand_var = rand() % 100;
 					if (rand_var < 10 * sbVoiceMult) {
@@ -1343,7 +1344,6 @@ class GameManager {
 					paused = true;
 					break;
 				case 5:
-				case 17:
 					bf_srcrect.y = bf_srcrect.h;
 					break;
 				case 6:
@@ -1363,28 +1363,34 @@ class GameManager {
 					bf_srcrect.y = bf_srcrect.h * 6;
 					break;
 				case 11:
-					bf_srcrect.y = bf_srcrect.h * 7;
+					bf_srcrect.x = bf_srcrect.w;
+					bf_srcrect.y = 0;
 					break;
 				case 12:
-					bf_srcrect.y = bf_srcrect.h * 8;
+					bf_srcrect.y = bf_srcrect.h;
 					break;
 				case 13:
-					bf_srcrect.y = bf_srcrect.h * 9;
+					bf_srcrect.y = bf_srcrect.h * 2;
 					break;
 				case 14:
-					bf_srcrect.y = bf_srcrect.h * 10;
+					bf_srcrect.y = bf_srcrect.h * 3;
 					break;
 				case 16:
-					bf_srcrect.y = bf_srcrect.h * 11;
+					bf_srcrect.y = bf_srcrect.h * 4;
+					break;
+				case 17:
+					bf_srcrect.y = bf_srcrect.h * 5;
 					break;
 				case 18:
-					bf_srcrect.y = bf_srcrect.h * 12;
+					bf_srcrect.y = bf_srcrect.h * 6;
 					b_visible = false;
 					paused = false;
 					peasantometer = 10;
 					setBurnination(100);
 					player.updateBreathLoc();
 					b_frameState = 0;
+					break;
+				default:
 					break;
 			}
 		}
