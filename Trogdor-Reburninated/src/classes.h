@@ -54,12 +54,9 @@ class Cottage {
 		Sint16 direction;
 		Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
 			frameState = 9;
-			sprite.spriteObj = &sprite_cottage;
-			sprite.srcrect = { 0, 0, sprite_cottage.scaled_w, sprite_cottage.scaled_h };
-			setSpriteForm(&sprite, (dir - 1));
+			prepareSpriteInstance(&sprite, &sprite_cottage, 0, (dir - 1));
 			sprite.dstrect = { pos_x, pos_y, (Uint16)sprite_cottage.frame_w, (Uint16)sprite_cottage.frame_h };
-			sprite_fire.spriteObj = &sprite_cottage_fire;
-			sprite_fire.srcrect = { 0, 0, sprite_cottage_fire.scaled_w, sprite_cottage_fire.scaled_h };
+			prepareSpriteInstance(&sprite_fire, &sprite_cottage_fire, 0, 0);
 			sprite_fire.dstrect = { sprite.dstrect.x + 5, sprite.dstrect.y - 5, (Uint16)sprite_cottage_fire.frame_w, (Uint16)sprite_cottage_fire.frame_h };
 			burning = false;
 			burned = false;
@@ -120,12 +117,10 @@ class Knight {
 		Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true) {
 			frameState = 0;
 			moving = true;
-			sprite.spriteObj = &sprite_knight;
+			prepareSpriteInstance(&sprite, &sprite_knight, 0, fr);
 			sprite.facingRight = fr;
 			home_x = pos_x;
 			home_y = pos_y;
-			sprite.srcrect = { 0, 0, sprite_knight.scaled_w, sprite_knight.scaled_h };
-			setSpriteForm(&sprite, sprite.facingRight);
 			half_src_w = sprite_knight.frame_w / 2;
 			half_src_h = sprite_knight.frame_h / 2 + 4;
 			sprite.dstrect = { home_x, home_y, (Uint16)sprite_knight.frame_w, (Uint16)sprite_knight.frame_h };
@@ -238,8 +233,7 @@ class Peasant {
 		Sint16 timer;
 		Peasant() {
 			frameState = 0;
-			sprite.spriteObj = &sprite_peasant;
-			sprite.srcrect = { 0, 0, sprite_peasant.scaled_w, sprite_peasant.scaled_h };
+			prepareSpriteInstance(&sprite, &sprite_peasant, 0, 0);
 			sprite.dstrect = { 0, 0, (Uint16)sprite_peasant.frame_w, (Uint16)sprite_peasant.frame_h };
 			sprite.isActive = false;
 			myHome = 0;
@@ -306,10 +300,8 @@ class Archer {
 		SpriteInstance sprite; // facing right == on the left; facing left == on the right
 		Archer(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 			frameState = 0;
-			sprite.spriteObj = &sprite_archer;
+			prepareSpriteInstance(&sprite, &sprite_archer, 0, fr);
 			sprite.facingRight = fr;
-			sprite.srcrect = { 0, 0, sprite_archer.scaled_w, sprite_archer.scaled_h };
-			setSpriteForm(&sprite, sprite.facingRight);
 			sprite.dstrect = { pos_x, pos_y, (Uint16)sprite_archer.frame_w, (Uint16)sprite_archer.frame_h };
 			sprite.isActive = false;
 		}
@@ -338,10 +330,8 @@ class Arrow {
 		SpriteInstance sprite;
 		Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 			frameState = 0;
-			sprite.spriteObj = &sprite_arrow;
+			prepareSpriteInstance(&sprite, &sprite_arrow, 0, fr);
 			sprite.facingRight = fr;
-			sprite.srcrect = { 0, 0, sprite_arrow.scaled_w, sprite_arrow.scaled_h };
-			setSpriteForm(&sprite, sprite.facingRight);
 			sprite.dstrect = { pos_x, pos_y, (Uint16)sprite_arrow.frame_w, (Uint16)sprite_arrow.frame_h };
 			sprite.isActive = false;
 			sprite.collision = { 1 + sprite.facingRight + sprite.dstrect.x, 1 + sprite.dstrect.y, 12, 3 };
@@ -381,8 +371,7 @@ class Loot {
 			Loot(0, 0);
 		}
 		Loot(Sint16 x_pos, Sint16 y_pos) {
-			sprite.spriteObj = &sprite_loot;
-			sprite.srcrect = { 0, 0, sprite_loot.scaled_w, sprite_loot.scaled_h };
+			prepareSpriteInstance(&sprite, &sprite_loot, 0, 0);
 			sprite.dstrect = { x_pos, y_pos, (Uint16)sprite_loot.frame_w, (Uint16)sprite_loot.frame_h };
 			sprite.isActive = false;
 		}
@@ -404,21 +393,16 @@ class Trogdor {
 		Uint8 frameStateFlag; // used for movement
 		Trogdor() {
 			frameState = 0;
-			sprite.spriteObj = &sprite_trogdor;
+			prepareSpriteInstance(&sprite, &sprite_trogdor, 0, 1);
 			sprite.facingRight = true;
-			sprite.srcrect = { 0, 0, sprite_trogdor.scaled_w, sprite_trogdor.scaled_h };
-			setSpriteForm(&sprite, sprite.facingRight);
 			spawnPos_x = (Sint16)(2780.0 / 5000 * gameWidth) - (sprite_trogdor.frame_w / 2);
 			spawnPos_y = (Sint16)(2360.0 / 3600 * gameHeight) - (sprite_trogdor.frame_h / 2);
 			sprite.dstrect = { spawnPos_x, spawnPos_y, (Uint16)sprite_trogdor.frame_w, (Uint16)sprite_trogdor.frame_h };
 			sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
 			fire_frameState = 0;
-			sprite_fire.spriteObj = &sprite_trogdor_fire;
-			sprite_fire.srcrect = { 0, 0, sprite_trogdor_fire.scaled_w, sprite_trogdor_fire.scaled_h };
-			setSpriteForm(&sprite, sprite.facingRight);
+			prepareSpriteInstance(&sprite_fire, &sprite_trogdor_fire, 0, sprite.facingRight);
 			sprite_fire.dstrect = { sprite.dstrect.x - 24 + (sprite.facingRight * 62), sprite.dstrect.y + 10, (Uint16)sprite_trogdor_fire.frame_w, (Uint16)sprite_trogdor_fire.frame_h };
-			sprite_death.spriteObj = &sprite_trogdor_dead;
-			sprite_death.srcrect = { 0, 0, sprite_trogdor_dead.scaled_w, sprite_trogdor_dead.scaled_h };
+			prepareSpriteInstance(&sprite_death, &sprite_trogdor_dead, 0, 0);
 			sprite_death.dstrect = { sprite.dstrect.x + ((sprite.dstrect.w + sprite_trogdor_dead.frame_w) / 2), sprite.dstrect.y + (sprite.dstrect.h - sprite_trogdor_dead.frame_h), (Uint16)sprite_trogdor_dead.frame_w, (Uint16)sprite_trogdor_dead.frame_h };
 			invince = 0;
 			sprite.isActive = true;
@@ -467,7 +451,7 @@ class Trogdor {
 		}
 		void resetPos(bool giveInvince) {
 			sprite.facingRight = true;
-			sprite.srcrect = { 0, 0, sprite_trogdor.scaled_w, sprite_trogdor.scaled_h };
+			resetSrcrect(&sprite);
 			setSpriteForm(&sprite, sprite.facingRight);
 			sprite.dstrect = { spawnPos_x, spawnPos_y, (Uint16)sprite_trogdor.frame_w, (Uint16)sprite_trogdor.frame_h };
 			sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
@@ -622,18 +606,14 @@ class GameManager {
 			extraMansCounter = 1;
 			arched = false;
 			dm_frameState = 0;
-			sprite_dm.spriteObj = &sprite_death_message;
-			sprite_dm.srcrect = { 0, 0, sprite_death_message.scaled_w, sprite_death_message.scaled_h };
+			prepareSpriteInstance(&sprite_dm, &sprite_death_message, 0, 0);
 			sprite_dm.isActive = false;
 			b_frameState = 0;
-			sprite_bf.spriteObj = &sprite_burninate_fire;
-			sprite_bf.srcrect = { 0, 0, sprite_burninate_fire.scaled_w, sprite_burninate_fire.scaled_h };
+			prepareSpriteInstance(&sprite_bf, &sprite_burninate_fire, 0, 0);
 			sprite_bf.dstrect = { OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), sprite_burninate_text.dstrect.y - sprite_burninate_fire.frame_h + 4, (Uint16)sprite_burninate_fire.frame_w, (Uint16)sprite_burninate_fire.frame_h };
 			b_visible = false;
-			sprite_bmFull.spriteObj = &sprite_burnination_meter_full;
-			sprite_bmFull.srcrect = { 0, 0, sprite_burnination_meter_full.scaled_w, sprite_burnination_meter_full.scaled_h };
-			sprite_pm.spriteObj = &sprite_peasantometer_icon;
-			sprite_pm.srcrect = { 0, 0, sprite_peasantometer_icon.scaled_w, sprite_peasantometer_icon.scaled_h };
+			prepareSpriteInstance(&sprite_bmFull, &sprite_burnination_meter_full, 0, 0);
+			prepareSpriteInstance(&sprite_pm, &sprite_peasantometer_icon, 0, 0);
 			kick_frameState = 0;
 			numHuts = 0;
 			treasureHutFound = false;
@@ -648,38 +628,38 @@ class GameManager {
 		}
 		void resetAllSrcRects() {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
-				hutArray[i].sprite.srcrect = { 0, 0, sprite_cottage.scaled_w, sprite_cottage.scaled_h };
+				resetSrcrect(&hutArray[i].sprite);
 				setSpriteForm(&hutArray[i].sprite, (hutArray[i].direction - 1));
 			}
 			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
-				knightArray[i].sprite.srcrect = { 0, 0, sprite_knight.scaled_w, sprite_knight.scaled_h };
+				resetSrcrect(&knightArray[i].sprite);
 				setSpriteForm(&knightArray[i].sprite, knightArray[i].sprite.facingRight);
 			}
 			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
-				peasantArray[i].sprite.srcrect = { 0, 0, sprite_peasant.scaled_w, sprite_peasant.scaled_h };
+				resetSrcrect(&peasantArray[i].sprite);
 			}
 			for (i = 0; i < 2; i++) {
-				archerArray[i].sprite.srcrect = { 0, 0, sprite_archer.scaled_w, sprite_archer.scaled_h };
+				resetSrcrect(&archerArray[i].sprite);
 				setSpriteForm(&archerArray[i].sprite, archerArray[i].sprite.facingRight);
 			}
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
-				arrowArrayL[i].sprite.srcrect = { 0, 0, sprite_arrow.scaled_w, sprite_arrow.scaled_h };
+				resetSrcrect(&arrowArrayL[i].sprite);
 				setSpriteForm(&arrowArrayL[i].sprite, arrowArrayL[i].sprite.facingRight);
-				arrowArrayR[i].sprite.srcrect = { 0, 0, sprite_arrow.scaled_w, sprite_arrow.scaled_h };
+				resetSrcrect(&arrowArrayR[i].sprite);
 				setSpriteForm(&arrowArrayR[i].sprite, arrowArrayR[i].sprite.facingRight);
 			}
 			for (i = 0; i < MAX_NUM_LOOT; i++) {
-				lootArray[i].sprite.srcrect = { 0, 0, sprite_loot.scaled_w, sprite_loot.scaled_h };
+				resetSrcrect(&lootArray[i].sprite);
 			}
-			player.sprite.srcrect = { 0, 0, sprite_trogdor.scaled_w, sprite_trogdor.scaled_h };
+			resetSrcrect(&player.sprite);
 			setSpriteForm(&player.sprite, player.sprite.facingRight);
-			player.sprite_fire.srcrect = { 0, 0, sprite_trogdor_fire.scaled_w, sprite_trogdor_fire.scaled_h };
+			resetSrcrect(&player.sprite_fire);
 			setSpriteForm(&player.sprite_fire, player.sprite.facingRight);
-			player.sprite_death.srcrect = { 0, 0, sprite_trogdor_dead.scaled_w, sprite_trogdor_dead.scaled_h };
-			sprite_dm.srcrect = { 0, 0, sprite_death_message.scaled_w, sprite_death_message.scaled_h };
-			sprite_bf.srcrect = { 0, 0, sprite_burninate_fire.scaled_w, sprite_burninate_fire.scaled_h };
-			sprite_bmFull.srcrect = { 0, 0, sprite_burnination_meter_full.scaled_w, sprite_burnination_meter_full.scaled_h };
-			sprite_pm.srcrect = { 0, 0, sprite_peasantometer_icon.scaled_w, sprite_peasantometer_icon.scaled_h };
+			resetSrcrect(&player.sprite_death);
+			resetSrcrect(&sprite_dm);
+			resetSrcrect(&sprite_bf);
+			resetSrcrect(&sprite_bmFull);
+			resetSrcrect(&sprite_pm);
 		}
 		void levelInit() {
 			setBurnination(0);

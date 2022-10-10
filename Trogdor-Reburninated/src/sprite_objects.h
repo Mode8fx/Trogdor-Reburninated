@@ -46,6 +46,8 @@ extern void setSpriteScale(SpriteObject *, double);
 extern void setSpriteFrame(SpriteInstance *, Sint8);
 extern void setSpriteForm(SpriteInstance *, Sint8);
 extern void setSpritePos(SpriteObject *, int, int);
+extern void prepareSpriteInstance(SpriteInstance *, SpriteObject *, Sint8, Sint8);
+extern void resetSrcrect(SpriteInstance *);
 extern Sint16 spriteFrame(SpriteObject, Sint8);
 extern Sint16 spriteForm(SpriteObject, Sint8);
 extern void renderSprite_game(SpriteInstance);

@@ -200,14 +200,14 @@ void setSpriteScale(SpriteObject *spriteObj, double scale) {
 #endif
 }
 
-void setSpriteFrame(SpriteInstance *sprite, Sint8 frame) {
-    sprite->animFrame = frame;
-    sprite->srcrect.x = spriteFrame(*sprite->spriteObj, frame);
+void setSpriteFrame(SpriteInstance *spriteIns, Sint8 frame) {
+    spriteIns->animFrame = frame;
+    spriteIns->srcrect.x = spriteFrame(*spriteIns->spriteObj, frame);
 }
 
-void setSpriteForm(SpriteInstance *sprite, Sint8 form) {
-    sprite->animForm = form;
-    sprite->srcrect.y = spriteForm(*sprite->spriteObj, form);
+void setSpriteForm(SpriteInstance *spriteIns, Sint8 form) {
+    spriteIns->animForm = form;
+    spriteIns->srcrect.y = spriteForm(*spriteIns->spriteObj, form);
 }
 
 void setSpritePos(SpriteObject *spriteObj, int rect_x, int rect_y) {
@@ -215,12 +215,24 @@ void setSpritePos(SpriteObject *spriteObj, int rect_x, int rect_y) {
     spriteObj->dstrect.y = (int)rect_y;
 }
 
-Sint16 spriteFrame(SpriteObject spriteObj, Sint8 frameNum) {
-    return spriteObj.scaled_w * frameNum;
+void prepareSpriteInstance(SpriteInstance *spriteIns, SpriteObject *spriteObj, Sint8 frame, Sint8 form) {
+    spriteIns->spriteObj = spriteObj;
+    resetSrcrect(spriteIns);
+    spriteIns->dstrect = spriteIns->spriteObj->dstrect;
+    setSpriteFrame(spriteIns, frame);
+    setSpriteForm(spriteIns, form);
 }
 
-Sint16 spriteForm(SpriteObject spriteObj, Sint8 formNum) {
-    return spriteObj.scaled_h * formNum;
+void resetSrcrect(SpriteInstance *spriteIns) {
+    spriteIns->srcrect = { 0, 0, spriteIns->spriteObj->scaled_w, spriteIns->spriteObj->scaled_h };
+}
+
+Sint16 spriteFrame(SpriteObject spriteObj, Sint8 frame) {
+    return spriteObj.scaled_w * frame;
+}
+
+Sint16 spriteForm(SpriteObject spriteObj, Sint8 form) {
+    return spriteObj.scaled_h * form;
 }
 
 void renderSprite_game(SpriteInstance spriteIns) {
