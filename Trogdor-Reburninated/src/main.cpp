@@ -494,14 +494,14 @@ int main(int argv, char** args) {
 					GM.renderPeasants();
 					GM.renderTrogdor();
 					if (GM.burnination > 0) {
-						renderSprite_game(sprite_trogdor_fire, GM.player.sprite_fire.srcrect, GM.player.sprite_fire.dstrect);
+						renderSprite_game(GM.player.sprite_fire);
 					}
 					GM.renderArchers();
 					GM.renderArrows();
-					if (GM.dm_visible) {
-						renderSprite_game(sprite_death_message, GM.dm_srcrect, sprite_death_message.dstrect);
+					if (GM.sprite_dm.isActive) {
+						renderSprite_game(GM.sprite_dm);
 					} else if (GM.b_visible) {
-						renderSprite_game(sprite_burninate_fire, GM.bf_srcrect, GM.bf_dstrect);
+						renderSprite_game(GM.sprite_bf);
 						renderSprite_static_game(sprite_burninate_text);
 					}
 					if (GM.manually_paused) {
@@ -609,12 +609,12 @@ int main(int argv, char** args) {
 					GM.renderLoot();
 					GM.renderTrogdor();
 					if (GM.burnination > 0) {
-						renderSprite_game(sprite_trogdor_fire, GM.player.sprite_fire.srcrect, GM.player.sprite_fire.dstrect);
+						renderSprite_game(GM.player.sprite_fire);
 					}
-					if (GM.dm_visible) {
-						renderSprite_game(sprite_death_message, GM.dm_srcrect, sprite_death_message.dstrect);
+					if (GM.sprite_dm.isActive) {
+						renderSprite_game(GM.sprite_dm);
 					} else if (GM.b_visible) {
-						renderSprite_game(sprite_burninate_fire, GM.bf_srcrect, GM.bf_dstrect);
+						renderSprite_game(GM.sprite_bf);
 						renderSprite_static_game(sprite_burninate_text);
 					}
 					if (GM.manually_paused) {

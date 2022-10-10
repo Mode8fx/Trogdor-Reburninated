@@ -19,11 +19,6 @@ struct SpriteSubObject {
 
 struct SpriteObject {
     SpriteSubObject *sub[8]; // the max number of frames a sprite sheet can have is 8
-#if !defined(SDL1)
-    SDL_Texture *texture;
-#else
-    SDL_Surface *surface;
-#endif
     Sint16 frame_w;      // the original width of a single animation frame
     Sint16 frame_h;      // the original height of a single animation frame
     Uint16 scaled_w;     // the scaled (actual) width of a single animation frame
@@ -34,6 +29,7 @@ struct SpriteObject {
 };
 
 struct SpriteInstance {
+    SpriteObject *spriteObj;
     SDL_Rect srcrect;
     SDL_Rect dstrect;
     Sint8 animFrame;
@@ -46,22 +42,33 @@ struct SpriteInstance {
 extern SDL_Rect outputRect;
 
 extern void prepareSprite(SpriteObject *, const char [], Sint8, Sint8, double);
-extern void prepareSprite_old(SpriteObject *, const char [], Sint8, Sint8, double);
 extern void setSpriteScale(SpriteObject *, double);
-extern void setSpriteFrame(SpriteInstance *, SpriteObject, Sint8);
-extern void setSpriteForm(SpriteInstance *, SpriteObject, Sint8);
+extern void setSpriteFrame(SpriteInstance *, Sint8);
+extern void setSpriteForm(SpriteInstance *, Sint8);
 extern void setSpritePos(SpriteObject *, int, int);
 extern Sint16 spriteFrame(SpriteObject, Sint8);
 extern Sint16 spriteForm(SpriteObject, Sint8);
-extern void renderSprite_game(SpriteObject, SDL_Rect, SDL_Rect);
-extern void renderSprite_app(SpriteObject, SDL_Rect, SDL_Rect);
-extern void renderSprite_static_game(SpriteObject);
-extern void renderSprite_static_app(SpriteObject);
-extern void renderSprite_overlay(SpriteObject);
-extern void renderEmptyOverlay(SpriteObject spriteObj);
+extern void renderSprite_game(SpriteInstance);
+extern void renderSprite_app(SpriteInstance);
+extern void renderSprite_overlay(SpriteInstance);
+extern void renderEmptyOverlay(SpriteInstance);
 extern void drawRect(SDL_Rect, Uint8, Uint8, Uint8);
 extern void drawRect_gameTextScreen(SDL_Rect, Uint8, Uint8, Uint8);
 extern void drawRectWithAlpha(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
+
+#if !defined(SDL1)
+#define CURR_SPRITE(spriteIns) \
+    spriteIns.spriteObj->sub[spriteIns.animFrame][spriteIns.animForm].texture
+#else
+#define CURR_SPRITE(spriteIns) \
+    spriteIns.spriteObj->sub[spriteIns.animFrame][spriteIns.animForm].surface
+#endif
+
+#define CURR_SPRITE_X_OFFSET(spriteIns) \
+    spriteIns.spriteObj->sub[spriteIns.animFrame][spriteIns.animForm].x_offset_start
+
+#define CURR_SPRITE_Y_OFFSET(spriteIns) \
+    spriteIns.spriteObj->sub[spriteIns.animFrame][spriteIns.animForm].y_offset_start
 
 #define PREPARE_SPRITE(spriteObj, path, rect_x, rect_y, numAnimFrames, numForms, scale) \
     prepareSprite(&spriteObj, path, numAnimFrames, numForms, scale);                    \

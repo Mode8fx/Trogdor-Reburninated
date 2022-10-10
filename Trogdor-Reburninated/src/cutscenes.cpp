@@ -97,7 +97,7 @@ void enterCSO(CutsceneObject *csObj, int x, int y, Sint8 frame, Sint8 form, Sint
 
 void renderCSO(CutsceneObject *csObj) {
 	if (csObj->isVisible) {
-		renderSprite_game(*csObj->sprite, csObj->srcrect, csObj->dstrect);
+		//renderSprite_game(*csObj->sprite, csObj->srcrect, csObj->dstrect);
 		csObj->x_actual += csObj->velocity_x;
 		csObj->y_actual += csObj->velocity_y;
 		csObj->dstrect.x = (int)csObj->x_actual;
