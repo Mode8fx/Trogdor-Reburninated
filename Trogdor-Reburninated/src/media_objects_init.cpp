@@ -592,54 +592,64 @@ void exceptMissingFile(const char *path) {
 #endif
 }
 
-void destroySprite(SpriteObject sprite) {
+void destroySprite(SpriteObject *sprite) {
+	for (i = 0; i < sprite->numAnimFrames; i++) {
+		for (j = 0; j < sprite->numForms; j++) {
 #if !defined(SDL1)
-	SDL_DestroyTexture(sprite.texture);
+			SDL_DestroyTexture(sprite->sub[i][j].texture);
 #else
-	SDL_FreeSurface(sprite.surface);
+			SDL_FreeSurface(sprite->sub[i][j].surface);
+#endif
+		}
+		free(sprite->sub[i]);
+	}
+#if !defined(SDL1)
+	SDL_DestroyTexture(sprite->texture);
+#else
+	SDL_FreeSurface(sprite->surface);
 #endif
 }
 
 void destroyAllSprites() {
-	destroySprite(sprite_videlectrix_logo);
-	destroySprite(sprite_title_screen);
-	destroySprite(sprite_trogdor_logo);
-	destroySprite(sprite_level_background_1);
-	destroySprite(sprite_level_background_2);
-	destroySprite(sprite_level_background_3);
-	destroySprite(sprite_level_background_4);
-	destroySprite(sprite_level_background_th);
-	destroySprite(sprite_burnination_meter_full);
-	destroySprite(sprite_burnination_meter_empty);
-	destroySprite(sprite_end_of_level_flash);
-	destroySprite(sprite_death_message);
-	destroySprite(sprite_burninate_text);
-	destroySprite(sprite_burninate_fire);
-	destroySprite(sprite_level_beaten_trogdor);
-	destroySprite(sprite_level_beaten_smoke);
-	destroySprite(sprite_game_over_trogdor);
-	destroySprite(sprite_trogdor);
-	destroySprite(sprite_cottage);
-	destroySprite(sprite_cottage_fire);
-	destroySprite(sprite_peasantometer_icon);
-	destroySprite(sprite_archer);
-	destroySprite(sprite_arrow);
-	destroySprite(sprite_trogdor_fire);
-	destroySprite(sprite_trogdor_dead);
-	destroySprite(sprite_knight);
-	destroySprite(sprite_peasant);
-	destroySprite(sprite_end_of_level_trogdor);
-	destroySprite(sprite_loot);
-	destroySprite(sprite_trogdor_flexing);
-	destroySprite(sprite_heart);
-	destroySprite(sprite_knight_funnyjoke);
-	destroySprite(sprite_arrow_funnyjoke);
-	destroySprite(sprite_kerrek);
-	destroySprite(sprite_kerrek_smoked);
-	destroySprite(sprite_overlay_basement_top);
-	destroySprite(sprite_overlay_basement_bottom);
-	destroySprite(sprite_overlay_basement_left);
-	destroySprite(sprite_overlay_basement_right);
+	destroySprite(&sprite_videlectrix_logo);
+	destroySprite(&sprite_title_screen);
+	destroySprite(&sprite_trogdor_logo);
+	destroySprite(&sprite_level_background_1);
+	destroySprite(&sprite_level_background_2);
+	destroySprite(&sprite_level_background_3);
+	destroySprite(&sprite_level_background_4);
+	destroySprite(&sprite_level_background_th);
+	destroySprite(&sprite_burnination_meter_full);
+	destroySprite(&sprite_burnination_meter_empty);
+	destroySprite(&sprite_end_of_level_flash);
+	destroySprite(&sprite_death_message);
+	destroySprite(&sprite_burninate_text);
+	destroySprite(&sprite_burninate_fire);
+	destroySprite(&sprite_level_beaten_trogdor);
+	destroySprite(&sprite_level_beaten_smoke);
+	destroySprite(&sprite_game_over_trogdor);
+	destroySprite(&sprite_trogdor);
+	destroySprite(&sprite_cottage);
+	destroySprite(&sprite_cottage_fire);
+	destroySprite(&sprite_peasantometer_icon);
+	destroySprite(&sprite_archer);
+	destroySprite(&sprite_arrow);
+	destroySprite(&sprite_trogdor_fire);
+	destroySprite(&sprite_trogdor_dead);
+	destroySprite(&sprite_knight);
+	destroySprite(&sprite_peasant);
+	destroySprite(&sprite_end_of_level_trogdor);
+	destroySprite(&sprite_loot);
+	destroySprite(&sprite_trogdor_flexing);
+	destroySprite(&sprite_heart);
+	destroySprite(&sprite_knight_funnyjoke);
+	destroySprite(&sprite_arrow_funnyjoke);
+	destroySprite(&sprite_kerrek);
+	destroySprite(&sprite_kerrek_smoked);
+	destroySprite(&sprite_overlay_basement_top);
+	destroySprite(&sprite_overlay_basement_bottom);
+	destroySprite(&sprite_overlay_basement_left);
+	destroySprite(&sprite_overlay_basement_right);
 }
 
 void destroyTextChars(FontObject *fontObj) {

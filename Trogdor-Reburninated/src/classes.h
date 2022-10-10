@@ -312,10 +312,10 @@ class Archer {
 			frameState++;
 			switch (frameState) {
 				case 14:
-					setSpriteForm(&sprite, sprite_archer, 1);
+					setSpriteFrame(&sprite, sprite_archer, 1);
 					break;
 				case 20:
-					sprite.srcrect.x = 0;
+					setSpriteFrame(&sprite, sprite_archer, 0);
 					// shoot arrow; this is handled by GameManager
 					break;
 				case 23:
@@ -879,7 +879,7 @@ class GameManager {
 			// Animate sprite
 			if (trog->frameStateFlag & 2) {
 				trog->frameState = 0;
-				trog->sprite.srcrect.x = 0;
+				setSpriteFrame(&trog->sprite, sprite_trogdor, 0);
 				setSpriteForm(&trog->sprite, sprite_trogdor, trog->sprite.facingRight);
 			} else if (trog->frameStateFlag & 1) {
 				trog->frameState = (++trog->frameState % 8);
@@ -890,7 +890,7 @@ class GameManager {
 				// Animate sprite
 				if (trog->frameStateFlag & 2) {
 					trog->fire_frameState = 0;
-					trog->sprite_fire.srcrect.x = 0;
+					setSpriteFrame(&trog->sprite_fire, sprite_trogdor_fire, 0);
 					setSpriteForm(&trog->sprite_fire, sprite_trogdor_fire, trog->sprite.facingRight);
 				} else {
 					trog->fire_frameState = (++trog->fire_frameState % 12);
@@ -918,7 +918,7 @@ class GameManager {
 			// Animate sprite
 			if (trog->frameStateFlag & 2) {
 				trog->frameState = 0;
-				trog->sprite.srcrect.x = 0;
+				setSpriteFrame(&trog->sprite, sprite_trogdor, 0);
 				setSpriteForm(&trog->sprite, sprite_trogdor, trog->sprite.facingRight);
 			} else if (trog->frameStateFlag & 1) {
 				trog->frameState = (++trog->frameState % 8);
@@ -929,7 +929,7 @@ class GameManager {
 				// Animate sprite
 				if (trog->frameStateFlag & 2) {
 					trog->fire_frameState = 0;
-					trog->sprite_fire.srcrect.x = 0;
+					setSpriteFrame(&trog->sprite_fire, sprite_trogdor_fire, 0);
 					setSpriteForm(&trog->sprite_fire, sprite_trogdor_fire, trog->sprite.facingRight);
 				} else {
 					trog->fire_frameState = (++trog->fire_frameState % 12);

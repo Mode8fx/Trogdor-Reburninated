@@ -13,6 +13,7 @@ Features:
 	- Strong Bad Commentary Frequency
 	- Debug Cheat Toggle
 Polish:
+- Fix burninate message fire
 - Move Credits screen, Coming Soon screen, and Quit functionality to Options menu
 - Add "Libraries" screen to Options menu
 - Add "Want more?" screen for other system ports to Options menu

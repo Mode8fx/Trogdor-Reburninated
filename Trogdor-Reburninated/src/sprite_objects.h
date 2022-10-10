@@ -3,7 +3,22 @@
 #ifndef SPRITE_OBJECTS_H
 #define SPRITE_OBJECTS_H
 
+struct SpriteSubObject {
+#if !defined(SDL1)
+    SDL_Texture *texture;
+#else
+    SDL_Surface *surface;
+#endif
+    Sint8 x_offset_start;
+    Sint8 x_offset_end;
+    Sint8 y_offset_start;
+    Sint8 y_offset_end;
+    Sint8 x_center;
+    Sint8 y_center;
+};
+
 struct SpriteObject {
+    SpriteSubObject *sub[8]; // the max number of frames a sprite sheet can have is 8
 #if !defined(SDL1)
     SDL_Texture *texture;
 #else
@@ -16,20 +31,6 @@ struct SpriteObject {
     Sint8 numAnimFrames; // e.g. Trogdor has four frames in his walking animation
     Sint8 numForms;      // e.g. Trogdor has two forms (facing left, facing right)
     SDL_Rect dstrect;    // represents the size of a sprite, even if it was resized
-};
-
-struct SpriteSubObject {
-#if !defined(SDL1)
-    SDL_Texture *texture;
-#else
-    SDL_Surface *surface;
-#endif
-    Sint8 x_offset_left;
-    Sint8 y_offset_left;
-    Sint8 x_offset_right;
-    Sint8 y_offset_right;
-    Sint8 x_center;
-    Sint8 y_center;
 };
 
 struct SpriteInstance {
@@ -45,6 +46,7 @@ struct SpriteInstance {
 extern SDL_Rect outputRect;
 
 extern void prepareSprite(SpriteObject *, const char [], Sint8, Sint8, double);
+extern void prepareSprite_old(SpriteObject *, const char [], Sint8, Sint8, double);
 extern void setSpriteScale(SpriteObject *, double);
 extern void setSpriteFrame(SpriteInstance *, SpriteObject, Sint8);
 extern void setSpriteForm(SpriteInstance *, SpriteObject, Sint8);
