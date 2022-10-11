@@ -494,14 +494,14 @@ int main(int argv, char** args) {
 					GM.renderPeasants();
 					GM.renderTrogdor();
 					if (GM.burnination > 0) {
-						renderSprite_game(GM.player.sprite_fire);
+						GM.player.sprite_fire.renderSprite_game();
 					}
 					GM.renderArchers();
 					GM.renderArrows();
 					if (GM.sprite_dm.isActive) {
-						renderSprite_game(GM.sprite_dm);
+						GM.sprite_dm.renderSprite_game();
 					} else if (GM.b_visible) {
-						renderSprite_game(GM.sprite_bf);
+						GM.sprite_bf.renderSprite_game();
 						renderSprite_static_game(sprite_burninate_text);
 					}
 					if (GM.manually_paused) {
@@ -609,12 +609,12 @@ int main(int argv, char** args) {
 					GM.renderLoot();
 					GM.renderTrogdor();
 					if (GM.burnination > 0) {
-						renderSprite_game(GM.player.sprite_fire);
+						GM.player.sprite_fire.renderSprite_game();
 					}
 					if (GM.sprite_dm.isActive) {
-						renderSprite_game(GM.sprite_dm);
+						GM.sprite_dm.renderSprite_game();
 					} else if (GM.b_visible) {
-						renderSprite_game(GM.sprite_bf);
+						GM.sprite_bf.renderSprite_game();
 						renderSprite_static_game(sprite_burninate_text);
 					}
 					if (GM.manually_paused) {

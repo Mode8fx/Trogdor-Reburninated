@@ -603,11 +603,6 @@ void destroySprite(SpriteObject *sprite) {
 		}
 		free(sprite->sub[i]);
 	}
-#if !defined(SDL1)
-	SDL_DestroyTexture(sprite->texture);
-#else
-	SDL_FreeSurface(sprite->surface);
-#endif
 }
 
 void destroyAllSprites() {
