@@ -16,7 +16,7 @@ SDL_Surface *temp_sprite_2;
 SDL_Surface *temp_sprite_single_zoom;
 #endif
 
-Uint32 getpixel(SDL_Surface* surface, int x, int y) {
+Uint32 getPixel(SDL_Surface *surface, int x, int y) {
     /* Here p is the address to the pixel we want to retrieve */
     p = (Uint8*)surface->pixels + y * surface->pitch + x * bpp;
 
@@ -43,7 +43,7 @@ Sint8 getXOffsetStart(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
     offsetEnd = offsetStart + spriteObj->frame_w - 1;
     for (int_i = offsetStart; int_i < offsetEnd; int_i++) {
         for (int_j = spriteObj->frame_h * y; int_j < spriteObj->frame_h * (y + 1); int_j++) {
-            if (getpixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
+            if (getPixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
                 return (Sint8)(int_i - offsetStart);
             }
         }
@@ -51,13 +51,13 @@ Sint8 getXOffsetStart(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
     return (Sint8)spriteObj->frame_w - 1;
 }
 
-Sint8 getXOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
+Sint16 getXOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
     offsetStart = spriteObj->frame_w * x;
     offsetEnd = offsetStart + spriteObj->frame_w - 1;
     for (int_i = offsetEnd; int_i > offsetStart; int_i--) {
         for (int_j = spriteObj->frame_h * y; int_j < spriteObj->frame_h * (y + 1); int_j++) {
-            if (getpixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
-                return (Sint8)(int_i - offsetStart);
+            if (getPixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
+                return (Sint16)(int_i - offsetStart);
             }
         }
     }
@@ -69,7 +69,7 @@ Sint8 getYOffsetStart(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
     offsetEnd = offsetStart + spriteObj->frame_h - 1;
     for (int_j = offsetStart; int_j < offsetEnd; int_j++) {
         for (int_i = spriteObj->frame_w * x; int_i < spriteObj->frame_w * (x + 1); int_i++) {
-            if (getpixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
+            if (getPixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
                 return (Sint8)(int_j - offsetStart);
             }
         }
@@ -77,35 +77,35 @@ Sint8 getYOffsetStart(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
     return (Sint8)spriteObj->frame_h - 1;
 }
 
-Sint8 getYOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
+Sint16 getYOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
     offsetStart = spriteObj->frame_h * y;
     offsetEnd = offsetStart + spriteObj->frame_h - 1;
     for (int_j = offsetEnd; int_j > offsetStart; int_j--) {
         for (int_i = spriteObj->frame_w * x; int_i < spriteObj->frame_w * (x + 1); int_i++) {
-            if (getpixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
-                return (Sint8)(int_j - offsetStart);
+            if (getPixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
+                return (Sint16)(int_j - offsetStart);
             }
         }
     }
     return 0;
 }
 
-void prepareSurfaceFromSpriteSheet(SDL_Surface *surface, SpriteObject *spriteObj) {
+void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
     int_i = spriteObj->sub[i][j].x_offset_end - spriteObj->sub[i][j].x_offset_start + 1;
     int_j = spriteObj->sub[i][j].y_offset_end - spriteObj->sub[i][j].y_offset_start + 1;
 #if (defined(WII) || defined(GAMECUBE))
-    surface = SDL_CreateRGBSurface(0, int_i, int_j, 24, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+    temp_sprite_single = SDL_CreateRGBSurface(0, int_i, int_j, 24, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
 #elif SDL_BYTEORDER == SDL_BIG_ENDIAN
-    surface = SDL_CreateRGBSurface(0, int_i, int_j, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+    temp_sprite_single = SDL_CreateRGBSurface(0, int_i, int_j, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
 #else
-    surface = SDL_CreateRGBSurface(0, int_i, int_j, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+    temp_sprite_single = SDL_CreateRGBSurface(0, int_i, int_j, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 #endif
 #if !defined(SDL1)
-    SDL_SetColorKey(surface, SDL_TRUE, 0xFF00FF);
+    SDL_SetColorKey(temp_sprite_single, SDL_TRUE, 0xFF00FF);
 #else
-    SDL_SetColorKey(surface, SDL_SRCCOLORKEY, 0xFF00FF);
+    SDL_SetColorKey(temp_sprite_single, SDL_SRCCOLORKEY, 0xFF00FF);
 #endif
-    SDL_FillRect(surface, NULL, 0xFF00FF);
+    SDL_FillRect(temp_sprite_single, NULL, 0xFF00FF);
     single_srcrect.x = (spriteObj->frame_w * i) + spriteObj->sub[i][j].x_offset_start;
     single_srcrect.y = (spriteObj->frame_h * j) + spriteObj->sub[i][j].y_offset_start;
     single_srcrect.w = int_i;
@@ -114,7 +114,7 @@ void prepareSurfaceFromSpriteSheet(SDL_Surface *surface, SpriteObject *spriteObj
     single_dstrect.y = 0;
     single_dstrect.w = int_i;
     single_dstrect.h = int_j;
-    SDL_BlitSurface(temp_sprite_sheet, &single_srcrect, surface, &single_dstrect);
+    SDL_BlitSurface(temp_sprite_sheet, &single_srcrect, temp_sprite_single, &single_dstrect);
 }
 
 void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFrames, Sint8 numForms, double scale) {
@@ -160,7 +160,7 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
             spriteObj->sub[i][j].y_offset_end = getYOffsetEnd(spriteObj, i, j);
 #if !defined(SDL1)
             // [SDL2] Create a new surface from the boundaries of the sprite, then create a texture from it
-            prepareSurfaceFromSpriteSheet(temp_sprite_single, spriteObj);
+            prepareSurfaceFromSpriteSheet(spriteObj);
             //spriteObj->surface = SDL_DisplayFormat(temp_sprite);
             spriteObj->sub[i][j].texture = SDL_CreateTextureFromSurface(renderer, temp_sprite_single);
             SDL_FreeSurface(temp_sprite_single);
@@ -171,10 +171,12 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
             }
             if (screenScale == 1 && scale == 1) {
                 // [SDL1 Normal] Create a new surface from the boundaries of the sprite
-                prepareSurfaceFromSpriteSheet(spriteObj->sub[i][j].surface, spriteObj);
+                prepareSurfaceFromSpriteSheet(spriteObj);
+                spriteObj->sub[i][j].surface = temp_sprite_single;
+                temp_sprite_single = NULL;
             } else {
                 // [SDL1 Zoom] Create a new surface from the boundaries of the sprite and zoom it
-                prepareSurfaceFromSpriteSheet(temp_sprite_single, spriteObj);
+                prepareSurfaceFromSpriteSheet(spriteObj);
                 spriteObj->sub[i][j].surface = zoomSurface(temp_sprite_single, screenScale * scale, screenScale * scale, SMOOTHING_OFF);
                 SDL_FreeSurface(temp_sprite_single);
                 temp_sprite_single = NULL;
@@ -241,6 +243,17 @@ void drawRectWithAlpha(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
 #else
     SDL_FillRect(windowScreen, &outputRect, ((r << 16) + (g << 8) + (b)));
 #endif
+}
+
+SpriteInstance::SpriteInstance(SpriteObject *so, Sint8 frame, Sint8 form) {
+    spriteObj = so;
+    if (spriteObj->numAnimFrames > 0) { // no idea why I need this check, but I do
+        resetSrcrect();
+        dstrect = spriteObj->dstrect;
+        setFrame(frame);
+        setForm(form);
+        updateCurrSprite();
+    }
 }
 
 void SpriteInstance::resetSrcrect() {

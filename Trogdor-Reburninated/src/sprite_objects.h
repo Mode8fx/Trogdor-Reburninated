@@ -10,9 +10,9 @@ struct SpriteSubObject {
     SDL_Surface *surface;
 #endif
     Sint8 x_offset_start;
-    Sint8 x_offset_end;
+    Sint16 x_offset_end;
     Sint8 y_offset_start;
-    Sint8 y_offset_end;
+    Sint16 y_offset_end;
     Sint8 x_center;
     Sint8 y_center;
 };
@@ -46,15 +46,8 @@ class SpriteInstance {
         bool isActive;
         bool facingRight;
         SpriteInstance() {
-            SpriteInstance(NULL, 0, 0);
         }
-        SpriteInstance(SpriteObject *spriteObj, Sint8 frame, Sint8 form) {
-            spriteObj = spriteObj;
-            resetSrcrect();
-            dstrect = spriteObj->dstrect;
-            setFrame(frame);
-            setForm(form);
-        }
+        SpriteInstance(SpriteObject *, Sint8, Sint8);
         void resetSrcrect();
         void setFrame(Sint8);
         void setForm(Sint8);
