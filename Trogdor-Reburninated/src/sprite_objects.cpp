@@ -242,3 +242,75 @@ void drawRectWithAlpha(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
     SDL_FillRect(windowScreen, &outputRect, ((r << 16) + (g << 8) + (b)));
 #endif
 }
+
+void SpriteInstance::resetSrcrect() {
+    srcrect = { 0, 0, spriteObj->scaled_w, spriteObj->scaled_h };
+}
+
+void SpriteInstance::setFrame(Sint8 frame) {
+    animFrame = frame;
+    srcrect.x = spriteObj->scaled_w * animFrame;
+}
+
+void SpriteInstance::setForm(Sint8 form) {
+    animForm = form;
+    srcrect.y = spriteObj->scaled_h * animForm;
+}
+
+void SpriteInstance::updateCurrSprite() {
+#if !defined(SDL1)
+    currSprite = spriteObj->sub[animFrame][animForm].texture;
+#else
+    currSprite = spriteObj->sub[animFrame][animForm].surface;
+#endif
+    currSpriteXOffset = spriteObj->sub[animFrame][animForm].x_offset_start;
+    currSpriteYOffset = spriteObj->sub[animFrame][animForm].y_offset_start;
+}
+
+void SpriteInstance::renderSprite_game() {
+    outputRect = dstrect;
+    outputRect.x = (int)(outputRect.x * screenScale) + gameToWindowDstRect.x + currSpriteXOffset;
+    outputRect.y = (int)(outputRect.y * screenScale) + gameToWindowDstRect.y + currSpriteYOffset;
+    outputRect.w = (int)(outputRect.w * screenScale);
+    outputRect.h = (int)(outputRect.h * screenScale);
+#if !defined(SDL1)
+    SDL_RenderCopy(renderer, currSprite, &srcrect, &outputRect);
+#else
+    SDL_BlitSurface(currSprite, &srcrect, windowScreen, &outputRect);
+#endif
+}
+
+void SpriteInstance::renderSprite_app() {
+    outputRect = dstrect;
+    outputRect.x = (int)(outputRect.x * screenScale) + appToWindowDstRect.x + currSpriteXOffset;
+    outputRect.y = (int)(outputRect.y * screenScale) + appToWindowDstRect.y + currSpriteYOffset;
+    outputRect.w = (int)(outputRect.w * screenScale);
+    outputRect.h = (int)(outputRect.h * screenScale);
+#if !defined(SDL1)
+    SDL_RenderCopy(renderer, currSprite, &srcrect, &outputRect);
+#else
+    SDL_BlitSurface(currSprite, &srcrect, windowScreen, &outputRect);
+#endif
+}
+
+void SpriteInstance::renderSprite_overlay() {
+    outputRect = dstrect;
+    outputRect.w = (int)(outputRect.w * screenScale);
+    outputRect.h = (int)(outputRect.h * screenScale);
+#if !defined(SDL1)
+    SDL_RenderCopy(renderer, currSprite, NULL, &outputRect);
+#else
+    SDL_BlitSurface(currSprite, NULL, windowScreen, &outputRect);
+#endif
+}
+
+void SpriteInstance::renderEmptyOverlay() {
+    outputRect = dstrect;
+    outputRect.w = (int)(outputRect.w * screenScale);
+    outputRect.h = (int)(outputRect.h * screenScale);
+#if !defined(SDL1)
+    SDL_RenderFillRect(renderer, &outputRect);
+#else
+    SDL_FillRect(windowScreen, &outputRect, 0);
+#endif
+}

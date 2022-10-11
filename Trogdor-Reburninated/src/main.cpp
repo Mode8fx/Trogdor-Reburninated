@@ -273,7 +273,7 @@ int main(int argv, char** args) {
 			/* Videlectrix logo */
 			case 1:
 				if (frameState < 65) {
-					renderSprite_static_app(sprite_videlectrix_logo);
+					sprite_videlectrix_logo_ins.renderSprite_app();
 					renderText(text_1_presents, font_nokia_12);
 				}
 				if (frameState < 72) {
@@ -303,7 +303,7 @@ int main(int argv, char** args) {
 					frameState = 3; // 3 is intentional
 					MM = MenuManager();
 				}
-				renderSprite_static_game(sprite_title_screen);
+				sprite_title_screen_ins.renderSprite_game();
 				break;
 			/* Instructions Screen */
 			case 3:
@@ -323,7 +323,7 @@ int main(int argv, char** args) {
 						isRunning = false;
 					}
 				}
-				renderSprite_static_game(sprite_trogdor_logo);
+				sprite_trogdor_logo_ins.renderSprite_game();
 				if (gameHiResMult < 2) {
 					switch (MM.page) {
 						case 1:
@@ -502,7 +502,7 @@ int main(int argv, char** args) {
 						GM.sprite_dm.renderSprite_game();
 					} else if (GM.b_visible) {
 						GM.sprite_bf.renderSprite_game();
-						renderSprite_static_game(sprite_burninate_text);
+						sprite_burninate_text_ins.renderSprite_game();
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
@@ -536,7 +536,7 @@ int main(int argv, char** args) {
 				GM.renderTopBar();
 				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				// TODO: draw "IT'S OVER!" and whatever else needs to be handled for this screen
-				renderSprite_static_game(sprite_game_over_trogdor);
+				sprite_game_over_trogdor_ins.renderSprite_game();
 				switch (frameState) {
 					case 321:
 						loadAndPlaySound(SFX_GAMEOVER);
@@ -615,7 +615,7 @@ int main(int argv, char** args) {
 						GM.sprite_dm.renderSprite_game();
 					} else if (GM.b_visible) {
 						GM.sprite_bf.renderSprite_game();
-						renderSprite_static_game(sprite_burninate_text);
+						sprite_burninate_text_ins.renderSprite_game();
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
@@ -648,7 +648,7 @@ int main(int argv, char** args) {
 				GM.renderTopBar();
 				GM.renderAndAnimateCottages();
 				if (((frameState - 1) / 2) % 2 == 0) {
-					renderSprite_static_game(sprite_end_of_level_flash);
+					sprite_end_of_level_flash_ins.renderSprite_game();
 				}
 				switch (frameState) {
 					case 257:
@@ -675,7 +675,7 @@ int main(int argv, char** args) {
 				if (sceneState == 8) {
 					frameState++;
 				}
-				renderSprite_static_game(sprite_end_of_level_trogdor);
+				sprite_end_of_level_trogdor_ins.renderSprite_game();
 				break;
 			/* Level Beaten Screen */
 			case 9:
@@ -963,18 +963,18 @@ int main(int argv, char** args) {
 		/* Draw Overlay */
 		if (renderOverlay) {
 			if (showOverlay) {
-				renderSprite_overlay(sprite_overlay_basement_top);
-				renderSprite_overlay(sprite_overlay_basement_bottom);
-				renderSprite_overlay(sprite_overlay_basement_left);
-				renderSprite_overlay(sprite_overlay_basement_right);
+				sprite_overlay_basement_top_ins.renderSprite_overlay();
+				sprite_overlay_basement_bottom_ins.renderSprite_overlay();
+				sprite_overlay_basement_left_ins.renderSprite_overlay();
+				sprite_overlay_basement_right_ins.renderSprite_overlay();
 			} else {
 #if !defined(SDL1)
 				SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 #endif
-				renderEmptyOverlay(sprite_overlay_basement_top);
-				renderEmptyOverlay(sprite_overlay_basement_bottom);
-				renderEmptyOverlay(sprite_overlay_basement_left);
-				renderEmptyOverlay(sprite_overlay_basement_right);
+				sprite_overlay_basement_top_ins.renderEmptyOverlay();
+				sprite_overlay_basement_bottom_ins.renderEmptyOverlay();
+				sprite_overlay_basement_left_ins.renderEmptyOverlay();
+				sprite_overlay_basement_right_ins.renderEmptyOverlay();
 			}
 		}
 

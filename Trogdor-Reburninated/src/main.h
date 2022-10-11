@@ -70,8 +70,11 @@ SoundEffect sfx_shutup;
 
 /* Sprite Objects */
 SpriteObject sprite_videlectrix_logo;
+SpriteInstance sprite_videlectrix_logo_ins;
 SpriteObject sprite_title_screen;
+SpriteInstance sprite_title_screen_ins;
 SpriteObject sprite_trogdor_logo;
+SpriteInstance sprite_trogdor_logo_ins;
 SpriteObject sprite_level_background_1;
 SpriteObject sprite_level_background_2;
 SpriteObject sprite_level_background_3;
@@ -80,17 +83,26 @@ SpriteObject sprite_level_background_th;
 SpriteObject *sprite_level_background;
 SpriteObject sprite_burnination_meter_full;
 SpriteObject sprite_burnination_meter_empty;
+SpriteInstance sprite_burnination_meter_empty_ins;
 SpriteObject sprite_end_of_level_flash;
+SpriteInstance sprite_end_of_level_flash_ins;
 SpriteObject sprite_death_message;
 SpriteObject sprite_burninate_text;
+SpriteInstance sprite_burninate_text_ins;
 SpriteObject sprite_burninate_fire;
 SpriteObject sprite_level_beaten_trogdor;
+SpriteInstance sprite_level_beaten_trogdor_ins;
 SpriteObject sprite_level_beaten_smoke;
 SpriteObject sprite_game_over_trogdor;
+SpriteInstance sprite_game_over_trogdor_ins;
 SpriteObject sprite_overlay_basement_top;
+SpriteInstance sprite_overlay_basement_top_ins;
 SpriteObject sprite_overlay_basement_bottom;
+SpriteInstance sprite_overlay_basement_bottom_ins;
 SpriteObject sprite_overlay_basement_left;
+SpriteInstance sprite_overlay_basement_left_ins;
 SpriteObject sprite_overlay_basement_right;
+SpriteInstance sprite_overlay_basement_right_ins;
 SpriteObject sprite_trogdor;
 SpriteObject sprite_cottage;
 SpriteObject sprite_cottage_fire;
@@ -103,6 +115,7 @@ SpriteObject sprite_trogdor_dead;
 SpriteObject sprite_knight;
 SpriteObject sprite_peasant;
 SpriteObject sprite_end_of_level_trogdor;
+SpriteInstance sprite_end_of_level_trogdor_ins;
 SpriteObject sprite_loot;
 SpriteObject sprite_trogdor_flexing;
 SpriteObject sprite_heart;
@@ -423,9 +436,9 @@ void renderBackground() {
 	outputRect.w = (Uint16)(outputRect.w * screenScale);
 	outputRect.h = (Uint16)(outputRect.h * screenScale);
 #if !defined(SDL1)
-	SDL_RenderCopy(renderer, sprite_level_background->texture, NULL, &outputRect);
+	SDL_RenderCopy(renderer, sprite_level_background->sub[0][0].texture, NULL, &outputRect);
 #else
-	SDL_BlitSurface(sprite_level_background->surface, NULL, windowScreen, &outputRect);
+	SDL_BlitSurface(sprite_level_background->sub[0][0].surface, NULL, windowScreen, &outputRect);
 #endif
 }
 

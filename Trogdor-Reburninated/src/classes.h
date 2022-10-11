@@ -1530,7 +1530,7 @@ class GameManager {
 			renderText(text_4_level_val, font_serif_red_6);
 			// Render peasantometer/burnination meter (depending on their values)
 			if (burnination > 0) {
-				renderSprite_static_game(sprite_burnination_meter_empty);
+				sprite_burnination_meter_empty_ins.renderSprite_game();
 				sprite_bmFull.renderSprite_game();
 			} else {
 				sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;

@@ -55,70 +55,14 @@ class SpriteInstance {
             setFrame(frame);
             setForm(form);
         }
-        void resetSrcrect() {
-            srcrect = { 0, 0, spriteObj->scaled_w, spriteObj->scaled_h };
-        }
-        void setFrame(Sint8 frame) {
-            animFrame = frame;
-            srcrect.x = spriteObj->scaled_w * animFrame;
-        }
-        void setForm(Sint8 form) {
-            animForm = form;
-            srcrect.y = spriteObj->scaled_h * animForm;
-        }
-        void updateCurrSprite() {
-#if !defined(SDL1)
-            currSprite = spriteObj->sub[animFrame][animForm].texture;
-#else
-            currSprite = spriteObj->sub[animFrame][animForm].surface;
-#endif
-            currSpriteXOffset = spriteObj->sub[animFrame][animForm].x_offset_start;
-            currSpriteYOffset = spriteObj->sub[animFrame][animForm].y_offset_start;
-        }
-        void renderSprite_game() {
-            outputRect = dstrect;
-            outputRect.x = (int)(outputRect.x * screenScale) + gameToWindowDstRect.x + currSpriteXOffset;
-            outputRect.y = (int)(outputRect.y * screenScale) + gameToWindowDstRect.y + currSpriteYOffset;
-            outputRect.w = (int)(outputRect.w * screenScale);
-            outputRect.h = (int)(outputRect.h * screenScale);
-#if !defined(SDL1)
-            SDL_RenderCopy(renderer, currSprite, &srcrect, &outputRect);
-#else
-            SDL_BlitSurface(currSprite, &srcrect, windowScreen, &outputRect);
-#endif
-        }
-        void renderSprite_app() {
-            outputRect = dstrect;
-            outputRect.x = (int)(outputRect.x * screenScale) + appToWindowDstRect.x + currSpriteXOffset;
-            outputRect.y = (int)(outputRect.y * screenScale) + appToWindowDstRect.y + currSpriteYOffset;
-            outputRect.w = (int)(outputRect.w * screenScale);
-            outputRect.h = (int)(outputRect.h * screenScale);
-#if !defined(SDL1)
-            SDL_RenderCopy(renderer, currSprite, &srcrect, &outputRect);
-#else
-            SDL_BlitSurface(currSprite, &srcrect, windowScreen, &outputRect);
-#endif
-        }
-        void renderSprite_overlay() {
-            outputRect = dstrect;
-            outputRect.w = (int)(outputRect.w * screenScale);
-            outputRect.h = (int)(outputRect.h * screenScale);
-#if !defined(SDL1)
-            SDL_RenderCopy(renderer, currSprite, NULL, &outputRect);
-#else
-            SDL_BlitSurface(currSprite, NULL, windowScreen, &outputRect);
-#endif
-        }
-        void renderEmptyOverlay() {
-            outputRect = dstrect;
-            outputRect.w = (int)(outputRect.w * screenScale);
-            outputRect.h = (int)(outputRect.h * screenScale);
-#if !defined(SDL1)
-            SDL_RenderFillRect(renderer, &outputRect);
-#else
-            SDL_FillRect(windowScreen, &outputRect, 0);
-#endif
-        }
+        void resetSrcrect();
+        void setFrame(Sint8);
+        void setForm(Sint8);
+        void updateCurrSprite();
+        void renderSprite_game();
+        void renderSprite_app();
+        void renderSprite_overlay();
+        void renderEmptyOverlay();
 };
 
 extern SDL_Rect outputRect;

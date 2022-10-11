@@ -166,7 +166,7 @@ void cutscene_level_beaten() {
 		default:
 			break;
 	}
-	renderSprite_static_game(sprite_level_beaten_trogdor);
+	sprite_level_beaten_trogdor_ins.renderSprite_game();
 	renderCSO(&cutscene_level_beaten_smoke);
 	renderCSO(&cutscene_cottage_fire);
 	renderText(text_9_nice_work, font_serif_white_10);
