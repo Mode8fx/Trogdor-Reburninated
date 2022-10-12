@@ -91,14 +91,18 @@ Sint16 getYOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
 }
 
 void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
-    int_i = spriteObj->sub[i][j].x_offset_end - spriteObj->sub[i][j].x_offset_start + 1;
-    int_j = spriteObj->sub[i][j].y_offset_end - spriteObj->sub[i][j].y_offset_start + 1;
+    single_srcrect.x = (spriteObj->frame_w * i) + spriteObj->sub[i][j].x_offset_start;
+    single_srcrect.y = (spriteObj->frame_h * j) + spriteObj->sub[i][j].y_offset_start;
+    single_srcrect.w = spriteObj->sub[i][j].x_offset_end - spriteObj->sub[i][j].x_offset_start + 1;
+    single_srcrect.h = spriteObj->sub[i][j].y_offset_end - spriteObj->sub[i][j].y_offset_start + 1;
+    //spriteObj->sub[i][j].w = (int)(single_srcrect.w * scale);
+    //spriteObj->sub[i][j].h = (int)(single_srcrect.h * scale);
 #if (defined(WII) || defined(GAMECUBE))
-    temp_sprite_single = SDL_CreateRGBSurface(0, int_i, int_j, 24, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+    temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 24, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
 #elif SDL_BYTEORDER == SDL_BIG_ENDIAN
-    temp_sprite_single = SDL_CreateRGBSurface(0, int_i, int_j, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+    temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
 #else
-    temp_sprite_single = SDL_CreateRGBSurface(0, int_i, int_j, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+    temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 #endif
 #if !defined(SDL1)
     SDL_SetColorKey(temp_sprite_single, SDL_TRUE, 0xFF00FF);
@@ -106,18 +110,12 @@ void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
     SDL_SetColorKey(temp_sprite_single, SDL_SRCCOLORKEY, 0xFF00FF);
 #endif
     SDL_FillRect(temp_sprite_single, NULL, 0xFF00FF);
-    single_srcrect.x = (spriteObj->frame_w * i) + spriteObj->sub[i][j].x_offset_start;
-    single_srcrect.y = (spriteObj->frame_h * j) + spriteObj->sub[i][j].y_offset_start;
-    single_srcrect.w = int_i;
-    single_srcrect.h = int_j;
-    single_dstrect.x = 0;
-    single_dstrect.y = 0;
-    single_dstrect.w = int_i;
-    single_dstrect.h = int_j;
+    single_dstrect = { 0, 0, single_srcrect.w, single_srcrect.h };
     SDL_BlitSurface(temp_sprite_sheet, &single_srcrect, temp_sprite_single, &single_dstrect);
 }
 
 void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFrames, Sint8 numForms, double scale) {
+    spriteObj->spriteScale = scale;
     // Check if the surface/texture already exists
 #if !defined(SDL1)
     if (spriteObj->sub[0] != NULL) {
@@ -142,12 +140,10 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
     // Store the size values of the sprite sheet
     spriteObj->frame_w = (Sint16)(temp_sprite_sheet->w / numAnimFrames);
     spriteObj->frame_h = (Sint16)(temp_sprite_sheet->h / numForms);
-    spriteObj->scaled_w = (Uint16)(spriteObj->frame_w);
-    spriteObj->scaled_h = (Uint16)(spriteObj->frame_h);
     spriteObj->numAnimFrames = numAnimFrames;
     spriteObj->numForms = numForms;
     // Iterate through each section (sprite) of the sprite sheet
-    //Convert the pixels to 32 bit
+    // Convert the pixels to 32 bit
     pixels = (Uint32*)temp_sprite_sheet->pixels;
     bpp = temp_sprite_sheet->format->BytesPerPixel;
     for (i = 0; i < numAnimFrames; i++) {
@@ -164,7 +160,7 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
             //spriteObj->surface = SDL_DisplayFormat(temp_sprite);
             spriteObj->sub[i][j].texture = SDL_CreateTextureFromSurface(renderer, temp_sprite_single);
             SDL_FreeSurface(temp_sprite_single);
-            temp_sprite_single = NULL;
+            SDL_QueryTexture(spriteObj->sub[i][j].texture, NULL, NULL, &spriteObj->sub[i][j].w, &spriteObj->sub[i][j].h);
 #else
             if (spriteObj->sub[i][j]->surface != NULL) {
                 SDL_FreeSurface(spriteObj->sub[i][j].surface);
@@ -173,19 +169,18 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
                 // [SDL1 Normal] Create a new surface from the boundaries of the sprite
                 prepareSurfaceFromSpriteSheet(spriteObj);
                 spriteObj->sub[i][j].surface = temp_sprite_single;
-                temp_sprite_single = NULL;
             } else {
                 // [SDL1 Zoom] Create a new surface from the boundaries of the sprite and zoom it
                 prepareSurfaceFromSpriteSheet(spriteObj);
                 spriteObj->sub[i][j].surface = zoomSurface(temp_sprite_single, screenScale * scale, screenScale * scale, SMOOTHING_OFF);
                 SDL_FreeSurface(temp_sprite_single);
-                temp_sprite_single = NULL;
             }
+            spriteObj->sub[i][j].w = spriteObj->sub[i][j].surface->w;
+            spriteObj->sub[i][j].h = spriteObj->sub[i][j].surface->h;
 #endif
+            temp_sprite_single = NULL;
         }
     }
-    //SDL_SetColorKey(temp_sprite_sheet, SDL_TRUE, 0xFF00FF);
-    //spriteObj->texture = SDL_CreateTextureFromSurface(renderer, temp_sprite_sheet);
     // Free the sprite sheet since we no longer need it
     SDL_FreeSurface(temp_sprite_sheet);
     temp_sprite_sheet = NULL;
@@ -247,27 +242,29 @@ void drawRectWithAlpha(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
 
 SpriteInstance::SpriteInstance(SpriteObject *so, Sint8 frame, Sint8 form) {
     spriteObj = so;
-    if (spriteObj->numAnimFrames > 0) { // no idea why I need this check, but I do
-        resetSrcrect();
+    // TODO: trogdor.bmp breaks somehow?
+    if (spriteObj->numAnimFrames > 0) {
+        srcrect.x = 0;
+        srcrect.y = 0;
         dstrect = spriteObj->dstrect;
-        setFrame(frame);
-        setForm(form);
-        updateCurrSprite();
+        setFrameAndForm(frame, form);
     }
-}
-
-void SpriteInstance::resetSrcrect() {
-    srcrect = { 0, 0, spriteObj->scaled_w, spriteObj->scaled_h };
 }
 
 void SpriteInstance::setFrame(Sint8 frame) {
     animFrame = frame;
-    srcrect.x = spriteObj->scaled_w * animFrame;
+    updateCurrSprite();
 }
 
 void SpriteInstance::setForm(Sint8 form) {
     animForm = form;
-    srcrect.y = spriteObj->scaled_h * animForm;
+    updateCurrSprite();
+}
+
+void SpriteInstance::setFrameAndForm(Sint8 frame, Sint8 form) {
+    animFrame = frame;
+    animForm = form;
+    updateCurrSprite();
 }
 
 void SpriteInstance::updateCurrSprite() {
@@ -278,14 +275,16 @@ void SpriteInstance::updateCurrSprite() {
 #endif
     currSpriteXOffset = spriteObj->sub[animFrame][animForm].x_offset_start;
     currSpriteYOffset = spriteObj->sub[animFrame][animForm].y_offset_start;
+    srcrect.w = (int)(spriteObj->sub[animFrame][animForm].w * screenScale * spriteObj->spriteScale);
+    srcrect.h = (int)(spriteObj->sub[animFrame][animForm].h * screenScale * spriteObj->spriteScale);
 }
 
 void SpriteInstance::renderSprite_game() {
-    outputRect = dstrect;
-    outputRect.x = (int)(outputRect.x * screenScale) + gameToWindowDstRect.x + currSpriteXOffset;
-    outputRect.y = (int)(outputRect.y * screenScale) + gameToWindowDstRect.y + currSpriteYOffset;
-    outputRect.w = (int)(outputRect.w * screenScale);
-    outputRect.h = (int)(outputRect.h * screenScale);
+    outputRect = { dstrect.x, dstrect.y, srcrect.w, srcrect.h };
+    outputRect.x = (int)((outputRect.x + currSpriteXOffset) * screenScale) + gameToWindowDstRect.x;
+    outputRect.y = (int)((outputRect.y + currSpriteYOffset) * screenScale) + gameToWindowDstRect.y;
+    //outputRect.w = (int)(outputRect.w * screenScale);
+    //outputRect.h = (int)(outputRect.h * screenScale);
 #if !defined(SDL1)
     SDL_RenderCopy(renderer, currSprite, &srcrect, &outputRect);
 #else
@@ -294,11 +293,11 @@ void SpriteInstance::renderSprite_game() {
 }
 
 void SpriteInstance::renderSprite_app() {
-    outputRect = dstrect;
-    outputRect.x = (int)(outputRect.x * screenScale) + appToWindowDstRect.x + currSpriteXOffset;
-    outputRect.y = (int)(outputRect.y * screenScale) + appToWindowDstRect.y + currSpriteYOffset;
-    outputRect.w = (int)(outputRect.w * screenScale);
-    outputRect.h = (int)(outputRect.h * screenScale);
+    outputRect = { dstrect.x, dstrect.y, srcrect.w, srcrect.h };
+    outputRect.x = (int)((outputRect.x + currSpriteXOffset) * screenScale) + appToWindowDstRect.x;
+    outputRect.y = (int)((outputRect.y + currSpriteYOffset) * screenScale) + appToWindowDstRect.y;
+    //outputRect.w = (int)(outputRect.w * screenScale);
+    //outputRect.h = (int)(outputRect.h * screenScale);
 #if !defined(SDL1)
     SDL_RenderCopy(renderer, currSprite, &srcrect, &outputRect);
 #else
@@ -308,8 +307,8 @@ void SpriteInstance::renderSprite_app() {
 
 void SpriteInstance::renderSprite_overlay() {
     outputRect = dstrect;
-    outputRect.w = (int)(outputRect.w * screenScale);
-    outputRect.h = (int)(outputRect.h * screenScale);
+    //outputRect.w = (int)(outputRect.w * screenScale);
+    //outputRect.h = (int)(outputRect.h * screenScale);
 #if !defined(SDL1)
     SDL_RenderCopy(renderer, currSprite, NULL, &outputRect);
 #else
@@ -319,8 +318,8 @@ void SpriteInstance::renderSprite_overlay() {
 
 void SpriteInstance::renderEmptyOverlay() {
     outputRect = dstrect;
-    outputRect.w = (int)(outputRect.w * screenScale);
-    outputRect.h = (int)(outputRect.h * screenScale);
+    //outputRect.w = (int)(outputRect.w * screenScale);
+    //outputRect.h = (int)(outputRect.h * screenScale);
 #if !defined(SDL1)
     SDL_RenderFillRect(renderer, &outputRect);
 #else

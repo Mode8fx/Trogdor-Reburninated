@@ -559,6 +559,7 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_peasantometer_icon, (rootDir + "graphics/peasantometer.bmp").c_str(),
 		0, 3, 2, 1, 1);
 	sprite_peasantometer_icon_init_x = (Uint8)(gameWidth * 66 / gameWidth);
+	sprite_peasantometer_icon_step = (int)(sprite_peasantometer_icon.frame_w * 1.5);
 	PREPARE_SPRITE(sprite_archer, (rootDir + "graphics/archer.bmp").c_str(),
 		0, 0, 2, 2, 1);
 	PREPARE_SPRITE(sprite_arrow, (rootDir + "graphics/arrow.bmp").c_str(),

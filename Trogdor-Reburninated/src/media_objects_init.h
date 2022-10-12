@@ -60,6 +60,7 @@ extern SpriteObject sprite_cottage;
 extern SpriteObject sprite_cottage_fire;
 extern SpriteObject sprite_peasantometer_icon;
 extern Uint8        sprite_peasantometer_icon_init_x;
+extern int          sprite_peasantometer_icon_step;
 extern SpriteObject sprite_archer;
 extern SpriteObject sprite_arrow;
 extern SpriteObject sprite_trogdor_fire;

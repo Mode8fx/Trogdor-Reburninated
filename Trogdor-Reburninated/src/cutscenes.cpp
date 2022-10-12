@@ -121,12 +121,12 @@ void renderCSO(CutsceneObject *csObj) {
 
 void updateCSOFrame(CutsceneObject *csObj, Sint8 frame) {
 	csObj->animFrame = frame;
-	csObj->srcrect.x = csObj->sprite->scaled_w * csObj->animFrame;
+	//csObj->srcrect.x = csObj->sprite->scaled_w * csObj->animFrame;
 }
 
 void updateCSOForm(CutsceneObject *csObj, Sint8 form) {
 	csObj->animForm = form;
-	csObj->srcrect.y = csObj->sprite->scaled_h * csObj->animForm;
+	//csObj->srcrect.y = csObj->sprite->scaled_h * csObj->animForm;
 }
 
 void setCSOPos(CutsceneObject *csObj, int x, int y) {

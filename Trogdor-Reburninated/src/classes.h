@@ -451,8 +451,7 @@ class Trogdor {
 		}
 		void resetPos(bool giveInvince) {
 			sprite.facingRight = true;
-			sprite.resetSrcrect();
-			sprite.setForm(sprite.facingRight);
+			sprite.setFrameAndForm(0, sprite.facingRight);
 			sprite.dstrect = { spawnPos_x, spawnPos_y, (Uint16)sprite_trogdor.frame_w, (Uint16)sprite_trogdor.frame_h };
 			sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
 			if (giveInvince) {
@@ -572,7 +571,8 @@ class GameManager {
 		SpriteInstance sprite_bf;               // BURNINATE! Message Fire
 		bool b_visible;                         // BURNINATE! Message
 		SpriteInstance sprite_bmFull;           // burnination meter
-		SpriteInstance sprite_pm;               // peasantometer
+		SpriteInstance sprite_pm_on;            // peasantometer (on)
+		SpriteInstance sprite_pm_off;           // peasantometer (off)
 		Uint8 kick_frameState;                  // kick the machine
 		bool treasureHutFound;                  // treasure hut has been found in this level
 		bool inTreasureHut;                     // player is currently in treasure hut
@@ -613,7 +613,8 @@ class GameManager {
 			sprite_bf.dstrect = { OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), sprite_burninate_text.dstrect.y - sprite_burninate_fire.frame_h + 4, (Uint16)sprite_burninate_fire.frame_w, (Uint16)sprite_burninate_fire.frame_h };
 			b_visible = false;
 			sprite_bmFull = SpriteInstance(&sprite_burnination_meter_full, 0, 0);
-			sprite_pm = SpriteInstance(&sprite_peasantometer_icon, 0, 0);
+			sprite_pm_on = SpriteInstance(&sprite_peasantometer_icon, 1, 0);
+			sprite_pm_off = SpriteInstance(&sprite_peasantometer_icon, 0, 0);
 			kick_frameState = 0;
 			numHuts = 0;
 			treasureHutFound = false;
@@ -628,38 +629,32 @@ class GameManager {
 		}
 		void resetAllSrcRects() {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
-				hutArray[i].sprite.resetSrcrect();
-				hutArray[i].sprite.setForm(hutArray[i].direction - 1);
+				hutArray[i].sprite.updateCurrSprite();
 			}
 			for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
-				knightArray[i].sprite.resetSrcrect();
-				knightArray[i].sprite.setForm(knightArray[i].sprite.facingRight);
+				knightArray[i].sprite.updateCurrSprite();
 			}
 			for (i = 0; i < MAX_NUM_PEASANTS; i++) {
-				peasantArray[i].sprite.resetSrcrect();
+				peasantArray[i].sprite.updateCurrSprite();
 			}
 			for (i = 0; i < 2; i++) {
-				archerArray[i].sprite.resetSrcrect();
-				archerArray[i].sprite.setForm(archerArray[i].sprite.facingRight);
+				archerArray[i].sprite.updateCurrSprite();
 			}
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
-				arrowArrayL[i].sprite.resetSrcrect();
-				arrowArrayL[i].sprite.setForm(arrowArrayL[i].sprite.facingRight);
-				arrowArrayR[i].sprite.resetSrcrect();
-				arrowArrayR[i].sprite.setForm(arrowArrayR[i].sprite.facingRight);
+				arrowArrayL[i].sprite.updateCurrSprite();
+				arrowArrayR[i].sprite.updateCurrSprite();
 			}
 			for (i = 0; i < MAX_NUM_LOOT; i++) {
-				lootArray[i].sprite.resetSrcrect();
+				lootArray[i].sprite.updateCurrSprite();
 			}
-			player.sprite.resetSrcrect();
-			player.sprite.setForm(player.sprite.facingRight);
-			player.sprite_fire.resetSrcrect();
-			player.sprite_fire.setForm(player.sprite.facingRight);
-			player.sprite_death.resetSrcrect();
-			sprite_dm.resetSrcrect();
-			sprite_bf.resetSrcrect();
-			sprite_bmFull.resetSrcrect();
-			sprite_pm.resetSrcrect();
+			player.sprite.updateCurrSprite();
+			player.sprite_fire.updateCurrSprite();
+			player.sprite_death.updateCurrSprite();
+			sprite_dm.updateCurrSprite();
+			sprite_bf.updateCurrSprite();
+			sprite_bmFull.updateCurrSprite();
+			sprite_pm_on.updateCurrSprite();
+			sprite_pm_off.updateCurrSprite();
 		}
 		void levelInit() {
 			setBurnination(0);
@@ -1533,14 +1528,16 @@ class GameManager {
 				sprite_burnination_meter_empty_ins.renderSprite_game();
 				sprite_bmFull.renderSprite_game();
 			} else {
-				sprite_peasantometer_icon.dstrect.x = sprite_peasantometer_icon_init_x;
-				sprite_pm.setFrame(1);
+				sprite_pm_on.dstrect.x = sprite_peasantometer_icon_init_x;
+				sprite_pm_off.dstrect.x = sprite_peasantometer_icon_init_x;
 				for (i = 0; i < 10; i++) {
-					if (peasantometer == i) {
-						sprite_pm.setFrame(0);
+					if (i < peasantometer) {
+						sprite_pm_on.renderSprite_game();
+						sprite_pm_on.dstrect.x += sprite_peasantometer_icon_step;
+					} else {
+						sprite_pm_off.renderSprite_game();
 					}
-					sprite_pm.renderSprite_game();
-					sprite_peasantometer_icon.dstrect.x += (int)(sprite_peasantometer_icon.frame_w * 1.5);
+					sprite_pm_off.dstrect.x += sprite_peasantometer_icon_step;
 				}
 			}
 		}

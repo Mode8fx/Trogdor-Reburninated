@@ -9,6 +9,8 @@ struct SpriteSubObject {
 #else
     SDL_Surface *surface;
 #endif
+    int w;
+    int h;
     Sint8 x_offset_start;
     Sint16 x_offset_end;
     Sint8 y_offset_start;
@@ -21,8 +23,7 @@ struct SpriteObject {
     SpriteSubObject *sub[8]; // the max number of frames a sprite sheet can have is 8
     Sint16 frame_w;      // the original width of a single animation frame
     Sint16 frame_h;      // the original height of a single animation frame
-    Uint16 scaled_w;     // the scaled (actual) width of a single animation frame
-    Uint16 scaled_h;     // the scaled (actual) height of a single animation frame
+    double spriteScale;  // the custom scale used for some sprites
     Sint8 numAnimFrames; // e.g. Trogdor has four frames in his walking animation
     Sint8 numForms;      // e.g. Trogdor has two forms (facing left, facing right)
     SDL_Rect dstrect;    // represents the size of a sprite, even if it was resized
@@ -48,9 +49,9 @@ class SpriteInstance {
         SpriteInstance() {
         }
         SpriteInstance(SpriteObject *, Sint8, Sint8);
-        void resetSrcrect();
         void setFrame(Sint8);
         void setForm(Sint8);
+        void setFrameAndForm(Sint8, Sint8);
         void updateCurrSprite();
         void renderSprite_game();
         void renderSprite_app();

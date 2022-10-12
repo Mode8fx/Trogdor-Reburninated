@@ -108,6 +108,7 @@ SpriteObject sprite_cottage;
 SpriteObject sprite_cottage_fire;
 SpriteObject sprite_peasantometer_icon;
 Uint8 sprite_peasantometer_icon_init_x;
+int sprite_peasantometer_icon_step;
 SpriteObject sprite_archer;
 SpriteObject sprite_arrow;
 SpriteObject sprite_trogdor_fire;
