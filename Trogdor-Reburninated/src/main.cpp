@@ -142,7 +142,9 @@ int main(int argv, char** args) {
 				if (MM.page > MM.maxPageNum) MM.page = MM.maxPageNum;
 				updateText(&text_3_page, "("+to_string(MM.page)+"/"+to_string(MM.maxPageNum)+")");
 			}
-			GM.resetAllSrcRects();
+			if (GM.initialized) {
+				GM.resetAllSrcRects();
+			}
 			windowSizeChanged = false;
 		}
 

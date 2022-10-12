@@ -541,6 +541,7 @@ class MenuManager {
 
 class GameManager {
 	public:
+		bool initialized;                       // whether or not a game has ever been initialized
 		Sint16 mans;                            // lives
 		Uint32 score;                           // score
 		Sint8 peasantometer;                    // # of peasants burned for burnination meter
@@ -586,6 +587,7 @@ class GameManager {
 		}
 		GameManager(MenuManager mm) {
 			srand(SDL_GetTicks());
+			initialized = true;
 			if (mm.contraActive) mans = 30;
 			else mans = 3;
 			score = 0;
