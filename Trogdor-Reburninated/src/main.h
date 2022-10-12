@@ -4,8 +4,8 @@
 #include "classes.h"
 #include "cutscenes.h"
 
-Sint8 sceneState;
-Sint16 frameState;
+Sint8 g_sceneState;
+Sint16 g_frameState;
 Uint16 rand_var;
 SDL_Event event;
 

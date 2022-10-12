@@ -137,7 +137,7 @@ void setCSOPos(CutsceneObject *csObj, int x, int y) {
 }
 
 void cutscene_level_beaten() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 277:
 			//cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_BURNINATE);
@@ -177,7 +177,7 @@ void cutscene_level_beaten() {
 }
 
 void cutscene_level_4() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 420:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
@@ -229,7 +229,7 @@ void cutscene_level_4() {
 }
 
 void cutscene_level_8() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 493:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
@@ -317,7 +317,7 @@ void cutscene_level_8() {
 }
 
 void cutscene_level_12() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 567:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
@@ -369,7 +369,7 @@ void cutscene_level_12() {
 }
 
 void cutscene_level_16() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 641:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
@@ -423,7 +423,7 @@ void cutscene_level_16() {
 }
 
 void cutscene_level_20() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 710:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
@@ -470,7 +470,7 @@ void cutscene_level_20() {
 }
 
 void cutscene_level_24() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 780:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
@@ -558,7 +558,7 @@ void cutscene_level_24() {
 }
 
 void cutscene_level_30() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 853:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
@@ -606,7 +606,7 @@ void cutscene_level_30() {
 }
 
 void cutscene_level_34() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 927:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
@@ -663,8 +663,8 @@ void cutscene_level_34() {
 		default:
 			break;
 	}
-	if (frameState <= 992) {
-		switch ((frameState - 927) % 6) {
+	if (g_frameState <= 992) {
+		switch ((g_frameState - 927) % 6) {
 			case 0:
 				cutscene_peasant_1.dstrect.y = 88;
 				cutscene_peasant_3.dstrect.y = 88;
@@ -702,7 +702,7 @@ void cutscene_level_34() {
 }
 
 void cutscene_level_38() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 1000:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
@@ -753,7 +753,7 @@ void cutscene_level_38() {
 }
 
 void cutscene_level_42() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 1076:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
@@ -774,7 +774,7 @@ void cutscene_level_42() {
 }
 
 void cutscene_level_46_arrow_helper(CutsceneObject *arrowObj, Sint16 startingFrame) {
-	switch (frameState - startingFrame) {
+	switch (g_frameState - startingFrame) {
 		case 0:
 			updateCSOFrame(&cutscene_archer_1, 1);
 			// arrow prepare
@@ -806,7 +806,7 @@ void cutscene_level_46_arrow_helper(CutsceneObject *arrowObj, Sint16 startingFra
 }
 
 void cutscene_level_46() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 1153:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
@@ -852,7 +852,7 @@ void cutscene_level_46() {
 }
 
 void cutscene_level_50() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 1226:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
@@ -867,7 +867,7 @@ void cutscene_level_50() {
 }
 
 void cutscene_level_100() {
-	switch (frameState) {
+	switch (g_frameState) {
 		case 1337:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);

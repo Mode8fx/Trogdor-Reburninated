@@ -9,8 +9,8 @@ struct Timer {
 };
 
 /* Program State */
-extern Sint8 sceneState;
-extern Sint16 frameState;
+extern Sint8 g_sceneState;
+extern Sint16 g_frameState;
 extern Uint16 rand_var;
 
 static bool isRunning;
