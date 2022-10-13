@@ -86,14 +86,6 @@ void scaleGameAndApp() {
 }
 
 void repositionOverlay() {
-	sprite_overlay_basement_top.dstrect.w = (int)(sprite_overlay_basement_top.dstrect.w * screenScale);
-	sprite_overlay_basement_top.dstrect.h = (int)(sprite_overlay_basement_top.dstrect.h * screenScale);
-	sprite_overlay_basement_bottom.dstrect.w = (int)(sprite_overlay_basement_bottom.dstrect.w * screenScale);
-	sprite_overlay_basement_bottom.dstrect.h = (int)(sprite_overlay_basement_bottom.dstrect.h * screenScale);
-	sprite_overlay_basement_left.dstrect.w = (int)(sprite_overlay_basement_left.dstrect.w * screenScale);
-	sprite_overlay_basement_left.dstrect.h = (int)(sprite_overlay_basement_left.dstrect.h * screenScale);
-	sprite_overlay_basement_right.dstrect.w = (int)(sprite_overlay_basement_right.dstrect.w * screenScale);
-	sprite_overlay_basement_right.dstrect.h = (int)(sprite_overlay_basement_right.dstrect.h * screenScale);
 	sprite_overlay_basement_top.dstrect.x = gameToWindowDstRect.x - sprite_overlay_basement_left.dstrect.w;
 	sprite_overlay_basement_top.dstrect.y = gameToWindowDstRect.y - sprite_overlay_basement_top.dstrect.h;
 	sprite_overlay_basement_bottom.dstrect.x = sprite_overlay_basement_top.dstrect.x;

@@ -159,8 +159,9 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
             prepareSurfaceFromSpriteSheet(spriteObj);
             //spriteObj->surface = SDL_DisplayFormat(temp_sprite);
             spriteObj->sub[i][j].texture = SDL_CreateTextureFromSurface(renderer, temp_sprite_single);
+            spriteObj->sub[i][j].w = temp_sprite_single->w;
+            spriteObj->sub[i][j].h = temp_sprite_single->h;
             SDL_FreeSurface(temp_sprite_single);
-            SDL_QueryTexture(spriteObj->sub[i][j].texture, NULL, NULL, &spriteObj->sub[i][j].w, &spriteObj->sub[i][j].h);
 #else
             if (spriteObj->sub[i][j]->surface != NULL) {
                 SDL_FreeSurface(spriteObj->sub[i][j].surface);
@@ -186,14 +187,14 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
     temp_sprite_sheet = NULL;
 }
 
-void setSpriteScale(SpriteObject *spriteObj, double scale) {
+void setSpriteScale(SpriteObject *spriteObj) {
     spriteObj->dstrect = { 0, 0, 0, 0 };
 #if !defined(SDL1)
-    spriteObj->dstrect.w = (int)(spriteObj->frame_w * scale);
-    spriteObj->dstrect.h = (int)(spriteObj->frame_h * scale);
+    spriteObj->dstrect.w = (int)(spriteObj->frame_w * screenScale * spriteObj->spriteScale);
+    spriteObj->dstrect.h = (int)(spriteObj->frame_h * screenScale * spriteObj->spriteScale);
 #else
-    spriteObj->dstrect.w = (int)(spriteObj->frame_w);
-    spriteObj->dstrect.h = (int)(spriteObj->frame_h);
+    spriteObj->dstrect.w = (int)(spriteObj->frame_w * screenScale);
+    spriteObj->dstrect.h = (int)(spriteObj->frame_h * screenScale);
 #endif
 }
 
@@ -242,11 +243,22 @@ void drawRectWithAlpha(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
 
 SpriteInstance::SpriteInstance(SpriteObject *so, Sint8 frame, Sint8 form) {
     spriteObj = so;
-    // TODO: trogdor.bmp breaks somehow?
     if (spriteObj->numAnimFrames > 0) {
         srcrect.x = 0;
         srcrect.y = 0;
-        dstrect = spriteObj->dstrect;
+        dstrect.x = spriteObj->dstrect.x;
+        dstrect.y = spriteObj->dstrect.y;
+        setFrameAndForm(frame, form);
+    }
+}
+
+SpriteInstance::SpriteInstance(SpriteObject *so, Sint8 frame, Sint8 form, int pos_x, int pos_y) {
+    spriteObj = so;
+    if (spriteObj->numAnimFrames > 0) {
+        srcrect.x = 0;
+        srcrect.y = 0;
+        dstrect.x = pos_x;
+        dstrect.y = pos_y;
         setFrameAndForm(frame, form);
     }
 }
@@ -275,16 +287,17 @@ void SpriteInstance::updateCurrSprite() {
 #endif
     currSpriteXOffset = spriteObj->sub[animFrame][animForm].x_offset_start;
     currSpriteYOffset = spriteObj->sub[animFrame][animForm].y_offset_start;
-    srcrect.w = (int)(spriteObj->sub[animFrame][animForm].w * screenScale * spriteObj->spriteScale);
-    srcrect.h = (int)(spriteObj->sub[animFrame][animForm].h * screenScale * spriteObj->spriteScale);
+    srcrect.w = spriteObj->sub[animFrame][animForm].w;
+    srcrect.h = spriteObj->sub[animFrame][animForm].h;
+    dstrect.w = (int)(spriteObj->sub[animFrame][animForm].w * spriteObj->spriteScale);
+    dstrect.h = (int)(spriteObj->sub[animFrame][animForm].h * spriteObj->spriteScale);
 }
 
 void SpriteInstance::renderSprite_game() {
-    outputRect = { dstrect.x, dstrect.y, srcrect.w, srcrect.h };
-    outputRect.x = (int)((outputRect.x + currSpriteXOffset) * screenScale) + gameToWindowDstRect.x;
-    outputRect.y = (int)((outputRect.y + currSpriteYOffset) * screenScale) + gameToWindowDstRect.y;
-    //outputRect.w = (int)(outputRect.w * screenScale);
-    //outputRect.h = (int)(outputRect.h * screenScale);
+    outputRect.x = (int)((dstrect.x + currSpriteXOffset) * screenScale) + gameToWindowDstRect.x;
+    outputRect.y = (int)((dstrect.y + currSpriteYOffset) * screenScale) + gameToWindowDstRect.y;
+    outputRect.w = (int)(dstrect.w * screenScale);
+    outputRect.h = (int)(dstrect.h * screenScale);
 #if !defined(SDL1)
     SDL_RenderCopy(renderer, currSprite, &srcrect, &outputRect);
 #else
@@ -293,11 +306,10 @@ void SpriteInstance::renderSprite_game() {
 }
 
 void SpriteInstance::renderSprite_app() {
-    outputRect = { dstrect.x, dstrect.y, srcrect.w, srcrect.h };
-    outputRect.x = (int)((outputRect.x + currSpriteXOffset) * screenScale) + appToWindowDstRect.x;
-    outputRect.y = (int)((outputRect.y + currSpriteYOffset) * screenScale) + appToWindowDstRect.y;
-    //outputRect.w = (int)(outputRect.w * screenScale);
-    //outputRect.h = (int)(outputRect.h * screenScale);
+    outputRect.x = (int)((dstrect.x + currSpriteXOffset) * screenScale) + appToWindowDstRect.x;
+    outputRect.y = (int)((dstrect.y + currSpriteYOffset) * screenScale) + appToWindowDstRect.y;
+    outputRect.w = (int)(dstrect.w * screenScale);
+    outputRect.h = (int)(dstrect.h * screenScale);
 #if !defined(SDL1)
     SDL_RenderCopy(renderer, currSprite, &srcrect, &outputRect);
 #else

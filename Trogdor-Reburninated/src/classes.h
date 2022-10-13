@@ -54,10 +54,8 @@ class Cottage {
 		Sint16 direction;
 		Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
 			frameState = 9;
-			sprite = SpriteInstance(&sprite_cottage, 0, (dir - 1));
-			sprite.dstrect = { pos_x, pos_y, (Uint16)sprite_cottage.frame_w, (Uint16)sprite_cottage.frame_h };
-			sprite_fire = SpriteInstance(&sprite_cottage_fire, 0, 0);
-			sprite_fire.dstrect = { sprite.dstrect.x + 5, sprite.dstrect.y - 5, (Uint16)sprite_cottage_fire.frame_w, (Uint16)sprite_cottage_fire.frame_h };
+			sprite = SpriteInstance(&sprite_cottage, 0, (dir - 1), pos_x, pos_y);
+			sprite_fire = SpriteInstance(&sprite_cottage_fire, 0, 0, sprite.dstrect.x + 5, sprite.dstrect.y - 5);
 			burning = false;
 			burned = false;
 			direction = dir;
@@ -117,13 +115,12 @@ class Knight {
 		Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true) {
 			frameState = 0;
 			moving = true;
-			sprite = SpriteInstance(&sprite_knight, 0, fr);
+			sprite = SpriteInstance(&sprite_knight, 0, fr, pos_x, pos_y);
 			sprite.facingRight = fr;
 			home_x = pos_x;
 			home_y = pos_y;
 			half_src_w = sprite_knight.frame_w / 2;
 			half_src_h = sprite_knight.frame_h / 2 + 4;
-			sprite.dstrect = { home_x, home_y, (Uint16)sprite_knight.frame_w, (Uint16)sprite_knight.frame_h };
 			offset_x = 0;
 			offset_y = 0;
 			direction = dir;
@@ -233,8 +230,7 @@ class Peasant {
 		Sint16 timer;
 		Peasant() {
 			frameState = 0;
-			sprite = SpriteInstance(&sprite_peasant, 0, 0);
-			sprite.dstrect = { 0, 0, (Uint16)sprite_peasant.frame_w, (Uint16)sprite_peasant.frame_h };
+			sprite = SpriteInstance(&sprite_peasant, 0, 0, 0, 0);
 			sprite.isActive = false;
 			myHome = 0;
 			stomped = false;
@@ -300,9 +296,8 @@ class Archer {
 		SpriteInstance sprite; // facing right == on the left; facing left == on the right
 		Archer(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 			frameState = 0;
-			sprite = SpriteInstance(&sprite_archer, 0, fr);
+			sprite = SpriteInstance(&sprite_archer, 0, fr, pos_x, pos_y);
 			sprite.facingRight = fr;
-			sprite.dstrect = { pos_x, pos_y, (Uint16)sprite_archer.frame_w, (Uint16)sprite_archer.frame_h };
 			sprite.isActive = false;
 		}
 		void updateFrameState() {
@@ -330,9 +325,8 @@ class Arrow {
 		SpriteInstance sprite;
 		Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 			frameState = 0;
-			sprite = SpriteInstance(&sprite_arrow, 0, fr);
+			sprite = SpriteInstance(&sprite_arrow, 0, fr, pos_x, pos_y);
 			sprite.facingRight = fr;
-			sprite.dstrect = { pos_x, pos_y, (Uint16)sprite_arrow.frame_w, (Uint16)sprite_arrow.frame_h };
 			sprite.isActive = false;
 			sprite.collision = { 1 + sprite.facingRight + sprite.dstrect.x, 1 + sprite.dstrect.y, 12, 3 };
 		}
@@ -370,9 +364,8 @@ class Loot {
 		Loot() {
 			Loot(0, 0);
 		}
-		Loot(Sint16 x_pos, Sint16 y_pos) {
-			sprite = SpriteInstance(&sprite_loot, 0, 0);
-			sprite.dstrect = { x_pos, y_pos, (Uint16)sprite_loot.frame_w, (Uint16)sprite_loot.frame_h };
+		Loot(Sint16 pos_x, Sint16 pos_y) {
+			sprite = SpriteInstance(&sprite_loot, 0, 0, pos_x, pos_y);
 			sprite.isActive = false;
 		}
 };
@@ -393,17 +386,16 @@ class Trogdor {
 		Uint8 frameStateFlag; // used for movement
 		Trogdor() {
 			frameState = 0;
-			sprite = SpriteInstance(&sprite_trogdor, 0, 1);
+			sprite = SpriteInstance(&sprite_trogdor, 0, 1, 0, 0);
 			sprite.facingRight = true;
-			spawnPos_x = (Sint16)(2780.0 / 5000 * gameWidth) - (sprite_trogdor.frame_w / 2);
-			spawnPos_y = (Sint16)(2360.0 / 3600 * gameHeight) - (sprite_trogdor.frame_h / 2);
-			sprite.dstrect = { spawnPos_x, spawnPos_y, (Uint16)sprite_trogdor.frame_w, (Uint16)sprite_trogdor.frame_h };
+			spawnPos_x = (Sint16)(2780.0 / 5000 * gameWidth) - (sprite.spriteObj->frame_w / 2);
+			spawnPos_y = (Sint16)(2360.0 / 3600 * gameHeight) - (sprite.spriteObj->frame_h / 2);
+			sprite.dstrect.x = spawnPos_x;
+			sprite.dstrect.y = spawnPos_y;
 			sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
 			fire_frameState = 0;
-			sprite_fire = SpriteInstance(&sprite_trogdor_fire, 0, sprite.facingRight);
-			sprite_fire.dstrect = { sprite.dstrect.x - 24 + (sprite.facingRight * 62), sprite.dstrect.y + 10, (Uint16)sprite_trogdor_fire.frame_w, (Uint16)sprite_trogdor_fire.frame_h };
-			sprite_death = SpriteInstance(&sprite_trogdor_dead, 0, 0);
-			sprite_death.dstrect = { sprite.dstrect.x + ((sprite.dstrect.w + sprite_trogdor_dead.frame_w) / 2), sprite.dstrect.y + (sprite.dstrect.h - sprite_trogdor_dead.frame_h), (Uint16)sprite_trogdor_dead.frame_w, (Uint16)sprite_trogdor_dead.frame_h };
+			sprite_fire = SpriteInstance(&sprite_trogdor_fire, 0, sprite.facingRight, sprite.dstrect.x - 24 + (sprite.facingRight * 62), sprite.dstrect.y + 10);
+			sprite_death = SpriteInstance(&sprite_trogdor_dead, 0, 0, sprite.dstrect.x + ((sprite.dstrect.w + sprite_trogdor_dead.frame_w) / 2), sprite.dstrect.y + (sprite.dstrect.h - sprite_trogdor_dead.frame_h));
 			invince = 0;
 			sprite.isActive = true;
 			x_offset = 0;
@@ -416,13 +408,13 @@ class Trogdor {
 			switch (frameState) {
 				case 20: // sworded
 					sprite_death.setFrame(0);
-					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.dstrect.w - sprite_trogdor_dead.frame_w) / 2);
-					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.dstrect.h - sprite_trogdor_dead.frame_h);
+					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.dstrect.w - sprite_death.dstrect.w) / 2);
+					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.dstrect.h - sprite_death.dstrect.h);
 					break;
 				case 50: // arrowed
 					sprite_death.setFrame(1);
-					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.dstrect.w - sprite_trogdor_dead.frame_w) / 2);
-					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.dstrect.h - sprite_trogdor_dead.frame_h);
+					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.dstrect.w - sprite_death.dstrect.w) / 2);
+					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.dstrect.h - sprite_death.dstrect.h);
 					break;
 				case 22:
 				case 52:
@@ -452,7 +444,8 @@ class Trogdor {
 		void resetPos(bool giveInvince) {
 			sprite.facingRight = true;
 			sprite.setFrameAndForm(0, sprite.facingRight);
-			sprite.dstrect = { spawnPos_x, spawnPos_y, (Uint16)sprite_trogdor.frame_w, (Uint16)sprite_trogdor.frame_h };
+			sprite.dstrect.x = spawnPos_x;
+			sprite.dstrect.y = spawnPos_y;
 			sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
 			if (giveInvince) {
 				invince = 36;
@@ -611,8 +604,9 @@ class GameManager {
 			sprite_dm = SpriteInstance(&sprite_death_message, 0, 0);
 			sprite_dm.isActive = false;
 			b_frameState = 0;
-			sprite_bf = SpriteInstance(&sprite_burninate_fire, 0, 0);
-			sprite_bf.dstrect = { OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), sprite_burninate_text.dstrect.y - sprite_burninate_fire.frame_h + 4, (Uint16)sprite_burninate_fire.frame_w, (Uint16)sprite_burninate_fire.frame_h };
+			sprite_bf = SpriteInstance(&sprite_burninate_fire, 0, 0, 0, 0);
+			sprite_bf.dstrect.x = OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire);
+			sprite_bf.dstrect.y = sprite_burninate_text.dstrect.y - sprite_bf.spriteObj->frame_h + 4;
 			b_visible = false;
 			sprite_bmFull = SpriteInstance(&sprite_burnination_meter_full, 0, 0);
 			sprite_pm_on = SpriteInstance(&sprite_peasantometer_icon, 1, 0);

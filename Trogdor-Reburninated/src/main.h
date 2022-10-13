@@ -434,8 +434,6 @@ void renderBackground() {
 	outputRect = sprite_level_background->dstrect;
 	outputRect.x = (Sint16)(outputRect.x * screenScale) + gameToWindowDstRect.x;
 	outputRect.y = (Sint16)(outputRect.y * screenScale) + gameToWindowDstRect.y;
-	outputRect.w = (Uint16)(outputRect.w * screenScale);
-	outputRect.h = (Uint16)(outputRect.h * screenScale);
 #if !defined(SDL1)
 	SDL_RenderCopy(renderer, sprite_level_background->sub[0][0].texture, NULL, &outputRect);
 #else

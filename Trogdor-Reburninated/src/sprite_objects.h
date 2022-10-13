@@ -9,8 +9,8 @@ struct SpriteSubObject {
 #else
     SDL_Surface *surface;
 #endif
-    int w;
-    int h;
+    Sint16 w;
+    Sint16 h;
     Sint8 x_offset_start;
     Sint16 x_offset_end;
     Sint8 y_offset_start;
@@ -49,6 +49,7 @@ class SpriteInstance {
         SpriteInstance() {
         }
         SpriteInstance(SpriteObject *, Sint8, Sint8);
+        SpriteInstance(SpriteObject *, Sint8, Sint8, int, int);
         void setFrame(Sint8);
         void setForm(Sint8);
         void setFrameAndForm(Sint8, Sint8);
@@ -62,7 +63,7 @@ class SpriteInstance {
 extern SDL_Rect outputRect;
 
 extern void prepareSprite(SpriteObject *, const char [], Sint8, Sint8, double);
-extern void setSpriteScale(SpriteObject *, double);
+extern void setSpriteScale(SpriteObject *);
 extern void setSpritePos(SpriteObject *, int, int);
 extern void drawRect(SDL_Rect, Uint8, Uint8, Uint8);
 extern void drawRect_gameTextScreen(SDL_Rect, Uint8, Uint8, Uint8);
@@ -70,7 +71,7 @@ extern void drawRectWithAlpha(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
 
 #define PREPARE_SPRITE(spriteObj, path, rect_x, rect_y, numAnimFrames, numForms, scale) \
     prepareSprite(&spriteObj, path, numAnimFrames, numForms, scale);                    \
-    setSpriteScale(&spriteObj, scale);                                                  \
+    setSpriteScale(&spriteObj);                                                         \
     setSpritePos(&spriteObj, (int)rect_x, (int)rect_y);
 
 #define OBJ_TO_MID_SCREEN_X(width, obj) \
