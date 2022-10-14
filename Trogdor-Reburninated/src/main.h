@@ -67,6 +67,7 @@ SoundEffect sfx_burninate;
 SoundEffect sfx_cutscene;
 SoundEffect sfx_gameover;
 SoundEffect sfx_shutup;
+SoundEffect sfx_huskyhead;
 
 /* Sprite Objects */
 SpriteObject sprite_videlectrix_logo;
@@ -104,6 +105,7 @@ SpriteInstance sprite_overlay_basement_left_ins;
 SpriteObject sprite_overlay_basement_right;
 SpriteInstance sprite_overlay_basement_right_ins;
 SpriteObject sprite_trogdor;
+SpriteObject sprite_trogdor_bighead;
 SpriteObject sprite_cottage;
 SpriteObject sprite_cottage_fire;
 SpriteObject sprite_peasantometer_icon;
@@ -116,7 +118,6 @@ SpriteObject sprite_trogdor_dead;
 SpriteObject sprite_knight;
 SpriteObject sprite_peasant;
 SpriteObject sprite_end_of_level_trogdor;
-SpriteInstance sprite_end_of_level_trogdor_ins;
 SpriteObject sprite_loot;
 SpriteObject sprite_trogdor_flexing;
 SpriteObject sprite_heart;

@@ -430,6 +430,8 @@ void InitializeSFX() {
 	sfx_gameover.path = "sfx/gameover.wav";
 	sfxArr[12] = &sfx_shutup;
 	sfx_shutup.path = "sfx/shutup.wav";
+	sfxArr[13] = &sfx_huskyhead;
+	sfx_huskyhead.path = "sfx/huskyhead.wav";
 	sfxArr_strongBad[0] = &sfx_sb1;
 	sfx_sb1.path = "sfx/trog_sb1.wav";
 	sfxArr_strongBad[1] = &sfx_sb2;
@@ -552,6 +554,8 @@ void InitializeSpritesPart1() {
 void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_trogdor, (rootDir + "graphics/trogdor.bmp").c_str(),
 		0, 0, 4, 2, 1);
+	PREPARE_SPRITE(sprite_trogdor_bighead, (rootDir + "graphics/trogdor_bighead.bmp").c_str(),
+		0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_cottage, (rootDir + "graphics/cottage.bmp").c_str(),
 		0, 0, 2, 4, 1);
 	PREPARE_SPRITE(sprite_cottage_fire, (rootDir + "graphics/cottage_fire.bmp").c_str(),
@@ -567,23 +571,22 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_trogdor_fire, (rootDir + "graphics/trogdor_fire.bmp").c_str(),
 		0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_trogdor_dead, (rootDir + "graphics/trogdor_dead.bmp").c_str(),
-		0, 0, 2, 1, 1);
+		0, 0, 2, 2, 1);
 	PREPARE_SPRITE(sprite_knight, (rootDir + "graphics/knight.bmp").c_str(),
 		0, 0, 6, 2, 1);
 	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
 		0, 0, 2, 4, 1);
 	if (gameHiResMult < 1.5) {
-		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_small.bmp").c_str(),
-			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, 2);
+		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor.bmp").c_str(),
+			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 2, 1, 2);
 	} else { // TODO: this could be polished a bit further for (1.5 <= gameHiResMult < 2)
-		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor_small.bmp").c_str(),
-			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 1, 1.5);
+		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor.bmp").c_str(),
+			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 2, 1, 1.5);
 	}
-	sprite_end_of_level_trogdor_ins = SpriteInstance(&sprite_end_of_level_trogdor, 0, 0);
 	PREPARE_SPRITE(sprite_loot, (rootDir + "graphics/loot.bmp").c_str(),
 		0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_trogdor_flexing, (rootDir + "graphics/trogdor_flexing.bmp").c_str(),
-		0, 0, 4, 1, 1);
+		0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_heart, (rootDir + "graphics/heart.bmp").c_str(),
 		0, 0, 5, 1, 1);
 	PREPARE_SPRITE(sprite_knight_funnyjoke, (rootDir + "graphics/knight_funnyjoke.bmp").c_str(),
@@ -638,6 +641,7 @@ void destroyAllSprites() {
 	destroySprite(&sprite_level_beaten_smoke);
 	destroySprite(&sprite_game_over_trogdor);
 	destroySprite(&sprite_trogdor);
+	destroySprite(&sprite_trogdor_bighead);
 	destroySprite(&sprite_cottage);
 	destroySprite(&sprite_cottage_fire);
 	destroySprite(&sprite_peasantometer_icon);

@@ -3,6 +3,22 @@
 #ifndef SPRITE_OBJECTS_H
 #define SPRITE_OBJECTS_H
 
+/*
+* @brief A single sprite from a sprite sheet.
+* 
+* @param texture (SDL2) The sprite texture, with no empty space around the sprite.
+* @param surface (SDL1) The sprite surface, with no empty space around the sprite.
+* @param w The unscaled width of the sprite, with no empty space.
+* @param h The unscaled height of the sprite, with no empty space.
+* @param scaled_w The width of the sprite, with no empty space, scaled by screenScale and spriteScale.
+* @param scaled_h The height of the sprite, with no empty space, scaled by screenScale and spriteScale.
+* @param x_offset_start The unscaled x-position of the first non-colorkeyed pixel.
+* @param x_offset_end The unscaled x-position of the last non-colorkeyed pixel.
+* @param y_offset_start The unscaled y-position of the first non-colorkeyed pixel.
+* @param y_offset_end The unscaled y-position of the last non-colorkeyed pixel.
+* @param x_center The midpoint between x_offset_start and x_offset_end, rounded down.
+* @param y_center The midpoint between y_offset_start and y_offset_end, rounded down.
+*/
 struct SpriteSubObject {
 #if !defined(SDL1)
     SDL_Texture *texture;
@@ -11,6 +27,8 @@ struct SpriteSubObject {
 #endif
     Sint16 w;
     Sint16 h;
+    Sint16 scaled_w;
+    Sint16 scaled_h;
     Sint8 x_offset_start;
     Sint16 x_offset_end;
     Sint8 y_offset_start;
@@ -19,6 +37,17 @@ struct SpriteSubObject {
     Sint8 y_center;
 };
 
+/*
+* @brief A sprite sheet.
+* 
+* @param sub A 2D array containing pointers to malloc'd SpriteSubObjects. sub[i][j] contains the pointer to the SpriteSubObject representing Frame i, Form j.
+* @param frame_w The unadjusted width of a single sprite, equal to (sprite sheet width) / (number of frames).
+* @param frame_h The unadjusted height of a single sprite, equal to (sprite sheet height) / (number of forms).
+* @param spriteScale The scale multiplier of each sprite in the sprite sheet, not accounting for screenScale.
+* @param numAnimFrames The number of frames; or, the max number of sprites on one row of the sprite sheet.
+* @param numForms The number of forms; or, the max number of sprites on one column of the sprite sheet.
+* @param dstrect x and y represent the default position of a sprite, while w and h represent the frame_w and frame_h respectively, each scaled up by spriteScale.
+*/
 struct SpriteObject {
     SpriteSubObject *sub[8]; // the max number of frames a sprite sheet can have is 8
     Sint16 frame_w;      // the original width of a single animation frame
@@ -29,6 +58,20 @@ struct SpriteObject {
     SDL_Rect dstrect;    // represents the size of a sprite, even if it was resized
 };
 
+/*
+* @brief A single instance of a sprite (e.g. if there a lot of coins onscreen at the same time, each coin would have its own SpriteInstance).
+* 
+* @param spriteObj A pointer to the SpriteObject represented by this SpriteInstance.
+* @param currSprite A pointer to the texture (SDL2) or surface (SDL1) of the SpriteSubObject being represented by this SpriteInstance.
+* @param currSpriteXOffset Equivalent to spriteObj->sub[animFrame][animForm].x_offset_start.
+* @param currSpriteYOffset Equivalent to spriteObj->sub[animFrame][animForm].y_offset_start.
+* @param srcrect (SDL2) The position (0,0) and size (unscaled) of the currently-represented SpriteSubObject.
+* @param srcrect (SDL1) The position (0,0) and size (already scaled according to screenScale and spriteScale) of the currently-represented SpriteSubObject.
+* @param dstrect The position (using internal game logic, NOT final screen placement) of the sprite frame (including empty space), and the w and h of the current SpriteSubObject scaled only by spriteScale. Transformations such as x/yOffset, screenScale, and gameToWindowDstRect are applied temporarily as they are needed.
+* @param collision The collision rect relative to dstrect x and y (that's sprite frame position, including empty space, according to internal game logic).
+* @param isActive Whether or not the sprite is active; usually, this means "is the sprite visible and/or doing things".
+* @param facingRight Is the sprite facing right; used for some sprites.
+*/
 class SpriteInstance {
     public:
         SpriteObject *spriteObj;

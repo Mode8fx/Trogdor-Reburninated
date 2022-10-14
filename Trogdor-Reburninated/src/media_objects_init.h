@@ -56,6 +56,7 @@ extern SpriteInstance sprite_overlay_basement_left_ins;
 extern SpriteObject sprite_overlay_basement_right;
 extern SpriteInstance sprite_overlay_basement_right_ins;
 extern SpriteObject sprite_trogdor;
+extern SpriteObject sprite_trogdor_bighead;
 extern SpriteObject sprite_cottage;
 extern SpriteObject sprite_cottage_fire;
 extern SpriteObject sprite_peasantometer_icon;
@@ -68,7 +69,6 @@ extern SpriteObject sprite_trogdor_dead;
 extern SpriteObject sprite_knight;
 extern SpriteObject sprite_peasant;
 extern SpriteObject sprite_end_of_level_trogdor;
-extern SpriteInstance sprite_end_of_level_trogdor_ins;
 extern SpriteObject sprite_loot;
 extern SpriteObject sprite_trogdor_flexing;
 extern SpriteObject sprite_heart;
@@ -91,6 +91,7 @@ extern SDL_Rect     divider_level_beaten_rect;
 #define SFX_CUTSCENE      sfxArr[10]
 #define SFX_GAMEOVER      sfxArr[11]
 #define SFX_SHUTUP        sfxArr[12]
+#define SFX_HUSKYHEAD     sfxArr[13]
 #define SFX_SB1           sfxArr_strongBad[0]
 #define SFX_SB2           sfxArr_strongBad[1]
 #define SFX_SB3           sfxArr_strongBad[2]
@@ -146,6 +147,7 @@ extern SoundEffect sfx_burninate;
 extern SoundEffect sfx_cutscene;
 extern SoundEffect sfx_gameover;
 extern SoundEffect sfx_shutup;
+extern SoundEffect sfx_huskyhead;
 
 
 extern SDL_Color color_white;

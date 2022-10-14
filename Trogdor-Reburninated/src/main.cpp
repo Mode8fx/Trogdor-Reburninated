@@ -31,6 +31,7 @@ Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down 
 Uint8 pacmanArrayKey[11] = { 0, 0, 0, 1, 1, 1, 2, 3, 2, 3, 2 }; // Up Up Up Down Down Down Left Right Left Right Left (play Pac-Man on a Ms. Pac-Man + Galaga arcade cabinet)
 Uint8 s3kArrayKey[9] = { 2, 2, 2, 3, 3, 3, 0, 0, 0 }; // Left Left Left Right Right Right Up Up Up (Sonic & Knuckles and S3&K level select)
 Uint8 fzxArrayKey[8] = { 2, 5, 3, 0, 1, 2, 3, 4 }; // Left B Right Up Down Left Right A ((roughly) unlock everything in F-Zero X)
+Uint8 dkcArrayKey[6] = { 5, 4, 9, 9, 4, 8 }; // B A R R A L (Donkey Kong Country 50 lives code)
 bool renderOverlay;
 bool showOverlay = true;
 bool cutsceneIsPlaying = false;
@@ -683,7 +684,7 @@ int main(int argv, char** args) {
 				if (g_sceneState == 8) {
 					g_frameState++;
 				}
-				sprite_end_of_level_trogdor_ins.renderSprite_game();
+				GM.player.sprite_end_of_level.renderSprite_game();
 				break;
 			/* Level Beaten Screen */
 			case 9:

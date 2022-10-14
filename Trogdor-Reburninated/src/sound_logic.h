@@ -3,7 +3,7 @@
 #ifndef SOUND_LOGIC_H
 #define SOUND_LOGIC_H
 
-constexpr auto NUM_SOUND_EFFECTS_SFX = 13; // hardcoded; change this as more sound effects are added
+constexpr auto NUM_SOUND_EFFECTS_SFX = 14; // hardcoded; change this as more sound effects are added
 //constexpr auto NUM_SOUND_EFFECTS_GAMEMUSIC = 0;
 constexpr auto NUM_SOUND_EFFECTS_STRONG_BAD = 21;
 constexpr auto NUM_SOUND_CHANNELS = 8;

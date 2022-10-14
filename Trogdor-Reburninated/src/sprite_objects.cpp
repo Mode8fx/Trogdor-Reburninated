@@ -155,22 +155,25 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
             if (spriteObj->sub[i][j].x_offset_end < spriteObj->sub[i][j].x_offset_start) { // blank sprite
                 spriteObj->sub[i][j].x_offset_end = spriteObj->sub[i][j].x_offset_start;
             }
+            spriteObj->sub[i][j].x_center = (spriteObj->sub[i][j].x_offset_end - spriteObj->sub[i][j].x_offset_start) / 2;
             // Get the sprite's upper/lower boundary (the y position where the sprite actually begins/ends)
             spriteObj->sub[i][j].y_offset_start = getYOffsetStart(spriteObj, i, j);
             spriteObj->sub[i][j].y_offset_end = getYOffsetEnd(spriteObj, i, j);
             if (spriteObj->sub[i][j].y_offset_end < spriteObj->sub[i][j].y_offset_start) { // blank sprite
                 spriteObj->sub[i][j].y_offset_end = spriteObj->sub[i][j].y_offset_start;
             }
+            spriteObj->sub[i][j].y_center = (spriteObj->sub[i][j].y_offset_end - spriteObj->sub[i][j].y_offset_start) / 2;
+            // Create a new surface from the boundaries of the sprite (temp_sprite_single)
             prepareSurfaceFromSpriteSheet(spriteObj);
 #if !defined(SDL1)
-            // [SDL2] Create a new surface from the boundaries of the sprite, then create a texture from it
+            // [SDL2] Create a texture from temp_sprite_single
             spriteObj->sub[i][j].texture = SDL_CreateTextureFromSurface(renderer, temp_sprite_single);
 #else
             if (screenScale == 1 && scale == 1) {
-                // [SDL1 Normal] Create a new surface from the boundaries of the sprite
+                // [SDL1 Normal] Create a new surface from temp_sprite_single
                 spriteObj->sub[i][j].surface = SDL_DisplayFormat(temp_sprite_single);
             } else {
-                // [SDL1 Zoom] Create a new surface from the boundaries of the sprite and zoom it
+                // [SDL1 Zoom] Create a zoomed surface from temp_sprite_single and zoom it
                 temp_sprite_single_zoom = zoomSurface(temp_sprite_single, screenScale * scale, screenScale * scale, SMOOTHING_OFF);
                 SDL_SetColorKey(temp_sprite_single_zoom, SDL_SRCCOLORKEY, 0xFF00FF);
                 spriteObj->sub[i][j].surface = SDL_DisplayFormat(temp_sprite_single_zoom);
@@ -180,6 +183,8 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
 #endif
             spriteObj->sub[i][j].w = temp_sprite_single->w;
             spriteObj->sub[i][j].h = temp_sprite_single->h;
+            spriteObj->sub[i][j].scaled_w = (int)(spriteObj->sub[i][j].w * scale * screenScale);
+            spriteObj->sub[i][j].scaled_h = (int)(spriteObj->sub[i][j].h * scale * screenScale);
             SDL_FreeSurface(temp_sprite_single);
             temp_sprite_single = NULL;
         }
@@ -301,8 +306,8 @@ void SpriteInstance::updateCurrSprite() {
     srcrect.w = spriteObj->sub[animFrame][animForm].w;
     srcrect.h = spriteObj->sub[animFrame][animForm].h;
 #else
-    srcrect.w = (int)(spriteObj->sub[animFrame][animForm].w * spriteObj->spriteScale * screenScale);
-    srcrect.h = (int)(spriteObj->sub[animFrame][animForm].h * spriteObj->spriteScale * screenScale);
+    srcrect.w = spriteObj->sub[animFrame][animForm].scaled_w;
+    srcrect.h = spriteObj->sub[animFrame][animForm].scaled_h;
 #endif
     dstrect.w = (int)(spriteObj->sub[animFrame][animForm].w * spriteObj->spriteScale);
     dstrect.h = (int)(spriteObj->sub[animFrame][animForm].h * spriteObj->spriteScale);

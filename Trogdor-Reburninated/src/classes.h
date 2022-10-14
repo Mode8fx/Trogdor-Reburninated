@@ -29,6 +29,7 @@ extern Uint8 contraArrayKey[10];
 extern Uint8 pacmanArrayKey[11];
 extern Uint8 s3kArrayKey[9];
 extern Uint8 fzxArrayKey[8];
+extern Uint8 dkcArrayKey[6];
 
 #if defined(SDL1)
 inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
@@ -377,6 +378,7 @@ class Trogdor {
 		Uint8 fire_frameState;
 		SpriteInstance sprite_fire;
 		SpriteInstance sprite_death;
+		SpriteInstance sprite_end_of_level;
 		Sint16 spawnPos_x;
 		Sint16 spawnPos_y;
 		Sint8 invince;        // remaining invincibility time (after respawn)
@@ -384,9 +386,17 @@ class Trogdor {
 		Sint8 y_offset;       // used for movement
 		Sint8 moveSpeed;      // used for movement
 		Uint8 frameStateFlag; // used for movement
-		Trogdor() {
+		Trogdor(bool bigHead = false) {
 			frameState = 0;
-			sprite = SpriteInstance(&sprite_trogdor, 0, 1, 0, 0);
+			if (bigHead) {
+				sprite = SpriteInstance(&sprite_trogdor_bighead, 0, 1, 0, 0);
+				sprite_death = SpriteInstance(&sprite_trogdor_dead, 0, 1);
+				sprite_end_of_level = SpriteInstance(&sprite_end_of_level_trogdor, 1, 0);
+			} else {
+				sprite = SpriteInstance(&sprite_trogdor, 0, 1, 0, 0);
+				sprite_death = SpriteInstance(&sprite_trogdor_dead, 0, 0);
+				sprite_end_of_level = SpriteInstance(&sprite_end_of_level_trogdor, 0, 0);
+			}
 			sprite.facingRight = true;
 			spawnPos_x = (Sint16)(2780.0 / 5000 * gameWidth) - (sprite.spriteObj->frame_w / 2);
 			spawnPos_y = (Sint16)(2360.0 / 3600 * gameHeight) - (sprite.spriteObj->frame_h / 2);
@@ -395,7 +405,6 @@ class Trogdor {
 			sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
 			fire_frameState = 0;
 			sprite_fire = SpriteInstance(&sprite_trogdor_fire, 0, sprite.facingRight, sprite.dstrect.x - 24 + (sprite.facingRight * 62), sprite.dstrect.y + 10);
-			sprite_death = SpriteInstance(&sprite_trogdor_dead, 0, 0, sprite.dstrect.x + ((sprite.dstrect.w + sprite_trogdor_dead.frame_w) / 2), sprite.dstrect.y + (sprite.dstrect.h - sprite_trogdor_dead.frame_h));
 			invince = 0;
 			sprite.isActive = true;
 			x_offset = 0;
@@ -470,31 +479,18 @@ class Trogdor {
 		}
 };
 
-#define HANDLE_CHEAT(cheatIsActive, cheatArrayKey, cheatIndex, sfx) \
-	if (!cheatIsActive) {                                           \
-		if (keyInputs != 0) {                                       \
-			if (keyInputs == (1 << (cheatArrayKey[cheatIndex]))) {  \
-				cheatIndex++;                                       \
-				if (cheatIndex == LEN(cheatArrayKey)) {             \
-					loadAndPlaySound(sfx); /* this was originally played upon starting the game, but I'm changing it; it's much clearer this way, especially since the controls are different for each system */ \
-					cheatIsActive = true;                           \
-				}                                                   \
-			} else {                                                \
-				cheatIndex = 0;                                     \
-			}                                                       \
-		}                                                           \
-	}
-
 class MenuManager {
 	public:
 		bool contraActive; // 30 Lives cheat is enabled
 		Sint8 contraIndex; // the current index of the 30 Lives cheat input
 		bool pacmanActive; // Debug Mode cheat is enabled
 		Sint8 pacmanIndex; // the current index of the Debug Mode cheat input
-		bool s3kActive;    // Talkative Strong Bad cheat is enabled
-		Sint8 s3kIndex;    // the current index of the Talkative Strong Bad cheat
-		bool fzxActive;    // Quiet Strong Bad cheat is enabled
-		Sint8 fzxIndex;    // the current index of the Quiet Strong Bad input
+		bool s3kActive;    // Big Head cheat is enabled
+		Sint8 s3kIndex;    // the current index of the Big Head cheat input
+		bool fzxActive;    // Start on Level 81 cheat is enabled
+		Sint8 fzxIndex;    // the current index of the Start on Level 81 cheat input
+		bool dkcActive;    // Noclip cheat is enabled
+		Sint8 dkcIndex;    // the current index of the Noclip cheat input
 		Sint8 page;        // the current page number
 		Sint8 maxPageNum;  // maxPageNum
 		MenuManager() {
@@ -506,6 +502,8 @@ class MenuManager {
 			s3kIndex = 0;
 			fzxActive = false;
 			fzxIndex = 0;
+			dkcActive = false;
+			dkcIndex = 0;
 			page = 1;
 			if (gameHiResMult < 2) {
 				maxPageNum = 5;
@@ -513,11 +511,37 @@ class MenuManager {
 				maxPageNum = 4;
 			}
 		}
+		bool handleCheat(bool &cheatIsActive, Uint8 *cheatArrayKey, Uint8 cheatLen, Sint8 &cheatIndex, SoundEffect *sfx) {
+			if (!cheatIsActive) {
+				if (keyInputs != 0) {
+					if (keyInputs == (1 << (cheatArrayKey[cheatIndex]))) {
+						cheatIndex++;
+						if ((Uint32)cheatIndex == cheatLen) {
+							// this was originally played upon starting the game, but I'm changing it; it's much clearer this way, especially since the controls are different for each system
+							loadAndPlaySound(sfx);
+							cheatIsActive = true;
+							return true;
+						}
+					} else {
+						cheatIndex = 0;
+					}
+				}
+			}
+			return false;
+		}
 		void typeStuff() {
-			HANDLE_CHEAT(contraActive, contraArrayKey, contraIndex, SFX_SFX2);
-			HANDLE_CHEAT(pacmanActive, pacmanArrayKey, pacmanIndex, SFX_GOLDGET);
-			HANDLE_CHEAT(s3kActive, s3kArrayKey, s3kIndex, SFX_SBBEST);
-			HANDLE_CHEAT(fzxActive, fzxArrayKey, fzxIndex, SFX_SHUTUP);
+			if (handleCheat(contraActive, contraArrayKey, 10, contraIndex, SFX_SFX2)
+				|| handleCheat(pacmanActive, pacmanArrayKey, 11, pacmanIndex, SFX_GOLDGET)
+				|| handleCheat(s3kActive, s3kArrayKey, 9, s3kIndex, SFX_HUSKYHEAD)
+				|| handleCheat(fzxActive, fzxArrayKey, 8, fzxIndex, SFX_SBKERREK)
+				|| handleCheat(dkcActive, dkcArrayKey, 6, dkcIndex, SFX_SBDOOJ)
+				) {
+				contraIndex = 0;
+				pacmanIndex = 0;
+				s3kIndex = 0;
+				fzxIndex = 0;
+				dkcIndex = 0;
+			}
 		}
 		void handlePageChange() {
 			if (keyPressed(INPUT_LEFT)) {
@@ -576,6 +600,7 @@ class GameManager {
 		Sint16 treasureHut_timer;               // remaining time in treasure hut
 		Loot lootArray[MAX_NUM_LOOT];           // array of Loot objects
 		Uint8 sbVoiceMult;                      // a multiplier for how often Strong Bad talks
+		bool noclip;                            // noclip cheat to walk through cottages
 		GameManager() {
 		}
 		GameManager(MenuManager mm) {
@@ -589,12 +614,13 @@ class GameManager {
 			startDown = false;
 			manually_paused = 0;
 			gameOver = false;
-			level = 1;
+			if (mm.fzxActive) level = 81;
+			else level = 1;
 			levelIndex = 1;
 			setBurnination(0);
 			archerFrequency = 0;
 			burnRate = 0;
-			player = Trogdor();
+			player = Trogdor(mm.s3kActive);
 			player.sprite.facingRight = true;
 			knightIncrement = 1;
 			extraMansBreak = 300;
@@ -619,9 +645,11 @@ class GameManager {
 			storex = 0;
 			storey = 0;
 			treasureHut_timer = 0;
-			if (mm.fzxActive) sbVoiceMult = 0;
-			else if (mm.s3kActive) sbVoiceMult = 2;
-			else sbVoiceMult = 1;
+			//if (mm.fzxActive) sbVoiceMult = 0;
+			//else if (mm.s3kActive) sbVoiceMult = 2;
+			//else sbVoiceMult = 1;
+			sbVoiceMult = 1;
+			noclip = mm.dkcActive;
 		}
 		void resetAllSrcRects() {
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
@@ -825,12 +853,13 @@ class GameManager {
 				// Collision
 				if (trog->sprite.dstrect.x < LEFT_BOUND_TROG || trog->sprite.dstrect.x > RIGHT_BOUND_TROG) {
 					trogdor_add_x_delta(-delta_x);
-				}
-				for (i = 0; i < MAX_NUM_HUTS; i++) {
-					if (hutArray[i].direction > 0 && !hutArray[i].burned
-						&& SDL_HasIntersection(&trog->sprite.dstrect, &hutArray[i].sprite.collision)) { // &trog->sprite->dstrect, NOT &trog->collision
-						trogdor_add_x_delta(-delta_x);
-						break;
+				} else if (!noclip) {
+					for (i = 0; i < MAX_NUM_HUTS; i++) {
+						if (hutArray[i].direction > 0 && !hutArray[i].burned
+							&& SDL_HasIntersection(&trog->sprite.dstrect, &hutArray[i].sprite.collision)) { // &trog->sprite->dstrect, NOT &trog->collision
+							trogdor_add_x_delta(-delta_x);
+							break;
+						}
 					}
 				}
 			}
@@ -841,12 +870,13 @@ class GameManager {
 				// Collision
 				if (trog->sprite.dstrect.y < UPPER_BOUND_TROG || trog->sprite.dstrect.y > LOWER_BOUND_TROG) {
 					trogdor_add_y_delta(-delta_y);
-				}
-				for (i = 0; i < MAX_NUM_HUTS; i++) {
-					if (hutArray[i].direction > 0 && !hutArray[i].burned
-						&& SDL_HasIntersection(&trog->sprite.dstrect, &hutArray[i].sprite.collision)) { // &trog->sprite->dstrect, NOT &trog->collision
-						trogdor_add_y_delta(-delta_y);
-						break;
+				} else if (!noclip) {
+					for (i = 0; i < MAX_NUM_HUTS; i++) {
+						if (hutArray[i].direction > 0 && !hutArray[i].burned
+							&& SDL_HasIntersection(&trog->sprite.dstrect, &hutArray[i].sprite.collision)) { // &trog->sprite->dstrect, NOT &trog->collision
+							trogdor_add_y_delta(-delta_y);
+							break;
+						}
 					}
 				}
 			}
