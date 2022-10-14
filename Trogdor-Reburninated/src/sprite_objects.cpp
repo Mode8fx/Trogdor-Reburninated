@@ -1,9 +1,11 @@
 #include "sprite_objects.h"
 
 SDL_Rect outputRect;
-SDL_Surface *temp_sprite;
 SDL_Surface *temp_sprite_sheet;
 SDL_Surface *temp_sprite_single;
+#if defined(SDL1)
+SDL_Surface *temp_sprite_single_zoom;
+#endif
 SDL_Rect single_srcrect;
 SDL_Rect single_dstrect;
 Uint32 *pixels;
@@ -11,12 +13,9 @@ int bpp;
 Uint8 *p;
 Sint16 offsetStart;
 Sint16 offsetEnd;
-#if defined(SDL1)
-SDL_Surface *temp_sprite_single_zoom;
-#endif
 
 Uint32 getPixel(SDL_Surface *surface, int x, int y) {
-    /* Here p is the address to the pixel we want to retrieve */
+    // p is the address to the pixel we want to retrieve
     p = (Uint8*)surface->pixels + y * surface->pitch + x * bpp;
 
     switch (bpp) {
@@ -94,8 +93,6 @@ void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
     single_srcrect.y = (spriteObj->frame_h * j) + spriteObj->sub[i][j].y_offset_start;
     single_srcrect.w = spriteObj->sub[i][j].x_offset_end - spriteObj->sub[i][j].x_offset_start + 1;
     single_srcrect.h = spriteObj->sub[i][j].y_offset_end - spriteObj->sub[i][j].y_offset_start + 1;
-    //spriteObj->sub[i][j].w = (int)(single_srcrect.w * scale);
-    //spriteObj->sub[i][j].h = (int)(single_srcrect.h * scale);
 #if (defined(WII) || defined(GAMECUBE))
     temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 24, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
 #elif SDL_BYTEORDER == SDL_BIG_ENDIAN
@@ -126,9 +123,7 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
         if (spriteObj->sub[i] != NULL) {
 #if defined(SDL1)
             for (j = 0; j < numForms; j++) {
-                if (spriteObj->sub[i][j].surface != NULL) {
-                    SDL_FreeSurface(spriteObj->sub[i][j].surface);
-                }
+                SDL_FreeSurface(spriteObj->sub[i][j].surface);
             }
 #endif
             free(spriteObj->sub[i]);
