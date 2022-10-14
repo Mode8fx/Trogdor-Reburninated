@@ -144,6 +144,12 @@ int main(int argv, char** args) {
 			}
 			if (GM.initialized) {
 				GM.resetAllSrcRects();
+#if defined(SDL1)
+				if (GM.manually_paused) {
+					SDL_FreeSurface(transparentScreen);
+					sdl1_createTransparentScreen();
+				}
+#endif
 			}
 			windowSizeChanged = false;
 		}

@@ -68,6 +68,7 @@ extern void setSpritePos(SpriteObject *, int, int);
 extern void drawRect(SDL_Rect, Uint8, Uint8, Uint8);
 extern void drawRect_gameTextScreen(SDL_Rect, Uint8, Uint8, Uint8);
 extern void drawRectWithAlpha(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
+extern void sdl1_createTransparentScreen();
 
 #define PREPARE_SPRITE(spriteObj, path, rect_x, rect_y, numAnimFrames, numForms, scale) \
     prepareSprite(&spriteObj, path, numAnimFrames, numForms, scale);                    \

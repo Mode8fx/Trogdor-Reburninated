@@ -196,13 +196,8 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
 
 void setSpriteScale(SpriteObject *spriteObj) {
     spriteObj->dstrect = { 0, 0, 0, 0 };
-#if !defined(SDL1)
     spriteObj->dstrect.w = (int)(spriteObj->frame_w * spriteObj->spriteScale);
     spriteObj->dstrect.h = (int)(spriteObj->frame_h * spriteObj->spriteScale);
-#else
-    spriteObj->dstrect.w = spriteObj->frame_w;
-    spriteObj->dstrect.h = spriteObj->frame_h;
-#endif
 }
 
 void setSpritePos(SpriteObject *spriteObj, int rect_x, int rect_y) {
@@ -245,6 +240,19 @@ void drawRectWithAlpha(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
     SDL_RenderFillRect(renderer, &outputRect);
 #else
     SDL_FillRect(windowScreen, &outputRect, ((r << 16) + (g << 8) + (b)));
+#endif
+}
+
+void sdl1_createTransparentScreen() {
+#if (defined(WII) || defined(GAMECUBE))
+    transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 24, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+    SDL_FillRect(transparentScreen, NULL, 0x000000C8);
+#elif defined(SDL1) && (SDL_BYTEORDER == SDL_BIG_ENDIAN)
+    transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+    SDL_FillRect(transparentScreen, NULL, 0x000000C8);
+#elif defined(SDL1)
+    transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
+    SDL_FillRect(transparentScreen, NULL, 0xC8000000);
 #endif
 }
 

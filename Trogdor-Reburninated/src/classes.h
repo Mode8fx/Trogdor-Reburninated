@@ -780,16 +780,7 @@ class GameManager {
 				if (startDown && !keyHeld(INPUT_START)) {
 					startDown = false;
 					manually_paused = frameCounter_global;
-#if (defined(WII) || defined(GAMECUBE))
-					transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 24, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
-					SDL_FillRect(transparentScreen, NULL, 0x000000C8);
-#elif defined(SDL1) && (SDL_BYTEORDER == SDL_BIG_ENDIAN)
-					transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
-					SDL_FillRect(transparentScreen, NULL, 0x000000C8);
-#elif defined(SDL1)
-					transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-					SDL_FillRect(transparentScreen, NULL, 0xC8000000);
-#endif
+					sdl1_createTransparentScreen();
 				}
 			} else {
 				playerMove_treasureHut(&player, player.x_offset, player.y_offset);
