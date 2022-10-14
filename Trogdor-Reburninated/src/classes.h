@@ -632,7 +632,7 @@ class GameManager {
 			b_frameState = 0;
 			sprite_bf = SpriteInstance(&sprite_burninate_fire, 0, 0, 0, 0);
 			sprite_bf.dstrect.x = OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire);
-			sprite_bf.dstrect.y = sprite_burninate_text.dstrect.y - sprite_bf.spriteObj->frame_h + 4;
+			sprite_bf.dstrect.y = sprite_burninate_text.dstrect.y - sprite_bf.spriteObj->frame_h + 6;// + 4?
 			b_visible = false;
 			sprite_bmFull = SpriteInstance(&sprite_burnination_meter_full, 0, 0);
 			sprite_pm_on = SpriteInstance(&sprite_peasantometer_icon, 1, 0);
@@ -1332,7 +1332,6 @@ class GameManager {
 			// hardcoded is messier, but faster
 			switch (b_frameState) {
 				case 4:
-					sprite_bf.setFrame(0);
 					sprite_bf.setForm(0);
 					rand_var = rand() % 100;
 					if (rand_var < 10 * sbVoiceMult) {
@@ -1348,6 +1347,7 @@ class GameManager {
 					paused = true;
 					break;
 				case 5:
+				case 17:
 					sprite_bf.setForm(1);
 					break;
 				case 6:
@@ -1361,32 +1361,26 @@ class GameManager {
 					sprite_bf.setForm(4);
 					break;
 				case 9:
+				case 13:
 					sprite_bf.setForm(5);
 					break;
 				case 10:
 					sprite_bf.setForm(6);
 					break;
 				case 11:
-					sprite_bf.setFrame(1);
-					sprite_bf.setForm(0);
+					sprite_bf.setForm(7);
 					break;
 				case 12:
-					sprite_bf.setForm(1);
-					break;
-				case 13:
-					sprite_bf.setForm(2);
+					sprite_bf.setForm(8);
 					break;
 				case 14:
-					sprite_bf.setForm(3);
+					sprite_bf.setForm(9);
 					break;
 				case 16:
-					sprite_bf.setForm(4);
-					break;
-				case 17:
-					sprite_bf.setForm(5);
+					sprite_bf.setForm(10);
 					break;
 				case 18:
-					sprite_bf.setForm(6);
+					sprite_bf.setForm(11);
 					b_visible = false;
 					paused = false;
 					peasantometer = 10;
