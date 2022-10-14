@@ -12,7 +12,6 @@ Uint8 *p;
 Sint16 offsetStart;
 Sint16 offsetEnd;
 #if defined(SDL1)
-SDL_Surface *temp_sprite_2;
 SDL_Surface *temp_sprite_single_zoom;
 #endif
 
@@ -125,6 +124,13 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
     // Allocate the SpriteSubObject array; each element of this 2D array represents a single sprite from the sprite sheet
     for (i = 0; i < numAnimFrames; i++) {
         if (spriteObj->sub[i] != NULL) {
+#if defined(SDL1)
+            for (j = 0; j < numForms; j++) {
+                if (spriteObj->sub[i][j].surface != NULL) {
+                    SDL_FreeSurface(spriteObj->sub[i][j].surface);
+                }
+            }
+#endif
             free(spriteObj->sub[i]);
         }
         spriteObj->sub[i] = (SpriteSubObject*)malloc(numForms * sizeof(SpriteSubObject));
@@ -151,34 +157,35 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
             // Get the sprite's left/right boundary (the x position where the sprite actually begins/ends)
             spriteObj->sub[i][j].x_offset_start = getXOffsetStart(spriteObj, i, j);
             spriteObj->sub[i][j].x_offset_end = getXOffsetEnd(spriteObj, i, j);
+            if (spriteObj->sub[i][j].x_offset_end < spriteObj->sub[i][j].x_offset_start) { // blank sprite
+                spriteObj->sub[i][j].x_offset_end = spriteObj->sub[i][j].x_offset_start;
+            }
             // Get the sprite's upper/lower boundary (the y position where the sprite actually begins/ends)
             spriteObj->sub[i][j].y_offset_start = getYOffsetStart(spriteObj, i, j);
             spriteObj->sub[i][j].y_offset_end = getYOffsetEnd(spriteObj, i, j);
+            if (spriteObj->sub[i][j].y_offset_end < spriteObj->sub[i][j].y_offset_start) { // blank sprite
+                spriteObj->sub[i][j].y_offset_end = spriteObj->sub[i][j].y_offset_start;
+            }
+            prepareSurfaceFromSpriteSheet(spriteObj);
 #if !defined(SDL1)
             // [SDL2] Create a new surface from the boundaries of the sprite, then create a texture from it
-            prepareSurfaceFromSpriteSheet(spriteObj);
-            //spriteObj->surface = SDL_DisplayFormat(temp_sprite);
             spriteObj->sub[i][j].texture = SDL_CreateTextureFromSurface(renderer, temp_sprite_single);
+#else
+            if (screenScale == 1 && scale == 1) {
+                // [SDL1 Normal] Create a new surface from the boundaries of the sprite
+                spriteObj->sub[i][j].surface = SDL_DisplayFormat(temp_sprite_single);
+            } else {
+                // [SDL1 Zoom] Create a new surface from the boundaries of the sprite and zoom it
+                temp_sprite_single_zoom = zoomSurface(temp_sprite_single, screenScale * scale, screenScale * scale, SMOOTHING_OFF);
+                SDL_SetColorKey(temp_sprite_single_zoom, SDL_SRCCOLORKEY, 0xFF00FF);
+                spriteObj->sub[i][j].surface = SDL_DisplayFormat(temp_sprite_single_zoom);
+                SDL_FreeSurface(temp_sprite_single_zoom);
+                temp_sprite_single_zoom = NULL;
+            }
+#endif
             spriteObj->sub[i][j].w = temp_sprite_single->w;
             spriteObj->sub[i][j].h = temp_sprite_single->h;
             SDL_FreeSurface(temp_sprite_single);
-#else
-            if (spriteObj->sub[i][j]->surface != NULL) {
-                SDL_FreeSurface(spriteObj->sub[i][j].surface);
-            }
-            if (screenScale == 1 && scale == 1) {
-                // [SDL1 Normal] Create a new surface from the boundaries of the sprite
-                prepareSurfaceFromSpriteSheet(spriteObj);
-                spriteObj->sub[i][j].surface = temp_sprite_single;
-            } else {
-                // [SDL1 Zoom] Create a new surface from the boundaries of the sprite and zoom it
-                prepareSurfaceFromSpriteSheet(spriteObj);
-                spriteObj->sub[i][j].surface = zoomSurface(temp_sprite_single, screenScale * scale, screenScale * scale, SMOOTHING_OFF);
-                SDL_FreeSurface(temp_sprite_single);
-            }
-            spriteObj->sub[i][j].w = spriteObj->sub[i][j].surface->w;
-            spriteObj->sub[i][j].h = spriteObj->sub[i][j].surface->h;
-#endif
             temp_sprite_single = NULL;
         }
     }
@@ -287,8 +294,13 @@ void SpriteInstance::updateCurrSprite() {
 #endif
     currSpriteXOffset = spriteObj->sub[animFrame][animForm].x_offset_start;
     currSpriteYOffset = spriteObj->sub[animFrame][animForm].y_offset_start;
+#if !defined(SDL1)
     srcrect.w = spriteObj->sub[animFrame][animForm].w;
     srcrect.h = spriteObj->sub[animFrame][animForm].h;
+#else
+    srcrect.w = (int)(spriteObj->sub[animFrame][animForm].w * spriteObj->spriteScale * screenScale);
+    srcrect.h = (int)(spriteObj->sub[animFrame][animForm].h * spriteObj->spriteScale * screenScale);
+#endif
     dstrect.w = (int)(spriteObj->sub[animFrame][animForm].w * spriteObj->spriteScale);
     dstrect.h = (int)(spriteObj->sub[animFrame][animForm].h * spriteObj->spriteScale);
 }
