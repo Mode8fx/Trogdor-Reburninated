@@ -74,6 +74,13 @@ extern void drawRectWithAlpha(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
     setSpriteScale(&spriteObj);                                                         \
     setSpritePos(&spriteObj, (int)rect_x, (int)rect_y);
 
+#define PREPARE_SPRITE_BG(spriteObj, path, rect_x, rect_y)          \
+    PREPARE_SPRITE(spriteObj, path, rect_x, rect_y, 1, 1, 1);       \
+    spriteObj.dstrect.x = (int)(spriteObj.dstrect.x * screenScale); \
+    spriteObj.dstrect.y = (int)(spriteObj.dstrect.y * screenScale); \
+    spriteObj.dstrect.w = (int)(spriteObj.dstrect.w * screenScale); \
+    spriteObj.dstrect.h = (int)(spriteObj.dstrect.h * screenScale);
+
 #define OBJ_TO_MID_SCREEN_X(width, obj) \
     ((width - obj.dstrect.w) / 2)
 

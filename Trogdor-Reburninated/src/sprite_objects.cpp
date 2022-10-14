@@ -190,11 +190,11 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
 void setSpriteScale(SpriteObject *spriteObj) {
     spriteObj->dstrect = { 0, 0, 0, 0 };
 #if !defined(SDL1)
-    spriteObj->dstrect.w = (int)(spriteObj->frame_w * screenScale * spriteObj->spriteScale);
-    spriteObj->dstrect.h = (int)(spriteObj->frame_h * screenScale * spriteObj->spriteScale);
+    spriteObj->dstrect.w = (int)(spriteObj->frame_w * spriteObj->spriteScale);
+    spriteObj->dstrect.h = (int)(spriteObj->frame_h * spriteObj->spriteScale);
 #else
-    spriteObj->dstrect.w = (int)(spriteObj->frame_w * screenScale);
-    spriteObj->dstrect.h = (int)(spriteObj->frame_h * screenScale);
+    spriteObj->dstrect.w = spriteObj->frame_w;
+    spriteObj->dstrect.h = spriteObj->frame_h;
 #endif
 }
 

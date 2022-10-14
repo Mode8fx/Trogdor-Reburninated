@@ -1509,8 +1509,8 @@ class GameManager {
 		}
 		void setBurnination(double num) {
 			burnination = num;
-			sprite_bmFull.srcrect.w = (int)(sprite_burnination_meter_empty.dstrect.w * burnination / 100.0);
-			sprite_burnination_meter_full.dstrect.w = sprite_bmFull.srcrect.w;
+			sprite_bmFull.srcrect.w = (int)(sprite_burnination_meter_empty_ins.srcrect.w * burnination / 100.0);
+			sprite_bmFull.dstrect.w = (int)(sprite_burnination_meter_empty_ins.dstrect.w * burnination / 100.0);
 		}
 		void renderTopBar() {
 			renderText(text_4_score, font_serif_2_red_6);

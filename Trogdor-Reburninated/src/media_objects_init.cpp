@@ -501,16 +501,16 @@ void InitializeSpritesPart1() {
 	PREPARE_SPRITE(sprite_trogdor_logo, (rootDir + "graphics/trogdor_logo.bmp").c_str(),
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_trogdor_logo), 15, 1, 1, 1);
 	sprite_trogdor_logo_ins = SpriteInstance(&sprite_trogdor_logo, 0, 0);
-	PREPARE_SPRITE(sprite_level_background_1, (rootDir + "graphics/backgrounds/1.bmp").c_str(),
-		0, 25, 1, 1, 1);
-	PREPARE_SPRITE(sprite_level_background_2, (rootDir + "graphics/backgrounds/2.bmp").c_str(),
-		0, 25, 1, 1, 1);
-	PREPARE_SPRITE(sprite_level_background_3, (rootDir + "graphics/backgrounds/3.bmp").c_str(),
-		0, 25, 1, 1, 1);
-	PREPARE_SPRITE(sprite_level_background_4, (rootDir + "graphics/backgrounds/4.bmp").c_str(),
-		0, 25, 1, 1, 1);
-	PREPARE_SPRITE(sprite_level_background_th, (rootDir + "graphics/backgrounds/treasure_hut.bmp").c_str(),
-		0, 25, 1, 1, 1);
+	PREPARE_SPRITE_BG(sprite_level_background_1, (rootDir + "graphics/backgrounds/1.bmp").c_str(),
+		0, 25);
+	PREPARE_SPRITE_BG(sprite_level_background_2, (rootDir + "graphics/backgrounds/2.bmp").c_str(),
+		0, 25);
+	PREPARE_SPRITE_BG(sprite_level_background_3, (rootDir + "graphics/backgrounds/3.bmp").c_str(),
+		0, 25);
+	PREPARE_SPRITE_BG(sprite_level_background_4, (rootDir + "graphics/backgrounds/4.bmp").c_str(),
+		0, 25);
+	PREPARE_SPRITE_BG(sprite_level_background_th, (rootDir + "graphics/backgrounds/treasure_hut.bmp").c_str(),
+		0, 25);
 	PREPARE_SPRITE(sprite_burnination_meter_full, (rootDir + "graphics/burnination_meter/full.bmp").c_str(),
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_full), 8, 1, 1, 1);
 	PREPARE_SPRITE(sprite_burnination_meter_empty, (rootDir + "graphics/burnination_meter/empty.bmp").c_str(),
