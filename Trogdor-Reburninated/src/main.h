@@ -89,7 +89,6 @@ SpriteObject sprite_end_of_level_flash;
 SpriteInstance sprite_end_of_level_flash_ins;
 SpriteObject sprite_death_message;
 SpriteObject sprite_burninate_text;
-SpriteInstance sprite_burninate_text_ins;
 SpriteObject sprite_burninate_fire;
 SpriteObject sprite_level_beaten_trogdor;
 SpriteObject sprite_level_beaten_smoke;

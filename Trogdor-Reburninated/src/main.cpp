@@ -511,7 +511,7 @@ int main(int argv, char** args) {
 						GM.sprite_dm.renderSprite_game();
 					} else if (GM.b_visible) {
 						GM.sprite_bf.renderSprite_game();
-						sprite_burninate_text_ins.renderSprite_game();
+						GM.sprite_bt.renderSprite_game();
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
@@ -530,8 +530,8 @@ int main(int argv, char** args) {
 					if (GM.inTreasureHut) {
 						GM.paused = true;
 						GM.treasureHutFound = true;
-						GM.player.sprite.dstrect.x = 211;
-						GM.player.sprite.dstrect.y = 118;
+						GM.player.sprite.setPosX(211);
+						GM.player.sprite.setPosY(118);
 						GM.treasureHut_timer = 110;
 						GM.set_level_background(5);
 						loadAndPlaySound(SFX_SFX2);
@@ -624,7 +624,7 @@ int main(int argv, char** args) {
 						GM.sprite_dm.renderSprite_game();
 					} else if (GM.b_visible) {
 						GM.sprite_bf.renderSprite_game();
-						sprite_burninate_text_ins.renderSprite_game();
+						GM.sprite_bt.renderSprite_game();
 					}
 					if (GM.manually_paused) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
@@ -642,8 +642,8 @@ int main(int argv, char** args) {
 					}
 					if (!GM.inTreasureHut) {
 						GM.paused = false;
-						GM.player.sprite.dstrect.x = GM.storex;
-						GM.player.sprite.dstrect.y = GM.storey;
+						GM.player.sprite.dstrect.x = GM.store_x;
+						GM.player.sprite.dstrect.y = GM.store_y;
 						GM.set_level_background(levels[GM.levelIndex][0]);
 						g_sceneState = 4;
 					}

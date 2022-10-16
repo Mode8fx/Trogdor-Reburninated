@@ -40,7 +40,6 @@ extern SpriteObject sprite_end_of_level_flash;
 extern SpriteInstance sprite_end_of_level_flash_ins;
 extern SpriteObject sprite_death_message;
 extern SpriteObject sprite_burninate_text;
-extern SpriteInstance sprite_burninate_text_ins;
 extern SpriteObject sprite_burninate_fire;
 extern SpriteObject sprite_level_beaten_trogdor;
 extern SpriteObject sprite_level_beaten_smoke;

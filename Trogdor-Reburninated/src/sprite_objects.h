@@ -106,7 +106,7 @@ class SpriteInstance {
         SpriteInstance() {
         }
         SpriteInstance(SpriteObject *, Sint8, Sint8);
-        SpriteInstance(SpriteObject *, Sint8, Sint8, int, int);
+        SpriteInstance(SpriteObject *, Sint8, Sint8, double, double);
         void setFrame(Sint8);
         void setForm(Sint8);
         void setFrameAndForm(Sint8, Sint8);
@@ -116,6 +116,8 @@ class SpriteInstance {
         void moveSprite();
         void setPosX(double);
         void setPosY(double);
+        void addPosX(double);
+        void addPosY(double);
         void setPos(double, double);
         void renderSprite_game();
         void renderSpriteAsCSO_game();

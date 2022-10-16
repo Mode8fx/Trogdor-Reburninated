@@ -275,7 +275,7 @@ class Peasant {
 				case 25:
 					sprite.isActive = false;
 					stomped = false;
-					sprite.dstrect.x = -300;
+					sprite.setPosX(-300);
 					break;
 				case 26:
 					sprite.setFrame(0);
@@ -312,7 +312,7 @@ class Archer {
 					// shoot arrow; this is handled by GameManager
 					break;
 				case 23:
-					sprite.dstrect.y = -300;
+					sprite.setPosY(-300);
 					sprite.isActive = false;
 				default:
 					break;
@@ -337,7 +337,7 @@ class Arrow {
 				loadAndPlaySound(SFX_ARROW);
 			}
 			if (sprite.facingRight) {
-				sprite.dstrect.x += 5;
+				sprite.addPosX(5);
 				if (sprite.dstrect.x > gameWidth) { // not exactly the same as the original, but close enough
 					clear();
 				}
@@ -345,7 +345,7 @@ class Arrow {
 				sprite.collision.y = 1 + sprite.dstrect.y;
 
 			} else {
-				sprite.dstrect.x -= 5;
+				sprite.addPosX(-5);
 				if (sprite.dstrect.x < -8) { // not exactly the same as the original, but close enough
 					clear();
 				}
@@ -355,7 +355,7 @@ class Arrow {
 		}
 		void clear() {
 			sprite.isActive = false;
-			sprite.dstrect.x = -500;
+			sprite.setPosX(-500);
 		}
 };
 
@@ -379,8 +379,8 @@ class Trogdor {
 		SpriteInstance sprite_fire;
 		SpriteInstance sprite_death;
 		SpriteInstance sprite_end_of_level;
-		Sint16 spawnPos_x;
-		Sint16 spawnPos_y;
+		double spawnPos_x;
+		double spawnPos_y;
 		Sint8 invince;        // remaining invincibility time (after respawn)
 		Sint8 x_offset;       // used for movement
 		Sint8 y_offset;       // used for movement
@@ -398,10 +398,10 @@ class Trogdor {
 				sprite_end_of_level = SpriteInstance(&sprite_end_of_level_trogdor, 0, 0);
 			}
 			sprite.facingRight = true;
-			spawnPos_x = (Sint16)(2780.0 / 5000 * gameWidth) - (sprite.spriteObj->frame_w / 2);
-			spawnPos_y = (Sint16)(2360.0 / 3600 * gameHeight) - (sprite.spriteObj->frame_h / 2);
-			sprite.dstrect.x = spawnPos_x;
-			sprite.dstrect.y = spawnPos_y;
+			spawnPos_x = (2780.0 / 5000 * gameWidth) - (sprite.spriteObj->frame_w / 2);
+			spawnPos_y = (2360.0 / 3600 * gameHeight) - (sprite.spriteObj->frame_h / 2);
+			sprite.setPosX(spawnPos_x);
+			sprite.setPosY(spawnPos_y);
 			sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
 			fire_frameState = 0;
 			sprite_fire = SpriteInstance(&sprite_trogdor_fire, 0, sprite.facingRight, sprite.dstrect.x - 24 + (sprite.facingRight * 62), sprite.dstrect.y + 10);
@@ -417,13 +417,13 @@ class Trogdor {
 			switch (frameState) {
 				case 20: // sworded
 					sprite_death.setFrame(0);
-					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.dstrect.w - sprite_death.dstrect.w) / 2);
-					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.dstrect.h - sprite_death.dstrect.h);
+					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.spriteObj->frame_w - sprite_death.spriteObj->frame_w) / 2);
+					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.spriteObj->frame_h - sprite_death.spriteObj->frame_h) - 7;
 					break;
 				case 50: // arrowed
 					sprite_death.setFrame(1);
-					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.dstrect.w - sprite_death.dstrect.w) / 2);
-					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.dstrect.h - sprite_death.dstrect.h);
+					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.spriteObj->frame_w - sprite_death.spriteObj->frame_w) / 2);
+					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.spriteObj->frame_h - sprite_death.spriteObj->frame_h) - 7;
 					break;
 				case 22:
 				case 52:
@@ -453,16 +453,21 @@ class Trogdor {
 		void resetPos(bool giveInvince) {
 			sprite.facingRight = true;
 			sprite.setFrameAndForm(0, sprite.facingRight);
-			sprite.dstrect.x = spawnPos_x;
-			sprite.dstrect.y = spawnPos_y;
+			sprite.setPosX(spawnPos_x);
+			sprite.setPosY(spawnPos_y);
 			sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
 			if (giveInvince) {
 				invince = 36;
 			}
 		}
 		void updateBreathLoc() {
-			sprite_fire.dstrect.x = sprite.dstrect.x - 24 + (sprite.facingRight * 62);
-			sprite_fire.dstrect.y = sprite.dstrect.y + 10;
+			if (sprite.facingRight) {
+				sprite_fire.setPosX(sprite.dstrect.x + 38);
+				sprite_fire.setPosY(sprite.dstrect.y + 10);
+			} else {
+				sprite_fire.setPosX(sprite.dstrect.x - 24);
+				sprite_fire.setPosY(sprite.dstrect.y + 10);
+			}
 		}
 		void invinceCheck() {
 			if (invince >= 1) {
@@ -586,6 +591,7 @@ class GameManager {
 		SpriteInstance sprite_dm;               // Death Message ("SWORDED!", "ARROWED!")
 		Uint8 dm_frameState;                    // Death Message ("SWORDED!", "ARROWED!")
 		Uint8 b_frameState;                     // BURNINATE! Message
+		SpriteInstance sprite_bt;               // BURNINATE! Message Text
 		SpriteInstance sprite_bf;               // BURNINATE! Message Fire
 		bool b_visible;                         // BURNINATE! Message
 		SpriteInstance sprite_bmFull;           // burnination meter
@@ -595,8 +601,8 @@ class GameManager {
 		bool treasureHutFound;                  // treasure hut has been found in this level
 		bool inTreasureHut;                     // player is currently in treasure hut
 		Sint16 treasureHutIndex;                // index of hut that contains treasure (0 = no treasure hut)
-		Sint16 storex;                          // old player X position (used for treasure huts)
-		Sint16 storey;                          // old player Y position (used for treasure huts)
+		Sint16 store_x;                          // old player X position (used for treasure huts)
+		Sint16 store_y;                          // old player Y position (used for treasure huts)
 		Sint16 treasureHut_timer;               // remaining time in treasure hut
 		Loot lootArray[MAX_NUM_LOOT];           // array of Loot objects
 		Uint8 sbVoiceMult;                      // a multiplier for how often Strong Bad talks
@@ -630,9 +636,10 @@ class GameManager {
 			sprite_dm = SpriteInstance(&sprite_death_message, 0, 0);
 			sprite_dm.isActive = false;
 			b_frameState = 0;
-			sprite_bf = SpriteInstance(&sprite_burninate_fire, 0, 0, 0, 0);
-			sprite_bf.dstrect.x = OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire);
-			sprite_bf.dstrect.y = sprite_burninate_text.dstrect.y - sprite_bf.spriteObj->frame_h + 6;// + 4?
+			sprite_bt = SpriteInstance(&sprite_burninate_text, 0, 0);
+			sprite_bf = SpriteInstance(&sprite_burninate_fire, 0, 0);
+			sprite_bf.setPosX(OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire));
+			sprite_bf.setPosY((double)sprite_bt.dstrect.y - sprite_bf.spriteObj->frame_h + 6); // + 4?
 			b_visible = false;
 			sprite_bmFull = SpriteInstance(&sprite_burnination_meter_full, 0, 0);
 			sprite_pm_on = SpriteInstance(&sprite_peasantometer_icon, 1, 0);
@@ -642,8 +649,8 @@ class GameManager {
 			treasureHutFound = false;
 			inTreasureHut = false;
 			treasureHutIndex = 0;
-			storex = 0;
-			storey = 0;
+			store_x = 0;
+			store_y = 0;
 			treasureHut_timer = 0;
 			//if (mm.fzxActive) sbVoiceMult = 0;
 			//else if (mm.s3kActive) sbVoiceMult = 2;
@@ -832,8 +839,8 @@ class GameManager {
 				for (i = 0; i < MAX_NUM_LOOT; i++) {
 					lootArray[i].sprite.isActive = true;
 				}
-				storex = player.sprite.dstrect.x - delta_x; // The delta is to prevent respawning inside hut after exitting (this probably wouldn't happen, but just in case)
-				storey = player.sprite.dstrect.y - delta_y;
+				store_x = player.sprite.dstrect.x - delta_x; // The delta is to prevent respawning inside hut after exiting (this probably wouldn't happen, but just in case)
+				store_y = player.sprite.dstrect.y - delta_y;
 			}
 		}
 		void handle_treasure_hut() {
@@ -902,7 +909,7 @@ class GameManager {
 				}
 			}
 		}
-		void playerMove_treasureHut(Trogdor* trog, Sint8 delta_x, Sint8 delta_y) {
+		void playerMove_treasureHut(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
 			// X movement
 			if (delta_x != 0) {
 				trogdor_add_x_delta(delta_x);
@@ -967,8 +974,8 @@ class GameManager {
 						if (!arrowArrayR[i].sprite.isActive) {
 							arrowArrayR[i].frameState = 0;
 							arrowArrayR[i].sprite.isActive = true;
-							arrowArrayR[i].sprite.dstrect.x = archerR.sprite.dstrect.x + (archerR.sprite.dstrect.w / 2) - (arrowArrayR[i].sprite.dstrect.w / 2);
-							arrowArrayR[i].sprite.dstrect.y = archerR.sprite.dstrect.y + (archerR.sprite.dstrect.h / 2) - (arrowArrayR[i].sprite.dstrect.h / 2);
+							arrowArrayR[i].sprite.setPosX((double)archerR.sprite.dstrect.x + (archerR.sprite.spriteObj->frame_w / 2) - (arrowArrayR[i].sprite.spriteObj->frame_w / 2));
+							arrowArrayR[i].sprite.setPosY((double)archerR.sprite.dstrect.y + (archerR.sprite.spriteObj->frame_h / 2) - (arrowArrayR[i].sprite.spriteObj->frame_h / 2));
 							break;
 						}
 					}
@@ -981,8 +988,8 @@ class GameManager {
 						if (!arrowArrayL[i].sprite.isActive) {
 							arrowArrayL[i].frameState = 0;
 							arrowArrayL[i].sprite.isActive = true;
-							arrowArrayL[i].sprite.dstrect.x = archerL.sprite.dstrect.x + (archerL.sprite.dstrect.w / 2) - (arrowArrayL[i].sprite.dstrect.w / 2);
-							arrowArrayL[i].sprite.dstrect.y = archerL.sprite.dstrect.y + (archerL.sprite.dstrect.h / 2) - (arrowArrayL[i].sprite.dstrect.h / 2);
+							arrowArrayL[i].sprite.setPosX((double)archerL.sprite.dstrect.x + (archerL.sprite.dstrect.w / 2) - (arrowArrayL[i].sprite.dstrect.w / 2));
+							arrowArrayL[i].sprite.setPosY((double)archerL.sprite.dstrect.y + (archerL.sprite.dstrect.h / 2) - (arrowArrayL[i].sprite.dstrect.h / 2));
 							break;
 						}
 					}
@@ -1228,7 +1235,7 @@ class GameManager {
 								peasantometer--;
 							}
 							peasantArray[i].burning = false;
-							//peasantArray[i].dstrect.x = -300;
+							//peasantArray[i].setPosX(-300);
 						}
 					} else if ((j >= 1 && peasantArray[i].sprite.dstrect.x <= peasantArray[i].myTargetx)
 						|| (j <= -1 && peasantArray[i].sprite.dstrect.x >= peasantArray[i].myTargetx)

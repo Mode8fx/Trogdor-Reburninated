@@ -271,13 +271,12 @@ SpriteInstance::SpriteInstance(SpriteObject *so, Sint8 frame, Sint8 form) {
     }
 }
 
-SpriteInstance::SpriteInstance(SpriteObject *so, Sint8 frame, Sint8 form, int pos_x, int pos_y) {
+SpriteInstance::SpriteInstance(SpriteObject *so, Sint8 frame, Sint8 form, double x, double y) {
     spriteObj = so;
     if (spriteObj->numFrames > 0) {
         srcrect.x = 0;
         srcrect.y = 0;
-        dstrect.x = pos_x;
-        dstrect.y = pos_y;
+        setPos(x, y);
         setFrameAndForm(frame, form);
     }
 }
@@ -341,31 +340,41 @@ void SpriteInstance::updateCurrSprite() {
 
 inline void SpriteInstance::moveSprite() {
     pos_x += vel_x;
-    dstrect.x = (int)pos_x;
+    dstrect.x = (Sint16)pos_x;
     pos_y += vel_y;
-    dstrect.y = (int)pos_y;
+    dstrect.y = (Sint16)pos_y;
 }
 
 void SpriteInstance::setPosX(double x) {
     pos_x = x;
-    dstrect.x = (int)x;
+    dstrect.x = (Sint16)x;
 }
 
 void SpriteInstance::setPosY(double y) {
     pos_y = y;
-    dstrect.y = (int)y;
+    dstrect.y = (Sint16)y;
+}
+
+void SpriteInstance::addPosX(double x) {
+    pos_x += x;
+    dstrect.x = (Sint16)pos_x;
+}
+
+void SpriteInstance::addPosY(double y) {
+    pos_y += y;
+    dstrect.y = (Sint16)pos_y;
 }
 
 void SpriteInstance::setPos(double x, double y) {
     pos_x = x;
-    dstrect.x = (int)x;
+    dstrect.x = (Sint16)x;
     pos_y = y;
-    dstrect.y = (int)y;
+    dstrect.y = (Sint16)y;
 }
 
 void SpriteInstance::renderSprite_game() {
-    outputRect.x = (int)((dstrect.x + currSpriteXOffset) * screenScale) + gameToWindowDstRect.x;
-    outputRect.y = (int)((dstrect.y + currSpriteYOffset) * screenScale) + gameToWindowDstRect.y;
+    outputRect.x = (Sint16)((dstrect.x + currSpriteXOffset) * screenScale) + gameToWindowDstRect.x;
+    outputRect.y = (Sint16)((dstrect.y + currSpriteYOffset) * screenScale) + gameToWindowDstRect.y;
     outputRect.w = (int)(dstrect.w * screenScale);
     outputRect.h = (int)(dstrect.h * screenScale);
 #if !defined(SDL1)
@@ -376,8 +385,8 @@ void SpriteInstance::renderSprite_game() {
 }
 
 void SpriteInstance::renderSpriteAsCSO_game() {
-    outputRect.x = (int)(((dstrect.x / TICKS_PER_PIXEL) - currSpriteCenterX) * screenScale) + gameToWindowDstRect.x;
-    outputRect.y = (int)(((dstrect.y / TICKS_PER_PIXEL) - currSpriteCenterY) * screenScale) + gameToWindowDstRect.y;
+    outputRect.x = (Sint16)(((dstrect.x / TICKS_PER_PIXEL) - currSpriteCenterX) * screenScale) + gameToWindowDstRect.x;
+    outputRect.y = (Sint16)(((dstrect.y / TICKS_PER_PIXEL) - currSpriteCenterY) * screenScale) + gameToWindowDstRect.y;
     outputRect.w = (int)(dstrect.w * screenScale);
     outputRect.h = (int)(dstrect.h * screenScale);
 #if !defined(SDL1)
@@ -388,8 +397,8 @@ void SpriteInstance::renderSpriteAsCSO_game() {
 }
 
 void SpriteInstance::renderSprite_app() {
-    outputRect.x = (int)((dstrect.x + currSpriteXOffset) * screenScale) + appToWindowDstRect.x;
-    outputRect.y = (int)((dstrect.y + currSpriteYOffset) * screenScale) + appToWindowDstRect.y;
+    outputRect.x = (Sint16)((dstrect.x + currSpriteXOffset) * screenScale) + appToWindowDstRect.x;
+    outputRect.y = (Sint16)((dstrect.y + currSpriteYOffset) * screenScale) + appToWindowDstRect.y;
     outputRect.w = (int)(dstrect.w * screenScale);
     outputRect.h = (int)(dstrect.h * screenScale);
 #if !defined(SDL1)
