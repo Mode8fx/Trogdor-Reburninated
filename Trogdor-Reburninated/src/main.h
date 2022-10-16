@@ -92,7 +92,6 @@ SpriteObject sprite_burninate_text;
 SpriteInstance sprite_burninate_text_ins;
 SpriteObject sprite_burninate_fire;
 SpriteObject sprite_level_beaten_trogdor;
-SpriteInstance sprite_level_beaten_trogdor_ins;
 SpriteObject sprite_level_beaten_smoke;
 SpriteObject sprite_game_over_trogdor;
 SpriteInstance sprite_game_over_trogdor_ins;
@@ -387,7 +386,7 @@ void InitializeDisplay() {
 #elif defined(SDL1)
 	SDL_WM_SetCaption("Trogdor Reburninated", NULL);
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	windowScreen = SDL_SetVideoMode(640, 480, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
+	windowScreen = SDL_SetVideoMode(videoSettings.widthSetting, videoSettings.heightSetting, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
 #else
 	window = SDL_CreateWindow("Trogdor Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, videoSettings.widthSetting, videoSettings.heightSetting, SDL_WINDOW_RESIZABLE);
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);

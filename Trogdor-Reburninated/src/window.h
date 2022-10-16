@@ -7,6 +7,7 @@
 constexpr auto gameWidth = 250;
 constexpr auto gameHeight = 180;
 constexpr auto DEFAULT_FRAME_RATE = 16;
+constexpr auto TICKS_PER_PIXEL = 20;
 
 extern Uint16 gameHiResWidth;
 extern Uint16 gameHiResHeight;
@@ -72,6 +73,9 @@ constexpr auto DEFAULT_HEIGHT = 240;
 #elif defined(ANDROID)
 #define DEFAULT_WIDTH  SYSTEM_WIDTH
 #define DEFAULT_HEIGHT SYSTEM_HEIGHT
+#elif defined(SDL1)
+constexpr auto DEFAULT_WIDTH = 320;
+constexpr auto DEFAULT_HEIGHT = 240;
 #else
 constexpr auto DEFAULT_WIDTH = 640;
 constexpr auto DEFAULT_HEIGHT = 480;

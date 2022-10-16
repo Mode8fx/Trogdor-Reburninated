@@ -110,7 +110,7 @@ void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
     SDL_BlitSurface(temp_sprite_sheet, &single_srcrect, temp_sprite_single, &single_dstrect);
 }
 
-void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFrames, Sint8 numForms, double scale) {
+void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, Sint8 numForms, double scale) {
     spriteObj->spriteScale = scale;
     // Check if the surface/texture already exists
 #if !defined(SDL1)
@@ -119,7 +119,7 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
     }
 #endif
     // Allocate the SpriteSubObject array; each element of this 2D array represents a single sprite from the sprite sheet
-    for (i = 0; i < numAnimFrames; i++) {
+    for (i = 0; i < numFrames; i++) {
         if (spriteObj->sub[i] != NULL) {
 #if defined(SDL1)
             for (j = 0; j < numForms; j++) {
@@ -139,15 +139,15 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
     }
 #endif
     // Store the size values of the sprite sheet
-    spriteObj->frame_w = (Sint16)(temp_sprite_sheet->w / numAnimFrames);
+    spriteObj->frame_w = (Sint16)(temp_sprite_sheet->w / numFrames);
     spriteObj->frame_h = (Sint16)(temp_sprite_sheet->h / numForms);
-    spriteObj->numAnimFrames = numAnimFrames;
+    spriteObj->numFrames = numFrames;
     spriteObj->numForms = numForms;
     // Iterate through each section (sprite) of the sprite sheet
     // Convert the pixels to 32 bit
     pixels = (Uint32*)temp_sprite_sheet->pixels;
     bpp = temp_sprite_sheet->format->BytesPerPixel;
-    for (i = 0; i < numAnimFrames; i++) {
+    for (i = 0; i < numFrames; i++) {
         for (j = 0; j < numForms; j++) {
             // Get the sprite's left/right boundary (the x position where the sprite actually begins/ends)
             spriteObj->sub[i][j].x_offset_start = getXOffsetStart(spriteObj, i, j);
@@ -155,14 +155,14 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numAnimFram
             if (spriteObj->sub[i][j].x_offset_end < spriteObj->sub[i][j].x_offset_start) { // blank sprite
                 spriteObj->sub[i][j].x_offset_end = spriteObj->sub[i][j].x_offset_start;
             }
-            spriteObj->sub[i][j].x_center = (spriteObj->sub[i][j].x_offset_end - spriteObj->sub[i][j].x_offset_start) / 2;
+            spriteObj->sub[i][j].center_x = (spriteObj->sub[i][j].x_offset_end - spriteObj->sub[i][j].x_offset_start) / 2;
             // Get the sprite's upper/lower boundary (the y position where the sprite actually begins/ends)
             spriteObj->sub[i][j].y_offset_start = getYOffsetStart(spriteObj, i, j);
             spriteObj->sub[i][j].y_offset_end = getYOffsetEnd(spriteObj, i, j);
             if (spriteObj->sub[i][j].y_offset_end < spriteObj->sub[i][j].y_offset_start) { // blank sprite
                 spriteObj->sub[i][j].y_offset_end = spriteObj->sub[i][j].y_offset_start;
             }
-            spriteObj->sub[i][j].y_center = (spriteObj->sub[i][j].y_offset_end - spriteObj->sub[i][j].y_offset_start) / 2;
+            spriteObj->sub[i][j].center_y = (spriteObj->sub[i][j].y_offset_end - spriteObj->sub[i][j].y_offset_start) / 2;
             // Create a new surface from the boundaries of the sprite (temp_sprite_single)
             prepareSurfaceFromSpriteSheet(spriteObj);
 #if !defined(SDL1)
@@ -258,18 +258,22 @@ void sdl1_createTransparentScreen() {
 
 SpriteInstance::SpriteInstance(SpriteObject *so, Sint8 frame, Sint8 form) {
     spriteObj = so;
-    if (spriteObj->numAnimFrames > 0) {
+    if (spriteObj->numFrames > 0) {
         srcrect.x = 0;
         srcrect.y = 0;
         dstrect.x = spriteObj->dstrect.x;
         dstrect.y = spriteObj->dstrect.y;
         setFrameAndForm(frame, form);
+        animFrameTime = 0;
+        animFrameCounter = 0;
+        animFormTime = 0;
+        animFormCounter = 0;
     }
 }
 
 SpriteInstance::SpriteInstance(SpriteObject *so, Sint8 frame, Sint8 form, int pos_x, int pos_y) {
     spriteObj = so;
-    if (spriteObj->numAnimFrames > 0) {
+    if (spriteObj->numFrames > 0) {
         srcrect.x = 0;
         srcrect.y = 0;
         dstrect.x = pos_x;
@@ -294,6 +298,26 @@ void SpriteInstance::setFrameAndForm(Sint8 frame, Sint8 form) {
     updateCurrSprite();
 }
 
+void SpriteInstance::animateFrame() {
+    if (animFrameTime > 0) {
+        animFrameCounter++;
+        while (animFrameCounter >= animFrameTime) {
+            animFrameCounter -= animFrameTime;
+            setFrame((animFrame + 1) % spriteObj->numFrames);
+        }
+    }
+}
+
+void SpriteInstance::animateForm() {
+    if (animFormTime > 0) {
+        animFormCounter++;
+        while (animFormCounter >= animFormTime) {
+            animFormCounter -= animFormTime;
+            setForm((animForm + 1) % spriteObj->numForms);
+        }
+    }
+}
+
 void SpriteInstance::updateCurrSprite() {
 #if !defined(SDL1)
     currSprite = spriteObj->sub[animFrame][animForm].texture;
@@ -302,6 +326,8 @@ void SpriteInstance::updateCurrSprite() {
 #endif
     currSpriteXOffset = spriteObj->sub[animFrame][animForm].x_offset_start;
     currSpriteYOffset = spriteObj->sub[animFrame][animForm].y_offset_start;
+    currSpriteCenterX = spriteObj->sub[animFrame][animForm].center_x;
+    currSpriteCenterY = spriteObj->sub[animFrame][animForm].center_y;
 #if !defined(SDL1)
     srcrect.w = spriteObj->sub[animFrame][animForm].w;
     srcrect.h = spriteObj->sub[animFrame][animForm].h;
@@ -313,9 +339,45 @@ void SpriteInstance::updateCurrSprite() {
     dstrect.h = (int)(spriteObj->sub[animFrame][animForm].h * spriteObj->spriteScale);
 }
 
+inline void SpriteInstance::moveSprite() {
+    pos_x += vel_x;
+    dstrect.x = (int)pos_x;
+    pos_y += vel_y;
+    dstrect.y = (int)pos_y;
+}
+
+void SpriteInstance::setPosX(double x) {
+    pos_x = x;
+    dstrect.x = (int)x;
+}
+
+void SpriteInstance::setPosY(double y) {
+    pos_y = y;
+    dstrect.y = (int)y;
+}
+
+void SpriteInstance::setPos(double x, double y) {
+    pos_x = x;
+    dstrect.x = (int)x;
+    pos_y = y;
+    dstrect.y = (int)y;
+}
+
 void SpriteInstance::renderSprite_game() {
     outputRect.x = (int)((dstrect.x + currSpriteXOffset) * screenScale) + gameToWindowDstRect.x;
     outputRect.y = (int)((dstrect.y + currSpriteYOffset) * screenScale) + gameToWindowDstRect.y;
+    outputRect.w = (int)(dstrect.w * screenScale);
+    outputRect.h = (int)(dstrect.h * screenScale);
+#if !defined(SDL1)
+    SDL_RenderCopy(renderer, currSprite, &srcrect, &outputRect);
+#else
+    SDL_BlitSurface(currSprite, &srcrect, windowScreen, &outputRect);
+#endif
+}
+
+void SpriteInstance::renderSpriteAsCSO_game() {
+    outputRect.x = (int)(((dstrect.x / TICKS_PER_PIXEL) - currSpriteCenterX) * screenScale) + gameToWindowDstRect.x;
+    outputRect.y = (int)(((dstrect.y / TICKS_PER_PIXEL) - currSpriteCenterY) * screenScale) + gameToWindowDstRect.y;
     outputRect.w = (int)(dstrect.w * screenScale);
     outputRect.h = (int)(dstrect.h * screenScale);
 #if !defined(SDL1)
@@ -339,8 +401,6 @@ void SpriteInstance::renderSprite_app() {
 
 void SpriteInstance::renderSprite_overlay() {
     outputRect = dstrect;
-    //outputRect.w = (int)(outputRect.w * screenScale);
-    //outputRect.h = (int)(outputRect.h * screenScale);
 #if !defined(SDL1)
     SDL_RenderCopy(renderer, currSprite, NULL, &outputRect);
 #else
@@ -350,11 +410,30 @@ void SpriteInstance::renderSprite_overlay() {
 
 void SpriteInstance::renderEmptyOverlay() {
     outputRect = dstrect;
-    //outputRect.w = (int)(outputRect.w * screenScale);
-    //outputRect.h = (int)(outputRect.h * screenScale);
 #if !defined(SDL1)
     SDL_RenderFillRect(renderer, &outputRect);
 #else
     SDL_FillRect(windowScreen, &outputRect, 0);
 #endif
+}
+
+void SpriteInstance::prepareAsCSO(double x, double y, Sint8 frame, Sint8 form, Sint8 frameTime, Sint8 formTime, double vel_x, double vel_y) {
+    setPos(x, y);
+    setFrameAndForm(frame, form);
+    animFrameTime = frameTime;
+    animFrameCounter = 0;
+    animFormTime = formTime;
+    animFormCounter = 0;
+    vel_x = vel_x;
+    vel_y = vel_y;
+    isActive = true;
+}
+
+void SpriteInstance::renderAsCSO() {
+    if (isActive) {
+        renderSpriteAsCSO_game();
+        moveSprite();
+        animateFrame();
+        animateForm();
+    }
 }

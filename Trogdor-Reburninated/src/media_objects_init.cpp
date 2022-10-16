@@ -530,7 +530,6 @@ void InitializeSpritesPart1() {
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_fire), 1, 12, 1);
 	PREPARE_SPRITE(sprite_level_beaten_trogdor, (rootDir + "graphics/level_beaten_trogdor_scaled.bmp").c_str(),
 		-5, 41, 1, 1, 1);
-	sprite_level_beaten_trogdor_ins = SpriteInstance(&sprite_level_beaten_trogdor, 0, 0);
 	PREPARE_SPRITE(sprite_level_beaten_smoke, (rootDir + "graphics/level_beaten_smoke.bmp").c_str(),
 		100, 100, 8, 4, 0.6666);
 	PREPARE_SPRITE(sprite_game_over_trogdor, (rootDir + "graphics/game_over_trogdor.bmp").c_str(),
@@ -610,7 +609,7 @@ void exceptMissingFile(const char *path) {
 }
 
 void destroySprite(SpriteObject *sprite) {
-	for (i = 0; i < sprite->numAnimFrames; i++) {
+	for (i = 0; i < sprite->numFrames; i++) {
 		for (j = 0; j < sprite->numForms; j++) {
 #if !defined(SDL1)
 			SDL_DestroyTexture(sprite->sub[i][j].texture);

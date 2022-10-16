@@ -16,8 +16,8 @@
 * @param x_offset_end The unscaled x-position of the last non-colorkeyed pixel.
 * @param y_offset_start The unscaled y-position of the first non-colorkeyed pixel.
 * @param y_offset_end The unscaled y-position of the last non-colorkeyed pixel.
-* @param x_center The midpoint between x_offset_start and x_offset_end, rounded down.
-* @param y_center The midpoint between y_offset_start and y_offset_end, rounded down.
+* @param center_x The midpoint between x_offset_start and x_offset_end, rounded down.
+* @param center_y The midpoint between y_offset_start and y_offset_end, rounded down.
 */
 struct SpriteSubObject {
 #if !defined(SDL1)
@@ -29,12 +29,12 @@ struct SpriteSubObject {
     Sint16 h;
     Sint16 scaled_w;
     Sint16 scaled_h;
-    Sint8 x_offset_start;
-    Sint16 x_offset_end;
-    Sint8 y_offset_start;
-    Sint16 y_offset_end;
-    Sint8 x_center;
-    Sint8 y_center;
+    Uint8 x_offset_start;
+    Uint16 x_offset_end;
+    Uint8 y_offset_start;
+    Uint16 y_offset_end;
+    Uint8 center_x;
+    Uint8 center_y;
 };
 
 /*
@@ -44,7 +44,7 @@ struct SpriteSubObject {
 * @param frame_w The unadjusted width of a single sprite, equal to (sprite sheet width) / (number of frames).
 * @param frame_h The unadjusted height of a single sprite, equal to (sprite sheet height) / (number of forms).
 * @param spriteScale The scale multiplier of each sprite in the sprite sheet, not accounting for screenScale.
-* @param numAnimFrames The number of frames; or, the max number of sprites on one row of the sprite sheet.
+* @param numFrames The number of frames; or, the max number of sprites on one row of the sprite sheet.
 * @param numForms The number of forms; or, the max number of sprites on one column of the sprite sheet.
 * @param dstrect x and y represent the default position of a sprite, while w and h represent the frame_w and frame_h respectively, each scaled up by spriteScale.
 */
@@ -53,7 +53,7 @@ struct SpriteObject {
     Sint16 frame_w;      // the original width of a single animation frame
     Sint16 frame_h;      // the original height of a single animation frame
     double spriteScale;  // the custom scale used for some sprites
-    Sint8 numAnimFrames; // e.g. Trogdor has four frames in his walking animation
+    Sint8 numFrames; // e.g. Trogdor has four frames in his walking animation
     Sint8 numForms;      // e.g. Trogdor has two forms (facing left, facing right)
     SDL_Rect dstrect;    // represents the size of a sprite, even if it was resized
 };
@@ -67,6 +67,10 @@ struct SpriteObject {
 * @param currSpriteYOffset Equivalent to spriteObj->sub[animFrame][animForm].y_offset_start.
 * @param srcrect (SDL2) The position (0,0) and size (unscaled) of the currently-represented SpriteSubObject.
 * @param srcrect (SDL1) The position (0,0) and size (already scaled according to screenScale and spriteScale) of the currently-represented SpriteSubObject.
+* @param vel_x The x-velocity, used for some SpriteInstances.
+* @param vel_y The y-velocity, used for some SpriteInstances.
+* @param pos_x The exact x-position, using double precision.
+* @param pos_y The exact y-position, using double precision.
 * @param dstrect The position (using internal game logic, NOT final screen placement) of the sprite frame (including empty space), and the w and h of the current SpriteSubObject scaled only by spriteScale. Transformations such as x/yOffset, screenScale, and gameToWindowDstRect are applied temporarily as they are needed.
 * @param collision The collision rect relative to dstrect x and y (that's sprite frame position, including empty space, according to internal game logic).
 * @param isActive Whether or not the sprite is active; usually, this means "is the sprite visible and/or doing things".
@@ -82,10 +86,20 @@ class SpriteInstance {
 #endif
         Sint8 currSpriteXOffset;
         Sint8 currSpriteYOffset;
+        Uint8 currSpriteCenterX;
+        Uint8 currSpriteCenterY;
         SDL_Rect srcrect;
         SDL_Rect dstrect;
+        double vel_x;
+        double vel_y;
+        double pos_x;
+        double pos_y;
         Sint8 animFrame;
         Sint8 animForm;
+        Sint8 animFrameTime;
+        Uint8 animFrameCounter;
+        Sint8 animFormTime;
+        Uint8 animFormCounter;
         SDL_Rect collision;
         bool isActive;
         bool facingRight;
@@ -96,11 +110,20 @@ class SpriteInstance {
         void setFrame(Sint8);
         void setForm(Sint8);
         void setFrameAndForm(Sint8, Sint8);
+        void animateFrame();
+        void animateForm();
         void updateCurrSprite();
+        void moveSprite();
+        void setPosX(double);
+        void setPosY(double);
+        void setPos(double, double);
         void renderSprite_game();
+        void renderSpriteAsCSO_game();
         void renderSprite_app();
         void renderSprite_overlay();
         void renderEmptyOverlay();
+        void prepareAsCSO(double, double, Sint8, Sint8, Sint8, Sint8, double, double);
+        void renderAsCSO();
 };
 
 extern SDL_Rect outputRect;
@@ -113,9 +136,9 @@ extern void drawRect_gameTextScreen(SDL_Rect, Uint8, Uint8, Uint8);
 extern void drawRectWithAlpha(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
 extern void sdl1_createTransparentScreen();
 
-#define PREPARE_SPRITE(spriteObj, path, rect_x, rect_y, numAnimFrames, numForms, scale) \
-    prepareSprite(&spriteObj, path, numAnimFrames, numForms, scale);                    \
-    setSpriteScale(&spriteObj);                                                         \
+#define PREPARE_SPRITE(spriteObj, path, rect_x, rect_y, numFrames, numForms, scale) \
+    prepareSprite(&spriteObj, path, numFrames, numForms, scale);                    \
+    setSpriteScale(&spriteObj);                                                     \
     setSpritePos(&spriteObj, (int)rect_x, (int)rect_y);
 
 #define PREPARE_SPRITE_BG(spriteObj, path, rect_x, rect_y)          \
