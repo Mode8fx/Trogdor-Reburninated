@@ -530,7 +530,7 @@ void InitializeSpritesPart1() {
 	PREPARE_SPRITE(sprite_level_beaten_trogdor, (rootDir + "graphics/level_beaten_trogdor_scaled.bmp").c_str(),
 		-5, 41, 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_beaten_smoke, (rootDir + "graphics/level_beaten_smoke.bmp").c_str(),
-		100, 100, 8, 4, 0.6666);
+		100, 100, 8, 4, 0.6667);
 	PREPARE_SPRITE(sprite_game_over_trogdor, (rootDir + "graphics/game_over_trogdor.bmp").c_str(),
 		-13, 75, 1, 1, 1);
 	sprite_game_over_trogdor_ins = SpriteInstance(&sprite_game_over_trogdor, 0, 0);

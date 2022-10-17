@@ -345,7 +345,7 @@ Uint16 windowHeight;
 double appWidthMult;
 double appHeightMult;
 Uint16 frameRate;
-Uint32 ticksPerFrame;
+Uint32 twipsPerFrame;
 
 /* Save File */
 SDL_RWops *saveFile;
@@ -367,7 +367,7 @@ void InitializeDisplay() {
 	appHeight = 240;
 	appSrcRect = { 0, 0, appWidth, appHeight };
 	frameRate = DEFAULT_FRAME_RATE;
-	ticksPerFrame = (Uint32)(1000 / frameRate);
+	twipsPerFrame = (Uint32)(1000 / frameRate);
 	setWidthHeightMults();
 
 	/* Set Window/Renderer */
@@ -420,7 +420,7 @@ void InitializeController() {
 	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
 	joystick = SDL_JoystickOpen(0);
 #else
-	for (i = 0; i < SDL_NumJoysticks(); i++) {
+	for (i = 0; i < SDL_NumJoystwips(); i++) {
 		if (SDL_IsGameController(i)) {
 			controller = SDL_GameControllerOpen(i);
 			break;

@@ -189,6 +189,10 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
             spriteObj->sub[i][j].scaled_h = (int)(spriteObj->sub[i][j].h * scale * screenScale);
             SDL_FreeSurface(temp_sprite_single);
             temp_sprite_single = NULL;
+            spriteObj->sub[i][j].x_offset_start = (Uint8)(spriteObj->sub[i][j].x_offset_start * scale);
+            spriteObj->sub[i][j].x_offset_end = (Uint8)(spriteObj->sub[i][j].x_offset_end * scale);
+            spriteObj->sub[i][j].y_offset_start = (Uint8)(spriteObj->sub[i][j].y_offset_start * scale);
+            spriteObj->sub[i][j].y_offset_end = (Uint8)(spriteObj->sub[i][j].y_offset_end * scale);
         }
     }
     // Free the sprite sheet since we no longer need it
@@ -391,8 +395,8 @@ void SpriteInstance::renderSprite_game() {
 }
 
 void SpriteInstance::renderSpriteAsCSO_game() {
-    outputRect.x = (Sint16)(((dstrect.x / TICKS_PER_PIXEL) - currSpriteCenterX) * screenScale) + gameToWindowDstRect.x;
-    outputRect.y = (Sint16)(((dstrect.y / TICKS_PER_PIXEL) - currSpriteCenterY) * screenScale) + gameToWindowDstRect.y;
+    outputRect.x = (Sint16)(((dstrect.x / TWIPS_PER_PIXEL) - currSpriteCenterX) * screenScale) + gameToWindowDstRect.x;
+    outputRect.y = (Sint16)(((dstrect.y / TWIPS_PER_PIXEL) - currSpriteCenterY) * screenScale) + gameToWindowDstRect.y;
     outputRect.w = (int)(dstrect.w * screenScale);
     outputRect.h = (int)(dstrect.h * screenScale);
 #if !defined(SDL1)
@@ -444,9 +448,9 @@ void SpriteInstance::prepareAsCSO(double x, double y, Sint8 frame, Sint8 form, S
     isActive = true;
 }
 
-void SpriteInstance::renderAsCSO(bool useTicks = true) {
+void SpriteInstance::renderAsCSO(bool useTwips = true) {
     if (isActive) {
-        if (useTicks) renderSpriteAsCSO_game();
+        if (useTwips) renderSpriteAsCSO_game();
         else renderSprite_game();
         moveSprite();
         animateFrame();
