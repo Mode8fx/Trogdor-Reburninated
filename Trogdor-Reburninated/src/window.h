@@ -7,7 +7,7 @@
 constexpr auto gameWidth = 250;
 constexpr auto gameHeight = 180;
 constexpr auto DEFAULT_FRAME_RATE = 16;
-constexpr auto TICKS_PER_PIXEL = 20;
+constexpr auto TWIPS_PER_PIXEL = 20;
 
 extern Uint16 gameHiResWidth;
 extern Uint16 gameHiResHeight;
