@@ -41,21 +41,17 @@ struct SpriteSubObject {
 * @brief A sprite sheet.
 * 
 * @param sub A 2D array containing pointers to malloc'd SpriteSubObjects. sub[i][j] contains the pointer to the SpriteSubObject representing Frame i, Form j.
-* @param frame_w The unadjusted width of a single sprite, equal to (sprite sheet width) / (number of frames).
-* @param frame_h The unadjusted height of a single sprite, equal to (sprite sheet height) / (number of forms).
 * @param spriteScale The scale multiplier of each sprite in the sprite sheet, not accounting for screenScale.
 * @param numFrames The number of frames; or, the max number of sprites on one row of the sprite sheet.
 * @param numForms The number of forms; or, the max number of sprites on one column of the sprite sheet.
-* @param dstrect x and y represent the default position of a sprite, while w and h represent the frame_w and frame_h respectively, each scaled up by spriteScale.
+* @param dstrect x and y represent the default position of a sprite, while w and h represent the original frame width and height (including empty space) respectively, each scaled up by spriteScale.
 */
 struct SpriteObject {
-    SpriteSubObject *sub[8]; // the max number of frames a sprite sheet can have is 8
-    Sint16 frame_w;      // the original width of a single animation frame
-    Sint16 frame_h;      // the original height of a single animation frame
-    double spriteScale;  // the custom scale used for some sprites
-    Sint8 numFrames; // e.g. Trogdor has four frames in his walking animation
-    Sint8 numForms;      // e.g. Trogdor has two forms (facing left, facing right)
-    SDL_Rect dstrect;    // represents the size of a sprite, even if it was resized
+    SpriteSubObject *sub[8];
+    double spriteScale;
+    Sint8 numFrames;
+    Sint8 numForms;
+    SDL_Rect dstrect;
 };
 
 /*
@@ -125,7 +121,7 @@ class SpriteInstance {
         void renderSprite_overlay();
         void renderEmptyOverlay();
         void prepareAsCSO(double, double, Sint8, Sint8, Sint8, Sint8, double, double);
-        void renderAsCSO();
+        void renderAsCSO(bool);
 };
 
 extern SDL_Rect outputRect;
@@ -163,15 +159,15 @@ extern void sdl1_createTransparentScreen();
     (((double)height * val) - (obj.dstrect.h / 2))
 
 #define OBJ_FRAME_TO_MID_SCREEN_X(width, obj) \
-    ((width - obj.frame_w) / 2)
+    ((width - obj.dstrect.w) / 2)
 
 #define OBJ_FRAME_TO_SCREEN_AT_FRACTION_X(width, obj, val) \
-    (((double)width * val) - (obj.frame_w / 2))
+    (((double)width * val) - (obj.dstrect.w / 2))
 
 #define OBJ_FRAME_TO_MID_SCREEN_Y(height, obj) \
-    ((height - obj.frame_h) / 2)
+    ((height - obj.dstrect.h) / 2)
 
 #define OBJ_FRAME_TO_SCREEN_AT_FRACTION_Y(height, obj, val) \
-    (((double)height * val) - (obj.frame_h / 2))
+    (((double)height * val) - (obj.dstrect.h / 2))
 
 #endif

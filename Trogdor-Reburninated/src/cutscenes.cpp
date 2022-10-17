@@ -77,26 +77,19 @@ void InitializeCutsceneObjects() {
 void cutscene_level_beaten() {
 	switch (g_frameState) {
 		case 277:
-			//cutsceneIsPlaying = true;
+			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_BURNINATE);
+			cutscene_level_beaten_trogdor.isActive = false;
 			cutscene_level_beaten_smoke.isActive = false;
 			cutscene_cottage_fire.isActive = false;
-			cutscene_level_beaten_smoke.prepareAsCSO(125, 83 - cutscene_level_beaten_smoke.spriteObj->dstrect.h, 0, 0, 1, 0, 0, 0);
+			cutscene_level_beaten_trogdor.prepareAsCSO(-5, 41, 0, 0, 0, 0, 0, 0);
+			cutscene_level_beaten_smoke.prepareAsCSO(125, 83.0 - cutscene_level_beaten_smoke.spriteObj->dstrect.h, 0, 0, 1, 8, 0, 0);
 			break;
 		case 281:
-			cutscene_cottage_fire.prepareAsCSO(222, 0, 0, 0, 2, 0, 0, 0);
-			break;
-		case 285:
-			cutscene_level_beaten_smoke.setForm(1);
+			cutscene_cottage_fire.prepareAsCSO(4789, 81, 0, 0, 2, 0, 0, 0);
 			break;
 		case 289:
 			cutscene_cottage_fire.isActive = false;
-			break;
-		case 293:
-			cutscene_level_beaten_smoke.setForm(2);
-			break;
-		case 301:
-			cutscene_level_beaten_smoke.setForm(3);
 			break;
 		case 308:
 			cutscene_level_beaten_smoke.isActive = false;
@@ -104,10 +97,9 @@ void cutscene_level_beaten() {
 		default:
 			break;
 	}
-	//sprite_level_beaten_trogdor_ins.renderSprite_game()
-	cutscene_level_beaten_trogdor.renderAsCSO();
-	cutscene_level_beaten_smoke.renderAsCSO();
-	cutscene_cottage_fire.renderAsCSO();
+	cutscene_level_beaten_trogdor.renderAsCSO(false);
+	cutscene_level_beaten_smoke.renderAsCSO(false);
+	cutscene_cottage_fire.renderAsCSO(true);
 	renderText(text_9_nice_work, font_serif_white_10);
 	renderText(text_9_level_gray, font_serif_gray_12);
 	renderText(text_9_beaten_gray, font_serif_gray_12);
@@ -159,11 +151,11 @@ void cutscene_level_4() {
 		default:
 			break;
 	}
-	cutscene_peasant_1.renderAsCSO();
-	cutscene_trogdor_1.renderAsCSO();
-	cutscene_knight_1.renderAsCSO();
-	cutscene_knight_2.renderAsCSO();
-	cutscene_trogdor_fire.renderAsCSO();
+	cutscene_peasant_1.renderAsCSO(false);
+	cutscene_trogdor_1.renderAsCSO(false);
+	cutscene_knight_1.renderAsCSO(false);
+	cutscene_knight_2.renderAsCSO(false);
+	cutscene_trogdor_fire.renderAsCSO(false);
 	renderText(text_11_cutscene, font_serif_white_9);
 }
 
@@ -242,12 +234,12 @@ void cutscene_level_8() {
 		default:
 			break;
 	}
-	cutscene_peasant_1.renderAsCSO();
-	cutscene_peasant_2.renderAsCSO();
-	cutscene_peasant_3.renderAsCSO();
-	cutscene_peasant_4.renderAsCSO();
-	cutscene_trogdor_1.renderAsCSO();
-	cutscene_trogdor_fire.renderAsCSO();
+	cutscene_peasant_1.renderAsCSO(false);
+	cutscene_peasant_2.renderAsCSO(false);
+	cutscene_peasant_3.renderAsCSO(false);
+	cutscene_peasant_4.renderAsCSO(false);
+	cutscene_trogdor_1.renderAsCSO(false);
+	cutscene_trogdor_fire.renderAsCSO(false);
 	renderText(text_12_cutscene, font_serif_white_9);
 }
 
@@ -294,12 +286,12 @@ void cutscene_level_12() {
 		default:
 			break;
 	}
-	cutscene_trogdor_1.renderAsCSO();
-	cutscene_trogdor_2.renderAsCSO();
-	cutscene_trogdor_3.renderAsCSO();
-	cutscene_trogdor_4.renderAsCSO();
-	cutscene_trogdor_5.renderAsCSO();
-	cutscene_trogdor_6.renderAsCSO();
+	cutscene_trogdor_1.renderAsCSO(false);
+	cutscene_trogdor_2.renderAsCSO(false);
+	cutscene_trogdor_3.renderAsCSO(false);
+	cutscene_trogdor_4.renderAsCSO(false);
+	cutscene_trogdor_5.renderAsCSO(false);
+	cutscene_trogdor_6.renderAsCSO(false);
 	renderText(text_13_cutscene, font_serif_white_9);
 }
 
@@ -341,19 +333,19 @@ void cutscene_level_16() {
 		default:
 			break;
 	}
-	cutscene_trogdor_1.renderAsCSO();
-	cutscene_knight_1.renderAsCSO();
-	cutscene_knight_2.renderAsCSO();
-	cutscene_peasant_1.renderAsCSO();
-	cutscene_peasant_2.renderAsCSO();
-	cutscene_peasant_3.renderAsCSO();
-	cutscene_peasant_4.renderAsCSO();
-	cutscene_peasant_5.renderAsCSO();
-	cutscene_peasant_6.renderAsCSO();
-	cutscene_peasant_7.renderAsCSO();
-	cutscene_peasant_8.renderAsCSO();
-	cutscene_peasant_9.renderAsCSO();
-	cutscene_peasant_10.renderAsCSO();
+	cutscene_trogdor_1.renderAsCSO(false);
+	cutscene_knight_1.renderAsCSO(false);
+	cutscene_knight_2.renderAsCSO(false);
+	cutscene_peasant_1.renderAsCSO(false);
+	cutscene_peasant_2.renderAsCSO(false);
+	cutscene_peasant_3.renderAsCSO(false);
+	cutscene_peasant_4.renderAsCSO(false);
+	cutscene_peasant_5.renderAsCSO(false);
+	cutscene_peasant_6.renderAsCSO(false);
+	cutscene_peasant_7.renderAsCSO(false);
+	cutscene_peasant_8.renderAsCSO(false);
+	cutscene_peasant_9.renderAsCSO(false);
+	cutscene_peasant_10.renderAsCSO(false);
 	renderText(text_14_cutscene, font_serif_white_9);
 }
 
@@ -400,7 +392,7 @@ void cutscene_level_20() {
 		default:
 			break;
 	}
-	cutscene_trogdor_flexing.renderAsCSO();
+	cutscene_trogdor_flexing.renderAsCSO(false);
 	renderText(text_15_cutscene, font_serif_white_9);
 }
 
@@ -480,15 +472,15 @@ void cutscene_level_24() {
 		default:
 			break;
 	}
-	cutscene_trogdor_1.renderAsCSO();
-	cutscene_peasant_1.renderAsCSO();
-	cutscene_peasant_2.renderAsCSO();
-	cutscene_peasant_3.renderAsCSO();
-	cutscene_peasant_4.renderAsCSO();
-	cutscene_peasant_5.renderAsCSO();
-	cutscene_peasant_6.renderAsCSO();
-	cutscene_peasant_7.renderAsCSO();
-	cutscene_trogdor_fire.renderAsCSO();
+	cutscene_trogdor_1.renderAsCSO(false);
+	cutscene_peasant_1.renderAsCSO(false);
+	cutscene_peasant_2.renderAsCSO(false);
+	cutscene_peasant_3.renderAsCSO(false);
+	cutscene_peasant_4.renderAsCSO(false);
+	cutscene_peasant_5.renderAsCSO(false);
+	cutscene_peasant_6.renderAsCSO(false);
+	cutscene_peasant_7.renderAsCSO(false);
+	cutscene_trogdor_fire.renderAsCSO(false);
 	renderText(text_16_cutscene, font_serif_white_9);
 }
 
@@ -534,9 +526,9 @@ void cutscene_level_30() {
 		default:
 			break;
 	}
-	cutscene_peasant_1.renderAsCSO();
-	cutscene_peasant_2.renderAsCSO();
-	cutscene_trogdor_fire.renderAsCSO();
+	cutscene_peasant_1.renderAsCSO(false);
+	cutscene_peasant_2.renderAsCSO(false);
+	cutscene_trogdor_fire.renderAsCSO(false);
 	renderText(text_17_cutscene, font_serif_white_9);
 }
 
@@ -624,15 +616,15 @@ void cutscene_level_34() {
 				break;
 		}
 	}
-	cutscene_peasant_1.renderAsCSO();
-	cutscene_peasant_2.renderAsCSO();
-	cutscene_peasant_3.renderAsCSO();
-	cutscene_peasant_4.renderAsCSO();
-	cutscene_peasant_5.renderAsCSO();
-	cutscene_peasant_6.renderAsCSO();
-	cutscene_peasant_7.renderAsCSO();
-	cutscene_trogdor_1.renderAsCSO();
-	cutscene_trogdor_2.renderAsCSO();
+	cutscene_peasant_1.renderAsCSO(false);
+	cutscene_peasant_2.renderAsCSO(false);
+	cutscene_peasant_3.renderAsCSO(false);
+	cutscene_peasant_4.renderAsCSO(false);
+	cutscene_peasant_5.renderAsCSO(false);
+	cutscene_peasant_6.renderAsCSO(false);
+	cutscene_peasant_7.renderAsCSO(false);
+	cutscene_trogdor_1.renderAsCSO(false);
+	cutscene_trogdor_2.renderAsCSO(false);
 	renderText(text_18_cutscene, font_serif_white_9);
 }
 
@@ -680,10 +672,10 @@ void cutscene_level_38() {
 		default:
 			break;
 	}
-	cutscene_peasant_1.renderAsCSO();
-	cutscene_peasant_2.renderAsCSO();
-	cutscene_heart.renderAsCSO();
-	cutscene_knight_1.renderAsCSO();
+	cutscene_peasant_1.renderAsCSO(false);
+	cutscene_peasant_2.renderAsCSO(false);
+	cutscene_heart.renderAsCSO(false);
+	cutscene_knight_1.renderAsCSO(false);
 	renderText(text_19_cutscene, font_serif_white_9);
 }
 
@@ -703,8 +695,8 @@ void cutscene_level_42() {
 		default:
 			break;
 	}
-	cutscene_cottage_1.renderAsCSO();
-	cutscene_cottage_2.renderAsCSO();
+	cutscene_cottage_1.renderAsCSO(false);
+	cutscene_cottage_2.renderAsCSO(false);
 	renderText(text_20_cutscene, font_serif_white_9);
 }
 
@@ -780,9 +772,9 @@ void cutscene_level_46() {
 	cutscene_level_46_arrow_helper(&cutscene_arrow_3, 1187);
 	cutscene_level_46_arrow_helper(&cutscene_arrow_1, 1194);
 	cutscene_level_46_arrow_helper(&cutscene_arrow_2, 1201);
-	cutscene_knight_funnyjoke.renderAsCSO();
-	cutscene_knight_1.renderAsCSO();
-	cutscene_archer_1.renderAsCSO();
+	cutscene_knight_funnyjoke.renderAsCSO(false);
+	cutscene_knight_1.renderAsCSO(false);
+	cutscene_archer_1.renderAsCSO(false);
 	renderText(text_21_cutscene, font_serif_white_9);
 }
 

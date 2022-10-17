@@ -13,6 +13,8 @@ int bpp;
 Uint8 *p;
 Sint16 offsetStart;
 Sint16 offsetEnd;
+Sint16 frame_w;
+Sint16 frame_h;
 
 Uint32 getPixel(SDL_Surface *surface, int x, int y) {
     // p is the address to the pixel we want to retrieve
@@ -37,23 +39,23 @@ Uint32 getPixel(SDL_Surface *surface, int x, int y) {
 }
 
 Sint8 getXOffsetStart(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
-    offsetStart = spriteObj->frame_w * x;
-    offsetEnd = offsetStart + spriteObj->frame_w - 1;
+    offsetStart = frame_w * x;
+    offsetEnd = offsetStart + frame_w - 1;
     for (int_i = offsetStart; int_i < offsetEnd; int_i++) {
-        for (int_j = spriteObj->frame_h * y; int_j < spriteObj->frame_h * (y + 1); int_j++) {
+        for (int_j = frame_h * y; int_j < frame_h * (y + 1); int_j++) {
             if (getPixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
                 return (Sint8)(int_i - offsetStart);
             }
         }
     }
-    return (Sint8)spriteObj->frame_w - 1;
+    return (Sint8)frame_w - 1;
 }
 
 Sint16 getXOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
-    offsetStart = spriteObj->frame_w * x;
-    offsetEnd = offsetStart + spriteObj->frame_w - 1;
+    offsetStart = frame_w * x;
+    offsetEnd = offsetStart + frame_w - 1;
     for (int_i = offsetEnd; int_i > offsetStart; int_i--) {
-        for (int_j = spriteObj->frame_h * y; int_j < spriteObj->frame_h * (y + 1); int_j++) {
+        for (int_j = frame_h * y; int_j < frame_h * (y + 1); int_j++) {
             if (getPixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
                 return (Sint16)(int_i - offsetStart);
             }
@@ -63,23 +65,23 @@ Sint16 getXOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
 }
 
 Sint8 getYOffsetStart(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
-    offsetStart = spriteObj->frame_h * y;
-    offsetEnd = offsetStart + spriteObj->frame_h - 1;
+    offsetStart = frame_h * y;
+    offsetEnd = offsetStart + frame_h - 1;
     for (int_j = offsetStart; int_j < offsetEnd; int_j++) {
-        for (int_i = spriteObj->frame_w * x; int_i < spriteObj->frame_w * (x + 1); int_i++) {
+        for (int_i = frame_w * x; int_i < frame_w * (x + 1); int_i++) {
             if (getPixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
                 return (Sint8)(int_j - offsetStart);
             }
         }
     }
-    return (Sint8)spriteObj->frame_h - 1;
+    return (Sint8)frame_h - 1;
 }
 
 Sint16 getYOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
-    offsetStart = spriteObj->frame_h * y;
-    offsetEnd = offsetStart + spriteObj->frame_h - 1;
+    offsetStart = frame_h * y;
+    offsetEnd = offsetStart + frame_h - 1;
     for (int_j = offsetEnd; int_j > offsetStart; int_j--) {
-        for (int_i = spriteObj->frame_w * x; int_i < spriteObj->frame_w * (x + 1); int_i++) {
+        for (int_i = frame_w * x; int_i < frame_w * (x + 1); int_i++) {
             if (getPixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
                 return (Sint16)(int_j - offsetStart);
             }
@@ -89,8 +91,8 @@ Sint16 getYOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
 }
 
 void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
-    single_srcrect.x = (spriteObj->frame_w * i) + spriteObj->sub[i][j].x_offset_start;
-    single_srcrect.y = (spriteObj->frame_h * j) + spriteObj->sub[i][j].y_offset_start;
+    single_srcrect.x = (frame_w * i) + spriteObj->sub[i][j].x_offset_start;
+    single_srcrect.y = (frame_h * j) + spriteObj->sub[i][j].y_offset_start;
     single_srcrect.w = spriteObj->sub[i][j].x_offset_end - spriteObj->sub[i][j].x_offset_start + 1;
     single_srcrect.h = spriteObj->sub[i][j].y_offset_end - spriteObj->sub[i][j].y_offset_start + 1;
 #if (defined(WII) || defined(GAMECUBE))
@@ -139,8 +141,8 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
     }
 #endif
     // Store the size values of the sprite sheet
-    spriteObj->frame_w = (Sint16)(temp_sprite_sheet->w / numFrames);
-    spriteObj->frame_h = (Sint16)(temp_sprite_sheet->h / numForms);
+    frame_w = (Sint16)(temp_sprite_sheet->w / numFrames);
+    frame_h = (Sint16)(temp_sprite_sheet->h / numForms);
     spriteObj->numFrames = numFrames;
     spriteObj->numForms = numForms;
     // Iterate through each section (sprite) of the sprite sheet
@@ -196,8 +198,8 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
 
 void setSpriteScale(SpriteObject *spriteObj) {
     spriteObj->dstrect = { 0, 0, 0, 0 };
-    spriteObj->dstrect.w = (int)(spriteObj->frame_w * spriteObj->spriteScale);
-    spriteObj->dstrect.h = (int)(spriteObj->frame_h * spriteObj->spriteScale);
+    spriteObj->dstrect.w = (int)(frame_w * spriteObj->spriteScale);
+    spriteObj->dstrect.h = (int)(frame_h * spriteObj->spriteScale);
 }
 
 void setSpritePos(SpriteObject *spriteObj, int rect_x, int rect_y) {
@@ -339,10 +341,14 @@ void SpriteInstance::updateCurrSprite() {
 }
 
 inline void SpriteInstance::moveSprite() {
-    pos_x += vel_x;
-    dstrect.x = (Sint16)pos_x;
-    pos_y += vel_y;
-    dstrect.y = (Sint16)pos_y;
+    if (vel_x != 0) {
+        pos_x += vel_x;
+        dstrect.x = (Sint16)pos_x;
+    }
+    if (vel_y != 0) {
+        pos_y += vel_y;
+        dstrect.y = (Sint16)pos_y;
+    }
 }
 
 void SpriteInstance::setPosX(double x) {
@@ -426,21 +432,22 @@ void SpriteInstance::renderEmptyOverlay() {
 #endif
 }
 
-void SpriteInstance::prepareAsCSO(double x, double y, Sint8 frame, Sint8 form, Sint8 frameTime, Sint8 formTime, double vel_x, double vel_y) {
+void SpriteInstance::prepareAsCSO(double x, double y, Sint8 frame, Sint8 form, Sint8 frameTime, Sint8 formTime, double vx, double vy) {
     setPos(x, y);
     setFrameAndForm(frame, form);
     animFrameTime = frameTime;
     animFrameCounter = 0;
     animFormTime = formTime;
     animFormCounter = 0;
-    vel_x = vel_x;
-    vel_y = vel_y;
+    vel_x = vx;
+    vel_y = vy;
     isActive = true;
 }
 
-void SpriteInstance::renderAsCSO() {
+void SpriteInstance::renderAsCSO(bool useTicks = true) {
     if (isActive) {
-        renderSpriteAsCSO_game();
+        if (useTicks) renderSpriteAsCSO_game();
+        else renderSprite_game();
         moveSprite();
         animateFrame();
         animateForm();

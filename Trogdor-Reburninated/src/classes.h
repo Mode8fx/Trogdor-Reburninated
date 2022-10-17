@@ -120,8 +120,8 @@ class Knight {
 			sprite.facingRight = fr;
 			home_x = pos_x;
 			home_y = pos_y;
-			half_src_w = sprite_knight.frame_w / 2;
-			half_src_h = sprite_knight.frame_h / 2 + 4;
+			half_src_w = sprite_knight.dstrect.w / 2;
+			half_src_h = sprite_knight.dstrect.h / 2 + 4;
 			offset_x = 0;
 			offset_y = 0;
 			direction = dir;
@@ -398,8 +398,8 @@ class Trogdor {
 				sprite_end_of_level = SpriteInstance(&sprite_end_of_level_trogdor, 0, 0);
 			}
 			sprite.facingRight = true;
-			spawnPos_x = (2780.0 / 5000 * gameWidth) - (sprite.spriteObj->frame_w / 2);
-			spawnPos_y = (2360.0 / 3600 * gameHeight) - (sprite.spriteObj->frame_h / 2);
+			spawnPos_x = (2780.0 / 5000 * gameWidth) - (sprite.spriteObj->dstrect.w / 2);
+			spawnPos_y = (2360.0 / 3600 * gameHeight) - (sprite.spriteObj->dstrect.h / 2);
 			sprite.setPosX(spawnPos_x);
 			sprite.setPosY(spawnPos_y);
 			sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
@@ -417,13 +417,13 @@ class Trogdor {
 			switch (frameState) {
 				case 20: // sworded
 					sprite_death.setFrame(0);
-					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.spriteObj->frame_w - sprite_death.spriteObj->frame_w) / 2);
-					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.spriteObj->frame_h - sprite_death.spriteObj->frame_h) - 7;
+					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.spriteObj->dstrect.w - sprite_death.spriteObj->dstrect.w) / 2);
+					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.spriteObj->dstrect.h - sprite_death.spriteObj->dstrect.h) - 7;
 					break;
 				case 50: // arrowed
 					sprite_death.setFrame(1);
-					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.spriteObj->frame_w - sprite_death.spriteObj->frame_w) / 2);
-					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.spriteObj->frame_h - sprite_death.spriteObj->frame_h) - 7;
+					sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.spriteObj->dstrect.w - sprite_death.spriteObj->dstrect.w) / 2);
+					sprite_death.dstrect.y = sprite.dstrect.y + (sprite.spriteObj->dstrect.h - sprite_death.spriteObj->dstrect.h) - 7;
 					break;
 				case 22:
 				case 52:
@@ -639,7 +639,7 @@ class GameManager {
 			sprite_bt = SpriteInstance(&sprite_burninate_text, 0, 0);
 			sprite_bf = SpriteInstance(&sprite_burninate_fire, 0, 0);
 			sprite_bf.setPosX(OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire));
-			sprite_bf.setPosY((double)sprite_bt.dstrect.y - sprite_bf.spriteObj->frame_h + 6); // + 4?
+			sprite_bf.setPosY((double)sprite_bt.dstrect.y - sprite_bf.spriteObj->dstrect.h + 6); // + 4?
 			b_visible = false;
 			sprite_bmFull = SpriteInstance(&sprite_burnination_meter_full, 0, 0);
 			sprite_pm_on = SpriteInstance(&sprite_peasantometer_icon, 1, 0);
@@ -974,8 +974,8 @@ class GameManager {
 						if (!arrowArrayR[i].sprite.isActive) {
 							arrowArrayR[i].frameState = 0;
 							arrowArrayR[i].sprite.isActive = true;
-							arrowArrayR[i].sprite.setPosX((double)archerR.sprite.dstrect.x + (archerR.sprite.spriteObj->frame_w / 2) - (arrowArrayR[i].sprite.spriteObj->frame_w / 2));
-							arrowArrayR[i].sprite.setPosY((double)archerR.sprite.dstrect.y + (archerR.sprite.spriteObj->frame_h / 2) - (arrowArrayR[i].sprite.spriteObj->frame_h / 2));
+							arrowArrayR[i].sprite.setPosX((double)archerR.sprite.dstrect.x + (archerR.sprite.spriteObj->dstrect.w / 2) - (arrowArrayR[i].sprite.spriteObj->dstrect.w / 2));
+							arrowArrayR[i].sprite.setPosY((double)archerR.sprite.dstrect.y + (archerR.sprite.spriteObj->dstrect.h / 2) - (arrowArrayR[i].sprite.spriteObj->dstrect.h / 2));
 							break;
 						}
 					}
