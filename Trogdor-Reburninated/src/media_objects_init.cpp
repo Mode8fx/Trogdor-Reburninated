@@ -104,11 +104,11 @@ void InitializeFontsAndText() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_2), 73 * gameHiResMult);
 		SET_TEXT("-Restored High Scores screen!", text_3_coming_soon_3, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), 87 * gameHiResMult);
-		SET_TEXT("-Hi-res sprite mode!", text_3_coming_soon_4, font_serif_white_6_mult,
+		SET_TEXT("-More options!", text_3_coming_soon_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), 101 * gameHiResMult);
-		SET_TEXT("-More options!", text_3_coming_soon_5, font_serif_white_6_mult,
+		SET_TEXT("-Save data support!", text_3_coming_soon_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 115 * gameHiResMult);
-		SET_TEXT("-Save data support!", text_3_coming_soon_6, font_serif_white_6_mult,
+		SET_TEXT("-And more!", text_3_coming_soon_6, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 129 * gameHiResMult);
 	} else {
 		SET_TEXT("(1/4)", text_3_page, font_serif_white_6_mult,
@@ -190,11 +190,11 @@ void InitializeFontsAndText() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_2), 73 * gameHiResMult);
 		SET_TEXT("-Restored High Scores screen!", text_3_coming_soon_3, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), 87 * gameHiResMult);
-		SET_TEXT("-Hi-res sprite mode!", text_3_coming_soon_4, font_serif_white_6_mult,
+		SET_TEXT("-More options!", text_3_coming_soon_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), 101 * gameHiResMult);
-		SET_TEXT("-More options!", text_3_coming_soon_5, font_serif_white_6_mult,
+		SET_TEXT("-Save data support!", text_3_coming_soon_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 115 * gameHiResMult);
-		SET_TEXT("-Save data support!", text_3_coming_soon_6, font_serif_white_6_mult,
+		SET_TEXT("-And more!", text_3_coming_soon_6, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 129 * gameHiResMult);
 	}
 	TTF_CloseFont(font_serif_white_6_mult.font);

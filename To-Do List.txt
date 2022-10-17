@@ -2,45 +2,46 @@ To-Do List
 
 Version 1.0 [faithful recreation of original Trogdor flash game]:
 Features:
+- Finish remaining cutscenes
 - Finish Game Over screen
-- Add art and animation to all cutscenes
 - Add a simple Options menu with a few customizable settings
 	- Starting Level
 	- Starting Lives
-	- Extra Lives Interval
+	- Extra Lives
 	- Peasant Penalty
 	- Archer Frequency
-	- Strong Bad Commentary Frequency
-	- Debug Cheat Toggle
+	- Commentary Frequency
+	- Scaling
+	- Cheats
 Polish:
-- Fix burninate message fire
 - Move Credits screen, Coming Soon screen, and Quit functionality to Options menu
 - Add "Libraries" screen to Options menu
 - Add "Want more?" screen for other system ports to Options menu
-Additional Ports:
-- Android
 Final:
-- Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS
-- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS
+- Update release materials (icons, descriptions, etc) for all versions: PC, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS
+- Test all versions: PC, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS
 
-Version 1.5 [an update that adds a few more features and an additional port]
+Version 1.5 [an update that adds a few more features and additional ports]
 Features:
+- Rework cutscenes to use exact positions from the original game
 - Restore the original game's unused High Scores screen
-- Add basic Records screen
-- Add Hi-Res Sprite Mode and AI upscale existing sprites
-	- Since resources are openly editable, an artist can replace these AI upscales with actual new art by simply replacing the files
+- Additional Options
+	- Sprite Mode
+	- Treasure Hut Accessibility
+	- Commentary Type
+	- Overlay
+	- Records
+	- Theater
 - Add save data support
-- Add option for treasure hut accessibility
-- Add option for more overlays
-- Add Theater setting to Options menu where you can watch cutscenes
 Polish:
 - Add "Coming Eventually" screen for v2.0
 Additional Ports:
+- Android
 - Xbox
 - Libretro
 Final:
-- Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, LibRetro
-- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, LibRetro
+- Update release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, Xbox, LibRetro
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, Xbox, LibRetro
 
 Version 2.0 [enhanced port of Trogdor with additional options, achievements, and more; mainly inspired by XBLA ports of arcade games]:
 Features:
@@ -52,8 +53,8 @@ Features:
 - Add History of Trogdor screen
 - Add secret game
 Final:
-- Prepare release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, LibRetro
-- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, LibRetro
+- Prepare release materials (icons, descriptions, etc) for all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, Xbox, LibRetro
+- Test all versions: PC, Android, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS, Xbox, LibRetro
 - Make a trailer?
 - ???
 
