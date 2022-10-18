@@ -1,6 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "input.h"
 #include "text_objects.h"
 
 constexpr auto MAX_NUM_OPTION_CHOICES = 10;
@@ -79,6 +80,7 @@ class Menu {
 		Menu() {
 		}
 		Menu(Uint8, Uint8, SpriteInstance *, bool, Sint8, Sint16, Sint16, Sint16, Sint16, Sint16, Sint8, Sint8, bool);
+		void handleControls();
 		void incrementOption();
 		void decrementOption();
 		void incrementCurrOptionChoice();

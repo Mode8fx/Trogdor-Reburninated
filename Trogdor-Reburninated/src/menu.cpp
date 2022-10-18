@@ -45,6 +45,21 @@ Menu::Menu(Uint8 numOpt, Uint8 numOns, SpriteInstance *spriteIns, bool keepIndex
 	optionsWrap = wrap;
 }
 
+void Menu::handleControls() {
+	if (keyPressed(INPUT_UP)) {
+		decrementOption();
+	}
+	if (keyPressed(INPUT_DOWN)) {
+		incrementOption();
+	}
+	if (keyPressed(INPUT_LEFT)) {
+		decrementCurrOptionChoice();
+	}
+	if (keyPressed(INPUT_RIGHT)) {
+		incrementCurrOptionChoice();
+	}
+}
+
 void Menu::incrementOption() {
 	if (cursorIndex < numOptions - 1) {
 		cursorIndex++;
