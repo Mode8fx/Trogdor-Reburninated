@@ -5,6 +5,7 @@ SRCS =	$(CURDIR)/src/main.cpp \
 		$(CURDIR)/src/cutscenes.cpp \
 		$(CURDIR)/src/general.cpp \
 		$(CURDIR)/src/media_objects_init.cpp \
+		$(CURDIR)/src/menu.cpp \
 		$(CURDIR)/src/sound_logic.cpp \
 		$(CURDIR)/src/sprite_objects.cpp \
 		$(CURDIR)/src/text_objects.cpp \

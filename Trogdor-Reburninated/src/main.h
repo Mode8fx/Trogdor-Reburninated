@@ -236,7 +236,6 @@ TextObject text_10_hi_scores_red;
 TextObject text_10_view_red;
 TextObject text_10_hi_scores_orange;
 TextObject text_10_view_orange;
-TextObject text_placeholder_cutscene;
 TextObject text_11_cutscene;
 TextObject text_12_cutscene;
 TextObject text_13_cutscene;

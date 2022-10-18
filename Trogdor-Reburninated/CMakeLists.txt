@@ -16,6 +16,8 @@ add_executable(trogdorrb
 	"src/level_data.h"
 	"src/media_objects_init.cpp"
 	"src/media_objects_init.h"
+	"src/menu.cpp"
+	"src/menu.h"
 	"src/sound_logic.cpp"
 	"src/sound_logic.h"
 	"src/sprite_objects.cpp"

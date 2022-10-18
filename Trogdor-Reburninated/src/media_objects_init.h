@@ -7,6 +7,9 @@
 #define MEDIA_OBJECTS_INIT_H
 
 extern void InitializeFontsAndText();
+extern void InitializeText_HomeScreen();
+extern void InitializeText_Cutscenes();
+extern void InitializeText_PauseScreen();
 extern void InitializeMusic();
 extern void InitializeSFX();
 extern void InitializeSpritesPart1();
@@ -254,7 +257,6 @@ extern TextObject text_10_hi_scores_red;
 extern TextObject text_10_view_red;
 extern TextObject text_10_hi_scores_orange;
 extern TextObject text_10_view_orange;
-extern TextObject text_placeholder_cutscene;
 extern TextObject text_11_cutscene;
 extern TextObject text_12_cutscene;
 extern TextObject text_13_cutscene;

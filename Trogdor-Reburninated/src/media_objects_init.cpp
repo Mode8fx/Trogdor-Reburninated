@@ -14,6 +14,107 @@ void InitializeFontsAndText() {
 	setFont(&font_serif_red_6_mult, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_red);
 	setFont(&font_serif_red_8_mult, "fonts/serif_v01.ttf", 8, 6.666, TTF_STYLE_NORMAL, color_red);
 	initializeFont_numbers(&font_serif_white_6_mult);
+	InitializeText_HomeScreen();
+	TTF_CloseFont(font_serif_white_6_mult.font);
+	TTF_CloseFont(font_serif_red_6_mult.font);
+	TTF_CloseFont(font_serif_red_8_mult.font);
+
+	//setFont(&font_serif_brown_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_brown);
+	//TTF_CloseFont(font_serif_brown_6.font);
+
+	//setFont(&font_serif_brown_8, "fonts/serif_v01.ttf", 8, 8, TTF_STYLE_NORMAL, color_brown);
+	//TTF_CloseFont(font_serif_brown_8.font);
+
+	//setFont(&font_serif_gray_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_gray);
+	//TTF_CloseFont(font_serif_gray_6.font);
+
+	setFont(&font_serif_gray_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_gray);
+	SET_TEXT("LEVEL", text_9_level_gray, font_serif_gray_12,
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_level_gray, 0.77) - 2, (111 + 1) * gameHiResMult);
+	SET_TEXT("BEATEN!", text_9_beaten_gray, font_serif_gray_12,
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_beaten_gray, 0.77) - 2, (132 + 1) * gameHiResMult);
+	TTF_CloseFont(font_serif_gray_12.font);
+
+	//setFont(&font_serif_orange_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_orange);
+	//TTF_CloseFont(font_serif_orange_6.font);
+
+	setFont(&font_serif_red_6, "fonts/serif_v01.ttf", 8, 6, TTF_STYLE_NORMAL, color_red);
+	initializeFont_numbers(&font_serif_red_6);
+	SET_TEXT("??????", text_4_score_val, font_serif_red_6,
+		5 * gameHiResMult, 11 * gameHiResMult);
+	SET_TEXT("??", text_4_mans_val, font_serif_red_6,
+		230 * gameHiResMult, 1 * gameHiResMult);
+	SET_TEXT("??", text_4_level_val, font_serif_red_6,
+		230 * gameHiResMult, 11 * gameHiResMult);
+	if (font_serif_red_6.size == 8) {
+		text_4_score_val.dstrect.y -= 1;
+		text_4_mans_val.dstrect.y -= 2;
+		text_4_level_val.dstrect.y -= 1;
+	}
+	TTF_CloseFont(font_serif_red_6.font);
+
+	//setFont(&font_serif_red_8, "fonts/serif_v01.ttf", 8, 8, TTF_STYLE_NORMAL, color_red);
+	//TTF_CloseFont(font_serif_red_8.font);
+
+	setFont(&font_serif_red_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_red);
+	SET_TEXT("LEVEL", text_9_level_red, font_serif_red_12,
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_level_red, 0.77), 111 * gameHiResMult);
+	SET_TEXT("BEATEN!", text_9_beaten_red, font_serif_red_12,
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_beaten_red, 0.77), 132 * gameHiResMult);
+	TTF_CloseFont(font_serif_red_12.font);
+
+	setFont(&font_serif_white_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_white);
+	InitializeText_PauseScreen();
+	TTF_CloseFont(font_serif_white_6.font);
+
+	setFont(&font_serif_white_9, "fonts/serif_v01.ttf", 9, 9, TTF_STYLE_NORMAL, color_white);
+	InitializeText_Cutscenes();
+	TTF_CloseFont(font_serif_white_9.font);
+
+	setFont(&font_serif_white_10, "fonts/serif_v01.ttf", 10, 10, TTF_STYLE_NORMAL, color_white);
+	SET_TEXT("nice work!", text_9_nice_work, font_serif_white_10,
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_nice_work, 0.77), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_9_nice_work, 0.45));
+	TTF_CloseFont(font_serif_white_10.font);
+
+	setFont(&font_nokia_12, "fonts/29_NOKIA 5110 FontSet.ttf", 12, 12, TTF_STYLE_NORMAL, color_white);
+	SET_TEXT("presents", text_1_presents, font_nokia_12,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents, 0.7));
+	TTF_CloseFont(font_nokia_12.font);
+
+	//setFont(font_serif_2_bold_black_23, "fonts/54_serif_v01.ttf", 23, 23, TTF_STYLE_BOLD, color_black);
+	//setFont(font_serif_2_bold_red_23, "fonts/54_serif_v01.ttf", 23, 23, TTF_STYLE_BOLD, color_red);
+	setFont(&font_serif_2_red_6, "fonts/serif_v01.ttf", 8, 6, TTF_STYLE_NORMAL, color_red);
+	SET_TEXT("SCORE:", text_4_score, font_serif_2_red_6,
+		5 * gameHiResMult, 1 * gameHiResMult);
+	SET_TEXT("MANS:", text_4_mans, font_serif_2_red_6,
+		200 * gameHiResMult, 1 * gameHiResMult);
+	SET_TEXT("LEVEL:", text_4_level, font_serif_2_red_6,
+		195 * gameHiResMult, 11 * gameHiResMult);
+	if (font_serif_2_red_6.size == 8) {
+		text_4_score.dstrect.y -= 2;
+		text_4_mans.dstrect.x -= font_serif_2_red_6.size;
+		text_4_mans.dstrect.y -= 2;
+		text_4_level.dstrect.x -= font_serif_2_red_6.size;
+		text_4_level.dstrect.y -= 1;
+	}
+	TTF_CloseFont(font_serif_2_red_6.font);
+
+	//setFont(&font_serif_2_red_13, "fonts/54_serif_v01.ttf", 13, 13, TTF_STYLE_NORMAL, color_red);
+	//TTF_CloseFont(font_serif_2_red_13.font);
+
+	//SET_TEXT("nice work!", text_nice_work, font_serif_white_10,
+	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_nice_work), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_nice_work));
+	//SET_TEXT("send'em", text_send_em, font_serif_gray_6,
+	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_send_em), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_send_em));
+	//SET_TEXT("YE       OLDE       HI-SCORES", text_ye_olde_hi_scores, font_serif_2_red_13,
+	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_ye_olde_hi_scores), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_ye_olde_hi_scores));
+	//SET_TEXT("1", text_one, font_serif_brown_8,
+	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_one), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_one));
+
+	TTF_Quit();
+}
+
+void InitializeText_HomeScreen() {
 	if (gameHiResMult < 2) {
 		SET_TEXT("(1/5)", text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
@@ -197,94 +298,9 @@ void InitializeFontsAndText() {
 		SET_TEXT("-And more!", text_3_coming_soon_6, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 129 * gameHiResMult);
 	}
-	TTF_CloseFont(font_serif_white_6_mult.font);
-	TTF_CloseFont(font_serif_red_6_mult.font);
-	TTF_CloseFont(font_serif_red_8_mult.font);
+}
 
-	//setFont(&font_serif_brown_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_brown);
-	//TTF_CloseFont(font_serif_brown_6.font);
-
-	//setFont(&font_serif_brown_8, "fonts/serif_v01.ttf", 8, 8, TTF_STYLE_NORMAL, color_brown);
-	//TTF_CloseFont(font_serif_brown_8.font);
-
-	//setFont(&font_serif_gray_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_gray);
-	//TTF_CloseFont(font_serif_gray_6.font);
-
-	setFont(&font_serif_gray_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_gray);
-	SET_TEXT("LEVEL", text_9_level_gray, font_serif_gray_12,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_level_gray, 0.77) - 2, (111 + 1) * gameHiResMult);
-	SET_TEXT("BEATEN!", text_9_beaten_gray, font_serif_gray_12,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_beaten_gray, 0.77) - 2, (132 + 1) * gameHiResMult);
-	TTF_CloseFont(font_serif_gray_12.font);
-
-	//setFont(&font_serif_orange_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_orange);
-	//TTF_CloseFont(font_serif_orange_6.font);
-
-	setFont(&font_serif_red_6, "fonts/serif_v01.ttf", 8, 6, TTF_STYLE_NORMAL, color_red);
-	initializeFont_numbers(&font_serif_red_6);
-	SET_TEXT("??????", text_4_score_val, font_serif_red_6,
-		5 * gameHiResMult, 11 * gameHiResMult);
-	SET_TEXT("??", text_4_mans_val, font_serif_red_6,
-		230 * gameHiResMult, 1 * gameHiResMult);
-	SET_TEXT("??", text_4_level_val, font_serif_red_6,
-		230 * gameHiResMult, 11 * gameHiResMult);
-	if (font_serif_red_6.size == 8) {
-		text_4_score_val.dstrect.y -= 1;
-		text_4_mans_val.dstrect.y -= 2;
-		text_4_level_val.dstrect.y -= 1;
-	}
-	TTF_CloseFont(font_serif_red_6.font);
-
-	setFont(&font_serif_red_8, "fonts/serif_v01.ttf", 8, 8, TTF_STYLE_NORMAL, color_red);
-	/* Cutscene Placeholder Message */
-	SET_TEXT("cutscenes aren't finished yet!", text_placeholder_cutscene, font_serif_red_8,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_placeholder_cutscene), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_placeholder_cutscene, 0.6));
-	TTF_CloseFont(font_serif_red_8.font);
-
-	setFont(&font_serif_red_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_red);
-	SET_TEXT("LEVEL", text_9_level_red, font_serif_red_12,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_level_red, 0.77), 111 * gameHiResMult);
-	SET_TEXT("BEATEN!", text_9_beaten_red, font_serif_red_12,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_beaten_red, 0.77), 132 * gameHiResMult);
-	TTF_CloseFont(font_serif_red_12.font);
-
-	setFont(&font_serif_white_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_white);
-	SET_TEXT("paused", text_4_paused_1, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 130 * gameHiResMult);
-#if defined(WII_U) || defined(GAMECUBE) || defined(ANDROID) || defined(THREEDS)
-	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'A+SELECT' to quit", text_4_paused_3, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
-#elif defined(WII)
-	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press '2+SELECT' to quit", text_4_paused_3, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
-#elif defined(VITA) || defined(PSP)
-	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'X+SELECT' to quit", text_4_paused_3, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
-#elif defined(SWITCH)
-	SET_TEXT("press '+' to resume", text_4_paused_2, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'A and -' to quit", text_4_paused_3, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
-#elif defined(XBOX)
-	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'A+BACK' to quit", text_4_paused_3, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
-#else
-	SET_TEXT("press 'START/ENTER' to resume", text_4_paused_2, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'Z+BACKSPACE/A+SELECT' to quit", text_4_paused_3, font_serif_white_6,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
-#endif
-	TTF_CloseFont(font_serif_white_6.font);
-
-	setFont(&font_serif_white_9, "fonts/serif_v01.ttf", 9, 9, TTF_STYLE_NORMAL, color_white);
+void InitializeText_Cutscenes() {
 	/* 11: Level 4 Interlude */
 	SET_TEXT("stompin' good!", text_11_cutscene, font_serif_white_9,
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_11_cutscene, 0.48), 46 * gameHiResMult);
@@ -350,49 +366,42 @@ void InitializeFontsAndText() {
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_13, 0.48), 57 * gameHiResMult);
 	SET_TEXT("keep playing!", text_23_cutscene_14, font_serif_white_9,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_14), 46 * gameHiResMult);
-	TTF_CloseFont(font_serif_white_9.font);
+}
 
-	setFont(&font_serif_white_10, "fonts/serif_v01.ttf", 10, 10, TTF_STYLE_NORMAL, color_white);
-	SET_TEXT("nice work!", text_9_nice_work, font_serif_white_10,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_nice_work, 0.77), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_9_nice_work, 0.45));
-	TTF_CloseFont(font_serif_white_10.font);
-
-	setFont(&font_nokia_12, "fonts/29_NOKIA 5110 FontSet.ttf", 12, 12, TTF_STYLE_NORMAL, color_white);
-	SET_TEXT("presents", text_1_presents, font_nokia_12,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents, 0.7));
-	TTF_CloseFont(font_nokia_12.font);
-
-	//setFont(font_serif_2_bold_black_23, "fonts/54_serif_v01.ttf", 23, 23, TTF_STYLE_BOLD, color_black);
-	//setFont(font_serif_2_bold_red_23, "fonts/54_serif_v01.ttf", 23, 23, TTF_STYLE_BOLD, color_red);
-	setFont(&font_serif_2_red_6, "fonts/serif_v01.ttf", 8, 6, TTF_STYLE_NORMAL, color_red);
-	SET_TEXT("SCORE:", text_4_score, font_serif_2_red_6,
-		5 * gameHiResMult, 1 * gameHiResMult);
-	SET_TEXT("MANS:", text_4_mans, font_serif_2_red_6,
-		200 * gameHiResMult, 1 * gameHiResMult);
-	SET_TEXT("LEVEL:", text_4_level, font_serif_2_red_6,
-		195 * gameHiResMult, 11 * gameHiResMult);
-	if (font_serif_2_red_6.size == 8) {
-		text_4_score.dstrect.y -= 2;
-		text_4_mans.dstrect.x -= font_serif_2_red_6.size;
-		text_4_mans.dstrect.y -= 2;
-		text_4_level.dstrect.x -= font_serif_2_red_6.size;
-		text_4_level.dstrect.y -= 1;
-	}
-	TTF_CloseFont(font_serif_2_red_6.font);
-
-	//setFont(&font_serif_2_red_13, "fonts/54_serif_v01.ttf", 13, 13, TTF_STYLE_NORMAL, color_red);
-	//TTF_CloseFont(font_serif_2_red_13.font);
-
-	//SET_TEXT("nice work!", text_nice_work, font_serif_white_10,
-	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_nice_work), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_nice_work));
-	//SET_TEXT("send'em", text_send_em, font_serif_gray_6,
-	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_send_em), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_send_em));
-	//SET_TEXT("YE       OLDE       HI-SCORES", text_ye_olde_hi_scores, font_serif_2_red_13,
-	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_ye_olde_hi_scores), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_ye_olde_hi_scores));
-	//SET_TEXT("1", text_one, font_serif_brown_8,
-	//	OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_one), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_one));
-
-	TTF_Quit();
+void InitializeText_PauseScreen() {
+	SET_TEXT("paused", text_4_paused_1, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 130 * gameHiResMult);
+#if defined(WII_U) || defined(GAMECUBE) || defined(ANDROID) || defined(THREEDS)
+	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
+	SET_TEXT("press 'A+SELECT' to quit", text_4_paused_3, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
+#elif defined(WII)
+	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
+	SET_TEXT("press '2+SELECT' to quit", text_4_paused_3, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
+#elif defined(VITA) || defined(PSP)
+	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
+	SET_TEXT("press 'X+SELECT' to quit", text_4_paused_3, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
+#elif defined(SWITCH)
+	SET_TEXT("press '+' to resume", text_4_paused_2, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
+	SET_TEXT("press 'A and -' to quit", text_4_paused_3, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
+#elif defined(XBOX)
+	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
+	SET_TEXT("press 'A+BACK' to quit", text_4_paused_3, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
+#else
+	SET_TEXT("press 'START/ENTER' to resume", text_4_paused_2, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
+	SET_TEXT("press 'Z+BACKSPACE/A+SELECT' to quit", text_4_paused_3, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
+#endif
 }
 
 void InitializeMusic() {

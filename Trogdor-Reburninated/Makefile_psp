@@ -7,6 +7,7 @@ OBJS   =	src/main.o \
 			src/cutscenes.o \
 			src/general.o \
 			src/media_objects_init.o \
+			src/menu.o \
 			src/sound_logic.o \
 			src/sprite_objects.o \
 			src/text_objects.o \

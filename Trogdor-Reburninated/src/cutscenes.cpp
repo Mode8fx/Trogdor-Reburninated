@@ -86,7 +86,7 @@ void cutscene_level_beaten() {
 			cutscene_level_beaten_smoke.prepareAsCSO(125, 83.0 - cutscene_level_beaten_smoke.spriteObj->dstrect.h, 0, 0, 1, 8, 0, 0);
 			break;
 		case 281:
-			cutscene_cottage_fire.prepareAsCSO(4789, 81, 0, 0, 2, 0, 0, 0);
+			cutscene_cottage_fire.prepareAsCSO(222, 0, 0, 0, 2, 0, 0, 0);
 			break;
 		case 289:
 			cutscene_cottage_fire.isActive = false;
@@ -99,7 +99,7 @@ void cutscene_level_beaten() {
 	}
 	cutscene_level_beaten_trogdor.renderAsCSO(false);
 	cutscene_level_beaten_smoke.renderAsCSO(false);
-	cutscene_cottage_fire.renderAsCSO(true);
+	cutscene_cottage_fire.renderAsCSO(false);
 	renderText(text_9_nice_work, font_serif_white_10);
 	renderText(text_9_level_gray, font_serif_gray_12);
 	renderText(text_9_beaten_gray, font_serif_gray_12);
