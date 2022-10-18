@@ -11,7 +11,6 @@ constexpr auto MAX_NUM_OPTION_CHOICES = 10;
 * @param numChoices The number of choices.
 * @param choices An array of pointers; each pointer represents a possible choice.
 * @param choiceIsAllowed An array of whether or not each choice should be skipped over; useful for multi-platform development when some choices shouldn't be allowed for some systems.
-* @param optionIsAllowed Whether or not the option should appear in the menu at all; useful for multi-platform development when some options shouldn't be allowed for some systems.
 * @param index The index of the currently-selected choice.
 * @param index_init The default index.
 * @param isActive Whether or not this option is currently onscreen; useful for scrollable menus.
@@ -25,7 +24,6 @@ class MenuOption {
 		Uint8 numChoices;
 		TextObject *choices;
 		bool choiceIsAllowed[MAX_NUM_OPTION_CHOICES];
-		bool optionIsAllowed;
 		Sint8 index;
 		Sint8 index_init;
 		bool isActive;
@@ -36,7 +34,6 @@ class MenuOption {
 		}
 		void prepareMenuOption(Uint8, TextObject *, Uint8, Uint8, bool);
 		void prepareChoice(Uint8, TextObject *);
-		void setActive(bool);
 		void setChoiceActive(Uint8, bool);
 };
 

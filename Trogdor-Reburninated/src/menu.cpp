@@ -9,7 +9,6 @@ void MenuOption::prepareMenuOption(Uint8 numOptions, TextObject *textObj, Uint8 
 	for (i = 0; i < numChoices; i++) {
 		choiceIsAllowed[i] = true;
 	}
-	optionIsAllowed = true;
 	index = start;
 	index_init = start;
 	isActive = true;
@@ -20,10 +19,6 @@ void MenuOption::prepareMenuOption(Uint8 numOptions, TextObject *textObj, Uint8 
 void MenuOption::prepareChoice(Uint8 choiceIndex, TextObject *textObj) {
 	choices[choiceIndex] = *textObj;
 	dstrect_choice = textObj->dstrect;
-}
-
-void MenuOption::setActive(bool active) {
-	optionIsAllowed = active;
 }
 
 void MenuOption::setChoiceActive(Uint8 choiceIndex, bool active) {
@@ -84,24 +79,35 @@ void Menu::decrementOption() {
 	}
 }
 
+// This assumes at least one choice is allowed
 void Menu::incrementCurrOptionChoice() {
-	if (options[cursorIndex].index < options[cursorIndex].numChoices - 1) {
-		options[cursorIndex].index++;
-		updateCurrOptionChoicePositions();
-	} else if (options[cursorIndex].choicesWrap) {
-		options[cursorIndex].index = 0;
-		updateCurrOptionChoicePositions();
+	if (options[cursorIndex].choicesWrap) {
+		do {
+			options[cursorIndex].index = (options[cursorIndex].index + 1) % options[cursorIndex].numChoices;
+		} while (!options[cursorIndex].choiceIsAllowed[options[cursorIndex].index]);
+	} else {
+		while (options[cursorIndex].index < options[cursorIndex].numChoices - 1 && !options[cursorIndex].choiceIsAllowed[options[cursorIndex].index]) {
+			options[cursorIndex].index++;
+		}
 	}
+	updateCurrOptionChoicePositions();
 }
 
+// This assumes at least one choice is allowed
 void Menu::decrementCurrOptionChoice() {
-	if (options[cursorIndex].index > 0) {
-		options[cursorIndex].index--;
-		updateCurrOptionChoicePositions();
-	} else if (options[cursorIndex].choicesWrap) {
-		options[cursorIndex].index = options[cursorIndex].numChoices - 1;
-		updateCurrOptionChoicePositions();
+	if (options[cursorIndex].choicesWrap) {
+		do {
+			options[cursorIndex].index = options[cursorIndex].index--;
+			if (options[cursorIndex].index < 0) {
+				options[cursorIndex].index += options[cursorIndex].numChoices;
+			}
+		} while (!options[cursorIndex].choiceIsAllowed[options[cursorIndex].index]);
+	} else {
+		while (options[cursorIndex].index > 0 && !options[cursorIndex].choiceIsAllowed[options[cursorIndex].index]) {
+			options[cursorIndex].index--;
+		}
 	}
+	updateCurrOptionChoicePositions();
 }
 
 void Menu::updateOptionPositions() {

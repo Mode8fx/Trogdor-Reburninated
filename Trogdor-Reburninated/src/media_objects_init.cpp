@@ -404,6 +404,10 @@ void InitializeText_PauseScreen() {
 #endif
 }
 
+void InitializeText_OptionsMenu(FontObject *fontObj) {
+	//setText("PLACEHOLDER", &textVar, fontObj);
+}
+
 void InitializeMusic() {
 }
 
