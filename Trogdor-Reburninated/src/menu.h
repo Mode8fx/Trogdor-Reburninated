@@ -35,8 +35,8 @@ class MenuOption {
 		MenuOption() {
 		}
 		void prepareMenuOption(Uint8, TextObject *, Uint8, Uint8, bool);
+		void prepareChoice(Uint8, TextObject *);
 		void setActive(bool);
-		void setChoice(Uint8, TextObject *);
 		void setChoiceActive(Uint8, bool);
 };
 
@@ -50,12 +50,15 @@ class MenuOption {
 * @param scrollIndex The amount that the menu itself has scrolled; used for scrolling through a large menu where not every option can be onscreen at once.
 * @param cursorIndex_onscreen The index representing the cursor's onscreen position, accounting for scrollIndex.
 * @param keepIndexOnExit Whether or not the cursor position should be reset every time you enter the menu.
-* @param optionsWrap Whether or not navigating past the last menu option should wrap around to the first option, and vice-versa.
 * @param scrollSpacer The minimum number of options allowed to be between the cursor and the top/bottom of the list before it starts scrolling.
-* @param start_x The x-position of the top-most menu option.
-* @param start_y The y-position of the top-most menu option.
+* @param start_x_label The x-position of the top-most menu option's label.
+* @param start_x_choice The x-position of the top-most menu option's choice.
 * @param spacer_x The amount that each subsequent menu option's x position should increase by.
+* @param start_y The y-position of the top-most menu option.
 * @param spacer_y The amount that each subsequent menu option's y position should increase by.
+* @param alignType_label Align type for options labels. 0 = left, 1 = center, 2 = right.
+* @param alignType_choice Align type for options choices. 0 = left, 1 = center, 2 = right.
+* @param optionsWrap Whether or not navigating past the last menu option should wrap around to the first option, and vice-versa.
 */
 class Menu {
 	public:
@@ -68,17 +71,24 @@ class Menu {
 		Sint8 cursorIndex_onscreen;
 		bool keepIndexOnExit;
 		Uint8 scrollSpacer;
-		Sint16 start_x;
-		Sint16 start_y;
+		Sint16 start_x_label;
+		Sint16 start_x_choice;
 		Sint16 spacer_x;
+		Sint16 start_y;
 		Sint16 spacer_y;
+		Sint8 alignType_label;
+		Sint8 alignType_choice;
 		bool optionsWrap;
 		Menu() {
 		}
-		Menu(Uint8, Uint8, SpriteInstance *, bool, Sint8, Sint16, Sint16, Sint16, Sint16, bool);
+		Menu(Uint8, Uint8, SpriteInstance *, bool, Sint8, Sint16, Sint16, Sint16, Sint16, Sint16, Sint8, Sint8, bool);
 		void incrementOption();
 		void decrementOption();
+		void incrementCurrOptionChoice();
+		void decrementCurrOptionChoice();
 		void updateOptionPositions();
+		void updateCurrOptionChoicePositions();
+		void openMenu();
 };
 
 #endif

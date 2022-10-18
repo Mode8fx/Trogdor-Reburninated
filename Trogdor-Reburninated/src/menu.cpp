@@ -17,20 +17,20 @@ void MenuOption::prepareMenuOption(Uint8 numOptions, TextObject *textObj, Uint8 
 	dstrect_label = textObj->dstrect;
 }
 
-void MenuOption::setActive(bool active) {
-	optionIsAllowed = active;
-}
-
-void MenuOption::setChoice(Uint8 choiceIndex, TextObject *textObj) {
+void MenuOption::prepareChoice(Uint8 choiceIndex, TextObject *textObj) {
 	choices[choiceIndex] = *textObj;
 	dstrect_choice = textObj->dstrect;
+}
+
+void MenuOption::setActive(bool active) {
+	optionIsAllowed = active;
 }
 
 void MenuOption::setChoiceActive(Uint8 choiceIndex, bool active) {
 	choiceIsAllowed[choiceIndex] = active;
 }
 
-Menu::Menu(Uint8 numOpt, Uint8 numOns, SpriteInstance *spriteIns, bool keepIndex, Sint8 space_scroll, Sint16 st_x, Sint16 st_y, Sint16 sp_x, Sint16 sp_y, bool wrap) {
+Menu::Menu(Uint8 numOpt, Uint8 numOns, SpriteInstance *spriteIns, bool keepIndex, Sint8 space_scroll, Sint16 st_x_label, Sint16 st_x_choice, Sint16 sp_x, Sint16 st_y, Sint16 sp_y, Sint8 at_label, Sint8 at_choice, bool wrap) {
 	numOptions = numOpt;
 	numOnscreen = min(numOns, numOptions);
 	options = (MenuOption*)malloc(numOptions * sizeof(MenuOption));
@@ -39,12 +39,15 @@ Menu::Menu(Uint8 numOpt, Uint8 numOns, SpriteInstance *spriteIns, bool keepIndex
 	scrollIndex = 0;
 	cursorIndex_onscreen = 0;
 	keepIndexOnExit = keepIndex;
-	optionsWrap = wrap;
 	scrollSpacer = space_scroll;
-	start_x = st_x;
-	start_y = st_y;
+	start_x_label = st_x_label;
+	start_x_choice = st_x_choice;
 	spacer_x = sp_x;
+	start_y = st_y;
 	spacer_y = sp_y;
+	alignType_label = at_label;
+	alignType_choice = at_choice;
+	optionsWrap = wrap;
 }
 
 void Menu::incrementOption() {
@@ -81,14 +84,75 @@ void Menu::decrementOption() {
 	}
 }
 
+void Menu::incrementCurrOptionChoice() {
+	if (options[cursorIndex].index < options[cursorIndex].numChoices - 1) {
+		options[cursorIndex].index++;
+		updateCurrOptionChoicePositions();
+	} else if (options[cursorIndex].choicesWrap) {
+		options[cursorIndex].index = 0;
+		updateCurrOptionChoicePositions();
+	}
+}
+
+void Menu::decrementCurrOptionChoice() {
+	if (options[cursorIndex].index > 0) {
+		options[cursorIndex].index--;
+		updateCurrOptionChoicePositions();
+	} else if (options[cursorIndex].choicesWrap) {
+		options[cursorIndex].index = options[cursorIndex].numChoices - 1;
+		updateCurrOptionChoicePositions();
+	}
+}
+
 void Menu::updateOptionPositions() {
-	// TODO: update cursor position here
 	for (i = 0; i < options[i].numChoices; i++) {
 		options[i].isActive = false;
 	}
 	j = cursorIndex - cursorIndex_onscreen;
-	for (i = j; i < i + numOnscreen; i++) {
+	for (i = j; i < j + numOnscreen; i++) {
 		options[i].isActive = true;
-		// TODO: update option positions here
+		options[i].dstrect_label.w = options[i].label->dstrect.w;
+		options[i].dstrect_label.h = options[i].label->dstrect.h;
+		switch (alignType_label) {
+			case 0:
+				options[i].dstrect_label.x = start_x_label + (spacer_x * (i - j));
+				break;
+			case 1:
+				options[i].dstrect_label.x = start_x_label + (spacer_x * (i - j)) - (options[i].dstrect_label.w / 2);
+				break;
+			default:
+				options[i].dstrect_label.x = start_x_label + (spacer_x * (i - j)) - options[i].dstrect_label.w;
+				break;
+		}
+		options[i].dstrect_label.y = start_y + (spacer_y * (i - j));
+		updateCurrOptionChoicePositions();
 	}
+	cursor->dstrect.x = options[cursorIndex_onscreen].dstrect_label.x - (cursor->dstrect.w * 2);
+	cursor->dstrect.y = options[cursorIndex_onscreen].dstrect_label.y + ((options[cursorIndex_onscreen].dstrect_label.h - cursor->dstrect.h) / 2);
+}
+
+void Menu::updateCurrOptionChoicePositions() {
+	options[cursorIndex].dstrect_choice.w = options[cursorIndex].choices[options[cursorIndex].index].dstrect.w;
+	options[cursorIndex].dstrect_choice.h = options[cursorIndex].choices[options[cursorIndex].index].dstrect.h;
+	switch (alignType_choice) {
+		case 0:
+			options[cursorIndex].dstrect_choice.x = start_x_choice + (spacer_x * (i - j));
+			break;
+		case 1:
+			options[cursorIndex].dstrect_choice.x = start_x_choice + (spacer_x * (i - j)) - (options[cursorIndex].dstrect_choice.w / 2);
+			break;
+		case 2:
+			options[cursorIndex].dstrect_choice.x = start_x_choice + (spacer_x * (i - j)) - options[cursorIndex].dstrect_choice.w;
+			break;
+	}
+	options[cursorIndex].dstrect_choice.y = start_y + (spacer_y * (i - j));
+}
+
+void Menu::openMenu() {
+	if (!keepIndexOnExit) {
+		cursorIndex = 0;
+		scrollIndex = 0;
+		cursorIndex_onscreen = 0;
+	}
+	updateOptionPositions();
 }
