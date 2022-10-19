@@ -608,6 +608,8 @@ void InitializeSpritesPart2() {
 		0, 0, 8, 1, 1);
 	PREPARE_SPRITE(sprite_kerrek_smoked, (rootDir + "graphics/kerrek_smoked.bmp").c_str(),
 		0, 0, 5, 1, 1);
+	PREPARE_SPRITE(sprite_menu_cursor, (rootDir + "graphics/menu_cursor.bmp").c_str(),
+		0, 0, 1, 1, 1);
 }
 
 void exceptMissingFile(const char *path) {
@@ -670,6 +672,7 @@ void destroyAllSprites() {
 	destroySprite(&sprite_arrow_funnyjoke);
 	destroySprite(&sprite_kerrek);
 	destroySprite(&sprite_kerrek_smoked);
+	destroySprite(&sprite_menu_cursor);
 	destroySprite(&sprite_overlay_basement_top);
 	destroySprite(&sprite_overlay_basement_bottom);
 	destroySprite(&sprite_overlay_basement_left);

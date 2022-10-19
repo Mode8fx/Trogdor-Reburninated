@@ -21,7 +21,6 @@ constexpr auto MAX_NUM_OPTION_CHOICES = 10;
 * @param choiceIsAllowed An array of whether or not each choice should be skipped over; useful for multi-platform development when some choices shouldn't be allowed for some systems.
 * @param index The index of the currently-selected choice.
 * @param index_init The default index.
-* @param isActive Whether or not this option is currently onscreen; useful for scrollable menus.
 * @param choicesWrap Whether or not navigating past the last option choice should wrap around to the first choice, and vice-versa.
 * @param optionIsLocked If the option is locked, its choices do not appear, its index cannot change, and the alt description is used in place of the normal description.
 */
@@ -40,7 +39,6 @@ class MenuOption {
 		bool choiceIsAllowed[MAX_NUM_OPTION_CHOICES];
 		Sint8 index;
 		Sint8 index_init;
-		bool isActive;
 		bool choicesWrap;
 		bool optionIsLocked;
 		MenuOption() {
@@ -49,6 +47,7 @@ class MenuOption {
 		void updateLabel();
 		void updateChoice();
 		void updateDescription();
+		void render(Sint16, Sint16, bool);
 };
 
 /* @brief A single menu.
@@ -62,11 +61,15 @@ class MenuOption {
 * @param cursorIndex_onscreen The index representing the cursor's onscreen position, accounting for scrollIndex.
 * @param keepIndexOnExit Whether or not the cursor position should be reset every time you enter the menu.
 * @param scrollSpacer The minimum number of options allowed to be between the cursor and the top/bottom of the list before it starts scrolling.
+* @param topOnscreenIndex The index of the topmost visible option.
+* @param bottomOnscreenIndex The index of the bottommost visible option.
 * @param start_x_label The x-position of the top-most menu option's label.
 * @param start_x_choice The x-position of the top-most menu option's choice.
 * @param spacer_x The amount that each subsequent menu option's x position should increase by.
-* @param start_y The y-position of the top-most menu option.
-* @param spacer_y The amount that each subsequent menu option's y position should increase by.
+* @param start_y_option The y-position of the top-most menu option.
+* @param start_y_desc The y-position of the top line of a 3-line description.
+* @param spacer_y_option The amount that each subsequent menu option's y position should increase by.
+* @param spacer_y_desc The amount that each subsequent description line's y position should increase by.
 * @param alignType_label Align type for options labels. 0 = left, 1 = center, 2 = right.
 * @param alignType_choice Align type for options choices. 0 = left, 1 = center, 2 = right.
 * @param optionsWrap Whether or not navigating past the last menu option should wrap around to the first option, and vice-versa.
@@ -76,24 +79,28 @@ class Menu {
 		Uint8 numOptions;
 		Uint8 numOnscreen;
 		MenuOption *options;
-		SpriteInstance *cursor;
+		SpriteInstance cursor;
 		Sint8 cursorIndex;
 		Sint8 scrollIndex;
 		Sint8 cursorIndex_onscreen;
 		bool keepIndexOnExit;
 		Uint8 scrollSpacer;
+		Sint8 topOnscreenIndex;
+		Sint8 bottomOnscreenIndex;
 		Sint16 start_x_label;
 		Sint16 start_x_choice;
 		Sint16 spacer_x;
-		Sint16 start_y;
-		Sint16 spacer_y;
+		Sint16 start_y_option;
+		Sint16 start_y_desc;
+		Sint16 spacer_y_option;
+		Sint16 spacer_y_desc;
 		Sint8 alignType_label;
 		Sint8 alignType_choice;
 		bool optionsWrap;
 		Menu() {
 		}
-		Menu(Uint8, Uint8, SpriteInstance *, bool, Sint8, Sint16, Sint16, Sint16, Sint16, Sint16, Sint8, Sint8, bool);
-		void handleControls();
+		void prepareMenu(Uint8, Uint8, SpriteObject *, bool, Sint8, Sint16, Sint16, Sint16, Sint16, Sint16, Sint16, Sint16, Sint8, Sint8, bool);
+		Uint8 handleControls();
 		void incrementOption();
 		void decrementOption();
 		void incrementCurrOptionChoice();
@@ -102,6 +109,7 @@ class Menu {
 		void updateCurrOptionChoicePositions();
 		void updateCurrOptionChoiceDescription();
 		void openMenu();
+		void renderMenu();
 };
 
 #endif

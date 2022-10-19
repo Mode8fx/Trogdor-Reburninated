@@ -79,6 +79,8 @@ void renderText(TextObject textObj, FontObject fontObj) {
 
 void renderTextChar_app(TextCharObject textCharObj) {
 	outputRect = textCharObj.dstrect;
+	outputRect.x += appToWindowDstRect.x;
+	outputRect.y += appToWindowDstRect.y;
 #if !defined(SDL1)
 	SDL_RenderCopy(renderer, textCharObj.texture, NULL, &outputRect);
 #else
