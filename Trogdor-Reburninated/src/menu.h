@@ -1,41 +1,54 @@
 #ifndef MENU_H
 #define MENU_H
 
-#include "input.h"
 #include "text_objects.h"
+#include "input.h"
 
 constexpr auto MAX_NUM_OPTION_CHOICES = 10;
 
 /* @brief A single option in a menu.
 * 
-* @param label A pointer representing the option's label.
+* @param label A TextObject representing the option's label.
+* @param labelPtr A pointer to a string for the label.
+* @param choice A TextObject representing the option's current choice.
+* @param choicePtr A pointer to an array of strings for the choice.
+* @param description_1 A TextObject representing the top line of the option's current description.
+* @param description_2 A TextObject representing the middle line of the option's current description.
+* @param description_3 A TextObject representing the bottom line of the option's current description.
+* @param descPtr A pointer to an array of strings for the choice description(s). If the size is 1, all choices use the same description.
+* @param altDescPtr A pointer to a string for the alt description, to be used if optionIsLocked is set to true.
 * @param numChoices The number of choices.
-* @param choices An array of pointers; each pointer represents a possible choice.
 * @param choiceIsAllowed An array of whether or not each choice should be skipped over; useful for multi-platform development when some choices shouldn't be allowed for some systems.
 * @param index The index of the currently-selected choice.
 * @param index_init The default index.
 * @param isActive Whether or not this option is currently onscreen; useful for scrollable menus.
 * @param choicesWrap Whether or not navigating past the last option choice should wrap around to the first choice, and vice-versa.
-* @param dstrect_label The dstrect of the label.
-* @param dstrect_choice The dstrect of the current choice.
+* @param optionIsLocked If the option is locked, its choices do not appear, its index cannot change, and the alt description is used in place of the normal description.
 */
 class MenuOption {
 	public:
-		TextObject *label;
+		TextObject label;
+		const char *labelPtr;
+		TextObject choice;
+		const char **choicePtr;
+		TextObject description_1;
+		TextObject description_2;
+		TextObject description_3;
+		const char ***descPtr;
+		const char *altDescPtr;
 		Uint8 numChoices;
-		TextObject *choices;
 		bool choiceIsAllowed[MAX_NUM_OPTION_CHOICES];
 		Sint8 index;
 		Sint8 index_init;
 		bool isActive;
 		bool choicesWrap;
-		TextRect dstrect_label;
-		TextRect dstrect_choice;
+		bool optionIsLocked;
 		MenuOption() {
 		}
-		void prepareMenuOption(Uint8, TextObject *, Uint8, Uint8, bool);
-		void prepareChoice(Uint8, TextObject *);
-		void setChoiceActive(Uint8, bool);
+		void prepareMenuOption(const char [], const char *[], const char **[], const char [], Uint8, Uint8, bool, bool);
+		void updateLabel();
+		void updateChoice();
+		void updateDescription();
 };
 
 /* @brief A single menu.
@@ -87,6 +100,7 @@ class Menu {
 		void decrementCurrOptionChoice();
 		void updateOptionPositions();
 		void updateCurrOptionChoicePositions();
+		void updateCurrOptionChoiceDescription();
 		void openMenu();
 };
 
