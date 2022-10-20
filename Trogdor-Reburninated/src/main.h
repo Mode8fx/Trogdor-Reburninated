@@ -5,10 +5,13 @@
 #include "cutscenes.h"
 #include "menu.h"
 
-Sint8 g_sceneState;
+Sint16 g_sceneState;
 Sint16 g_frameState;
 Uint16 rand_var;
 SDL_Event event;
+
+Menu menu_main;
+Menu menu_cheats;
 
 /* SDL Input */
 #if !defined(SDL1) && !defined(PSP)

@@ -5,6 +5,7 @@
 #include "input.h"
 
 constexpr auto MAX_NUM_OPTION_CHOICES = 10;
+constexpr auto MAX_NUM_MENU_OPTIONS = 10;
 
 /* @brief A single option in a menu.
 * 
@@ -15,9 +16,12 @@ constexpr auto MAX_NUM_OPTION_CHOICES = 10;
 * @param description_1 A TextObject representing the top line of the option's current description.
 * @param description_2 A TextObject representing the middle line of the option's current description.
 * @param description_3 A TextObject representing the bottom line of the option's current description.
-* @param descPtr A pointer to an array of strings for the choice description(s). If the size is 1, all choices use the same description.
+* @param descPtr_1 A pointer to an array of strings for the top line of the choice description(s). If the size is 1, all choices use the same description.
+* @param descPtr_2 A pointer to an array of strings for the middle line of the choice description(s). If the size is 1, all choices use the same description.
+* @param descPtr_3 A pointer to an array of strings for the bottom line of the choice description(s). If the size is 1, all choices use the same description.
 * @param altDescPtr A pointer to a string for the alt description, to be used if optionIsLocked is set to true.
 * @param numChoices The number of choices.
+* @param oneDescription Whether or not one description is shared among all choices.
 * @param choiceIsAllowed An array of whether or not each choice should be skipped over; useful for multi-platform development when some choices shouldn't be allowed for some systems.
 * @param index The index of the currently-selected choice.
 * @param index_init The default index.
@@ -33,9 +37,12 @@ class MenuOption {
 		TextObject description_1;
 		TextObject description_2;
 		TextObject description_3;
-		const char ***descPtr;
+		const char **descPtr_1;
+		const char **descPtr_2;
+		const char **descPtr_3;
 		const char *altDescPtr;
 		Uint8 numChoices;
+		bool oneDescription;
 		bool choiceIsAllowed[MAX_NUM_OPTION_CHOICES];
 		Sint8 index;
 		Sint8 index_init;
@@ -43,7 +50,7 @@ class MenuOption {
 		bool optionIsLocked;
 		MenuOption() {
 		}
-		void prepareMenuOption(const char [], const char *[], const char **[], const char [], Uint8, Uint8, bool, bool);
+		MenuOption(const char [], const char *[], const char *[], const char *[], const char *[], const char [], Uint8, bool, Uint8, bool, bool);
 		void updateLabel();
 		void updateChoice();
 		void updateDescription();
@@ -78,7 +85,7 @@ class Menu {
 	public:
 		Uint8 numOptions;
 		Uint8 numOnscreen;
-		MenuOption *options;
+		MenuOption *options[MAX_NUM_MENU_OPTIONS];
 		SpriteInstance cursor;
 		Sint8 cursorIndex;
 		Sint8 scrollIndex;
@@ -100,7 +107,7 @@ class Menu {
 		Menu() {
 		}
 		void prepareMenu(Uint8, Uint8, SpriteObject *, bool, Sint8, Sint16, Sint16, Sint16, Sint16, Sint16, Sint16, Sint16, Sint8, Sint8, bool);
-		Uint8 handleControls();
+		Sint8 handleInput();
 		void incrementOption();
 		void decrementOption();
 		void incrementCurrOptionChoice();
@@ -111,5 +118,10 @@ class Menu {
 		void openMenu();
 		void renderMenu();
 };
+
+extern void InitializeMenus();
+
+extern Menu menu_main;
+extern Menu menu_cheats;
 
 #endif

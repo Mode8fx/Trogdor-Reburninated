@@ -447,18 +447,18 @@ inline void handleInput() {
 					break;
 				}
 				break;
-#if !defined(PSP)
-			case SDL_FINGERDOWN:
-				mouseInput_x = (Sint32)(event.tfinger.x * windowWidth);
-				mouseInput_y = (Sint32)(event.tfinger.y * windowHeight);
-				break;
-			case SDL_FINGERMOTION:
-				mouseInput_x = (Sint32)(event.tfinger.x * windowWidth);
-				mouseInput_y = (Sint32)(event.tfinger.y * windowHeight);
-				break;
-			case SDL_FINGERUP:
-				break;
-#endif
+//#if !defined(PSP)
+//			case SDL_FINGERDOWN:
+//				mouseInput_x = (Sint32)(event.tfinger.x * windowWidth);
+//				mouseInput_y = (Sint32)(event.tfinger.y * windowHeight);
+//				break;
+//			case SDL_FINGERMOTION:
+//				mouseInput_x = (Sint32)(event.tfinger.x * windowWidth);
+//				mouseInput_y = (Sint32)(event.tfinger.y * windowHeight);
+//				break;
+//			case SDL_FINGERUP:
+//				break;
+//#endif
 			default:
 				break;
 #else

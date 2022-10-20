@@ -79,6 +79,7 @@ int main(int argv, char** args) {
 #endif
 
 	InitializeCutsceneObjects();
+	InitializeMenus();
 
 	/* Initialize Loading Screen rect */
 	text_0_loading_censor_rect = { text_0_loading.dstrect.x, text_0_loading.dstrect.y,
@@ -329,7 +330,8 @@ int main(int argv, char** args) {
 						updateText(&text_4_level_val, to_string(GM.level));
 						g_sceneState = 4;
 					} else if (keyPressed(INPUT_SELECT)) {
-						isRunning = false;
+						menu_main.openMenu();
+						g_sceneState = 301;
 					}
 				}
 				sprite_trogdor_logo_ins.renderSprite_game();
@@ -428,6 +430,22 @@ int main(int argv, char** args) {
 					}
 				}
 				renderText(text_3_page, font_serif_white_6_mult);
+				break;
+			/* Options Menu */
+			case 301:
+				g_frameState++;
+				renderOverlay = false;
+				menu_main.renderMenu();
+				switch (menu_main.handleInput()) {
+					case 9: // Quit Game
+						isRunning = false;
+						break;
+					case -1: // Press B
+						g_sceneState = 3;
+						break;
+					default:
+						break;
+				}
 				break;
 			/* Game */
 			case 4:
