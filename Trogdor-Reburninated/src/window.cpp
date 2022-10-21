@@ -86,29 +86,29 @@ void scaleGameAndApp() {
 }
 
 void repositionOverlay() {
-	sprite_overlay_basement_top.dstrect.w = (int)(sprite_overlay_basement_top.dstrect.w * screenScale);
-	sprite_overlay_basement_top.dstrect.h = (int)(sprite_overlay_basement_top.dstrect.h * screenScale);
-	sprite_overlay_basement_bottom.dstrect.w = (int)(sprite_overlay_basement_bottom.dstrect.w * screenScale);
-	sprite_overlay_basement_bottom.dstrect.h = (int)(sprite_overlay_basement_bottom.dstrect.h * screenScale);
-	sprite_overlay_basement_left.dstrect.w = (int)(sprite_overlay_basement_left.dstrect.w * screenScale);
-	sprite_overlay_basement_left.dstrect.h = (int)(sprite_overlay_basement_left.dstrect.h * screenScale);
-	sprite_overlay_basement_right.dstrect.w = (int)(sprite_overlay_basement_right.dstrect.w * screenScale);
-	sprite_overlay_basement_right.dstrect.h = (int)(sprite_overlay_basement_right.dstrect.h * screenScale);
-	sprite_overlay_basement_top.dstrect.x = gameToWindowDstRect.x - sprite_overlay_basement_left.dstrect.w;
-	sprite_overlay_basement_top.dstrect.y = gameToWindowDstRect.y - sprite_overlay_basement_top.dstrect.h;
-	sprite_overlay_basement_bottom.dstrect.x = sprite_overlay_basement_top.dstrect.x;
-	sprite_overlay_basement_bottom.dstrect.y = gameToWindowDstRect.y + gameToWindowDstRect.h;
-	sprite_overlay_basement_left.dstrect.x = sprite_overlay_basement_top.dstrect.x;
-	sprite_overlay_basement_left.dstrect.y = gameToWindowDstRect.y;
-	sprite_overlay_basement_right.dstrect.x = gameToWindowDstRect.x + gameToWindowDstRect.w;
-	uint_i = sprite_overlay_basement_top.dstrect.x + sprite_overlay_basement_top.dstrect.w;
-	uint_j = sprite_overlay_basement_right.dstrect.x + sprite_overlay_basement_right.dstrect.w;
-	sprite_overlay_basement_right.dstrect.x += (uint_i - uint_j);
-	sprite_overlay_basement_right.dstrect.y = sprite_overlay_basement_left.dstrect.y;
-	sprite_overlay_basement_top_ins.dstrect = sprite_overlay_basement_top.dstrect;
-	sprite_overlay_basement_bottom_ins.dstrect = sprite_overlay_basement_bottom.dstrect;
-	sprite_overlay_basement_left_ins.dstrect = sprite_overlay_basement_left.dstrect;
-	sprite_overlay_basement_right_ins.dstrect = sprite_overlay_basement_right.dstrect;
+	sprite_overlay_basement_top_ins.dstrect.w = (int)(sprite_overlay_basement_top.dstrect.w * screenScale);
+	sprite_overlay_basement_top_ins.dstrect.h = (int)(sprite_overlay_basement_top.dstrect.h * screenScale);
+	sprite_overlay_basement_bottom_ins.dstrect.w = (int)(sprite_overlay_basement_bottom.dstrect.w * screenScale);
+	sprite_overlay_basement_bottom_ins.dstrect.h = (int)(sprite_overlay_basement_bottom.dstrect.h * screenScale);
+	sprite_overlay_basement_left_ins.dstrect.w = (int)(sprite_overlay_basement_left.dstrect.w * screenScale);
+	sprite_overlay_basement_left_ins.dstrect.h = (int)(sprite_overlay_basement_left.dstrect.h * screenScale);
+	sprite_overlay_basement_right_ins.dstrect.w = (int)(sprite_overlay_basement_right.dstrect.w * screenScale);
+	sprite_overlay_basement_right_ins.dstrect.h = (int)(sprite_overlay_basement_right.dstrect.h * screenScale);
+	sprite_overlay_basement_top_ins.dstrect.x = gameToWindowDstRect.x - sprite_overlay_basement_left_ins.dstrect.w;
+	sprite_overlay_basement_top_ins.dstrect.y = gameToWindowDstRect.y - sprite_overlay_basement_top_ins.dstrect.h;
+	sprite_overlay_basement_bottom_ins.dstrect.x = sprite_overlay_basement_top_ins.dstrect.x;
+	sprite_overlay_basement_bottom_ins.dstrect.y = gameToWindowDstRect.y + gameToWindowDstRect.h;
+	sprite_overlay_basement_left_ins.dstrect.x = sprite_overlay_basement_top_ins.dstrect.x;
+	sprite_overlay_basement_left_ins.dstrect.y = gameToWindowDstRect.y;
+	sprite_overlay_basement_right_ins.dstrect.x = gameToWindowDstRect.x + gameToWindowDstRect.w;
+	uint_i = sprite_overlay_basement_top_ins.dstrect.x + sprite_overlay_basement_top_ins.dstrect.w;
+	uint_j = sprite_overlay_basement_right_ins.dstrect.x + sprite_overlay_basement_right_ins.dstrect.w;
+	sprite_overlay_basement_right_ins.dstrect.x += (uint_i - uint_j);
+	sprite_overlay_basement_right_ins.dstrect.y = sprite_overlay_basement_left_ins.dstrect.y;
+	sprite_overlay_basement_top_ins.dstrect = sprite_overlay_basement_top_ins.dstrect;
+	sprite_overlay_basement_bottom_ins.dstrect = sprite_overlay_basement_bottom_ins.dstrect;
+	sprite_overlay_basement_left_ins.dstrect = sprite_overlay_basement_left_ins.dstrect;
+	sprite_overlay_basement_right_ins.dstrect = sprite_overlay_basement_right_ins.dstrect;
 }
 
 void setScaling() {

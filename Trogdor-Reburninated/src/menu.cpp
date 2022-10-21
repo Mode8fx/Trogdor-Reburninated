@@ -1,5 +1,15 @@
 #include "menu.h"
 
+Sint8 currOnscreenIndex;
+
+#define CURR_OPTION options[cursorIndex]
+
+#define DESC_LINE_Y_TOP    (Sint16)(start_y_desc * screenScale)
+#define DESC_LINE_Y_UPPER  (Sint16)((start_y_desc + (spacer_y_desc / 2)) * screenScale)
+#define DESC_LINE_Y_MID    (Sint16)((start_y_desc + spacer_y_desc) * screenScale)
+#define DESC_LINE_Y_LOWER  (Sint16)((start_y_desc + (spacer_y_desc * 3 / 2)) * screenScale)
+#define DESC_LINE_Y_BOTTOM (Sint16)((start_y_desc + (spacer_y_desc * 2)) * screenScale)
+
 MenuOption::MenuOption(const char label_ptr[], const char *choice_ptr[], const char *desc_ptr_1[], const char *desc_ptr_2[], const char *desc_ptr_3[], const char altDesc_ptr[], Uint8 numCh, bool oneDesc, Uint8 start, bool wrap, bool locked) {
 	labelPtr = label_ptr;
 	choicePtr = choice_ptr;
@@ -125,7 +135,7 @@ void Menu::incrementOption() {
 	if (cursorIndex < numOptions - 1) {
 		cursorIndex++;
 		cursorIndex_onscreen++;
-		if (cursorIndex_onscreen > numOnscreen - scrollSpacer) {
+		if ((cursorIndex_onscreen > numOnscreen - scrollSpacer) && (scrollIndex < numOptions - numOnscreen)) {
 			scrollIndex++;
 			cursorIndex_onscreen--;
 		}
@@ -142,7 +152,7 @@ void Menu::decrementOption() {
 	if (cursorIndex > 0) {
 		cursorIndex--;
 		cursorIndex_onscreen--;
-		if (cursorIndex_onscreen < scrollSpacer) {
+		if ((cursorIndex_onscreen < scrollSpacer) && (scrollIndex > 0)) {
 			scrollIndex--;
 			cursorIndex_onscreen++;
 		}
@@ -157,56 +167,56 @@ void Menu::decrementOption() {
 
 // This assumes at least one choice is allowed
 void Menu::incrementCurrOptionChoice() {
-	if (options[cursorIndex]->choicesWrap) {
+	if (CURR_OPTION->choicesWrap) {
 		do {
-			options[cursorIndex]->index = (options[cursorIndex]->index + 1) % options[cursorIndex]->numChoices;
-		} while (!options[cursorIndex]->choiceIsAllowed[options[cursorIndex]->index]);
-	} else if (options[cursorIndex]->index < options[cursorIndex]->numChoices - 1) {
+			CURR_OPTION->index = (CURR_OPTION->index + 1) % CURR_OPTION->numChoices;
+		} while (!CURR_OPTION->choiceIsAllowed[CURR_OPTION->index]);
+	} else if (CURR_OPTION->index < CURR_OPTION->numChoices - 1) {
 		do {
-			options[cursorIndex]->index++;
-		} while (options[cursorIndex]->index < options[cursorIndex]->numChoices - 1 && !options[cursorIndex]->choiceIsAllowed[options[cursorIndex]->index]);
+			CURR_OPTION->index++;
+		} while (CURR_OPTION->index < CURR_OPTION->numChoices - 1 && !CURR_OPTION->choiceIsAllowed[CURR_OPTION->index]);
 	}
 	updateCurrOptionChoicePositions();
-	options[cursorIndex]->updateDescription();
+	CURR_OPTION->updateDescription();
 }
 
 // This assumes at least one choice is allowed
 void Menu::decrementCurrOptionChoice() {
-	if (options[cursorIndex]->choicesWrap) {
+	if (CURR_OPTION->choicesWrap) {
 		do {
-			options[cursorIndex]->index = options[cursorIndex]->index--;
-			if (options[cursorIndex]->index < 0) {
-				options[cursorIndex]->index += options[cursorIndex]->numChoices;
+			CURR_OPTION->index = CURR_OPTION->index--;
+			if (CURR_OPTION->index < 0) {
+				CURR_OPTION->index += CURR_OPTION->numChoices;
 			}
-		} while (!options[cursorIndex]->choiceIsAllowed[options[cursorIndex]->index]);
-	} else if (!options[cursorIndex]->choiceIsAllowed[options[cursorIndex]->index]){
+		} while (!CURR_OPTION->choiceIsAllowed[CURR_OPTION->index]);
+	} else if (!CURR_OPTION->choiceIsAllowed[CURR_OPTION->index]){
 		do {
-			options[cursorIndex]->index--;
-		} while (options[cursorIndex]->index > 0 && !options[cursorIndex]->choiceIsAllowed[options[cursorIndex]->index]);
+			CURR_OPTION->index--;
+		} while (CURR_OPTION->index > 0 && !CURR_OPTION->choiceIsAllowed[CURR_OPTION->index]);
 	}
 	updateCurrOptionChoicePositions();
-	options[cursorIndex]->updateDescription();
+	CURR_OPTION->updateDescription();
 }
 
 void Menu::updateOptionPositions() {
 	topOnscreenIndex = cursorIndex - cursorIndex_onscreen;
 	bottomOnscreenIndex = min(topOnscreenIndex + numOnscreen, (int)numOptions) - 1;
-	for (i = topOnscreenIndex; i <= bottomOnscreenIndex; i++) {
+	for (currOnscreenIndex = topOnscreenIndex; currOnscreenIndex <= bottomOnscreenIndex; currOnscreenIndex++) {
 		switch (alignType_label) {
 			case 0:
-				options[i]->label.dstrect.x = start_x_label + (spacer_x * (i - topOnscreenIndex));
+				options[currOnscreenIndex]->label.dstrect.x = start_x_label + (spacer_x * (currOnscreenIndex - topOnscreenIndex));
 				break;
 			case 1:
-				options[i]->label.dstrect.x = start_x_label + (spacer_x * (i - topOnscreenIndex)) - (options[i]->label.dstrect.w / 2);
+				options[currOnscreenIndex]->label.dstrect.x = start_x_label + (spacer_x * (currOnscreenIndex - topOnscreenIndex)) - (options[currOnscreenIndex]->label.dstrect.w / 2);
 				break;
 			default:
-				options[i]->label.dstrect.x = start_x_label + (spacer_x * (i - topOnscreenIndex)) - options[i]->label.dstrect.w;
+				options[currOnscreenIndex]->label.dstrect.x = start_x_label + (spacer_x * (currOnscreenIndex - topOnscreenIndex)) - options[currOnscreenIndex]->label.dstrect.w;
 				break;
 		}
-		options[i]->label.dstrect.y = start_y_option + (spacer_y_option * (i - topOnscreenIndex));
+		options[currOnscreenIndex]->label.dstrect.y = start_y_option + (spacer_y_option * (currOnscreenIndex - topOnscreenIndex));
 
-		options[i]->label.dstrect.x = (Sint16)(options[i]->label.dstrect.x * screenScale);
-		options[i]->label.dstrect.y = (Sint16)(options[i]->label.dstrect.y * screenScale);
+		options[currOnscreenIndex]->label.dstrect.x = (Sint16)(options[currOnscreenIndex]->label.dstrect.x * screenScale);
+		options[currOnscreenIndex]->label.dstrect.y = (Sint16)(options[currOnscreenIndex]->label.dstrect.y * screenScale);
 		updateCurrOptionChoicePositions();
 	}
 	cursor.dstrect.x = options[cursorIndex_onscreen]->label.dstrect.x - (cursor.dstrect.w * 2);
@@ -214,35 +224,35 @@ void Menu::updateOptionPositions() {
 }
 
 void Menu::updateCurrOptionChoicePositions() {
-	options[cursorIndex]->updateChoice();
+	CURR_OPTION->updateChoice();
 	switch (alignType_choice) {
 		case 0:
-			options[cursorIndex]->choice.dstrect.x = start_x_choice + (spacer_x * (i - topOnscreenIndex));
+			CURR_OPTION->choice.dstrect.x = start_x_choice + (spacer_x * (currOnscreenIndex - topOnscreenIndex));
 			break;
 		case 1:
-			options[cursorIndex]->choice.dstrect.x = start_x_choice + (spacer_x * (i - topOnscreenIndex)) - (options[cursorIndex]->choice.dstrect.w / 2);
+			CURR_OPTION->choice.dstrect.x = start_x_choice + (spacer_x * (currOnscreenIndex - topOnscreenIndex)) - (CURR_OPTION->choice.dstrect.w / 2);
 			break;
 		case 2:
-			options[cursorIndex]->choice.dstrect.x = start_x_choice + (spacer_x * (i - topOnscreenIndex)) - options[cursorIndex]->choice.dstrect.w;
+			CURR_OPTION->choice.dstrect.x = start_x_choice + (spacer_x * (currOnscreenIndex - topOnscreenIndex)) - CURR_OPTION->choice.dstrect.w;
 			break;
 	}
-	options[cursorIndex]->choice.dstrect.y = start_y_option + (spacer_y_option * (i - topOnscreenIndex));
+	CURR_OPTION->choice.dstrect.y = start_y_option + (spacer_y_option * (currOnscreenIndex - topOnscreenIndex));
 
-	options[cursorIndex]->choice.dstrect.x = (Sint16)(options[cursorIndex]->choice.dstrect.x * screenScale);
-	options[cursorIndex]->choice.dstrect.y = (Sint16)(options[cursorIndex]->choice.dstrect.y * screenScale);
+	CURR_OPTION->choice.dstrect.x = (Sint16)(CURR_OPTION->choice.dstrect.x * screenScale);
+	CURR_OPTION->choice.dstrect.y = (Sint16)(CURR_OPTION->choice.dstrect.y * screenScale);
 	updateCurrOptionChoiceDescription();
 }
 
 void Menu::updateCurrOptionChoiceDescription() {
-	if (options[cursorIndex]->description_2.dstrect.w == 0) {
-		setTextPos(&options[cursorIndex]->description_1, OBJ_TO_MID_SCREEN_X(appWidth, options[cursorIndex]->description_2), start_y_desc + spacer_y_desc);
-	} else if (options[cursorIndex]->description_3.dstrect.w == 0) {
-		setTextPos(&options[cursorIndex]->description_1, OBJ_TO_MID_SCREEN_X(appWidth, options[cursorIndex]->description_1), start_y_desc + (spacer_y_desc / 2));
-		setTextPos(&options[cursorIndex]->description_2, OBJ_TO_MID_SCREEN_X(appWidth, options[cursorIndex]->description_2), start_y_desc + (spacer_y_desc * 3 / 2));
+	if (CURR_OPTION->description_2.dstrect.w == 0) {
+		setTextPos(&CURR_OPTION->description_1, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, CURR_OPTION->description_2), DESC_LINE_Y_MID);
+	} else if (CURR_OPTION->description_3.dstrect.w == 0) {
+		setTextPos(&CURR_OPTION->description_1, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, CURR_OPTION->description_1), DESC_LINE_Y_UPPER);
+		setTextPos(&CURR_OPTION->description_2, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, CURR_OPTION->description_2), DESC_LINE_Y_LOWER);
 	} else {
-		setTextPos(&options[cursorIndex]->description_1, OBJ_TO_MID_SCREEN_X(appWidth, options[cursorIndex]->description_1), start_y_desc);
-		setTextPos(&options[cursorIndex]->description_2, OBJ_TO_MID_SCREEN_X(appWidth, options[cursorIndex]->description_2), start_y_desc + spacer_y_desc);
-		setTextPos(&options[cursorIndex]->description_3, OBJ_TO_MID_SCREEN_X(appWidth, options[cursorIndex]->description_3), start_y_desc + (spacer_y_desc * 2));
+		setTextPos(&CURR_OPTION->description_1, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, CURR_OPTION->description_1), DESC_LINE_Y_TOP);
+		setTextPos(&CURR_OPTION->description_2, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, CURR_OPTION->description_2), DESC_LINE_Y_MID);
+		setTextPos(&CURR_OPTION->description_3, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, CURR_OPTION->description_3), DESC_LINE_Y_BOTTOM);
 	}
 }
 
@@ -256,7 +266,7 @@ void Menu::openMenu() {
 }
 
 void Menu::renderMenu() {
-	// TODO: Render box containing menu here?
+	// TODO: Render menu background here
 	for (i = topOnscreenIndex; i <= bottomOnscreenIndex; i++) {
 		options[i]->render(spacer_x * (i - topOnscreenIndex), spacer_y_option * (i - topOnscreenIndex), (cursorIndex == i));
 	}

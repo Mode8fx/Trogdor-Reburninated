@@ -1,5 +1,9 @@
 #include "text_objects.h"
 
+char tempCharArray[64];
+Uint8 charCounter;
+Sint16 charWidthCounter;
+
 char tempChar[2] = { '\0', '\0' };
 #if !defined(SDL1)
 SDL_Surface *temp_text;

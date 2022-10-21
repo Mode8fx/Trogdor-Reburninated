@@ -161,9 +161,6 @@ FontObject font_commodore_error_1;
 FontObject font_commodore_error_2;
 
 /* Text Objects */
-char tempCharArray[64];
-Uint8 charCounter;
-Sint16 charWidthCounter;
 TextObject text_0_loading;
 SDL_Rect text_0_loading_censor_rect;
 TextObject text_1_presents;
@@ -435,8 +432,10 @@ void InitializeController() {
 
 void renderBackground() {
 	outputRect = sprite_level_background->dstrect;
-	outputRect.x = outputRect.x + gameToWindowDstRect.x;
-	outputRect.y = outputRect.y + gameToWindowDstRect.y;
+	outputRect.x = (Sint16)(outputRect.x * screenScale) + gameToWindowDstRect.x;
+	outputRect.y = (Sint16)(outputRect.y * screenScale) + gameToWindowDstRect.y;
+	outputRect.w = (int)(outputRect.w * screenScale);
+	outputRect.h = (int)(outputRect.h * screenScale);
 #if !defined(SDL1)
 	SDL_RenderCopy(renderer, sprite_level_background->sub[0][0].texture, NULL, &outputRect);
 #else

@@ -198,6 +198,8 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
     // Free the sprite sheet since we no longer need it
     SDL_FreeSurface(temp_sprite_sheet);
     temp_sprite_sheet = NULL;
+
+    setSpriteScale(spriteObj);
 }
 
 void setSpriteScale(SpriteObject *spriteObj) {
