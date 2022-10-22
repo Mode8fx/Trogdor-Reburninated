@@ -3,7 +3,6 @@
 
 #include "classes.h"
 #include "cutscenes.h"
-#include "menu.h"
 
 Sint16 g_sceneState;
 Sint16 g_frameState;

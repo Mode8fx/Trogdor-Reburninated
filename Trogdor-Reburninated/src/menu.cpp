@@ -13,9 +13,9 @@ bool menusAreInitialized = false;
 #define DESC_LINE_Y_LOWER  (Sint16)((start_y_desc + (spacer_y_desc * 3 / 2)) * screenScale)
 #define DESC_LINE_Y_BOTTOM (Sint16)((start_y_desc + (spacer_y_desc * 2)) * screenScale)
 
-MenuOption::MenuOption(const char label_ptr[], const char *choice_ptr[], const char *desc_ptr_1[], const char *desc_ptr_2[], const char *desc_ptr_3[], const char altDesc_ptr[], Uint8 numCh, bool oneDesc, Uint8 start, bool wrap, bool locked) {
+void MenuOption::prepareMenuOption(const char label_ptr[], const char *choice_ptr[], const char *desc_ptr_1[], const char *desc_ptr_2[], const char *desc_ptr_3[], const char altDesc_ptr[], Uint8 numCh, bool oneDesc, Uint8 start, bool wrap) {
+	labelPtr = label_ptr;
 	if (!menusAreInitialized) {
-		labelPtr = label_ptr;
 		choicePtr = choice_ptr;
 		descPtr_1 = desc_ptr_1;
 		descPtr_2 = desc_ptr_2;
@@ -29,8 +29,15 @@ MenuOption::MenuOption(const char label_ptr[], const char *choice_ptr[], const c
 		index = start;
 		index_init = start;
 		choicesWrap = wrap;
-		optionIsLocked = locked;
+		optionIsLocked = false;
 	}
+	updateLabel();
+	updateChoice();
+	updateDescription();
+}
+
+void MenuOption::setLocked(bool locked) {
+	optionIsLocked = locked;
 	updateLabel();
 	updateChoice();
 	updateDescription();
@@ -91,6 +98,15 @@ void MenuOption::render(bool renderDescription) {
 void Menu::prepareMenu(Uint8 numOpt, Uint8 numOns, SpriteObject *spriteObj, bool keepIndex, Sint8 space_scroll,
 	Sint16 st_x_label, Sint16 st_x_choice, Sint16 sp_x, Sint16 st_y_option, Sint16 st_y_desc, Sint16 sp_y_option, Sint16 sp_y_desc,
 	Sint8 at_label, Sint8 at_choice, bool wrap) {
+	start_x_label = st_x_label;
+	start_x_choice = st_x_choice;
+	spacer_x = sp_x;
+	start_y_option = st_y_option;
+	start_y_desc = st_y_desc;
+	spacer_y_option = sp_y_option;
+	spacer_y_desc = sp_y_desc;
+	alignType_label = at_label;
+	alignType_choice = at_choice;
 	if (!menusAreInitialized) {
 		numOptions = numOpt;
 		numOnscreen = min(numOns, numOptions);
@@ -102,15 +118,6 @@ void Menu::prepareMenu(Uint8 numOpt, Uint8 numOns, SpriteObject *spriteObj, bool
 		scrollSpacer = space_scroll;
 		topOnscreenIndex = 0;
 		bottomOnscreenIndex = 0;
-		start_x_label = st_x_label;
-		start_x_choice = st_x_choice;
-		spacer_x = sp_x;
-		start_y_option = st_y_option;
-		start_y_desc = st_y_desc;
-		spacer_y_option = sp_y_option;
-		spacer_y_desc = sp_y_desc;
-		alignType_label = at_label;
-		alignType_choice = at_choice;
 		optionsWrap = wrap;
 	}
 }
@@ -300,10 +307,10 @@ const char *option_main_6_choices[6] = { "Off", "Very Low", "Low", "Normal", "Hi
 const char *option_main_6_descriptions_line_1[6] = { "Strong Bad does not talk.", "Strong Bad talks 50% less often.", "Strong Bad talks 25% less often.", "Strong Bad talks as often", "Strong Bad talks 25% more often.", "Strong Bad talks 50% more often." };
 const char *option_main_6_descriptions_line_2[6] = { "", "", "", "as he did in the original game.", "", "" };
 const char *option_main_6_descriptions_line_3[6] = { "", "", "", "", "", "" };
-const char *option_main_7_choices[4] = { "Full Overlay", "Full Game", "Pixel-Perfect Overlay", "Pixel-Perfect Game" };
-const char *option_main_7_descriptions_line_1[4] = { "Scale everything so that", "Scale the game window to fill the", "Scale so that everything uses", "Scale the game window to be as big as" };
-const char *option_main_7_descriptions_line_2[4] = { "the overlay fills the screen.", "screen. The overlay will be", "integer scaling. The most", "possible with integer scaling. The most" };
-const char *option_main_7_descriptions_line_3[4] = { "", "cut off.", "accurate, but possibly smallest.", "accurate, but overlay may be cut off." };
+const char *option_main_7_choices[4] = { "Full", "Full Game", "Pixel-Perfect", "Pixel-Perfect Game" };
+const char *option_main_7_descriptions_line_1[4] = { "Scale everything so that", "Scale the game to fill the screen.", "Scale so that everything uses integer", "Scale the game to be as big as possible" };
+const char *option_main_7_descriptions_line_2[4] = { "the overlay fills the screen.", "The overlay will be cut off.", "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate." };
+const char *option_main_7_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)" };
 const char *option_main_8_descriptions_line_1[1] = { "Toggle hidden cheats." };
 const char *option_main_9_descriptions_line_1[1] = { "View the credits." };
 const char *option_main_10_descriptions_line_1[1] = { "Quit the game." };
@@ -321,53 +328,87 @@ void InitializeMenus() {
 	TTF_Init();
 	setFont(&font_serif_white_6_mult, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white);
 
-	menu_main.prepareMenu(10, 6, &sprite_menu_cursor, false, 1, 48, 176, 0, 25, 175, 25, 15, 0, 0, true);
-	menu_main.options[0] = new MenuOption("Starting Level", option_main_1_choices,
+	menu_main.prepareMenu(10, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale >= 2)), 168 + (8 * (screenScale >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
+	if (!menusAreInitialized) {
+		for (i = 0; i < 10; i++) {
+			menu_main.options[i] = new MenuOption();
+		}
+	}
+	menu_main.options[0]->prepareMenuOption("Starting Level", option_main_1_choices,
 		option_main_1_descriptions_line_1, option_empty, option_empty,
-		NULL, 10, true, 0, true, false);
-	menu_main.options[1] = new MenuOption("Starting Lives", option_main_2_choices,
+		NULL, 10, true, 0, true);
+	menu_main.options[1]->prepareMenuOption("Starting Lives", option_main_2_choices,
 		option_main_2_descriptions_line_1, option_empty, option_empty,
-		NULL, 8, true, 3, true, false);
-	menu_main.options[2] = new MenuOption("Extra Lives", option_main_3_choices,
+		NULL, 8, true, 3, true);
+	menu_main.options[2]->prepareMenuOption("Extra Lives", option_main_3_choices,
 		option_main_3_descriptions_line_1, option_main_3_descriptions_line_2, option_main_3_descriptions_line_3,
-		NULL, 8, false, 0, true, false);
-	menu_main.options[3] = new MenuOption("Peasant Penalty", option_on_off,
+		NULL, 8, false, 0, true);
+	menu_main.options[3]->prepareMenuOption("Peasant Penalty", option_on_off,
 		option_main_4_descriptions_line_1, option_main_4_descriptions_line_2, option_main_4_descriptions_line_3,
-		NULL, 2, false, 0, true, false);
-	menu_main.options[4] = new MenuOption("Archer Frequency", option_main_5_choices,
+		NULL, 2, false, 0, true);
+	menu_main.options[4]->prepareMenuOption("Archer Frequency", option_main_5_choices,
 		option_main_5_descriptions_line_1, option_main_5_descriptions_line_2, option_main_5_descriptions_line_3,
-		NULL, 4, false, 0, true, false);
-	menu_main.options[5] = new MenuOption("Commentary Frequency", option_main_6_choices,
-		option_main_6_descriptions_line_1, option_main_6_descriptions_line_2, option_main_6_descriptions_line_3,
-		NULL, 6, false, 3, true, false);
-	menu_main.options[6] = new MenuOption("Scaling", option_main_7_choices,
+		NULL, 4, false, 0, true);
+	if (screenScale < 2) {
+		menu_main.options[5]->prepareMenuOption("Commentary Freq.", option_main_6_choices,
+			option_main_6_descriptions_line_1, option_main_6_descriptions_line_2, option_main_6_descriptions_line_3,
+			NULL, 6, false, 3, true);
+	} else {
+		menu_main.options[5]->prepareMenuOption("Commentary Frequency", option_main_6_choices,
+			option_main_6_descriptions_line_1, option_main_6_descriptions_line_2, option_main_6_descriptions_line_3,
+			NULL, 6, false, 3, true);
+	}
+	menu_main.options[6]->prepareMenuOption("Scaling", option_main_7_choices,
 		option_main_7_descriptions_line_1, option_main_7_descriptions_line_2, option_main_7_descriptions_line_3,
-		NULL, 4, false, 2, true, false);
-	menu_main.options[7] = new MenuOption("Cheats", option_empty,
+		NULL, 4, false, 2, true);
+	menu_main.options[7]->prepareMenuOption("Cheats", option_empty,
 		option_main_8_descriptions_line_1, option_empty, option_empty,
-		NULL, 1, true, 0, true, false);
-	menu_main.options[8] = new MenuOption("Credits", option_empty,
+		NULL, 1, true, 0, true);
+	menu_main.options[8]->prepareMenuOption("Credits", option_empty,
 		option_main_9_descriptions_line_1, option_empty, option_empty,
-		NULL, 1, true, 0, true, false);
-	menu_main.options[9] = new MenuOption("Quit Game", option_empty,
+		NULL, 1, true, 0, true);
+	menu_main.options[9]->prepareMenuOption("Quit Game", option_empty,
 		option_main_10_descriptions_line_1, option_empty, option_empty,
-		NULL, 1, true, 0, true, false);
+		NULL, 1, true, 0, true);
 
-	menu_cheats.prepareMenu(4, 6, &sprite_menu_cursor, false, 1, 48, 176, 0, 25, 175, 25, 15, 0, 0, true);
-	menu_cheats.options[0] = new MenuOption("Infinite Lives", option_on_off,
+	menu_cheats.prepareMenu(4, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale >= 2)), 160 + (16 * (screenScale >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
+	if (!menusAreInitialized) {
+		for (i = 0; i < 4; i++) {
+			menu_cheats.options[i] = new MenuOption();
+		}
+	}
+	menu_cheats.options[0]->prepareMenuOption("Infinite Lives", option_on_off,
 		option_cheats_1_descriptions_line_1, option_cheats_1_descriptions_line_2, option_cheats_1_descriptions_line_3,
-		"Secret Code?!?!", 2, true, 0, true, true);
-	menu_cheats.options[1] = new MenuOption("Debug Cheat", option_on_off,
+		"Secret Code?!?!", 2, true, 0, true);
+	menu_cheats.options[1]->prepareMenuOption("Debug Cheat", option_on_off,
 		option_cheats_2_descriptions_line_1, option_cheats_2_descriptions_line_2, option_cheats_2_descriptions_line_3,
-		"Class of 1981", 2, true, 0, true, true);
-	menu_cheats.options[2] = new MenuOption("Big Head Mode", option_on_off,
+		"Class of 1981", 2, true, 0, true);
+	menu_cheats.options[2]->prepareMenuOption("Big Head Mode", option_on_off,
 		option_cheats_3_descriptions_line_1, option_empty, option_empty,
-		"Echidna Mushroom Pulley", 2, true, 0, true, true);
-	menu_cheats.options[3] = new MenuOption("Noclip", option_on_off,
+		"Echidna Mushroom Pulley", 2, true, 0, true);
+	menu_cheats.options[3]->prepareMenuOption("Noclip", option_on_off,
 		option_cheats_4_descriptions_line_1, option_cheats_4_descriptions_line_2, option_empty,
-		"1994 Country", 2, true, 0, true, true);
+		"1994 Country", 2, true, 0, true);
+
+	if (!menusAreInitialized) {
+		menu_main.options[1]->choiceIsAllowed[5] = false;
+		menu_main.options[1]->choiceIsAllowed[6] = false;
+		menu_main.options[1]->choiceIsAllowed[7] = false;
+		menu_cheats.options[0]->setLocked(true);
+		menu_cheats.options[1]->setLocked(true);
+		menu_cheats.options[2]->setLocked(true);
+		menu_cheats.options[3]->setLocked(true);
+	}
+
+	menu_main.updateOptionPositions();
+	menu_cheats.updateOptionPositions();
+
+	menusAreInitialized = true;
 
 	TTF_CloseFont(font_serif_white_6_mult.font);
 	TTF_Quit();
-	menusAreInitialized = true;
+}
+
+void setCheat(Uint8 cheatIndex, bool enabled) {
+	menu_cheats.options[cheatIndex]->setLocked(!enabled);
 }

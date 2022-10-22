@@ -50,7 +50,8 @@ class MenuOption {
 		bool optionIsLocked;
 		MenuOption() {
 		}
-		MenuOption(const char [], const char *[], const char *[], const char *[], const char *[], const char [], Uint8, bool, Uint8, bool, bool);
+		void prepareMenuOption(const char [], const char *[], const char *[], const char *[], const char *[], const char [], Uint8, bool, Uint8, bool);
+		void setLocked(bool);
 		void updateLabel();
 		void updateChoice();
 		void updateDescription();
@@ -120,6 +121,7 @@ class Menu {
 };
 
 //extern void InitializeMenus();
+extern void setCheat(Uint8, bool);
 
 extern Menu menu_main;
 extern Menu menu_cheats;

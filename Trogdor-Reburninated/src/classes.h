@@ -4,6 +4,7 @@
 #include "config.h"
 #include "input.h"
 #include "level_data.h"
+#include "menu.h"
 
 // for all "directions": 1 = up, 2 = down, 3 = left, 4 = right
 
