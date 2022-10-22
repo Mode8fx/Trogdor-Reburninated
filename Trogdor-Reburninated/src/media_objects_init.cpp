@@ -610,6 +610,9 @@ void InitializeSpritesPart2() {
 		0, 0, 5, 1, 1);
 	PREPARE_SPRITE(sprite_menu_cursor, (rootDir + "graphics/menu_cursor.bmp").c_str(),
 		0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_menu_background, (rootDir + "graphics/options_menu.bmp").c_str(),
+		0, 0, 1, 1, 1);
+	sprite_menu_background_ins = SpriteInstance(&sprite_menu_background, 0, 0);
 }
 
 void exceptMissingFile(const char *path) {
@@ -673,6 +676,7 @@ void destroyAllSprites() {
 	destroySprite(&sprite_kerrek);
 	destroySprite(&sprite_kerrek_smoked);
 	destroySprite(&sprite_menu_cursor);
+	destroySprite(&sprite_menu_background);
 	destroySprite(&sprite_overlay_basement_top);
 	destroySprite(&sprite_overlay_basement_bottom);
 	destroySprite(&sprite_overlay_basement_left);

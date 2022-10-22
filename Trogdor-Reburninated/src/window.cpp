@@ -120,6 +120,7 @@ void setScaling() {
 	repositionOverlay();
 	destroyAllTextChars();
 	InitializeFontsAndText();
+	InitializeMenus();
 #endif
 }
 

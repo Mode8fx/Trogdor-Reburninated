@@ -420,6 +420,18 @@ void SpriteInstance::renderSprite_app() {
 #endif
 }
 
+void SpriteInstance::renderSprite_app_noShift() {
+    outputRect.x = (dstrect.x + currSpriteXOffset) + appToWindowDstRect.x;
+    outputRect.y = (dstrect.y + currSpriteYOffset) + appToWindowDstRect.y;
+    outputRect.w = (int)(dstrect.w * screenScale);
+    outputRect.h = (int)(dstrect.h * screenScale);
+#if !defined(SDL1)
+    SDL_RenderCopy(renderer, currSprite, &srcrect, &outputRect);
+#else
+    SDL_BlitSurface(currSprite, &srcrect, windowScreen, &outputRect);
+#endif
+}
+
 void SpriteInstance::renderSprite_overlay() {
     outputRect = dstrect;
 #if !defined(SDL1)

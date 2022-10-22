@@ -79,6 +79,8 @@ extern SpriteObject sprite_arrow_funnyjoke;
 extern SpriteObject sprite_kerrek;
 extern SpriteObject sprite_kerrek_smoked;
 extern SpriteObject sprite_menu_cursor;
+extern SpriteObject sprite_menu_background;
+extern SpriteInstance sprite_menu_background_ins;
 extern SDL_Rect     divider_level_beaten_rect;
 
 #define SFX_BURN_HUT      sfxArr[0]

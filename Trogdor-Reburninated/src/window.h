@@ -86,5 +86,6 @@ extern void setScaling();
 extern void snapWindow_x(double, Uint16);
 extern void snapWindow_y(double, Uint16);
 extern void SDL_toggleFullscreen();
+extern void InitializeMenus(); // this is in menu.cpp
 
 #endif

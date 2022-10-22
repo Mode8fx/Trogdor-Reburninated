@@ -128,6 +128,8 @@ SpriteObject sprite_arrow_funnyjoke;
 SpriteObject sprite_kerrek;
 SpriteObject sprite_kerrek_smoked;
 SpriteObject sprite_menu_cursor;
+SpriteObject sprite_menu_background;
+SpriteInstance sprite_menu_background_ins;
 SDL_Rect     divider_level_beaten_rect;
 
 /* Fonts */

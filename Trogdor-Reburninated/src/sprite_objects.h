@@ -118,6 +118,7 @@ class SpriteInstance {
         void renderSprite_game();
         void renderSpriteAsCSO_game();
         void renderSprite_app();
+        void renderSprite_app_noShift();
         void renderSprite_overlay();
         void renderEmptyOverlay();
         void prepareAsCSO(double, double, Sint8, Sint8, Sint8, Sint8, double, double);

@@ -14,9 +14,8 @@ Features:
 	- Scaling
 	- Cheats
 Polish:
-- Move Credits screen, Coming Soon screen, and Quit functionality to Options menu
-- Add "Libraries" screen to Options menu
-- Add "Want more?" screen for other system ports to Options menu
+- Move Credits screen to Options menu
+- Add "Libraries", "Coming Soon", and "Want More?" pages to Credits
 Final:
 - Update release materials (icons, descriptions, etc) for all versions: PC, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS
 - Test all versions: PC, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS

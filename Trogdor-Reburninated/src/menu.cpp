@@ -1,8 +1,11 @@
 #include "menu.h"
 
 Sint8 currOnscreenIndex;
+bool menusAreInitialized = false;
 
 #define CURR_OPTION options[cursorIndex]
+#define CURR_OPTION_ONSCREEN options[currOnscreenIndex]
+#define CURR_SPACER_X (spacer_x * (currOnscreenIndex - topOnscreenIndex))
 
 #define DESC_LINE_Y_TOP    (Sint16)(start_y_desc * screenScale)
 #define DESC_LINE_Y_UPPER  (Sint16)((start_y_desc + (spacer_y_desc / 2)) * screenScale)
@@ -11,21 +14,23 @@ Sint8 currOnscreenIndex;
 #define DESC_LINE_Y_BOTTOM (Sint16)((start_y_desc + (spacer_y_desc * 2)) * screenScale)
 
 MenuOption::MenuOption(const char label_ptr[], const char *choice_ptr[], const char *desc_ptr_1[], const char *desc_ptr_2[], const char *desc_ptr_3[], const char altDesc_ptr[], Uint8 numCh, bool oneDesc, Uint8 start, bool wrap, bool locked) {
-	labelPtr = label_ptr;
-	choicePtr = choice_ptr;
-	descPtr_1 = desc_ptr_1;
-	descPtr_2 = desc_ptr_2;
-	descPtr_3 = desc_ptr_3;
-	altDescPtr = altDesc_ptr;
-	numChoices = numCh;
-	oneDescription = oneDesc;
-	for (i = 0; i < numChoices; i++) {
-		choiceIsAllowed[i] = true;
+	if (!menusAreInitialized) {
+		labelPtr = label_ptr;
+		choicePtr = choice_ptr;
+		descPtr_1 = desc_ptr_1;
+		descPtr_2 = desc_ptr_2;
+		descPtr_3 = desc_ptr_3;
+		altDescPtr = altDesc_ptr;
+		numChoices = numCh;
+		oneDescription = oneDesc;
+		for (i = 0; i < numChoices; i++) {
+			choiceIsAllowed[i] = true;
+		}
+		index = start;
+		index_init = start;
+		choicesWrap = wrap;
+		optionIsLocked = locked;
 	}
-	index = start;
-	index_init = start;
-	choicesWrap = wrap;
-	optionIsLocked = locked;
 	updateLabel();
 	updateChoice();
 	updateDescription();
@@ -73,7 +78,7 @@ void MenuOption::updateDescription() {
 	}
 }
 
-void MenuOption::render(Sint16 space_x, Sint16 space_y, bool renderDescription) {
+void MenuOption::render(bool renderDescription) {
 	renderText_app(label, font_serif_white_6_mult);
 	renderText_app(choice, font_serif_white_6_mult);
 	if (renderDescription) {
@@ -86,27 +91,28 @@ void MenuOption::render(Sint16 space_x, Sint16 space_y, bool renderDescription) 
 void Menu::prepareMenu(Uint8 numOpt, Uint8 numOns, SpriteObject *spriteObj, bool keepIndex, Sint8 space_scroll,
 	Sint16 st_x_label, Sint16 st_x_choice, Sint16 sp_x, Sint16 st_y_option, Sint16 st_y_desc, Sint16 sp_y_option, Sint16 sp_y_desc,
 	Sint8 at_label, Sint8 at_choice, bool wrap) {
-	numOptions = numOpt;
-	numOnscreen = min(numOns, numOptions);
-	//options = (MenuOption*)malloc(numOptions * sizeof(MenuOption));
-	cursor = SpriteInstance(spriteObj, 0, 0);
-	cursorIndex = 0;
-	scrollIndex = 0;
-	cursorIndex_onscreen = 0;
-	keepIndexOnExit = keepIndex;
-	scrollSpacer = space_scroll;
-	topOnscreenIndex = 0;
-	bottomOnscreenIndex = 0;
-	start_x_label = st_x_label;
-	start_x_choice = st_x_choice;
-	spacer_x = sp_x;
-	start_y_option = st_y_option;
-	start_y_desc = st_y_desc;
-	spacer_y_option = sp_y_option;
-	spacer_y_desc = sp_y_desc;
-	alignType_label = at_label;
-	alignType_choice = at_choice;
-	optionsWrap = wrap;
+	if (!menusAreInitialized) {
+		numOptions = numOpt;
+		numOnscreen = min(numOns, numOptions);
+		cursor = SpriteInstance(spriteObj, 0, 0);
+		cursorIndex = 0;
+		scrollIndex = 0;
+		cursorIndex_onscreen = 0;
+		keepIndexOnExit = keepIndex;
+		scrollSpacer = space_scroll;
+		topOnscreenIndex = 0;
+		bottomOnscreenIndex = 0;
+		start_x_label = st_x_label;
+		start_x_choice = st_x_choice;
+		spacer_x = sp_x;
+		start_y_option = st_y_option;
+		start_y_desc = st_y_desc;
+		spacer_y_option = sp_y_option;
+		spacer_y_desc = sp_y_desc;
+		alignType_label = at_label;
+		alignType_choice = at_choice;
+		optionsWrap = wrap;
+	}
 }
 
 Sint8 Menu::handleInput() {
@@ -135,7 +141,7 @@ void Menu::incrementOption() {
 	if (cursorIndex < numOptions - 1) {
 		cursorIndex++;
 		cursorIndex_onscreen++;
-		if ((cursorIndex_onscreen > numOnscreen - scrollSpacer) && (scrollIndex < numOptions - numOnscreen)) {
+		if ((cursorIndex_onscreen >= numOnscreen - scrollSpacer) && (scrollIndex < numOptions - numOnscreen)) {
 			scrollIndex++;
 			cursorIndex_onscreen--;
 		}
@@ -176,8 +182,9 @@ void Menu::incrementCurrOptionChoice() {
 			CURR_OPTION->index++;
 		} while (CURR_OPTION->index < CURR_OPTION->numChoices - 1 && !CURR_OPTION->choiceIsAllowed[CURR_OPTION->index]);
 	}
-	updateCurrOptionChoicePositions();
+	CURR_OPTION->updateChoice();
 	CURR_OPTION->updateDescription();
+	updateOptionChoicePosition(cursorIndex);
 }
 
 // This assumes at least one choice is allowed
@@ -194,65 +201,65 @@ void Menu::decrementCurrOptionChoice() {
 			CURR_OPTION->index--;
 		} while (CURR_OPTION->index > 0 && !CURR_OPTION->choiceIsAllowed[CURR_OPTION->index]);
 	}
-	updateCurrOptionChoicePositions();
+	CURR_OPTION->updateChoice();
 	CURR_OPTION->updateDescription();
+	updateOptionChoicePosition(cursorIndex);
 }
 
 void Menu::updateOptionPositions() {
 	topOnscreenIndex = cursorIndex - cursorIndex_onscreen;
 	bottomOnscreenIndex = min(topOnscreenIndex + numOnscreen, (int)numOptions) - 1;
 	for (currOnscreenIndex = topOnscreenIndex; currOnscreenIndex <= bottomOnscreenIndex; currOnscreenIndex++) {
+		// Update Label 
 		switch (alignType_label) {
 			case 0:
-				options[currOnscreenIndex]->label.dstrect.x = start_x_label + (spacer_x * (currOnscreenIndex - topOnscreenIndex));
+				CURR_OPTION_ONSCREEN->label.dstrect.x = start_x_label + CURR_SPACER_X;
 				break;
 			case 1:
-				options[currOnscreenIndex]->label.dstrect.x = start_x_label + (spacer_x * (currOnscreenIndex - topOnscreenIndex)) - (options[currOnscreenIndex]->label.dstrect.w / 2);
+				CURR_OPTION_ONSCREEN->label.dstrect.x = start_x_label + CURR_SPACER_X - (CURR_OPTION_ONSCREEN->label.dstrect.w / 2);
 				break;
 			default:
-				options[currOnscreenIndex]->label.dstrect.x = start_x_label + (spacer_x * (currOnscreenIndex - topOnscreenIndex)) - options[currOnscreenIndex]->label.dstrect.w;
+				CURR_OPTION_ONSCREEN->label.dstrect.x = start_x_label + CURR_SPACER_X - CURR_OPTION_ONSCREEN->label.dstrect.w;
 				break;
 		}
-		options[currOnscreenIndex]->label.dstrect.y = start_y_option + (spacer_y_option * (currOnscreenIndex - topOnscreenIndex));
+		CURR_OPTION_ONSCREEN->label.dstrect.y = start_y_option + (spacer_y_option * (currOnscreenIndex - topOnscreenIndex));
 
-		options[currOnscreenIndex]->label.dstrect.x = (Sint16)(options[currOnscreenIndex]->label.dstrect.x * screenScale);
-		options[currOnscreenIndex]->label.dstrect.y = (Sint16)(options[currOnscreenIndex]->label.dstrect.y * screenScale);
-		updateCurrOptionChoicePositions();
+		CURR_OPTION_ONSCREEN->label.dstrect.x = (Sint16)(CURR_OPTION_ONSCREEN->label.dstrect.x * screenScale);
+		CURR_OPTION_ONSCREEN->label.dstrect.y = (Sint16)(CURR_OPTION_ONSCREEN->label.dstrect.y * screenScale);
+		updateOptionChoicePosition(currOnscreenIndex);
 	}
-	cursor.dstrect.x = options[cursorIndex_onscreen]->label.dstrect.x - (cursor.dstrect.w * 2);
-	cursor.dstrect.y = options[cursorIndex_onscreen]->label.dstrect.y + ((options[cursorIndex_onscreen]->label.dstrect.h - cursor.dstrect.h) / 2);
+	cursor.dstrect.x = CURR_OPTION->label.dstrect.x - (Sint16)(cursor.dstrect.w * screenScale * 2);
+	cursor.dstrect.y = CURR_OPTION->label.dstrect.y + ((CURR_OPTION->label.dstrect.h - (Sint16)(cursor.dstrect.h * screenScale)) / 2);
 }
 
-void Menu::updateCurrOptionChoicePositions() {
-	CURR_OPTION->updateChoice();
+void Menu::updateOptionChoicePosition(Sint8 optionIndex) {
 	switch (alignType_choice) {
 		case 0:
-			CURR_OPTION->choice.dstrect.x = start_x_choice + (spacer_x * (currOnscreenIndex - topOnscreenIndex));
+			options[optionIndex]->choice.dstrect.x = start_x_choice + CURR_SPACER_X;
 			break;
 		case 1:
-			CURR_OPTION->choice.dstrect.x = start_x_choice + (spacer_x * (currOnscreenIndex - topOnscreenIndex)) - (CURR_OPTION->choice.dstrect.w / 2);
+			options[optionIndex]->choice.dstrect.x = start_x_choice + CURR_SPACER_X - (CURR_OPTION->choice.dstrect.w / 2);
 			break;
 		case 2:
-			CURR_OPTION->choice.dstrect.x = start_x_choice + (spacer_x * (currOnscreenIndex - topOnscreenIndex)) - CURR_OPTION->choice.dstrect.w;
+			options[optionIndex]->choice.dstrect.x = start_x_choice + CURR_SPACER_X - CURR_OPTION->choice.dstrect.w;
 			break;
 	}
-	CURR_OPTION->choice.dstrect.y = start_y_option + (spacer_y_option * (currOnscreenIndex - topOnscreenIndex));
+	options[optionIndex]->choice.dstrect.y = options[optionIndex]->label.dstrect.y;
 
-	CURR_OPTION->choice.dstrect.x = (Sint16)(CURR_OPTION->choice.dstrect.x * screenScale);
-	CURR_OPTION->choice.dstrect.y = (Sint16)(CURR_OPTION->choice.dstrect.y * screenScale);
-	updateCurrOptionChoiceDescription();
+	options[optionIndex]->choice.dstrect.x = (Sint16)(options[optionIndex]->choice.dstrect.x * screenScale);
+	updateOptionDescPosition(optionIndex);
 }
 
-void Menu::updateCurrOptionChoiceDescription() {
-	if (CURR_OPTION->description_2.dstrect.w == 0) {
-		setTextPos(&CURR_OPTION->description_1, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, CURR_OPTION->description_2), DESC_LINE_Y_MID);
-	} else if (CURR_OPTION->description_3.dstrect.w == 0) {
-		setTextPos(&CURR_OPTION->description_1, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, CURR_OPTION->description_1), DESC_LINE_Y_UPPER);
-		setTextPos(&CURR_OPTION->description_2, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, CURR_OPTION->description_2), DESC_LINE_Y_LOWER);
+void Menu::updateOptionDescPosition(Sint8 optionIndex) {
+	if (options[optionIndex]->description_2.dstrect.w == 0) {
+		setTextPos(&options[optionIndex]->description_1, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, options[optionIndex]->description_1), DESC_LINE_Y_MID);
+	} else if (options[optionIndex]->description_3.dstrect.w == 0) {
+		setTextPos(&options[optionIndex]->description_1, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, options[optionIndex]->description_1), DESC_LINE_Y_UPPER);
+		setTextPos(&options[optionIndex]->description_2, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, options[optionIndex]->description_2), DESC_LINE_Y_LOWER);
 	} else {
-		setTextPos(&CURR_OPTION->description_1, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, CURR_OPTION->description_1), DESC_LINE_Y_TOP);
-		setTextPos(&CURR_OPTION->description_2, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, CURR_OPTION->description_2), DESC_LINE_Y_MID);
-		setTextPos(&CURR_OPTION->description_3, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, CURR_OPTION->description_3), DESC_LINE_Y_BOTTOM);
+		setTextPos(&options[optionIndex]->description_1, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, options[optionIndex]->description_1), DESC_LINE_Y_TOP);
+		setTextPos(&options[optionIndex]->description_2, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, options[optionIndex]->description_2), DESC_LINE_Y_MID);
+		setTextPos(&options[optionIndex]->description_3, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, options[optionIndex]->description_3), DESC_LINE_Y_BOTTOM);
 	}
 }
 
@@ -266,16 +273,15 @@ void Menu::openMenu() {
 }
 
 void Menu::renderMenu() {
-	// TODO: Render menu background here
 	for (i = topOnscreenIndex; i <= bottomOnscreenIndex; i++) {
-		options[i]->render(spacer_x * (i - topOnscreenIndex), spacer_y_option * (i - topOnscreenIndex), (cursorIndex == i));
+		options[i]->render(cursorIndex == i);
 	}
-	cursor.renderSprite_app();
+	cursor.renderSprite_app_noShift();
 }
 
 const char *option_on_off[2] = { "On", "Off" };
 const char *option_empty[1] = { "" };
-const char *option_main_1_choices[5] = { "1", "21", "41", "61", "81" };
+const char *option_main_1_choices[10] = { "1", "11", "21", "31", "41", "51", "61", "71", "81", "91"};
 const char *option_main_1_descriptions_line_1[1] = { "The level that the game starts on." };
 const char *option_main_2_choices[8] = { "1", "2", "3", "4", "5", "10", "20", "30" };
 const char *option_main_2_descriptions_line_1[1] = { "The number of lives you start with." };
@@ -315,10 +321,10 @@ void InitializeMenus() {
 	TTF_Init();
 	setFont(&font_serif_white_6_mult, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white);
 
-	menu_main.prepareMenu(10, 6, &sprite_menu_cursor, false, 1, 32, 224, 0, 25, 175, 25, 15, 0, 0, true);
+	menu_main.prepareMenu(10, 6, &sprite_menu_cursor, false, 1, 48, 176, 0, 25, 175, 25, 15, 0, 0, true);
 	menu_main.options[0] = new MenuOption("Starting Level", option_main_1_choices,
 		option_main_1_descriptions_line_1, option_empty, option_empty,
-		NULL, 5, true, 0, true, false);
+		NULL, 10, true, 0, true, false);
 	menu_main.options[1] = new MenuOption("Starting Lives", option_main_2_choices,
 		option_main_2_descriptions_line_1, option_empty, option_empty,
 		NULL, 8, true, 3, true, false);
@@ -347,20 +353,21 @@ void InitializeMenus() {
 		option_main_10_descriptions_line_1, option_empty, option_empty,
 		NULL, 1, true, 0, true, false);
 
-	//menu_cheats.prepareMenu(4, 6, &sprite_menu_cursor, false, 1, 32, 224, 0, 25, 175, 25, 15, 0, 0, true);
-	//menu_cheats.options[0].prepareMenuOption("Infinite Lives", (const char**)option_on_off,
-	//	(const char**)option_cheats_1_descriptions_line_1, (const char**)option_cheats_1_descriptions_line_2, (const char**)option_cheats_1_descriptions_line_3,
-	//	"Secret Code?!?!", 2, true, 0, true, true);
-	//menu_cheats.options[1].prepareMenuOption("Debug Cheat", (const char**)option_on_off,
-	//	(const char**)option_cheats_2_descriptions_line_1, (const char**)option_cheats_2_descriptions_line_2, (const char**)option_cheats_2_descriptions_line_3,
-	//	"Class of 1981", 2, true, 0, true, true);
-	//menu_cheats.options[2].prepareMenuOption("Big Head Mode", (const char**)option_on_off,
-	//	(const char**)option_cheats_3_descriptions_line_1, (const char**)option_empty, (const char**)option_empty,
-	//	"Echidna Mushroom Pulley", 2, true, 0, true, true);
-	//menu_cheats.options[3].prepareMenuOption("Noclip", (const char**)option_on_off,
-	//	(const char**)option_cheats_4_descriptions_line_1, (const char**)option_cheats_4_descriptions_line_2, (const char**)option_empty,
-	//	"1994 Country", 2, true, 0, true, true);
+	menu_cheats.prepareMenu(4, 6, &sprite_menu_cursor, false, 1, 48, 176, 0, 25, 175, 25, 15, 0, 0, true);
+	menu_cheats.options[0] = new MenuOption("Infinite Lives", option_on_off,
+		option_cheats_1_descriptions_line_1, option_cheats_1_descriptions_line_2, option_cheats_1_descriptions_line_3,
+		"Secret Code?!?!", 2, true, 0, true, true);
+	menu_cheats.options[1] = new MenuOption("Debug Cheat", option_on_off,
+		option_cheats_2_descriptions_line_1, option_cheats_2_descriptions_line_2, option_cheats_2_descriptions_line_3,
+		"Class of 1981", 2, true, 0, true, true);
+	menu_cheats.options[2] = new MenuOption("Big Head Mode", option_on_off,
+		option_cheats_3_descriptions_line_1, option_empty, option_empty,
+		"Echidna Mushroom Pulley", 2, true, 0, true, true);
+	menu_cheats.options[3] = new MenuOption("Noclip", option_on_off,
+		option_cheats_4_descriptions_line_1, option_cheats_4_descriptions_line_2, option_empty,
+		"1994 Country", 2, true, 0, true, true);
 
 	TTF_CloseFont(font_serif_white_6_mult.font);
 	TTF_Quit();
+	menusAreInitialized = true;
 }

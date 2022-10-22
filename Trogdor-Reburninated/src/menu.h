@@ -54,7 +54,7 @@ class MenuOption {
 		void updateLabel();
 		void updateChoice();
 		void updateDescription();
-		void render(Sint16, Sint16, bool);
+		void render(bool);
 };
 
 /* @brief A single menu.
@@ -113,13 +113,13 @@ class Menu {
 		void incrementCurrOptionChoice();
 		void decrementCurrOptionChoice();
 		void updateOptionPositions();
-		void updateCurrOptionChoicePositions();
-		void updateCurrOptionChoiceDescription();
+		void updateOptionChoicePosition(Sint8);
+		void updateOptionDescPosition(Sint8);
 		void openMenu();
 		void renderMenu();
 };
 
-extern void InitializeMenus();
+//extern void InitializeMenus();
 
 extern Menu menu_main;
 extern Menu menu_cheats;

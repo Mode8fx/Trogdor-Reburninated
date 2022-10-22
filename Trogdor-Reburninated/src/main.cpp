@@ -79,7 +79,6 @@ int main(int argv, char** args) {
 #endif
 
 	InitializeCutsceneObjects();
-	InitializeMenus();
 
 	/* Initialize Loading Screen rect */
 	text_0_loading_censor_rect = { text_0_loading.dstrect.x, text_0_loading.dstrect.y,
@@ -435,13 +434,32 @@ int main(int argv, char** args) {
 			case 301:
 				g_frameState++;
 				renderOverlay = false;
+				sprite_menu_background_ins.renderSprite_app();
 				menu_main.renderMenu();
 				switch (menu_main.handleInput()) {
+					case 7: // Cheats
+						menu_cheats.openMenu();
+						g_sceneState = 302;
+						break;
 					case 9: // Quit Game
 						isRunning = false;
 						break;
 					case -1: // Press B
 						g_sceneState = 3;
+						break;
+					default:
+						break;
+				}
+				break;
+				/* Cheats Menu */
+			case 302:
+				g_frameState++;
+				renderOverlay = false;
+				sprite_menu_background_ins.renderSprite_app();
+				menu_cheats.renderMenu();
+				switch (menu_cheats.handleInput()) {
+					case -1: // Press B
+						g_sceneState = 301;
 						break;
 					default:
 						break;
