@@ -35,11 +35,13 @@ extern SDL_Rect gameHiResSrcRect;
 extern SDL_Rect appSrcRect;
 extern SDL_Rect appToWindowDstRect; // app mapping to window
 extern SDL_Rect gameToWindowDstRect; // game screen mapping to window
+extern SDL_Rect menuToWindowDstRect; // menu mapping to window
 
 extern bool isWindowed;
 extern double screenScale; // the multiplier by which graphics should be scaled via SDL_gfx; caps out at 2
 extern int trueScreenScaleInt; // the multiplier by which the screen should be scaled via renderer
 extern double trueScreenScaleFull; // the multiplier by which the screen should be scaled via renderer
+extern double screenScale_menu;
 extern bool allowHiRes;
 extern Sint8 scalingType;
 #if !defined(SDL1)

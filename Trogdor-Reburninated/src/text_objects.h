@@ -48,6 +48,8 @@ extern void renderTextChar(TextCharObject);
 extern void renderText(TextObject, FontObject);
 extern void renderTextChar_app(TextCharObject);
 extern void renderText_app(TextObject, FontObject);
+extern void renderTextChar_menu(TextCharObject);
+extern void renderText_menu(TextObject, FontObject);
 extern void setTextCharPosX(TextCharObject *, int);
 extern void setTextCharPosY(TextCharObject *, int);
 extern void destroyTextObjectTexture(TextCharObject);

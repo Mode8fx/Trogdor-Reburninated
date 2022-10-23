@@ -434,7 +434,7 @@ int main(int argv, char** args) {
 			case 301:
 				g_frameState++;
 				renderOverlay = false;
-				sprite_menu_background_ins.renderSprite_app();
+				sprite_menu_background_ins.renderSprite_menu();
 				menu_main.renderMenu();
 				switch (menu_main.handleInput()) {
 					case 7: // Cheats
@@ -455,7 +455,7 @@ int main(int argv, char** args) {
 			case 302:
 				g_frameState++;
 				renderOverlay = false;
-				sprite_menu_background_ins.renderSprite_app();
+				sprite_menu_background_ins.renderSprite_menu();
 				menu_cheats.renderMenu();
 				switch (menu_cheats.handleInput()) {
 					case -1: // Press B

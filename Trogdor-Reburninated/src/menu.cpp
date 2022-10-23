@@ -7,11 +7,11 @@ bool menusAreInitialized = false;
 #define CURR_OPTION_ONSCREEN options[currOnscreenIndex]
 #define CURR_SPACER_X (spacer_x * (currOnscreenIndex - topOnscreenIndex))
 
-#define DESC_LINE_Y_TOP    (Sint16)(start_y_desc * screenScale)
-#define DESC_LINE_Y_UPPER  (Sint16)((start_y_desc + (spacer_y_desc / 2)) * screenScale)
-#define DESC_LINE_Y_MID    (Sint16)((start_y_desc + spacer_y_desc) * screenScale)
-#define DESC_LINE_Y_LOWER  (Sint16)((start_y_desc + (spacer_y_desc * 3 / 2)) * screenScale)
-#define DESC_LINE_Y_BOTTOM (Sint16)((start_y_desc + (spacer_y_desc * 2)) * screenScale)
+#define DESC_LINE_Y_TOP    (Sint16)(start_y_desc * screenScale_menu)
+#define DESC_LINE_Y_UPPER  (Sint16)((start_y_desc + (spacer_y_desc / 2)) * screenScale_menu)
+#define DESC_LINE_Y_MID    (Sint16)((start_y_desc + spacer_y_desc) * screenScale_menu)
+#define DESC_LINE_Y_LOWER  (Sint16)((start_y_desc + (spacer_y_desc * 3 / 2)) * screenScale_menu)
+#define DESC_LINE_Y_BOTTOM (Sint16)((start_y_desc + (spacer_y_desc * 2)) * screenScale_menu)
 
 void MenuOption::prepareMenuOption(const char label_ptr[], const char *choice_ptr[], const char *desc_ptr_1[], const char *desc_ptr_2[], const char *desc_ptr_3[], const char altDesc_ptr[], Uint8 numCh, bool oneDesc, Uint8 start, bool wrap) {
 	labelPtr = label_ptr;
@@ -86,12 +86,12 @@ void MenuOption::updateDescription() {
 }
 
 void MenuOption::render(bool renderDescription) {
-	renderText_app(label, font_serif_white_6_mult);
-	renderText_app(choice, font_serif_white_6_mult);
+	renderText_menu(label, font_serif_white_6_mult);
+	renderText_menu(choice, font_serif_white_6_mult);
 	if (renderDescription) {
-		renderText_app(description_1, font_serif_white_6_mult);
-		renderText_app(description_2, font_serif_white_6_mult);
-		renderText_app(description_3, font_serif_white_6_mult);
+		renderText_menu(description_1, font_serif_white_6_mult);
+		renderText_menu(description_2, font_serif_white_6_mult);
+		renderText_menu(description_3, font_serif_white_6_mult);
 	}
 }
 
@@ -231,12 +231,12 @@ void Menu::updateOptionPositions() {
 		}
 		CURR_OPTION_ONSCREEN->label.dstrect.y = start_y_option + (spacer_y_option * (currOnscreenIndex - topOnscreenIndex));
 
-		CURR_OPTION_ONSCREEN->label.dstrect.x = (Sint16)(CURR_OPTION_ONSCREEN->label.dstrect.x * screenScale);
-		CURR_OPTION_ONSCREEN->label.dstrect.y = (Sint16)(CURR_OPTION_ONSCREEN->label.dstrect.y * screenScale);
+		CURR_OPTION_ONSCREEN->label.dstrect.x = (Sint16)(CURR_OPTION_ONSCREEN->label.dstrect.x * screenScale_menu);
+		CURR_OPTION_ONSCREEN->label.dstrect.y = (Sint16)(CURR_OPTION_ONSCREEN->label.dstrect.y * screenScale_menu);
 		updateOptionChoicePosition(currOnscreenIndex);
 	}
-	cursor.dstrect.x = CURR_OPTION->label.dstrect.x - (Sint16)(cursor.dstrect.w * screenScale * 2);
-	cursor.dstrect.y = CURR_OPTION->label.dstrect.y + ((CURR_OPTION->label.dstrect.h - (Sint16)(cursor.dstrect.h * screenScale)) / 2);
+	cursor.dstrect.x = CURR_OPTION->label.dstrect.x - (Sint16)(cursor.dstrect.w * screenScale_menu * 2);
+	cursor.dstrect.y = CURR_OPTION->label.dstrect.y + ((CURR_OPTION->label.dstrect.h - (Sint16)(cursor.dstrect.h * screenScale_menu)) / 2);
 }
 
 void Menu::updateOptionChoicePosition(Sint8 optionIndex) {
@@ -253,7 +253,7 @@ void Menu::updateOptionChoicePosition(Sint8 optionIndex) {
 	}
 	options[optionIndex]->choice.dstrect.y = options[optionIndex]->label.dstrect.y;
 
-	options[optionIndex]->choice.dstrect.x = (Sint16)(options[optionIndex]->choice.dstrect.x * screenScale);
+	options[optionIndex]->choice.dstrect.x = (Sint16)(options[optionIndex]->choice.dstrect.x * screenScale_menu);
 	updateOptionDescPosition(optionIndex);
 }
 
@@ -283,7 +283,7 @@ void Menu::renderMenu() {
 	for (i = topOnscreenIndex; i <= bottomOnscreenIndex; i++) {
 		options[i]->render(cursorIndex == i);
 	}
-	cursor.renderSprite_app_noShift();
+	cursor.renderSprite_menu();
 }
 
 const char *option_on_off[2] = { "On", "Off" };
@@ -328,7 +328,7 @@ void InitializeMenus() {
 	TTF_Init();
 	setFont(&font_serif_white_6_mult, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white);
 
-	menu_main.prepareMenu(10, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale >= 2)), 168 + (8 * (screenScale >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
+	menu_main.prepareMenu(10, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 168 + (8 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
 	if (!menusAreInitialized) {
 		for (i = 0; i < 10; i++) {
 			menu_main.options[i] = new MenuOption();
@@ -349,7 +349,7 @@ void InitializeMenus() {
 	menu_main.options[4]->prepareMenuOption("Archer Frequency", option_main_5_choices,
 		option_main_5_descriptions_line_1, option_main_5_descriptions_line_2, option_main_5_descriptions_line_3,
 		NULL, 4, false, 0, true);
-	if (screenScale < 2) {
+	if (screenScale_menu < 2) {
 		menu_main.options[5]->prepareMenuOption("Commentary Freq.", option_main_6_choices,
 			option_main_6_descriptions_line_1, option_main_6_descriptions_line_2, option_main_6_descriptions_line_3,
 			NULL, 6, false, 3, true);
@@ -371,7 +371,7 @@ void InitializeMenus() {
 		option_main_10_descriptions_line_1, option_empty, option_empty,
 		NULL, 1, true, 0, true);
 
-	menu_cheats.prepareMenu(4, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale >= 2)), 160 + (16 * (screenScale >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
+	menu_cheats.prepareMenu(4, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
 	if (!menusAreInitialized) {
 		for (i = 0; i < 4; i++) {
 			menu_cheats.options[i] = new MenuOption();

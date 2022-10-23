@@ -326,10 +326,12 @@ SDL_Rect gameHiResSrcRect = { 0, 0, gameWidth, gameHeight };
 SDL_Rect appSrcRect = { 0, 0, appWidth, appHeight };
 SDL_Rect appToWindowDstRect = { 0, 0, appWidth, appHeight };
 SDL_Rect gameToWindowDstRect = { 0, 0, gameWidth, gameHeight };
+SDL_Rect menuToWindowDstRect = { 0, 0, appWidth, appHeight };
 bool isWindowed = true;
 double screenScale = 1;
 int trueScreenScaleInt = 1;
 double trueScreenScaleFull = 1;
+double screenScale_menu = 1;
 bool allowHiRes = true;
 Sint8 scalingType = 0;
 #if !defined(SDL1)

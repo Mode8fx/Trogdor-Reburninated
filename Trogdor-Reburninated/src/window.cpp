@@ -8,21 +8,23 @@ void setWidthHeightMults() {
 	gameHiResMult = (double)gameHiResWidth / gameWidth;
 }
 
+double getScreenScale_app() {
+	if (windowWidth <= appWidth || windowHeight <= appHeight) return 1;
+	return min(((double)windowWidth / appWidth), ((double)windowHeight / appHeight));
+}
+
 void scaleGameByApp() {
-	screenScale = (double)windowWidth / appWidth;
-	if ((double)windowHeight / appHeight < screenScale) {
-		screenScale = (double)windowHeight / appHeight;
-	}
-	if (screenScale < 1) screenScale = 1;
+	screenScale = getScreenScale_app();
 	trueScreenScaleInt = (int)screenScale;
 }
 
+double getScreenScale_game() {
+	if (windowWidth <= gameWidth || windowHeight <= gameHeight) return 1;
+	return min(((double)windowWidth / gameWidth), ((double)windowHeight / gameHeight));
+}
+
 void scaleAppByGame() {
-	screenScale = (double)windowWidth / gameWidth;
-	if ((double)windowHeight / gameHeight < screenScale) {
-		screenScale = (double)windowHeight / gameHeight;
-	}
-	if (screenScale < 1) screenScale = 1;
+	screenScale = getScreenScale_game();
 	trueScreenScaleInt = (int)screenScale;
 }
 
@@ -83,6 +85,11 @@ void scaleGameAndApp() {
 	gameHiResHeight = gameToWindowDstRect.h;
 	gameHiResSrcRect.w = gameHiResWidth;
 	gameHiResSrcRect.h = gameHiResHeight;
+	screenScale_menu = (int)getScreenScale_app();
+	menuToWindowDstRect.w = (int)(appWidth * screenScale_menu);
+	menuToWindowDstRect.h = (int)(appHeight * screenScale_menu);
+	menuToWindowDstRect.x = max((int)((windowWidth - menuToWindowDstRect.w) / 2), 0);
+	menuToWindowDstRect.y = max((int)((windowHeight - menuToWindowDstRect.h) / 2), 0);
 }
 
 void repositionOverlay() {

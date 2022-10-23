@@ -103,6 +103,28 @@ void renderText_app(TextObject textObj, FontObject fontObj) {
 	}
 }
 
+void renderTextChar_menu(TextCharObject textCharObj) {
+	outputRect = textCharObj.dstrect;
+	outputRect.x += menuToWindowDstRect.x;
+	outputRect.y += menuToWindowDstRect.y;
+#if !defined(SDL1)
+	SDL_RenderCopy(renderer, textCharObj.texture, NULL, &outputRect);
+#else
+	SDL_BlitSurface(textCharObj.surface, NULL, windowScreen, &outputRect);
+#endif
+}
+
+void renderText_menu(TextObject textObj, FontObject fontObj) {
+	STRCPY(tempCharArray, textObj.str.c_str());
+	charWidthCounter = 0;
+	for (charCounter = 0; charCounter < textObj.str.length(); charCounter++) {
+		setTextCharPosX(&CHAR_AT_INDEX(charCounter, fontObj.textChars), (textObj.dstrect.x + charWidthCounter));
+		setTextCharPosY(&CHAR_AT_INDEX(charCounter, fontObj.textChars), textObj.dstrect.y);
+		renderTextChar_menu(CHAR_AT_INDEX(charCounter, fontObj.textChars));
+		charWidthCounter += CHAR_AT_INDEX(charCounter, fontObj.textChars).dstrect.w;
+	}
+}
+
 void setTextCharPosX(TextCharObject *textCharObj, int pos_x) {
     textCharObj->dstrect.x = pos_x;
 }

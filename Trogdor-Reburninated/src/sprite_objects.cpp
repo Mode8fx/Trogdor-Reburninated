@@ -420,11 +420,11 @@ void SpriteInstance::renderSprite_app() {
 #endif
 }
 
-void SpriteInstance::renderSprite_app_noShift() {
-    outputRect.x = (dstrect.x + currSpriteXOffset) + appToWindowDstRect.x;
-    outputRect.y = (dstrect.y + currSpriteYOffset) + appToWindowDstRect.y;
-    outputRect.w = (int)(dstrect.w * screenScale);
-    outputRect.h = (int)(dstrect.h * screenScale);
+void SpriteInstance::renderSprite_menu() {
+    outputRect.x = (dstrect.x + currSpriteXOffset) + menuToWindowDstRect.x;
+    outputRect.y = (dstrect.y + currSpriteYOffset) + menuToWindowDstRect.y;
+    outputRect.w = (int)(dstrect.w * screenScale_menu);
+    outputRect.h = (int)(dstrect.h * screenScale_menu);
 #if !defined(SDL1)
     SDL_RenderCopy(renderer, currSprite, &srcrect, &outputRect);
 #else
