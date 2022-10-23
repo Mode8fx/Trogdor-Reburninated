@@ -237,35 +237,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\classes.cpp" />
-    <ClCompile Include="src\classes.h" />
-    <ClCompile Include="src\config.cpp" />
-    <ClCompile Include="src\cutscenes.cpp" />
-    <ClCompile Include="src\input.cpp" />
-    <ClCompile Include="src\main.cpp" />
-    <ClCompile Include="src\media_objects_init.cpp" />
-    <ClCompile Include="src\menu.cpp" />
-    <ClCompile Include="src\on_open_and_close.cpp" />
-    <ClCompile Include="src\sound_logic.cpp" />
-    <ClCompile Include="src\sprite_objects.cpp" />
-    <ClCompile Include="src\general.cpp" />
-    <ClCompile Include="src\text_objects.cpp" />
-    <ClCompile Include="src\window.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="resource.h" />
+    <ClInclude Include="src\classes.h" />
+    <ClInclude Include="src\config.h" />
     <ClInclude Include="src\cutscenes.h" />
     <ClInclude Include="src\general.h" />
     <ClInclude Include="src\include.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\level_data.h" />
     <ClInclude Include="src\main.h" />
-    <ClInclude Include="src\config.h" />
+    <ClInclude Include="src\media_objects_init.h" />
     <ClInclude Include="src\menu.h" />
     <ClInclude Include="src\on_open_and_close.h" />
     <ClInclude Include="src\sound_logic.h" />
     <ClInclude Include="src\sprite_objects.h" />
-    <ClInclude Include="src\media_objects_init.h" />
     <ClInclude Include="src\text_objects.h" />
     <ClInclude Include="src\window.h" />
   </ItemGroup>
@@ -277,6 +262,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\classes.cpp" />
+    <ClCompile Include="src\config.cpp" />
+    <ClCompile Include="src\cutscenes.cpp" />
+    <ClCompile Include="src\general.cpp" />
+    <ClCompile Include="src\input.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\media_objects_init.cpp" />
+    <ClCompile Include="src\menu.cpp" />
+    <ClCompile Include="src\on_open_and_close.cpp" />
+    <ClCompile Include="src\sound_logic.cpp" />
+    <ClCompile Include="src\sprite_objects.cpp" />
+    <ClCompile Include="src\text_objects.cpp" />
+    <ClCompile Include="src\window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

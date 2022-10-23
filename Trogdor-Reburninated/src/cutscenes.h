@@ -21,6 +21,5 @@ extern void cutscene_level_50();
 extern void cutscene_level_100();
 
 extern bool cutsceneIsPlaying;
-extern Sint16 g_frameState;
 
 #endif
