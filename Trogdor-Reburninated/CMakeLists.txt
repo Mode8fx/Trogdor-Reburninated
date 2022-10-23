@@ -4,6 +4,7 @@ project(trogdorrb CXX)
 add_executable(trogdorrb
 	"src/main.cpp"
 	"src/main.h"
+	"src/classes.cpp"
 	"src/classes.h"
 	"src/config.cpp"
 	"src/config.h"

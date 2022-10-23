@@ -121,7 +121,6 @@ class Menu {
 };
 
 //extern void InitializeMenus();
-extern void setCheat(Uint8, bool);
 
 extern Menu menu_main;
 extern Menu menu_cheats;

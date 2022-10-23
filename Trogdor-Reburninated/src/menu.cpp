@@ -408,7 +408,3 @@ void InitializeMenus() {
 	TTF_CloseFont(font_serif_white_6_mult.font);
 	TTF_Quit();
 }
-
-void setCheat(Uint8 cheatIndex, bool enabled) {
-	menu_cheats.options[cheatIndex]->setLocked(!enabled);
-}

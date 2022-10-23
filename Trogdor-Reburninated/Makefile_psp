@@ -3,6 +3,7 @@ PSP_LARGE_MEMORY=1
 TARGET	=	trogdor
 BUILD 	=	build_psp
 OBJS   =	src/main.o \
+			src/classes.o \
 			src/config.o \
 			src/cutscenes.o \
 			src/general.o \

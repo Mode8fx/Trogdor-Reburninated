@@ -237,6 +237,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\classes.cpp" />
     <ClCompile Include="src\classes.h" />
     <ClCompile Include="src\config.cpp" />
     <ClCompile Include="src\cutscenes.cpp" />
