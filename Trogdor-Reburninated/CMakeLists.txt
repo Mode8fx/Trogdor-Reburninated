@@ -20,6 +20,7 @@ add_executable(trogdorrb
 	"src/media_objects_init.h"
 	"src/menu.cpp"
 	"src/menu.h"
+	"src/on_open_and_close.h"
 	"src/sound_logic.cpp"
 	"src/sound_logic.h"
 	"src/sprite_objects.cpp"

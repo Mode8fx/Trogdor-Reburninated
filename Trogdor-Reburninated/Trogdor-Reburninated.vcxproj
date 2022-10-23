@@ -245,6 +245,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\media_objects_init.cpp" />
     <ClCompile Include="src\menu.cpp" />
+    <ClCompile Include="src\on_open_and_close.cpp" />
     <ClCompile Include="src\sound_logic.cpp" />
     <ClCompile Include="src\sprite_objects.cpp" />
     <ClCompile Include="src\general.cpp" />
@@ -261,6 +262,7 @@
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\menu.h" />
+    <ClInclude Include="src\on_open_and_close.h" />
     <ClInclude Include="src\sound_logic.h" />
     <ClInclude Include="src\sprite_objects.h" />
     <ClInclude Include="src\media_objects_init.h" />
