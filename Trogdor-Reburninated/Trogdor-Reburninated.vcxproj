@@ -241,6 +241,7 @@
     <ClCompile Include="src\classes.h" />
     <ClCompile Include="src\config.cpp" />
     <ClCompile Include="src\cutscenes.cpp" />
+    <ClCompile Include="src\input.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\media_objects_init.cpp" />
     <ClCompile Include="src\menu.cpp" />

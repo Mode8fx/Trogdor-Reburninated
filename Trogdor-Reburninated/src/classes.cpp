@@ -28,7 +28,7 @@ inline bool SDL_HasIntersection(const SDL_Rect* A, const SDL_Rect* B) {
 Cottage::Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
 	frameState = 9;
 	sprite = SpriteInstance(&sprite_cottage, 0, (dir - 1), pos_x, pos_y);
-	sprite_fire = SpriteInstance(&sprite_cottage_fire, 0, 0, sprite.dstrect.x + 5, sprite.dstrect.y - 5);
+	sprite_fire = SpriteInstance(&sprite_cottage_fire, 0, 0, (double)sprite.dstrect.x + 5, (double)sprite.dstrect.y - 5);
 	burning = false;
 	burned = false;
 	direction = dir;
@@ -326,7 +326,7 @@ Trogdor::Trogdor(bool bigHead = false) {
 	sprite.setPosY(spawnPos_y);
 	sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
 	fire_frameState = 0;
-	sprite_fire = SpriteInstance(&sprite_trogdor_fire, 0, sprite.facingRight, sprite.dstrect.x - 24 + (sprite.facingRight * 62), sprite.dstrect.y + 10);
+	sprite_fire = SpriteInstance(&sprite_trogdor_fire, 0, sprite.facingRight, (double)sprite.dstrect.x - 24 + ((double)sprite.facingRight * 62), (double)sprite.dstrect.y + 10);
 	invince = 0;
 	sprite.isActive = true;
 	x_offset = 0;
@@ -387,11 +387,11 @@ void Trogdor::resetPos(bool giveInvince) {
 
 void Trogdor::updateBreathLoc() {
 	if (sprite.facingRight) {
-		sprite_fire.setPosX(sprite.dstrect.x + 38);
-		sprite_fire.setPosY(sprite.dstrect.y + 10);
+		sprite_fire.setPosX((double)sprite.dstrect.x + 38);
+		sprite_fire.setPosY((double)sprite.dstrect.y + 10);
 	} else {
-		sprite_fire.setPosX(sprite.dstrect.x - 24);
-		sprite_fire.setPosY(sprite.dstrect.y + 10);
+		sprite_fire.setPosX((double)sprite.dstrect.x - 24);
+		sprite_fire.setPosY((double)sprite.dstrect.y + 10);
 	}
 }
 

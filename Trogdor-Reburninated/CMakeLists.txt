@@ -13,6 +13,7 @@ add_executable(trogdorrb
 	"src/general.cpp"
 	"src/general.h"
 	"src/include.h"
+	"src/input.cpp"
 	"src/input.h"
 	"src/level_data.h"
 	"src/media_objects_init.cpp"

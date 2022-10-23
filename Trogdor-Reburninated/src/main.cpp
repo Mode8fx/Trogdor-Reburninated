@@ -1,6 +1,8 @@
 #include "main.h"
 
 /* General Input */
+bool isRunning;
+bool windowSizeChanged;
 Uint32 keyInputs;
 Uint32 heldKeys;
 Uint32 heldKeys_last;
@@ -95,9 +97,7 @@ int main(int argv, char** args) {
 			timer_buttonHold = 0;
 			timer_buttonHold_repeater = 0;
 		}
-
 		handleInput();
-
 		if (keyPressed(INPUT_FULLSCREEN)) {
 			SDL_toggleFullscreen();
 		}

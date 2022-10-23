@@ -9,12 +9,12 @@ struct Timer {
 };
 
 /* Program State */
+extern bool isRunning;
+extern bool windowSizeChanged;
 extern Sint16 g_sceneState;
 extern Sint16 g_frameState;
 extern Uint16 rand_var;
 
-static bool isRunning;
-static bool windowSizeChanged;
 extern SDL_Event event;
 
 /* General-use Variables */
