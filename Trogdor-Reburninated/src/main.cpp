@@ -1,49 +1,7 @@
 #include "main.h"
 
-/* General Input */
-bool isRunning;
-bool windowSizeChanged;
-Uint32 keyInputs;
-Uint32 heldKeys;
-Uint32 heldKeys_last;
-Uint8  heldDirs;
-Uint8  heldDirs_last;
-Uint8  heldDirs_kb;
-Uint8  heldDirs_dpad;
-Uint8  heldDirs_stick;
-#if defined(WII)
-Uint32 wii_keysDown;
-Uint32 wii_keysUp;
-#endif
-Sint32 timer_buttonHold;
-Sint32 timer_buttonHold_repeater;
-
-/* Timer */
-Timer timer_global;
-Uint32 deltaTime;
-
-/* Framerate */
-Uint32 frameTime;
-Uint32 frameCounter_global;
-
-/* Other */
-MenuManager MM;
-GameManager GM;
-Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down Left Right Left Right B A (Konami code)
-Uint8 pacmanArrayKey[11] = { 0, 0, 0, 1, 1, 1, 2, 3, 2, 3, 2 }; // Up Up Up Down Down Down Left Right Left Right Left (play Pac-Man on a Ms. Pac-Man + Galaga arcade cabinet)
-Uint8 s3kArrayKey[9] = { 2, 2, 2, 3, 3, 3, 0, 0, 0 }; // Left Left Left Right Right Right Up Up Up (Sonic & Knuckles and S3&K level select)
-Uint8 fzxArrayKey[8] = { 2, 5, 3, 0, 1, 2, 3, 4 }; // Left B Right Up Down Left Right A ((roughly) unlock everything in F-Zero X)
-Uint8 dkcArrayKey[6] = { 5, 4, 9, 9, 4, 8 }; // B A R R A L (Donkey Kong Country 50 lives code)
 bool renderOverlay;
 bool showOverlay = true;
-bool cutsceneIsPlaying = false;
-
-/* General-use Variables */
-Sint8 i, j, k;
-int int_i, int_j, int_k;
-Uint32 uint_i, uint_j, uint_k;
-float float_i;
-double double_i;
 
 int main(int argv, char** args) {
 	isRunning = true;
@@ -996,7 +954,7 @@ int main(int argv, char** args) {
 
 		heldKeys_last = heldKeys;
 		heldDirs_last = heldDirs;
-#if !(defined(GAMECUBE)|| defined(PSP))
+#if !(defined(GAMECUBE)|| defined(PSP) || defined(XBOX))
 		/* Update Mouse Position */
 		mouseInput_x_last = mouseInput_x;
 		mouseInput_y_last = mouseInput_y;

@@ -14,7 +14,6 @@ extern bool windowSizeChanged;
 extern Sint16 g_sceneState;
 extern Sint16 g_frameState;
 extern Uint16 rand_var;
-
 extern SDL_Event event;
 
 /* General-use Variables */
@@ -23,6 +22,7 @@ extern int int_i, int_j, int_k;
 extern Uint32 uint_i, uint_j, uint_k;
 extern float float_i;
 extern double double_i;
+extern SDL_Rect outputRect;
 
 /* Timer */
 extern Timer timer_global;

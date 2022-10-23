@@ -3,6 +3,8 @@
 
 #include "sprite_objects.h"
 
+extern bool cutsceneIsPlaying;
+
 extern void InitializeCutsceneObjects();
 extern void cutscene_level_beaten();
 extern void cutscene_level_4();
@@ -19,7 +21,5 @@ extern void cutscene_level_46();
 extern void cutscene_level_46_arrow_helper(SpriteInstance *, Sint16);
 extern void cutscene_level_50();
 extern void cutscene_level_100();
-
-extern bool cutsceneIsPlaying;
 
 #endif

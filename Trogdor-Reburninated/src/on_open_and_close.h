@@ -2,7 +2,6 @@
 #define ON_OPEN_AND_CLOSE_H
 
 #include "classes.h"
-#include "cutscenes.h"
 
 void InitializeDisplay();
 void InitializeSound();

@@ -1,6 +1,5 @@
 #include "sprite_objects.h"
 
-SDL_Rect outputRect;
 SDL_Surface *temp_sprite_sheet;
 SDL_Surface *temp_sprite_single;
 #if defined(SDL1)

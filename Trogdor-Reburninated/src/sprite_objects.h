@@ -125,8 +125,6 @@ class SpriteInstance {
         void renderAsCSO(bool);
 };
 
-extern SDL_Rect outputRect;
-
 extern void prepareSprite(SpriteObject *, const char [], Sint8, Sint8, double);
 extern void setSpriteScale(SpriteObject *);
 extern void setSpritePos(SpriteObject *, int, int);

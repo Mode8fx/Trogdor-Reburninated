@@ -28,7 +28,7 @@ extern Sint16 controllerAxis_leftStickY;
 extern Uint32 wii_keysDown;
 extern Uint32 wii_keysUp;
 #endif
-#if !(defined(GAMECUBE) || defined(PSP))
+#if !(defined(GAMECUBE) || defined(PSP) || defined(XBOX))
 extern Sint32 mouseInput_x;
 extern Sint32 mouseInput_x_last;
 extern Sint32 mouseInput_y;

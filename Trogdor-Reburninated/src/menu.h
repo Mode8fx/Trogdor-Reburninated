@@ -120,8 +120,6 @@ class Menu {
 		void renderMenu();
 };
 
-//extern void InitializeMenus();
-
 extern Menu menu_main;
 extern Menu menu_cheats;
 

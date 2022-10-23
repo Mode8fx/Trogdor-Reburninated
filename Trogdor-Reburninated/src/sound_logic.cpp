@@ -2,11 +2,8 @@
 
 bool sfxShouldBePlaying = false;
 Uint8 sfxIndex = 0;
-SoundEffect *sfxArr[NUM_SOUND_EFFECTS_SFX];
 SoundEffect *sfxChannelArr[NUM_SOUND_CHANNELS_SFX] = { NULL, NULL, NULL, NULL, NULL, NULL };
-//SoundEffect *sfxArr_gameMusic[NUM_SOUND_EFFECTS_GAMEMUSIC];
 //SoundEffect *sfxChannel_gameMusic = NULL;
-SoundEffect *sfxArr_strongBad[NUM_SOUND_EFFECTS_STRONG_BAD];
 SoundEffect *sfxChannel_strongBad = NULL;
 
 #if defined(PSP)

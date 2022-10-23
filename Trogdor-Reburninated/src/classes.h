@@ -6,13 +6,6 @@
 #include "level_data.h"
 #include "menu.h"
 
-extern Uint32 frameCounter_global;
-extern Uint8 contraArrayKey[10];
-extern Uint8 pacmanArrayKey[11];
-extern Uint8 s3kArrayKey[9];
-extern Uint8 fzxArrayKey[8];
-extern Uint8 dkcArrayKey[6];
-
 constexpr auto MAX_NUM_HUTS = 6;
 constexpr auto MAX_NUM_ARROWS = 5;
 #define archerR archerArray[0]
@@ -131,7 +124,7 @@ class MenuManager {
 		Sint8 page;        // the current page number
 		Sint8 maxPageNum;  // maxPageNum
 		MenuManager();
-		bool handleCheat(bool &cheatIsActive, Uint8 *cheatArrayKey, Uint8 cheatLen, Sint8 &cheatIndex, SoundEffect *sfx);
+		bool handleCheat(bool &cheatIsActive, const Uint8 *cheatArrayKey, Uint8 cheatLen, Sint8 &cheatIndex, SoundEffect *sfx);
 		void typeStuff();
 		void handlePageChange();
 };

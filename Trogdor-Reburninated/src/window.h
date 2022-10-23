@@ -48,6 +48,7 @@ extern Sint8 scalingType;
 #if !defined(SDL1)
 extern SDL_DisplayMode DM;
 #endif
+
 //#if !defined(ANDROID)
 //#define SYSTEM_WIDTH  DM.w
 //#define SYSTEM_HEIGHT DM.h

@@ -61,17 +61,15 @@ extern void initializeFont_numbers(FontObject *);
     setText(text, &textObj, &fontObj);                 \
     setTextPos(&textObj, (Sint16)(pos_x), (Sint16)(pos_y));
 
-/* Text Objects */
-extern char tempCharArray[64];
-extern Uint8 charCounter;
-extern Sint16 charWidthCounter;
-
+/* Colors */
 extern SDL_Color color_white;
 extern SDL_Color color_black;
 extern SDL_Color color_red;
 extern SDL_Color color_gray;
 extern SDL_Color color_orange;
 extern SDL_Color color_brown;
+
+/* Fonts */
 extern FontObject font_serif_brown_6;
 extern FontObject font_serif_brown_8;
 extern FontObject font_serif_gray_6;
@@ -95,6 +93,7 @@ extern FontObject font_serif_2_red_13;
 extern FontObject font_commodore_error_1;
 extern FontObject font_commodore_error_2;
 
+/* Text Objects */
 extern TextObject text_0_loading;
 extern SDL_Rect text_0_loading_censor_rect;
 extern TextObject text_1_presents;

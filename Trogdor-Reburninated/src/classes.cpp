@@ -1,6 +1,14 @@
 #include "classes.h"
 
+extern MenuManager MM;
+extern GameManager GM;
+
 // for all "directions": 1 = up, 2 = down, 3 = left, 4 = right
+const Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down Left Right Left Right B A (Konami code)
+const Uint8 pacmanArrayKey[11] = { 0, 0, 0, 1, 1, 1, 2, 3, 2, 3, 2 }; // Up Up Up Down Down Down Left Right Left Right Left (play Pac-Man on a Ms. Pac-Man + Galaga arcade cabinet)
+const Uint8 s3kArrayKey[9] = { 2, 2, 2, 3, 3, 3, 0, 0, 0 }; // Left Left Left Right Right Right Up Up Up (Sonic & Knuckles and S3&K level select)
+const Uint8 fzxArrayKey[8] = { 2, 5, 3, 0, 1, 2, 3, 4 }; // Left B Right Up Down Left Right A ((roughly) unlock everything in F-Zero X)
+const Uint8 dkcArrayKey[6] = { 5, 4, 9, 9, 4, 8 }; // B A R R A L (Donkey Kong Country 50 lives code)
 
 constexpr auto LEFT_BOUND = 17;
 constexpr auto RIGHT_BOUND = 233;
@@ -428,7 +436,7 @@ MenuManager::MenuManager() {
 	}
 }
 
-bool MenuManager::handleCheat(bool &cheatIsActive, Uint8 *cheatArrayKey, Uint8 cheatLen, Sint8 &cheatIndex, SoundEffect *sfx) {
+bool MenuManager::handleCheat(bool &cheatIsActive, const Uint8 *cheatArrayKey, Uint8 cheatLen, Sint8 &cheatIndex, SoundEffect *sfx) {
 	if (!cheatIsActive) {
 		if (keyInputs != 0) {
 			if (keyInputs == (1 << (cheatArrayKey[cheatIndex]))) {

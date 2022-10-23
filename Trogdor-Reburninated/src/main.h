@@ -1,33 +1,76 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-#include "classes.h"
-#include "cutscenes.h"
 #include "on_open_and_close.h"
+#include "cutscenes.h"
 
+/* Program State */
+bool isRunning;
+bool windowSizeChanged;
 Sint16 g_sceneState;
 Sint16 g_frameState;
 Uint16 rand_var;
 SDL_Event event;
 
-Menu menu_main;
-Menu menu_cheats;
+/* General-use Variables */
+Sint8 i, j, k;
+int int_i, int_j, int_k;
+Uint32 uint_i, uint_j, uint_k;
+float float_i;
+double double_i;
+SDL_Rect outputRect;
+
+/* Timer */
+Timer timer_global;
+Uint32 deltaTime;
+
+/* Framerate */
+Uint32 frameTime;
+Uint32 frameCounter_global;
 
 /* SDL Input */
 #if !defined(SDL1) && !defined(PSP)
-SDL_GameController *controller = nullptr;
+SDL_GameController *controller;
 #else
-SDL_Joystick *joystick = nullptr;
+SDL_Joystick *joystick;
 Uint8 joystickHat;
 #endif
+
+/* General Input */
+Uint32 keyInputs;
+Uint32 heldKeys;
+Uint32 heldKeys_last;
+Uint8  heldDirs;
+Uint8  heldDirs_last;
+Uint8  heldDirs_kb;
+Uint8  heldDirs_dpad;
+Uint8  heldDirs_stick;
+Sint32 timer_buttonHold;
+Sint32 timer_buttonHold_repeater;
 Sint16 controllerAxis_leftStickX;
 Sint16 controllerAxis_leftStickY;
-#if !(defined(GAMECUBE) || defined(PSP))
+#if defined(WII)
+Uint32 wii_keysDown;
+Uint32 wii_keysUp;
+#endif
+#if !(defined(GAMECUBE) || defined(PSP) || defined(XBOX))
 Sint32 mouseInput_x;
 Sint32 mouseInput_x_last;
 Sint32 mouseInput_y;
 Sint32 mouseInput_y_last;
 #endif
+
+/* Save File */
+SDL_RWops *saveFile;
+SoundSettings soundSettings;
+VideoSettings videoSettings;
+
+/* Cutscenes */
+bool cutsceneIsPlaying = false;
+
+/* Menus */
+Menu menu_main;
+Menu menu_cheats;
 
 /* Audio */
 #if defined(PSP)
@@ -37,6 +80,11 @@ int *bgm;
 #else
 Mix_Music *bgm;
 #endif
+SoundEffect *sfxArr[NUM_SOUND_EFFECTS_SFX];
+//SoundEffect *sfxArr_gameMusic[NUM_SOUND_EFFECTS_GAMEMUSIC];
+SoundEffect *sfxArr_strongBad[NUM_SOUND_EFFECTS_STRONG_BAD];
+
+/* Audio (SoundEffects) */
 SoundEffect sfx_burn_hut;
 SoundEffect sfx_goldget;
 SoundEffect sfx_peasantscream;
@@ -111,8 +159,8 @@ SpriteObject sprite_trogdor_bighead;
 SpriteObject sprite_cottage;
 SpriteObject sprite_cottage_fire;
 SpriteObject sprite_peasantometer_icon;
-Uint8 sprite_peasantometer_icon_init_x;
-int sprite_peasantometer_icon_step;
+Uint8        sprite_peasantometer_icon_init_x;
+int          sprite_peasantometer_icon_step;
 SpriteObject sprite_archer;
 SpriteObject sprite_arrow;
 SpriteObject sprite_trogdor_fire;
@@ -132,13 +180,15 @@ SpriteObject sprite_menu_background;
 SpriteInstance sprite_menu_background_ins;
 SDL_Rect     divider_level_beaten_rect;
 
-/* Fonts */
+/* Colors */
 SDL_Color color_white  = { 255, 255, 255 };
 SDL_Color color_black  = {   0,   0,   0 };
 SDL_Color color_red    = { 255,   0,   0 };
 SDL_Color color_gray   = { 102, 102, 102 };
 SDL_Color color_orange = { 255, 204,   0 };
 SDL_Color color_brown  = { 153, 102,   0 };
+
+/* Fonts */
 FontObject font_serif_brown_6;
 FontObject font_serif_brown_8;
 FontObject font_serif_gray_6;
@@ -314,30 +364,6 @@ TextObject text_error_1;
 TextObject text_error_2;
 
 /* Window */
-#if !defined(SDL1)
-SDL_Window *window;
-SDL_Renderer *renderer;
-#else
-SDL_Surface *windowScreen;
-SDL_Surface *transparentScreen;
-#endif
-SDL_Rect gameSrcRect = { 0, 0, gameWidth, gameHeight };
-//SDL_Rect gameToAppDstRect = { 0, 0, gameWidth, gameHeight };
-SDL_Rect gameHiResSrcRect = { 0, 0, gameWidth, gameHeight };
-SDL_Rect appSrcRect = { 0, 0, appWidth, appHeight };
-SDL_Rect appToWindowDstRect = { 0, 0, appWidth, appHeight };
-SDL_Rect gameToWindowDstRect = { 0, 0, gameWidth, gameHeight };
-SDL_Rect menuToWindowDstRect = { 0, 0, appWidth, appHeight };
-bool isWindowed = true;
-double screenScale = 1;
-int trueScreenScaleInt = 1;
-double trueScreenScaleFull = 1;
-double screenScale_menu = 1;
-bool allowHiRes = true;
-Sint8 scalingType = 0;
-#if !defined(SDL1)
-SDL_DisplayMode DM;
-#endif
 Uint16 gameHiResWidth;
 Uint16 gameHiResHeight;
 Uint16 appWidth;
@@ -352,9 +378,34 @@ double appHeightMult;
 Uint16 frameRate;
 Uint32 ticksPerFrame;
 
-/* Save File */
-SDL_RWops *saveFile;
-SoundSettings soundSettings;
-VideoSettings videoSettings;
+#if !defined(SDL1)
+SDL_Window *window;
+SDL_Renderer *renderer;
+#else
+SDL_Surface *windowScreen;
+SDL_Surface *transparentScreen;
+#endif
+SDL_Rect gameSrcRect = { 0, 0, gameWidth, gameHeight };
+//SDL_Rect gameToAppDstRect = { 0, 0, gameWidth, gameHeight };
+SDL_Rect gameHiResSrcRect = { 0, 0, gameWidth, gameHeight };
+SDL_Rect appSrcRect = { 0, 0, appWidth, appHeight };
+SDL_Rect appToWindowDstRect = { 0, 0, appWidth, appHeight };
+SDL_Rect gameToWindowDstRect = { 0, 0, gameWidth, gameHeight };
+SDL_Rect menuToWindowDstRect = { 0, 0, appWidth, appHeight };
+
+bool isWindowed = true;
+double screenScale = 1;
+int trueScreenScaleInt = 1;
+double trueScreenScaleFull = 1;
+double screenScale_menu = 1;
+bool allowHiRes = true;
+Sint8 scalingType = 0;
+#if !defined(SDL1)
+SDL_DisplayMode DM;
+#endif
+
+/* Managers */
+MenuManager MM;
+GameManager GM;
 
 #endif
