@@ -4,15 +4,9 @@ Version 1.0 [faithful recreation of original Trogdor flash game]:
 Features:
 - Finish remaining cutscenes
 - Finish Game Over screen
-- Add a simple Options menu with a few customizable settings
-	- Starting Level
-	- Starting Lives
-	- Extra Lives
-	- Peasant Penalty
-	- Archer Frequency
-	- Commentary Frequency
-	- Scaling
-	- Cheats
+- Implement Scaling as menu option instead of button press
+- Fix menu text scaling (use separate font)
+- Make sure text initialization includes non-selected options+descriptions
 Polish:
 - Move Credits screen to Options menu
 - Add "Libraries", "Coming Soon", and "Want More?" pages to Credits

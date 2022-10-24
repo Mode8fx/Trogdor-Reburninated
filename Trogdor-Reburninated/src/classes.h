@@ -44,7 +44,7 @@ class Knight {
 		Sint16 offset_y;  // the offset relative to home
 		Knight(Sint16, Sint16, Sint8, bool);
 		inline void updateCollision();
-		void updateHome(Sint8 knightIncrement);
+		void updateHome(Sint8);
 		void updateFrameStateAndMove();
 };
 
@@ -64,7 +64,7 @@ class Peasant {
 		bool returning;
 		Sint16 timer;
 		Peasant();
-		void updateFrameState(Uint8 sbVoiceMult);
+		void updateFrameState(double);
 };
 
 class Archer {
@@ -88,7 +88,7 @@ class Loot {
 	public:
 		SpriteInstance sprite;
 		Loot();
-		Loot(Sint16 pos_x, Sint16 pos_y);
+		Loot(Sint16, Sint16);
 };
 
 class Trogdor {
@@ -108,27 +108,22 @@ class Trogdor {
 		Uint8 frameStateFlag; // used for movement
 		Trogdor(bool);
 		void updateFrameState();
-		void resetPos(bool giveInvince);
+		void resetPos(bool);
 		void updateBreathLoc();
 		void invinceCheck();
 };
 
 class MenuManager {
 	public:
-		bool contraActive; // 30 Lives cheat is enabled
-		Sint8 contraIndex; // the current index of the 30 Lives cheat input
-		bool pacmanActive; // Debug Mode cheat is enabled
+		Sint8 contraIndex; // the current index of the Infinite/30 Lives cheat input
 		Sint8 pacmanIndex; // the current index of the Debug Mode cheat input
-		bool s3kActive;    // Big Head cheat is enabled
 		Sint8 s3kIndex;    // the current index of the Big Head cheat input
-		bool fzxActive;    // Start on Level 81 cheat is enabled
 		Sint8 fzxIndex;    // the current index of the Start on Level 81 cheat input
-		bool dkcActive;    // Noclip cheat is enabled
 		Sint8 dkcIndex;    // the current index of the Noclip cheat input
 		Sint8 page;        // the current page number
 		Sint8 maxPageNum;  // maxPageNum
 		MenuManager();
-		bool handleCheat(bool &cheatIsActive, const Uint8 *cheatArrayKey, Uint8 cheatLen, Sint8 &cheatIndex, SoundEffect *sfx);
+		bool handleCheat(Uint8, const Uint8 *, Uint8, Sint8 &, SoundEffect *);
 		void typeStuff();
 		void handlePageChange();
 };
@@ -136,6 +131,7 @@ class MenuManager {
 class GameManager {
 	public:
 		bool initialized;                       // whether or not a game has ever been initialized
+		bool infiniteLives;                     // infinite lives cheat
 		Sint16 mans;                            // lives
 		Uint32 score;                           // score
 		Sint8 peasantometer;                    // # of peasants burned for burnination meter
@@ -158,7 +154,8 @@ class GameManager {
 		Trogdor player;                         // the player
 		Sint8 knightIncrement;                  // knight movement speed
 		Uint16 extraMansBreak;                  // # of points for an extra life
-		Uint16 extraMansCounter;                // how many extra lives have been earned so far
+		Uint16 extraMansCounter;                // how many extra lives have been earned so far + 1
+		Uint16 maxExtraMans;                    // how many extra lives are allowed to be earned
 		bool arched;                            // previous death was to arrow
 		SpriteInstance sprite_dm;               // Death Message ("SWORDED!", "ARROWED!")
 		Uint8 dm_frameState;                    // Death Message ("SWORDED!", "ARROWED!")
@@ -173,44 +170,46 @@ class GameManager {
 		bool treasureHutFound;                  // treasure hut has been found in this level
 		bool inTreasureHut;                     // player is currently in treasure hut
 		Sint16 treasureHutIndex;                // index of hut that contains treasure (0 = no treasure hut)
-		Sint16 store_x;                          // old player X position (used for treasure huts)
-		Sint16 store_y;                          // old player Y position (used for treasure huts)
+		Sint16 store_x;                         // old player X position (used for treasure huts)
+		Sint16 store_y;                         // old player Y position (used for treasure huts)
 		Sint16 treasureHut_timer;               // remaining time in treasure hut
 		Loot lootArray[MAX_NUM_LOOT];           // array of Loot objects
-		Uint8 sbVoiceMult;                      // a multiplier for how often Strong Bad talks
+		double sbVoiceMult;                     // a multiplier for how often Strong Bad talks
+		bool debugMode;                         // debug mode
 		bool noclip;                            // noclip cheat to walk through cottages
 		GameManager();
-		GameManager(MenuManager mm);
+		GameManager(MenuManager);
 		void resetAllSrcRects();
+		void setArcherFrequency();
 		void levelInit();
-		void set_level_background(Sint16 bg_index);
+		void set_level_background(Sint16);
 		void getPlayerInput();
-		inline void trogdor_add_x_delta(Sint8 dx);
-		inline void trogdor_add_y_delta(Sint8 dy);
-		inline void handle_treasure_hut_entry(Trogdor *trog, Sint8 delta_x, Sint8 delta_y);
+		inline void trogdor_add_x_delta(Sint8);
+		inline void trogdor_add_y_delta(Sint8);
+		inline void handle_treasure_hut_entry(Trogdor *, Sint8, Sint8);
 		void handle_treasure_hut();
 		// This has to be part of GM and not Trogdor since it references GM (and GameManager references Trogdor, so it would be circular)
-		void playerMove(Trogdor *trog, Sint8 delta_x, Sint8 delta_y);
-		void playerMove_treasureHut(Trogdor *trog, Sint8 delta_x, Sint8 delta_y);
+		void playerMove(Trogdor *, Sint8, Sint8);
+		void playerMove_treasureHut(Trogdor *, Sint8, Sint8);
 		void popArchers();
 		void updateArchersAndArrows();
 		void updateKnightHome();
 		void updateKnightOffsetAndMove();
 		void testKnightHit();
 		void arrowHitEventHandler();
-		inline void toggleKnightMotion(bool hasMotion);
+		inline void toggleKnightMotion(bool);
 		bool testWon();
-		void updateScore(Uint16 increment);
-		inline void updateMans(Sint8 increment);
-		void setMans(Sint8 val);
-		void updateLevel(Sint8 increment);
+		void updateScore(Uint16);
+		inline void updateMans(Sint8);
+		void setMans(Sint8);
+		void updateLevel(Sint8);
 		void clearArrows();
 		void testBurnHut();
 		void updateBurnmeter();
-		inline void peasant_set_x_delta(Sint16 new_x);
-		inline void peasant_set_y_delta(Sint16 new_y);
-		inline void peasant_add_x_delta(Sint8 dx);
-		inline void peasant_add_y_delta(Sint8 dy);
+		inline void peasant_set_x_delta(Sint16);
+		inline void peasant_set_y_delta(Sint16);
+		inline void peasant_add_x_delta(Sint8);
+		inline void peasant_add_y_delta(Sint8);
 		void popPeasants();
 		void peasantEatTest();
 		void peasantTimerClick();
@@ -229,7 +228,7 @@ class GameManager {
 		void renderKnights();
 		void renderPeasants();
 		void renderTrogdor();
-		void setBurnination(double num);
+		void setBurnination(double);
 		void renderTopBar();
 };
 

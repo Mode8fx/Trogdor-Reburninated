@@ -3,6 +3,7 @@
 #include "input.h"
 #include "text_objects.h"
 #include "level_data.h"
+#include "menu.h"
 
 extern MenuManager MM;
 extern GameManager GM;
@@ -206,7 +207,7 @@ Peasant::Peasant() {
 	sprite.collision = { 8 + sprite.dstrect.x, 5 + sprite.dstrect.y, 8, 19 };
 }
 
-void Peasant::updateFrameState(Uint8 sbVoiceMult) {
+void Peasant::updateFrameState(double sbVoiceMult) {
 	frameState++;
 	switch (frameState) {
 		case 1:
@@ -422,15 +423,10 @@ void Trogdor::invinceCheck() {
 }
 
 MenuManager::MenuManager() {
-	contraActive = false;
 	contraIndex = 0;
-	pacmanActive = false;
 	pacmanIndex = 0;
-	s3kActive = false;
 	s3kIndex = 0;
-	fzxActive = false;
 	fzxIndex = 0;
-	dkcActive = false;
 	dkcIndex = 0;
 	page = 1;
 	if (gameHiResMult < 2) {
@@ -440,15 +436,21 @@ MenuManager::MenuManager() {
 	}
 }
 
-bool MenuManager::handleCheat(bool &cheatIsActive, const Uint8 *cheatArrayKey, Uint8 cheatLen, Sint8 &cheatIndex, SoundEffect *sfx) {
-	if (!cheatIsActive) {
+bool MenuManager::handleCheat(Uint8 menuIndex, const Uint8 *cheatArrayKey, Uint8 cheatLen, Sint8 &cheatIndex, SoundEffect *sfx) {
+	if (menu_cheats.options[menuIndex]->optionIsLocked) {
 		if (keyInputs != 0) {
 			if (keyInputs == (1 << (cheatArrayKey[cheatIndex]))) {
 				cheatIndex++;
 				if ((Uint32)cheatIndex == cheatLen) {
 					// this was originally played upon starting the game, but I'm changing it; it's much clearer this way, especially since the controls are different for each system
 					loadAndPlaySound(sfx);
-					cheatIsActive = true;
+					menu_cheats.options[menuIndex]->setLocked(false);
+					menu_cheats.options[menuIndex]->index = 0;
+					if (menuIndex == 0) {
+						MENU_STARTING_LIVES->choiceIsAllowed[6] = true;
+						MENU_STARTING_LIVES->choiceIsAllowed[7] = true;
+						MENU_STARTING_LIVES->choiceIsAllowed[8] = true;
+					}
 					return true;
 				}
 			} else {
@@ -460,11 +462,11 @@ bool MenuManager::handleCheat(bool &cheatIsActive, const Uint8 *cheatArrayKey, U
 }
 
 void MenuManager::typeStuff() {
-	if (handleCheat(contraActive, contraArrayKey, 10, contraIndex, SFX_SFX2)
-		|| handleCheat(pacmanActive, pacmanArrayKey, 11, pacmanIndex, SFX_GOLDGET)
-		|| handleCheat(s3kActive, s3kArrayKey, 9, s3kIndex, SFX_HUSKYHEAD)
-		|| handleCheat(fzxActive, fzxArrayKey, 8, fzxIndex, SFX_SBKERREK)
-		|| handleCheat(dkcActive, dkcArrayKey, 6, dkcIndex, SFX_SBDOOJ)
+	if (handleCheat(0, contraArrayKey, 10, contraIndex, SFX_SFX2)
+		|| handleCheat(1, pacmanArrayKey, 11, pacmanIndex, SFX_GOLDGET)
+		|| handleCheat(2, s3kArrayKey, 9, s3kIndex, SFX_HUSKYHEAD)
+		//|| handleCheat(3, fzxArrayKey, 8, fzxIndex, SFX_SBKERREK)
+		|| handleCheat(3, dkcArrayKey, 6, dkcIndex, SFX_SBDOOJ)
 		) {
 		contraIndex = 0;
 		pacmanIndex = 0;
@@ -492,24 +494,75 @@ GameManager::GameManager() {
 GameManager::GameManager(MenuManager mm) {
 	srand(SDL_GetTicks());
 	initialized = true;
-	if (mm.contraActive) mans = 30;
-	else mans = 3;
+	infiniteLives = CHEATS_INF_LIVES->isValue(0);
+	if (infiniteLives) {
+		mans = 99;
+	} else {
+		switch (MENU_STARTING_LIVES->index) {
+			case 6:
+				mans = 10;
+				break;
+			case 7:
+				mans = 20;
+				break;
+			case 8:
+				mans = 30;
+				break;
+			default:
+				mans = MENU_STARTING_LIVES->index;
+				break;
+		}
+	}
 	score = 0;
 	peasantometer = 0;
 	paused = false;
 	startDown = false;
 	manually_paused = 0;
 	gameOver = false;
-	if (mm.fzxActive) level = 81;
-	else level = 1;
-	levelIndex = 1;
+	//if (mm.fzxActive) level = 81;
+	//else level = 1;
+	level = MENU_STARTING_LEVEL->index * 10 + 1;
+	//levelIndex = 1; // set via levelInit()
 	setBurnination(0);
 	archerFrequency = 0;
 	burnRate = 0;
-	player = Trogdor(mm.s3kActive);
+	player = Trogdor(CHEAT_BIG_HEAD_MODE->isValue(0));
 	player.sprite.facingRight = true;
 	knightIncrement = 1;
-	extraMansBreak = 300;
+	switch (CHEAT_BIG_HEAD_MODE->index) {
+		case 0:
+			extraMansBreak = 300;
+			maxExtraMans = 10000;
+			break;
+		case 1:
+			extraMansBreak = 500;
+			maxExtraMans = 10000;
+			break;
+		case 2:
+			extraMansBreak = 1000;
+			maxExtraMans = 10000;
+			break;
+		case 3:
+			extraMansBreak = 500;
+			maxExtraMans = 1;
+			break;
+		case 4:
+			extraMansBreak = 500;
+			maxExtraMans = 2;
+			break;
+		case 5:
+			extraMansBreak = 1000;
+			maxExtraMans = 1;
+			break;
+		case 6:
+			extraMansBreak = 1000;
+			maxExtraMans = 2;
+			break;
+		default:
+			extraMansBreak = 10000;
+			maxExtraMans = 0;
+			break;
+	}
 	extraMansCounter = 1;
 	arched = false;
 	dm_frameState = 0;
@@ -532,11 +585,28 @@ GameManager::GameManager(MenuManager mm) {
 	store_x = 0;
 	store_y = 0;
 	treasureHut_timer = 0;
-	//if (mm.fzxActive) sbVoiceMult = 0;
-	//else if (mm.s3kActive) sbVoiceMult = 2;
-	//else sbVoiceMult = 1;
-	sbVoiceMult = 1;
-	noclip = mm.dkcActive;
+	switch (MENU_SCALING->index) {
+		case 0:
+			sbVoiceMult = 0;
+			break;
+		case 1:
+			sbVoiceMult = 0.5;
+			break;
+		case 2:
+			sbVoiceMult = 0.75;
+			break;
+		case 3:
+			sbVoiceMult = 1;
+			break;
+		case 4:
+			sbVoiceMult = 1.25;
+			break;
+		default:
+			sbVoiceMult = 1.5;
+			break;
+	}
+	debugMode = CHEAT_DEBUG_MODE->isValue(0);
+	noclip = CHEAT_NOCLIP->isValue(0);
 }
 
 void GameManager::resetAllSrcRects() {
@@ -569,25 +639,52 @@ void GameManager::resetAllSrcRects() {
 	sprite_pm_off.updateCurrSprite();
 }
 
+void GameManager::setArcherFrequency() {
+	switch (MENU_ARCHER_FREQ->index) {
+		case 0:
+			if (level > 25) {
+				archerFrequency = 400; // 4
+			} else if (level > 20) {
+				archerFrequency = 200; // 2
+			} else if (level > 15) {
+				archerFrequency = 80; // 0.8
+			} else if (level > 10) {
+				archerFrequency = 60; // 0.6
+			} else if (level > 5) {
+				archerFrequency = 40; // 0.4
+			} else {
+				archerFrequency = 20; // 0.2
+			}
+			break;
+		case 1:
+			archerFrequency = 40;
+			break;
+		case 2:
+			archerFrequency = 80;
+			break;
+		case 3:
+			archerFrequency = 200;
+			break;
+		default:
+			archerFrequency = 400;
+			break;
+	}
+}
+
 void GameManager::levelInit() {
 	setBurnination(0);
+	setArcherFrequency();
 	if (level > 25) {
-		archerFrequency = 400; // 4
 		burnRate = 1.3;
 	} else if (level > 20) {
-		archerFrequency = 200; // 2
 		burnRate = 1.2;
 	} else if (level > 15) {
-		archerFrequency = 80; // 0.8
 		burnRate = 1.1;
 	} else if (level > 10) {
-		archerFrequency = 60; // 0.6
 		burnRate = 1;
 	} else if (level > 5) {
-		archerFrequency = 40; // 0.4
 		burnRate = 0.9;
 	} else {
-		archerFrequency = 20; // 0.2
 		burnRate = 0.7;
 	}
 	if (level == 1) {
@@ -966,7 +1063,7 @@ bool GameManager::testWon() {
 void GameManager::updateScore(Uint16 increment) {
 	uint_i = score;
 	score += increment;
-	if ((uint_i < (Uint32)(extraMansBreak * extraMansCounter)) && (score >= (Uint32)(extraMansBreak * extraMansCounter))) {
+	if ((uint_i < (Uint32)(extraMansBreak * extraMansCounter)) && (score >= (Uint32)(extraMansBreak * extraMansCounter)) && (extraMansCounter <= maxExtraMans)) {
 		updateMans(1);
 		extraMansCounter++;
 	}
@@ -974,8 +1071,10 @@ void GameManager::updateScore(Uint16 increment) {
 }
 
 inline void GameManager::updateMans(Sint8 increment) {
-	mans += increment;
-	updateText(&text_4_mans_val, to_string(mans));
+	if (!infiniteLives) {
+		mans += increment;
+		updateText(&text_4_mans_val, to_string(mans));
+	}
 }
 
 void GameManager::setMans(Sint8 val) {
@@ -1142,7 +1241,7 @@ void GameManager::peasantTimerClick() {
 					if (peasantArray[i].burning) {
 						hutArray[peasantArray[i].myHome].burning = true;
 						// if (peasantometer > 0 && !peasantArray[i].burning) { // I added the burning check; this looks like an oversight in the original game (though it's very rare that it would actually affect the player)
-					} else if (peasantometer > 0) {
+					} else if (peasantometer > 0 && MENU_PEASANT_PENALTY->isValue(0)) {
 						peasantometer--;
 					}
 					peasantArray[i].burning = false;

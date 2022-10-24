@@ -98,6 +98,10 @@ void MenuOption::render(bool renderDescription) {
 	}
 }
 
+bool MenuOption::isValue(Uint8 val) {
+	return (!optionIsLocked && index == val);
+}
+
 void Menu::prepareMenu(Uint8 numOpt, Uint8 numOns, SpriteObject *spriteObj, bool keepIndex, Sint8 space_scroll,
 	Sint16 st_x_label, Sint16 st_x_choice, Sint16 sp_x, Sint16 st_y_option, Sint16 st_y_desc, Sint16 sp_y_option, Sint16 sp_y_desc,
 	Sint8 at_label, Sint8 at_choice, bool wrap) {
@@ -293,8 +297,8 @@ const char *option_on_off[2] = { "On", "Off" };
 const char *option_empty[1] = { "" };
 const char *option_main_1_choices[10] = { "1", "11", "21", "31", "41", "51", "61", "71", "81", "91"};
 const char *option_main_1_descriptions_line_1[1] = { "The level that the game starts on." };
-const char *option_main_2_choices[8] = { "1", "2", "3", "4", "5", "10", "20", "30" };
-const char *option_main_2_descriptions_line_1[1] = { "The number of lives you start with." };
+const char *option_main_2_choices[9] = { "0", "1", "2", "3", "4", "5", "10", "20", "30" };
+const char *option_main_2_descriptions_line_1[1] = { "The number of extra lives you start with." };
 const char *option_main_3_choices[8] = { "Every 300 points", "Every 500 points", "Every 1000 points", "500 points only", "500 and 1000 only", "1000 points only", "1000 and 2000 only", "None" };
 const char *option_main_3_descriptions_line_1[8] = { "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "No extra lives." };
 const char *option_main_3_descriptions_line_2[8] = { "every 300 points.", "every 500 points.", "every 1000 points.", "at 500 points.", "at 500 and 1000 points.", "at 1000 points.", "at 1000 and 2000 points.", "" };
@@ -302,10 +306,10 @@ const char *option_main_3_descriptions_line_3[8] = { "", "", "", "", "", "", "",
 const char *option_main_4_descriptions_line_1[2] = { "The peasant meter decreases", "No penalty for escaped peasants." };
 const char *option_main_4_descriptions_line_2[2] = { "every time a peasant escapes.", "" };
 const char *option_main_4_descriptions_line_3[2] = { "", "" };
-const char *option_main_5_choices[4] = { "Scaling", "Low", "Medium", "High" };
-const char *option_main_5_descriptions_line_1[4] = { "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often." };
-const char *option_main_5_descriptions_line_2[4] = { "", "", "", "" };
-const char *option_main_5_descriptions_line_3[4] = { "", "", "", "" };
+const char *option_main_5_choices[5] = { "Scaling", "Low", "Medium", "High", "Very High"};
+const char *option_main_5_descriptions_line_1[5] = { "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"};
+const char *option_main_5_descriptions_line_2[5] = { "", "", "", "", "" };
+const char *option_main_5_descriptions_line_3[5] = { "", "", "", "", "" };
 const char *option_main_6_choices[6] = { "Off", "Very Low", "Low", "Normal", "High", "Very High", };
 const char *option_main_6_descriptions_line_1[6] = { "Strong Bad does not talk.", "Strong Bad talks 50% less often.", "Strong Bad talks 25% less often.", "Strong Bad talks as often", "Strong Bad talks 25% more often.", "Strong Bad talks 50% more often." };
 const char *option_main_6_descriptions_line_2[6] = { "", "", "", "as he did in the original game.", "", "" };
@@ -337,31 +341,31 @@ void InitializeMenus() {
 			menu_main.options[i] = new MenuOption();
 		}
 	}
-	menu_main.options[0]->prepareMenuOption("Starting Level", option_main_1_choices,
+	MENU_STARTING_LEVEL->prepareMenuOption("Starting Level", option_main_1_choices,
 		option_main_1_descriptions_line_1, option_empty, option_empty,
 		NULL, 10, true, 0, true);
-	menu_main.options[1]->prepareMenuOption("Starting Lives", option_main_2_choices,
+	MENU_STARTING_LIVES->prepareMenuOption("Starting Lives", option_main_2_choices,
 		option_main_2_descriptions_line_1, option_empty, option_empty,
-		NULL, 8, true, 3, true);
-	menu_main.options[2]->prepareMenuOption("Extra Lives", option_main_3_choices,
+		NULL, 9, true, 3, true);
+	MENU_EXTRA_LIVES->prepareMenuOption("Lives Interval", option_main_3_choices,
 		option_main_3_descriptions_line_1, option_main_3_descriptions_line_2, option_main_3_descriptions_line_3,
 		NULL, 8, false, 0, true);
-	menu_main.options[3]->prepareMenuOption("Peasant Penalty", option_on_off,
+	MENU_PEASANT_PENALTY->prepareMenuOption("Peasant Penalty", option_on_off,
 		option_main_4_descriptions_line_1, option_main_4_descriptions_line_2, option_main_4_descriptions_line_3,
 		NULL, 2, false, 0, true);
-	menu_main.options[4]->prepareMenuOption("Archer Frequency", option_main_5_choices,
+	MENU_ARCHER_FREQ->prepareMenuOption("Archer Frequency", option_main_5_choices,
 		option_main_5_descriptions_line_1, option_main_5_descriptions_line_2, option_main_5_descriptions_line_3,
-		NULL, 4, false, 0, true);
+		NULL, 5, false, 0, true);
 	if (screenScale_menu < 2) {
-		menu_main.options[5]->prepareMenuOption("Commentary Freq.", option_main_6_choices,
+		MENU_COMMENT_FREQ->prepareMenuOption("Commentary Freq.", option_main_6_choices,
 			option_main_6_descriptions_line_1, option_main_6_descriptions_line_2, option_main_6_descriptions_line_3,
 			NULL, 6, false, 3, true);
 	} else {
-		menu_main.options[5]->prepareMenuOption("Commentary Frequency", option_main_6_choices,
+		MENU_COMMENT_FREQ->prepareMenuOption("Commentary Frequency", option_main_6_choices,
 			option_main_6_descriptions_line_1, option_main_6_descriptions_line_2, option_main_6_descriptions_line_3,
 			NULL, 6, false, 3, true);
 	}
-	menu_main.options[6]->prepareMenuOption("Scaling", option_main_7_choices,
+	MENU_SCALING->prepareMenuOption("Scaling", option_main_7_choices,
 		option_main_7_descriptions_line_1, option_main_7_descriptions_line_2, option_main_7_descriptions_line_3,
 		NULL, 4, false, 2, true);
 	menu_main.options[7]->prepareMenuOption("Cheats", option_empty,
@@ -380,27 +384,27 @@ void InitializeMenus() {
 			menu_cheats.options[i] = new MenuOption();
 		}
 	}
-	menu_cheats.options[0]->prepareMenuOption("Infinite Lives", option_on_off,
+	CHEATS_INF_LIVES->prepareMenuOption("Infinite Lives", option_on_off,
 		option_cheats_1_descriptions_line_1, option_cheats_1_descriptions_line_2, option_cheats_1_descriptions_line_3,
 		"Secret Code?!?!", 2, true, 0, true);
-	menu_cheats.options[1]->prepareMenuOption("Debug Cheat", option_on_off,
+	CHEAT_DEBUG_MODE->prepareMenuOption("Debug Mode", option_on_off,
 		option_cheats_2_descriptions_line_1, option_cheats_2_descriptions_line_2, option_cheats_2_descriptions_line_3,
 		"Class of 1981", 2, true, 0, true);
-	menu_cheats.options[2]->prepareMenuOption("Big Head Mode", option_on_off,
+	CHEAT_BIG_HEAD_MODE->prepareMenuOption("Big Head Mode", option_on_off,
 		option_cheats_3_descriptions_line_1, option_empty, option_empty,
 		"Echidna Mushroom Pulley", 2, true, 0, true);
-	menu_cheats.options[3]->prepareMenuOption("Noclip", option_on_off,
+	CHEAT_NOCLIP->prepareMenuOption("Noclip", option_on_off,
 		option_cheats_4_descriptions_line_1, option_cheats_4_descriptions_line_2, option_empty,
 		"1994 Country", 2, true, 0, true);
 
 	if (!menusAreInitialized) {
-		menu_main.options[1]->choiceIsAllowed[5] = false;
-		menu_main.options[1]->choiceIsAllowed[6] = false;
-		menu_main.options[1]->choiceIsAllowed[7] = false;
-		menu_cheats.options[0]->setLocked(true);
-		menu_cheats.options[1]->setLocked(true);
-		menu_cheats.options[2]->setLocked(true);
-		menu_cheats.options[3]->setLocked(true);
+		MENU_STARTING_LIVES->choiceIsAllowed[6] = false;
+		MENU_STARTING_LIVES->choiceIsAllowed[7] = false;
+		MENU_STARTING_LIVES->choiceIsAllowed[8] = false;
+		CHEATS_INF_LIVES->setLocked(true);
+		CHEAT_DEBUG_MODE->setLocked(true);
+		CHEAT_BIG_HEAD_MODE->setLocked(true);
+		CHEAT_NOCLIP->setLocked(true);
 	}
 
 	menu_main.updateOptionPositions();

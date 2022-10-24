@@ -431,7 +431,7 @@ int main(int argv, char** args) {
 			/* Game */
 			case 4:
 				if (!GM.paused && !GM.manually_paused) {
-					if (MM.pacmanActive) {
+					if (GM.debugMode) {
 						GM.handleDebugCheat();
 					}
 
@@ -441,7 +441,7 @@ int main(int argv, char** args) {
 					GM.getPlayerInput();
 					GM.updateKnightHome();
 					GM.updateKnightOffsetAndMove();
-					if (GM.testWon() || (MM.pacmanActive && keyPressed(INPUT_SELECT))) {
+					if (GM.testWon() || (keyPressed(INPUT_SELECT) && GM.debugMode)) {
 						GM.updateScore(min((20 + ((GM.level / 5) + 1) * 5), 200));
 						GM.clearArrows();
 						g_sceneState = 8;

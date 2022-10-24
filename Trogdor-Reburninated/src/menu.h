@@ -57,6 +57,7 @@ class MenuOption {
 		void updateChoice();
 		void updateDescription();
 		void render(bool);
+		bool isValue(Uint8);
 };
 
 /* @brief A single menu.
@@ -123,5 +124,17 @@ class Menu {
 
 extern Menu menu_main;
 extern Menu menu_cheats;
+
+#define MENU_STARTING_LEVEL  menu_main.options[0]
+#define MENU_STARTING_LIVES  menu_main.options[1]
+#define MENU_EXTRA_LIVES     menu_main.options[2]
+#define MENU_PEASANT_PENALTY menu_main.options[3]
+#define MENU_ARCHER_FREQ     menu_main.options[4]
+#define MENU_COMMENT_FREQ    menu_main.options[5]
+#define MENU_SCALING         menu_main.options[6]
+#define CHEATS_INF_LIVES	 menu_cheats.options[0]
+#define CHEAT_DEBUG_MODE     menu_cheats.options[1]
+#define CHEAT_BIG_HEAD_MODE  menu_cheats.options[2]
+#define CHEAT_NOCLIP         menu_cheats.options[3]
 
 #endif
