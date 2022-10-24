@@ -54,6 +54,7 @@ class MenuOption {
 		void prepareMenuOption(const char [], const char *[], const char *[], const char *[], const char *[], const char [], Uint8, bool, Uint8, bool);
 		void setLocked(bool);
 		void updateLabel();
+		void initChoicesAndDescriptions();
 		void updateChoice();
 		void updateDescription();
 		void render(bool);

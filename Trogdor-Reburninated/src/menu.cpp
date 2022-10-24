@@ -4,7 +4,9 @@
 #include "window.h"
 
 Sint8 currOnscreenIndex;
+Sint8 initCounter;
 bool menusAreInitialized = false;
+FontObject *menuFont;
 
 #define CURR_OPTION options[cursorIndex]
 #define CURR_OPTION_ONSCREEN options[currOnscreenIndex]
@@ -35,6 +37,7 @@ void MenuOption::prepareMenuOption(const char label_ptr[], const char *choice_pt
 		optionIsLocked = false;
 	}
 	updateLabel();
+	initChoicesAndDescriptions();
 	updateChoice();
 	updateDescription();
 }
@@ -49,20 +52,38 @@ void MenuOption::setLocked(bool locked) {
 void MenuOption::updateLabel() {
 	if (!optionIsLocked) {
 		if (labelPtr != NULL) {
-			setText(labelPtr, &label, &font_serif_white_6_mult);
+			setText(labelPtr, &label, menuFont);
 		}
 	} else {
-		setText("???", &label, &font_serif_white_6_mult);
+		setText("???", &label, menuFont);
+	}
+}
+
+// this initializes text chars used in choices that aren't initially selected
+void MenuOption::initChoicesAndDescriptions() {
+	if (choicePtr != NULL) {
+		for (initCounter = 0; initCounter < numChoices; initCounter++) {
+			setText(choicePtr[initCounter], &choice, menuFont);
+		}
+	}
+	if (descPtr_1 != NULL) {
+		if (!oneDescription) {
+			for (initCounter = 0; initCounter < numChoices; initCounter++) {
+				setText(descPtr_1[initCounter], &description_1, menuFont);
+				setText(descPtr_2[initCounter], &description_1, menuFont);
+				setText(descPtr_3[initCounter], &description_1, menuFont);
+			}
+		}
 	}
 }
 
 void MenuOption::updateChoice() {
 	if (!optionIsLocked) {
 		if (choicePtr != NULL) {
-			setText(choicePtr[index], &choice, &font_serif_white_6_mult);
+			setText(choicePtr[index], &choice, menuFont);
 		}
 	} else {
-		setText("", &choice, &font_serif_white_6_mult);
+		setText("", &choice, menuFont);
 	}
 }
 
@@ -70,31 +91,31 @@ void MenuOption::updateDescription() {
 	if (!optionIsLocked) {
 		if (descPtr_1 != NULL) {
 			if (oneDescription) {
-				setText(descPtr_1[0], &description_1, &font_serif_white_6_mult);
-				setText(descPtr_2[0], &description_2, &font_serif_white_6_mult);
-				setText(descPtr_3[0], &description_3, &font_serif_white_6_mult);
+				setText(descPtr_1[0], &description_1, menuFont);
+				setText(descPtr_2[0], &description_2, menuFont);
+				setText(descPtr_3[0], &description_3, menuFont);
 			} else {
-				setText(descPtr_1[index], &description_1, &font_serif_white_6_mult);
-				setText(descPtr_2[index], &description_2, &font_serif_white_6_mult);
-				setText(descPtr_3[index], &description_3, &font_serif_white_6_mult);
+				setText(descPtr_1[index], &description_1, menuFont);
+				setText(descPtr_2[index], &description_2, menuFont);
+				setText(descPtr_3[index], &description_3, menuFont);
 			}
 		}
 	} else {
 		if (altDescPtr != NULL) {
-			setText(altDescPtr, &description_1, &font_serif_white_6_mult);
-			setText("", &description_2, &font_serif_white_6_mult);
-			setText("", &description_3, &font_serif_white_6_mult);
+			setText(altDescPtr, &description_1, menuFont);
+			setText("", &description_2, menuFont);
+			setText("", &description_3, menuFont);
 		}
 	}
 }
 
 void MenuOption::render(bool renderDescription) {
-	renderText_menu(label, font_serif_white_6_mult);
-	renderText_menu(choice, font_serif_white_6_mult);
+	renderText_menu(label, *menuFont);
+	renderText_menu(choice, *menuFont);
 	if (renderDescription) {
-		renderText_menu(description_1, font_serif_white_6_mult);
-		renderText_menu(description_2, font_serif_white_6_mult);
-		renderText_menu(description_3, font_serif_white_6_mult);
+		renderText_menu(description_1, *menuFont);
+		renderText_menu(description_2, *menuFont);
+		renderText_menu(description_3, *menuFont);
 	}
 }
 
@@ -266,14 +287,14 @@ void Menu::updateOptionChoicePosition(Sint8 optionIndex) {
 
 void Menu::updateOptionDescPosition(Sint8 optionIndex) {
 	if (options[optionIndex]->description_2.dstrect.w == 0) {
-		setTextPos(&options[optionIndex]->description_1, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, options[optionIndex]->description_1), DESC_LINE_Y_MID);
+		setTextPos(&options[optionIndex]->description_1, OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), options[optionIndex]->description_1), DESC_LINE_Y_MID);
 	} else if (options[optionIndex]->description_3.dstrect.w == 0) {
-		setTextPos(&options[optionIndex]->description_1, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, options[optionIndex]->description_1), DESC_LINE_Y_UPPER);
-		setTextPos(&options[optionIndex]->description_2, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, options[optionIndex]->description_2), DESC_LINE_Y_LOWER);
+		setTextPos(&options[optionIndex]->description_1, OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), options[optionIndex]->description_1), DESC_LINE_Y_UPPER);
+		setTextPos(&options[optionIndex]->description_2, OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), options[optionIndex]->description_2), DESC_LINE_Y_LOWER);
 	} else {
-		setTextPos(&options[optionIndex]->description_1, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, options[optionIndex]->description_1), DESC_LINE_Y_TOP);
-		setTextPos(&options[optionIndex]->description_2, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, options[optionIndex]->description_2), DESC_LINE_Y_MID);
-		setTextPos(&options[optionIndex]->description_3, OBJ_TO_MID_SCREEN_X(appToWindowDstRect.w, options[optionIndex]->description_3), DESC_LINE_Y_BOTTOM);
+		setTextPos(&options[optionIndex]->description_1, OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), options[optionIndex]->description_1), DESC_LINE_Y_TOP);
+		setTextPos(&options[optionIndex]->description_2, OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), options[optionIndex]->description_2), DESC_LINE_Y_MID);
+		setTextPos(&options[optionIndex]->description_3, OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), options[optionIndex]->description_3), DESC_LINE_Y_BOTTOM);
 	}
 }
 
@@ -333,7 +354,14 @@ const char *option_cheats_4_descriptions_line_2[1] = { "by walking through cotta
 
 void InitializeMenus() {
 	TTF_Init();
-	setFont(&font_serif_white_6_mult, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white);
+	// if the menu font would end up being the same as font_serif_white_6_mult, just use that instead of creating a new font
+	if (font_serif_white_6_mult.size == max(8, (int)(8 * screenScale_menu))) {
+		menuFont = &font_serif_white_6_mult;
+		setFont(menuFont, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white, true);
+	} else {
+		menuFont = &font_serif_white_8;
+		setFont(menuFont, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white, true);
+	}
 
 	menu_main.prepareMenu(10, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 168 + (8 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
 	if (!menusAreInitialized) {
@@ -412,6 +440,6 @@ void InitializeMenus() {
 
 	menusAreInitialized = true;
 
-	TTF_CloseFont(font_serif_white_6_mult.font);
+	TTF_CloseFont(menuFont->font);
 	TTF_Quit();
 }

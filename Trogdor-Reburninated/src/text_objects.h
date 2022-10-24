@@ -52,7 +52,7 @@ extern void renderText_menu(TextObject, FontObject);
 extern void setTextCharPosX(TextCharObject *, int);
 extern void setTextCharPosY(TextCharObject *, int);
 extern void destroyTextObjectTexture(TextCharObject);
-extern void setFont(FontObject *, const char *, int, double, int, SDL_Color);
+extern void setFont(FontObject *, const char *, int, double, int, SDL_Color, bool);
 extern void initializeFont_numbers(FontObject *);
 
 // This should be a macro since pos_x and pos_y may (and likely will) change before they're needed
@@ -81,6 +81,7 @@ extern FontObject font_serif_red_8_mult;
 extern FontObject font_serif_red_12;
 extern FontObject font_serif_white_6;
 extern FontObject font_serif_white_6_mult;
+extern FontObject font_serif_white_8;
 extern FontObject font_serif_white_9;
 extern FontObject font_serif_white_10;
 extern FontObject font_serif_white_14;

@@ -207,6 +207,7 @@ FontObject font_serif_red_8_mult;
 FontObject font_serif_red_12;
 FontObject font_serif_white_6;
 FontObject font_serif_white_6_mult;
+FontObject font_serif_white_8;
 FontObject font_serif_white_9;
 FontObject font_serif_white_10;
 FontObject font_serif_white_14;

@@ -41,7 +41,7 @@ void updateText(TextObject *textObj, string text) {
     textObj->str = text;
 }
 
-void setTextChar(const char* text, TTF_Font* font, SDL_Color text_color, TextCharObject* textCharObj) {
+void setTextChar(const char *text, TTF_Font *font, SDL_Color text_color, TextCharObject *textCharObj) {
 #if !defined(SDL1)
 #if !defined(PSP)
 	temp_text = TTF_RenderText_Solid(font, text, text_color);
@@ -144,8 +144,12 @@ void destroyTextObjectTexture(TextCharObject textCharObj) {
 #endif
 }
 
-void setFont(FontObject *fontObj, const char *path, int originalSize, double multSize, int style, SDL_Color color) {
-	fontObj->size = max(originalSize, (int)(multSize * gameHiResMult));
+void setFont(FontObject *fontObj, const char *path, int originalSize, double multSize, int style, SDL_Color color, bool scaleToWindow) {
+	if (scaleToWindow) {
+		fontObj->size = max(originalSize, (int)(multSize * screenScale_menu));
+	} else {
+		fontObj->size = max(originalSize, (int)(multSize * gameHiResMult));
+	}
 	fontObj->style = style;
 	fontObj->color = color;
 	fontObj->font = TTF_OpenFont((rootDir + path).c_str(), fontObj->size);

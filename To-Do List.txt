@@ -5,8 +5,6 @@ Features:
 - Finish remaining cutscenes
 - Finish Game Over screen
 - Implement Scaling as menu option instead of button press
-- Fix menu text scaling (use separate font)
-- Make sure text initialization includes non-selected options+descriptions
 Polish:
 - Move Credits screen to Options menu
 - Add "Libraries", "Coming Soon", and "Want More?" pages to Credits
