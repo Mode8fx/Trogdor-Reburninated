@@ -1,8 +1,14 @@
+#include "include.h"
+#include "menu.h"
+#include "sound_logic.h"
+#include "text_objects.h"
+#include "general.h"
+#include "config.h"
+#include "window.h"
+#include "classes.h"
+
 #ifndef MAIN_H
 #define MAIN_H
-
-#include "on_open_and_close.h"
-#include "cutscenes.h"
 
 /* Program State */
 bool isRunning;

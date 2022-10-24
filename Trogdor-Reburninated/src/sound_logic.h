@@ -1,4 +1,4 @@
-#include "config.h"
+#include "include.h"
 
 #ifndef SOUND_LOGIC_H
 #define SOUND_LOGIC_H

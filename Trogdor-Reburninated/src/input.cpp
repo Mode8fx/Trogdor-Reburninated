@@ -1,4 +1,5 @@
 #include "input.h"
+#include "general.h"
 
 constexpr auto STICK_DEADZONE = 10922; // 32767 / 3
 

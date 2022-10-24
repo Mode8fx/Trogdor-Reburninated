@@ -1,7 +1,7 @@
+#include "include.h"
+
 #ifndef LEVEL_DATA_H
 #define LEVEL_DATA_H
-
-#include "include.h"
 
 constexpr auto DIR_UP = 1;
 constexpr auto DIR_DOWN = 2;

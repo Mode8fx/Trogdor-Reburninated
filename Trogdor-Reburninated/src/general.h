@@ -1,7 +1,7 @@
+#include "include.h"
+
 #ifndef GENERAL_H
 #define GENERAL_H
-
-#include "include.h"
 
 struct Timer {
     double now;

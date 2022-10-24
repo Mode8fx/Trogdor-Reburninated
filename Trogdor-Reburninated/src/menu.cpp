@@ -1,4 +1,7 @@
 #include "menu.h"
+#include "input.h"
+#include "general.h"
+#include "window.h"
 
 Sint8 currOnscreenIndex;
 bool menusAreInitialized = false;

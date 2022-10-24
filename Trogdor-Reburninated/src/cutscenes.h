@@ -1,7 +1,8 @@
+#include "include.h"
+#include "sprite_objects.h"
+
 #ifndef CUTSCENES_H
 #define CUTSCENES_H
-
-#include "sprite_objects.h"
 
 extern bool cutsceneIsPlaying;
 

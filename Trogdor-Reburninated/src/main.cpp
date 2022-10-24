@@ -1,4 +1,9 @@
 #include "main.h"
+#include "on_open_and_close.h"
+#include "cutscenes.h"
+#include "input.h"
+#include "media_objects_init.h"
+#include "level_data.h"
 
 bool renderOverlay;
 bool showOverlay = true;

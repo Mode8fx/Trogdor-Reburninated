@@ -1,4 +1,6 @@
 #include "sprite_objects.h"
+#include "general.h"
+#include "window.h"
 
 SDL_Surface *temp_sprite_sheet;
 SDL_Surface *temp_sprite_single;

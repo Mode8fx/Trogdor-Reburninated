@@ -1,10 +1,10 @@
+#include "include.h"
+#include "sprite_objects.h"
+#include "sound_logic.h"
+#include "window.h"
+
 #ifndef CLASSES_H
 #define CLASSES_H
-
-#include "config.h"
-#include "input.h"
-#include "level_data.h"
-#include "menu.h"
 
 constexpr auto MAX_NUM_HUTS = 6;
 constexpr auto MAX_NUM_ARROWS = 5;
@@ -13,6 +13,10 @@ constexpr auto MAX_NUM_ARROWS = 5;
 constexpr auto MAX_NUM_KNIGHTS = 2;
 constexpr auto MAX_NUM_PEASANTS = 7;
 constexpr auto MAX_NUM_LOOT = 7;
+
+#if defined(SDL1)
+inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B);
+#endif
 
 class Cottage {
 	public:
@@ -196,10 +200,10 @@ class GameManager {
 		void arrowHitEventHandler();
 		inline void toggleKnightMotion(bool hasMotion);
 		bool testWon();
-		inline void updateScore(Uint16 increment);
+		void updateScore(Uint16 increment);
 		inline void updateMans(Sint8 increment);
-		inline void setMans(Sint8 val);
-		inline void updateLevel(Sint8 increment);
+		void setMans(Sint8 val);
+		void updateLevel(Sint8 increment);
 		void clearArrows();
 		void testBurnHut();
 		void updateBurnmeter();

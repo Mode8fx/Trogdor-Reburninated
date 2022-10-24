@@ -1,7 +1,6 @@
-#include "config.h"
-#include "sprite_objects.h"
+#include "include.h"
 #include "text_objects.h"
-#include "sound_logic.h"
+#include "sprite_objects.h"
 
 #ifndef MEDIA_OBJECTS_INIT_H
 #define MEDIA_OBJECTS_INIT_H

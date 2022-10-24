@@ -1,7 +1,7 @@
+#include "include.h"
+
 #ifndef INPUT_H
 #define INPUT_H
-
-#include "general.h"
 
 /* SDL Input */
 #if !defined(SDL1) && !defined(PSP)

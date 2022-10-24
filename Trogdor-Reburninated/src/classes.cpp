@@ -1,4 +1,8 @@
 #include "classes.h"
+#include "general.h"
+#include "input.h"
+#include "text_objects.h"
+#include "level_data.h"
 
 extern MenuManager MM;
 extern GameManager GM;
@@ -28,7 +32,7 @@ constexpr auto ARCHER_LEFT_X = -1; //  179 / 5000 * 250 - (20 / 2)
 constexpr auto ARCHER_RIGHT_X = 231; // 4829 / 5000 * 250 - (20 / 2)
 
 #if defined(SDL1)
-inline bool SDL_HasIntersection(const SDL_Rect* A, const SDL_Rect* B) {
+inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
 	return (!((A->x + A->w < B->x) || (B->x + B->w < A->x) || (A->y + A->h < B->y) || (B->y + B->h < A->y)));
 }
 #endif
@@ -959,7 +963,7 @@ bool GameManager::testWon() {
 	return true;
 }
 
-inline void GameManager::updateScore(Uint16 increment) {
+void GameManager::updateScore(Uint16 increment) {
 	uint_i = score;
 	score += increment;
 	if ((uint_i < (Uint32)(extraMansBreak * extraMansCounter)) && (score >= (Uint32)(extraMansBreak * extraMansCounter))) {
@@ -974,12 +978,12 @@ inline void GameManager::updateMans(Sint8 increment) {
 	updateText(&text_4_mans_val, to_string(mans));
 }
 
-inline void GameManager::setMans(Sint8 val) {
+void GameManager::setMans(Sint8 val) {
 	mans = val;
 	updateText(&text_4_mans_val, to_string(mans));
 }
 
-inline void GameManager::updateLevel(Sint8 increment) {
+void GameManager::updateLevel(Sint8 increment) {
 	level += increment;
 	updateText(&text_4_level_val, to_string(level));
 }

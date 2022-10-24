@@ -1,4 +1,10 @@
 #include "media_objects_init.h"
+#include "text_objects.h"
+#include "window.h"
+#include "sound_logic.h"
+#include "sprite_objects.h"
+#include "config.h"
+#include "general.h"
 
 ifstream ifile;
 

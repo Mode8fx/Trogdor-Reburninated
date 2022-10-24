@@ -1,8 +1,7 @@
+#include "include.h"
+
 #ifndef WINDOW_H
 #define WINDOW_H
-
-#include "config.h"
-#include "media_objects_init.h"
 
 constexpr auto gameWidth = 250;
 constexpr auto gameHeight = 180;
@@ -45,46 +44,13 @@ extern double trueScreenScaleFull; // the multiplier by which the screen should 
 extern double screenScale_menu;
 extern bool allowHiRes;
 extern Sint8 scalingType;
-#if !defined(SDL1)
-extern SDL_DisplayMode DM;
-#endif
 
-//#if !defined(ANDROID)
-//#define SYSTEM_WIDTH  DM.w
-//#define SYSTEM_HEIGHT DM.h
-#if defined(ANDROID)
-#define SYSTEM_WIDTH  max(DM.w, DM.h)
-#define SYSTEM_HEIGHT min(DM.w, DM.h)
-#endif
-#if defined(WII_U)
-constexpr auto DEFAULT_WIDTH = 1280;
-constexpr auto DEFAULT_HEIGHT = 720;
-#elif defined(VITA)
-constexpr auto DEFAULT_WIDTH = 960;
-constexpr auto DEFAULT_HEIGHT = 544;
-#elif defined(SWITCH)
-constexpr auto DEFAULT_WIDTH = 1920;
-constexpr auto DEFAULT_HEIGHT = 1080;
-#elif defined(PSP)
-constexpr auto DEFAULT_WIDTH = 480;
-constexpr auto DEFAULT_HEIGHT = 272;
-#elif defined(WII) || defined(GAMECUBE) || defined(XBOX)
-constexpr auto DEFAULT_WIDTH = 640;
-constexpr auto DEFAULT_HEIGHT = 480;
-#elif defined(THREEDS)
-constexpr auto DEFAULT_WIDTH = 400;
-constexpr auto DEFAULT_HEIGHT = 240;
-#elif defined(ANDROID)
-#define DEFAULT_WIDTH  SYSTEM_WIDTH
-#define DEFAULT_HEIGHT SYSTEM_HEIGHT
-#elif defined(SDL1)
-constexpr auto DEFAULT_WIDTH = 320;
-constexpr auto DEFAULT_HEIGHT = 240;
-#else
-constexpr auto DEFAULT_WIDTH = 640;
-constexpr auto DEFAULT_HEIGHT = 480;
-#endif
-
+extern double getScreenScale_app();
+extern void scaleGameByApp();
+extern double getScreenScale_game();
+extern void scaleAppByGame();
+extern void scaleGameAndApp();
+extern void repositionOverlay();
 extern void setWidthHeightMults();
 extern void setScaling();
 extern void snapWindow_x(double, Uint16);

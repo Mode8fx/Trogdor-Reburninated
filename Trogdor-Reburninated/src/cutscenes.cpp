@@ -1,4 +1,7 @@
 #include "cutscenes.h"
+#include "general.h"
+#include "sound_logic.h"
+#include "text_objects.h"
 
 SpriteInstance cutscene_level_beaten_trogdor;
 SpriteInstance cutscene_level_beaten_smoke;

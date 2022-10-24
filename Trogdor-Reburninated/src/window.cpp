@@ -1,4 +1,8 @@
 #include "window.h"
+#include "sprite_objects.h"
+#include "general.h"
+#include "media_objects_init.h"
+#include "config.h"
 
 void setWidthHeightMults() {
 	appWidthMult = (double)windowWidth / appWidth;

@@ -1,4 +1,4 @@
-#include "config.h"
+#include "include.h"
 
 #ifndef SPRITE_OBJECTS_H
 #define SPRITE_OBJECTS_H
@@ -125,6 +125,12 @@ class SpriteInstance {
         void renderAsCSO(bool);
 };
 
+extern Uint32 getPixel(SDL_Surface *surface, int x, int y);
+extern Sint8 getXOffsetStart(SpriteObject *spriteObj, Sint8 x, Sint8 y);
+extern Sint16 getXOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y);
+extern Sint8 getYOffsetStart(SpriteObject *spriteObj, Sint8 x, Sint8 y);
+extern Sint16 getYOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y);
+extern void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj);
 extern void prepareSprite(SpriteObject *, const char [], Sint8, Sint8, double);
 extern void setSpriteScale(SpriteObject *);
 extern void setSpritePos(SpriteObject *, int, int);

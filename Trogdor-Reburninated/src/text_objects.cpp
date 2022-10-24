@@ -1,4 +1,7 @@
 #include "text_objects.h"
+#include "general.h"
+#include "window.h"
+#include "config.h"
 
 char tempCharArray[64];
 Uint8 charCounter;

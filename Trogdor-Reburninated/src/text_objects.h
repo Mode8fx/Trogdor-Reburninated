@@ -1,5 +1,4 @@
-#include "general.h"
-#include "window.h"
+#include "include.h"
 
 #ifndef TEXT_OBJECTS_H
 #define TEXT_OBJECTS_H

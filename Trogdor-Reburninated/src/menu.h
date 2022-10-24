@@ -1,8 +1,9 @@
+#include "include.h"
+#include "text_objects.h"
+#include "sprite_objects.h"
+
 #ifndef MENU_H
 #define MENU_H
-
-#include "text_objects.h"
-#include "input.h"
 
 constexpr auto MAX_NUM_OPTION_CHOICES = 10;
 constexpr auto MAX_NUM_MENU_OPTIONS = 10;

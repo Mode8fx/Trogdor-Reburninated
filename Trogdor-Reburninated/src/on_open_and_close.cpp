@@ -1,4 +1,11 @@
 #include "on_open_and_close.h"
+#include "config.h"
+#include "window.h"
+#include "sound_logic.h"
+#include "input.h"
+#include "general.h"
+#include "sprite_objects.h"
+#include "media_objects_init.h"
 
 void InitializeDisplay() {
 #if !defined(SDL1)

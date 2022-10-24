@@ -1,4 +1,6 @@
 #include "sound_logic.h"
+#include "config.h"
+#include "general.h"
 
 bool sfxShouldBePlaying = false;
 Uint8 sfxIndex = 0;
