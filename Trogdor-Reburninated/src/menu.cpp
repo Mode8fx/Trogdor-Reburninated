@@ -354,8 +354,8 @@ const char *option_cheats_4_descriptions_line_2[1] = { "by walking through cotta
 
 void InitializeMenus() {
 	TTF_Init();
-	// if the menu font would end up being the same as font_serif_white_6_mult, just use that instead of creating a new font
-	if (font_serif_white_6_mult.size == max(8, (int)(8 * screenScale_menu))) {
+	// if the menu font would end up being the same as font_serif_white_6_mult, just use that instead of initializing an exclusive font
+	if (font_serif_white_6_mult.size == getDesiredFontSize(&font_serif_white_8)) {
 		menuFont = &font_serif_white_6_mult;
 		setFont(menuFont, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white, true);
 	} else {

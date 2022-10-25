@@ -25,6 +25,9 @@ void InitializeFontsAndText() {
 	TTF_CloseFont(font_serif_red_6_mult.font);
 	TTF_CloseFont(font_serif_red_8_mult.font);
 
+	setFont(&font_serif_white_8, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white, true);
+	TTF_CloseFont(font_serif_white_8.font);
+
 	//setFont(&font_serif_brown_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_brown);
 	//TTF_CloseFont(font_serif_brown_6.font);
 
@@ -145,10 +148,10 @@ void InitializeText_HomeScreen() {
 		SET_TEXT("press START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
 #if defined(GAMECUBE)
-		SET_TEXT("Press Z to QUIT.", text_3_quit, font_serif_white_6_mult,
+		SET_TEXT("Press Z for OPTIONS.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #else
-		SET_TEXT("Press SELECT to QUIT.", text_3_quit, font_serif_white_6_mult,
+		SET_TEXT("Press SELECT for OPTIONS.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #endif
 #elif defined(SWITCH)
@@ -156,14 +159,14 @@ void InitializeText_HomeScreen() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
 		SET_TEXT("press + to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press - to QUIT.", text_3_quit, font_serif_white_6_mult,
+		SET_TEXT("Press - for OPTIONS.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #else
 		SET_TEXT("Press ENTER/START to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
 		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press SELECT/BACKSPACE to QUIT.", text_3_quit, font_serif_white_6_mult,
+		SET_TEXT("Press SELECT/BACK for OPTIONS.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #endif
 		SET_TEXT("SECRET HINTS!!", text_3_hints_1, font_serif_red_6_mult,
@@ -239,10 +242,10 @@ void InitializeText_HomeScreen() {
 		SET_TEXT("press START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
 #if defined(GAMECUBE)
-		SET_TEXT("Press Z to QUIT.", text_3_quit, font_serif_white_6_mult,
+		SET_TEXT("Press Z for OPTIONS.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #else
-		SET_TEXT("Press SELECT to QUIT.", text_3_quit, font_serif_white_6_mult,
+		SET_TEXT("Press SELECT for OPTIONS.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #endif
 #elif defined(SWITCH)
@@ -250,14 +253,14 @@ void InitializeText_HomeScreen() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
 		SET_TEXT("press + to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press - to QUIT.", text_3_quit, font_serif_white_6_mult,
+		SET_TEXT("Press - for OPTIONS.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #else
 		SET_TEXT("Press ENTER/START to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
 		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press SELECT/BACKSPACE to QUIT.", text_3_quit, font_serif_white_6_mult,
+		SET_TEXT("Press SELECT/BACKSPACE for OPTIONS.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #endif
 		SET_TEXT("SECRET HINTS!!", text_3_hints_1, font_serif_red_6_mult,
@@ -690,18 +693,20 @@ void destroyAllSprites() {
 }
 
 void destroyTextChars(FontObject *fontObj) {
-	for (i = 0; i < (126 + 1 - 32); i++) {
+	if (getDesiredFontSize(fontObj) != fontObj->size) {
+		for (i = 0; i < (126 + 1 - 32); i++) {
 #if !defined(SDL1)
-		if (fontObj->textChars[i].texture != NULL) {
-			SDL_DestroyTexture(fontObj->textChars[i].texture);
-			fontObj->textChars[i].texture = NULL;
-		}
+			if (fontObj->textChars[i].texture != NULL) {
+				SDL_DestroyTexture(fontObj->textChars[i].texture);
+				fontObj->textChars[i].texture = NULL;
+			}
 #else
-		if (fontObj->textChars[i].surface != NULL) {
-			SDL_FreeSurface(fontObj->textChars[i].surface);
-			fontObj->textChars[i].surface = NULL;
-		}
+			if (fontObj->textChars[i].surface != NULL) {
+				SDL_FreeSurface(fontObj->textChars[i].surface);
+				fontObj->textChars[i].surface = NULL;
+			}
 #endif
+		}
 	}
 }
 

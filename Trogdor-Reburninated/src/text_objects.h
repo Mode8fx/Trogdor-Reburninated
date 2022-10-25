@@ -34,6 +34,9 @@ struct TextCharObject {
 struct FontObject {
     TTF_Font *font;
 	int size;
+    Sint16 originalSize;
+    double multSize;
+    bool scaleToWindow;
 	int style;
 	SDL_Color color;
 	TextCharObject textChars[126 + 1 - 32];
@@ -52,6 +55,7 @@ extern void renderText_menu(TextObject, FontObject);
 extern void setTextCharPosX(TextCharObject *, int);
 extern void setTextCharPosY(TextCharObject *, int);
 extern void destroyTextObjectTexture(TextCharObject);
+extern int getDesiredFontSize(FontObject *);
 extern void setFont(FontObject *, const char *, int, double, int, SDL_Color, bool);
 extern void initializeFont_numbers(FontObject *);
 
