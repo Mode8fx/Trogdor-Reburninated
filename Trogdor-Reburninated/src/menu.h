@@ -116,6 +116,7 @@ class Menu {
 		void decrementOption();
 		void incrementCurrOptionChoice();
 		void decrementCurrOptionChoice();
+		void setOptionChoice(Sint8, Sint8);
 		void updateOptionPositions();
 		void updateOptionChoicePosition(Sint8);
 		void updateOptionDescPosition(Sint8);
@@ -126,16 +127,28 @@ class Menu {
 extern Menu menu_main;
 extern Menu menu_cheats;
 
-#define MENU_STARTING_LEVEL  menu_main.options[0]
-#define MENU_STARTING_LIVES  menu_main.options[1]
-#define MENU_EXTRA_LIVES     menu_main.options[2]
-#define MENU_PEASANT_PENALTY menu_main.options[3]
-#define MENU_ARCHER_FREQ     menu_main.options[4]
-#define MENU_COMMENT_FREQ    menu_main.options[5]
-#define MENU_SCALING         menu_main.options[6]
-#define CHEATS_INF_LIVES	 menu_cheats.options[0]
-#define CHEAT_DEBUG_MODE     menu_cheats.options[1]
-#define CHEAT_BIG_HEAD_MODE  menu_cheats.options[2]
-#define CHEAT_NOCLIP         menu_cheats.options[3]
+constexpr auto MENU_STARTING_LEVEL_INDEX = 0;
+constexpr auto MENU_STARTING_LIVES_INDEX = 1;
+constexpr auto MENU_EXTRA_LIVES_INDEX = 2;
+constexpr auto MENU_PEASANT_PENALTY_INDEX = 3;
+constexpr auto MENU_ARCHER_FREQ_INDEX = 4;
+constexpr auto MENU_COMMENT_FREQ_INDEX = 5;
+constexpr auto MENU_SCALING_INDEX = 6;
+#define MENU_STARTING_LEVEL  menu_main.options[MENU_STARTING_LEVEL_INDEX]
+#define MENU_STARTING_LIVES  menu_main.options[MENU_STARTING_LIVES_INDEX]
+#define MENU_EXTRA_LIVES     menu_main.options[MENU_EXTRA_LIVES_INDEX]
+#define MENU_PEASANT_PENALTY menu_main.options[MENU_PEASANT_PENALTY_INDEX]
+#define MENU_ARCHER_FREQ     menu_main.options[MENU_ARCHER_FREQ_INDEX]
+#define MENU_COMMENT_FREQ    menu_main.options[MENU_COMMENT_FREQ_INDEX]
+#define MENU_SCALING         menu_main.options[MENU_SCALING_INDEX]
+
+constexpr auto CHEATS_INF_LIVES_INDEX = 0;
+constexpr auto CHEAT_DEBUG_MODE_INDEX = 1;
+constexpr auto CHEAT_BIG_HEAD_MODE_INDEX = 2;
+constexpr auto CHEAT_NOCLIP_INDEX = 3;
+#define CHEATS_INF_LIVES	 menu_cheats.options[CHEATS_INF_LIVES_INDEX]
+#define CHEAT_DEBUG_MODE     menu_cheats.options[CHEAT_DEBUG_MODE_INDEX]
+#define CHEAT_BIG_HEAD_MODE  menu_cheats.options[CHEAT_BIG_HEAD_MODE_INDEX]
+#define CHEAT_NOCLIP         menu_cheats.options[CHEAT_NOCLIP_INDEX]
 
 #endif

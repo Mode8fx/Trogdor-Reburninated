@@ -166,7 +166,7 @@ Sint8 Menu::handleInput() {
 	if (keyPressed(INPUT_A)) {
 		return cursorIndex;
 	}
-	if (keyPressed(INPUT_B)) {
+	if (keyPressed(INPUT_B) || keyPressed(INPUT_SELECT)) {
 		return -1;
 	}
 	return -2;
@@ -239,6 +239,13 @@ void Menu::decrementCurrOptionChoice() {
 	CURR_OPTION->updateChoice();
 	CURR_OPTION->updateDescription();
 	updateOptionChoicePosition(cursorIndex);
+}
+
+void Menu::setOptionChoice(Sint8 optionIndex, Sint8 choiceIndex) {
+	options[optionIndex]->index = choiceIndex;
+	options[optionIndex]->updateChoice();
+	options[optionIndex]->updateDescription();
+	updateOptionChoicePosition(optionIndex);
 }
 
 void Menu::updateOptionPositions() {
@@ -335,9 +342,9 @@ const char *option_main_6_choices[6] = { "Off", "Very Low", "Low", "Normal", "Hi
 const char *option_main_6_descriptions_line_1[6] = { "Strong Bad does not talk.", "Strong Bad talks 50% less often.", "Strong Bad talks 25% less often.", "Strong Bad talks as often", "Strong Bad talks 25% more often.", "Strong Bad talks 50% more often." };
 const char *option_main_6_descriptions_line_2[6] = { "", "", "", "as he did in the original game.", "", "" };
 const char *option_main_6_descriptions_line_3[6] = { "", "", "", "", "", "" };
-const char *option_main_7_choices[4] = { "Full", "Full Game", "Pixel-Perfect", "Pixel-Perfect Game" };
-const char *option_main_7_descriptions_line_1[4] = { "Scale everything so that", "Scale the game to fill the screen.", "Scale so that everything uses integer", "Scale the game to be as big as possible" };
-const char *option_main_7_descriptions_line_2[4] = { "the overlay fills the screen.", "The overlay will be cut off.", "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate." };
+const char *option_main_7_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "Full Game" };
+const char *option_main_7_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "Scale the game to fill the screen." };
+const char *option_main_7_descriptions_line_2[4] = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." };
 const char *option_main_7_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)" };
 const char *option_main_8_descriptions_line_1[1] = { "Toggle hidden cheats." };
 const char *option_main_9_descriptions_line_1[1] = { "View the credits." };
@@ -395,7 +402,7 @@ void InitializeMenus() {
 	}
 	MENU_SCALING->prepareMenuOption("Scaling", option_main_7_choices,
 		option_main_7_descriptions_line_1, option_main_7_descriptions_line_2, option_main_7_descriptions_line_3,
-		NULL, 4, false, 2, true);
+		NULL, 4, false, 0, true);
 	menu_main.options[7]->prepareMenuOption("Cheats", option_empty,
 		option_main_8_descriptions_line_1, option_empty, option_empty,
 		NULL, 1, true, 0, true);

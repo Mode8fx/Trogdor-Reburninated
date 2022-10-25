@@ -4,7 +4,6 @@ Version 1.0 [faithful recreation of original Trogdor flash game]:
 Features:
 - Finish remaining cutscenes
 - Finish Game Over screen
-- Implement Scaling as menu option instead of button press
 Polish:
 - Move Credits screen to Options menu
 - Add "Libraries", "Coming Soon", and "Want More?" pages to Credits

@@ -66,6 +66,7 @@ int main(int argv, char** args) {
 		}
 		if (keyPressed(INPUT_Y)) {
 			scalingType = (scalingType + 1) % 4;
+			menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 			windowSizeChanged = true;
 		}
 		if (keyPressed(INPUT_X)) {
@@ -292,6 +293,7 @@ int main(int argv, char** args) {
 						updateText(&text_4_level_val, to_string(GM.level));
 						g_sceneState = 4;
 					} else if (keyPressed(INPUT_SELECT)) {
+						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						menu_main.openMenu();
 						g_sceneState = 301;
 					}
@@ -400,6 +402,10 @@ int main(int argv, char** args) {
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_main.renderMenu();
 				switch (menu_main.handleInput()) {
+					case 6: // Scaling
+						scalingType = MENU_SCALING->index;
+						windowSizeChanged = true;
+						break;
 					case 7: // Cheats
 						menu_cheats.openMenu();
 						g_sceneState = 302;
@@ -407,7 +413,7 @@ int main(int argv, char** args) {
 					case 9: // Quit Game
 						isRunning = false;
 						break;
-					case -1: // Press B
+					case -1: // Press B/Select
 						g_sceneState = 3;
 						break;
 					default:
@@ -421,7 +427,8 @@ int main(int argv, char** args) {
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_cheats.renderMenu();
 				switch (menu_cheats.handleInput()) {
-					case -1: // Press B
+					case -1: // Press B/Select
+						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;
 						break;
 					default:
