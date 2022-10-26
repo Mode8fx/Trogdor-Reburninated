@@ -554,9 +554,9 @@ void InitializeMenus() {
 		"1994 Country", 2, true, 0, true);
 
 	/* Credits Notebook */
-	menu_credits.prepareMenuNotebook(4, 304, 216, 2);
+	menu_credits.prepareMenuNotebook(5, 304, 216, 2);
 	if (!menusAreInitialized) {
-		for (i = 0; i < 4; i++) {
+		for (i = 0; i < 5; i++) {
 			menu_credits.pages[i] = new MenuPage();
 		}
 	}
@@ -581,37 +581,44 @@ void InitializeMenus() {
 	menu_credits.pages[1]->setTextLine(6, "");
 	menu_credits.pages[1]->setTextLine(7, "v1.0");
 
-	menu_credits.pages[2]->prepareMenuPage(7, 0, 30, 20, 1);
-	menu_credits.pages[2]->setTextLine(0, "- LIBRARIES -");
+	menu_credits.pages[2]->prepareMenuPage(5, 0, 30, 20, 1);
+	menu_credits.pages[2]->setTextLine(0, "- STINKOMAN MUSIC -");
 	menu_credits.pages[2]->setTextLine(1, "");
+	menu_credits.pages[2]->setTextLine(2, "Jonathan Howe");
+	menu_credits.pages[2]->setTextLine(3, "");
+	menu_credits.pages[2]->setTextLine(4, "U.Z. Inu");
+
+	menu_credits.pages[3]->prepareMenuPage(7, 0, 30, 20, 1);
+	menu_credits.pages[3]->setTextLine(0, "- LIBRARIES -");
+	menu_credits.pages[3]->setTextLine(1, "");
 #if defined(SDL1)
-	menu_credits.pages[2]->setTextLine(2, "SDL");
-	menu_credits.pages[2]->setTextLine(3, "SDL_image");
-	menu_credits.pages[2]->setTextLine(4, "SDL_mixer");
-	menu_credits.pages[2]->setTextLine(5, "SDL_ttf");
-	menu_credits.pages[2]->setTextLine(6, "SDL_gfx");
+	menu_credits.pages[3]->setTextLine(2, "SDL");
+	menu_credits.pages[3]->setTextLine(3, "SDL_image");
+	menu_credits.pages[3]->setTextLine(4, "SDL_mixer");
+	menu_credits.pages[3]->setTextLine(5, "SDL_ttf");
+	menu_credits.pages[3]->setTextLine(6, "SDL_gfx");
 #else
-	menu_credits.pages[2]->setTextLine(2, "SDL2");
-	menu_credits.pages[2]->setTextLine(3, "SDL2_image");
+	menu_credits.pages[3]->setTextLine(2, "SDL2");
+	menu_credits.pages[3]->setTextLine(3, "SDL2_image");
 #if defined(PSP)
-	menu_credits.pages[2]->setTextLine(4, "OSLibAudio");
+	menu_credits.pages[3]->setTextLine(4, "OSLibAudio");
 #else
-	menu_credits.pages[2]->setTextLine(4, "SDL2_mixer");
+	menu_credits.pages[3]->setTextLine(4, "SDL2_mixer");
 #endif
-	menu_credits.pages[2]->setTextLine(5, "SDL2_ttf");
-	menu_credits.pages[2]->setTextLine(6, "");
+	menu_credits.pages[3]->setTextLine(5, "SDL2_ttf");
+	menu_credits.pages[3]->setTextLine(6, "");
 #endif
 
-	menu_credits.pages[3]->prepareMenuPage(9, 0, 30, 20, 1);
-	menu_credits.pages[3]->setTextLine(0, "- WANT MORE? -");
-	menu_credits.pages[3]->setTextLine(1, "");
-	menu_credits.pages[3]->setTextLine(2, "Trogdor: Reburninated is available");
-	menu_credits.pages[3]->setTextLine(3, "for a wide variety of");
-	menu_credits.pages[3]->setTextLine(4, "homebrew-enabled systems, old and new.");
-	menu_credits.pages[3]->setTextLine(5, "Play it everywhere!");
-	menu_credits.pages[3]->setTextLine(6, "");
-	menu_credits.pages[3]->setTextLine(7, "https://github.com/Mips96");
-	menu_credits.pages[3]->setTextLine(8, "/Trogdor-Reburninated");
+	menu_credits.pages[4]->prepareMenuPage(9, 0, 30, 20, 1);
+	menu_credits.pages[4]->setTextLine(0, "- WANT MORE? -");
+	menu_credits.pages[4]->setTextLine(1, "");
+	menu_credits.pages[4]->setTextLine(2, "Trogdor: Reburninated is available");
+	menu_credits.pages[4]->setTextLine(3, "for a wide variety of");
+	menu_credits.pages[4]->setTextLine(4, "homebrew-enabled systems, old and new.");
+	menu_credits.pages[4]->setTextLine(5, "Play it everywhere!");
+	menu_credits.pages[4]->setTextLine(6, "");
+	menu_credits.pages[4]->setTextLine(7, "https://github.com/Mips96");
+	menu_credits.pages[4]->setTextLine(8, "/Trogdor-Reburninated");
 
 	/* Initializing Values */
 	if (!menusAreInitialized) {

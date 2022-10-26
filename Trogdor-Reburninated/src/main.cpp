@@ -374,19 +374,19 @@ int main(int argv, char** args) {
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_main.renderMenu();
 				switch (menu_main.handleInput()) {
-					case 6: // Scaling
+					case MENU_SCALING_INDEX:
 						scalingType = MENU_SCALING->index;
 						windowSizeChanged = true;
 						break;
-					case 7: // Cheats
+					case MENU_CHEATS_INDEX:
 						menu_cheats.openMenu();
 						g_sceneState = 302;
 						break;
-					case 8: // Credits
+					case MENU_CREDITS_INDEX:
 						menu_credits.openNotebook();
 						g_sceneState = 303;
 						break;
-					case 9: // Quit Game
+					case MENU_QUIT_INDEX: // Quit Game
 						isRunning = false;
 						break;
 					case -1: // Press B/Select
