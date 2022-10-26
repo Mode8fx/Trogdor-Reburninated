@@ -131,6 +131,7 @@ class MenuManager {
 class GameManager {
 	public:
 		bool initialized;                       // whether or not a game has ever been initialized
+		bool forceMusicStart;                   // whether or not music should be forced to play (this is needed for levels that shouldn't restart music upon init)
 		bool infiniteLives;                     // infinite lives cheat
 		Sint16 mans;                            // lives
 		Uint32 score;                           // score
@@ -181,6 +182,7 @@ class GameManager {
 		GameManager(MenuManager);
 		void resetAllSrcRects();
 		void setArcherFrequency();
+		void setMusic();
 		void levelInit();
 		void set_level_background(Sint16);
 		void getPlayerInput();

@@ -4,6 +4,7 @@
 #include "text_objects.h"
 #include "level_data.h"
 #include "menu.h"
+#include "config.h"
 
 extern MenuManager MM;
 extern GameManager GM;
@@ -494,6 +495,7 @@ GameManager::GameManager() {
 GameManager::GameManager(MenuManager mm) {
 	srand(SDL_GetTicks());
 	initialized = true;
+	forceMusicStart = true;
 	infiniteLives = CHEATS_INF_LIVES->isValue(0);
 	if (infiniteLives) {
 		mans = 99;
@@ -671,6 +673,70 @@ void GameManager::setArcherFrequency() {
 	}
 }
 
+void GameManager::setMusic() {
+	switch (MENU_MUSIC->index) {
+		case 1:
+			switch (level) {
+				case 4:
+				case 8:
+				case 12:
+				case 16:
+				case 20:
+				case 24:
+				case 30:
+				case 34:
+				case 38:
+				case 42:
+				case 46:
+					playMusic(MUSIC_STINKOMAN_BOSS, true);
+					break;
+				default:
+					if (level >= 46 && level <= 48) {
+						if (level == 46 || forceMusicStart) {
+							playMusic(MUSIC_STINKOMAN_MIDPOINT, true);
+						}
+					} else if (level >= 49 && level <= 50) {
+						if (level == 49 || forceMusicStart) {
+							playMusic(MUSIC_STINKOMAN_HOMESTRETCH, true);
+						}
+					} else if (level >= 91 && level <= 95) {
+						if (level == 91 || forceMusicStart) {
+							playMusic(MUSIC_STINKOMAN_LAST_10, true);
+						}
+					} else if (level >= 96 && level <= 97) {
+						if (level == 96 || forceMusicStart) {
+							playMusic(MUSIC_STINKOMAN_HOMESTRETCH, true);
+						}
+					} else if (level >= 98 && level <= 100) {
+						if (level == 98 || forceMusicStart) {
+							playMusic(MUSIC_STINKOMAN_FINAL_BOSS, true);
+						}
+					} else {
+						switch (levels[levelIndex][0]) {
+							case 1:
+								playMusic(MUSIC_STINKOMAN_DAY, true);
+								break;
+							case 2:
+								playMusic(MUSIC_STINKOMAN_EVENING, true);
+								break;
+							case 3:
+								playMusic(MUSIC_STINKOMAN_NIGHT, true);
+								break;
+							case 4:
+								playMusic(MUSIC_STINKOMAN_DAWN, true);
+								break;
+							default:
+								break;
+						}
+					}
+					break;
+			}
+			break;
+		default:
+			break;
+	}
+}
+
 void GameManager::levelInit() {
 	setBurnination(0);
 	setArcherFrequency();
@@ -733,6 +799,8 @@ void GameManager::levelInit() {
 	treasureHutFound = false;
 	inTreasureHut = false;
 	treasureHutIndex = levels[levelIndex][1];
+	setMusic();
+	forceMusicStart = false;
 }
 
 void GameManager::set_level_background(Sint16 bg_index) {
@@ -796,6 +864,7 @@ void GameManager::getPlayerInput() {
 		if (startDown && !keyHeld(INPUT_START)) {
 			startDown = false;
 			manually_paused = frameCounter_global;
+			Mix_VolumeMusic((int)(DEFAULT_MUSIC_VOLUME_NORMAL * 128.0 / 3 / 100));
 			sdl1_createTransparentScreen();
 		}
 	} else {
@@ -1308,6 +1377,8 @@ void GameManager::dm_updateFrameState() { // death message
 				} else if ((rand() % 100) < 20 * sbVoiceMult) {
 					loadAndPlaySound(SFX_SBWORST);
 				}
+			} else {
+				fadeMusic(1200);
 			}
 			break;
 		case 27:

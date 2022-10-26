@@ -12,7 +12,7 @@ void loadSaveFile() {
 	videoSettings.widthSetting = DEFAULT_WIDTH;
 	videoSettings.heightSetting = DEFAULT_HEIGHT;
 	soundSettings.musicIndex = 0;
-	soundSettings.bgmVolume = 100;
+	soundSettings.bgmVolume = DEFAULT_MUSIC_VOLUME_NORMAL;
 	soundSettings.sfxVolume = 100;
 }
 
@@ -22,7 +22,7 @@ void initializeSaveFileNew() {
 		videoSettings.widthSetting = DEFAULT_WIDTH;
 		videoSettings.heightSetting = DEFAULT_HEIGHT;
 		soundSettings.musicIndex = 0;
-		soundSettings.bgmVolume = 100;
+		soundSettings.bgmVolume = DEFAULT_MUSIC_VOLUME_NORMAL;
 		soundSettings.sfxVolume = 100;
 		SDL_RWwrite(saveFile, &videoSettings.widthSetting, sizeof(Uint16), 1);
 		SDL_RWwrite(saveFile, &videoSettings.heightSetting, sizeof(Uint16), 1);

@@ -449,24 +449,28 @@ const char *option_main_3_choices[8] = { "Every 300 points", "Every 500 points",
 const char *option_main_3_descriptions_line_1[8] = { "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "No extra lives." };
 const char *option_main_3_descriptions_line_2[8] = { "every 300 points.", "every 500 points.", "every 1000 points.", "at 500 points.", "at 500 and 1000 points.", "at 1000 points.", "at 1000 and 2000 points.", "" };
 const char *option_main_3_descriptions_line_3[8] = { "", "", "", "", "", "", "", "" };
-const char *option_main_4_descriptions_line_1[2] = { "The peasant meter decreases", "No penalty for escaped peasants." };
-const char *option_main_4_descriptions_line_2[2] = { "every time a peasant escapes.", "" };
+const char *option_main_4_choices[2] = { "Off", "Stinkoman 20X6"};
+const char *option_main_4_descriptions_line_1[2] = { "Don't play music in-game.", "Play music from Stinkoman 20X6." };
+const char *option_main_4_descriptions_line_2[2] = { "", "The song changes depending on the level." };
 const char *option_main_4_descriptions_line_3[2] = { "", "" };
-const char *option_main_5_choices[5] = { "Scaling", "Low", "Medium", "High", "Very High"};
-const char *option_main_5_descriptions_line_1[5] = { "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"};
-const char *option_main_5_descriptions_line_2[5] = { "", "", "", "", "" };
-const char *option_main_5_descriptions_line_3[5] = { "", "", "", "", "" };
-const char *option_main_6_choices[6] = { "Off", "Very Low", "Low", "Normal", "High", "Very High", };
-const char *option_main_6_descriptions_line_1[6] = { "Strong Bad does not talk.", "Strong Bad talks 50% less often.", "Strong Bad talks 25% less often.", "Strong Bad talks as often", "Strong Bad talks 25% more often.", "Strong Bad talks 50% more often." };
-const char *option_main_6_descriptions_line_2[6] = { "", "", "", "as he did in the original game.", "", "" };
-const char *option_main_6_descriptions_line_3[6] = { "", "", "", "", "", "" };
-const char *option_main_7_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "Full Game" };
-const char *option_main_7_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "Scale the game to fill the screen." };
-const char *option_main_7_descriptions_line_2[4] = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." };
-const char *option_main_7_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)" };
-const char *option_main_8_descriptions_line_1[1] = { "Toggle hidden cheats." };
-const char *option_main_9_descriptions_line_1[1] = { "View the credits." };
-const char *option_main_10_descriptions_line_1[1] = { "Quit the game." };
+const char *option_main_5_descriptions_line_1[2] = { "The peasant meter decreases", "No penalty for escaped peasants." };
+const char *option_main_5_descriptions_line_2[2] = { "every time a peasant escapes.", "" };
+const char *option_main_5_descriptions_line_3[2] = { "", "" };
+const char *option_main_6_choices[5] = { "Scaling", "Low", "Medium", "High", "Very High"};
+const char *option_main_6_descriptions_line_1[5] = { "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"};
+const char *option_main_6_descriptions_line_2[5] = { "", "", "", "", "" };
+const char *option_main_6_descriptions_line_3[5] = { "", "", "", "", "" };
+const char *option_main_7_choices[6] = { "Off", "Very Low", "Low", "Normal", "High", "Very High", };
+const char *option_main_7_descriptions_line_1[6] = { "Strong Bad does not talk.", "Strong Bad talks 50% less often.", "Strong Bad talks 25% less often.", "Strong Bad talks as often", "Strong Bad talks 25% more often.", "Strong Bad talks 50% more often." };
+const char *option_main_7_descriptions_line_2[6] = { "", "", "", "as he did in the original game.", "", "" };
+const char *option_main_7_descriptions_line_3[6] = { "", "", "", "", "", "" };
+const char *option_main_8_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "Full Game" };
+const char *option_main_8_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "Scale the game to fill the screen." };
+const char *option_main_8_descriptions_line_2[4] = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." };
+const char *option_main_8_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)" };
+const char *option_main_9_descriptions_line_1[1] = { "Toggle hidden cheats." };
+const char *option_main_10_descriptions_line_1[1] = { "View the credits." };
+const char *option_main_11_descriptions_line_1[1] = { "Quit the game." };
 const char *option_cheats_1_descriptions_line_1[1] = { "Infinite lives, play forever!" };
 const char *option_cheats_1_descriptions_line_2[1] = { "Unlocking this cheat also unlocks" };
 const char *option_cheats_1_descriptions_line_3[1] = { "more starting lives options." };
@@ -489,9 +493,9 @@ void InitializeMenus() {
 	}
 
 	/* Options Menu */
-	menu_main.prepareMenu(10, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 168 + (8 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
+	menu_main.prepareMenu(11, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 168 + (8 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
 	if (!menusAreInitialized) {
-		for (i = 0; i < 10; i++) {
+		for (i = 0; i < 11; i++) {
 			menu_main.options[i] = new MenuOption();
 		}
 	}
@@ -504,26 +508,29 @@ void InitializeMenus() {
 	MENU_EXTRA_LIVES->prepareMenuOption("Lives Interval", option_main_3_choices,
 		option_main_3_descriptions_line_1, option_main_3_descriptions_line_2, option_main_3_descriptions_line_3,
 		NULL, 8, false, 0, true);
-	MENU_PEASANT_PENALTY->prepareMenuOption("Peasant Penalty", option_on_off,
+	MENU_MUSIC->prepareMenuOption("Music", option_main_4_choices,
 		option_main_4_descriptions_line_1, option_main_4_descriptions_line_2, option_main_4_descriptions_line_3,
 		NULL, 2, false, 0, true);
-	MENU_ARCHER_FREQ->prepareMenuOption("Archer Frequency", option_main_5_choices,
+	MENU_PEASANT_PENALTY->prepareMenuOption("Peasant Penalty", option_on_off,
 		option_main_5_descriptions_line_1, option_main_5_descriptions_line_2, option_main_5_descriptions_line_3,
-		NULL, 5, false, 0, true);
-	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_6_choices,
+		NULL, 2, false, 0, true);
+	MENU_ARCHER_FREQ->prepareMenuOption("Archer Frequency", option_main_6_choices,
 		option_main_6_descriptions_line_1, option_main_6_descriptions_line_2, option_main_6_descriptions_line_3,
-		NULL, 6, false, 3, true);
-	MENU_SCALING->prepareMenuOption("Screen Scaling", option_main_7_choices,
+		NULL, 5, false, 0, true);
+	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_7_choices,
 		option_main_7_descriptions_line_1, option_main_7_descriptions_line_2, option_main_7_descriptions_line_3,
+		NULL, 6, false, 3, true);
+	MENU_SCALING->prepareMenuOption("Screen Scaling", option_main_8_choices,
+		option_main_8_descriptions_line_1, option_main_8_descriptions_line_2, option_main_8_descriptions_line_3,
 		NULL, 4, false, 0, true);
-	menu_main.options[7]->prepareMenuOption("Cheats", option_empty,
-		option_main_8_descriptions_line_1, option_empty, option_empty,
-		NULL, 1, true, 0, true);
-	menu_main.options[8]->prepareMenuOption("Credits", option_empty,
+	MENU_CHEATS->prepareMenuOption("Cheats", option_empty,
 		option_main_9_descriptions_line_1, option_empty, option_empty,
 		NULL, 1, true, 0, true);
-	menu_main.options[9]->prepareMenuOption("Quit Game", option_empty,
+	MENU_CREDITS->prepareMenuOption("Credits", option_empty,
 		option_main_10_descriptions_line_1, option_empty, option_empty,
+		NULL, 1, true, 0, true);
+	MENU_QUIT->prepareMenuOption("Quit Game", option_empty,
+		option_main_11_descriptions_line_1, option_empty, option_empty,
 		NULL, 1, true, 0, true);
 
 	/* Cheats Menu */

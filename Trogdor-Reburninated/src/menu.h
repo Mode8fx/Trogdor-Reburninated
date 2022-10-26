@@ -6,7 +6,7 @@
 #define MENU_H
 
 constexpr auto MAX_NUM_OPTION_CHOICES = 10;
-constexpr auto MAX_NUM_MENU_OPTIONS = 10;
+constexpr auto MAX_NUM_MENU_OPTIONS = 11;
 constexpr auto MAX_NUM_MENU_PAGES = 4;
 constexpr auto MAX_NUM_MENU_LINES = 9;
 
@@ -185,17 +185,25 @@ extern MenuNotebook menu_credits;
 constexpr auto MENU_STARTING_LEVEL_INDEX = 0;
 constexpr auto MENU_STARTING_LIVES_INDEX = 1;
 constexpr auto MENU_EXTRA_LIVES_INDEX = 2;
-constexpr auto MENU_PEASANT_PENALTY_INDEX = 3;
-constexpr auto MENU_ARCHER_FREQ_INDEX = 4;
-constexpr auto MENU_COMMENT_FREQ_INDEX = 5;
-constexpr auto MENU_SCALING_INDEX = 6;
+constexpr auto MENU_MUSIC_INDEX = 3;
+constexpr auto MENU_PEASANT_PENALTY_INDEX = 4;
+constexpr auto MENU_ARCHER_FREQ_INDEX = 5;
+constexpr auto MENU_COMMENT_FREQ_INDEX = 6;
+constexpr auto MENU_SCALING_INDEX = 7;
+constexpr auto MENU_CHEATS_INDEX = 8;
+constexpr auto MENU_CREDITS_INDEX = 9;
+constexpr auto MENU_QUIT_INDEX = 10;
 #define MENU_STARTING_LEVEL  menu_main.options[MENU_STARTING_LEVEL_INDEX]
 #define MENU_STARTING_LIVES  menu_main.options[MENU_STARTING_LIVES_INDEX]
 #define MENU_EXTRA_LIVES     menu_main.options[MENU_EXTRA_LIVES_INDEX]
+#define MENU_MUSIC           menu_main.options[MENU_MUSIC_INDEX]
 #define MENU_PEASANT_PENALTY menu_main.options[MENU_PEASANT_PENALTY_INDEX]
 #define MENU_ARCHER_FREQ     menu_main.options[MENU_ARCHER_FREQ_INDEX]
 #define MENU_COMMENT_FREQ    menu_main.options[MENU_COMMENT_FREQ_INDEX]
 #define MENU_SCALING         menu_main.options[MENU_SCALING_INDEX]
+#define MENU_CHEATS          menu_main.options[MENU_CHEATS_INDEX]
+#define MENU_CREDITS         menu_main.options[MENU_CREDITS_INDEX]
+#define MENU_QUIT            menu_main.options[MENU_QUIT_INDEX]
 
 constexpr auto CHEATS_INF_LIVES_INDEX = 0;
 constexpr auto CHEAT_DEBUG_MODE_INDEX = 1;

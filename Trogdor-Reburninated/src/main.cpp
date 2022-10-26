@@ -441,6 +441,9 @@ int main(int argv, char** args) {
 					if (GM.testWon() || (keyPressed(INPUT_SELECT) && GM.debugMode)) {
 						GM.updateScore(min((20 + ((GM.level / 5) + 1) * 5), 200));
 						GM.clearArrows();
+						if (GM.level <= 90 || GM.level == 95 || GM.level == 97 || GM.level == 100) {
+							fadeMusic(1200);
+						}
 						g_sceneState = 8;
 						g_frameState = 256;
 					}
@@ -463,6 +466,7 @@ int main(int argv, char** args) {
 						}
 						if (GM.startDown && !keyHeld(INPUT_START)) {
 							GM.startDown = false;
+							Mix_VolumeMusic((int)(DEFAULT_MUSIC_VOLUME_NORMAL * 128.0 / 100));
 							GM.manually_paused = 0;
 #if defined(SDL1)
 							SDL_FreeSurface(transparentScreen);
@@ -520,6 +524,8 @@ int main(int argv, char** args) {
 						}
 						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
 							g_sceneState = 3;
+							stopMusic();
+							Mix_VolumeMusic((int)(DEFAULT_MUSIC_VOLUME_NORMAL * 128.0 / 100));
 							menuMusicHasStarted = false;
 							MM = MenuManager();
 						}
@@ -545,6 +551,7 @@ int main(int argv, char** args) {
 				sprite_game_over_trogdor_ins.renderSprite_game();
 				switch (g_frameState) {
 					case 321:
+						stopMusic();
 						loadAndPlaySound(SFX_GAMEOVER);
 						if (GM.score < 2000) {
 							if (GM.arched) {
@@ -569,6 +576,7 @@ int main(int argv, char** args) {
 				// TODO: high score-related things here
 				if (keyPressed(INPUT_START)) {
 					g_sceneState = 3;
+					stopMusic();
 					menuMusicHasStarted = false;
 					MM = MenuManager();
 				}
@@ -584,6 +592,7 @@ int main(int argv, char** args) {
 					}
 					if (GM.startDown && !keyHeld(INPUT_START)) {
 						GM.startDown = false;
+						Mix_VolumeMusic((int)(DEFAULT_MUSIC_VOLUME_NORMAL * 128.0 / 100));
 						GM.manually_paused = 0;
 #if defined(SDL1)
 						SDL_FreeSurface(transparentScreen);
@@ -635,6 +644,7 @@ int main(int argv, char** args) {
 						}
 						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
 							g_sceneState = 3;
+							stopMusic();
 							menuMusicHasStarted = false;
 							MM = MenuManager();
 						}
