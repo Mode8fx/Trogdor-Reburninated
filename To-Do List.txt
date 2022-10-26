@@ -4,9 +4,6 @@ Version 1.0 [faithful recreation of original Trogdor flash game]:
 Features:
 - Finish remaining cutscenes
 - Finish Game Over screen
-Polish:
-- Move Credits screen to Options menu
-- Add "Libraries", "Coming Soon", and "Want More?" pages to Credits
 Final:
 - Update release materials (icons, descriptions, etc) for all versions: PC, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS
 - Test all versions: PC, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS

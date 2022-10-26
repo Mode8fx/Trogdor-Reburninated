@@ -7,6 +7,60 @@
 
 constexpr auto MAX_NUM_OPTION_CHOICES = 10;
 constexpr auto MAX_NUM_MENU_OPTIONS = 10;
+constexpr auto MAX_NUM_MENU_PAGES = 4;
+constexpr auto MAX_NUM_MENU_LINES = 9;
+
+/* @brief A page of text within a menu.
+* 
+* @param lines An array of TextObjects representing lines of text.
+* @param numLines The number of lines.
+* @param start_x The x-position of each line; unused if alignType is 1.
+* @param start_y The y-position of the top-most line.
+* @param spacer_y The amount that each subsequent line's y position should increase by.
+* @param alignType Align type for lines. 0 = left, 1 = center, 2 = right.
+*/
+class MenuPage {
+	public:
+		TextObject lines[MAX_NUM_MENU_LINES];
+		Sint8 numLines;
+		Sint16 start_x;
+		Sint16 start_y;
+		Sint16 spacer_y;
+		Sint8 alignType;
+		MenuPage() {}
+		void prepareMenuPage(Sint8, Sint16, Sint16, Sint16, Sint8);
+		void setTextLine(Sint8, const char[]);
+		void render();
+};
+
+/* @brief A group of pages of text within a menu. Used for multi-screen walls of text.
+* 
+* @param numPages The number of pages in the notebook.
+* @param index The current page index.
+* @param pages An array of pointers; each pointer represents a page.
+* @param pageCounter A TextObject representing the onscreen page counter.
+* @param pageCounter_x The x-position of the page counter.
+* @param pageCounter_y The y-position of the page counter.
+* @param alignType_pageCounter Align type for the page counter. 0 = left, 1 = center, 2 = right.
+*/
+class MenuNotebook {
+	public:
+		Sint8 numPages;
+		Sint8 index;
+		MenuPage *pages[MAX_NUM_MENU_PAGES];
+		TextObject pageCounter;
+		Sint16 pageCounter_x;
+		//Sint16 pageCounter_y;
+		Sint8 alignType_pageCounter;
+		MenuNotebook() {}
+		void prepareMenuNotebook(Sint8, Sint16, Sint16, Sint8);
+		void openNotebook();
+		void updatePageCounterText();
+		Sint8 handleInput();
+		void decrementPageNum();
+		void incrementPageNum();
+		void renderNotebook();
+};
 
 /* @brief A single option in a menu.
 * 
@@ -126,6 +180,7 @@ class Menu {
 
 extern Menu menu_main;
 extern Menu menu_cheats;
+extern MenuNotebook menu_credits;
 
 constexpr auto MENU_STARTING_LEVEL_INDEX = 0;
 constexpr auto MENU_STARTING_LIVES_INDEX = 1;

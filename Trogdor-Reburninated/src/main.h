@@ -77,6 +77,7 @@ bool cutsceneIsPlaying = false;
 /* Menus */
 Menu menu_main;
 Menu menu_cheats;
+MenuNotebook menu_credits;
 
 /* Audio */
 #if defined(PSP)

@@ -4,7 +4,7 @@
 #include "window.h"
 
 Sint8 currOnscreenIndex;
-Sint8 initCounter;
+Sint8 counter;
 bool menusAreInitialized = false;
 FontObject *menuFont;
 
@@ -12,11 +12,121 @@ FontObject *menuFont;
 #define CURR_OPTION_ONSCREEN options[currOnscreenIndex]
 #define CURR_SPACER_X (spacer_x * (currOnscreenIndex - topOnscreenIndex))
 
+#define CENTER_X(textObj)  OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), textObj)
 #define DESC_LINE_Y_TOP    (Sint16)(start_y_desc * screenScale_menu)
 #define DESC_LINE_Y_UPPER  (Sint16)((start_y_desc + (spacer_y_desc / 2)) * screenScale_menu)
 #define DESC_LINE_Y_MID    (Sint16)((start_y_desc + spacer_y_desc) * screenScale_menu)
 #define DESC_LINE_Y_LOWER  (Sint16)((start_y_desc + (spacer_y_desc * 3 / 2)) * screenScale_menu)
 #define DESC_LINE_Y_BOTTOM (Sint16)((start_y_desc + (spacer_y_desc * 2)) * screenScale_menu)
+
+/*************/
+/* MENU PAGE */
+/*************/
+
+void MenuPage::prepareMenuPage(Sint8 num_lines, Sint16 st_x, Sint16 st_y, Sint16 sp_y, Sint8 align_type) {
+	numLines = num_lines;
+	start_x = st_x;
+	start_y = sp_y;
+	spacer_y = sp_y;
+	alignType = align_type;
+}
+
+void MenuPage::setTextLine(Sint8 index, const char text[]) {
+	setText(text, &lines[index], menuFont);
+	switch (alignType) {
+		case 0:
+			lines[index].dstrect.x = start_x;
+			break;
+		case 1:
+			lines[index].dstrect.x = CENTER_X(lines[index]);
+			break;
+		default:
+			lines[index].dstrect.x = start_x - lines[index].dstrect.w;
+			break;
+	}
+	lines[index].dstrect.y = (Sint16)((start_y + (spacer_y * index)) * screenScale_menu);
+}
+
+void MenuPage::render() {
+	for (counter = 0; counter < numLines; counter++) {
+		renderText_menu(lines[counter], *menuFont);
+	}
+}
+
+/*****************/
+/* MENU NOTEBOOK */
+/*****************/
+
+void MenuNotebook::prepareMenuNotebook(Sint8 num_pages, Sint16 pos_x, Sint16 pos_y, Sint8 align_type) {
+	numPages = num_pages;
+	pageCounter.dstrect.y = (Sint16)(pos_y * screenScale_menu);
+	setText("(1/5)", &pageCounter, menuFont);
+	pageCounter_x = (Sint16)(pos_x * screenScale_menu);
+	alignType_pageCounter = align_type;
+	if (!menusAreInitialized) {
+		index = 0;
+	}
+	updatePageCounterText();
+}
+
+void MenuNotebook::openNotebook() {
+	index = 0;
+	updatePageCounterText();
+}
+
+void MenuNotebook::updatePageCounterText() {
+	updateText(&pageCounter, "(" + to_string((index + 1)) + "/" + to_string(numPages) + ")");
+	switch (alignType_pageCounter) {
+		case 0:
+			pageCounter.dstrect.x = pageCounter_x;
+			break;
+		case 1:
+			pageCounter.dstrect.x = pageCounter_x - (pageCounter.dstrect.w / 2);
+			break;
+		default:
+			pageCounter.dstrect.x = pageCounter_x - pageCounter.dstrect.w;
+			break;
+	}
+}
+
+Sint8 MenuNotebook::handleInput() {
+	if (keyPressed(INPUT_LEFT)) {
+		decrementPageNum();
+	}
+	if (keyPressed(INPUT_RIGHT)) {
+		incrementPageNum();
+	}
+	if (keyPressed(INPUT_A)) {
+		return index;
+	}
+	if (keyPressed(INPUT_B) || keyPressed(INPUT_SELECT)) {
+		return -1;
+	}
+	return -2;
+}
+
+void MenuNotebook::decrementPageNum() {
+	if (index > 0) {
+		index--;
+		updatePageCounterText();
+	}
+}
+
+void MenuNotebook::incrementPageNum() {
+	if (index < numPages - 1) {
+		index++;
+		updatePageCounterText();
+	}
+}
+
+void MenuNotebook::renderNotebook() {
+	pages[index]->render();
+	renderText_menu(pageCounter, *menuFont);
+}
+
+/***************/
+/* MENU OPTION */
+/***************/
 
 void MenuOption::prepareMenuOption(const char label_ptr[], const char *choice_ptr[], const char *desc_ptr_1[], const char *desc_ptr_2[], const char *desc_ptr_3[], const char altDesc_ptr[], Uint8 numCh, bool oneDesc, Uint8 start, bool wrap) {
 	labelPtr = label_ptr;
@@ -62,16 +172,16 @@ void MenuOption::updateLabel() {
 // this initializes text chars used in choices that aren't initially selected
 void MenuOption::initChoicesAndDescriptions() {
 	if (choicePtr != NULL) {
-		for (initCounter = 0; initCounter < numChoices; initCounter++) {
-			setText(choicePtr[initCounter], &choice, menuFont);
+		for (counter = 0; counter < numChoices; counter++) {
+			setText(choicePtr[counter], &choice, menuFont);
 		}
 	}
 	if (descPtr_1 != NULL) {
 		if (!oneDescription) {
-			for (initCounter = 0; initCounter < numChoices; initCounter++) {
-				setText(descPtr_1[initCounter], &description_1, menuFont);
-				setText(descPtr_2[initCounter], &description_1, menuFont);
-				setText(descPtr_3[initCounter], &description_1, menuFont);
+			for (counter = 0; counter < numChoices; counter++) {
+				setText(descPtr_1[counter], &description_1, menuFont);
+				setText(descPtr_2[counter], &description_1, menuFont);
+				setText(descPtr_3[counter], &description_1, menuFont);
 			}
 		}
 	}
@@ -122,6 +232,10 @@ void MenuOption::render(bool renderDescription) {
 bool MenuOption::isValue(Uint8 val) {
 	return (!optionIsLocked && index == val);
 }
+
+/********/
+/* MENU */
+/********/
 
 void Menu::prepareMenu(Uint8 numOpt, Uint8 numOns, SpriteObject *spriteObj, bool keepIndex, Sint8 space_scroll,
 	Sint16 st_x_label, Sint16 st_x_choice, Sint16 sp_x, Sint16 st_y_option, Sint16 st_y_desc, Sint16 sp_y_option, Sint16 sp_y_desc,
@@ -294,14 +408,14 @@ void Menu::updateOptionChoicePosition(Sint8 optionIndex) {
 
 void Menu::updateOptionDescPosition(Sint8 optionIndex) {
 	if (options[optionIndex]->description_2.dstrect.w == 0) {
-		setTextPos(&options[optionIndex]->description_1, OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), options[optionIndex]->description_1), DESC_LINE_Y_MID);
+		setTextPos(&options[optionIndex]->description_1, CENTER_X(options[optionIndex]->description_1), DESC_LINE_Y_MID);
 	} else if (options[optionIndex]->description_3.dstrect.w == 0) {
-		setTextPos(&options[optionIndex]->description_1, OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), options[optionIndex]->description_1), DESC_LINE_Y_UPPER);
-		setTextPos(&options[optionIndex]->description_2, OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), options[optionIndex]->description_2), DESC_LINE_Y_LOWER);
+		setTextPos(&options[optionIndex]->description_1, CENTER_X(options[optionIndex]->description_1), DESC_LINE_Y_UPPER);
+		setTextPos(&options[optionIndex]->description_2, CENTER_X(options[optionIndex]->description_2), DESC_LINE_Y_LOWER);
 	} else {
-		setTextPos(&options[optionIndex]->description_1, OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), options[optionIndex]->description_1), DESC_LINE_Y_TOP);
-		setTextPos(&options[optionIndex]->description_2, OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), options[optionIndex]->description_2), DESC_LINE_Y_MID);
-		setTextPos(&options[optionIndex]->description_3, OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), options[optionIndex]->description_3), DESC_LINE_Y_BOTTOM);
+		setTextPos(&options[optionIndex]->description_1, CENTER_X(options[optionIndex]->description_1), DESC_LINE_Y_TOP);
+		setTextPos(&options[optionIndex]->description_2, CENTER_X(options[optionIndex]->description_2), DESC_LINE_Y_MID);
+		setTextPos(&options[optionIndex]->description_3, CENTER_X(options[optionIndex]->description_3), DESC_LINE_Y_BOTTOM);
 	}
 }
 
@@ -320,6 +434,10 @@ void Menu::renderMenu() {
 	}
 	cursor.renderSprite_menu();
 }
+
+/***********************/
+/* MENU INITIALIZATION */
+/***********************/
 
 const char *option_on_off[2] = { "On", "Off" };
 const char *option_empty[1] = { "" };
@@ -370,6 +488,7 @@ void InitializeMenus() {
 		setFont(menuFont, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white, true);
 	}
 
+	/* Options Menu */
 	menu_main.prepareMenu(10, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 168 + (8 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
 	if (!menusAreInitialized) {
 		for (i = 0; i < 10; i++) {
@@ -413,6 +532,7 @@ void InitializeMenus() {
 		option_main_10_descriptions_line_1, option_empty, option_empty,
 		NULL, 1, true, 0, true);
 
+	/* Cheats Menu */
 	menu_cheats.prepareMenu(4, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
 	if (!menusAreInitialized) {
 		for (i = 0; i < 4; i++) {
@@ -432,6 +552,67 @@ void InitializeMenus() {
 		option_cheats_4_descriptions_line_1, option_cheats_4_descriptions_line_2, option_empty,
 		"1994 Country", 2, true, 0, true);
 
+	/* Credits Notebook */
+	menu_credits.prepareMenuNotebook(4, 304, 216, 2);
+	if (!menusAreInitialized) {
+		for (i = 0; i < 4; i++) {
+			menu_credits.pages[i] = new MenuPage();
+		}
+	}
+	menu_credits.pages[0]->prepareMenuPage(9, 0, 30, 20, 1);
+	menu_credits.pages[0]->setTextLine(0, "- ORIGINAL FLASH GAME -");
+	menu_credits.pages[0]->setTextLine(1, "");
+	menu_credits.pages[0]->setTextLine(2, "Programming: Jonathan Howe");
+	menu_credits.pages[0]->setTextLine(3, "Design: Mike Chapman, Matt Chapman");
+	menu_credits.pages[0]->setTextLine(4, "");
+	menu_credits.pages[0]->setTextLine(5, "https://homestarrunner.com");
+	menu_credits.pages[0]->setTextLine(6, "");
+	menu_credits.pages[0]->setTextLine(7, "https://www.youtube.com/user");
+	menu_credits.pages[0]->setTextLine(8, "/homestarrunnerdotcom");
+
+	menu_credits.pages[1]->prepareMenuPage(8, 0, 30, 20, 1);
+	menu_credits.pages[1]->setTextLine(0, "- THIS RECREATION -");
+	menu_credits.pages[1]->setTextLine(1, "");
+	menu_credits.pages[1]->setTextLine(2, "Mips96");
+	menu_credits.pages[1]->setTextLine(3, "");
+	menu_credits.pages[1]->setTextLine(4, "https://github.com/Mips96");
+	menu_credits.pages[1]->setTextLine(5, "/Trogdor-Reburninated");
+	menu_credits.pages[1]->setTextLine(6, "");
+	menu_credits.pages[1]->setTextLine(7, "v1.0");
+
+	menu_credits.pages[2]->prepareMenuPage(7, 0, 30, 20, 1);
+	menu_credits.pages[2]->setTextLine(0, "- LIBRARIES -");
+	menu_credits.pages[2]->setTextLine(1, "");
+#if defined(SDL1)
+	menu_credits.pages[2]->setTextLine(2, "SDL");
+	menu_credits.pages[2]->setTextLine(3, "SDL_image");
+	menu_credits.pages[2]->setTextLine(4, "SDL_mixer");
+	menu_credits.pages[2]->setTextLine(5, "SDL_ttf");
+	menu_credits.pages[2]->setTextLine(6, "SDL_gfx");
+#else
+	menu_credits.pages[2]->setTextLine(2, "SDL2");
+	menu_credits.pages[2]->setTextLine(3, "SDL2_image");
+#if defined(PSP)
+	menu_credits.pages[2]->setTextLine(4, "OSLibAudio");
+#else
+	menu_credits.pages[2]->setTextLine(4, "SDL2_mixer");
+#endif
+	menu_credits.pages[2]->setTextLine(5, "SDL2_ttf");
+	menu_credits.pages[2]->setTextLine(6, "");
+#endif
+
+	menu_credits.pages[3]->prepareMenuPage(9, 0, 30, 20, 1);
+	menu_credits.pages[3]->setTextLine(0, "- WANT MORE? -");
+	menu_credits.pages[3]->setTextLine(1, "");
+	menu_credits.pages[3]->setTextLine(2, "Trogdor: Reburninated is available");
+	menu_credits.pages[3]->setTextLine(3, "for a wide variety of");
+	menu_credits.pages[3]->setTextLine(4, "homebrew-enabled systems, old and new.");
+	menu_credits.pages[3]->setTextLine(5, "Play it everywhere!");
+	menu_credits.pages[3]->setTextLine(6, "");
+	menu_credits.pages[3]->setTextLine(7, "https://github.com/Mips96");
+	menu_credits.pages[3]->setTextLine(8, "/Trogdor-Reburninated");
+
+	/* Initializing Values */
 	if (!menusAreInitialized) {
 		MENU_STARTING_LIVES->choiceIsAllowed[6] = false;
 		MENU_STARTING_LIVES->choiceIsAllowed[7] = false;

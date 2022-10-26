@@ -410,6 +410,10 @@ int main(int argv, char** args) {
 						menu_cheats.openMenu();
 						g_sceneState = 302;
 						break;
+					case 8: // Credits
+						menu_credits.openNotebook();
+						g_sceneState = 303;
+						break;
 					case 9: // Quit Game
 						isRunning = false;
 						break;
@@ -420,13 +424,26 @@ int main(int argv, char** args) {
 						break;
 				}
 				break;
-				/* Cheats Menu */
+			/* Cheats Menu */
 			case 302:
 				g_frameState++;
-				renderOverlay = false;
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_cheats.renderMenu();
 				switch (menu_cheats.handleInput()) {
+					case -1: // Press B/Select
+						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
+						g_sceneState = 301;
+						break;
+					default:
+						break;
+				}
+				break;
+			/* Credits Screen */
+			case 303:
+				g_frameState++;
+				sprite_menu_background_ins.renderSprite_menu();
+				menu_credits.renderNotebook();
+				switch (menu_credits.handleInput()) {
 					case -1: // Press B/Select
 						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;

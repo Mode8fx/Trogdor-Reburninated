@@ -292,7 +292,7 @@ void InitializeText_HomeScreen() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), 129 * gameHiResMult);
 		SET_TEXT("https://github.com/Mips96/Trogdor-Reburninated", text_3_credits_7, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), 143 * gameHiResMult);
-		SET_TEXT("v0.9", text_3_credits_8, font_serif_white_6_mult,
+		SET_TEXT("v1.0", text_3_credits_8, font_serif_white_6_mult,
 			gameHiResWidth - (text_3_credits_8.dstrect.w * 1.5), gameHiResHeight - (text_3_credits_8.dstrect.h * 1.5));
 		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
@@ -810,7 +810,7 @@ void HandleErrorText(const char *badPath) {
 #else
 	quickErrorTextRender_1("Press ENTER/START to quit.", 0.825);
 #endif
-	quickErrorTextRender_2("[Trogdor Reburninated v1.0]", 0.9);
+	quickErrorTextRender_2("[Trogdor: Reburninated v1.0]", 0.9);
 	TTF_CloseFont(font_commodore_error_1.font);
 	TTF_CloseFont(font_commodore_error_2.font);
 
