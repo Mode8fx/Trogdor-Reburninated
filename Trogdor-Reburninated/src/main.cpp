@@ -100,10 +100,10 @@ int main(int argv, char** args) {
 			updateText(&text_4_mans_val, to_string(GM.mans));
 			updateText(&text_4_level_val, to_string(GM.level));
 			if (gameHiResMult < 2) {
-				MM.maxPageNum = 5;
+				MM.maxPageNum = 3;
 				updateText(&text_3_page, "("+to_string(MM.page)+"/"+to_string(MM.maxPageNum)+")");
 			} else {
-				MM.maxPageNum = 4;
+				MM.maxPageNum = 2;
 				if (MM.page > MM.maxPageNum) MM.page = MM.maxPageNum;
 				updateText(&text_3_page, "("+to_string(MM.page)+"/"+to_string(MM.maxPageNum)+")");
 			}
@@ -329,25 +329,6 @@ int main(int argv, char** args) {
 							renderText(text_3_hints_6, font_serif_red_6_mult);
 							renderText(text_3_hints_7, font_serif_red_6_mult);
 							break;
-						case 4:
-							renderText(text_3_credits_1, font_serif_red_6_mult);
-							renderText(text_3_credits_2, font_serif_white_6_mult);
-							renderText(text_3_credits_3, font_serif_white_6_mult);
-							renderText(text_3_credits_4, font_serif_white_6_mult);
-							renderText(text_3_credits_5, font_serif_white_6_mult);
-							renderText(text_3_credits_6, font_serif_white_6_mult);
-							renderText(text_3_credits_7, font_serif_white_6_mult);
-							renderText(text_3_credits_8, font_serif_white_6_mult);
-							break;
-						case 5:
-							renderText(text_3_coming_soon_1, font_serif_red_6_mult);
-							renderText(text_3_coming_soon_2, font_serif_white_6_mult);
-							renderText(text_3_coming_soon_3, font_serif_white_6_mult);
-							renderText(text_3_coming_soon_4, font_serif_white_6_mult);
-							renderText(text_3_coming_soon_4a, font_serif_white_6_mult);
-							renderText(text_3_coming_soon_5, font_serif_white_6_mult);
-							renderText(text_3_coming_soon_6, font_serif_white_6_mult);
-							break;
 						default:
 							break;
 					}
@@ -373,23 +354,7 @@ int main(int argv, char** args) {
 							renderText(text_3_hints_6, font_serif_red_6_mult);
 							renderText(text_3_hints_7, font_serif_red_6_mult);
 							break;
-						case 3:
-							renderText(text_3_credits_1, font_serif_red_6_mult);
-							renderText(text_3_credits_2, font_serif_white_6_mult);
-							renderText(text_3_credits_3, font_serif_white_6_mult);
-							renderText(text_3_credits_4, font_serif_white_6_mult);
-							renderText(text_3_credits_5, font_serif_white_6_mult);
-							renderText(text_3_credits_6, font_serif_white_6_mult);
-							renderText(text_3_credits_7, font_serif_white_6_mult);
-							renderText(text_3_credits_8, font_serif_white_6_mult);
-							break;
 						default:
-							renderText(text_3_coming_soon_1, font_serif_red_6_mult);
-							renderText(text_3_coming_soon_2, font_serif_white_6_mult);
-							renderText(text_3_coming_soon_3, font_serif_white_6_mult);
-							renderText(text_3_coming_soon_4, font_serif_white_6_mult);
-							renderText(text_3_coming_soon_5, font_serif_white_6_mult);
-							renderText(text_3_coming_soon_6, font_serif_white_6_mult);
 							break;
 					}
 				}

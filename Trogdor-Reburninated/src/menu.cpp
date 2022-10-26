@@ -510,16 +510,10 @@ void InitializeMenus() {
 	MENU_ARCHER_FREQ->prepareMenuOption("Archer Frequency", option_main_5_choices,
 		option_main_5_descriptions_line_1, option_main_5_descriptions_line_2, option_main_5_descriptions_line_3,
 		NULL, 5, false, 0, true);
-	if (screenScale_menu < 2) {
-		MENU_COMMENT_FREQ->prepareMenuOption("Commentary Freq.", option_main_6_choices,
-			option_main_6_descriptions_line_1, option_main_6_descriptions_line_2, option_main_6_descriptions_line_3,
-			NULL, 6, false, 3, true);
-	} else {
-		MENU_COMMENT_FREQ->prepareMenuOption("Commentary Frequency", option_main_6_choices,
-			option_main_6_descriptions_line_1, option_main_6_descriptions_line_2, option_main_6_descriptions_line_3,
-			NULL, 6, false, 3, true);
-	}
-	MENU_SCALING->prepareMenuOption("Scaling", option_main_7_choices,
+	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_6_choices,
+		option_main_6_descriptions_line_1, option_main_6_descriptions_line_2, option_main_6_descriptions_line_3,
+		NULL, 6, false, 3, true);
+	MENU_SCALING->prepareMenuOption("Screen Scaling", option_main_7_choices,
 		option_main_7_descriptions_line_1, option_main_7_descriptions_line_2, option_main_7_descriptions_line_3,
 		NULL, 4, false, 0, true);
 	menu_main.options[7]->prepareMenuOption("Cheats", option_empty,

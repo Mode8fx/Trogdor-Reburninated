@@ -125,7 +125,7 @@ void InitializeFontsAndText() {
 
 void InitializeText_HomeScreen() {
 	if (gameHiResMult < 2) {
-		SET_TEXT("(1/5)", text_3_page, font_serif_white_6_mult,
+		SET_TEXT("(1/3)", text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
 #if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
@@ -191,37 +191,8 @@ void InitializeText_HomeScreen() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_6), 115 * gameHiResMult);
 		SET_TEXT("- Secret Code?!?!", text_3_hints_7, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_7), 129 * gameHiResMult);
-		SET_TEXT("CREDITS", text_3_credits_1, font_serif_red_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_1), 59 * gameHiResMult);
-		SET_TEXT("- ORIGINAL FLASH GAME -", text_3_credits_2, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_2), 73 * gameHiResMult);
-		SET_TEXT("Programming: Jonathan Howe", text_3_credits_3, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_3), 87 * gameHiResMult);
-		// credits for the HTML5 version will be added when stuff from the HTML5 version is added to this version
-		SET_TEXT("Design: Mike & Matt Chapman", text_3_credits_4, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_4), 101 * gameHiResMult);
-		SET_TEXT("- THIS RECREATION -", text_3_credits_5, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_5), 115 * gameHiResMult);
-		SET_TEXT("Mips96", text_3_credits_6, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), 129 * gameHiResMult);
-		SET_TEXT("https://github.com/Mips96", text_3_credits_7, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), 143 * gameHiResMult);
-		SET_TEXT("v1.0", text_3_credits_8, font_serif_white_6_mult,
-			gameHiResWidth - (text_3_credits_8.dstrect.w * 1.5), gameHiResHeight - (text_3_credits_8.dstrect.h * 1.5));
-		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, font_serif_red_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
-		SET_TEXT("\"Version 1.5\"", text_3_coming_soon_2, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_2), 73 * gameHiResMult);
-		SET_TEXT("-Restored High Scores screen!", text_3_coming_soon_3, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), 87 * gameHiResMult);
-		SET_TEXT("-More options!", text_3_coming_soon_4, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), 101 * gameHiResMult);
-		SET_TEXT("-Save data support!", text_3_coming_soon_5, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 115 * gameHiResMult);
-		SET_TEXT("-And more!", text_3_coming_soon_6, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 129 * gameHiResMult);
 	} else {
-		SET_TEXT("(1/4)", text_3_page, font_serif_white_6_mult,
+		SET_TEXT("(1/2)", text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
 #if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
@@ -277,35 +248,6 @@ void InitializeText_HomeScreen() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_6), 129 * gameHiResMult);
 		SET_TEXT("- Secret Code?!?!", text_3_hints_7, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_7), 143 * gameHiResMult);
-		SET_TEXT("CREDITS", text_3_credits_1, font_serif_red_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_1), 59 * gameHiResMult);
-		SET_TEXT("- ORIGINAL FLASH GAME -", text_3_credits_2, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_2), 73 * gameHiResMult);
-		SET_TEXT("Programming: Jonathan Howe", text_3_credits_3, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_3), 87 * gameHiResMult);
-		// credits for the HTML5 version will be added when stuff from the HTML5 version is added to this version
-		SET_TEXT("Design: Mike Chapman, Matt Chapman", text_3_credits_4, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_4), 101 * gameHiResMult);
-		SET_TEXT("- THIS RECREATION -", text_3_credits_5, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_5), 115 * gameHiResMult);
-		SET_TEXT("Mips96", text_3_credits_6, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_6), 129 * gameHiResMult);
-		SET_TEXT("https://github.com/Mips96/Trogdor-Reburninated", text_3_credits_7, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_credits_7), 143 * gameHiResMult);
-		SET_TEXT("v1.0", text_3_credits_8, font_serif_white_6_mult,
-			gameHiResWidth - (text_3_credits_8.dstrect.w * 1.5), gameHiResHeight - (text_3_credits_8.dstrect.h * 1.5));
-		SET_TEXT("COMING SOON (?)", text_3_coming_soon_1, font_serif_red_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_1), 59 * gameHiResMult);
-		SET_TEXT("\"Version 1.5\"", text_3_coming_soon_2, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_2), 73 * gameHiResMult);
-		SET_TEXT("-Restored High Scores screen!", text_3_coming_soon_3, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_3), 87 * gameHiResMult);
-		SET_TEXT("-More options!", text_3_coming_soon_4, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_4), 101 * gameHiResMult);
-		SET_TEXT("-Save data support!", text_3_coming_soon_5, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_5), 115 * gameHiResMult);
-		SET_TEXT("-And more!", text_3_coming_soon_6, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_coming_soon_6), 129 * gameHiResMult);
 	}
 }
 

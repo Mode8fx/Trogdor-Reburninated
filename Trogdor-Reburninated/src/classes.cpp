@@ -430,9 +430,9 @@ MenuManager::MenuManager() {
 	dkcIndex = 0;
 	page = 1;
 	if (gameHiResMult < 2) {
-		maxPageNum = 5;
+		maxPageNum = 3;
 	} else {
-		maxPageNum = 4;
+		maxPageNum = 2;
 	}
 }
 
