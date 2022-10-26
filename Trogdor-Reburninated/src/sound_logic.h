@@ -14,8 +14,10 @@ constexpr auto SFX_CHANNEL_STRONG_BAD = NUM_SOUND_CHANNELS - 1; // highest chann
 
 #if !defined(PSP)
 constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.wav";
+constexpr auto MUSIC_MENU = "music/trogdor_soundboard_music_trogkaraoke.wav";
 #else
 constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.bgm";
+constexpr auto MUSIC_MENU = "music/trogdor_soundboard_music_trogkaraoke.bgm";
 #endif
 
 struct SoundEffect {
@@ -52,6 +54,7 @@ extern void playMusic(const char *, bool);
 extern void playMusicAtIndex(Uint8);
 extern void stopMusic();
 extern void pauseMusic();
+extern void resumeMusic();
 extern void loadAndPlaySound(SoundEffect *);
 extern void makeSoundStatic(SoundEffect *);
 extern void freeFinishedSoundChunks();

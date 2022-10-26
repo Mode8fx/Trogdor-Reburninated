@@ -7,6 +7,7 @@
 
 bool renderOverlay;
 bool showOverlay = true;
+bool menuMusicHasStarted = false;
 
 int main(int argv, char** args) {
 	isRunning = true;
@@ -295,6 +296,12 @@ int main(int argv, char** args) {
 					} else if (keyPressed(INPUT_SELECT)) {
 						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						menu_main.openMenu();
+						if (!menuMusicHasStarted) {
+							playMusic(MUSIC_MENU, true);
+							menuMusicHasStarted = true;
+						} else {
+							resumeMusic();
+						}
 						g_sceneState = 301;
 					}
 				}
@@ -384,6 +391,7 @@ int main(int argv, char** args) {
 						break;
 					case -1: // Press B/Select
 						g_sceneState = 3;
+						pauseMusic();
 						break;
 					default:
 						break;
@@ -512,6 +520,7 @@ int main(int argv, char** args) {
 						}
 						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
 							g_sceneState = 3;
+							menuMusicHasStarted = false;
 							MM = MenuManager();
 						}
 					}
@@ -558,8 +567,9 @@ int main(int argv, char** args) {
 						break;
 				}
 				// TODO: high score-related things here
-				if (keyPressed(INPUT_START)) { // TODO: placeholder; remove this later
+				if (keyPressed(INPUT_START)) {
 					g_sceneState = 3;
+					menuMusicHasStarted = false;
 					MM = MenuManager();
 				}
 				if (g_sceneState == 5) {
@@ -625,6 +635,7 @@ int main(int argv, char** args) {
 						}
 						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
 							g_sceneState = 3;
+							menuMusicHasStarted = false;
 							MM = MenuManager();
 						}
 					}

@@ -13,6 +13,7 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #define STOP_MUSIC()           oslStopSound(bgm)
 #define FREE_MUSIC()           oslDeleteSound(bgm)
 #define PAUSE_MUSIC()          oslPauseSound(bgm, 1)
+#define RESUME_MUSIC()         oslPauseSound(bgm, 0)
 #define LOAD_SFX(path)         oslLoadSoundFile((rootDir + path).c_str(), OSL_FMT_NONE)
 #define PLAY_SFX(sfx, channel) oslPlaySound(sfx->chunk, channel)
 #define FREE_SFX(sfx)          oslDeleteSound(sfx->chunk)
@@ -21,6 +22,7 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #define STOP_MUSIC()           NULL
 #define FREE_MUSIC()           NULL
 #define PAUSE_MUSIC()          NULL
+#define RESUME_MUSIC()         NULL
 #define LOAD_SFX(path)         NULL
 #define PLAY_SFX(sfx, channel) NULL
 #define FREE_SFX(sfx)          NULL
@@ -29,6 +31,7 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #define STOP_MUSIC()           Mix_HaltMusic()
 #define FREE_MUSIC()           Mix_FreeMusic(bgm)
 #define PAUSE_MUSIC()          Mix_PauseMusic()
+#define RESUME_MUSIC()         Mix_ResumeMusic()
 #define LOAD_SFX(path)         Mix_LoadWAV((rootDir + path).c_str())
 #define PLAY_SFX(sfx, channel) Mix_PlayChannel(channel, sfx->chunk, 0)
 #define FREE_SFX(sfx)          Mix_FreeChunk(sfx->chunk)
@@ -73,6 +76,10 @@ void stopMusic() {
 
 void pauseMusic() {
 	PAUSE_MUSIC();
+}
+
+void resumeMusic() {
+	RESUME_MUSIC();
 }
 
 void loadAndPlaySound(SoundEffect *sfx) {
