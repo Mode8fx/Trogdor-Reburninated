@@ -59,12 +59,7 @@ void InitializeCutsceneObjects() {
 	cutscene_peasant_8 = SpriteInstance(&sprite_peasant, 0, 0);
 	cutscene_peasant_9 = SpriteInstance(&sprite_peasant, 0, 0);
 	cutscene_peasant_10 = SpriteInstance(&sprite_peasant, 0, 0);
-	cutscene_trogdor_1 = SpriteInstance(&sprite_trogdor, 0, 0);
-	cutscene_trogdor_2 = SpriteInstance(&sprite_trogdor, 0, 0);
-	cutscene_trogdor_3 = SpriteInstance(&sprite_trogdor, 0, 0);
-	cutscene_trogdor_4 = SpriteInstance(&sprite_trogdor, 0, 0);
-	cutscene_trogdor_5 = SpriteInstance(&sprite_trogdor, 0, 0);
-	cutscene_trogdor_6 = SpriteInstance(&sprite_trogdor, 0, 0);
+	InitializeCutsceneObjects_trogdor();
 	cutscene_trogdor_fire = SpriteInstance(&sprite_trogdor_fire, 0, 0);
 	cutscene_trogdor_flexing = SpriteInstance(&sprite_trogdor_flexing, 0, 0);
 	cutscene_trogdor_ending = SpriteInstance(&sprite_trogdor_ending, 0, 0);
@@ -83,6 +78,24 @@ void InitializeCutsceneObjects() {
 	cutscene_arrow_1 = SpriteInstance(&sprite_arrow_funnyjoke, 0, 0);
 	cutscene_arrow_2 = SpriteInstance(&sprite_arrow_funnyjoke, 0, 0);
 	cutscene_arrow_3 = SpriteInstance(&sprite_arrow_funnyjoke, 0, 0);
+}
+
+void InitializeCutsceneObjects_trogdor() {
+	if (GM.bigHeadMode) {
+		cutscene_trogdor_1 = SpriteInstance(&sprite_trogdor_bighead, 0, 0);
+		cutscene_trogdor_2 = SpriteInstance(&sprite_trogdor_bighead, 0, 0);
+		cutscene_trogdor_3 = SpriteInstance(&sprite_trogdor_bighead, 0, 0);
+		cutscene_trogdor_4 = SpriteInstance(&sprite_trogdor_bighead, 0, 0);
+		cutscene_trogdor_5 = SpriteInstance(&sprite_trogdor_bighead, 0, 0);
+		cutscene_trogdor_6 = SpriteInstance(&sprite_trogdor_bighead, 0, 0);
+	} else {
+		cutscene_trogdor_1 = SpriteInstance(&sprite_trogdor, 0, 0);
+		cutscene_trogdor_2 = SpriteInstance(&sprite_trogdor, 0, 0);
+		cutscene_trogdor_3 = SpriteInstance(&sprite_trogdor, 0, 0);
+		cutscene_trogdor_4 = SpriteInstance(&sprite_trogdor, 0, 0);
+		cutscene_trogdor_5 = SpriteInstance(&sprite_trogdor, 0, 0);
+		cutscene_trogdor_6 = SpriteInstance(&sprite_trogdor, 0, 0);
+	}
 }
 
 void cutscene_level_beaten() {
@@ -366,7 +379,7 @@ void cutscene_level_20() {
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
 			cutscene_trogdor_flexing.isActive = false;
-			cutscene_trogdor_flexing.prepareAsCSO(92, 72, 0, 0, 0, 0, 0, 0);
+			cutscene_trogdor_flexing.prepareAsCSO(92, 72, 0, GM.bigHeadMode, 0, 0, 0, 0);
 			break;
 		case 729:
 		case 747:
@@ -822,6 +835,14 @@ void cutscene_level_100() {
 			cutsceneIsPlaying = true;
 			cutscene_level_100_screen_counter = 0;
 			cutscene_strong_bad.isActive = false;
+			cutscene_trogdor_1.isActive = false;
+			cutscene_peasant_1.isActive = false;
+			cutscene_knight_1.isActive = false;
+			cutscene_archer_1.isActive = false;
+			cutscene_archer_2.isActive = false;
+			cutscene_kerrek.isActive = false;
+			cutscene_trogdor_ending.isActive = false;
+			cutscene_strong_bad_ending.isActive = false;
 			break;
 		case 1347:
 			cutscene_strong_bad.prepareAsCSO(220, 100, 0, 0, 1, 0, -3.372, 0);
@@ -873,30 +894,47 @@ void cutscene_level_100() {
 			break;
 		case 1522:
 			cutscene_level_100_screen_counter++;
+			cutscene_trogdor_1.prepareAsCSO(107, 83, 0, 1, 0, 0, 0, 0);
 			break;
 		case 1543:
 			cutscene_level_100_screen_counter++;
+			cutscene_trogdor_1.isActive = false;
+			cutscene_peasant_1.prepareAsCSO(115, 91, 0, 0, 0, 0, 0, 0);
 			break;
 		case 1562:
 			cutscene_level_100_screen_counter++;
+			cutscene_peasant_1.prepareAsCSO(115, 91, 1, 0, 0, 0, 0, 0);
 			break;
 		case 1582:
 			cutscene_level_100_screen_counter++;
+			cutscene_peasant_1.prepareAsCSO(115, 91, 0, 1, 0, 0, 0, 0);
 			break;
 		case 1601:
 			cutscene_level_100_screen_counter++;
+			cutscene_peasant_1.isActive = false;
+			cutscene_knight_1.prepareAsCSO(117, 91, 0, 1, 0, 0, 0, 0);
 			break;
 		case 1621:
 			cutscene_level_100_screen_counter++;
+			cutscene_knight_1.prepareAsCSO(115, 91, 1, 0, 0, 0, 0, 0);
 			break;
 		case 1641:
 			cutscene_level_100_screen_counter++;
+			cutscene_knight_1.isActive = false;
+			cutscene_archer_1.prepareAsCSO(106, 94, 1, 0, 0, 0, 0, 0);
+			cutscene_archer_2.prepareAsCSO(106 + (double)cutscene_archer_1.spriteObj->dstrect.w, 94, 0, 1, 0, 0, 0, 0);
 			break;
 		case 1660:
 			cutscene_level_100_screen_counter++;
+			cutscene_archer_1.isActive = false;
+			cutscene_archer_2.isActive = false;
+			cutscene_kerrek.prepareAsCSO(106, 73, 0, 0, 0, 0, 0, 0);
 			break;
 		case 1681:
 			cutscene_level_100_screen_counter++;
+			cutscene_kerrek.isActive = false;
+			cutscene_trogdor_ending.prepareAsCSO(90, 84, 0, GM.bigHeadMode, 0, 0, 0, 0);
+			cutscene_strong_bad_ending.prepareAsCSO(138, 94, 0, 0, 0, 0, 0, 0);
 			break;
 		case 1716:
 			cutsceneIsPlaying = false;
@@ -909,13 +947,16 @@ void cutscene_level_100() {
 			cutscene_strong_bad.renderAsCSO(false);
 			break;
 		case 1:
+			cutscene_strong_bad.renderAsCSO(false);
 			renderText(text_23_cutscene_1, font_serif_white_9);
 			break;
 		case 2:
+			cutscene_strong_bad.renderAsCSO(false);
 			renderText(text_23_cutscene_1, font_serif_white_9);
 			renderText(text_23_cutscene_2, font_serif_white_9);
 			break;
 		case 3:
+			cutscene_strong_bad.renderAsCSO(false);
 			renderText(text_23_cutscene_1, font_serif_white_9);
 			renderText(text_23_cutscene_2, font_serif_white_9);
 			renderText(text_23_cutscene_3, font_serif_white_9);
@@ -924,32 +965,43 @@ void cutscene_level_100() {
 			renderText(text_23_cutscene_4, font_serif_white_9);
 			break;
 		case 5:
+			cutscene_trogdor_1.renderAsCSO(false);
 			renderText(text_23_cutscene_5, font_serif_white_9);
 			break;
 		case 6:
+			cutscene_peasant_1.renderAsCSO(false);
 			renderText(text_23_cutscene_6, font_serif_white_9);
 			break;
 		case 7:
+			cutscene_peasant_1.renderAsCSO(false);
 			renderText(text_23_cutscene_7, font_serif_white_9);
 			break;
 		case 8:
+			cutscene_peasant_1.renderAsCSO(false);
 			renderText(text_23_cutscene_8, font_serif_white_9);
 			break;
 		case 9:
+			cutscene_knight_1.renderAsCSO(false);
 			renderText(text_23_cutscene_9, font_serif_white_9);
 			break;
 		case 10:
+			cutscene_knight_1.renderAsCSO(false);
 			renderText(text_23_cutscene_10, font_serif_white_9);
 			break;
 		case 11:
+			cutscene_archer_1.renderAsCSO(false);
+			cutscene_archer_2.renderAsCSO(false);
 			renderText(text_23_cutscene_11, font_serif_white_9);
 			renderText(text_23_cutscene_12, font_serif_white_9);
 			break;
 		case 12:
+			cutscene_kerrek.renderAsCSO(false);
 			renderText(text_23_cutscene_13, font_serif_white_9);
 			renderText(text_23_cutscene_14, font_serif_white_9);
 			break;
 		case 13:
+			cutscene_trogdor_ending.renderAsCSO(false);
+			cutscene_strong_bad_ending.renderAsCSO(false);
 			renderText(text_23_cutscene_15, font_serif_white_9);
 			break;
 		default:

@@ -542,17 +542,17 @@ void InitializeSpritesPart2() {
 		0, 0, 2, 4, 1);
 	if (gameHiResMult < 1.5) {
 		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor.bmp").c_str(),
-			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 2, 1, 2);
+			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 2, 2);
 	} else { // TODO: this could be polished a bit further for (1.5 <= gameHiResMult < 2)
 		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor.bmp").c_str(),
-			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 2, 1, 1.5);
+			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 2, 1.5);
 	}
 	PREPARE_SPRITE(sprite_loot, (rootDir + "graphics/loot.bmp").c_str(),
 		0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_trogdor_flexing, (rootDir + "graphics/trogdor_flexing.bmp").c_str(),
 		0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_trogdor_ending, (rootDir + "graphics/trogdor_ending.bmp").c_str(),
-		0, 0, 1, 1, 1);
+		0, 0, 1, 2, 1);
 	PREPARE_SPRITE(sprite_heart, (rootDir + "graphics/heart.bmp").c_str(),
 		0, 0, 5, 1, 1);
 	PREPARE_SPRITE(sprite_knight_funnyjoke, (rootDir + "graphics/knight_funnyjoke.bmp").c_str(),

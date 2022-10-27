@@ -324,7 +324,7 @@ Trogdor::Trogdor(bool bigHead = false) {
 	if (bigHead) {
 		sprite = SpriteInstance(&sprite_trogdor_bighead, 0, 1, 0, 0);
 		sprite_death = SpriteInstance(&sprite_trogdor_dead, 0, 1);
-		sprite_end_of_level = SpriteInstance(&sprite_end_of_level_trogdor, 1, 0);
+		sprite_end_of_level = SpriteInstance(&sprite_end_of_level_trogdor, 0, 1);
 	} else {
 		sprite = SpriteInstance(&sprite_trogdor, 0, 1, 0, 0);
 		sprite_death = SpriteInstance(&sprite_trogdor_dead, 0, 0);
@@ -525,7 +525,8 @@ GameManager::GameManager(MenuManager mm) {
 	setBurnination(0);
 	archerFrequency = 0;
 	burnRate = 0;
-	player = Trogdor(CHEAT_BIG_HEAD_MODE->isValue(0));
+	bigHeadMode = CHEAT_BIG_HEAD_MODE->isValue(0);
+	player = Trogdor(bigHeadMode);
 	player.sprite.facingRight = true;
 	knightIncrement = 1;
 	switch (CHEAT_BIG_HEAD_MODE->index) {

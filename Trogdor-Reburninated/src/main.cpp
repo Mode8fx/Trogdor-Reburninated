@@ -292,6 +292,7 @@ int main(int argv, char** args) {
 						updateText(&text_4_score_val, to_string(GM.score));
 						updateText(&text_4_mans_val, to_string(GM.mans));
 						updateText(&text_4_level_val, to_string(GM.level));
+						InitializeCutsceneObjects_trogdor(); // needed in case Big Head Mode was toggled
 						g_sceneState = 4;
 					} else if (keyPressed(INPUT_SELECT)) {
 						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
