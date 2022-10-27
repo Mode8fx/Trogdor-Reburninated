@@ -883,6 +883,10 @@ void cutscene_level_50() {
 		default:
 			break;
 	}
+	cutscene_trogdor_1.renderAsCSO(false);
+	cutscene_trogdor_fire.renderAsCSO(false);
+	cutscene_kerrek.renderAsCSO(false);
+	cutscene_kerrek_smoked.renderAsCSO(false);
 	renderText(text_22_cutscene, font_serif_white_9);
 }
 

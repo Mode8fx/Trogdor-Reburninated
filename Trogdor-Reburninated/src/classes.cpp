@@ -862,7 +862,7 @@ void GameManager::getPlayerInput() {
 		if (startDown && !keyHeld(INPUT_START)) {
 			startDown = false;
 			manually_paused = frameCounter_global;
-			setVolume_music(DEFAULT_VOLUME_MUSIC / 3.0);
+			setVolume_music(DEFAULT_VOLUME_MUSIC / 3);
 			sdl1_createTransparentScreen();
 		}
 	} else {
