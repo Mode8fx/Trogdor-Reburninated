@@ -560,7 +560,7 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_arrow_funnyjoke, (rootDir + "graphics/arrow_funnyjoke.bmp").c_str(),
 		0, 0, 4, 1, 1);
 	PREPARE_SPRITE(sprite_kerrek, (rootDir + "graphics/kerrek.bmp").c_str(),
-		0, 0, 8, 1, 1);
+		0, 0, 9, 1, 1);
 	PREPARE_SPRITE(sprite_kerrek_smoked, (rootDir + "graphics/kerrek_smoked.bmp").c_str(),
 		0, 0, 5, 1, 1);
 	PREPARE_SPRITE(sprite_strong_bad, (rootDir + "graphics/strong_bad.bmp").c_str(),

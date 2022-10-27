@@ -2,7 +2,6 @@ To-Do List
 
 Version 1.0 [faithful recreation of original Trogdor flash game]:
 Features:
-- Finish remaining cutscenes
 - Finish Game Over screen
 Final:
 - Update release materials (icons, descriptions, etc) for all versions: PC, Switch, Wii U, Wii, Gamecube, Vita, PSP, 3DS

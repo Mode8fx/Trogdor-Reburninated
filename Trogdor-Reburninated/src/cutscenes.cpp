@@ -814,6 +814,63 @@ void cutscene_level_50() {
 		case 1226:
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
+			cutscene_trogdor_1.isActive = false;
+			cutscene_trogdor_fire.isActive = false;
+			cutscene_kerrek.isActive = false;
+			cutscene_kerrek_smoked.isActive = false;
+			cutscene_trogdor_1.prepareAsCSO(77, 90, 0, 0, 0, 0, 0, 0);
+			cutscene_kerrek.prepareAsCSO(132, 75, 0, 0, 0, 0, 0, 0);
+			break;
+		case 1235:
+			cutscene_kerrek.setFrame(1);
+			break;
+		case 1237:
+			cutscene_kerrek.setFrame(0);
+			break;
+		case 1243:
+			cutscene_kerrek.setFrame(1);
+			break;
+		case 1245:
+			cutscene_kerrek.setFrame(0);
+			break;
+		case 1251:
+			cutscene_kerrek.setFrame(1);
+			break;
+		case 1253:
+			cutscene_kerrek.setFrame(0);
+			break;
+		case 1260:
+			cutscene_trogdor_fire.prepareAsCSO(114, 99, 0, 1, 2, 0, 0, 0);
+			cutscene_kerrek.setFrame(1);
+			break;
+		case 1262:
+			cutscene_kerrek.setFrame(0);
+			break;
+		case 1267:
+			cutscene_kerrek.prepareAsCSO(132, 75, 2, 0, 2, 0, 0, 0);
+			break;
+		case 1275:
+			cutscene_trogdor_fire.isActive = false;
+			break;
+		case 1281:
+			cutscene_kerrek.isActive = false;
+			cutscene_kerrek_smoked.prepareAsCSO(136, 88, 0, 0, 0, 0, 0, 0);
+			break;
+		case 1282:
+			cutscene_kerrek_smoked.setFrame(1);
+			break;
+		case 1287:
+			cutscene_kerrek_smoked.prepareAsCSO(136, 106, 2, 0, 0, 0, 0, 0);
+			break;
+		case 1288:
+		case 1290:
+			cutscene_kerrek_smoked.prepareAsCSO(136, 116, 3, 0, 0, 0, 0, 0);
+			break;
+		case 1289:
+			cutscene_kerrek_smoked.prepareAsCSO(135, 119, 4, 0, 0, 0, 0, 0);
+			break;
+		case 1291:
+			cutscene_kerrek_smoked.prepareAsCSO(137, 120, 1, 0, 0, 0, 0, 0);
 			break;
 		case 1297:
 			if (rand() % 100 < 50 * GM.sbVoiceMult) {
