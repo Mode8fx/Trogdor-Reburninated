@@ -707,28 +707,29 @@ void cutscene_level_46_arrow_helper(SpriteInstance *arrowObj, Sint16 startingFra
 	switch (g_frameState - startingFrame) {
 		case 0:
 			cutscene_archer_1.setFrame(1);
-			// arrow prepare
+			arrowObj->isActive = true;
+			arrowObj->prepareAsCSO(223, 93, 0, 0, 0, 0, 0, 0);
 			break;
 		case 3:
 			cutscene_archer_1.setFrame(0);
-			// arrow fire
+			arrowObj->prepareAsCSO(199, 93, 0, 0, 0, 0, -18.343, 0);
 			break;
 		case 11:
 			cutscene_knight_funnyjoke.setFrame(1);
-			// arrow bounce 1
+			arrowObj->prepareAsCSO(84, 84, 1, 0, 0, 0, 0, 0);
 			break;
 		case 12:
 			cutscene_knight_funnyjoke.setFrame(0);
-			// arrow bounce 2
+			arrowObj->prepareAsCSO(100, 83, 2, 0, 0, 0, 0, 0);
 			break;
 		case 13:
-			// arrow bounce 3
+			arrowObj->prepareAsCSO(124, 103, 3, 0, 0, 0, 0, 0);
 			break;
 		case 14:
-			// arrow bounce 4
+			arrowObj->setPos(134, 119);
 			break;
 		case 15:
-			// arrow disable
+			arrowObj->isActive = false;
 			break;
 		default:
 			break;
@@ -743,6 +744,9 @@ void cutscene_level_46() {
 			cutscene_knight_funnyjoke.isActive = false;
 			cutscene_knight_1.isActive = false;
 			cutscene_archer_1.isActive = false;
+			cutscene_arrow_1.isActive = false;
+			cutscene_arrow_2.isActive = false;
+			cutscene_arrow_3.isActive = false;
 			cutscene_knight_funnyjoke.prepareAsCSO(58, 91, 0, 0, 0, 0, 0, 0);
 			break;
 		case 1166:
@@ -778,6 +782,9 @@ void cutscene_level_46() {
 	cutscene_knight_funnyjoke.renderAsCSO(false);
 	cutscene_knight_1.renderAsCSO(false);
 	cutscene_archer_1.renderAsCSO(false);
+	cutscene_arrow_1.renderAsCSO(false);
+	cutscene_arrow_2.renderAsCSO(false);
+	cutscene_arrow_3.renderAsCSO(false);
 	renderText(text_21_cutscene, font_serif_white_9);
 }
 
