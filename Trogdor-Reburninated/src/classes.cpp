@@ -685,42 +685,42 @@ void GameManager::setMusic() {
 				case 38:
 				case 42:
 				case 46:
-					playMusic(MUSIC_STINKOMAN_BOSS, true);
+					playMusic(MUSIC_STINKOMAN_BOSS, true, DEFAULT_VOLUME_MUSIC);
 					break;
 				default:
 					if (level >= 46 && level <= 48) {
 						if (level == 46 || forceMusicStart) {
-							playMusic(MUSIC_STINKOMAN_MIDPOINT, true);
+							playMusic(MUSIC_STINKOMAN_MIDPOINT, true, DEFAULT_VOLUME_MUSIC);
 						}
 					} else if (level >= 49 && level <= 50) {
 						if (level == 49 || forceMusicStart) {
-							playMusic(MUSIC_STINKOMAN_HOMESTRETCH, true);
+							playMusic(MUSIC_STINKOMAN_HOMESTRETCH, true, DEFAULT_VOLUME_MUSIC);
 						}
 					} else if (level >= 91 && level <= 95) {
 						if (level == 91 || forceMusicStart) {
-							playMusic(MUSIC_STINKOMAN_LAST_10, true);
+							playMusic(MUSIC_STINKOMAN_LAST_10, true, DEFAULT_VOLUME_MUSIC);
 						}
 					} else if (level >= 96 && level <= 97) {
 						if (level == 96 || forceMusicStart) {
-							playMusic(MUSIC_STINKOMAN_HOMESTRETCH, true);
+							playMusic(MUSIC_STINKOMAN_HOMESTRETCH, true, DEFAULT_VOLUME_MUSIC);
 						}
 					} else if (level >= 98 && level <= 100) {
 						if (level == 98 || forceMusicStart) {
-							playMusic(MUSIC_STINKOMAN_FINAL_BOSS, true);
+							playMusic(MUSIC_STINKOMAN_FINAL_BOSS, true, DEFAULT_VOLUME_MUSIC);
 						}
 					} else {
 						switch (levels[levelIndex][0]) {
 							case 1:
-								playMusic(MUSIC_STINKOMAN_DAY, true);
+								playMusic(MUSIC_STINKOMAN_DAY, true, DEFAULT_VOLUME_MUSIC);
 								break;
 							case 2:
-								playMusic(MUSIC_STINKOMAN_EVENING, true);
+								playMusic(MUSIC_STINKOMAN_EVENING, true, DEFAULT_VOLUME_MUSIC);
 								break;
 							case 3:
-								playMusic(MUSIC_STINKOMAN_NIGHT, true);
+								playMusic(MUSIC_STINKOMAN_NIGHT, true, DEFAULT_VOLUME_MUSIC);
 								break;
 							case 4:
-								playMusic(MUSIC_STINKOMAN_DAWN, true);
+								playMusic(MUSIC_STINKOMAN_DAWN, true, DEFAULT_VOLUME_MUSIC);
 								break;
 							default:
 								break;
@@ -861,7 +861,7 @@ void GameManager::getPlayerInput() {
 		if (startDown && !keyHeld(INPUT_START)) {
 			startDown = false;
 			manually_paused = frameCounter_global;
-			Mix_VolumeMusic((int)(DEFAULT_MUSIC_VOLUME_NORMAL * 128.0 / 3 / 100));
+			setVolume_music(DEFAULT_VOLUME_MUSIC / 3.0);
 			sdl1_createTransparentScreen();
 		}
 	} else {

@@ -3,6 +3,7 @@
 #include "sound_logic.h"
 #include "text_objects.h"
 #include "classes.h"
+#include "config.h"
 
 SpriteInstance cutscene_level_beaten_trogdor;
 SpriteInstance cutscene_level_beaten_smoke;
@@ -834,7 +835,7 @@ void cutscene_level_100() {
 			cutscene_strong_bad.prepareAsCSO(115, 99, 0, 1, 0, 0, 0, 0);
 			break;
 		case 1386:
-			playMusic(MUSIC_ENDING, false);
+			playMusic(MUSIC_ENDING, false, DEFAULT_VOLUME_GAME);
 			break;
 		case 1397:
 			cutscene_level_100_screen_counter++;

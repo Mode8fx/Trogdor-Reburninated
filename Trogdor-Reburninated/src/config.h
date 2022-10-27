@@ -3,7 +3,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-constexpr auto DEFAULT_MUSIC_VOLUME_NORMAL = 35;
+constexpr auto DEFAULT_VOLUME_GAME = 100;
+constexpr auto DEFAULT_VOLUME_MUSIC = 35;
 
 struct SoundSettings {
 	Sint8 musicIndex;

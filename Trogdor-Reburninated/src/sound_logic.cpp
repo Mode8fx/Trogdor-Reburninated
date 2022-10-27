@@ -18,6 +18,7 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #define LOAD_SFX(path)         oslLoadSoundFile((rootDir + path).c_str(), OSL_FMT_NONE)
 #define PLAY_SFX(sfx, channel) oslPlaySound(sfx->chunk, channel)
 #define FREE_SFX(sfx)          oslDeleteSound(sfx->chunk)
+#define SET_VOLUME_MUSIC(vol)  bgm->volumeLeft = bgm->volumeRight = ((vol * OSL_VOLUME_MAX) / 100)
 #elif defined(XBOX)
 #define LOAD_MUSIC(path)       NULL
 #define STOP_MUSIC()           NULL
@@ -28,6 +29,7 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #define LOAD_SFX(path)         NULL
 #define PLAY_SFX(sfx, channel) NULL
 #define FREE_SFX(sfx)          NULL
+#define SET_VOLUME_MUSIC(vol)  NULL
 #else
 #define LOAD_MUSIC(path)       Mix_LoadMUS((rootDir + path).c_str())
 #define STOP_MUSIC()           Mix_HaltMusic()
@@ -38,10 +40,12 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #define LOAD_SFX(path)         Mix_LoadWAV((rootDir + path).c_str())
 #define PLAY_SFX(sfx, channel) Mix_PlayChannel(channel, sfx->chunk, 0)
 #define FREE_SFX(sfx)          Mix_FreeChunk(sfx->chunk)
+#define SET_VOLUME_MUSIC(vol)  Mix_VolumeMusic(vol * 128 / 100)
 #endif
 
-void playMusic(const char *musicRelPath, bool loop) {
+void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
 	bgm = LOAD_MUSIC(musicRelPath);
+	setVolume_music(vol);
 #if defined(PSP)
 	if (loop) {
 		oslSetSoundLoop(bgm, true);
@@ -73,8 +77,15 @@ void playMusicAtIndex(Uint8 index) {
 }
 
 void stopMusic() {
+#if defined(PSP)
 	STOP_MUSIC();
 	FREE_MUSIC();
+#else
+	if (Mix_PlayingMusic()) {
+		STOP_MUSIC();
+		FREE_MUSIC();
+	}
+#endif
 }
 
 void pauseMusic() {
@@ -173,4 +184,8 @@ void freeFinishedSoundChunks() {
 			}
 		}
 	}
+}
+
+void setVolume_music(Uint8 vol) {
+	SET_VOLUME_MUSIC(vol);
 }

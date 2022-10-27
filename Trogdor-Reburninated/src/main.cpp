@@ -266,7 +266,7 @@ int main(int argv, char** args) {
 			/* Title Screen */
 			case 2:
 				if (g_frameState == 73) {
-					playMusic(MUSIC_TITLE_SCREEN, false);
+					playMusic(MUSIC_TITLE_SCREEN, false, DEFAULT_VOLUME_GAME);
 					renderOverlay = true;
 				}
 				if (g_frameState < 192) {
@@ -297,7 +297,7 @@ int main(int argv, char** args) {
 						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						menu_main.openMenu();
 						if (!menuMusicHasStarted) {
-							playMusic(MUSIC_MENU, true);
+							playMusic(MUSIC_MENU, true, DEFAULT_VOLUME_MUSIC);
 							menuMusicHasStarted = true;
 						} else {
 							resumeMusic();
@@ -466,7 +466,7 @@ int main(int argv, char** args) {
 						}
 						if (GM.startDown && !keyHeld(INPUT_START)) {
 							GM.startDown = false;
-							Mix_VolumeMusic((int)(DEFAULT_MUSIC_VOLUME_NORMAL * 128.0 / 100));
+							setVolume_music(DEFAULT_VOLUME_MUSIC);
 							GM.manually_paused = 0;
 #if defined(SDL1)
 							SDL_FreeSurface(transparentScreen);
@@ -525,7 +525,7 @@ int main(int argv, char** args) {
 						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
 							g_sceneState = 3;
 							stopMusic();
-							Mix_VolumeMusic((int)(DEFAULT_MUSIC_VOLUME_NORMAL * 128.0 / 100));
+							setVolume_music(DEFAULT_VOLUME_MUSIC);
 							menuMusicHasStarted = false;
 							MM = MenuManager();
 						}
@@ -592,7 +592,7 @@ int main(int argv, char** args) {
 					}
 					if (GM.startDown && !keyHeld(INPUT_START)) {
 						GM.startDown = false;
-						Mix_VolumeMusic((int)(DEFAULT_MUSIC_VOLUME_NORMAL * 128.0 / 100));
+						setVolume_music(DEFAULT_VOLUME_MUSIC);
 						GM.manually_paused = 0;
 #if defined(SDL1)
 						SDL_FreeSurface(transparentScreen);

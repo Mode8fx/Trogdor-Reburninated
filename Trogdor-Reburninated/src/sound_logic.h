@@ -70,7 +70,7 @@ extern SoundEffect *sfxChannelArr[NUM_SOUND_CHANNELS_SFX];
 extern SoundEffect *sfxArr_strongBad[NUM_SOUND_EFFECTS_STRONG_BAD];
 extern SoundEffect *sfxChannel_strongBad;
 
-extern void playMusic(const char *, bool);
+extern void playMusic(const char *, bool, Uint8);
 extern void playMusicAtIndex(Uint8);
 extern void stopMusic();
 extern void pauseMusic();
@@ -79,6 +79,7 @@ extern void fadeMusic(Uint16);
 extern void loadAndPlaySound(SoundEffect *);
 extern void makeSoundStatic(SoundEffect *);
 extern void freeFinishedSoundChunks();
+extern void setVolume_music(Uint8);
 
 #define SFX_BURN_HUT      sfxArr[0]
 #define SFX_GOLDGET       sfxArr[1]

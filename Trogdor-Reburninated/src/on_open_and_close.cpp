@@ -57,7 +57,7 @@ void InitializeSound() {
 		SDL_Log(Mix_GetError());
 #endif
 	}
-	Mix_VolumeMusic((int)(soundSettings.bgmVolume * 128.0 / 100));
+	setVolume_music(soundSettings.bgmVolume);
 	Mix_AllocateChannels(NUM_SOUND_CHANNELS);
 	Mix_Volume(SFX_CHANNEL_GAME, (int)(soundSettings.sfxVolume * 128.0 / 100));
 	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(soundSettings.sfxVolume * 128.0 / 100));
