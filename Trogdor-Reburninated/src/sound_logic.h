@@ -15,6 +15,7 @@ constexpr auto SFX_CHANNEL_STRONG_BAD = NUM_SOUND_CHANNELS - 1; // highest chann
 #if !defined(PSP)
 constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.ogg";
 constexpr auto MUSIC_MENU = "music/menu.ogg";
+constexpr auto MUSIC_ENDING = "music/ending.ogg";
 constexpr auto MUSIC_STINKOMAN_DAY = "music/stinkoman_level_1.ogg";
 constexpr auto MUSIC_STINKOMAN_EVENING = "music/stinkoman_level_2.ogg";
 constexpr auto MUSIC_STINKOMAN_NIGHT = "music/stinkoman_level_5.ogg";
@@ -27,6 +28,7 @@ constexpr auto MUSIC_STINKOMAN_FINAL_BOSS = "music/stinkoman_mecha_trogador.ogg"
 #else
 constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.bgm";
 constexpr auto MUSIC_MENU = "music/menu.bgm";
+constexpr auto MUSIC_ENDING = "music/ending.bgm";
 constexpr auto MUSIC_STINKOMAN_DAY = "music/stinkoman_level_1.bgm";
 constexpr auto MUSIC_STINKOMAN_EVENING = "music/stinkoman_level_2.bgm";
 constexpr auto MUSIC_STINKOMAN_NIGHT = "music/stinkoman_level_5.bgm";

@@ -2,6 +2,7 @@
 #include "general.h"
 #include "sound_logic.h"
 #include "text_objects.h"
+#include "classes.h"
 
 SpriteInstance cutscene_level_beaten_trogdor;
 SpriteInstance cutscene_level_beaten_smoke;
@@ -24,12 +25,15 @@ SpriteInstance cutscene_trogdor_5;
 SpriteInstance cutscene_trogdor_6;
 SpriteInstance cutscene_trogdor_fire;
 SpriteInstance cutscene_trogdor_flexing;
+SpriteInstance cutscene_trogdor_ending;
 SpriteInstance cutscene_heart;
 SpriteInstance cutscene_knight_1;
 SpriteInstance cutscene_knight_2;
 SpriteInstance cutscene_knight_funnyjoke;
 SpriteInstance cutscene_kerrek;
 SpriteInstance cutscene_kerrek_smoked;
+SpriteInstance cutscene_strong_bad;
+SpriteInstance cutscene_strong_bad_ending;
 SpriteInstance cutscene_cottage_1;
 SpriteInstance cutscene_cottage_2;
 SpriteInstance cutscene_archer_1;
@@ -62,12 +66,15 @@ void InitializeCutsceneObjects() {
 	cutscene_trogdor_6 = SpriteInstance(&sprite_trogdor, 0, 0);
 	cutscene_trogdor_fire = SpriteInstance(&sprite_trogdor_fire, 0, 0);
 	cutscene_trogdor_flexing = SpriteInstance(&sprite_trogdor_flexing, 0, 0);
+	cutscene_trogdor_ending = SpriteInstance(&sprite_trogdor_ending, 0, 0);
 	cutscene_heart = SpriteInstance(&sprite_heart, 0, 0);
 	cutscene_knight_1 = SpriteInstance(&sprite_knight, 0, 0);
 	cutscene_knight_2 = SpriteInstance(&sprite_knight, 0, 0);
 	cutscene_knight_funnyjoke = SpriteInstance(&sprite_knight_funnyjoke, 0, 0);
 	cutscene_kerrek = SpriteInstance(&sprite_kerrek, 0, 0);
 	cutscene_kerrek_smoked = SpriteInstance(&sprite_kerrek_smoked, 0, 0);
+	cutscene_strong_bad = SpriteInstance(&sprite_strong_bad, 0, 0);
+	cutscene_strong_bad_ending = SpriteInstance(&sprite_strong_bad_ending, 0, 0);
 	cutscene_cottage_1 = SpriteInstance(&sprite_cottage, 0, 0);
 	cutscene_cottage_2 = SpriteInstance(&sprite_cottage, 0, 0);
 	cutscene_archer_1 = SpriteInstance(&sprite_archer, 0, 0);
@@ -794,6 +801,11 @@ void cutscene_level_50() {
 			cutsceneIsPlaying = true;
 			loadAndPlaySound(SFX_CUTSCENE);
 			break;
+		case 1297:
+			if (rand() % 100 < 50 * GM.sbVoiceMult) {
+				loadAndPlaySound(SFX_SBKERREK);
+			}
+			break;
 		case 1334:
 			cutsceneIsPlaying = false;
 			break;
@@ -807,17 +819,53 @@ void cutscene_level_100() {
 	switch (g_frameState) {
 		case 1337:
 			cutsceneIsPlaying = true;
-			loadAndPlaySound(SFX_CUTSCENE);
 			cutscene_level_100_screen_counter = 0;
+			cutscene_strong_bad.isActive = false;
+			break;
+		case 1347:
+			cutscene_strong_bad.prepareAsCSO(220, 100, 0, 0, 1, 0, -3.372, 0);
+			break;
+		case 1349:
+			if (rand() % 100 < 50 * GM.sbVoiceMult) {
+				loadAndPlaySound(SFX_SBWIN);
+			}
+			break;
+		case 1377:
+			cutscene_strong_bad.prepareAsCSO(115, 99, 0, 1, 0, 0, 0, 0);
+			break;
+		case 1386:
+			playMusic(MUSIC_ENDING, false);
 			break;
 		case 1397:
 			cutscene_level_100_screen_counter++;
+			cutscene_strong_bad.prepareAsCSO(115, 99, 0, 1, 3, 0, 0, 0);
+			break;
+		case 1415:
+			cutscene_strong_bad.prepareAsCSO(115, 99, 0, 1, 0, 0, 0, 0);
 			break;
 		case 1423:
 			cutscene_level_100_screen_counter++;
+			cutscene_strong_bad.prepareAsCSO(115, 99, 1, 1, 3, 0, 0, 0);
+			break;
+		case 1432:
+			cutscene_strong_bad.prepareAsCSO(115, 99, 0, 1, 0, 0, 0, 0);
+			break;
+		case 1437:
+			cutscene_strong_bad.prepareAsCSO(115, 99, 1, 1, 3, 0, 0, 0);
 			break;
 		case 1440:
 			cutscene_level_100_screen_counter++;
+			break;
+		case 1446:
+			cutscene_strong_bad.prepareAsCSO(115, 99, 0, 1, 0, 0, 0, 0);
+			break;
+		case 1456:
+			if (rand() % 100 < 50 * GM.sbVoiceMult) {
+				loadAndPlaySound(SFX_SBWIN2);
+			}
+			break;
+		case 1493:
+			cutscene_strong_bad.isActive = false;
 			break;
 		case 1501:
 			cutscene_level_100_screen_counter++;
@@ -856,13 +904,19 @@ void cutscene_level_100() {
 			break;
 	}
 	switch (cutscene_level_100_screen_counter) {
+		case 0:
+			cutscene_strong_bad.renderAsCSO(false);
+			break;
 		case 1:
 			renderText(text_23_cutscene_1, font_serif_white_9);
 			break;
 		case 2:
+			renderText(text_23_cutscene_1, font_serif_white_9);
 			renderText(text_23_cutscene_2, font_serif_white_9);
 			break;
 		case 3:
+			renderText(text_23_cutscene_1, font_serif_white_9);
+			renderText(text_23_cutscene_2, font_serif_white_9);
 			renderText(text_23_cutscene_3, font_serif_white_9);
 			break;
 		case 4:
@@ -888,12 +942,16 @@ void cutscene_level_100() {
 			break;
 		case 11:
 			renderText(text_23_cutscene_11, font_serif_white_9);
-			break;
-		case 12:
 			renderText(text_23_cutscene_12, font_serif_white_9);
 			break;
-		case 13:
+		case 12:
 			renderText(text_23_cutscene_13, font_serif_white_9);
+			renderText(text_23_cutscene_14, font_serif_white_9);
+			break;
+		case 13:
+			renderText(text_23_cutscene_15, font_serif_white_9);
+			break;
+		default:
 			break;
 	}
 }

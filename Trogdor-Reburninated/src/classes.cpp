@@ -6,9 +6,6 @@
 #include "menu.h"
 #include "config.h"
 
-extern MenuManager MM;
-extern GameManager GM;
-
 // for all "directions": 1 = up, 2 = down, 3 = left, 4 = right
 const Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down Left Right Left Right B A (Konami code)
 const Uint8 pacmanArrayKey[11] = { 0, 0, 0, 1, 1, 1, 2, 3, 2, 3, 2 }; // Up Up Up Down Down Down Left Right Left Right Left (play Pac-Man on a Ms. Pac-Man + Galaga arcade cabinet)

@@ -187,6 +187,7 @@ extern TextObject text_23_cutscene_11;
 extern TextObject text_23_cutscene_12;
 extern TextObject text_23_cutscene_13;
 extern TextObject text_23_cutscene_14;
+extern TextObject text_23_cutscene_15;
 extern TextObject text_25_ye_olde_high_scores;
 extern TextObject text_25_name;
 extern TextObject text_25_level;

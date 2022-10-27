@@ -234,4 +234,7 @@ class GameManager {
 		void renderTopBar();
 };
 
+extern MenuManager MM;
+extern GameManager GM;
+
 #endif

@@ -309,14 +309,16 @@ void InitializeText_Cutscenes() {
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_9, 0.48), 46 * gameHiResMult);
 	SET_TEXT("the red knight", text_23_cutscene_10, font_serif_white_9,
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_10, 0.48), 46 * gameHiResMult);
-	SET_TEXT("the siamese archers", text_23_cutscene_11, font_serif_white_9,
+	SET_TEXT("the siamese", text_23_cutscene_11, font_serif_white_9,
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_11, 0.48), 46 * gameHiResMult);
-	SET_TEXT("and Wordly Wise", text_23_cutscene_12, font_serif_white_9,
+	SET_TEXT("archers", text_23_cutscene_12, font_serif_white_9,
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_12, 0.48), 46 * gameHiResMult);
-	SET_TEXT("as The Kerrek", text_23_cutscene_13, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_13, 0.48), 57 * gameHiResMult);
-	SET_TEXT("keep playing!", text_23_cutscene_14, font_serif_white_9,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_14), 46 * gameHiResMult);
+	SET_TEXT("and Wordly Wise", text_23_cutscene_13, font_serif_white_9,
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_13, 0.48), 46 * gameHiResMult);
+	SET_TEXT("as The Kerrek", text_23_cutscene_14, font_serif_white_9,
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_14, 0.48), 57 * gameHiResMult);
+	SET_TEXT("keep playing!", text_23_cutscene_15, font_serif_white_9,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_23_cutscene_15), 46 * gameHiResMult);
 }
 
 void InitializeText_PauseScreen() {
@@ -549,6 +551,8 @@ void InitializeSpritesPart2() {
 		0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_trogdor_flexing, (rootDir + "graphics/trogdor_flexing.bmp").c_str(),
 		0, 0, 4, 2, 1);
+	PREPARE_SPRITE(sprite_trogdor_ending, (rootDir + "graphics/trogdor_ending.bmp").c_str(),
+		0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_heart, (rootDir + "graphics/heart.bmp").c_str(),
 		0, 0, 5, 1, 1);
 	PREPARE_SPRITE(sprite_knight_funnyjoke, (rootDir + "graphics/knight_funnyjoke.bmp").c_str(),
@@ -559,6 +563,10 @@ void InitializeSpritesPart2() {
 		0, 0, 8, 1, 1);
 	PREPARE_SPRITE(sprite_kerrek_smoked, (rootDir + "graphics/kerrek_smoked.bmp").c_str(),
 		0, 0, 5, 1, 1);
+	PREPARE_SPRITE(sprite_strong_bad, (rootDir + "graphics/strong_bad.bmp").c_str(),
+		0, 0, 2, 2, 1);
+	PREPARE_SPRITE(sprite_strong_bad_ending, (rootDir + "graphics/strong_bad_ending.bmp").c_str(),
+		0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_menu_cursor, (rootDir + "graphics/menu_cursor.bmp").c_str(),
 		0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_menu_background, (rootDir + "graphics/options_menu.bmp").c_str(),
@@ -621,11 +629,14 @@ void destroyAllSprites() {
 	destroySprite(&sprite_end_of_level_trogdor);
 	destroySprite(&sprite_loot);
 	destroySprite(&sprite_trogdor_flexing);
+	destroySprite(&sprite_trogdor_ending);
 	destroySprite(&sprite_heart);
 	destroySprite(&sprite_knight_funnyjoke);
 	destroySprite(&sprite_arrow_funnyjoke);
 	destroySprite(&sprite_kerrek);
 	destroySprite(&sprite_kerrek_smoked);
+	destroySprite(&sprite_strong_bad);
+	destroySprite(&sprite_strong_bad_ending);
 	destroySprite(&sprite_menu_cursor);
 	destroySprite(&sprite_menu_background);
 	destroySprite(&sprite_overlay_basement_top);
