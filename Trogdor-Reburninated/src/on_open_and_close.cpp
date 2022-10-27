@@ -163,7 +163,7 @@ void DestroyAll() {
 	oslDeinitAudio();
 #elif defined(XBOX)
 #else
-	stopMusic();
+	Mix_HaltMusic();
 	//Mix_FreeMusic(bgm);
 	Mix_CloseAudio();
 #if !defined(WII) && !defined(GAMECUBE)

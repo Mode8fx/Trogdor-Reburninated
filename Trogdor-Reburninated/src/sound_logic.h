@@ -13,17 +13,17 @@ constexpr auto SFX_CHANNEL_GAME_MUSIC = NUM_SOUND_CHANNELS - 2;
 constexpr auto SFX_CHANNEL_STRONG_BAD = NUM_SOUND_CHANNELS - 1; // highest channel
 
 #if !defined(PSP)
-constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.wav";
-constexpr auto MUSIC_MENU = "music/menu.wav";
-constexpr auto MUSIC_STINKOMAN_DAY = "music/stinkoman_level_1.wav";
-constexpr auto MUSIC_STINKOMAN_EVENING = "music/stinkoman_level_2.wav";
-constexpr auto MUSIC_STINKOMAN_NIGHT = "music/stinkoman_level_5.wav";
-constexpr auto MUSIC_STINKOMAN_DAWN = "music/stinkoman_level_6.wav";
-constexpr auto MUSIC_STINKOMAN_MIDPOINT = "music/stinkoman_level_9.wav";
-constexpr auto MUSIC_STINKOMAN_LAST_10 = "music/stinkoman_level_10.wav";
-constexpr auto MUSIC_STINKOMAN_BOSS = "music/stinkoman_boss_fight.wav";
-constexpr auto MUSIC_STINKOMAN_HOMESTRETCH = "music/stinkoman_z_sabre.wav";
-constexpr auto MUSIC_STINKOMAN_FINAL_BOSS = "music/stinkoman_mecha_trogador.wav";
+constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.ogg";
+constexpr auto MUSIC_MENU = "music/menu.ogg";
+constexpr auto MUSIC_STINKOMAN_DAY = "music/stinkoman_level_1.ogg";
+constexpr auto MUSIC_STINKOMAN_EVENING = "music/stinkoman_level_2.ogg";
+constexpr auto MUSIC_STINKOMAN_NIGHT = "music/stinkoman_level_5.ogg";
+constexpr auto MUSIC_STINKOMAN_DAWN = "music/stinkoman_level_6.ogg";
+constexpr auto MUSIC_STINKOMAN_MIDPOINT = "music/stinkoman_level_9.ogg";
+constexpr auto MUSIC_STINKOMAN_LAST_10 = "music/stinkoman_level_10.ogg";
+constexpr auto MUSIC_STINKOMAN_BOSS = "music/stinkoman_boss_fight.ogg";
+constexpr auto MUSIC_STINKOMAN_HOMESTRETCH = "music/stinkoman_z_sabre.ogg";
+constexpr auto MUSIC_STINKOMAN_FINAL_BOSS = "music/stinkoman_mecha_trogador.ogg";
 #else
 constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.bgm";
 constexpr auto MUSIC_MENU = "music/menu.bgm";
