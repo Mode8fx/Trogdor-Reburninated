@@ -193,7 +193,6 @@ extern SpriteObject sprite_burninate_fire;
 extern SpriteObject sprite_level_beaten_trogdor;
 extern SpriteObject sprite_level_beaten_smoke;
 extern SpriteObject sprite_game_over_trogdor;
-extern SpriteInstance sprite_game_over_trogdor_ins;
 extern SpriteObject sprite_overlay_basement_top;
 extern SpriteInstance sprite_overlay_basement_top_ins;
 extern SpriteObject sprite_overlay_basement_bottom;
@@ -229,6 +228,8 @@ extern SpriteObject sprite_strong_bad_ending;
 extern SpriteObject sprite_menu_cursor;
 extern SpriteObject sprite_menu_background;
 extern SpriteInstance sprite_menu_background_ins;
+//extern SpriteObject sprite_game_over_banner;
+extern SpriteObject sprite_game_over_text;
 extern SDL_Rect     divider_level_beaten_rect;
 
 #endif

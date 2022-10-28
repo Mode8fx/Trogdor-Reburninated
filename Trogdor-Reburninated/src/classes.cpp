@@ -529,7 +529,7 @@ GameManager::GameManager(MenuManager mm) {
 	player = Trogdor(bigHeadMode);
 	player.sprite.facingRight = true;
 	knightIncrement = 1;
-	switch (CHEAT_BIG_HEAD_MODE->index) {
+	switch (MENU_EXTRA_LIVES->index) {
 		case 0:
 			extraMansBreak = 300;
 			maxExtraMans = 10000;
@@ -585,7 +585,7 @@ GameManager::GameManager(MenuManager mm) {
 	store_x = 0;
 	store_y = 0;
 	treasureHut_timer = 0;
-	switch (MENU_SCALING->index) {
+	switch (MENU_COMMENT_FREQ->index) {
 		case 0:
 			sbVoiceMult = 0;
 			break;
@@ -689,7 +689,7 @@ void GameManager::setMusic() {
 					playMusic(MUSIC_STINKOMAN_BOSS, true, DEFAULT_VOLUME_MUSIC);
 					break;
 				default:
-					if (level >= 46 && level <= 48) {
+					if (level >= 47 && level <= 48) {
 						if (level == 46 || forceMusicStart) {
 							playMusic(MUSIC_STINKOMAN_MIDPOINT, true, DEFAULT_VOLUME_MUSIC);
 						}
@@ -1539,9 +1539,11 @@ void GameManager::handleDebugCheat() {
 #endif
 	if (keyPressed(INPUT_L) && level > 1) {
 		updateLevel(-1);
+		forceMusicStart = true;
 	}
 	if (keyPressed(INPUT_R) && level < 100) {
 		updateLevel(1);
+		forceMusicStart = true;
 	}
 }
 

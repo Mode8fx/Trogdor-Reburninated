@@ -442,7 +442,7 @@ int main(int argv, char** args) {
 					if (GM.testWon() || (keyPressed(INPUT_SELECT) && GM.debugMode)) {
 						GM.updateScore(min((20 + ((GM.level / 5) + 1) * 5), 200));
 						GM.clearArrows();
-						if (GM.level <= 90 || GM.level == 95 || GM.level == 97 || GM.level == 100) {
+						if (!(GM.level == 47 || GM.level == 49 || (GM.level >= 91 && GM.level <= 94) || GM.level == 96 || GM.level == 98 || GM.level == 99)) {
 							fadeMusic(1200);
 						}
 						g_sceneState = 8;
@@ -547,34 +547,10 @@ int main(int argv, char** args) {
 			/* Game Over Screen */
 			case 5:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
-				// TODO: draw "IT'S OVER!" and whatever else needs to be handled for this screen
-				sprite_game_over_trogdor_ins.renderSprite_game();
-				switch (g_frameState) {
-					case 321:
-						stopMusic();
-						loadAndPlaySound(SFX_GAMEOVER);
-						if (GM.score < 2000) {
-							if (GM.arched) {
-								if ((rand() % 100) < 50 * GM.sbVoiceMult) {
-									loadAndPlaySound(SFX_SBARCHEND);
-								}
-							} else if ((GM.score > 1000) && ((rand() % 100) < 70 * GM.sbVoiceMult)) {
-								loadAndPlaySound(SFX_SBSCORE);
-							} else if ((rand() % 100) < 70 * GM.sbVoiceMult) {
-								loadAndPlaySound(SFX_SBGAMEOVER);
-							}
-						} else {
-							if (GM.sbVoiceMult > 0) {
-								loadAndPlaySound(SFX_SBSECRET);
-							}
-						}
-						GM.setMans(0);
-						break;
-					default:
-						break;
+				cutscene_game_over();
+				if (g_sceneState == 5) {
+					g_frameState++;
 				}
-				// TODO: high score-related things here
 				if (keyPressed(INPUT_START)) {
 					g_sceneState = 3;
 					stopMusic();
@@ -699,7 +675,6 @@ int main(int argv, char** args) {
 			/* Level Beaten Screen */
 			case 9:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_beaten();
 				switch (g_frameState) {
 					case 285:
@@ -778,7 +753,6 @@ int main(int argv, char** args) {
 			/* Level 4 Interlude */
 			case 11:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_4();
 				if (!cutsceneIsPlaying) {
 					GM.levelInit();
@@ -791,7 +765,6 @@ int main(int argv, char** args) {
 			/* Level 8 Interlude */
 			case 12:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_8();
 				if (!cutsceneIsPlaying) {
 					GM.levelInit();
@@ -804,7 +777,6 @@ int main(int argv, char** args) {
 			/* Level 12 Interlude */
 			case 13:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_12();
 				if (!cutsceneIsPlaying) {
 					GM.levelInit();
@@ -817,7 +789,6 @@ int main(int argv, char** args) {
 			/* Level 16 Interlude */
 			case 14:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_16();
 				if (!cutsceneIsPlaying) {
 					GM.levelInit();
@@ -830,7 +801,6 @@ int main(int argv, char** args) {
 			/* Level 20 Interlude */
 			case 15:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_20();
 				if (!cutsceneIsPlaying) {
 					GM.levelInit();
@@ -843,7 +813,6 @@ int main(int argv, char** args) {
 			/* Level 24 Interlude */
 			case 16:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_24();
 				if (!cutsceneIsPlaying) {
 					GM.levelInit();
@@ -856,7 +825,6 @@ int main(int argv, char** args) {
 			/* Level 30 Interlude */
 			case 17:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_30();
 				if (!cutsceneIsPlaying) {
 					GM.levelInit();
@@ -869,7 +837,6 @@ int main(int argv, char** args) {
 			/* Level 34 Interlude */
 			case 18:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_34();
 				if (!cutsceneIsPlaying) {
 					GM.levelInit();
@@ -882,7 +849,6 @@ int main(int argv, char** args) {
 			/* Level 38 Interlude */
 			case 19:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_38();
 				if (!cutsceneIsPlaying) {
 					GM.levelInit();
@@ -895,7 +861,6 @@ int main(int argv, char** args) {
 			/* Level 42 Interlude */
 			case 20:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_42();
 				if (!cutsceneIsPlaying) {
 					GM.levelInit();
@@ -908,7 +873,6 @@ int main(int argv, char** args) {
 			/* Level 46 Interlude */
 			case 21:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_46();
 				if (!cutsceneIsPlaying) {
 					GM.levelInit();
@@ -921,7 +885,6 @@ int main(int argv, char** args) {
 			/* Level 50 Interlude */
 			case 22:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_50();
 				if (!cutsceneIsPlaying) {
 					GM.levelInit();
@@ -934,7 +897,6 @@ int main(int argv, char** args) {
 			/* Level 100 Interlude (Credits) */
 			case 23:
 				GM.renderTopBar();
-				//drawRect(divider_level_beaten_rect, color_black.r, color_black.g, color_black.b);
 				cutscene_level_100();
 				switch (g_frameState) {
 					case 1349:

@@ -9,6 +9,7 @@ extern bool cutsceneIsPlaying;
 extern void InitializeCutsceneObjects();
 extern void InitializeCutsceneObjects_trogdor();
 extern void cutscene_level_beaten();
+extern void cutscene_game_over();
 extern void cutscene_level_4();
 extern void cutscene_level_8();
 extern void cutscene_level_12();

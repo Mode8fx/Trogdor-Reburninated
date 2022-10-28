@@ -152,7 +152,6 @@ SpriteObject sprite_burninate_fire;
 SpriteObject sprite_level_beaten_trogdor;
 SpriteObject sprite_level_beaten_smoke;
 SpriteObject sprite_game_over_trogdor;
-SpriteInstance sprite_game_over_trogdor_ins;
 SpriteObject sprite_overlay_basement_top;
 SpriteInstance sprite_overlay_basement_top_ins;
 SpriteObject sprite_overlay_basement_bottom;
@@ -188,6 +187,8 @@ SpriteObject sprite_strong_bad_ending;
 SpriteObject sprite_menu_cursor;
 SpriteObject sprite_menu_background;
 SpriteInstance sprite_menu_background_ins;
+//SpriteObject sprite_game_over_banner;
+SpriteObject sprite_game_over_text;
 SDL_Rect     divider_level_beaten_rect;
 
 /* Colors */

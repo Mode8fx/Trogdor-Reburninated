@@ -312,7 +312,7 @@ void InitializeText_Cutscenes() {
 	SET_TEXT("the siamese", text_23_cutscene_11, font_serif_white_9,
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_11, 0.48), 46 * gameHiResMult);
 	SET_TEXT("archers", text_23_cutscene_12, font_serif_white_9,
-		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_12, 0.48), 46 * gameHiResMult);
+		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_12, 0.48), 57 * gameHiResMult);
 	SET_TEXT("and Wordly Wise", text_23_cutscene_13, font_serif_white_9,
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_23_cutscene_13, 0.48), 46 * gameHiResMult);
 	SET_TEXT("as The Kerrek", text_23_cutscene_14, font_serif_white_9,
@@ -499,7 +499,6 @@ void InitializeSpritesPart1() {
 		100, 100, 8, 4, 0.6667);
 	PREPARE_SPRITE(sprite_game_over_trogdor, (rootDir + "graphics/game_over_trogdor.bmp").c_str(),
 		-13, 75, 1, 1, 1);
-	sprite_game_over_trogdor_ins = SpriteInstance(&sprite_game_over_trogdor, 0, 0);
 	PREPARE_SPRITE(sprite_overlay_basement_top, (rootDir + "graphics/overlays/basement_top.bmp").c_str(),
 		0, 0, 1, 1, 1);
 	sprite_overlay_basement_top_ins = SpriteInstance(&sprite_overlay_basement_top, 0, 0);
@@ -572,6 +571,10 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_menu_background, (rootDir + "graphics/options_menu.bmp").c_str(),
 		0, 0, 1, 1, 1);
 	sprite_menu_background_ins = SpriteInstance(&sprite_menu_background, 0, 0);
+	//PREPARE_SPRITE(sprite_game_over_banner, (rootDir + "graphics/game_over_banner.bmp").c_str(),
+	//	0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_game_over_text, (rootDir + "graphics/game_over_text.bmp").c_str(),
+		0, 0, 1, 5, 1);
 }
 
 void exceptMissingFile(const char *path) {
@@ -639,6 +642,8 @@ void destroyAllSprites() {
 	destroySprite(&sprite_strong_bad_ending);
 	destroySprite(&sprite_menu_cursor);
 	destroySprite(&sprite_menu_background);
+	//destroySprite(&sprite_game_over_banner);
+	destroySprite(&sprite_game_over_text);
 	destroySprite(&sprite_overlay_basement_top);
 	destroySprite(&sprite_overlay_basement_bottom);
 	destroySprite(&sprite_overlay_basement_left);

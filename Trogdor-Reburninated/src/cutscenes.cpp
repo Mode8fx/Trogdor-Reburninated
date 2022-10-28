@@ -7,6 +7,9 @@
 
 SpriteInstance cutscene_level_beaten_trogdor;
 SpriteInstance cutscene_level_beaten_smoke;
+SpriteInstance cutscene_game_over_trogdor;
+//SpriteInstance cutscene_game_over_banner;
+SpriteInstance cutscene_game_over_text;
 SpriteInstance cutscene_cottage_fire;
 SpriteInstance cutscene_peasant_1;
 SpriteInstance cutscene_peasant_2;
@@ -48,6 +51,9 @@ Sint8 cutscene_level_100_screen_counter;
 void InitializeCutsceneObjects() {
 	cutscene_level_beaten_trogdor = SpriteInstance(&sprite_level_beaten_trogdor, 0, 0);
 	cutscene_level_beaten_smoke = SpriteInstance(&sprite_level_beaten_smoke, 0, 0);
+	cutscene_game_over_trogdor = SpriteInstance(&sprite_game_over_trogdor, 0, 0);
+	//cutscene_game_over_banner = SpriteInstance(&sprite_game_over_banner, 0, 0);
+	cutscene_game_over_text = SpriteInstance(&sprite_game_over_text, 0, 0);
 	cutscene_cottage_fire = SpriteInstance(&sprite_cottage_fire, 0, 0);
 	cutscene_peasant_1 = SpriteInstance(&sprite_peasant, 0, 0);
 	cutscene_peasant_2 = SpriteInstance(&sprite_peasant, 0, 0);
@@ -129,6 +135,42 @@ void cutscene_level_beaten() {
 	renderText(text_9_beaten_gray, font_serif_gray_12);
 	renderText(text_9_level_red, font_serif_red_12);
 	renderText(text_9_beaten_red, font_serif_red_12);
+}
+
+void cutscene_game_over() {
+	switch (g_frameState) {
+		case 321:
+			stopMusic();
+			loadAndPlaySound(SFX_GAMEOVER);
+			cutscene_game_over_trogdor.isActive = false;
+			//cutscene_game_over_banner.isActive = false;
+			cutscene_game_over_text.isActive = false;
+			cutscene_game_over_trogdor.prepareAsCSO(-13, 75, 0, 0, 0, 0, 0, 0);
+			//cutscene_game_over_banner.prepareAsCSO(185, 156, 0, 0, 0, 0, 0, 0);
+			cutscene_game_over_text.prepareAsCSO(44, 45, 0, 0, 0, 2, 0, 0);
+			if (GM.score < 2000) {
+				if (GM.arched) {
+					if ((rand() % 100) < 50 * GM.sbVoiceMult) {
+						loadAndPlaySound(SFX_SBARCHEND);
+					}
+				} else if ((GM.score > 1000) && ((rand() % 100) < 70 * GM.sbVoiceMult)) {
+					loadAndPlaySound(SFX_SBSCORE);
+				} else if ((rand() % 100) < 70 * GM.sbVoiceMult) {
+					loadAndPlaySound(SFX_SBGAMEOVER);
+				}
+			} else {
+				if (GM.sbVoiceMult > 0) {
+					loadAndPlaySound(SFX_SBSECRET);
+				}
+			}
+			GM.setMans(0);
+			break;
+		default:
+			break;
+	}
+	cutscene_game_over_trogdor.renderAsCSO(false);
+	//cutscene_game_over_banner.renderAsCSO(false);
+	cutscene_game_over_text.renderAsCSO(false);
 }
 
 void cutscene_level_4() {
@@ -818,7 +860,7 @@ void cutscene_level_50() {
 			cutscene_trogdor_fire.isActive = false;
 			cutscene_kerrek.isActive = false;
 			cutscene_kerrek_smoked.isActive = false;
-			cutscene_trogdor_1.prepareAsCSO(77, 90, 0, 0, 0, 0, 0, 0);
+			cutscene_trogdor_1.prepareAsCSO(77, 90, 0, 1, 0, 0, 0, 0);
 			cutscene_kerrek.prepareAsCSO(132, 75, 0, 0, 0, 0, 0, 0);
 			break;
 		case 1235:
