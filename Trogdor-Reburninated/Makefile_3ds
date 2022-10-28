@@ -56,7 +56,7 @@ CFLAGS	:=	-g -Wall -O2 -mword-relocations \
 
 CFLAGS	+=	$(INCLUDE) `sdl-config --cflags` `$(PREFIX)pkg-config --cflags  SDL_ttf SDL_gfx SDL_mixer SDL_image freetype2` -DSDL1 -D__3DS__ -DTHREEDS
 
-CXXFLAGS	:= $(CFLAGS) -fno-rtti -fno-exceptions -std=gnu++11
+CXXFLAGS	:= $(CFLAGS) -fno-rtti -fexceptions -std=gnu++11
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)

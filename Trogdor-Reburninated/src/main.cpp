@@ -65,11 +65,13 @@ int main(int argv, char** args) {
 		if (keyPressed(INPUT_FULLSCREEN)) {
 			SDL_toggleFullscreen();
 		}
+#if !defined(THREEDS)
 		if (keyPressed(INPUT_Y)) {
 			scalingType = (scalingType + 1) % 4;
 			menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 			windowSizeChanged = true;
 		}
+#endif
 		if (keyPressed(INPUT_X)) {
 			showOverlay = !showOverlay;
 		}
@@ -375,10 +377,12 @@ int main(int argv, char** args) {
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_main.renderMenu();
 				switch (menu_main.handleInput()) {
+#if !defined(THREEDS)
 					case MENU_SCALING_INDEX:
 						scalingType = MENU_SCALING->index;
 						windowSizeChanged = true;
 						break;
+#endif
 					case MENU_CHEATS_INDEX:
 						menu_cheats.openMenu();
 						g_sceneState = 302;

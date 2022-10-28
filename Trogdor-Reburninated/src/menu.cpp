@@ -464,6 +464,12 @@ const char *option_main_7_choices[6] = { "Off", "Very Low", "Low", "Normal", "Hi
 const char *option_main_7_descriptions_line_1[6] = { "Strong Bad does not talk.", "Strong Bad talks 50% less often.", "Strong Bad talks 25% less often.", "Strong Bad talks as often", "Strong Bad talks 25% more often.", "Strong Bad talks 50% more often." };
 const char *option_main_7_descriptions_line_2[6] = { "", "", "", "as he did in the original game.", "", "" };
 const char *option_main_7_descriptions_line_3[6] = { "", "", "", "", "", "" };
+#if defined(THREEDS)
+const char *option_main_8_choices[4] = { "N/A", "N/A", "N/A", "N/A" };
+const char *option_main_8_descriptions_line_1[4] = { "(Unused)", "(Unused)", "(Unused)", "(Unused)" };
+const char *option_main_8_descriptions_line_2[4] = { "", "", "", "" };
+const char *option_main_8_descriptions_line_3[4] = { "", "", "", "" };
+#else
 const char *option_main_8_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "Full Game" };
 const char *option_main_8_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "Scale the game to fill the screen." };
 const char *option_main_8_descriptions_line_2[4] = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." };
@@ -471,10 +477,11 @@ const char *option_main_8_descriptions_line_2[4] = { "scaling. Accurate, but pos
 const char *option_main_8_descriptions_line_3[4] = { "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)" };
 #elif defined(WII)
 const char *option_main_8_descriptions_line_3[4] = { "(Press 2 to apply, may take a few seconds)", "(Press 2 to apply, may take a few seconds)", "(Press 2 to apply, may take a few seconds)", "(Press 2 to apply, may take a few seconds)" };
-#elif defined(WII_U) || defined(SWITCH) || defined(GAMECUBE) || defined(ANDROID) || defined(THREEDS) || defined(XBOX)
+#elif defined(WII_U) || defined(SWITCH) || defined(GAMECUBE) || defined(ANDROID) || defined(XBOX)
 const char *option_main_8_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)" };
 #else
 const char *option_main_8_descriptions_line_3[4] = { "(Press Z to apply, may take a few seconds)", "(Press Z to apply, may take a few seconds)", "(Press Z to apply, may take a few seconds)", "(Press Z to apply, may take a few seconds)" };
+#endif
 #endif
 const char *option_main_9_descriptions_line_1[1] = { "Toggle hidden cheats." };
 const char *option_main_10_descriptions_line_1[1] = { "View the credits." };

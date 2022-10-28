@@ -47,7 +47,7 @@ struct SpriteSubObject {
 * @param dstrect x and y represent the default position of a sprite, while w and h represent the original frame width and height (including empty space) respectively, each scaled up by spriteScale.
 */
 struct SpriteObject {
-    SpriteSubObject *sub[8];
+    SpriteSubObject *sub[9];
     double spriteScale;
     Sint8 numFrames;
     Sint8 numForms;

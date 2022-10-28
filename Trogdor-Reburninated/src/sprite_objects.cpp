@@ -168,6 +168,11 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
             spriteObj->sub[i][j].center_y = (spriteObj->sub[i][j].y_offset_end - spriteObj->sub[i][j].y_offset_start) / 2;
             // Create a new surface from the boundaries of the sprite (temp_sprite_single)
             prepareSurfaceFromSpriteSheet(spriteObj);
+            // Get info from temp_sprite_single
+            spriteObj->sub[i][j].w = temp_sprite_single->w;
+            spriteObj->sub[i][j].h = temp_sprite_single->h;
+            spriteObj->sub[i][j].scaled_w = (int)(spriteObj->sub[i][j].w * scale * screenScale);
+            spriteObj->sub[i][j].scaled_h = (int)(spriteObj->sub[i][j].h * scale * screenScale);
 #if !defined(SDL1)
             // [SDL2] Create a texture from temp_sprite_single
             spriteObj->sub[i][j].texture = SDL_CreateTextureFromSurface(renderer, temp_sprite_single);
@@ -184,12 +189,10 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
                 temp_sprite_single_zoom = NULL;
             }
 #endif
-            spriteObj->sub[i][j].w = temp_sprite_single->w;
-            spriteObj->sub[i][j].h = temp_sprite_single->h;
-            spriteObj->sub[i][j].scaled_w = (int)(spriteObj->sub[i][j].w * scale * screenScale);
-            spriteObj->sub[i][j].scaled_h = (int)(spriteObj->sub[i][j].h * scale * screenScale);
+            // Free temp_sprite_single since we no longer need it
             SDL_FreeSurface(temp_sprite_single);
             temp_sprite_single = NULL;
+            // Adjust offsets according to scale
             spriteObj->sub[i][j].x_offset_start = (Uint8)(spriteObj->sub[i][j].x_offset_start * scale);
             spriteObj->sub[i][j].x_offset_end = (Uint8)(spriteObj->sub[i][j].x_offset_end * scale);
             spriteObj->sub[i][j].y_offset_start = (Uint8)(spriteObj->sub[i][j].y_offset_start * scale);
