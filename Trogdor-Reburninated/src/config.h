@@ -37,6 +37,10 @@ const string rootDir = "";
 
 #define SAVE_FILE (rootDir+"save.bin").c_str()
 
+#define CREATE_DEBUG_FILE(str) \
+	saveFile = SDL_RWFromFile((rootDir + str).c_str(), "w+b"); \
+	SDL_RWclose(saveFile);
+
 #if !defined(SDL1)
 extern SDL_DisplayMode DM;
 #endif

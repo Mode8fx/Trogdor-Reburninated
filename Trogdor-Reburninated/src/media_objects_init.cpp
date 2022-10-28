@@ -85,7 +85,7 @@ void InitializeFontsAndText() {
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_nice_work, 0.77), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_9_nice_work, 0.45));
 	TTF_CloseFont(font_serif_white_10.font);
 
-	setFont(&font_nokia_12, "fonts/29_NOKIA 5110 FontSet.ttf", 12, 12, TTF_STYLE_NORMAL, color_white, false);
+	setFont(&font_nokia_12, "fonts/29_NOKIA_5110_FontSet.ttf", 12, 12, TTF_STYLE_NORMAL, color_white, false);
 	SET_TEXT("presents", text_1_presents, font_nokia_12,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents, 0.7));
 	TTF_CloseFont(font_nokia_12.font);
@@ -590,11 +590,13 @@ void exceptMissingFile(const char *path) {
 void destroySprite(SpriteObject *sprite) {
 	for (i = 0; i < sprite->numFrames; i++) {
 		for (j = 0; j < sprite->numForms; j++) {
+			if (&sprite->sub[i][j] != NULL) {
 #if !defined(SDL1)
-			SDL_DestroyTexture(sprite->sub[i][j].texture);
+				SDL_DestroyTexture(sprite->sub[i][j].texture);
 #else
-			SDL_FreeSurface(sprite->sub[i][j].surface);
+				SDL_FreeSurface(sprite->sub[i][j].surface);
 #endif
+			}
 		}
 		free(sprite->sub[i]);
 	}
@@ -738,8 +740,8 @@ void HandleErrorText(const char *badPath) {
 	TTF_Init();
 
 	STRCPY(tempCharArrayError, badPath);
-	setFont(&font_commodore_error_1, "fonts/Commodore Pixelized v1.2.ttf", 10, 10, TTF_STYLE_NORMAL, color_white, true);
-	setFont(&font_commodore_error_2, "fonts/Commodore Pixelized v1.2.ttf", 10, 9, TTF_STYLE_NORMAL, color_orange, true);
+	setFont(&font_commodore_error_1, "fonts/Commodore_Pixelized_v1_2.ttf", 10, 10, TTF_STYLE_NORMAL, color_white, true);
+	setFont(&font_commodore_error_2, "fonts/Commodore_Pixelized_v1_2.ttf", 10, 9, TTF_STYLE_NORMAL, color_orange, true);
 	uint_i = (rand() % 4);
 	switch (uint_i) {
 		case 0:
