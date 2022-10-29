@@ -8,6 +8,14 @@ FILE * __cdecl __iob_func(void) {
 }
 #endif
 
+void applyColorKey(SDL_Surface *surface) {
+#if !defined(SDL1)
+	SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
+#else
+	SDL_SetColorKey(surface, SDL_SRCCOLORKEY, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
+#endif
+}
+
 void systemSpecificOpen() {
 #if defined(WII_U)
 	/* Set SD Card Mount Path */

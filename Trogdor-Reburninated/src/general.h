@@ -40,6 +40,7 @@ extern FILE _iob[];
 extern "C" FILE * __cdecl __iob_func(void);
 #endif
 
+extern void applyColorKey(SDL_Surface *);
 extern void systemSpecificOpen();
 extern void systemSpecificClose();
 

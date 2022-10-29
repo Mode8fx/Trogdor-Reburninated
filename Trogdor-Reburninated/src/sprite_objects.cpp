@@ -96,19 +96,11 @@ void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
     single_srcrect.y = (frame_h * j) + spriteObj->sub[i][j].y_offset_start;
     single_srcrect.w = spriteObj->sub[i][j].x_offset_end - spriteObj->sub[i][j].x_offset_start + 1;
     single_srcrect.h = spriteObj->sub[i][j].y_offset_end - spriteObj->sub[i][j].y_offset_start + 1;
-#if (defined(WII) || defined(GAMECUBE))
-    temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 24, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
-#elif SDL_BYTEORDER == SDL_BIG_ENDIAN
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
     temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
 #else
     temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 #endif
-#if !defined(SDL1)
-    SDL_SetColorKey(temp_sprite_single, SDL_TRUE, 0xFF00FF);
-#else
-    SDL_SetColorKey(temp_sprite_single, SDL_SRCCOLORKEY, 0xFF00FF);
-#endif
-    SDL_FillRect(temp_sprite_single, NULL, 0xFF00FF);
     single_dstrect = { 0, 0, single_srcrect.w, single_srcrect.h };
     SDL_BlitSurface(temp_sprite_sheet, &single_srcrect, temp_sprite_single, &single_dstrect);
 }
@@ -175,6 +167,7 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
             spriteObj->sub[i][j].scaled_h = (int)(spriteObj->sub[i][j].h * scale * screenScale);
 #if !defined(SDL1)
             // [SDL2] Create a texture from temp_sprite_single
+            applyColorKey(temp_sprite_single);
             spriteObj->sub[i][j].texture = SDL_CreateTextureFromSurface(renderer, temp_sprite_single);
 #else
             if (screenScale == 1 && scale == 1) {
@@ -183,7 +176,7 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
             } else {
                 // [SDL1 Zoom] Create a zoomed surface from temp_sprite_single and zoom it
                 temp_sprite_single_zoom = zoomSurface(temp_sprite_single, screenScale * scale, screenScale * scale, SMOOTHING_OFF);
-                SDL_SetColorKey(temp_sprite_single_zoom, SDL_SRCCOLORKEY, 0xFF00FF);
+                applyColorKey(temp_sprite_single_zoom);
                 spriteObj->sub[i][j].surface = SDL_DisplayFormat(temp_sprite_single_zoom);
                 SDL_FreeSurface(temp_sprite_single_zoom);
                 temp_sprite_single_zoom = NULL;
