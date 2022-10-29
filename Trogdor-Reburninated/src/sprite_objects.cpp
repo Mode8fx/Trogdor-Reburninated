@@ -44,7 +44,7 @@ Sint8 getXOffsetStart(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
     offsetEnd = offsetStart + frame_w - 1;
     for (int_i = offsetStart; int_i < offsetEnd; int_i++) {
         for (int_j = frame_h * y; int_j < frame_h * (y + 1); int_j++) {
-            if (getPixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
+            if (getPixel(temp_sprite_sheet, int_i, int_j) != SDL_MapRGB(temp_sprite_sheet->format, 0xFF, 0, 0xFF)) {
                 return (Sint8)(int_i - offsetStart);
             }
         }
@@ -57,7 +57,7 @@ Sint16 getXOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
     offsetEnd = offsetStart + frame_w - 1;
     for (int_i = offsetEnd; int_i > offsetStart; int_i--) {
         for (int_j = frame_h * y; int_j < frame_h * (y + 1); int_j++) {
-            if (getPixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
+            if (getPixel(temp_sprite_sheet, int_i, int_j) != SDL_MapRGB(temp_sprite_sheet->format, 0xFF, 0, 0xFF)) {
                 return (Sint16)(int_i - offsetStart);
             }
         }
@@ -70,7 +70,7 @@ Sint8 getYOffsetStart(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
     offsetEnd = offsetStart + frame_h - 1;
     for (int_j = offsetStart; int_j < offsetEnd; int_j++) {
         for (int_i = frame_w * x; int_i < frame_w * (x + 1); int_i++) {
-            if (getPixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
+            if (getPixel(temp_sprite_sheet, int_i, int_j) != SDL_MapRGB(temp_sprite_sheet->format, 0xFF, 0, 0xFF)) {
                 return (Sint8)(int_j - offsetStart);
             }
         }
@@ -83,7 +83,7 @@ Sint16 getYOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y) {
     offsetEnd = offsetStart + frame_h - 1;
     for (int_j = offsetEnd; int_j > offsetStart; int_j--) {
         for (int_i = frame_w * x; int_i < frame_w * (x + 1); int_i++) {
-            if (getPixel(temp_sprite_sheet, int_i, int_j) != 0xFF00FF) {
+            if (getPixel(temp_sprite_sheet, int_i, int_j) != SDL_MapRGB(temp_sprite_sheet->format, 0xFF, 0, 0xFF)) {
                 return (Sint16)(int_j - offsetStart);
             }
         }

@@ -469,15 +469,37 @@ const char *option_main_8_choices[4] = { "N/A", "N/A", "N/A", "N/A" };
 const char *option_main_8_descriptions_line_1[4] = { "(Unused)", "(Unused)", "(Unused)", "(Unused)" };
 const char *option_main_8_descriptions_line_2[4] = { "", "", "", "" };
 const char *option_main_8_descriptions_line_3[4] = { "", "", "", "" };
+#elif defined(PSP)
+const char *option_main_8_choices[4] = { "Pixel-Perfect", "", "Full", "Full Game" };
+const char *option_main_8_descriptions_line_1[4] = { "Scale so that everything uses integer", "", "Scale everything so that", "Scale the game to fill the screen." };
+const char *option_main_8_descriptions_line_2[4] = { "scaling. Accurate, but small.", "", "the overlay fills the screen.", "The overlay will be cut off." };
+const char *option_main_8_descriptions_line_3[4] = { "(Press X to apply, may take a few seconds)", "", "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)" };
+#elif defined(WII) || defined(GAMECUBE) || defined(XBOX)
+const char *option_main_8_choices[4] = { "Pixel-Perfect", "", "", "Full Game" };
+const char *option_main_8_descriptions_line_1[4] = { "Scale so that everything uses integer", "", "", "Scale the game to fill the screen." };
+const char *option_main_8_descriptions_line_2[4] = { "scaling. The most accurate.", "", "", "The overlay will be cut off." };
+#if defined(WII)
+const char *option_main_8_descriptions_line_3[4] = { "(Press 2 to apply, may take a few seconds)", "", "", "(Press 2 to apply, may take a few seconds)" };
+#else
+const char *option_main_8_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "", "", "(Press A to apply, may take a few seconds)" };
+#endif
+#elif defined(WII_U)
+const char *option_main_8_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "", "" };
+const char *option_main_8_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "", "" };
+const char *option_main_8_descriptions_line_2[4] = { "scaling. Accurate, but small.", "with integer scaling. The most accurate.", "", "" };
+const char *option_main_8_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "", "" };
+#elif defined(SWITCH)
+const char *option_main_8_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "" };
+const char *option_main_8_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "" };
+const char *option_main_8_descriptions_line_2[4] = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "" };
+const char *option_main_8_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "" };
 #else
 const char *option_main_8_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "Full Game" };
 const char *option_main_8_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "Scale the game to fill the screen." };
 const char *option_main_8_descriptions_line_2[4] = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." };
-#if defined(VITA) || defined(PSP)
+#if defined(VITA)
 const char *option_main_8_descriptions_line_3[4] = { "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)" };
-#elif defined(WII)
-const char *option_main_8_descriptions_line_3[4] = { "(Press 2 to apply, may take a few seconds)", "(Press 2 to apply, may take a few seconds)", "(Press 2 to apply, may take a few seconds)", "(Press 2 to apply, may take a few seconds)" };
-#elif defined(WII_U) || defined(SWITCH) || defined(GAMECUBE) || defined(ANDROID) || defined(XBOX)
+#elif defined(ANDROID)
 const char *option_main_8_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)" };
 #else
 const char *option_main_8_descriptions_line_3[4] = { "(Press Z to apply, may take a few seconds)", "(Press Z to apply, may take a few seconds)", "(Press Z to apply, may take a few seconds)", "(Press Z to apply, may take a few seconds)" };
@@ -644,6 +666,15 @@ void InitializeMenus() {
 		CHEAT_DEBUG_MODE->setLocked(true);
 		CHEAT_BIG_HEAD_MODE->setLocked(true);
 		CHEAT_NOCLIP->setLocked(true);
+#if defined(THREEDS) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
+		MENU_SCALING->choiceIsAllowed[1] = false;
+#endif
+#if defined(THREEDS) || defined(WII) || defined(GAMECUBE) || defined(XBOX) || defined(WII_U)
+		MENU_SCALING->choiceIsAllowed[2] = false;
+#endif
+#if defined(THREEDS) || defined(WII_U) || defined(SWITCH)
+		MENU_SCALING->choiceIsAllowed[3] = false;
+#endif
 	}
 
 	menu_main.updateOptionPositions();

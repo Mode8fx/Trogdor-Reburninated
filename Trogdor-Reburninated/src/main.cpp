@@ -67,8 +67,10 @@ int main(int argv, char** args) {
 		}
 #if !defined(THREEDS)
 		if (keyPressed(INPUT_Y)) {
-			scalingType = (scalingType + 1) % 4;
-			menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
+			do {
+				scalingType = (scalingType + 1) % 4;
+				menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
+			} while (MENU_SCALING->choiceIsAllowed[scalingType] == false);
 			windowSizeChanged = true;
 		}
 #endif
