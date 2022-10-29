@@ -566,9 +566,9 @@ void InitializeSpritesPart2() {
 		0, 0, 2, 2, 1);
 	PREPARE_SPRITE(sprite_strong_bad_ending, (rootDir + "graphics/strong_bad_ending.bmp").c_str(),
 		0, 0, 1, 1, 1);
-	PREPARE_SPRITE(sprite_menu_cursor, (rootDir + "graphics/menu_cursor.bmp").c_str(),
+	PREPARE_SPRITE_MENU(sprite_menu_cursor, (rootDir + "graphics/menu_cursor.bmp").c_str(),
 		0, 0, 1, 1, 1);
-	PREPARE_SPRITE(sprite_menu_background, (rootDir + "graphics/options_menu.bmp").c_str(),
+	PREPARE_SPRITE_MENU(sprite_menu_background, (rootDir + "graphics/options_menu.bmp").c_str(),
 		0, 0, 1, 1, 1);
 	sprite_menu_background_ins = SpriteInstance(&sprite_menu_background, 0, 0);
 	//PREPARE_SPRITE(sprite_game_over_banner, (rootDir + "graphics/game_over_banner.bmp").c_str(),

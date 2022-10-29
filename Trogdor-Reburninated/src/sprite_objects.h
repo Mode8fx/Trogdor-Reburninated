@@ -131,7 +131,7 @@ extern Sint16 getXOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y);
 extern Sint8 getYOffsetStart(SpriteObject *spriteObj, Sint8 x, Sint8 y);
 extern Sint16 getYOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y);
 extern void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj);
-extern void prepareSprite(SpriteObject *, const char [], Sint8, Sint8, double);
+extern void prepareSprite(SpriteObject *, const char [], Sint8, Sint8, double, bool);
 extern void setSpriteScale(SpriteObject *);
 extern void setSpritePos(SpriteObject *, int, int);
 extern void drawRect(SDL_Rect, Uint8, Uint8, Uint8);
@@ -140,7 +140,11 @@ extern void drawRectWithAlpha(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
 extern void sdl1_createTransparentScreen();
 
 #define PREPARE_SPRITE(spriteObj, path, rect_x, rect_y, numFrames, numForms, scale) \
-    prepareSprite(&spriteObj, path, numFrames, numForms, scale);                    \
+    prepareSprite(&spriteObj, path, numFrames, numForms, scale, false);             \
+    setSpritePos(&spriteObj, (int)rect_x, (int)rect_y);
+
+#define PREPARE_SPRITE_MENU(spriteObj, path, rect_x, rect_y, numFrames, numForms, scale) \
+    prepareSprite(&spriteObj, path, numFrames, numForms, scale, true);                   \
     setSpritePos(&spriteObj, (int)rect_x, (int)rect_y);
 
 #define PREPARE_SPRITE_BG(spriteObj, path, rect_x, rect_y) \

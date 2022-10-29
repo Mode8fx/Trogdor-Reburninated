@@ -16,6 +16,7 @@ Sint16 offsetStart;
 Sint16 offsetEnd;
 Sint16 frame_w;
 Sint16 frame_h;
+double currScreenScale;
 
 Uint32 getPixel(SDL_Surface *surface, int x, int y) {
     // p is the address to the pixel we want to retrieve
@@ -105,7 +106,7 @@ void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
     SDL_BlitSurface(temp_sprite_sheet, &single_srcrect, temp_sprite_single, &single_dstrect);
 }
 
-void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, Sint8 numForms, double scale) {
+void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, Sint8 numForms, double scale, bool isMenuSprite) {
     spriteObj->spriteScale = scale;
     // Check if the surface/texture already exists
 #if !defined(SDL1)
@@ -113,6 +114,11 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
         return;
     }
 #endif
+    if (isMenuSprite) {
+        currScreenScale = screenScale_menu;
+    } else {
+        currScreenScale = screenScale;
+    }
     // Allocate the SpriteSubObject array; each element of this 2D array represents a single sprite from the sprite sheet
     for (i = 0; i < numFrames; i++) {
         if (spriteObj->sub[i] != NULL) {
@@ -163,19 +169,20 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
             // Get info from temp_sprite_single
             spriteObj->sub[i][j].w = temp_sprite_single->w;
             spriteObj->sub[i][j].h = temp_sprite_single->h;
-            spriteObj->sub[i][j].scaled_w = (int)(spriteObj->sub[i][j].w * scale * screenScale);
-            spriteObj->sub[i][j].scaled_h = (int)(spriteObj->sub[i][j].h * scale * screenScale);
+            spriteObj->sub[i][j].scaled_w = (int)(spriteObj->sub[i][j].w * scale * currScreenScale);
+            spriteObj->sub[i][j].scaled_h = (int)(spriteObj->sub[i][j].h * scale * currScreenScale);
 #if !defined(SDL1)
             // [SDL2] Create a texture from temp_sprite_single
             applyColorKey(temp_sprite_single);
             spriteObj->sub[i][j].texture = SDL_CreateTextureFromSurface(renderer, temp_sprite_single);
 #else
-            if (screenScale == 1 && scale == 1) {
+            if (currScreenScale == 1 && scale == 1) {
                 // [SDL1 Normal] Create a new surface from temp_sprite_single
+                applyColorKey(temp_sprite_single);
                 spriteObj->sub[i][j].surface = SDL_DisplayFormat(temp_sprite_single);
             } else {
                 // [SDL1 Zoom] Create a zoomed surface from temp_sprite_single and zoom it
-                temp_sprite_single_zoom = zoomSurface(temp_sprite_single, screenScale * scale, screenScale * scale, SMOOTHING_OFF);
+                temp_sprite_single_zoom = zoomSurface(temp_sprite_single, currScreenScale * scale, currScreenScale * scale, SMOOTHING_OFF);
                 applyColorKey(temp_sprite_single_zoom);
                 spriteObj->sub[i][j].surface = SDL_DisplayFormat(temp_sprite_single_zoom);
                 SDL_FreeSurface(temp_sprite_single_zoom);

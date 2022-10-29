@@ -249,10 +249,10 @@ void Menu::prepareMenu(Uint8 numOpt, Uint8 numOns, SpriteObject *spriteObj, bool
 	spacer_y_desc = sp_y_desc;
 	alignType_label = at_label;
 	alignType_choice = at_choice;
+	cursor = SpriteInstance(spriteObj, 0, 0, spriteObj->dstrect.x, spriteObj->dstrect.y);
 	if (!menusAreInitialized) {
 		numOptions = numOpt;
 		numOnscreen = min(numOns, numOptions);
-		cursor = SpriteInstance(spriteObj, 0, 0);
 		cursorIndex = 0;
 		scrollIndex = 0;
 		cursorIndex_onscreen = 0;
