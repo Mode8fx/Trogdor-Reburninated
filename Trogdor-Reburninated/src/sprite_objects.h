@@ -234,6 +234,7 @@ extern SpriteObject sprite_menu_background;
 extern SpriteInstance sprite_menu_background_ins;
 //extern SpriteObject sprite_game_over_banner;
 extern SpriteObject sprite_game_over_text;
+extern SpriteObject sprite_game_over_jonathan_howe;
 extern SDL_Rect     divider_level_beaten_rect;
 
 #endif

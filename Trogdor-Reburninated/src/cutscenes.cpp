@@ -10,6 +10,7 @@ SpriteInstance cutscene_level_beaten_smoke;
 SpriteInstance cutscene_game_over_trogdor;
 //SpriteInstance cutscene_game_over_banner;
 SpriteInstance cutscene_game_over_text;
+SpriteInstance cutscene_game_over_jonathan_howe;
 SpriteInstance cutscene_cottage_fire;
 SpriteInstance cutscene_peasant_1;
 SpriteInstance cutscene_peasant_2;
@@ -54,6 +55,7 @@ void InitializeCutsceneObjects() {
 	cutscene_game_over_trogdor = SpriteInstance(&sprite_game_over_trogdor, 0, 0);
 	//cutscene_game_over_banner = SpriteInstance(&sprite_game_over_banner, 0, 0);
 	cutscene_game_over_text = SpriteInstance(&sprite_game_over_text, 0, 0);
+	cutscene_game_over_jonathan_howe = SpriteInstance(&sprite_game_over_jonathan_howe, 0, 0);
 	cutscene_cottage_fire = SpriteInstance(&sprite_cottage_fire, 0, 0);
 	cutscene_peasant_1 = SpriteInstance(&sprite_peasant, 0, 0);
 	cutscene_peasant_2 = SpriteInstance(&sprite_peasant, 0, 0);
@@ -145,6 +147,7 @@ void cutscene_game_over() {
 			cutscene_game_over_trogdor.isActive = false;
 			//cutscene_game_over_banner.isActive = false;
 			cutscene_game_over_text.isActive = false;
+			cutscene_game_over_jonathan_howe.isActive = false;
 			cutscene_game_over_trogdor.prepareAsCSO(-13, 75, 0, 0, 0, 0, 0, 0);
 			//cutscene_game_over_banner.prepareAsCSO(185, 156, 0, 0, 0, 0, 0, 0);
 			cutscene_game_over_text.prepareAsCSO(44, 45, 0, 0, 0, 2, 0, 0);
@@ -162,6 +165,7 @@ void cutscene_game_over() {
 				if (GM.sbVoiceMult > 0) {
 					loadAndPlaySound(SFX_SBSECRET);
 				}
+				cutscene_game_over_jonathan_howe.prepareAsCSO(40, 173, 0, 0, 0, 1, 0, 0); // original is 41, 173
 			}
 			GM.setMans(0);
 			break;
@@ -171,6 +175,7 @@ void cutscene_game_over() {
 	cutscene_game_over_trogdor.renderAsCSO(false);
 	//cutscene_game_over_banner.renderAsCSO(false);
 	cutscene_game_over_text.renderAsCSO(false);
+	cutscene_game_over_jonathan_howe.renderAsCSO(false);
 }
 
 void cutscene_level_4() {

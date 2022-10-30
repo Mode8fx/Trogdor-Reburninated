@@ -619,6 +619,8 @@ void InitializeSpritesPart2() {
 	//	0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_game_over_text, (rootDir + "graphics/game_over_text.bmp").c_str(),
 		0, 0, 1, 5, 1);
+	PREPARE_SPRITE(sprite_game_over_jonathan_howe, (rootDir + "graphics/jonathan_howe.bmp").c_str(),
+		0, 0, 1, 6, 1);
 }
 
 void exceptMissingFile(const char *path) {
@@ -690,6 +692,7 @@ void destroyAllSprites() {
 	destroySprite(&sprite_menu_background);
 	//destroySprite(&sprite_game_over_banner);
 	destroySprite(&sprite_game_over_text);
+	destroySprite(&sprite_game_over_jonathan_howe);
 	destroySprite(&sprite_overlay_basement_top);
 	destroySprite(&sprite_overlay_basement_bottom);
 	destroySprite(&sprite_overlay_basement_left);

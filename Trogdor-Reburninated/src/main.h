@@ -189,6 +189,7 @@ SpriteObject sprite_menu_background;
 SpriteInstance sprite_menu_background_ins;
 //SpriteObject sprite_game_over_banner;
 SpriteObject sprite_game_over_text;
+SpriteObject sprite_game_over_jonathan_howe;
 SDL_Rect     divider_level_beaten_rect;
 
 /* Colors */
