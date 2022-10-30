@@ -1,6 +1,6 @@
 PSP_LARGE_MEMORY=1
 
-TARGET	=	trogdor
+TARGET	=	trogdor-reburninated
 BUILD 	=	build_psp
 OBJS   =	src/main.o \
 			src/classes.o \

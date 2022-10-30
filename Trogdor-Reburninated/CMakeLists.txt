@@ -64,7 +64,7 @@ if (VITA)
 	# find_package(PkgConfig REQUIRED)
 	add_definitions(-DVITA)
 	
-	set(VITA_APP_NAME "Trogdor Reburninated")
+	set(VITA_APP_NAME "Trogdor: Reburninated")
 	set(VITA_TITLEID  "TROG73287")
 	set(VITA_VERSION  "01.00")
 
