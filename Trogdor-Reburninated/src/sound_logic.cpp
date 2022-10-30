@@ -44,6 +44,10 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #endif
 
 void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
+	if (bgm != NULL) {
+		STOP_MUSIC();
+		FREE_MUSIC();
+	}
 	bgm = LOAD_MUSIC(musicRelPath);
 	setVolume_music(vol);
 #if defined(PSP)

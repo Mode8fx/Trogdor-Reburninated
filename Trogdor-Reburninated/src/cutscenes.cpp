@@ -949,6 +949,7 @@ void cutscene_level_100() {
 			cutscene_archer_1.isActive = false;
 			cutscene_archer_2.isActive = false;
 			cutscene_kerrek.isActive = false;
+			cutscene_kerrek_smoked.isActive = false;
 			cutscene_trogdor_ending.isActive = false;
 			cutscene_strong_bad_ending.isActive = false;
 			break;
@@ -1038,9 +1039,19 @@ void cutscene_level_100() {
 			cutscene_archer_2.isActive = false;
 			cutscene_kerrek.prepareAsCSO(106, 73, 0, 0, 0, 0, 0, 0);
 			break;
+		case 1662:
+			cutscene_kerrek.prepareAsCSO(106, 73, 2, 0, 2, 0, 0, 0);
+			break;
+		case 1676:
+			cutscene_kerrek.isActive = false;
+			cutscene_kerrek_smoked.prepareAsCSO(110, 86, 0, 0, 0, 0, 0, 0);
+			break;
+		case 1677:
+			cutscene_kerrek_smoked.setFrame(1);
+			break;
 		case 1681:
 			cutscene_level_100_screen_counter++;
-			cutscene_kerrek.isActive = false;
+			cutscene_kerrek_smoked.isActive = false;
 			cutscene_trogdor_ending.prepareAsCSO(90, 84, 0, GM.bigHeadMode, 0, 0, 0, 0);
 			cutscene_strong_bad_ending.prepareAsCSO(138, 94, 0, 0, 0, 0, 0, 0);
 			break;
@@ -1104,6 +1115,7 @@ void cutscene_level_100() {
 			break;
 		case 12:
 			cutscene_kerrek.renderAsCSO(false);
+			cutscene_kerrek_smoked.renderAsCSO(false);
 			renderText(text_23_cutscene_13, font_serif_white_9);
 			renderText(text_23_cutscene_14, font_serif_white_9);
 			break;
