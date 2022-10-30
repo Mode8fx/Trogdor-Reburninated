@@ -964,11 +964,9 @@ void cutscene_level_100() {
 		case 1377:
 			cutscene_strong_bad.prepareAsCSO(115, 99, 0, 1, 0, 0, 0, 0);
 			break;
-		case 1386:
-			playMusic(MUSIC_ENDING, false, DEFAULT_VOLUME_GAME);
-			break;
 		case 1397:
 			cutscene_level_100_screen_counter++;
+			playMusic(MUSIC_ENDING_1, false, DEFAULT_VOLUME_GAME);
 			cutscene_strong_bad.prepareAsCSO(115, 99, 0, 1, 3, 0, 0, 0);
 			break;
 		case 1415:
@@ -1000,6 +998,7 @@ void cutscene_level_100() {
 			break;
 		case 1501:
 			cutscene_level_100_screen_counter++;
+			playMusic(MUSIC_ENDING_2, false, DEFAULT_VOLUME_GAME);
 			break;
 		case 1522:
 			cutscene_level_100_screen_counter++;
