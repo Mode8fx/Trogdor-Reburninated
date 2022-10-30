@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <app version="1">
-  <name>Trogdor Beta</name>
+  <name>Trogdor: Reburninated</name>
   <coder>Mips96</coder>
   <version>0.9</version>
-  <release_date>20220822210000</release_date>
+  <release_date>20221031210000</release_date>
   <short_description>Burninate the countryside!</short_description>
-  <long_description>A recreation of the Homestar Runner Flash game "Trogdor" made with SDL2. Currently in beta.
+  <long_description>A recreation of the Homestar Runner Flash game "Trogdor" with new features, made with SDL2.
   
   https://github.com/Mips96/Trogdor-Reburninated
   
