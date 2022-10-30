@@ -5,6 +5,13 @@
 
 constexpr auto DEFAULT_VOLUME_GAME = 100;
 constexpr auto DEFAULT_VOLUME_MUSIC = 35;
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
+#define MAX_PAGE_NUM_LOWRES 5
+#define MAX_PAGE_NUM_HIRES 4
+#else
+#define MAX_PAGE_NUM_LOWRES 4
+#define MAX_PAGE_NUM_HIRES 3
+#endif
 
 struct SoundSettings {
 	Sint8 musicIndex;

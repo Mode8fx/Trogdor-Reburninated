@@ -125,7 +125,7 @@ void InitializeFontsAndText() {
 
 void InitializeText_HomeScreen() {
 	if (gameHiResMult < 2) {
-		SET_TEXT("(1/3)", text_3_page, font_serif_white_6_mult,
+		SET_TEXT(("(1/"+to_string(MAX_PAGE_NUM_LOWRES)+")").c_str(), text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
 #if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
@@ -166,7 +166,7 @@ void InitializeText_HomeScreen() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
 		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press SELECT/BACK for OPTIONS.", text_3_quit, font_serif_white_6_mult,
+		SET_TEXT("Press BACK/SELECT for OPTIONS.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #endif
 		SET_TEXT("SECRET HINTS!!", text_3_hints_1, font_serif_red_6_mult,
@@ -192,7 +192,7 @@ void InitializeText_HomeScreen() {
 		SET_TEXT("- Secret Code?!?!", text_3_hints_7, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_7), 129 * gameHiResMult);
 	} else {
-		SET_TEXT("(1/2)", text_3_page, font_serif_white_6_mult,
+		SET_TEXT(("(1/"+to_string(MAX_PAGE_NUM_HIRES)+")").c_str(), text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
 #if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
@@ -231,7 +231,7 @@ void InitializeText_HomeScreen() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
 		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press SELECT/BACKSPACE for OPTIONS.", text_3_quit, font_serif_white_6_mult,
+		SET_TEXT("Press BACKSPACE/SELECT for OPTIONS.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
 #endif
 		SET_TEXT("SECRET HINTS!!", text_3_hints_1, font_serif_red_6_mult,
@@ -249,6 +249,50 @@ void InitializeText_HomeScreen() {
 		SET_TEXT("- Secret Code?!?!", text_3_hints_7, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_7), 143 * gameHiResMult);
 	}
+	SET_TEXT("WHILE PAUSED OR", text_3_controls_1, font_serif_red_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_1), 59 * gameHiResMult);
+	SET_TEXT("ON THIS SCREEN:", text_3_controls_2, font_serif_red_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_2), 73 * gameHiResMult);
+#if defined(VITA) || defined(PSP)
+	SET_TEXT("-Press Triangle to change scaling", text_3_controls_3, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
+	SET_TEXT("-Press Square to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 115 * gameHiResMult);
+#elif defined(WII)
+	SET_TEXT("-Press Home (Wii) / Y (GC) to change scaling", text_3_controls_3, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
+	SET_TEXT("-Press X (GC) to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 115 * gameHiResMult);
+#elif defined(THREEDS)
+	SET_TEXT("", text_3_controls_3, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
+	SET_TEXT("-Press X to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 101 * gameHiResMult);
+#elif defined(WII_U) || defined(SWITCH) || defined(GAMECUBE) || defined(ANDROID) || defined(XBOX)
+	SET_TEXT("-Press Y to change scaling", text_3_controls_3, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
+	SET_TEXT("-Press X to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 115 * gameHiResMult);
+#else
+	SET_TEXT("-Press V / Y to change scaling", text_3_controls_3, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
+	SET_TEXT("-Press C / X to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
+#endif
+	SET_TEXT("(may take a few seconds)", text_3_controls_4, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 115 * gameHiResMult);
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
+	SET_TEXT("HEY, KEYBOARD USERS!", text_3_keyboard_1, font_serif_red_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_keyboard_1), 59 * gameHiResMult);
+	SET_TEXT("For cheat input:", text_3_keyboard_2, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_keyboard_2), 87 * gameHiResMult);
+	SET_TEXT("D-Pad -> WASD/Arrows", text_3_keyboard_3, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_keyboard_3), 101 * gameHiResMult);
+	SET_TEXT(" A -> Z      B -> X", text_3_keyboard_4, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_keyboard_4), 115 * gameHiResMult);
+	SET_TEXT(" L -> Q      R -> E", text_3_keyboard_5, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_keyboard_5), 129 * gameHiResMult);
+#endif
 }
 
 void InitializeText_Cutscenes() {

@@ -428,9 +428,9 @@ MenuManager::MenuManager() {
 	dkcIndex = 0;
 	page = 1;
 	if (gameHiResMult < 2) {
-		maxPageNum = 3;
+		maxPageNum = MAX_PAGE_NUM_LOWRES;
 	} else {
-		maxPageNum = 2;
+		maxPageNum = MAX_PAGE_NUM_HIRES;
 	}
 }
 
@@ -856,17 +856,17 @@ void GameManager::getPlayerInput() {
 	}
 	if (!inTreasureHut) {
 		playerMove(&player, player.x_offset, player.y_offset);
-		if (keyPressed(INPUT_START)) {
-			startDown = true;
-		}
-		if (startDown && !keyHeld(INPUT_START)) {
-			startDown = false;
-			manually_paused = frameCounter_global;
-			setVolume_music(DEFAULT_VOLUME_MUSIC / 3);
-			sdl1_createTransparentScreen();
-		}
 	} else {
 		playerMove_treasureHut(&player, player.x_offset, player.y_offset);
+	}
+	if (keyPressed(INPUT_START)) {
+		startDown = true;
+	}
+	if (startDown && !keyHeld(INPUT_START)) {
+		startDown = false;
+		manually_paused = frameCounter_global;
+		setVolume_music(DEFAULT_VOLUME_MUSIC / 3);
+		sdl1_createTransparentScreen();
 	}
 	if (keyHeld(INPUT_L) && kick_frameState == 0) {
 		kick_frameState = 3;

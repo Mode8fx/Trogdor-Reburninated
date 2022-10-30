@@ -66,7 +66,7 @@ int main(int argv, char** args) {
 			SDL_toggleFullscreen();
 		}
 #if !defined(THREEDS)
-		if (keyPressed(INPUT_Y)) {
+		if (keyPressed(INPUT_Y) && (g_sceneState == 2 || g_sceneState == 3 || GM.manually_paused)) {
 			do {
 				scalingType = (scalingType + 1) % 4;
 				menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
@@ -74,22 +74,22 @@ int main(int argv, char** args) {
 			windowSizeChanged = true;
 		}
 #endif
-		if (keyPressed(INPUT_X)) {
+		if (keyPressed(INPUT_X) && (g_sceneState == 2 || g_sceneState == 3 || GM.manually_paused)) {
 			showOverlay = !showOverlay;
 		}
 		/* Handle Window Size Changes */
 		if (windowSizeChanged) {
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)) && !defined(SDL1)
-			if (scalingType % 2 == 0) {
-				if (SDL_GetWindowSurface(window)->w < appWidth)
-					SDL_SetWindowSize(window, appWidth, SDL_GetWindowSurface(window)->h);
-				if (SDL_GetWindowSurface(window)->h < appHeight)
-					SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight);
-			} else {
+			if (scalingType % 2 == 1 && SDL_GetWindowSurface(window)->w >= appWidth && SDL_GetWindowSurface(window)->h >= appHeight) {
 				if (SDL_GetWindowSurface(window)->w < gameWidth)
 					SDL_SetWindowSize(window, gameWidth, SDL_GetWindowSurface(window)->h);
 				if (SDL_GetWindowSurface(window)->h < gameHeight)
 					SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, gameHeight);
+			} else {
+				if (SDL_GetWindowSurface(window)->w < appWidth)
+					SDL_SetWindowSize(window, appWidth, SDL_GetWindowSurface(window)->h);
+				if (SDL_GetWindowSurface(window)->h < appHeight)
+					SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, appHeight);
 			}
 			// If you resize the window to within 6% of an integer ratio, snap to that ratio
 			if (scalingType == 0) {
@@ -105,10 +105,10 @@ int main(int argv, char** args) {
 			updateText(&text_4_mans_val, to_string(GM.mans));
 			updateText(&text_4_level_val, to_string(GM.level));
 			if (gameHiResMult < 2) {
-				MM.maxPageNum = 3;
+				MM.maxPageNum = MAX_PAGE_NUM_LOWRES;
 				updateText(&text_3_page, "("+to_string(MM.page)+"/"+to_string(MM.maxPageNum)+")");
 			} else {
-				MM.maxPageNum = 2;
+				MM.maxPageNum = MAX_PAGE_NUM_HIRES;
 				if (MM.page > MM.maxPageNum) MM.page = MM.maxPageNum;
 				updateText(&text_3_page, "("+to_string(MM.page)+"/"+to_string(MM.maxPageNum)+")");
 			}
@@ -341,6 +341,22 @@ int main(int argv, char** args) {
 							renderText(text_3_hints_6, font_serif_red_6_mult);
 							renderText(text_3_hints_7, font_serif_red_6_mult);
 							break;
+						case 4:
+							renderText(text_3_controls_1, font_serif_red_6_mult);
+							renderText(text_3_controls_2, font_serif_red_6_mult);
+							renderText(text_3_controls_3, font_serif_white_6_mult);
+							renderText(text_3_controls_4, font_serif_white_6_mult);
+							renderText(text_3_controls_5, font_serif_white_6_mult);
+							break;
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
+						case 5:
+							renderText(text_3_keyboard_1, font_serif_red_6_mult);
+							renderText(text_3_keyboard_2, font_serif_white_6_mult);
+							renderText(text_3_keyboard_3, font_serif_white_6_mult);
+							renderText(text_3_keyboard_4, font_serif_white_6_mult);
+							renderText(text_3_keyboard_5, font_serif_white_6_mult);
+							break;
+#endif
 						default:
 							break;
 					}
@@ -366,6 +382,22 @@ int main(int argv, char** args) {
 							renderText(text_3_hints_6, font_serif_red_6_mult);
 							renderText(text_3_hints_7, font_serif_red_6_mult);
 							break;
+						case 3:
+							renderText(text_3_controls_1, font_serif_red_6_mult);
+							renderText(text_3_controls_2, font_serif_red_6_mult);
+							renderText(text_3_controls_3, font_serif_white_6_mult);
+							renderText(text_3_controls_4, font_serif_white_6_mult);
+							renderText(text_3_controls_5, font_serif_white_6_mult);
+							break;
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
+						case 4:
+							renderText(text_3_keyboard_1, font_serif_red_6_mult);
+							renderText(text_3_keyboard_2, font_serif_white_6_mult);
+							renderText(text_3_keyboard_3, font_serif_white_6_mult);
+							renderText(text_3_keyboard_4, font_serif_white_6_mult);
+							renderText(text_3_keyboard_5, font_serif_white_6_mult);
+							break;
+#endif
 						default:
 							break;
 					}
@@ -535,6 +567,7 @@ int main(int argv, char** args) {
 							setVolume_music(DEFAULT_VOLUME_MUSIC);
 							menuMusicHasStarted = false;
 							MM = MenuManager();
+							GM.manually_paused = 0;
 						}
 					}
 					if (GM.inTreasureHut) {
@@ -630,6 +663,7 @@ int main(int argv, char** args) {
 							stopMusic();
 							menuMusicHasStarted = false;
 							MM = MenuManager();
+							GM.manually_paused = 0;
 						}
 					}
 					if (!GM.inTreasureHut) {

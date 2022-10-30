@@ -502,7 +502,7 @@ const char *option_main_8_descriptions_line_3[4] = { "(Press X to apply, may tak
 #elif defined(ANDROID)
 const char *option_main_8_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)" };
 #else
-const char *option_main_8_descriptions_line_3[4] = { "(Press Z to apply, may take a few seconds)", "(Press Z to apply, may take a few seconds)", "(Press Z to apply, may take a few seconds)", "(Press Z to apply, may take a few seconds)" };
+const char *option_main_8_descriptions_line_3[4] = { "(Press Z / A to apply)", "(Press Z / A to apply)", "(Press Z / A to apply)", "(Press Z / A to apply)" };
 #endif
 #endif
 const char *option_main_9_descriptions_line_1[1] = { "Toggle hidden cheats." };
@@ -511,9 +511,9 @@ const char *option_main_11_descriptions_line_1[1] = { "Quit the game." };
 const char *option_cheats_1_descriptions_line_1[1] = { "Infinite lives, play forever!" };
 const char *option_cheats_1_descriptions_line_2[1] = { "Unlocking this cheat also unlocks" };
 const char *option_cheats_1_descriptions_line_3[1] = { "more starting lives options." };
-const char *option_cheats_2_descriptions_line_1[1] = { "Enable Debug Mode. A/B to change" };
-const char *option_cheats_2_descriptions_line_2[1] = { "peasant meter, L/R to" };
-const char *option_cheats_2_descriptions_line_3[1] = { "change level, Select to win level." };
+const char *option_cheats_2_descriptions_line_1[1] = { "Enable Debug Mode." };
+const char *option_cheats_2_descriptions_line_2[1] = { "Press buttons to do things." };
+const char *option_cheats_2_descriptions_line_3[1] = { "" };
 const char *option_cheats_3_descriptions_line_1[1] = { "Give Trogdor a more husky head." };
 const char *option_cheats_4_descriptions_line_1[1] = { "Remove the game's difficulty" };
 const char *option_cheats_4_descriptions_line_2[1] = { "by walking through cottages." };
