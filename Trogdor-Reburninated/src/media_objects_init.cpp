@@ -271,7 +271,7 @@ void InitializeText_HomeScreen() {
 	SET_TEXT("", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("-Press X to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 101 * gameHiResMult);
 	SET_TEXT("", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #elif defined(WII_U) || defined(SWITCH) || defined(GAMECUBE) || defined(ANDROID) || defined(XBOX)
@@ -289,8 +289,13 @@ void InitializeText_HomeScreen() {
 	SET_TEXT("-Press F (KB) to toggle fullscreen", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #endif
+#if defined(THREEDS)
+	SET_TEXT("", text_3_controls_4, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 115 * gameHiResMult);
+#else
 	SET_TEXT("(may take a few seconds)", text_3_controls_4, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 115 * gameHiResMult);
+#endif
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 	SET_TEXT("HEY, KEYBOARD USERS!", text_3_keyboard_1, font_serif_red_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_keyboard_1), 59 * gameHiResMult);
@@ -594,7 +599,7 @@ void InitializeSpritesPart2() {
 		0, 0, 6, 2, 1);
 	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
 		0, 0, 2, 4, 1);
-	if (gameHiResMult < 1.5) {
+	if (gameHiResMult < 1.6) {
 		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor.bmp").c_str(),
 			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 2, 2);
 	} else { // TODO: this could be polished a bit further for (1.5 <= gameHiResMult < 2)
