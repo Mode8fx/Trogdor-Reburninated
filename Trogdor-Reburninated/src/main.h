@@ -251,6 +251,7 @@ TextObject text_3_controls_2;
 TextObject text_3_controls_3;
 TextObject text_3_controls_4;
 TextObject text_3_controls_5;
+TextObject text_3_controls_6;
 TextObject text_3_keyboard_1;
 TextObject text_3_keyboard_2;
 TextObject text_3_keyboard_3;

@@ -123,6 +123,7 @@ extern TextObject text_3_controls_2;
 extern TextObject text_3_controls_3;
 extern TextObject text_3_controls_4;
 extern TextObject text_3_controls_5;
+extern TextObject text_3_controls_6;
 extern TextObject text_3_keyboard_1;
 extern TextObject text_3_keyboard_2;
 extern TextObject text_3_keyboard_3;

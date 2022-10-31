@@ -137,26 +137,30 @@ void setScaling() {
 
 void snapWindow_x(double range, Uint16 size) {
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)) && !defined(SDL1)
-	double_i = ((float)SDL_GetWindowSurface(window)->w / size);
-	if ((double_i - floor(double_i)) >= pow(1 - range, floor(double_i))) {
-		if ((size * ceil(double_i)) < DM.w) {
-			SDL_SetWindowSize(window, size * (short)(ceil(double_i)), SDL_GetWindowSurface(window)->h);
+	if (isWindowed) {
+		double_i = ((float)SDL_GetWindowSurface(window)->w / size);
+		if ((double_i - floor(double_i)) >= pow(1 - range, floor(double_i))) {
+			if ((size * ceil(double_i)) < DM.w) {
+				SDL_SetWindowSize(window, size * (short)(ceil(double_i)), SDL_GetWindowSurface(window)->h);
+			}
+		} else if ((double_i - floor(double_i)) < 1 - pow(1 - range, (short)(floor(double_i))) && (SDL_GetWindowSurface(window)->w % size != 0)) {
+			SDL_SetWindowSize(window, size * (short)floor(double_i), SDL_GetWindowSurface(window)->h);
 		}
-	} else if ((double_i - floor(double_i)) < 1 - pow(1 - range, (short)(floor(double_i))) && (SDL_GetWindowSurface(window)->w % size != 0)) {
-		SDL_SetWindowSize(window, size * (short)floor(double_i), SDL_GetWindowSurface(window)->h);
 	}
 #endif
 }
 
 void snapWindow_y(double range, Uint16 size) {
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)) && !defined(SDL1)
-	double_i = ((float)SDL_GetWindowSurface(window)->h / size);
-	if ((double_i - floor(double_i)) >= pow(1 - range, (short)(floor(double_i)))) {
-		if ((size * ceil(double_i)) < DM.h) {
-			SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, size * (short)ceil(double_i));
+	if (isWindowed) {
+		double_i = ((float)SDL_GetWindowSurface(window)->h / size);
+		if ((double_i - floor(double_i)) >= pow(1 - range, (short)(floor(double_i)))) {
+			if ((size * ceil(double_i)) < DM.h) {
+				SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, size * (short)ceil(double_i));
+			}
+		} else if ((double_i - floor(double_i)) < 1 - pow(1 - range, (short)(floor(double_i))) && (SDL_GetWindowSurface(window)->h % size != 0)) {
+			SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, size * (short)floor(double_i));
 		}
-	} else if ((double_i - floor(double_i)) < 1 - pow(1 - range, (short)(floor(double_i))) && (SDL_GetWindowSurface(window)->h % size != 0)) {
-		SDL_SetWindowSize(window, SDL_GetWindowSurface(window)->w, size * (short)floor(double_i));
 	}
 #endif
 }
@@ -166,8 +170,9 @@ void SDL_toggleFullscreen() {
 	isWindowed = !isWindowed;
 	if (isWindowed) {
 		SDL_SetWindowFullscreen(window, 0);
+		SDL_SetWindowSize(window, DEFAULT_WIDTH, DEFAULT_HEIGHT);
 	} else {
-		SDL_SetWindowSize(window, appWidth, appHeight);
+		SDL_SetWindowSize(window, DM.w, DM.h);
 		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 	}
 	//setScaling();

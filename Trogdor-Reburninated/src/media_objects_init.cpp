@@ -258,26 +258,36 @@ void InitializeText_HomeScreen() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("-Press Square to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
+	SET_TEXT("", text_3_controls_6, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #elif defined(WII)
 	SET_TEXT("-Press Home (Wii) / Y (GC) to change scaling", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("-Press X (GC) to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
+	SET_TEXT("", text_3_controls_6, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #elif defined(THREEDS)
 	SET_TEXT("", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("-Press X to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
+	SET_TEXT("", text_3_controls_6, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #elif defined(WII_U) || defined(SWITCH) || defined(GAMECUBE) || defined(ANDROID) || defined(XBOX)
 	SET_TEXT("-Press Y to change scaling", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("-Press X to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
+	SET_TEXT("", text_3_controls_6, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #else
 	SET_TEXT("-Press V / Y to change scaling", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("-Press C / X to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
+	SET_TEXT("-Press F (KB) to toggle fullscreen", text_3_controls_6, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #endif
 	SET_TEXT("(may take a few seconds)", text_3_controls_4, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 115 * gameHiResMult);

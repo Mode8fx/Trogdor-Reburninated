@@ -347,6 +347,7 @@ int main(int argv, char** args) {
 							renderText(text_3_controls_3, font_serif_white_6_mult);
 							renderText(text_3_controls_4, font_serif_white_6_mult);
 							renderText(text_3_controls_5, font_serif_white_6_mult);
+							renderText(text_3_controls_6, font_serif_white_6_mult);
 							break;
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 						case 5:
@@ -388,6 +389,7 @@ int main(int argv, char** args) {
 							renderText(text_3_controls_3, font_serif_white_6_mult);
 							renderText(text_3_controls_4, font_serif_white_6_mult);
 							renderText(text_3_controls_5, font_serif_white_6_mult);
+							renderText(text_3_controls_6, font_serif_white_6_mult);
 							break;
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 						case 4:
