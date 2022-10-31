@@ -133,7 +133,7 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
     }
     // Load the sprite sheet as a surface
     temp_sprite_sheet = IMG_Load(path);
-#if !defined(XBOX)
+#if !(defined(XBOX) || defined(PSP))
     // If there was an error (e.g. missing file), crash to error screen
     if (temp_sprite_sheet == NULL) {
         throw(path);

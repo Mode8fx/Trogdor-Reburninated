@@ -22,7 +22,7 @@ OBJS   =	src/main.o \
 
 INCDIR =
 CFLAGS = -G0 -O2 -DPSP
-CXXFLAGS = $(CFLAGS) -fexceptions -fno-rtti -fpermissive
+CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti -fpermissive
 ASFLAGS = $(CFLAGS)
 
 LIBDIR =
