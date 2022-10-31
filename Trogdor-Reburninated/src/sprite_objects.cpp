@@ -139,6 +139,7 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
         throw(path);
     }
 #endif
+    SDL_SetColorKey(temp_sprite_sheet, SDL_TRUE, 0xFF00FF);
     // Store the size values of the sprite sheet
     frame_w = (Sint16)(temp_sprite_sheet->w / numFrames);
     frame_h = (Sint16)(temp_sprite_sheet->h / numForms);
