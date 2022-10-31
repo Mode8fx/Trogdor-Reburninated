@@ -559,7 +559,7 @@ void InitializeMenus() {
 		NULL, 6, false, 3, true);
 	MENU_SCALING->prepareMenuOption("Screen Scaling", option_main_8_choices,
 		option_main_8_descriptions_line_1, option_main_8_descriptions_line_2, option_main_8_descriptions_line_3,
-		NULL, 4, false, 0, true);
+		NULL, 4, false, scalingType, true);
 	MENU_CHEATS->prepareMenuOption("Cheats", option_empty,
 		option_main_9_descriptions_line_1, option_empty, option_empty,
 		NULL, 1, true, 0, true);

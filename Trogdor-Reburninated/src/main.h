@@ -409,7 +409,11 @@ int trueScreenScaleInt = 1;
 double trueScreenScaleFull = 1;
 double screenScale_menu = 1;
 bool allowHiRes = true;
+#if defined(VITA) || defined(WII_U) || defined(SWITCH)
+Sint8 scalingType = 1;
+#else
 Sint8 scalingType = 0;
+#endif
 #if !defined(SDL1)
 SDL_DisplayMode DM;
 #endif

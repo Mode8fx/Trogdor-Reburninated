@@ -133,7 +133,7 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
     }
     // Load the sprite sheet as a surface
     temp_sprite_sheet = IMG_Load(path);
-#if !(defined(XBOX) || defined(PSP))
+#if !(defined(XBOX) || defined(PSP) || defined(VITA))
     // If there was an error (e.g. missing file), crash to error screen
     if (temp_sprite_sheet == NULL) {
         throw(path);
@@ -414,8 +414,8 @@ void SpriteInstance::renderSpriteAsCSO_game() {
 }
 
 void SpriteInstance::renderSprite_app() {
-    outputRect.x = (Sint16)((dstrect.x + currSpriteXOffset) * screenScale) + appToWindowDstRect.x;
-    outputRect.y = (Sint16)((dstrect.y + currSpriteYOffset) * screenScale) + appToWindowDstRect.y;
+    outputRect.x = (Sint16)(dstrect.x + currSpriteXOffset);
+    outputRect.y = (Sint16)(dstrect.y + currSpriteYOffset);
     outputRect.w = (int)(dstrect.w * screenScale);
     outputRect.h = (int)(dstrect.h * screenScale);
 #if !defined(SDL1)

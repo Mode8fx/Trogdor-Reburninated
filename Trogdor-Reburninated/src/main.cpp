@@ -31,7 +31,7 @@ int main(int argv, char** args) {
 #endif
 	InitializeController();
 
-#if !(defined(XBOX) || defined(PSP))
+#if !(defined(XBOX) || defined(PSP) || defined(VITA))
 	try {
 #endif
 	loadSaveFile();
@@ -1019,7 +1019,7 @@ int main(int argv, char** args) {
 
 	return 0;
 
-#if !(defined(XBOX) || defined(PSP))
+#if !(defined(XBOX) || defined(PSP) || defined(VITA))
 	} catch (const char *badPath) {
 #if !defined(SDL1)
 		SDL_SetRenderDrawColor(renderer, 69, 95, 216, 255);

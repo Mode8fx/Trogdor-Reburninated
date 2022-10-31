@@ -487,7 +487,7 @@ void InitializeSFX() {
 	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
 		sfxArr_strongBad[i]->type = 1;
 	}
-#if defined(VITA) || defined(THREEDS)
+#if defined(VITA) || defined(THREEDS) || defined(WII_U)
 	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
 		makeSoundStatic(sfxArr[i]);
 	}
@@ -505,8 +505,9 @@ void InitializeSFX() {
 
 void InitializeSpritesPart1() {
 	PREPARE_SPRITE(sprite_videlectrix_logo, (rootDir + "graphics/videlectrix_logo_big.bmp").c_str(),
-		OBJ_FRAME_TO_MID_SCREEN_X(appWidth, sprite_videlectrix_logo), OBJ_FRAME_TO_MID_SCREEN_Y(appHeight, sprite_videlectrix_logo), 1, 1, 1);
+		0, 0, 1, 1, 1);
 	sprite_videlectrix_logo_ins = SpriteInstance(&sprite_videlectrix_logo, 0, 0);
+	sprite_videlectrix_logo_ins.setPos((windowWidth - (sprite_videlectrix_logo_ins.dstrect.w * screenScale)) / 2, (windowHeight - (sprite_videlectrix_logo_ins.dstrect.h * screenScale)) / 2);
 	PREPARE_SPRITE(sprite_title_screen, (rootDir + "graphics/title_screen.bmp").c_str(),
 		0, 0, 1, 1, 1);
 	sprite_title_screen_ins = SpriteInstance(&sprite_title_screen, 0, 0);
@@ -624,7 +625,7 @@ void InitializeSpritesPart2() {
 }
 
 void exceptMissingFile(const char *path) {
-#if !(defined(XBOX) || defined(PSP))
+#if !(defined(XBOX) || defined(PSP) || defined(VITA))
 	ifile.open(path);
 	if (!ifile) {
 		throw(path);
