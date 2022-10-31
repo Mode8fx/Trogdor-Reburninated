@@ -20,6 +20,7 @@ add_executable(trogdorrb
 	"src/media_objects_init.h"
 	"src/menu.cpp"
 	"src/menu.h"
+	"src/on_open_and_close.cpp"
 	"src/on_open_and_close.h"
 	"src/sound_logic.cpp"
 	"src/sound_logic.h"
@@ -37,13 +38,13 @@ if (WIIU)
 	add_definitions(-DWII_U)
 
 	target_link_libraries(trogdorrb -L${DEVKITPRO}/portlibs/wiiu/lib -L${DEVKITPRO}/portlibs/ppc/lib -L${DEVKITPRO}/wut/lib)
-	# target_link_libraries(trogdorrb -lSDL2_ttf -lSDL2_mixer -lmodplug -lvorbisfile -lvorbis -logg -lSDL2_gfx -lSDL2_image -lSDL2 -lfreetype -lpng -lmpg123 -lbz2 -ljpeg -lz -lwut)
 	pkg_check_modules(SDL2 REQUIRED IMPORTED_TARGET SDL2)
 	pkg_check_modules(SDL2_image REQUIRED IMPORTED_TARGET SDL2_image)
 	pkg_check_modules(SDL2_mixer REQUIRED IMPORTED_TARGET SDL2_mixer)
 	pkg_check_modules(SDL2_ttf REQUIRED IMPORTED_TARGET SDL2_ttf)
 	pkg_check_modules(SDL2_gfx REQUIRED IMPORTED_TARGET SDL2_gfx)
-	target_link_libraries(trogdorrb PkgConfig::SDL2 PkgConfig::SDL2_image PkgConfig::SDL2_mixer PkgConfig::SDL2_ttf PkgConfig::SDL2_gfx)
+	# target_link_libraries(trogdorrb PkgConfig::SDL2 PkgConfig::SDL2_image PkgConfig::SDL2_mixer PkgConfig::SDL2_ttf PkgConfig::SDL2_gfx)
+	target_link_libraries(trogdorrb -lSDL2_ttf -lSDL2_mixer -lmodplug -lvorbisfile -lvorbis -logg -lSDL2_gfx -lSDL2_image -lSDL2 -lfreetype -lpng -lmpg123 -lbz2 -ljpeg -lz -lwut)
 
 	set(SDL2_INCLUDE_DIRS
 	"${DEVKITPRO}/portlibs/wiiu/include/SDL2;\

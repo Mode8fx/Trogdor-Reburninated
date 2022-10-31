@@ -391,7 +391,7 @@ SDL2/
 SDL1/
 Release (SDL1)/
 build_wii/
-build_gamecube/
+build_gc/
 build_switch/
 build_wii_u/
 build_vita/
