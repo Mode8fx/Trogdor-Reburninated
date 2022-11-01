@@ -31,7 +31,7 @@ int main(int argv, char** args) {
 #endif
 	InitializeController();
 
-#if !(defined(XBOX) || defined(PSP) || defined(VITA))
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 	try {
 #endif
 	loadSaveFile();
@@ -1025,7 +1025,7 @@ int main(int argv, char** args) {
 
 	return 0;
 
-#if !(defined(XBOX) || defined(PSP) || defined(VITA))
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 	} catch (const char *badPath) {
 #if !defined(SDL1)
 		SDL_SetRenderDrawColor(renderer, 69, 95, 216, 255);

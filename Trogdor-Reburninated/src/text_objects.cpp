@@ -160,7 +160,7 @@ void setFont(FontObject *fontObj, const char *path, int originalSize, double mul
 	fontObj->style = style;
 	fontObj->color = color;
 	fontObj->font = TTF_OpenFont((rootDir + path).c_str(), fontObj->size);
-#if !(defined(XBOX) || defined(PSP) || defined(VITA))
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 	if (fontObj->font == NULL) {
 		throw((rootDir + path).c_str());
 	}

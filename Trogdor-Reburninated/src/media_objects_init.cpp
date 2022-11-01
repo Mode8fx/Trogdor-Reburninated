@@ -640,7 +640,7 @@ void InitializeSpritesPart2() {
 }
 
 void exceptMissingFile(const char *path) {
-#if !(defined(XBOX) || defined(PSP) || defined(VITA))
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 	ifile.open(path);
 	if (!ifile) {
 		throw(path);
