@@ -263,7 +263,7 @@ void InitializeText_HomeScreen() {
 #elif defined(WII)
 	SET_TEXT("-Press Home (Wii) / Y (GC) to change scaling", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
-	SET_TEXT("-Press X (GC) to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
+	SET_TEXT("-Press A (Wii) / R (GC) to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
 	SET_TEXT(" ", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
@@ -599,7 +599,7 @@ void InitializeSpritesPart2() {
 		0, 0, 6, 2, 1);
 	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
 		0, 0, 2, 4, 1);
-	if (gameHiResMult < 1.6) {
+	if (gameHiResMult < 1.5) {
 		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor.bmp").c_str(),
 			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 2, 2);
 	} else { // TODO: this could be polished a bit further for (1.5 <= gameHiResMult < 2)

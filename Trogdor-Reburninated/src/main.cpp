@@ -74,7 +74,11 @@ int main(int argv, char** args) {
 			windowSizeChanged = true;
 		}
 #endif
+#if defined(WII)
+		if (keyPressed(INPUT_R) && (g_sceneState == 2 || g_sceneState == 3 || GM.manually_paused)) {
+#else
 		if (keyPressed(INPUT_X) && (g_sceneState == 2 || g_sceneState == 3 || GM.manually_paused)) {
+#endif
 			showOverlay = !showOverlay;
 		}
 		/* Handle Window Size Changes */
