@@ -30,6 +30,7 @@ extern SDL_Surface *windowScreen;
 extern SDL_Surface *transparentScreen;
 #endif
 extern SDL_Rect gameSrcRect;
+const SDL_Rect gameSrcRect_unscaled = { 0, 0, gameWidth, gameHeight };
 //extern SDL_Rect gameToAppDstRect; // game screen mapping to app
 extern SDL_Rect gameHiResSrcRect;
 extern SDL_Rect appSrcRect;

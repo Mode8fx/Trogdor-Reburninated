@@ -2,7 +2,7 @@
 <app version="1">
   <name>Trogdor: Reburninated</name>
   <coder>Mips96</coder>
-  <version>1.0</version>
+  <version>1.1</version>
   <release_date>202210312100</release_date>
   <short_description>Burninate the countryside!</short_description>
   <long_description>A recreation of the Homestar Runner Flash game "Trogdor" with new features, made with SDL. In-game button prompts are for Wii Remote, but a Gamecube controller also works.

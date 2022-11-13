@@ -469,8 +469,11 @@ void SpriteInstance::prepareAsCSO(double x, double y, Sint8 frame, Sint8 form, S
 
 void SpriteInstance::renderAsCSO(bool useTwips = true) {
     if (isActive) {
-        if (useTwips) renderSpriteAsCSO_game();
-        else renderSprite_game();
+        if (useTwips) {
+            renderSpriteAsCSO_game();
+        } else if (SDL_HasIntersection(&gameSrcRect_unscaled, &dstrect)) {
+            renderSprite_game();
+        }
         moveSprite();
         animateFrame();
         animateForm();

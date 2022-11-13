@@ -63,11 +63,11 @@ struct SpriteObject {
 * @param currSpriteYOffset Equivalent to spriteObj->sub[animFrame][animForm].y_offset_start.
 * @param srcrect (SDL2) The position (0,0) and size (unscaled) of the currently-represented SpriteSubObject.
 * @param srcrect (SDL1) The position (0,0) and size (already scaled according to screenScale and spriteScale) of the currently-represented SpriteSubObject.
+* @param dstrect The position (using internal game logic, NOT final screen placement) of the sprite frame (including empty space), and the w and h of the current SpriteSubObject scaled only by spriteScale. Transformations such as x/yOffset, screenScale, and gameToWindowDstRect are applied temporarily as they are needed.
 * @param vel_x The x-velocity, used for some SpriteInstances.
 * @param vel_y The y-velocity, used for some SpriteInstances.
 * @param pos_x The exact x-position, using double precision.
 * @param pos_y The exact y-position, using double precision.
-* @param dstrect The position (using internal game logic, NOT final screen placement) of the sprite frame (including empty space), and the w and h of the current SpriteSubObject scaled only by spriteScale. Transformations such as x/yOffset, screenScale, and gameToWindowDstRect are applied temporarily as they are needed.
 * @param collision The collision rect relative to dstrect x and y (that's sprite frame position, including empty space, according to internal game logic).
 * @param isActive Whether or not the sprite is active; usually, this means "is the sprite visible and/or doing things".
 * @param facingRight Is the sprite facing right; used for some sprites.

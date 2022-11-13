@@ -833,7 +833,7 @@ void HandleErrorText(const char *badPath) {
 #else
 	quickErrorTextRender_1("Press ENTER/START to quit.", 0.825);
 #endif
-	quickErrorTextRender_2("[Trogdor: Reburninated v1.0]", 0.9);
+	quickErrorTextRender_2("[Trogdor: Reburninated v1.1]", 0.9);
 	TTF_CloseFont(font_commodore_error_1.font);
 	TTF_CloseFont(font_commodore_error_2.font);
 
