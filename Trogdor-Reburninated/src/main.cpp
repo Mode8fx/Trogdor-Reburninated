@@ -65,7 +65,7 @@ int main(int argv, char** args) {
 		if (keyPressed(INPUT_FULLSCREEN)) {
 			SDL_toggleFullscreen();
 		}
-#if !defined(THREEDS)
+#if !(defined(THREEDS) || defined(WII) || defined(GAMECUBE))
 		if (keyPressed(INPUT_Y) && (g_sceneState == 2 || g_sceneState == 3 || GM.manually_paused)) {
 			do {
 				scalingType = (scalingType + 1) % 4;
