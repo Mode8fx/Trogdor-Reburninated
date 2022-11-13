@@ -19,6 +19,7 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #define PLAY_SFX(sfx, channel) oslPlaySound(sfx->chunk, channel)
 #define FREE_SFX(sfx)          oslDeleteSound(sfx->chunk)
 #define SET_VOLUME_MUSIC(vol)  bgm->volumeLeft = bgm->volumeRight = ((vol * OSL_VOLUME_MAX) / 100)
+#define MUSIC_IS_PLAYING()     (bgm != NULL)
 #elif defined(XBOX)
 #define LOAD_MUSIC(path)       NULL
 #define STOP_MUSIC()           NULL
@@ -30,6 +31,7 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #define PLAY_SFX(sfx, channel) NULL
 #define FREE_SFX(sfx)          NULL
 #define SET_VOLUME_MUSIC(vol)  NULL
+#define MUSIC_IS_PLAYING()     NULL
 #else
 #define LOAD_MUSIC(path)       Mix_LoadMUS((rootDir + path).c_str())
 #define STOP_MUSIC()           Mix_HaltMusic()
@@ -41,10 +43,11 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #define PLAY_SFX(sfx, channel) Mix_PlayChannel(channel, sfx->chunk, 0)
 #define FREE_SFX(sfx)          Mix_FreeChunk(sfx->chunk)
 #define SET_VOLUME_MUSIC(vol)  Mix_VolumeMusic(vol * 128 / 100)
+#define MUSIC_IS_PLAYING()     Mix_PlayingMusic()
 #endif
 
 void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
-	if (bgm != NULL) {
+	if (MUSIC_IS_PLAYING()) {
 		stopMusic();
 	}
 	bgm = LOAD_MUSIC(musicRelPath);
@@ -64,43 +67,29 @@ void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
 #endif
 }
 
-void playMusicAtIndex(Uint8 index) {
-	if (soundSettings.musicIndex != 0) {
-		stopMusic();
-	}
-	soundSettings.musicIndex = index;
-	switch (soundSettings.musicIndex) {
-		case 1:
-		//	bgm = Mix_LoadMUS(MUSIC_1);
-		//	Mix_PlayMusic(bgm, -1);
-			break;
-		default:
-			break;
-	}
-}
-
 void stopMusic() {
-#if defined(PSP)
-	STOP_MUSIC();
-	FREE_MUSIC();
-#else
-	if (Mix_PlayingMusic()) {
+	if (MUSIC_IS_PLAYING()) {
 		STOP_MUSIC();
 		FREE_MUSIC();
 	}
-#endif
 }
 
 void pauseMusic() {
-	PAUSE_MUSIC();
+	if (MUSIC_IS_PLAYING()) {
+		PAUSE_MUSIC();
+	}
 }
 
 void resumeMusic() {
-	RESUME_MUSIC();
+	if (MUSIC_IS_PLAYING()) {
+		RESUME_MUSIC();
+	}
 }
 
 void fadeMusic(Uint16 ms) {
-	FADE_MUSIC(ms);
+	if (MUSIC_IS_PLAYING()) {
+		FADE_MUSIC(ms);
+	}
 }
 
 void loadAndPlaySound(SoundEffect *sfx) {
@@ -190,5 +179,7 @@ void freeFinishedSoundChunks() {
 }
 
 void setVolume_music(Uint8 vol) {
-	SET_VOLUME_MUSIC(vol);
+	if (MUSIC_IS_PLAYING()) {
+		SET_VOLUME_MUSIC(vol);
+	}
 }

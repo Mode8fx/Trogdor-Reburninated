@@ -73,7 +73,6 @@ extern SoundEffect *sfxArr_strongBad[NUM_SOUND_EFFECTS_STRONG_BAD];
 extern SoundEffect *sfxChannel_strongBad;
 
 extern void playMusic(const char *, bool, Uint8);
-extern void playMusicAtIndex(Uint8);
 extern void stopMusic();
 extern void pauseMusic();
 extern void resumeMusic();

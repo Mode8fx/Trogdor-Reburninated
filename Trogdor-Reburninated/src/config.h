@@ -14,7 +14,6 @@ constexpr auto DEFAULT_VOLUME_MUSIC = 35;
 #endif
 
 struct SoundSettings {
-	Sint8 musicIndex;
 	Sint8 bgmVolume;
 	Sint8 sfxVolume;
 };

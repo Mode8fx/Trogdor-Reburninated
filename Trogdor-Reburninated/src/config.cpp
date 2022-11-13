@@ -11,7 +11,6 @@ void loadSaveFile() {
 	//}
 	videoSettings.widthSetting = DEFAULT_WIDTH;
 	videoSettings.heightSetting = DEFAULT_HEIGHT;
-	soundSettings.musicIndex = 0;
 	soundSettings.bgmVolume = DEFAULT_VOLUME_MUSIC;
 	soundSettings.sfxVolume = 100;
 }
@@ -21,12 +20,10 @@ void initializeSaveFileNew() {
 	if (saveFile != NULL) {
 		videoSettings.widthSetting = DEFAULT_WIDTH;
 		videoSettings.heightSetting = DEFAULT_HEIGHT;
-		soundSettings.musicIndex = 0;
 		soundSettings.bgmVolume = DEFAULT_VOLUME_MUSIC;
 		soundSettings.sfxVolume = 100;
 		SDL_RWwrite(saveFile, &videoSettings.widthSetting, sizeof(Uint16), 1);
 		SDL_RWwrite(saveFile, &videoSettings.heightSetting, sizeof(Uint16), 1);
-		SDL_RWwrite(saveFile, &soundSettings.musicIndex, sizeof(Sint8), 1);
 		SDL_RWwrite(saveFile, &soundSettings.bgmVolume, sizeof(Sint8), 1);
 		SDL_RWwrite(saveFile, &soundSettings.sfxVolume, sizeof(Sint8), 1);
 		SDL_RWclose(saveFile);
@@ -36,7 +33,6 @@ void initializeSaveFileNew() {
 // unused for now
 //void SAVE_CURRENT_SAVE() {
 //	INITIALIZE_SAVE_FILE_WITH_SAVE(
-//		soundSettings.musicIndex,
 //		soundSettings.bgmVolume,
 //		soundSettings.sfxVolume
 //	);
