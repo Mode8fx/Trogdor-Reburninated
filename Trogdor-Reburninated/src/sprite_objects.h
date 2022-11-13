@@ -3,6 +3,10 @@
 #ifndef SPRITE_OBJECTS_H
 #define SPRITE_OBJECTS_H
 
+#if defined(SDL1)
+inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B);
+#endif
+
 /*
 * @brief A single sprite from a sprite sheet.
 * 

@@ -18,6 +18,12 @@ Sint16 frame_w;
 Sint16 frame_h;
 double currScreenScale;
 
+#if defined(SDL1)
+inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
+	return (!((A->x + A->w < B->x) || (B->x + B->w < A->x) || (A->y + A->h < B->y) || (B->y + B->h < A->y)));
+}
+#endif
+
 Uint32 getPixel(SDL_Surface *surface, int x, int y) {
     // p is the address to the pixel we want to retrieve
     p = (Uint8*)surface->pixels + y * surface->pitch + x * bpp;
