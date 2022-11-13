@@ -456,14 +456,14 @@ const char *option_main_4_descriptions_line_3[2] = { "", "" };
 const char *option_main_5_descriptions_line_1[2] = { "The peasant meter decreases", "No penalty for escaped peasants." };
 const char *option_main_5_descriptions_line_2[2] = { "every time a peasant escapes.", "" };
 const char *option_main_5_descriptions_line_3[2] = { "", "" };
-const char *option_main_6_choices[6] = { "Original", "New", "Low", "Medium", "High", "Non-stop"};
+const char *option_main_6_choices[6] = { "Original", "New", "Low", "Medium", "High", "Non-stop" };
 const char *option_main_6_descriptions_line_1[6] = { "Archers appear more in later levels.", "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"};
 const char *option_main_6_descriptions_line_2[6] = { "Same as the original game.", "New scaling that's more evenly", "", "", "", ""};
 const char *option_main_6_descriptions_line_3[6] = { "", "distributed between levels.", "", "", "", ""};
-const char *option_main_7_choices[6] = { "Off", "Very Low", "Low", "Normal", "High", "Very High", };
-const char *option_main_7_descriptions_line_1[6] = { "Strong Bad does not talk.", "Strong Bad talks 50% less often.", "Strong Bad talks 25% less often.", "Strong Bad talks as often", "Strong Bad talks 25% more often.", "Strong Bad talks 50% more often." };
-const char *option_main_7_descriptions_line_2[6] = { "", "", "", "as he did in the original game.", "", "" };
-const char *option_main_7_descriptions_line_3[6] = { "", "", "", "", "", "" };
+const char *option_main_7_choices[7] = { "Off", "Very Low", "Low", "Normal", "High", "Very High", "Let's-Player" };
+const char *option_main_7_descriptions_line_1[7] = { "Strong Bad does not talk.", "Strong Bad rarely talks.", "Strong Bad talks less than usual.", "Strong Bad talks as often", "Strong Bad talks a bit more often.", "Strong Bad talks much more often.", "Strong Bad won't shut up!" };
+const char *option_main_7_descriptions_line_2[7] = { "", "", "as he did in the original game.", "", "", "(He talks twice as much as usual)" };
+const char *option_main_7_descriptions_line_3[7] = { "", "", "", "", "", "", "" };
 #if defined(THREEDS)
 const char *option_main_8_choices[4] = { "N/A", "N/A", "N/A", "N/A" };
 const char *option_main_8_descriptions_line_1[4] = { "(Unused)", "(Unused)", "(Unused)", "(Unused)" };
@@ -561,7 +561,7 @@ void InitializeMenus() {
 		NULL, 6, false, 0, true);
 	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_7_choices,
 		option_main_7_descriptions_line_1, option_main_7_descriptions_line_2, option_main_7_descriptions_line_3,
-		NULL, 6, false, 3, true);
+		NULL, 7, false, 3, true);
 	MENU_SCALING->prepareMenuOption("Screen Scaling", option_main_8_choices,
 		option_main_8_descriptions_line_1, option_main_8_descriptions_line_2, option_main_8_descriptions_line_3,
 		NULL, 4, false, scalingType, true);

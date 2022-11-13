@@ -590,19 +590,22 @@ GameManager::GameManager(MenuManager mm) {
 			sbVoiceMult = 0;
 			break;
 		case 1:
-			sbVoiceMult = 0.5;
+			sbVoiceMult = 0.3333;
 			break;
 		case 2:
-			sbVoiceMult = 0.75;
+			sbVoiceMult = 0.6666;
 			break;
 		case 3:
 			sbVoiceMult = 1;
 			break;
 		case 4:
-			sbVoiceMult = 1.25;
+			sbVoiceMult = 1.3333;
+			break;
+		case 5:
+			sbVoiceMult = 1.6666;
 			break;
 		default:
-			sbVoiceMult = 1.5;
+			sbVoiceMult = 2;
 			break;
 	}
 	debugMode = CHEAT_DEBUG_MODE->isValue(0);
