@@ -456,10 +456,10 @@ const char *option_main_4_descriptions_line_3[2] = { "", "" };
 const char *option_main_5_descriptions_line_1[2] = { "The peasant meter decreases", "No penalty for escaped peasants." };
 const char *option_main_5_descriptions_line_2[2] = { "every time a peasant escapes.", "" };
 const char *option_main_5_descriptions_line_3[2] = { "", "" };
-const char *option_main_6_choices[5] = { "Scaling", "Low", "Medium", "High", "Very High"};
-const char *option_main_6_descriptions_line_1[5] = { "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"};
-const char *option_main_6_descriptions_line_2[5] = { "", "", "", "", "" };
-const char *option_main_6_descriptions_line_3[5] = { "", "", "", "", "" };
+const char *option_main_6_choices[6] = { "Original", "New", "Low", "Medium", "High", "Non-stop"};
+const char *option_main_6_descriptions_line_1[6] = { "Archers appear more in later levels.", "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"};
+const char *option_main_6_descriptions_line_2[6] = { "Same as the original game.", "New scaling that's more evenly", "", "", "", ""};
+const char *option_main_6_descriptions_line_3[6] = { "", "distributed between levels.", "", "", "", ""};
 const char *option_main_7_choices[6] = { "Off", "Very Low", "Low", "Normal", "High", "Very High", };
 const char *option_main_7_descriptions_line_1[6] = { "Strong Bad does not talk.", "Strong Bad talks 50% less often.", "Strong Bad talks 25% less often.", "Strong Bad talks as often", "Strong Bad talks 25% more often.", "Strong Bad talks 50% more often." };
 const char *option_main_7_descriptions_line_2[6] = { "", "", "", "as he did in the original game.", "", "" };
@@ -558,7 +558,7 @@ void InitializeMenus() {
 		NULL, 2, false, 0, true);
 	MENU_ARCHER_FREQ->prepareMenuOption("Archer Frequency", option_main_6_choices,
 		option_main_6_descriptions_line_1, option_main_6_descriptions_line_2, option_main_6_descriptions_line_3,
-		NULL, 5, false, 0, true);
+		NULL, 6, false, 0, true);
 	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_7_choices,
 		option_main_7_descriptions_line_1, option_main_7_descriptions_line_2, option_main_7_descriptions_line_3,
 		NULL, 6, false, 3, true);

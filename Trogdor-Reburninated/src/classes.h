@@ -143,7 +143,7 @@ class GameManager {
 		Uint8 level;                            // current level
 		Uint8 levelIndex;                       // current level index (determined by level)
 		double burnination;                     // amount of time left in burnination state
-		double archerFrequency;                 // frequency at which archers appear
+		Uint16 archerFrequency;                 // frequency at which archers appear
 		double burnRate;                        // rate at which the burnination meter decreases
 		Arrow arrowArrayL[MAX_NUM_ARROWS];      // array of Arrow objects (facing left, firing from right to left)
 		Arrow arrowArrayR[MAX_NUM_ARROWS];      // array of Arrow objects (facing right, firing from left to right)

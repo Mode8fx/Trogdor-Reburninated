@@ -656,17 +656,20 @@ void GameManager::setArcherFrequency() {
 				archerFrequency = 20; // 0.2
 			}
 			break;
-		case 1:
-			archerFrequency = 40;
+		case 1: // scale from (level 1 = 20) to (level 31 = 400)
+			archerFrequency = ceil((12.6666 * level) + (7.3333));
 			break;
 		case 2:
-			archerFrequency = 80;
+			archerFrequency = 40;
 			break;
 		case 3:
-			archerFrequency = 200;
+			archerFrequency = 150;
+			break;
+		case 4:
+			archerFrequency = 300;
 			break;
 		default:
-			archerFrequency = 400;
+			archerFrequency = 600;
 			break;
 	}
 }
