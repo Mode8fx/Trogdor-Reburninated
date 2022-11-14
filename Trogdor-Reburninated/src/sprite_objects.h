@@ -209,6 +209,7 @@ extern SpriteObject sprite_overlay_basement_left;
 extern SpriteInstance sprite_overlay_basement_left_ins;
 extern SpriteObject sprite_overlay_basement_right;
 extern SpriteInstance sprite_overlay_basement_right_ins;
+extern SDL_Rect right_overlay_padding;
 extern SpriteObject sprite_trogdor;
 extern SpriteObject sprite_trogdor_bighead;
 extern SpriteObject sprite_cottage;

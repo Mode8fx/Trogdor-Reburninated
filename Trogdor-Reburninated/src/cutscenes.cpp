@@ -228,6 +228,11 @@ void cutscene_level_4() {
 	cutscene_knight_2.renderAsCSO(false);
 	cutscene_trogdor_fire.renderAsCSO(false);
 	renderText(text_11_cutscene, font_serif_white_9);
+#if !defined(SDL1)
+	SDL_RenderFillRect(renderer, &right_overlay_padding);
+#else
+	SDL_FillRect(windowScreen, &right_overlay_padding, 0);
+#endif
 }
 
 void cutscene_level_8() {
@@ -776,7 +781,7 @@ void cutscene_level_46_arrow_helper(SpriteInstance *arrowObj, Sint16 startingFra
 		case 0:
 			cutscene_archer_1.setFrame(1);
 			arrowObj->isActive = true;
-			arrowObj->prepareAsCSO(223, 93, 0, 0, 0, 0, 0, 0);
+			arrowObj->prepareAsCSO(225, 93, 0, 0, 0, 0, 0, 0); // was 223; changed since there's no outer screen frame
 			break;
 		case 3:
 			cutscene_archer_1.setFrame(0);
@@ -818,7 +823,7 @@ void cutscene_level_46() {
 			cutscene_knight_funnyjoke.prepareAsCSO(58, 91, 0, 0, 0, 0, 0, 0);
 			break;
 		case 1166:
-			cutscene_archer_1.prepareAsCSO(246, 90, 0, 0, 0, 0, -3.6, 0);
+			cutscene_archer_1.prepareAsCSO(248, 90, 0, 0, 0, 0, -3.6, 0); // was 246; changed since there's no outer screen frame
 			break;
 		case 1171:
 			cutscene_archer_1.vel_x = 0;

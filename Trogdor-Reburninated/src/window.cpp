@@ -120,6 +120,8 @@ void repositionOverlay() {
 	sprite_overlay_basement_bottom_ins.dstrect = sprite_overlay_basement_bottom_ins.dstrect;
 	sprite_overlay_basement_left_ins.dstrect = sprite_overlay_basement_left_ins.dstrect;
 	sprite_overlay_basement_right_ins.dstrect = sprite_overlay_basement_right_ins.dstrect;
+	right_overlay_padding = sprite_overlay_basement_right_ins.dstrect;
+	right_overlay_padding.x += right_overlay_padding.w;
 }
 
 void setScaling() {

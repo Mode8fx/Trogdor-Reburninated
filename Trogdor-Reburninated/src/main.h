@@ -160,6 +160,7 @@ SpriteObject sprite_overlay_basement_left;
 SpriteInstance sprite_overlay_basement_left_ins;
 SpriteObject sprite_overlay_basement_right;
 SpriteInstance sprite_overlay_basement_right_ins;
+SDL_Rect right_overlay_padding;
 SpriteObject sprite_trogdor;
 SpriteObject sprite_trogdor_bighead;
 SpriteObject sprite_cottage;
