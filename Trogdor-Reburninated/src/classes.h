@@ -171,6 +171,7 @@ class GameManager {
 		bool treasureHutFound;                  // treasure hut has been found in this level
 		bool inTreasureHut;                     // player is currently in treasure hut
 		Sint16 treasureHutIndex;                // index of hut that contains treasure (0 = no treasure hut)
+		Sint8 treasureHutLevel;                 // the level index of the first treasure hut you entered; default is 0
 		Sint16 store_x;                         // old player X position (used for treasure huts)
 		Sint16 store_y;                         // old player Y position (used for treasure huts)
 		Sint16 treasureHut_timer;               // remaining time in treasure hut

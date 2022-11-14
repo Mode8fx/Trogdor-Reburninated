@@ -582,6 +582,7 @@ GameManager::GameManager(MenuManager mm) {
 	treasureHutFound = false;
 	inTreasureHut = false;
 	treasureHutIndex = 0;
+	treasureHutLevel = -1;
 	store_x = 0;
 	store_y = 0;
 	treasureHut_timer = 0;
@@ -891,8 +892,10 @@ inline void GameManager::trogdor_add_y_delta(Sint8 dy) {
 
 inline void GameManager::handle_treasure_hut_entry(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
 	// Technically, the original treasure_button collision is different from the hut fire collision used here, but it's both negligible and inconsistent between huts (seems like a bug), so I'm not gonna bother
-	if (treasureHutIndex && !treasureHutFound && !hutArray[treasureHutIndex - 1].burned && SDL_HasIntersection(&trog->sprite.dstrect, &hutArray[treasureHutIndex - 1].sprite.collision)) {
+	if (treasureHutIndex && !treasureHutFound && !hutArray[treasureHutIndex - 1].burned && SDL_HasIntersection(&trog->sprite.dstrect, &hutArray[treasureHutIndex - 1].sprite.collision)
+		&& (MENU_TREASURE_HUTS->index == 0 || (MENU_TREASURE_HUTS->index == 1 && (treasureHutLevel == -1 || treasureHutLevel == levelIndex)))) {
 		inTreasureHut = true;
+		treasureHutLevel = levelIndex;
 		for (i = 0; i < MAX_NUM_LOOT; i++) {
 			lootArray[i].sprite.isActive = true;
 		}
