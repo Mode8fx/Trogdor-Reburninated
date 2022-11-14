@@ -126,17 +126,16 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
         currScreenScale = screenScale;
     }
     // Allocate the SpriteSubObject array; each element of this 2D array represents a single sprite from the sprite sheet
-    for (i = 0; i < numFrames; i++) {
-        if (spriteObj->sub[i] != NULL) {
 #if defined(SDL1)
-            for (j = 0; j < numForms; j++) {
+    for (i = 0; i < numFrames; i++) {
+        for (j = 0; j < numForms; j++) {
+            if (spriteObj->sub[i][j].surface != NULL) {
                 SDL_FreeSurface(spriteObj->sub[i][j].surface);
+                spriteObj->sub[i][j].surface = NULL;
             }
-#endif
-            free(spriteObj->sub[i]);
         }
-        spriteObj->sub[i] = (SpriteSubObject*)malloc(numForms * sizeof(SpriteSubObject));
     }
+#endif
     // Load the sprite sheet as a surface
     temp_sprite_sheet = IMG_Load(path);
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))

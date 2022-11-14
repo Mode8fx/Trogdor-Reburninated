@@ -616,6 +616,7 @@ GameManager::GameManager(MenuManager mm) {
 void GameManager::resetAllSrcRects() {
 	for (i = 0; i < MAX_NUM_HUTS; i++) {
 		hutArray[i].sprite.updateCurrSprite();
+		hutArray[i].sprite_fire.updateCurrSprite();
 	}
 	for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 		knightArray[i].sprite.updateCurrSprite();
@@ -636,7 +637,9 @@ void GameManager::resetAllSrcRects() {
 	player.sprite.updateCurrSprite();
 	player.sprite_fire.updateCurrSprite();
 	player.sprite_death.updateCurrSprite();
+	player.sprite_end_of_level.updateCurrSprite();
 	sprite_dm.updateCurrSprite();
+	sprite_bt.updateCurrSprite();
 	sprite_bf.updateCurrSprite();
 	sprite_bmFull.updateCurrSprite();
 	sprite_pm_on.updateCurrSprite();

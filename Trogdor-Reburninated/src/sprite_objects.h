@@ -44,14 +44,14 @@ struct SpriteSubObject {
 /*
 * @brief A sprite sheet.
 * 
-* @param sub A 2D array containing pointers to malloc'd SpriteSubObjects. sub[i][j] contains the pointer to the SpriteSubObject representing Frame i, Form j.
+* @param sub A 2D array containing pointers to SpriteSubObjects. sub[i][j] contains the pointer to the SpriteSubObject representing Frame i, Form j.
 * @param spriteScale The scale multiplier of each sprite in the sprite sheet, not accounting for screenScale.
 * @param numFrames The number of frames; or, the max number of sprites on one row of the sprite sheet.
 * @param numForms The number of forms; or, the max number of sprites on one column of the sprite sheet.
 * @param dstrect x and y represent the default position of a sprite, while w and h represent the original frame width and height (including empty space) respectively, each scaled up by spriteScale.
 */
 struct SpriteObject {
-    SpriteSubObject *sub[9];
+    SpriteSubObject sub[9][12];
     double spriteScale;
     Sint8 numFrames;
     Sint8 numForms;
