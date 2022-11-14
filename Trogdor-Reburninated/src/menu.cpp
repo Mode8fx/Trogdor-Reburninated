@@ -478,20 +478,15 @@ const char *option_main_scaling_choices[4] = { "Pixel-Perfect", "", "Full", "Ful
 const char *option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "", "Scale everything so that", "Scale the game to fill the screen." };
 const char *option_main_scaling_descriptions_line_2[4] = { "scaling. Accurate, but small.", "", "the overlay fills the screen.", "The overlay will be cut off." };
 const char *option_main_scaling_descriptions_line_3[4] = { "(Press X to apply, may take a few seconds)", "", "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)" };
-#elif defined(WII) || defined(GAMECUBE)
+#elif defined(WII) || defined(GAMECUBE) || defined(XBOX)
 const char *option_main_scaling_choices[4] = { "Pixel-Perfect", "", "", "Full Game" };
-const char *option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "", "", "[EXPERIMENTAL] Scale the game to fill" };
-const char *option_main_scaling_descriptions_line_2[4] = { "scaling. The most accurate.", "", "", "the screen. The overlay will be cut off." };
+const char *option_main_8_descriptions_line_1[4] = { "Scale so that everything uses integer", "", "", "Scale the game to fill the screen." };
+const char *option_main_8_descriptions_line_2[4] = { "scaling. The most accurate.", "", "", "The overlay will be cut off." };
 #if defined(WII)
 const char *option_main_scaling_descriptions_line_3[4] = { "(Press 2 to apply, may take a few seconds)", "", "", "(Press 2 to apply, may take a few seconds)" };
 #else
 const char *option_main_scaling_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "", "", "(Press A to apply, may take a few seconds)" };
 #endif
-#elif defined(XBOX)
-const char *option_main_scaling_choices[4] = { "Pixel-Perfect", "", "", "Full Game" };
-const char *option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "", "", "Scale the game to fill the screen." };
-const char *option_main_scaling_descriptions_line_2[4] = { "scaling. The most accurate.", "", "", "The overlay will be cut off." };
-const char *option_main_scaling_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "", "", "(Press A to apply, may take a few seconds)" };
 #elif defined(WII_U)
 const char *option_main_scaling_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "", "" };
 const char *option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "", "" };
