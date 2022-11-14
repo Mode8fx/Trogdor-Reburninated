@@ -11,7 +11,7 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #if defined(PSP)
 #define LOAD_MUSIC(path)       oslLoadSoundFile((rootDir + path).c_str(), OSL_FMT_STREAM)
 #define STOP_MUSIC()           oslStopSound(bgm)
-#define FREE_MUSIC()           oslDeleteSound(bgm)
+#define FREE_MUSIC()           oslDeleteSound(bgm); bgm = NULL;
 #define PAUSE_MUSIC()          oslPauseSound(bgm, 1)
 #define RESUME_MUSIC()         oslPauseSound(bgm, 0)
 #define FADE_MUSIC(ms)         STOP_MUSIC()
@@ -35,7 +35,7 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #else
 #define LOAD_MUSIC(path)       Mix_LoadMUS((rootDir + path).c_str())
 #define STOP_MUSIC()           Mix_HaltMusic()
-#define FREE_MUSIC()           Mix_FreeMusic(bgm)
+#define FREE_MUSIC()           Mix_FreeMusic(bgm); bgm = NULL;
 #define PAUSE_MUSIC()          Mix_PauseMusic()
 #define RESUME_MUSIC()         Mix_ResumeMusic()
 #define FADE_MUSIC(ms)         Mix_FadeOutMusic(ms)
@@ -70,7 +70,9 @@ void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
 void stopMusic() {
 	if (MUSIC_IS_PLAYING()) {
 		STOP_MUSIC();
+#if !defined(PSP)
 		FREE_MUSIC();
+#endif
 	}
 }
 

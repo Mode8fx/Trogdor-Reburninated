@@ -462,7 +462,7 @@ const char *option_main_6_descriptions_line_2[6] = { "Same as the original game.
 const char *option_main_6_descriptions_line_3[6] = { "", "distributed between levels.", "", "", "", ""};
 const char *option_main_7_choices[7] = { "Off", "Very Low", "Low", "Normal", "High", "Very High", "Let's-Player" };
 const char *option_main_7_descriptions_line_1[7] = { "Strong Bad does not talk.", "Strong Bad rarely talks.", "Strong Bad talks less than usual.", "Strong Bad talks as often", "Strong Bad talks a bit more often.", "Strong Bad talks much more often.", "Strong Bad won't shut up!" };
-const char *option_main_7_descriptions_line_2[7] = { "", "", "", "as he did in the original game.", "", "", "(He talks twice as much as usual)"};
+const char *option_main_7_descriptions_line_2[7] = { "", "", "", "as he did in the original game.", "", "", "(He talks twice as much as usual.)"};
 const char *option_main_7_descriptions_line_3[7] = { "", "", "", "", "", "", "" };
 #if defined(THREEDS)
 const char *option_main_8_choices[4] = { "N/A", "N/A", "N/A", "N/A" };
