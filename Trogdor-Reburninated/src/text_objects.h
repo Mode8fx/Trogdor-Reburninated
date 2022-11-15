@@ -100,7 +100,8 @@ extern FontObject font_commodore_error_2;
 /* Text Objects */
 extern TextObject text_0_loading;
 extern SDL_Rect text_0_loading_censor_rect;
-extern TextObject text_1_presents;
+extern TextObject text_1_presents_1;
+extern TextObject text_1_presents_2;
 extern TextObject text_3_click_anywhere_to_start;
 extern TextObject text_3_quit;
 //extern TextObject text_3_programmed;

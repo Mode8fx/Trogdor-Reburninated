@@ -256,7 +256,8 @@ int main(int argv, char** args) {
 			case 1:
 				if (g_frameState < 65) {
 					sprite_videlectrix_logo_ins.renderSprite_app();
-					renderText(text_1_presents, font_nokia_12);
+					renderText(text_1_presents_1, font_nokia_12);
+					renderText(text_1_presents_2, font_nokia_12);
 				}
 				if (g_frameState < 72) {
 					g_frameState++;

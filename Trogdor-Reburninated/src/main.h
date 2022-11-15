@@ -229,7 +229,8 @@ FontObject font_commodore_error_2;
 /* Text Objects */
 TextObject text_0_loading;
 SDL_Rect text_0_loading_censor_rect;
-TextObject text_1_presents;
+TextObject text_1_presents_1;
+TextObject text_1_presents_2;
 TextObject text_3_click_anywhere_to_start;
 TextObject text_3_quit;
 //TextObject text_3_programmed;
