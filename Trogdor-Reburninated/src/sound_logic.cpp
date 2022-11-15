@@ -51,7 +51,6 @@ void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
 		stopMusic();
 	}
 	bgm = LOAD_MUSIC(musicRelPath);
-	setVolume_music(vol);
 #if defined(PSP)
 	if (loop) {
 		oslSetSoundLoop(bgm, true);
@@ -65,6 +64,7 @@ void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
 		Mix_PlayMusic(bgm, 1);
 	}
 #endif
+	setVolume_music(vol);
 }
 
 void stopMusic() {
