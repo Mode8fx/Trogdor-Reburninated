@@ -480,8 +480,8 @@ const char *option_main_scaling_descriptions_line_2[4] = { "scaling. Accurate, b
 const char *option_main_scaling_descriptions_line_3[4] = { "(Press X to apply, may take a few seconds)", "", "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)" };
 #elif defined(WII) || defined(GAMECUBE) || defined(XBOX)
 const char *option_main_scaling_choices[4] = { "Pixel-Perfect", "", "", "Full Game" };
-const char *option_main_8_descriptions_line_1[4] = { "Scale so that everything uses integer", "", "", "Scale the game to fill the screen." };
-const char *option_main_8_descriptions_line_2[4] = { "scaling. The most accurate.", "", "", "The overlay will be cut off." };
+const char *option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "", "", "Scale the game to fill the screen." };
+const char *option_main_scaling_descriptions_line_2[4] = { "scaling. The most accurate.", "", "", "The overlay will be cut off." };
 #if defined(WII)
 const char *option_main_scaling_descriptions_line_3[4] = { "(Press 2 to apply, may take a few seconds)", "", "", "(Press 2 to apply, may take a few seconds)" };
 #else
