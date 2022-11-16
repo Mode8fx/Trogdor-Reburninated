@@ -414,6 +414,8 @@ double screenScale_menu = 1;
 bool allowHiRes = true;
 #if defined(VITA) || defined(WII_U) || defined(SWITCH)
 Sint8 scalingType = 1;
+#elif defined(PSP)
+Sint8 scalingType = 3;
 #else
 Sint8 scalingType = 0;
 #endif
