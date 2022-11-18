@@ -1,5 +1,5 @@
 # Trogdor Reburninated
-This is an enhanced recreation of the Homestar Runner Flash game, _Trogdor_. It is currently available for PC, Switch, Wii U, Wii, Gamecube, 3DS, Vita, and PSP.
+This is an enhanced recreation of the Homestar Runner Flash game, _Trogdor_. It is currently available for PC, Switch, Wii U, Wii, 3DS, Vita, and PSP.
 
 Homestar Runner is no stranger to [fan ports](https://www.mrphlip.com/ds/pop_tire/) of its [Flash games](https://www.mrphlip.com/ds/secret/), and its impact on Flash media, as well as Internet media as a whole, cannot be overstated. Though the original game is still playable on modern devices through its [HTML5 port](https://old.homestarrunner.com/trogdor-canvas/index.html), this project aims to expand on the original release with new features and multiplatform libraries that allow for porting to a wide variety of systems.
 
@@ -28,7 +28,7 @@ That being said, almost all art and sound assets are ported directly from the or
 I have a few currently-unimplemented features in mind, such as restoring the original game's unused High Scores screen, but there is no set release date for future updates.
 
 ### Will this be ported to \_\_\_\_\_?
-This game was made to be compatible with both SDL 1.2 and SDL2 specifically so it could be ported to many systems. At the very least, expect an Android port at some point in the future. You could also try porting it yourself; this is open-source, after all.
+This game was made to be compatible with both SDL 1.2 and SDL2 specifically so it could be ported to many systems. At the very least, expect a Gamecube port at some point in the future. You could also try porting it yourself; this is open-source, after all.
 
 ### Legal Stuff
 This is an unofficial fan project made without any involvement from anyone who contributed to the original game. Trogdor and Homestar Runner are owned by the Brothers Chaps, Mike and Matt Chapman. The original Flash game was programmed by Jonathan Howe.
