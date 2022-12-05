@@ -592,7 +592,7 @@ void InitializeMenus() {
 		"Class of 1981", 2, true, 0, true);
 	CHEAT_BIG_HEAD_MODE->prepareMenuOption("Big Head Mode", option_on_off,
 		option_cheats_big_head_mode_descriptions_line_1, option_empty, option_empty,
-		"Echidna Mushroom Pulley", 2, true, 0, true);
+		"S&K Mushroom Pulley", 2, true, 0, true);
 	CHEAT_NOCLIP->prepareMenuOption("Noclip", option_on_off,
 		option_cheats_noclip_descriptions_line_1, option_cheats_noclip_descriptions_line_2, option_empty,
 		"1994 Country", 2, true, 0, true);

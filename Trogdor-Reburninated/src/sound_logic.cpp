@@ -56,15 +56,16 @@ void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
 		oslSetSoundLoop(bgm, true);
 	}
 	oslPlaySound(bgm, SFX_CHANNEL_GAME_MUSIC);
+	setVolume_music(vol);
 #elif defined(XBOX)
 #else
+	setVolume_music(vol);
 	if (loop) {
 		Mix_PlayMusic(bgm, -1);
 	} else {
 		Mix_PlayMusic(bgm, 1);
 	}
 #endif
-	setVolume_music(vol);
 }
 
 void stopMusic() {
@@ -181,7 +182,11 @@ void freeFinishedSoundChunks() {
 }
 
 void setVolume_music(Uint8 vol) {
+#if defined(PSP)
 	if (MUSIC_IS_PLAYING()) {
 		SET_VOLUME_MUSIC(vol);
 	}
+#else
+	SET_VOLUME_MUSIC(vol);
+#endif
 }
