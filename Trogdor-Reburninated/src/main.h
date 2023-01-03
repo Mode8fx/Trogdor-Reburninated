@@ -201,6 +201,12 @@ SDL_Color color_gray   = { 102, 102, 102 };
 SDL_Color color_orange = { 255, 204,   0 };
 SDL_Color color_brown  = { 153, 102,   0 };
 
+/* Font RWops */
+SDL_RWops *rwops_font_29_NOKIA_5110_FontSet;
+SDL_RWops *rwops_font_54_serif_v01;
+SDL_RWops *rwops_font_Commodore_Pixelized_v1_2;
+SDL_RWops *rwops_font_serif_v01;
+
 /* Fonts */
 FontObject font_serif_brown_6;
 FontObject font_serif_brown_8;

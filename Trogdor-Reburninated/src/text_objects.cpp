@@ -152,19 +152,15 @@ int getDesiredFontSize(FontObject *fontObj) {
 	}
 }
 
-void setFont(FontObject *fontObj, const char *path, int originalSize, double multSize, int style, SDL_Color color, bool scaleToWindow) {
+void setFont(FontObject *fontObj, SDL_RWops *rwops_font, int originalSize, double multSize, int style, SDL_Color color, bool scaleToWindow) {
 	fontObj->originalSize = originalSize;
 	fontObj->multSize = multSize;
 	fontObj->scaleToWindow = scaleToWindow;
 	fontObj->size = getDesiredFontSize(fontObj);
 	fontObj->style = style;
 	fontObj->color = color;
-	fontObj->font = TTF_OpenFont((rootDir + path).c_str(), fontObj->size);
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
-	if (fontObj->font == NULL) {
-		throw((rootDir + path).c_str());
-	}
-#endif
+	SDL_RWseek(rwops_font, 0, RW_SEEK_SET);
+	fontObj->font = TTF_OpenFontRW(rwops_font, false, fontObj->size);
 	TTF_SetFontStyle(fontObj->font, fontObj->style);
 }
 

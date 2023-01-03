@@ -56,7 +56,7 @@ extern void setTextCharPosX(TextCharObject *, int);
 extern void setTextCharPosY(TextCharObject *, int);
 extern void destroyTextObjectTexture(TextCharObject);
 extern int getDesiredFontSize(FontObject *);
-extern void setFont(FontObject *, const char *, int, double, int, SDL_Color, bool);
+extern void setFont(FontObject *, SDL_RWops *, int, double, int, SDL_Color, bool);
 extern void initializeFont_numbers(FontObject *);
 
 // This should be a macro since pos_x and pos_y may (and likely will) change before they're needed
@@ -71,6 +71,12 @@ extern SDL_Color color_red;
 extern SDL_Color color_gray;
 extern SDL_Color color_orange;
 extern SDL_Color color_brown;
+
+/* Font RWops */
+extern SDL_RWops *rwops_font_29_NOKIA_5110_FontSet;
+extern SDL_RWops *rwops_font_54_serif_v01;
+extern SDL_RWops *rwops_font_Commodore_Pixelized_v1_2;
+extern SDL_RWops *rwops_font_serif_v01;
 
 /* Fonts */
 extern FontObject font_serif_brown_6;

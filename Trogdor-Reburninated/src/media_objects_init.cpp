@@ -5,49 +5,56 @@
 #include "sprite_objects.h"
 #include "config.h"
 #include "general.h"
+#include "fonts/fonts_29_NOKIA_5110_FontSet.h"
+#include "fonts/fonts_Commodore_Pixelized_v1_2.h"
+#include "fonts/fonts_serif_v01.h"
 
 ifstream ifile;
 
 void InitializeFontsAndText() {
 	TTF_Init();
 
-	setFont(&font_serif_white_14, "fonts/serif_v01.ttf", 14, 14, TTF_STYLE_NORMAL, color_white, false);
+	rwops_font_29_NOKIA_5110_FontSet = SDL_RWFromConstMem(fonts_29_NOKIA_5110_FontSet_data, fonts_29_NOKIA_5110_FontSet_len);
+	rwops_font_Commodore_Pixelized_v1_2 = SDL_RWFromConstMem(fonts_Commodore_Pixelized_v1_2_data, fonts_Commodore_Pixelized_v1_2_len);
+	rwops_font_serif_v01 = SDL_RWFromConstMem(fonts_serif_v01_data, fonts_serif_v01_len);
+
+	setFont(&font_serif_white_14, rwops_font_serif_v01, 14, 14, TTF_STYLE_NORMAL, color_white, false);
 	SET_TEXT("loading...", text_0_loading, font_serif_white_14,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_0_loading), OBJ_TO_MID_SCREEN_Y(gameHiResHeight, text_0_loading));
 	TTF_CloseFont(font_serif_white_14.font);
 
-	setFont(&font_serif_white_6_mult, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white, false);
-	setFont(&font_serif_red_6_mult, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_red, false);
-	setFont(&font_serif_red_8_mult, "fonts/serif_v01.ttf", 8, 6.666, TTF_STYLE_NORMAL, color_red, false);
+	setFont(&font_serif_white_6_mult, rwops_font_serif_v01, 8, 5, TTF_STYLE_NORMAL, color_white, false);
+	setFont(&font_serif_red_6_mult, rwops_font_serif_v01, 8, 5, TTF_STYLE_NORMAL, color_red, false);
+	setFont(&font_serif_red_8_mult, rwops_font_serif_v01, 8, 6.666, TTF_STYLE_NORMAL, color_red, false);
 	initializeFont_numbers(&font_serif_white_6_mult);
 	InitializeText_HomeScreen();
 	TTF_CloseFont(font_serif_white_6_mult.font);
 	TTF_CloseFont(font_serif_red_6_mult.font);
 	TTF_CloseFont(font_serif_red_8_mult.font);
 
-	setFont(&font_serif_white_8, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white, true);
+	setFont(&font_serif_white_8, rwops_font_serif_v01, 8, 5, TTF_STYLE_NORMAL, color_white, true);
 	TTF_CloseFont(font_serif_white_8.font);
 
-	//setFont(&font_serif_brown_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_brown);
+	//setFont(&font_serif_brown_6, rwops_font_serif_v01, 6, 6, TTF_STYLE_NORMAL, color_brown);
 	//TTF_CloseFont(font_serif_brown_6.font);
 
-	//setFont(&font_serif_brown_8, "fonts/serif_v01.ttf", 8, 8, TTF_STYLE_NORMAL, color_brown);
+	//setFont(&font_serif_brown_8, rwops_font_serif_v01, 8, 8, TTF_STYLE_NORMAL, color_brown);
 	//TTF_CloseFont(font_serif_brown_8.font);
 
-	//setFont(&font_serif_gray_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_gray);
+	//setFont(&font_serif_gray_6, rwops_font_serif_v01, 6, 6, TTF_STYLE_NORMAL, color_gray);
 	//TTF_CloseFont(font_serif_gray_6.font);
 
-	setFont(&font_serif_gray_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_gray, false);
+	setFont(&font_serif_gray_12, rwops_font_serif_v01, 12, 12, TTF_STYLE_NORMAL, color_gray, false);
 	SET_TEXT("LEVEL", text_9_level_gray, font_serif_gray_12,
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_level_gray, 0.77) - 2, (111 + 1) * gameHiResMult);
 	SET_TEXT("BEATEN!", text_9_beaten_gray, font_serif_gray_12,
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_beaten_gray, 0.77) - 2, (132 + 1) * gameHiResMult);
 	TTF_CloseFont(font_serif_gray_12.font);
 
-	//setFont(&font_serif_orange_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_orange);
+	//setFont(&font_serif_orange_6, rwops_font_serif_v01, 6, 6, TTF_STYLE_NORMAL, color_orange);
 	//TTF_CloseFont(font_serif_orange_6.font);
 
-	setFont(&font_serif_red_6, "fonts/serif_v01.ttf", 8, 6, TTF_STYLE_NORMAL, color_red, false);
+	setFont(&font_serif_red_6, rwops_font_serif_v01, 8, 6, TTF_STYLE_NORMAL, color_red, false);
 	initializeFont_numbers(&font_serif_red_6);
 	SET_TEXT("??????", text_4_score_val, font_serif_red_6,
 		5 * gameHiResMult, 11 * gameHiResMult);
@@ -62,30 +69,30 @@ void InitializeFontsAndText() {
 	}
 	TTF_CloseFont(font_serif_red_6.font);
 
-	//setFont(&font_serif_red_8, "fonts/serif_v01.ttf", 8, 8, TTF_STYLE_NORMAL, color_red);
+	//setFont(&font_serif_red_8, rwops_font_serif_v01, 8, 8, TTF_STYLE_NORMAL, color_red);
 	//TTF_CloseFont(font_serif_red_8.font);
 
-	setFont(&font_serif_red_12, "fonts/serif_v01.ttf", 12, 12, TTF_STYLE_NORMAL, color_red, false);
+	setFont(&font_serif_red_12, rwops_font_serif_v01, 12, 12, TTF_STYLE_NORMAL, color_red, false);
 	SET_TEXT("LEVEL", text_9_level_red, font_serif_red_12,
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_level_red, 0.77), 111 * gameHiResMult);
 	SET_TEXT("BEATEN!", text_9_beaten_red, font_serif_red_12,
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_beaten_red, 0.77), 132 * gameHiResMult);
 	TTF_CloseFont(font_serif_red_12.font);
 
-	setFont(&font_serif_white_6, "fonts/serif_v01.ttf", 6, 6, TTF_STYLE_NORMAL, color_white, false);
+	setFont(&font_serif_white_6, rwops_font_serif_v01, 6, 6, TTF_STYLE_NORMAL, color_white, false);
 	InitializeText_PauseScreen();
 	TTF_CloseFont(font_serif_white_6.font);
 
-	setFont(&font_serif_white_9, "fonts/serif_v01.ttf", 9, 9, TTF_STYLE_NORMAL, color_white, false);
+	setFont(&font_serif_white_9, rwops_font_serif_v01, 9, 9, TTF_STYLE_NORMAL, color_white, false);
 	InitializeText_Cutscenes();
 	TTF_CloseFont(font_serif_white_9.font);
 
-	setFont(&font_serif_white_10, "fonts/serif_v01.ttf", 10, 10, TTF_STYLE_NORMAL, color_white, false);
+	setFont(&font_serif_white_10, rwops_font_serif_v01, 10, 10, TTF_STYLE_NORMAL, color_white, false);
 	SET_TEXT("nice work!", text_9_nice_work, font_serif_white_10,
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_nice_work, 0.77), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_9_nice_work, 0.45));
 	TTF_CloseFont(font_serif_white_10.font);
 
-	setFont(&font_nokia_12, "fonts/29_NOKIA_5110_FontSet.ttf", 12, 12, TTF_STYLE_NORMAL, color_white, false);
+	setFont(&font_nokia_12, rwops_font_29_NOKIA_5110_FontSet, 12, 12, TTF_STYLE_NORMAL, color_white, false);
 #if defined(PSP)
 	SET_TEXT("presents", text_1_presents_1, font_nokia_12,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents_1, 0.7));
@@ -99,9 +106,9 @@ void InitializeFontsAndText() {
 #endif
 	TTF_CloseFont(font_nokia_12.font);
 
-	//setFont(font_serif_2_bold_black_23, "fonts/54_serif_v01.ttf", 23, 23, TTF_STYLE_BOLD, color_black);
-	//setFont(font_serif_2_bold_red_23, "fonts/54_serif_v01.ttf", 23, 23, TTF_STYLE_BOLD, color_red);
-	setFont(&font_serif_2_red_6, "fonts/serif_v01.ttf", 8, 6, TTF_STYLE_NORMAL, color_red, false);
+	//setFont(font_serif_2_bold_black_23, rwops_font_54_serif_v01, 23, 23, TTF_STYLE_BOLD, color_black);
+	//setFont(font_serif_2_bold_red_23, rwops_font_54_serif_v01, 23, 23, TTF_STYLE_BOLD, color_red);
+	setFont(&font_serif_2_red_6, rwops_font_serif_v01, 8, 6, TTF_STYLE_NORMAL, color_red, false);
 	SET_TEXT("SCORE:", text_4_score, font_serif_2_red_6,
 		5 * gameHiResMult, 1 * gameHiResMult);
 	SET_TEXT("MANS:", text_4_mans, font_serif_2_red_6,
@@ -117,7 +124,7 @@ void InitializeFontsAndText() {
 	}
 	TTF_CloseFont(font_serif_2_red_6.font);
 
-	//setFont(&font_serif_2_red_13, "fonts/54_serif_v01.ttf", 13, 13, TTF_STYLE_NORMAL, color_red);
+	//setFont(&font_serif_2_red_13, rwops_font_54_serif_v01, 13, 13, TTF_STYLE_NORMAL, color_red);
 	//TTF_CloseFont(font_serif_2_red_13.font);
 
 	//SET_TEXT("nice work!", text_nice_work, font_serif_white_10,
@@ -812,8 +819,8 @@ void HandleErrorText(const char *badPath) {
 	TTF_Init();
 
 	STRCPY(tempCharArrayError, badPath);
-	setFont(&font_commodore_error_1, "fonts/Commodore_Pixelized_v1_2.ttf", 10, 10, TTF_STYLE_NORMAL, color_white, true);
-	setFont(&font_commodore_error_2, "fonts/Commodore_Pixelized_v1_2.ttf", 10, 9, TTF_STYLE_NORMAL, color_orange, true);
+	setFont(&font_commodore_error_1, rwops_font_Commodore_Pixelized_v1_2, 10, 10, TTF_STYLE_NORMAL, color_white, true);
+	setFont(&font_commodore_error_2, rwops_font_Commodore_Pixelized_v1_2, 10, 9, TTF_STYLE_NORMAL, color_orange, true);
 	uint_i = (rand() % 4);
 	switch (uint_i) {
 		case 0:
