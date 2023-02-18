@@ -446,7 +446,7 @@ int main(int argv, char** args) {
 						menu_cheats.setOptionChoice(CHEAT_DEBUG_MODE_INDEX, CHEAT_DEBUG_MODE->index_init);
 						menu_cheats.setOptionChoice(CHEAT_BIG_HEAD_MODE_INDEX, CHEAT_BIG_HEAD_MODE->index_init);
 						menu_cheats.setOptionChoice(CHEAT_NOCLIP_INDEX, CHEAT_NOCLIP->index_init);
-						loadAndPlaySound(SFX_SBDOOJ);
+						loadAndPlaySound(SFX_SBDOOJ_SHORT);
 						break;
 					case MENU_CREDITS_INDEX:
 						menu_credits.openNotebook();

@@ -127,8 +127,8 @@ SoundEffect sfx_kick;
 SoundEffect sfx_burninate;
 SoundEffect sfx_cutscene;
 SoundEffect sfx_gameover;
-SoundEffect sfx_shutup;
 SoundEffect sfx_huskyhead;
+SoundEffect sfx_sbdooj_short;
 
 /* Sprite Objects */
 SpriteObject sprite_videlectrix_logo;

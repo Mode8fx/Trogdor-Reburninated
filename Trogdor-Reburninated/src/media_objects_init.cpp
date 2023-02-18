@@ -421,10 +421,10 @@ void InitializeSFX() {
 	sfx_cutscene.path = "sfx/cutscene.wav";
 	sfxArr[11] = &sfx_gameover;
 	sfx_gameover.path = "sfx/gameover.wav";
-	sfxArr[12] = &sfx_shutup;
-	sfx_shutup.path = "sfx/shutup.wav";
-	sfxArr[13] = &sfx_huskyhead;
+	sfxArr[12] = &sfx_huskyhead;
 	sfx_huskyhead.path = "sfx/huskyhead.wav";
+	sfxArr[13] = &sfx_sbdooj_short;
+	sfx_sbdooj_short.path = "sfx/sbdooj_short.wav";
 	sfxArr_strongBad[0] = &sfx_sb1;
 	sfx_sb1.path = "sfx/trog_sb1.wav";
 	sfxArr_strongBad[1] = &sfx_sb2;
@@ -801,7 +801,7 @@ void HandleErrorText(const char *badPath) {
 #else
 	quickErrorTextRender_1("Press ENTER/START to quit.", 0.825);
 #endif
-	quickErrorTextRender_2("[Trogdor: Reburninated v1.1]", 0.9);
+	quickErrorTextRender_2("[Trogdor: Reburninated v1.2]", 0.9);
 	TTF_CloseFont(font_commodore_error_1.font);
 	TTF_CloseFont(font_commodore_error_2.font);
 

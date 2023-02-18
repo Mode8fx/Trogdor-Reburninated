@@ -663,7 +663,7 @@ void InitializeMenus() {
 	menu_credits.pages[1]->setTextLine(4, "https://github.com/Mips96");
 	menu_credits.pages[1]->setTextLine(5, "/Trogdor-Reburninated");
 	menu_credits.pages[1]->setTextLine(6, "");
-	menu_credits.pages[1]->setTextLine(7, "v1.1");
+	menu_credits.pages[1]->setTextLine(7, "v1.2");
 
 	menu_credits.pages[2]->prepareMenuPage(5, 0, 30, 20, 1);
 	menu_credits.pages[2]->setTextLine(0, "- STINKOMAN MUSIC -");
