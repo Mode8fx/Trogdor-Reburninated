@@ -128,7 +128,7 @@ void MenuNotebook::renderNotebook() {
 /* MENU OPTION */
 /***************/
 
-void MenuOption::prepareMenuOption(const char label_ptr[], const char *choice_ptr[], const char *desc_ptr_1[], const char *desc_ptr_2[], const char *desc_ptr_3[], const char altDesc_ptr[], Uint8 numCh, bool oneDesc, Uint8 start, bool wrap) {
+void MenuOption::prepareMenuOption(const char label_ptr[], const char *choice_ptr[], const char *desc_ptr_1[], const char *desc_ptr_2[], const char *desc_ptr_3[], const char altDesc_ptr[], Uint8 numCh, bool oneDesc, Sint8 start, bool wrap) {
 	labelPtr = label_ptr;
 	if (!menusAreInitialized) {
 		choicePtr = choice_ptr;
@@ -511,6 +511,7 @@ const char *option_main_scaling_descriptions_line_3[4] = { "(Press Z / A to appl
 #endif
 const char *option_main_cheats_descriptions_line_1[1] = { "Toggle hidden cheats." };
 const char *option_main_credits_descriptions_line_1[1] = { "View the credits." };
+const char *option_main_reset_settings_descriptions_line_1[1] = { "Reset all settings to default." };
 const char *option_main_quit_descriptions_line_1[1] = { "Quit the game." };
 const char *option_cheats_inf_lives_descriptions_line_1[1] = { "Infinite lives, play forever!" };
 const char *option_cheats_inf_lives_descriptions_line_2[1] = { "Unlocking this cheat also unlocks" };
@@ -572,6 +573,9 @@ void InitializeMenus() {
 		NULL, 1, true, 0, true);
 	MENU_CREDITS->prepareMenuOption("Credits", option_empty,
 		option_main_credits_descriptions_line_1, option_empty, option_empty,
+		NULL, 1, true, 0, true);
+	MENU_RESET_SETTINGS->prepareMenuOption("Reset to Default", option_empty,
+		option_main_reset_settings_descriptions_line_1, option_empty, option_empty,
 		NULL, 1, true, 0, true);
 	MENU_QUIT->prepareMenuOption("Quit Game", option_empty,
 		option_main_quit_descriptions_line_1, option_empty, option_empty,

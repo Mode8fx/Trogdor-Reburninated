@@ -432,6 +432,21 @@ int main(int argv, char** args) {
 						menu_credits.openNotebook();
 						g_sceneState = 303;
 						break;
+					case MENU_RESET_SETTINGS_INDEX:
+						menu_main.setOptionChoice(MENU_STARTING_LEVEL_INDEX, MENU_STARTING_LEVEL->index_init);
+						menu_main.setOptionChoice(MENU_STARTING_LIVES_INDEX, MENU_STARTING_LIVES->index_init);
+						menu_main.setOptionChoice(MENU_EXTRA_LIVES_INDEX, MENU_EXTRA_LIVES->index_init);
+						menu_main.setOptionChoice(MENU_MUSIC_INDEX, MENU_MUSIC->index_init);
+						menu_main.setOptionChoice(MENU_PEASANT_PENALTY_INDEX, MENU_PEASANT_PENALTY->index_init);
+						menu_main.setOptionChoice(MENU_TREASURE_HUTS_INDEX, MENU_TREASURE_HUTS->index_init);
+						menu_main.setOptionChoice(MENU_ARCHER_FREQ_INDEX, MENU_ARCHER_FREQ->index_init);
+						menu_main.setOptionChoice(MENU_COMMENT_FREQ_INDEX, MENU_COMMENT_FREQ->index_init);
+						//menu_main.setOptionChoice(MENU_SCALING_INDEX, MENU_SCALING->index_init);
+						menu_cheats.setOptionChoice(CHEATS_INF_LIVES_INDEX, CHEATS_INF_LIVES->index_init);
+						menu_cheats.setOptionChoice(CHEAT_DEBUG_MODE_INDEX, CHEAT_DEBUG_MODE->index_init);
+						menu_cheats.setOptionChoice(CHEAT_BIG_HEAD_MODE_INDEX, CHEAT_BIG_HEAD_MODE->index_init);
+						menu_cheats.setOptionChoice(CHEAT_NOCLIP_INDEX, CHEAT_NOCLIP->index_init);
+						break;
 					case MENU_QUIT_INDEX: // Quit Game
 						isRunning = false;
 						break;

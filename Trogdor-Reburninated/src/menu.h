@@ -105,7 +105,7 @@ class MenuOption {
 		bool optionIsLocked;
 		MenuOption() {
 		}
-		void prepareMenuOption(const char [], const char *[], const char *[], const char *[], const char *[], const char [], Uint8, bool, Uint8, bool);
+		void prepareMenuOption(const char [], const char *[], const char *[], const char *[], const char *[], const char [], Uint8, bool, Sint8, bool);
 		void setLocked(bool);
 		void updateLabel();
 		void initChoicesAndDescriptions();
@@ -193,8 +193,9 @@ constexpr auto MENU_COMMENT_FREQ_INDEX = 7;
 constexpr auto MENU_SCALING_INDEX = 8;
 constexpr auto MENU_CHEATS_INDEX = 9;
 constexpr auto MENU_CREDITS_INDEX = 10;
-constexpr auto MENU_QUIT_INDEX = 11;
-constexpr auto MENU_NUM_OPTIONS = 12;
+constexpr auto MENU_RESET_SETTINGS_INDEX = 11;
+constexpr auto MENU_QUIT_INDEX = 12;
+constexpr auto MENU_NUM_OPTIONS = 13;
 #define MENU_STARTING_LEVEL  menu_main.options[MENU_STARTING_LEVEL_INDEX]
 #define MENU_STARTING_LIVES  menu_main.options[MENU_STARTING_LIVES_INDEX]
 #define MENU_EXTRA_LIVES     menu_main.options[MENU_EXTRA_LIVES_INDEX]
@@ -206,6 +207,7 @@ constexpr auto MENU_NUM_OPTIONS = 12;
 #define MENU_SCALING         menu_main.options[MENU_SCALING_INDEX]
 #define MENU_CHEATS          menu_main.options[MENU_CHEATS_INDEX]
 #define MENU_CREDITS         menu_main.options[MENU_CREDITS_INDEX]
+#define MENU_RESET_SETTINGS  menu_main.options[MENU_RESET_SETTINGS_INDEX]
 #define MENU_QUIT            menu_main.options[MENU_QUIT_INDEX]
 
 constexpr auto CHEATS_INF_LIVES_INDEX = 0;
