@@ -423,8 +423,6 @@ void InitializeSFX() {
 	sfx_gameover.path = "sfx/gameover.wav";
 	sfxArr[12] = &sfx_huskyhead;
 	sfx_huskyhead.path = "sfx/huskyhead.wav";
-	sfxArr[13] = &sfx_sbdooj_short;
-	sfx_sbdooj_short.path = "sfx/sbdooj_short.wav";
 	sfxArr_strongBad[0] = &sfx_sb1;
 	sfx_sb1.path = "sfx/trog_sb1.wav";
 	sfxArr_strongBad[1] = &sfx_sb2;
@@ -467,6 +465,10 @@ void InitializeSFX() {
 	sfx_sbwin2.path = "sfx/trog_sbwin2.wav";
 	sfxArr_strongBad[20] = &sfx_sbworst;
 	sfx_sbworst.path = "sfx/trog_sbworst.wav";
+	sfxArr_strongBad[21] = &sfx_sbdooj_short;
+	sfx_sbdooj_short.path = "sfx/sbdooj_short.wav";
+	sfxArr_strongBad[22] = &sfx_itsover;
+	sfx_itsover.path = "sfx/soundboard_itsover.wav";
 	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
 		sfxArr_strongBad[i]->type = 1;
 	}

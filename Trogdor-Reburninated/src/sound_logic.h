@@ -3,9 +3,9 @@
 #ifndef SOUND_LOGIC_H
 #define SOUND_LOGIC_H
 
-constexpr auto NUM_SOUND_EFFECTS_SFX = 14; // hardcoded; change this as more sound effects are added
+constexpr auto NUM_SOUND_EFFECTS_SFX = 13; // hardcoded; change this as more sound effects are added
 //constexpr auto NUM_SOUND_EFFECTS_GAMEMUSIC = 0;
-constexpr auto NUM_SOUND_EFFECTS_STRONG_BAD = 21;
+constexpr auto NUM_SOUND_EFFECTS_STRONG_BAD = 23;
 constexpr auto NUM_SOUND_CHANNELS = 8;
 constexpr auto NUM_SOUND_CHANNELS_SFX = NUM_SOUND_CHANNELS - 2;
 constexpr auto SFX_CHANNEL_GAME = -1; // any free channel
@@ -95,7 +95,6 @@ extern void setVolume_music(Uint8);
 #define SFX_CUTSCENE      sfxArr[10]
 #define SFX_GAMEOVER      sfxArr[11]
 #define SFX_HUSKYHEAD     sfxArr[12]
-#define SFX_SBDOOJ_SHORT  sfxArr[13]
 #define SFX_SB1           sfxArr_strongBad[0]
 #define SFX_SB2           sfxArr_strongBad[1]
 #define SFX_SB3           sfxArr_strongBad[2]
@@ -117,6 +116,8 @@ extern void setVolume_music(Uint8);
 #define SFX_SBWIN         sfxArr_strongBad[18]
 #define SFX_SBWIN2        sfxArr_strongBad[19]
 #define SFX_SBWORST       sfxArr_strongBad[20]
+#define SFX_SBDOOJ_SHORT  sfxArr_strongBad[21]
+#define SFX_ITSOVER       sfxArr_strongBad[22]
 extern SoundEffect sfx_burn_hut;
 extern SoundEffect sfx_goldget;
 extern SoundEffect sfx_peasantscream;
@@ -152,5 +153,6 @@ extern SoundEffect sfx_cutscene;
 extern SoundEffect sfx_gameover;
 extern SoundEffect sfx_huskyhead;
 extern SoundEffect sfx_sbdooj_short;
+extern SoundEffect sfx_itsover;
 
 #endif

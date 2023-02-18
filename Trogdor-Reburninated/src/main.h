@@ -80,6 +80,7 @@ Menu menu_difficulty;
 Menu menu_cosmetic;
 Menu menu_cheats;
 MenuNotebook menu_credits;
+Menu menu_quit;
 
 /* Audio */
 #if defined(PSP)
@@ -129,6 +130,7 @@ SoundEffect sfx_cutscene;
 SoundEffect sfx_gameover;
 SoundEffect sfx_huskyhead;
 SoundEffect sfx_sbdooj_short;
+SoundEffect sfx_itsover;
 
 /* Sprite Objects */
 SpriteObject sprite_videlectrix_logo;

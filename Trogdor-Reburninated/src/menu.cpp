@@ -219,6 +219,12 @@ void MenuOption::updateDescription() {
 	}
 }
 
+void MenuOption::setDescriptionToIndex(Uint8 forcedIndex) {
+	setText(descPtr_1[forcedIndex], &description_1, menuFont);
+	setText(descPtr_2[forcedIndex], &description_2, menuFont);
+	setText(descPtr_3[forcedIndex], &description_3, menuFont);
+}
+
 void MenuOption::render(bool renderDescription) {
 	renderText_menu(label, *menuFont);
 	renderText_menu(choice, *menuFont);
@@ -521,14 +527,48 @@ std::string option_main_cheats_descriptions_line_2[1] = { "Follow the hints!" };
 std::string option_main_credits_descriptions_line_1[1] = { "View the credits." };
 std::string option_main_reset_settings_descriptions_line_1[1] = { "Reset all settings to default." };
 std::string option_main_quit_descriptions_line_1[1] = { "Quit the game." };
-std::string option_CHEAT_INF_LIVES_descriptions_line_1[1] = { "Infinite lives, play forever!" };
-std::string option_CHEAT_INF_LIVES_descriptions_line_2[1] = { "Unlocking this cheat also unlocks" };
-std::string option_CHEAT_INF_LIVES_descriptions_line_3[1] = { "more starting lives options." };
+std::string option_cheats_inf_lives_descriptions_line_1[1] = { "Infinite lives, play forever!" };
+std::string option_cheats_inf_lives_descriptions_line_2[1] = { "Unlocking this cheat also unlocks" };
+std::string option_cheats_inf_lives_descriptions_line_3[1] = { "more starting lives options." };
 std::string option_cheats_debug_mode_descriptions_line_1[1] = { "Enable Debug Mode." };
 std::string option_cheats_debug_mode_descriptions_line_2[1] = { "Press buttons to do things." };
 std::string option_cheats_big_head_mode_descriptions_line_1[1] = { "Give Trogdor a more husky head." };
 std::string option_cheats_noclip_descriptions_line_1[1] = { "Remove the game's difficulty" };
 std::string option_cheats_noclip_descriptions_line_2[1] = { "by walking through cottages." };
+#if defined(WII_U) || defined(VITA) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
+#if defined(WII_U)
+std::string console_quit_line_1 = "WHY ARE YOU STILL USING A WII U?!";
+#elif defined(VITA)
+std::string console_quit_line_1 = "WHY ARE YOU STILL USING A VITA?!";
+#elif defined(PSP)
+std::string console_quit_line_1 = "WHY ARE YOU STILL USING A PSP?!";
+#elif defined(WII)
+std::string console_quit_line_1 = "WHY ARE YOU STILL USING A WII?!";
+#elif defined(GAMECUBE)
+std::string console_quit_line_1 = "WHY ARE YOU STILL USING A GAMECUBE?!";
+#elif defined(THREEDS)
+std::string console_quit_line_1 = "WHY ARE YOU STILL USING A 3DS?!";
+#elif defined(XBOX)
+std::string console_quit_line_1 = "WHY ARE YOU STILL USING AN XBOX?!";
+#else
+std::string console_quit_line_1 = "WHY ARE YOU STILL USING WINDOWS 98?!";
+#endif
+std::string console_quit_line_2 = "WHAT IS WRONG WITH YOU?! STOP BUYING";
+std::string console_quit_line_3 = "CONSOLES FROM THRIFT STORES, MAN!";
+#else
+#if defined(SWITCH)
+std::string console_quit_line_1 = "Switch over? Virus equals very yes?";
+#elif defined(ANDROID)
+std::string console_quit_line_1 = "Android over? Virus equals very yes?";
+#else
+std::string console_quit_line_1 = "Computer over? Virus equals very yes?";
+#endif
+std::string console_quit_line_2 = "";
+std::string console_quit_line_3 = "";
+#endif
+std::string option_quit_descriptions_line_1[7] = { "Hey Player, I really like your", "Strong Bad's gonna get the", "Are you sure you want to quit this", "Don't leave yet -- There's a", "If you leave now, how will you", "Click \"Keep playing\" to email strong bad", console_quit_line_1};
+std::string option_quit_descriptions_line_2[7] = { "\"quitting to play a different game\"", "high score, man, 50,000.", "great game?", "peasant around that corner!", "get ye flask?", "", console_quit_line_2};
+std::string option_quit_descriptions_line_3[7] = { "costume.", "", "", "", "", "", console_quit_line_3};
 
 void InitializeMenus() {
 	TTF_Init();
@@ -625,7 +665,7 @@ void InitializeMenus() {
 		}
 	}
 	CHEAT_INF_LIVES->prepareMenuOption("Infinite Lives", option_on_off,
-		option_CHEAT_INF_LIVES_descriptions_line_1, option_CHEAT_INF_LIVES_descriptions_line_2, option_CHEAT_INF_LIVES_descriptions_line_3,
+		option_cheats_inf_lives_descriptions_line_1, option_cheats_inf_lives_descriptions_line_2, option_cheats_inf_lives_descriptions_line_3,
 		"Secret Code?!?!", 2, true, 0, true);
 	CHEAT_DEBUG_MODE->prepareMenuOption("Debug Mode", option_on_off,
 		option_cheats_debug_mode_descriptions_line_1, option_cheats_debug_mode_descriptions_line_2, option_empty,
@@ -704,6 +744,20 @@ void InitializeMenus() {
 	menu_credits.pages[4]->setTextLine(7, "https://github.com/Mips96");
 	menu_credits.pages[4]->setTextLine(8, "/Trogdor-Reburninated");
 
+	/* Quit Menu */
+	menu_quit.prepareMenu(QUIT_NUM_OPTIONS, 7, &sprite_menu_cursor, false, 1, 128 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 132, 60, 25, 15, 0, 0, true);
+	if (!menusAreInitialized) {
+		for (i = 0; i < QUIT_NUM_OPTIONS; i++) {
+			menu_quit.options[i] = new MenuOption();
+		}
+	}
+	QUIT_BACK->prepareMenuOption("Keep playing", option_empty,
+		option_quit_descriptions_line_1, option_quit_descriptions_line_2, option_quit_descriptions_line_3,
+		"", 1, false, 0, true);
+	QUIT_CONFIRM->prepareMenuOption("Quit it!", option_empty,
+		option_quit_descriptions_line_1, option_quit_descriptions_line_2, option_quit_descriptions_line_3,
+		"", 1, false, 0, true);
+
 	/* Initializing Values */
 	if (!menusAreInitialized) {
 		MENU_EXTRA_LIVES->choiceIsAllowed[6] = false;
@@ -728,6 +782,7 @@ void InitializeMenus() {
 	menu_difficulty.updateOptionPositions();
 	menu_cosmetic.updateOptionPositions();
 	menu_cheats.updateOptionPositions();
+	menu_quit.updateOptionPositions();
 
 	menusAreInitialized = true;
 

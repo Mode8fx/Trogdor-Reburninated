@@ -453,7 +453,12 @@ int main(int argv, char** args) {
 						g_sceneState = 305;
 						break;
 					case MENU_QUIT_INDEX: // Quit Game
-						isRunning = false;
+						menu_quit.openMenu();
+						j = (rand() % 7);
+						QUIT_BACK->setDescriptionToIndex(j);
+						QUIT_CONFIRM->setDescriptionToIndex(j);
+						menu_quit.updateOptionPositions();
+						g_sceneState = 306;
 						break;
 					case -1: // Press B/Select
 						g_sceneState = 3;
@@ -517,6 +522,32 @@ int main(int argv, char** args) {
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_credits.renderNotebook();
 				switch (menu_credits.handleInput()) {
+					case -1: // Press B/Select
+						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
+						g_sceneState = 301;
+						break;
+					default:
+						break;
+				}
+				break;
+			/* Quit Screen */
+			case 306:
+				g_frameState++;
+				sprite_menu_background_ins.renderSprite_menu();
+				menu_quit.renderMenu();
+				switch (menu_quit.handleInput()) {
+					case QUIT_BACK_INDEX:
+						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
+						g_sceneState = 301;
+						break;
+					case QUIT_CONFIRM_INDEX:
+						stopMusic();
+						loadAndPlaySound(SFX_ITSOVER);
+						while (sfxChannel_strongBad != NULL) {
+							freeFinishedSoundChunks(); // wait for sound to stop playing
+						}
+						isRunning = false;
+						break;
 					case -1: // Press B/Select
 						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;

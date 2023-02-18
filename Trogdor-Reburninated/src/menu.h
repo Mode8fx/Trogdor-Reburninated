@@ -111,6 +111,7 @@ class MenuOption {
 		void initChoicesAndDescriptions();
 		void updateChoice();
 		void updateDescription();
+		void setDescriptionToIndex(Uint8);
 		void render(bool);
 		bool isValue(Uint8);
 };
@@ -227,11 +228,18 @@ constexpr auto CHEAT_DEBUG_MODE_INDEX = 1;
 constexpr auto CHEAT_BIG_HEAD_MODE_INDEX = 2;
 constexpr auto CHEAT_NOCLIP_INDEX = 3;
 constexpr auto CHEAT_NUM_OPTIONS = 4;
-#define CHEAT_INF_LIVES	     menu_cheats.options[CHEAT_INF_LIVES_INDEX]
-#define CHEAT_DEBUG_MODE     menu_cheats.options[CHEAT_DEBUG_MODE_INDEX]
-#define CHEAT_BIG_HEAD_MODE  menu_cheats.options[CHEAT_BIG_HEAD_MODE_INDEX]
-#define CHEAT_NOCLIP         menu_cheats.options[CHEAT_NOCLIP_INDEX]
+#define CHEAT_INF_LIVES     menu_cheats.options[CHEAT_INF_LIVES_INDEX]
+#define CHEAT_DEBUG_MODE    menu_cheats.options[CHEAT_DEBUG_MODE_INDEX]
+#define CHEAT_BIG_HEAD_MODE menu_cheats.options[CHEAT_BIG_HEAD_MODE_INDEX]
+#define CHEAT_NOCLIP        menu_cheats.options[CHEAT_NOCLIP_INDEX]
 
 extern MenuNotebook menu_credits;
+
+extern Menu menu_quit;
+constexpr auto QUIT_BACK_INDEX = 0;
+constexpr auto QUIT_CONFIRM_INDEX = 1;
+constexpr auto QUIT_NUM_OPTIONS = 2;
+#define QUIT_BACK    menu_quit.options[QUIT_BACK_INDEX]
+#define QUIT_CONFIRM menu_quit.options[QUIT_CONFIRM_INDEX]
 
 #endif
