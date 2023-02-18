@@ -418,36 +418,39 @@ int main(int argv, char** args) {
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_main.renderMenu();
 				switch (menu_main.handleInput()) {
-#if !defined(THREEDS)
-					case MENU_SCALING_INDEX:
-						scalingType = MENU_SCALING->index;
-						windowSizeChanged = true;
-						break;
-#endif
-					case MENU_CHEATS_INDEX:
-						menu_cheats.openMenu();
+					case MENU_DIFFICULTY_INDEX:
+						menu_difficulty.openMenu();
 						g_sceneState = 302;
 						break;
-					case MENU_CREDITS_INDEX:
-						menu_credits.openNotebook();
+					case MENU_COSMETIC_INDEX:
+						menu_cosmetic.openMenu();
 						g_sceneState = 303;
 						break;
+					case MENU_CHEATS_INDEX:
+						menu_cheats.openMenu();
+						g_sceneState = 304;
+						break;
 					case MENU_RESET_SETTINGS_INDEX:
-						menu_main.setOptionChoice(MENU_STARTING_LEVEL_INDEX, MENU_STARTING_LEVEL->index_init);
-						menu_main.setOptionChoice(MENU_STARTING_LIVES_INDEX, MENU_STARTING_LIVES->index_init);
-						menu_main.setOptionChoice(MENU_EXTRA_LIVES_INDEX, MENU_EXTRA_LIVES->index_init);
-						menu_main.setOptionChoice(MENU_MUSIC_INDEX, MENU_MUSIC->index_init);
-						menu_main.setOptionChoice(MENU_PEASANT_PENALTY_INDEX, MENU_PEASANT_PENALTY->index_init);
-						menu_main.setOptionChoice(MENU_TREASURE_HUTS_INDEX, MENU_TREASURE_HUTS->index_init);
-						menu_main.setOptionChoice(MENU_ARCHER_FREQ_INDEX, MENU_ARCHER_FREQ->index_init);
-						menu_main.setOptionChoice(MENU_KNIGHT_BEHAVIOR_INDEX, MENU_KNIGHT_BEHAVIOR->index_init);
-						menu_main.setOptionChoice(MENU_LEVEL_TRAN_INDEX, MENU_LEVEL_TRAN->index_init);
-						menu_main.setOptionChoice(MENU_COMMENT_FREQ_INDEX, MENU_COMMENT_FREQ->index_init);
-						//menu_main.setOptionChoice(MENU_SCALING_INDEX, MENU_SCALING->index_init);
-						menu_cheats.setOptionChoice(CHEATS_INF_LIVES_INDEX, CHEATS_INF_LIVES->index_init);
+						menu_difficulty.setOptionChoice(MENU_STARTING_LEVEL_INDEX, MENU_STARTING_LEVEL->index_init);
+						menu_difficulty.setOptionChoice(MENU_EXTRA_LIVES_INDEX, MENU_EXTRA_LIVES->index_init);
+						menu_difficulty.setOptionChoice(MENU_LIVES_INTERVAL_INDEX, MENU_LIVES_INTERVAL->index_init);
+						menu_difficulty.setOptionChoice(MENU_PEASANT_PENALTY_INDEX, MENU_PEASANT_PENALTY->index_init);
+						menu_difficulty.setOptionChoice(MENU_TREASURE_HUTS_INDEX, MENU_TREASURE_HUTS->index_init);
+						menu_difficulty.setOptionChoice(MENU_ARCHER_FREQ_INDEX, MENU_ARCHER_FREQ->index_init);
+						menu_difficulty.setOptionChoice(MENU_KNIGHT_BEHAVIOR_INDEX, MENU_KNIGHT_BEHAVIOR->index_init);
+						menu_cosmetic.setOptionChoice(MENU_LEVEL_TRAN_INDEX, MENU_LEVEL_TRAN->index_init);
+						menu_cosmetic.setOptionChoice(MENU_MUSIC_INDEX, MENU_MUSIC->index_init);
+						menu_cosmetic.setOptionChoice(MENU_COMMENT_FREQ_INDEX, MENU_COMMENT_FREQ->index_init);
+						//menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, MENU_SCALING->index_init);
+						menu_cheats.setOptionChoice(CHEAT_INF_LIVES_INDEX, CHEAT_INF_LIVES->index_init);
 						menu_cheats.setOptionChoice(CHEAT_DEBUG_MODE_INDEX, CHEAT_DEBUG_MODE->index_init);
 						menu_cheats.setOptionChoice(CHEAT_BIG_HEAD_MODE_INDEX, CHEAT_BIG_HEAD_MODE->index_init);
 						menu_cheats.setOptionChoice(CHEAT_NOCLIP_INDEX, CHEAT_NOCLIP->index_init);
+						loadAndPlaySound(SFX_SBDOOJ);
+						break;
+					case MENU_CREDITS_INDEX:
+						menu_credits.openNotebook();
+						g_sceneState = 305;
 						break;
 					case MENU_QUIT_INDEX: // Quit Game
 						isRunning = false;
@@ -460,8 +463,42 @@ int main(int argv, char** args) {
 						break;
 				}
 				break;
-			/* Cheats Menu */
+			/* Difficulty Settings Menu */
 			case 302:
+				g_frameState++;
+				sprite_menu_background_ins.renderSprite_menu();
+				menu_difficulty.renderMenu();
+				switch (menu_difficulty.handleInput()) {
+					case -1: // Press B/Select
+						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
+						g_sceneState = 301;
+						break;
+					default:
+						break;
+				}
+				break;
+			/* Cosmetic Settings Menu */
+			case 303:
+				g_frameState++;
+				sprite_menu_background_ins.renderSprite_menu();
+				menu_cosmetic.renderMenu();
+				switch (menu_cosmetic.handleInput()) {
+#if !defined(THREEDS)
+					case MENU_SCALING_INDEX:
+						scalingType = MENU_SCALING->index;
+						windowSizeChanged = true;
+						break;
+#endif
+					case -1: // Press B/Select
+						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
+						g_sceneState = 301;
+						break;
+					default:
+						break;
+				}
+				break;
+			/* Cheats Menu */
+			case 304:
 				g_frameState++;
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_cheats.renderMenu();
@@ -475,7 +512,7 @@ int main(int argv, char** args) {
 				}
 				break;
 			/* Credits Screen */
-			case 303:
+			case 305:
 				g_frameState++;
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_credits.renderNotebook();

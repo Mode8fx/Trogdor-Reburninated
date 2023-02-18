@@ -512,16 +512,20 @@ std::string option_main_scaling_descriptions_line_1[4] = { "Scale so that everyt
 std::string option_main_scaling_descriptions_line_2[4] = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." };
 std::string option_main_scaling_descriptions_line_3[4] = { press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply };
 #endif
-std::string option_main_cheats_descriptions_line_1[1] = { "Toggle hidden cheats." };
+std::string option_main_difficulty_descriptions_line_1[1] = { "Change settings related to" };
+std::string option_main_difficulty_descriptions_line_2[1] = { "game difficulty." };
+std::string option_main_cosmetic_descriptions_line_1[1] = { "Change settings related to" };
+std::string option_main_cosmetic_descriptions_line_2[1] = { "game audio and video." };
+std::string option_main_cheats_descriptions_line_1[1] = { "Toggle secret cheats." };
+std::string option_main_cheats_descriptions_line_2[1] = { "Follow the hints!" };
 std::string option_main_credits_descriptions_line_1[1] = { "View the credits." };
 std::string option_main_reset_settings_descriptions_line_1[1] = { "Reset all settings to default." };
 std::string option_main_quit_descriptions_line_1[1] = { "Quit the game." };
-std::string option_cheats_inf_lives_descriptions_line_1[1] = { "Infinite lives, play forever!" };
-std::string option_cheats_inf_lives_descriptions_line_2[1] = { "Unlocking this cheat also unlocks" };
-std::string option_cheats_inf_lives_descriptions_line_3[1] = { "more starting lives options." };
+std::string option_CHEAT_INF_LIVES_descriptions_line_1[1] = { "Infinite lives, play forever!" };
+std::string option_CHEAT_INF_LIVES_descriptions_line_2[1] = { "Unlocking this cheat also unlocks" };
+std::string option_CHEAT_INF_LIVES_descriptions_line_3[1] = { "more starting lives options." };
 std::string option_cheats_debug_mode_descriptions_line_1[1] = { "Enable Debug Mode." };
 std::string option_cheats_debug_mode_descriptions_line_2[1] = { "Press buttons to do things." };
-std::string option_cheats_debug_mode_descriptions_line_3[1] = { "" };
 std::string option_cheats_big_head_mode_descriptions_line_1[1] = { "Give Trogdor a more husky head." };
 std::string option_cheats_noclip_descriptions_line_1[1] = { "Remove the game's difficulty" };
 std::string option_cheats_noclip_descriptions_line_2[1] = { "by walking through cottages." };
@@ -544,18 +548,42 @@ void InitializeMenus() {
 			menu_main.options[i] = new MenuOption();
 		}
 	}
+
+	MENU_DIFFICULTY->prepareMenuOption("Difficulty Settings", option_empty,
+		option_main_difficulty_descriptions_line_1, option_main_difficulty_descriptions_line_2, option_empty,
+		"", 1, true, 0, true);
+	MENU_COSMETIC->prepareMenuOption("Cosmetic Settings", option_empty,
+		option_main_cosmetic_descriptions_line_1, option_main_cosmetic_descriptions_line_2, option_empty,
+		"", 1, true, 0, true);
+	MENU_CHEATS->prepareMenuOption("Cheats", option_empty,
+		option_main_cheats_descriptions_line_1, option_main_cheats_descriptions_line_2, option_empty,
+		"", 1, true, 0, true);
+	MENU_RESET_SETTINGS->prepareMenuOption("Reset to Default", option_empty,
+		option_main_reset_settings_descriptions_line_1, option_empty, option_empty,
+		"", 1, true, 0, true);
+	MENU_CREDITS->prepareMenuOption("Credits", option_empty,
+		option_main_credits_descriptions_line_1, option_empty, option_empty,
+		"", 1, true, 0, true);
+	MENU_QUIT->prepareMenuOption("Quit Game", option_empty,
+		option_main_quit_descriptions_line_1, option_empty, option_empty,
+		"", 1, true, 0, true);
+
+	/* Difficulty Settings Menu */
+	menu_difficulty.prepareMenu(DIFFICULTY_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
+	if (!menusAreInitialized) {
+		for (i = 0; i < DIFFICULTY_NUM_OPTIONS; i++) {
+			menu_difficulty.options[i] = new MenuOption();
+		}
+	}
 	MENU_STARTING_LEVEL->prepareMenuOption("Starting Level", option_main_starting_level_choices,
 		option_main_starting_level_descriptions_line_1, option_empty, option_empty,
 		"", 10, true, 0, true);
-	MENU_STARTING_LIVES->prepareMenuOption("Extra Lives", option_main_extra_lives_choices,
+	MENU_EXTRA_LIVES->prepareMenuOption("Extra Lives", option_main_extra_lives_choices,
 		option_main_extra_lives_descriptions_line_1, option_empty, option_empty,
 		"", 9, true, 3, true);
-	MENU_EXTRA_LIVES->prepareMenuOption("Lives Interval", option_main_lives_interval_choices,
+	MENU_LIVES_INTERVAL->prepareMenuOption("Lives Interval", option_main_lives_interval_choices,
 		option_main_lives_interval_descriptions_line_1, option_main_lives_interval_descriptions_line_2, option_main_lives_interval_descriptions_line_3,
 		"", 8, false, 0, true);
-	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
-		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
-		"", 2, false, 0, true);
 	MENU_PEASANT_PENALTY->prepareMenuOption("Peasant Penalty", option_on_off,
 		option_main_peasant_penalty_descriptions_line_1, option_main_peasant_penalty_descriptions_line_2, option_main_peasant_penalty_descriptions_line_3,
 		"", 2, false, 0, true);
@@ -568,8 +596,19 @@ void InitializeMenus() {
 	MENU_KNIGHT_BEHAVIOR->prepareMenuOption("Knight Behavior", option_main_knight_behavior_choices,
 		option_main_knight_behavior_descriptions_line_1, option_main_knight_behavior_descriptions_line_2, option_main_knight_behavior_descriptions_line_3,
 		"", 2, false, 0, true);
+
+	/* Cosmetic Settings Menu */
+	menu_cosmetic.prepareMenu(COSMETIC_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
+	if (!menusAreInitialized) {
+		for (i = 0; i < COSMETIC_NUM_OPTIONS; i++) {
+			menu_cosmetic.options[i] = new MenuOption();
+		}
+	}
 	MENU_LEVEL_TRAN->prepareMenuOption("Level Transition", option_main_level_tran_choices,
 		option_main_level_tran_descriptions_line_1, option_main_level_tran_descriptions_line_2, option_main_level_tran_descriptions_line_3,
+		"", 2, false, 0, true);
+	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
+		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
 		"", 2, false, 0, true);
 	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_comment_freq_choices,
 		option_main_comment_freq_descriptions_line_1, option_main_comment_freq_descriptions_line_2, option_main_comment_freq_descriptions_line_3,
@@ -577,18 +616,6 @@ void InitializeMenus() {
 	MENU_SCALING->prepareMenuOption("Screen Scaling", option_main_scaling_choices,
 		option_main_scaling_descriptions_line_1, option_main_scaling_descriptions_line_2, option_main_scaling_descriptions_line_3,
 		"", 4, false, scalingType, true);
-	MENU_CHEATS->prepareMenuOption("Cheats", option_empty,
-		option_main_cheats_descriptions_line_1, option_empty, option_empty,
-		"", 1, true, 0, true);
-	MENU_CREDITS->prepareMenuOption("Credits", option_empty,
-		option_main_credits_descriptions_line_1, option_empty, option_empty,
-		"", 1, true, 0, true);
-	MENU_RESET_SETTINGS->prepareMenuOption("Reset to Default", option_empty,
-		option_main_reset_settings_descriptions_line_1, option_empty, option_empty,
-		"", 1, true, 0, true);
-	MENU_QUIT->prepareMenuOption("Quit Game", option_empty,
-		option_main_quit_descriptions_line_1, option_empty, option_empty,
-		"", 1, true, 0, true);
 
 	/* Cheats Menu */
 	menu_cheats.prepareMenu(CHEAT_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -597,11 +624,11 @@ void InitializeMenus() {
 			menu_cheats.options[i] = new MenuOption();
 		}
 	}
-	CHEATS_INF_LIVES->prepareMenuOption("Infinite Lives", option_on_off,
-		option_cheats_inf_lives_descriptions_line_1, option_cheats_inf_lives_descriptions_line_2, option_cheats_inf_lives_descriptions_line_3,
+	CHEAT_INF_LIVES->prepareMenuOption("Infinite Lives", option_on_off,
+		option_CHEAT_INF_LIVES_descriptions_line_1, option_CHEAT_INF_LIVES_descriptions_line_2, option_CHEAT_INF_LIVES_descriptions_line_3,
 		"Secret Code?!?!", 2, true, 0, true);
 	CHEAT_DEBUG_MODE->prepareMenuOption("Debug Mode", option_on_off,
-		option_cheats_debug_mode_descriptions_line_1, option_cheats_debug_mode_descriptions_line_2, option_cheats_debug_mode_descriptions_line_3,
+		option_cheats_debug_mode_descriptions_line_1, option_cheats_debug_mode_descriptions_line_2, option_empty,
 		"Class of 1981", 2, true, 0, true);
 	CHEAT_BIG_HEAD_MODE->prepareMenuOption("Big Head Mode", option_on_off,
 		option_cheats_big_head_mode_descriptions_line_1, option_empty, option_empty,
@@ -679,10 +706,10 @@ void InitializeMenus() {
 
 	/* Initializing Values */
 	if (!menusAreInitialized) {
-		MENU_STARTING_LIVES->choiceIsAllowed[6] = false;
-		MENU_STARTING_LIVES->choiceIsAllowed[7] = false;
-		MENU_STARTING_LIVES->choiceIsAllowed[8] = false;
-		CHEATS_INF_LIVES->setLocked(true);
+		MENU_EXTRA_LIVES->choiceIsAllowed[6] = false;
+		MENU_EXTRA_LIVES->choiceIsAllowed[7] = false;
+		MENU_EXTRA_LIVES->choiceIsAllowed[8] = false;
+		CHEAT_INF_LIVES->setLocked(true);
 		CHEAT_DEBUG_MODE->setLocked(true);
 		CHEAT_BIG_HEAD_MODE->setLocked(true);
 		CHEAT_NOCLIP->setLocked(true);
@@ -698,6 +725,8 @@ void InitializeMenus() {
 	}
 
 	menu_main.updateOptionPositions();
+	menu_difficulty.updateOptionPositions();
+	menu_cosmetic.updateOptionPositions();
 	menu_cheats.updateOptionPositions();
 
 	menusAreInitialized = true;
