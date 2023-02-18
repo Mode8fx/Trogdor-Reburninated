@@ -5,6 +5,7 @@
 #define CUTSCENES_H
 
 extern bool cutsceneIsPlaying;
+extern Uint8 sound_channel_level_beaten;
 
 extern void InitializeCutsceneObjects();
 extern void InitializeCutsceneObjects_trogdor();

@@ -440,6 +440,7 @@ int main(int argv, char** args) {
 						menu_main.setOptionChoice(MENU_PEASANT_PENALTY_INDEX, MENU_PEASANT_PENALTY->index_init);
 						menu_main.setOptionChoice(MENU_TREASURE_HUTS_INDEX, MENU_TREASURE_HUTS->index_init);
 						menu_main.setOptionChoice(MENU_ARCHER_FREQ_INDEX, MENU_ARCHER_FREQ->index_init);
+						menu_main.setOptionChoice(MENU_LEVEL_TRAN_INDEX, MENU_LEVEL_TRAN->index_init);
 						menu_main.setOptionChoice(MENU_COMMENT_FREQ_INDEX, MENU_COMMENT_FREQ->index_init);
 						//menu_main.setOptionChoice(MENU_SCALING_INDEX, MENU_SCALING->index_init);
 						menu_cheats.setOptionChoice(CHEATS_INF_LIVES_INDEX, CHEATS_INF_LIVES->index_init);
@@ -738,72 +739,74 @@ int main(int argv, char** args) {
 			case 9:
 				GM.renderTopBar();
 				cutscene_level_beaten();
-				switch (g_frameState) {
-					case 285:
+				if (g_frameState == 285) {
+					GM.updateLevel(1);
+				} else if ((MENU_LEVEL_TRAN->isValue(0) && g_frameState == 316) || (MENU_LEVEL_TRAN->isValue(1) && keyPressed(INPUT_A))) {
+					if (g_frameState < 285) {
 						GM.updateLevel(1);
-						break;
-					case 316:
-						switch (GM.level) {
-							case 5:
-								g_sceneState = 11;
-								g_frameState = 420;
-								break;
-							case 9:
-								g_sceneState = 12;
-								g_frameState = 493;
-								break;
-							case 13:
-								g_sceneState = 13;
-								g_frameState = 567;
-								break;
-							case 17:
-								g_sceneState = 14;
-								g_frameState = 641;
-								break;
-							case 21:
-								g_sceneState = 15;
-								g_frameState = 710;
-								break;
-							case 25:
-								g_sceneState = 16;
-								g_frameState = 780;
-								break;
-							case 31:
-								g_sceneState = 17;
-								g_frameState = 853;
-								break;
-							case 35:
-								g_sceneState = 18;
-								g_frameState = 927;
-								break;
-							case 39:
-								g_sceneState = 19;
-								g_frameState = 1000;
-								break;
-							case 43:
-								g_sceneState = 20;
-								g_frameState = 1076;
-								break;
-							case 47:
-								g_sceneState = 21;
-								g_frameState = 1153;
-								break;
-							case 51:
-								g_sceneState = 22;
-								g_frameState = 1226;
-								break;
-							case 101:
-								g_sceneState = 23;
-								g_frameState = 1337;
-								break;
-							default:
-								GM.levelInit();
-								g_sceneState = 4;
-								break;
-						}
-						break;
-					default:
-						break;
+					}
+					switch (GM.level) {
+						case 5:
+							g_sceneState = 11;
+							g_frameState = 420;
+							break;
+						case 9:
+							g_sceneState = 12;
+							g_frameState = 493;
+							break;
+						case 13:
+							g_sceneState = 13;
+							g_frameState = 567;
+							break;
+						case 17:
+							g_sceneState = 14;
+							g_frameState = 641;
+							break;
+						case 21:
+							g_sceneState = 15;
+							g_frameState = 710;
+							break;
+						case 25:
+							g_sceneState = 16;
+							g_frameState = 780;
+							break;
+						case 31:
+							g_sceneState = 17;
+							g_frameState = 853;
+							break;
+						case 35:
+							g_sceneState = 18;
+							g_frameState = 927;
+							break;
+						case 39:
+							g_sceneState = 19;
+							g_frameState = 1000;
+							break;
+						case 43:
+							g_sceneState = 20;
+							g_frameState = 1076;
+							break;
+						case 47:
+							g_sceneState = 21;
+							g_frameState = 1153;
+							break;
+						case 51:
+							g_sceneState = 22;
+							g_frameState = 1226;
+							break;
+						case 101:
+							g_sceneState = 23;
+							g_frameState = 1337;
+							break;
+						default:
+							GM.levelInit();
+							g_sceneState = 4;
+							break;
+					}
+					if (sound_channel_level_beaten != 99) {
+						sfxChannelArr[sound_channel_level_beaten] = NULL;
+					}
+					sound_channel_level_beaten = 99;
 				}
 				if (g_sceneState == 9) {
 					g_frameState++;

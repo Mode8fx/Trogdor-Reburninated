@@ -464,6 +464,18 @@ const char *option_main_archer_freq_choices[6] = { "Original", "New", "Low", "Me
 const char *option_main_archer_freq_descriptions_line_1[6] = { "Archers appear more in later levels.", "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"};
 const char *option_main_archer_freq_descriptions_line_2[6] = { "Same as the original game.", "New scaling that's more evenly", "", "", "", ""};
 const char *option_main_archer_freq_descriptions_line_3[6] = { "", "distributed between levels.", "", "", "", ""};
+const char *option_main_level_tran_choices[2] = { "Original", "Button Press" };
+#if defined(WII_U) || defined(SWITCH) || defined(GAMECUBE) || defined(THREEDS)
+const char *option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press A" };
+#elif defined(VITA) || defined(PSP)
+const char *option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press X" };
+#elif defined(WII)
+const char *option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press 2" };
+#else
+const char *option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press Z" };
+#endif
+const char *option_main_level_tran_descriptions_line_2[2] = { "level will load automatically.", "to load the next level." };
+const char *option_main_level_tran_descriptions_line_3[2] = { "", "" };
 const char *option_main_comment_freq_choices[7] = { "Off", "Very Low", "Low", "Normal", "High", "Very High", "Let's-Player" };
 const char *option_main_comment_freq_descriptions_line_1[7] = { "Strong Bad does not talk.", "Strong Bad rarely talks.", "Strong Bad talks less than usual.", "Strong Bad talks as often", "Strong Bad talks a bit more often.", "Strong Bad talks much more often.", "Strong Bad won't shut up!" };
 const char *option_main_comment_freq_descriptions_line_2[7] = { "", "", "", "as he did in the original game.", "", "", "(He talks twice as much as usual.)"};
@@ -562,6 +574,9 @@ void InitializeMenus() {
 	MENU_ARCHER_FREQ->prepareMenuOption("Archer Frequency", option_main_archer_freq_choices,
 		option_main_archer_freq_descriptions_line_1, option_main_archer_freq_descriptions_line_2, option_main_archer_freq_descriptions_line_3,
 		NULL, 6, false, 0, true);
+	MENU_LEVEL_TRAN->prepareMenuOption("Level Transition", option_main_level_tran_choices,
+		option_main_level_tran_descriptions_line_1, option_main_level_tran_descriptions_line_2, option_main_level_tran_descriptions_line_3,
+		NULL, 2, false, 0, true);
 	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_comment_freq_choices,
 		option_main_comment_freq_descriptions_line_1, option_main_comment_freq_descriptions_line_2, option_main_comment_freq_descriptions_line_3,
 		NULL, 7, false, 3, true);

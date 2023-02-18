@@ -77,7 +77,7 @@ extern void stopMusic();
 extern void pauseMusic();
 extern void resumeMusic();
 extern void fadeMusic(Uint16);
-extern void loadAndPlaySound(SoundEffect *);
+extern Uint8 loadAndPlaySound(SoundEffect *);
 extern void makeSoundStatic(SoundEffect *);
 extern void freeFinishedSoundChunks();
 extern void setVolume_music(Uint8);

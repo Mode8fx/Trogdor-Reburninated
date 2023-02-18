@@ -95,7 +95,7 @@ void fadeMusic(Uint16 ms) {
 	}
 }
 
-void loadAndPlaySound(SoundEffect *sfx) {
+Uint8 loadAndPlaySound(SoundEffect *sfx) {
 	if (!sfx->isPlaying) {
 		if (!sfx->isStatic) {
 			sfx->chunk = LOAD_SFX(sfx->path);
@@ -107,6 +107,7 @@ void loadAndPlaySound(SoundEffect *sfx) {
 		sfxIndex = (sfxIndex + 1) % SFX_CHANNEL_GAME_MUSIC;
 		PLAY_SFX(sfx, sfxIndex);
 #elif defined(XBOX)
+		sfxIndex = 0;
 #else
 		sfxIndex = PLAY_SFX(sfx, SFX_CHANNEL_GAME);
 #endif

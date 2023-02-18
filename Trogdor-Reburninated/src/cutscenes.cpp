@@ -48,6 +48,7 @@ SpriteInstance cutscene_arrow_2;
 SpriteInstance cutscene_arrow_3;
 
 Sint8 cutscene_level_100_screen_counter;
+Uint8 sound_channel_level_beaten = 99;
 
 void InitializeCutsceneObjects() {
 	cutscene_level_beaten_trogdor = SpriteInstance(&sprite_level_beaten_trogdor, 0, 0);
@@ -110,7 +111,7 @@ void cutscene_level_beaten() {
 	switch (g_frameState) {
 		case 277:
 			cutsceneIsPlaying = true;
-			loadAndPlaySound(SFX_BURNINATE);
+			sound_channel_level_beaten = loadAndPlaySound(SFX_BURNINATE);
 			cutscene_level_beaten_trogdor.isActive = false;
 			cutscene_level_beaten_smoke.isActive = false;
 			cutscene_cottage_fire.isActive = false;
