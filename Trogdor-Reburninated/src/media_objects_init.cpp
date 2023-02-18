@@ -5,6 +5,7 @@
 #include "sprite_objects.h"
 #include "config.h"
 #include "general.h"
+#include "input.h"
 
 ifstream ifile;
 
@@ -151,33 +152,12 @@ void InitializeText_HomeScreen() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), 101 * gameHiResMult);
 		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), 115 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
-		SET_TEXT("Press START to pause.", text_3_instructions_5, font_serif_white_6_mult,
+		SET_TEXT("Press " + INPUT_PAUSE + " to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
-		SET_TEXT("press START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
+		SET_TEXT("press " + INPUT_PAUSE + " to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-#if defined(GAMECUBE)
-		SET_TEXT("Press Z for OPTIONS.", text_3_quit, font_serif_white_6_mult,
+		SET_TEXT("Press " + INPUT_MISC + " for OPTIONS.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
-#else
-		SET_TEXT("Press SELECT for OPTIONS.", text_3_quit, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
-#endif
-#elif defined(SWITCH)
-		SET_TEXT("Press + to pause.", text_3_instructions_5, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
-		SET_TEXT("press + to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press - for OPTIONS.", text_3_quit, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
-#else
-		SET_TEXT("Press ENTER/START to pause.", text_3_instructions_5, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 129 * gameHiResMult);
-		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press BACK/SELECT for OPTIONS.", text_3_quit, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
-#endif
 		SET_TEXT("SECRET HINTS!!", text_3_hints_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_1), 59 * gameHiResMult);
 		SET_TEXT("-Don't let the peasants return", text_3_hints_2, font_serif_white_6_mult,
@@ -216,33 +196,12 @@ void InitializeText_HomeScreen() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_3), 87 * gameHiResMult);
 		SET_TEXT("Avoid knights and archers!", text_3_instructions_4, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_4), 101 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
-		SET_TEXT("Press START to pause.", text_3_instructions_5, font_serif_white_6_mult,
+		SET_TEXT("Press " + INPUT_PAUSE + " to pause.", text_3_instructions_5, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
-		SET_TEXT("press START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
+		SET_TEXT("press " + INPUT_PAUSE + " to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-#if defined(GAMECUBE)
-		SET_TEXT("Press Z for OPTIONS.", text_3_quit, font_serif_white_6_mult,
+		SET_TEXT("Press " + INPUT_MISC + " for OPTIONS.", text_3_quit, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
-#else
-		SET_TEXT("Press SELECT for OPTIONS.", text_3_quit, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
-#endif
-#elif defined(SWITCH)
-		SET_TEXT("Press + to pause.", text_3_instructions_5, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
-		SET_TEXT("press + to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press - for OPTIONS.", text_3_quit, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
-#else
-		SET_TEXT("Press ENTER/START to pause.", text_3_instructions_5, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_5), 115 * gameHiResMult);
-		SET_TEXT("press ENTER/START to START", text_3_click_anywhere_to_start, font_serif_red_8_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_click_anywhere_to_start), 129 * gameHiResMult);
-		SET_TEXT("Press BACKSPACE/SELECT for OPTIONS.", text_3_quit, font_serif_white_6_mult,
-			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_quit), 143 * gameHiResMult);
-#endif
 		SET_TEXT("SECRET HINTS!!", text_3_hints_1, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_1), 59 * gameHiResMult);
 		SET_TEXT("-Don't let the peasants return to their cottages", text_3_hints_2, font_serif_white_6_mult,

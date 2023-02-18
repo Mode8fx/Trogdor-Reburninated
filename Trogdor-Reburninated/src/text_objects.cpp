@@ -12,7 +12,7 @@ char tempChar[2] = { '\0', '\0' };
 SDL_Surface *temp_text;
 #endif
 
-void setText(const char text[], TextObject *textObj, FontObject *fontObj) {
+void setText(std::string text, TextObject *textObj, FontObject *fontObj) {
 	textObj->str = text;
 	STRCPY(tempCharArray, textObj->str.c_str());
 	textObj->dstrect.w = 0;

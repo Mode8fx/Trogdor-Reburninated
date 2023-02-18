@@ -42,7 +42,7 @@ struct FontObject {
 	TextCharObject textChars[126 + 1 - 32];
 };
 
-extern void setText(const char [], TextObject *, FontObject *);
+extern void setText(std::string, TextObject *, FontObject *);
 extern void setTextPos(TextObject *, Sint16, Sint16);
 extern void updateText(TextObject *, string);
 extern void setTextChar(const char *, TTF_Font *, SDL_Color, TextCharObject *);

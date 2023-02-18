@@ -50,6 +50,9 @@ constexpr auto INPUT_START      = (1 << 10); // enter
 constexpr auto INPUT_SELECT     = (1 << 11); // backspace
 constexpr auto INPUT_FULLSCREEN = (1 << 12); // f
 constexpr auto INPUT_ALL_DIRS   = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIGHT;
+extern std::string INPUT_CONFIRM;
+extern std::string INPUT_PAUSE;
+extern std::string INPUT_MISC;
 
 bool keyPressed(Uint16 key);
 bool keyHeld(Uint16 button);

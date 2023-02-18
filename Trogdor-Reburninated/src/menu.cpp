@@ -128,7 +128,7 @@ void MenuNotebook::renderNotebook() {
 /* MENU OPTION */
 /***************/
 
-void MenuOption::prepareMenuOption(const char label_ptr[], const char *choice_ptr[], const char *desc_ptr_1[], const char *desc_ptr_2[], const char *desc_ptr_3[], const char altDesc_ptr[], Uint8 numCh, bool oneDesc, Sint8 start, bool wrap) {
+void MenuOption::prepareMenuOption(const char label_ptr[], std::string choice_ptr[], std::string desc_ptr_1[], std::string desc_ptr_2[], std::string desc_ptr_3[], std::string altDesc_ptr, Uint8 numCh, bool oneDesc, Sint8 start, bool wrap) {
 	labelPtr = label_ptr;
 	if (!menusAreInitialized) {
 		choicePtr = choice_ptr;
@@ -161,7 +161,7 @@ void MenuOption::setLocked(bool locked) {
 
 void MenuOption::updateLabel() {
 	if (!optionIsLocked) {
-		if (labelPtr != NULL) {
+		if (!labelPtr.empty()) {
 			setText(labelPtr, &label, menuFont);
 		}
 	} else {
@@ -211,7 +211,7 @@ void MenuOption::updateDescription() {
 			}
 		}
 	} else {
-		if (altDescPtr != NULL) {
+		if (!altDescPtr.empty()) {
 			setText(altDescPtr, &description_1, menuFont);
 			setText("", &description_2, menuFont);
 			setText("", &description_3, menuFont);
@@ -439,101 +439,88 @@ void Menu::renderMenu() {
 /* MENU INITIALIZATION */
 /***********************/
 
-const char *option_on_off[2] = { "On", "Off" };
-const char *option_empty[1] = { "" };
-const char *option_main_starting_level_choices[10] = { "1", "11", "21", "31", "41", "51", "61", "71", "81", "91" };
-const char *option_main_starting_level_descriptions_line_1[1] = { "The level that the game starts on." };
-const char *option_main_starting_lives_choices[9] = { "0", "1", "2", "3", "4", "5", "10", "20", "30" };
-const char *option_main_starting_lives_descriptions_line_1[1] = { "The number of extra lives you start with." };
-const char *option_main_extra_lives_choices[8] = { "Every 300 points", "Every 500 points", "Every 1000 points", "500 points only", "500 and 1000 only", "1000 points only", "1000 and 2000 only", "None" };
-const char *option_main_extra_lives_descriptions_line_1[8] = { "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "No extra lives." };
-const char *option_main_extra_lives_descriptions_line_2[8] = { "every 300 points.", "every 500 points.", "every 1000 points.", "at 500 points.", "at 500 and 1000 points.", "at 1000 points.", "at 1000 and 2000 points.", "" };
-const char *option_main_extra_lives_descriptions_line_3[8] = { "", "", "", "", "", "", "", "" };
-const char *option_main_music_choices[2] = { "Off", "Stinkoman 20X6"};
-const char *option_main_music_descriptions_line_1[2] = { "Don't play music in-game.", "Play music from Stinkoman 20X6." };
-const char *option_main_music_descriptions_line_2[2] = { "", "The song changes depending on the level." };
-const char *option_main_music_descriptions_line_3[2] = { "", "" };
-const char *option_main_peasant_penalty_descriptions_line_1[2] = { "The peasant meter decreases", "No penalty for escaped peasants." };
-const char *option_main_peasant_penalty_descriptions_line_2[2] = { "every time a peasant escapes.", "" };
-const char *option_main_peasant_penalty_descriptions_line_3[2] = { "", "" };
-const char *option_main_treasure_huts_choices[3] = { "New", "Original", "Off" };
-const char *option_main_treasure_huts_descriptions_line_1[3] = { "You can enter all treasure huts.", "After you enter a treasure hut, you cannot", "Treasure huts are disabled."};
-const char *option_main_treasure_huts_descriptions_line_2[3] = { "Same behavior as the HTML5 port.", "enter huts from other level layouts.", ""};
-const char *option_main_treasure_huts_descriptions_line_3[3] = { "", "Same behavior as the original game.", ""};
-const char *option_main_archer_freq_choices[6] = { "Original", "New", "Low", "Medium", "High", "Non-stop" };
-const char *option_main_archer_freq_descriptions_line_1[6] = { "Archers appear more in later levels.", "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"};
-const char *option_main_archer_freq_descriptions_line_2[6] = { "Same as the original game.", "New scaling that's more evenly", "", "", "", ""};
-const char *option_main_archer_freq_descriptions_line_3[6] = { "", "distributed between levels.", "", "", "", ""};
-const char *option_main_level_tran_choices[2] = { "Original", "Button Press" };
-#if defined(WII_U) || defined(SWITCH) || defined(GAMECUBE) || defined(THREEDS)
-const char *option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press A" };
-#elif defined(VITA) || defined(PSP)
-const char *option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press X" };
-#elif defined(WII)
-const char *option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press 2" };
+std::string option_on_off[2] = { "On", "Off" };
+std::string option_empty[1] = { "" };
+std::string option_main_starting_level_choices[10] = { "1", "11", "21", "31", "41", "51", "61", "71", "81", "91" };
+std::string option_main_starting_level_descriptions_line_1[1] = { "The level that the game starts on." };
+std::string option_main_extra_lives_choices[9] = { "0", "1", "2", "3", "4", "5", "10", "20", "30" };
+std::string option_main_extra_lives_descriptions_line_1[1] = { "The number of extra lives you start with." };
+std::string option_main_lives_interval_choices[8] = { "Every 300 points", "Every 500 points", "Every 1000 points", "500 points only", "500 and 1000 only", "1000 points only", "1000 and 2000 only", "None" };
+std::string option_main_lives_interval_descriptions_line_1[8] = { "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "No extra lives." };
+std::string option_main_lives_interval_descriptions_line_2[8] = { "every 300 points.", "every 500 points.", "every 1000 points.", "at 500 points.", "at 500 and 1000 points.", "at 1000 points.", "at 1000 and 2000 points.", "" };
+std::string option_main_lives_interval_descriptions_line_3[8] = { "", "", "", "", "", "", "", "" };
+std::string option_main_music_choices[2] = { "Off", "Stinkoman 20X6"};
+std::string option_main_music_descriptions_line_1[2] = { "Don't play music in-game.", "Play music from Stinkoman 20X6." };
+std::string option_main_music_descriptions_line_2[2] = { "", "The song changes depending on the level." };
+std::string option_main_music_descriptions_line_3[2] = { "", "" };
+std::string option_main_peasant_penalty_descriptions_line_1[2] = { "The peasant meter decreases", "No penalty for escaped peasants." };
+std::string option_main_peasant_penalty_descriptions_line_2[2] = { "every time a peasant escapes.", "" };
+std::string option_main_peasant_penalty_descriptions_line_3[2] = { "", "" };
+std::string option_main_treasure_huts_choices[3] = { "New", "Original", "Off" };
+std::string option_main_treasure_huts_descriptions_line_1[3] = { "You can enter all treasure huts.", "After you enter a treasure hut, you cannot", "Treasure huts are disabled."};
+std::string option_main_treasure_huts_descriptions_line_2[3] = { "Same behavior as the HTML5 port.", "enter huts from other level layouts.", ""};
+std::string option_main_treasure_huts_descriptions_line_3[3] = { "", "Same behavior as the original game.", ""};
+std::string option_main_archer_freq_choices[6] = { "Original", "New", "Low", "Medium", "High", "Non-stop" };
+std::string option_main_archer_freq_descriptions_line_1[6] = { "Archers appear more in later levels.", "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"};
+std::string option_main_archer_freq_descriptions_line_2[6] = { "Same as the original game.", "New scaling that's more evenly", "", "", "", ""};
+std::string option_main_archer_freq_descriptions_line_3[6] = { "", "distributed between levels.", "", "", "", ""};
+std::string option_main_level_tran_choices[2] = { "Original", "Button Press" };
+std::string option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press " + INPUT_CONFIRM };
+std::string option_main_level_tran_descriptions_line_2[2] = { "level will load automatically.", "to load the next level." };
+std::string option_main_level_tran_descriptions_line_3[2] = { "", "" };
+std::string option_main_comment_freq_choices[7] = { "Off", "Very Low", "Low", "Normal", "High", "Very High", "Let's-Player" };
+std::string option_main_comment_freq_descriptions_line_1[7] = { "Strong Bad does not talk.", "Strong Bad rarely talks.", "Strong Bad talks less than usual.", "Strong Bad talks as often", "Strong Bad talks a bit more often.", "Strong Bad talks much more often.", "Strong Bad won't shut up!" };
+std::string option_main_comment_freq_descriptions_line_2[7] = { "", "", "", "as he did in the original game.", "", "", "(He talks twice as much as usual.)"};
+std::string option_main_comment_freq_descriptions_line_3[7] = { "", "", "", "", "", "", "" };
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
+std::string press_confirm_to_apply = "(Press " + INPUT_CONFIRM + " to apply, may take a few seconds)";
 #else
-const char *option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press Z" };
+std::string press_confirm_to_apply = "(Press " + INPUT_CONFIRM + " to apply)";
 #endif
-const char *option_main_level_tran_descriptions_line_2[2] = { "level will load automatically.", "to load the next level." };
-const char *option_main_level_tran_descriptions_line_3[2] = { "", "" };
-const char *option_main_comment_freq_choices[7] = { "Off", "Very Low", "Low", "Normal", "High", "Very High", "Let's-Player" };
-const char *option_main_comment_freq_descriptions_line_1[7] = { "Strong Bad does not talk.", "Strong Bad rarely talks.", "Strong Bad talks less than usual.", "Strong Bad talks as often", "Strong Bad talks a bit more often.", "Strong Bad talks much more often.", "Strong Bad won't shut up!" };
-const char *option_main_comment_freq_descriptions_line_2[7] = { "", "", "", "as he did in the original game.", "", "", "(He talks twice as much as usual.)"};
-const char *option_main_comment_freq_descriptions_line_3[7] = { "", "", "", "", "", "", "" };
 #if defined(THREEDS)
-const char *option_main_scaling_choices[4] = { "N/A", "N/A", "N/A", "N/A" };
-const char *option_main_scaling_descriptions_line_1[4] = { "(Unused)", "(Unused)", "(Unused)", "(Unused)" };
-const char *option_main_scaling_descriptions_line_2[4] = { "", "", "", "" };
-const char *option_main_scaling_descriptions_line_3[4] = { "", "", "", "" };
+std::string option_main_scaling_choices[4] = { "N/A", "N/A", "N/A", "N/A" };
+std::string option_main_scaling_descriptions_line_1[4] = { "(Unused)", "(Unused)", "(Unused)", "(Unused)" };
+std::string option_main_scaling_descriptions_line_2[4] = { "", "", "", "" };
+std::string option_main_scaling_descriptions_line_3[4] = { "", "", "", "" };
 #elif defined(PSP)
-const char *option_main_scaling_choices[4] = { "Pixel-Perfect", "", "Full", "Full Game" };
-const char *option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "", "Scale everything so that", "Scale the game to fill the screen." };
-const char *option_main_scaling_descriptions_line_2[4] = { "scaling. Accurate, but small.", "", "the overlay fills the screen.", "The overlay will be cut off." };
-const char *option_main_scaling_descriptions_line_3[4] = { "(Press X to apply, may take a few seconds)", "", "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)" };
+std::string option_main_scaling_choices[4] = { "Pixel-Perfect", "", "Full", "Full Game" };
+std::string option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "", "Scale everything so that", "Scale the game to fill the screen." };
+std::string option_main_scaling_descriptions_line_2[4] = { "scaling. Accurate, but small.", "", "the overlay fills the screen.", "The overlay will be cut off." };
+std::string option_main_scaling_descriptions_line_3[4] = { press_confirm_to_apply, "", press_confirm_to_apply, press_confirm_to_apply };
 #elif defined(WII) || defined(GAMECUBE) || defined(XBOX)
-const char *option_main_scaling_choices[4] = { "Pixel-Perfect", "", "", "Full Game" };
-const char *option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "", "", "Scale the game to fill the screen." };
-const char *option_main_scaling_descriptions_line_2[4] = { "scaling. The most accurate.", "", "", "The overlay will be cut off." };
-#if defined(WII)
-const char *option_main_scaling_descriptions_line_3[4] = { "(Press 2 to apply, may take a few seconds)", "", "", "(Press 2 to apply, may take a few seconds)" };
-#else
-const char *option_main_scaling_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "", "", "(Press A to apply, may take a few seconds)" };
-#endif
+std::string option_main_scaling_choices[4] = { "Pixel-Perfect", "", "", "Full Game" };
+std::string option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "", "", "Scale the game to fill the screen." };
+std::string option_main_scaling_descriptions_line_2[4] = { "scaling. The most accurate.", "", "", "The overlay will be cut off." };
+std::string option_main_scaling_descriptions_line_3[4] = { press_confirm_to_apply, "", "", press_confirm_to_apply };
 #elif defined(WII_U)
-const char *option_main_scaling_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "", "" };
-const char *option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "", "" };
-const char *option_main_scaling_descriptions_line_2[4] = { "scaling. Accurate, but small.", "with integer scaling. The most accurate.", "", "" };
-const char *option_main_scaling_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "", "" };
+std::string option_main_scaling_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "", "" };
+std::string option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "", "" };
+std::string option_main_scaling_descriptions_line_2[4] = { "scaling. Accurate, but small.", "with integer scaling. The most accurate.", "", "" };
+std::string option_main_scaling_descriptions_line_3[4] = { press_confirm_to_apply, press_confirm_to_apply, "", "" };
 #elif defined(SWITCH)
-const char *option_main_scaling_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "" };
-const char *option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "" };
-const char *option_main_scaling_descriptions_line_2[4] = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "" };
-const char *option_main_scaling_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "" };
+std::string option_main_scaling_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "" };
+std::string option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "" };
+std::string option_main_scaling_descriptions_line_2[4] = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "" };
+std::string option_main_scaling_descriptions_line_3[4] = { press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply, "" };
 #else
-const char *option_main_scaling_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "Full Game" };
-const char *option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "Scale the game to fill the screen." };
-const char *option_main_scaling_descriptions_line_2[4] = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." };
-#if defined(VITA)
-const char *option_main_scaling_descriptions_line_3[4] = { "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)", "(Press X to apply, may take a few seconds)" };
-#elif defined(ANDROID)
-const char *option_main_scaling_descriptions_line_3[4] = { "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)", "(Press A to apply, may take a few seconds)" };
-#else
-const char *option_main_scaling_descriptions_line_3[4] = { "(Press Z / A to apply)", "(Press Z / A to apply)", "(Press Z / A to apply)", "(Press Z / A to apply)" };
+std::string option_main_scaling_choices[4] = { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "Full Game" };
+std::string option_main_scaling_descriptions_line_1[4] = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "Scale the game to fill the screen." };
+std::string option_main_scaling_descriptions_line_2[4] = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." };
+std::string option_main_scaling_descriptions_line_3[4] = { press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply };
 #endif
-#endif
-const char *option_main_cheats_descriptions_line_1[1] = { "Toggle hidden cheats." };
-const char *option_main_credits_descriptions_line_1[1] = { "View the credits." };
-const char *option_main_reset_settings_descriptions_line_1[1] = { "Reset all settings to default." };
-const char *option_main_quit_descriptions_line_1[1] = { "Quit the game." };
-const char *option_cheats_inf_lives_descriptions_line_1[1] = { "Infinite lives, play forever!" };
-const char *option_cheats_inf_lives_descriptions_line_2[1] = { "Unlocking this cheat also unlocks" };
-const char *option_cheats_inf_lives_descriptions_line_3[1] = { "more starting lives options." };
-const char *option_cheats_debug_mode_descriptions_line_1[1] = { "Enable Debug Mode." };
-const char *option_cheats_debug_mode_descriptions_line_2[1] = { "Press buttons to do things." };
-const char *option_cheats_debug_mode_descriptions_line_3[1] = { "" };
-const char *option_cheats_big_head_mode_descriptions_line_1[1] = { "Give Trogdor a more husky head." };
-const char *option_cheats_noclip_descriptions_line_1[1] = { "Remove the game's difficulty" };
-const char *option_cheats_noclip_descriptions_line_2[1] = { "by walking through cottages." };
+std::string option_main_cheats_descriptions_line_1[1] = { "Toggle hidden cheats." };
+std::string option_main_credits_descriptions_line_1[1] = { "View the credits." };
+std::string option_main_reset_settings_descriptions_line_1[1] = { "Reset all settings to default." };
+std::string option_main_quit_descriptions_line_1[1] = { "Quit the game." };
+std::string option_cheats_inf_lives_descriptions_line_1[1] = { "Infinite lives, play forever!" };
+std::string option_cheats_inf_lives_descriptions_line_2[1] = { "Unlocking this cheat also unlocks" };
+std::string option_cheats_inf_lives_descriptions_line_3[1] = { "more starting lives options." };
+std::string option_cheats_debug_mode_descriptions_line_1[1] = { "Enable Debug Mode." };
+std::string option_cheats_debug_mode_descriptions_line_2[1] = { "Press buttons to do things." };
+std::string option_cheats_debug_mode_descriptions_line_3[1] = { "" };
+std::string option_cheats_big_head_mode_descriptions_line_1[1] = { "Give Trogdor a more husky head." };
+std::string option_cheats_noclip_descriptions_line_1[1] = { "Remove the game's difficulty" };
+std::string option_cheats_noclip_descriptions_line_2[1] = { "by walking through cottages." };
 
 void InitializeMenus() {
 	TTF_Init();
@@ -555,46 +542,46 @@ void InitializeMenus() {
 	}
 	MENU_STARTING_LEVEL->prepareMenuOption("Starting Level", option_main_starting_level_choices,
 		option_main_starting_level_descriptions_line_1, option_empty, option_empty,
-		NULL, 10, true, 0, true);
-	MENU_STARTING_LIVES->prepareMenuOption("Starting Lives", option_main_starting_lives_choices,
-		option_main_starting_lives_descriptions_line_1, option_empty, option_empty,
-		NULL, 9, true, 3, true);
-	MENU_EXTRA_LIVES->prepareMenuOption("Lives Interval", option_main_extra_lives_choices,
-		option_main_extra_lives_descriptions_line_1, option_main_extra_lives_descriptions_line_2, option_main_extra_lives_descriptions_line_3,
-		NULL, 8, false, 0, true);
+		"", 10, true, 0, true);
+	MENU_STARTING_LIVES->prepareMenuOption("Extra Lives", option_main_extra_lives_choices,
+		option_main_extra_lives_descriptions_line_1, option_empty, option_empty,
+		"", 9, true, 3, true);
+	MENU_EXTRA_LIVES->prepareMenuOption("Lives Interval", option_main_lives_interval_choices,
+		option_main_lives_interval_descriptions_line_1, option_main_lives_interval_descriptions_line_2, option_main_lives_interval_descriptions_line_3,
+		"", 8, false, 0, true);
 	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
 		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
-		NULL, 2, false, 0, true);
+		"", 2, false, 0, true);
 	MENU_PEASANT_PENALTY->prepareMenuOption("Peasant Penalty", option_on_off,
 		option_main_peasant_penalty_descriptions_line_1, option_main_peasant_penalty_descriptions_line_2, option_main_peasant_penalty_descriptions_line_3,
-		NULL, 2, false, 0, true);
+		"", 2, false, 0, true);
 	MENU_TREASURE_HUTS->prepareMenuOption("Treasure Huts", option_main_treasure_huts_choices,
 		option_main_treasure_huts_descriptions_line_1, option_main_treasure_huts_descriptions_line_2, option_main_treasure_huts_descriptions_line_3,
-		NULL, 3, false, 0, true);
+		"", 3, false, 0, true);
 	MENU_ARCHER_FREQ->prepareMenuOption("Archer Frequency", option_main_archer_freq_choices,
 		option_main_archer_freq_descriptions_line_1, option_main_archer_freq_descriptions_line_2, option_main_archer_freq_descriptions_line_3,
-		NULL, 6, false, 0, true);
+		"", 6, false, 0, true);
 	MENU_LEVEL_TRAN->prepareMenuOption("Level Transition", option_main_level_tran_choices,
 		option_main_level_tran_descriptions_line_1, option_main_level_tran_descriptions_line_2, option_main_level_tran_descriptions_line_3,
-		NULL, 2, false, 0, true);
+		"", 2, false, 0, true);
 	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_comment_freq_choices,
 		option_main_comment_freq_descriptions_line_1, option_main_comment_freq_descriptions_line_2, option_main_comment_freq_descriptions_line_3,
-		NULL, 7, false, 3, true);
+		"", 7, false, 3, true);
 	MENU_SCALING->prepareMenuOption("Screen Scaling", option_main_scaling_choices,
 		option_main_scaling_descriptions_line_1, option_main_scaling_descriptions_line_2, option_main_scaling_descriptions_line_3,
-		NULL, 4, false, scalingType, true);
+		"", 4, false, scalingType, true);
 	MENU_CHEATS->prepareMenuOption("Cheats", option_empty,
 		option_main_cheats_descriptions_line_1, option_empty, option_empty,
-		NULL, 1, true, 0, true);
+		"", 1, true, 0, true);
 	MENU_CREDITS->prepareMenuOption("Credits", option_empty,
 		option_main_credits_descriptions_line_1, option_empty, option_empty,
-		NULL, 1, true, 0, true);
+		"", 1, true, 0, true);
 	MENU_RESET_SETTINGS->prepareMenuOption("Reset to Default", option_empty,
 		option_main_reset_settings_descriptions_line_1, option_empty, option_empty,
-		NULL, 1, true, 0, true);
+		"", 1, true, 0, true);
 	MENU_QUIT->prepareMenuOption("Quit Game", option_empty,
 		option_main_quit_descriptions_line_1, option_empty, option_empty,
-		NULL, 1, true, 0, true);
+		"", 1, true, 0, true);
 
 	/* Cheats Menu */
 	menu_cheats.prepareMenu(CHEAT_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);

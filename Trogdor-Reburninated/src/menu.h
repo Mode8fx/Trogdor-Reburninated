@@ -86,16 +86,16 @@ class MenuNotebook {
 class MenuOption {
 	public:
 		TextObject label;
-		const char *labelPtr;
+		std::string labelPtr;
 		TextObject choice;
-		const char **choicePtr;
+		std::string *choicePtr;
 		TextObject description_1;
 		TextObject description_2;
 		TextObject description_3;
-		const char **descPtr_1;
-		const char **descPtr_2;
-		const char **descPtr_3;
-		const char *altDescPtr;
+		std::string *descPtr_1;
+		std::string *descPtr_2;
+		std::string *descPtr_3;
+		std::string altDescPtr;
 		Uint8 numChoices;
 		bool oneDescription;
 		bool choiceIsAllowed[MAX_NUM_OPTION_CHOICES];
@@ -105,7 +105,7 @@ class MenuOption {
 		bool optionIsLocked;
 		MenuOption() {
 		}
-		void prepareMenuOption(const char [], const char *[], const char *[], const char *[], const char *[], const char [], Uint8, bool, Sint8, bool);
+		void prepareMenuOption(const char [], std::string [], std::string [], std::string [], std::string [], std::string, Uint8, bool, Sint8, bool);
 		void setLocked(bool);
 		void updateLabel();
 		void initChoicesAndDescriptions();
