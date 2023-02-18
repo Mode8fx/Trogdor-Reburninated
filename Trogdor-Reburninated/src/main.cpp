@@ -440,6 +440,7 @@ int main(int argv, char** args) {
 						menu_main.setOptionChoice(MENU_PEASANT_PENALTY_INDEX, MENU_PEASANT_PENALTY->index_init);
 						menu_main.setOptionChoice(MENU_TREASURE_HUTS_INDEX, MENU_TREASURE_HUTS->index_init);
 						menu_main.setOptionChoice(MENU_ARCHER_FREQ_INDEX, MENU_ARCHER_FREQ->index_init);
+						menu_main.setOptionChoice(MENU_KNIGHT_BEHAVIOR_INDEX, MENU_KNIGHT_BEHAVIOR->index_init);
 						menu_main.setOptionChoice(MENU_LEVEL_TRAN_INDEX, MENU_LEVEL_TRAN->index_init);
 						menu_main.setOptionChoice(MENU_COMMENT_FREQ_INDEX, MENU_COMMENT_FREQ->index_init);
 						//menu_main.setOptionChoice(MENU_SCALING_INDEX, MENU_SCALING->index_init);
@@ -535,6 +536,9 @@ int main(int argv, char** args) {
 #endif
 						}
 					} else {
+						if (MENU_KNIGHT_BEHAVIOR->isValue(1)) {
+							GM.updateKnightHome();
+						}
 						GM.updateKnightOffsetAndMove();
 					}
 				}

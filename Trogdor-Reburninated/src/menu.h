@@ -6,7 +6,7 @@
 #define MENU_H
 
 constexpr auto MAX_NUM_OPTION_CHOICES = 10;
-constexpr auto MAX_NUM_MENU_OPTIONS = 14;
+constexpr auto MAX_NUM_MENU_OPTIONS = 15;
 constexpr auto MAX_NUM_MENU_PAGES = 5;
 constexpr auto MAX_NUM_MENU_LINES = 9;
 
@@ -189,14 +189,15 @@ constexpr auto MENU_MUSIC_INDEX = 3;
 constexpr auto MENU_PEASANT_PENALTY_INDEX = 4;
 constexpr auto MENU_TREASURE_HUTS_INDEX = 5;
 constexpr auto MENU_ARCHER_FREQ_INDEX = 6;
-constexpr auto MENU_LEVEL_TRAN_INDEX = 7;
-constexpr auto MENU_COMMENT_FREQ_INDEX = 8;
-constexpr auto MENU_SCALING_INDEX = 9;
-constexpr auto MENU_CHEATS_INDEX = 10;
-constexpr auto MENU_CREDITS_INDEX = 11;
-constexpr auto MENU_RESET_SETTINGS_INDEX = 12;
-constexpr auto MENU_QUIT_INDEX = 13;
-constexpr auto MENU_NUM_OPTIONS = 14;
+constexpr auto MENU_KNIGHT_BEHAVIOR_INDEX = 7;
+constexpr auto MENU_LEVEL_TRAN_INDEX = 8;
+constexpr auto MENU_COMMENT_FREQ_INDEX = 9;
+constexpr auto MENU_SCALING_INDEX = 10;
+constexpr auto MENU_CHEATS_INDEX = 11;
+constexpr auto MENU_CREDITS_INDEX = 12;
+constexpr auto MENU_RESET_SETTINGS_INDEX = 13;
+constexpr auto MENU_QUIT_INDEX = 14;
+constexpr auto MENU_NUM_OPTIONS = 15;
 #define MENU_STARTING_LEVEL  menu_main.options[MENU_STARTING_LEVEL_INDEX]
 #define MENU_STARTING_LIVES  menu_main.options[MENU_STARTING_LIVES_INDEX]
 #define MENU_EXTRA_LIVES     menu_main.options[MENU_EXTRA_LIVES_INDEX]
@@ -204,6 +205,7 @@ constexpr auto MENU_NUM_OPTIONS = 14;
 #define MENU_PEASANT_PENALTY menu_main.options[MENU_PEASANT_PENALTY_INDEX]
 #define MENU_TREASURE_HUTS   menu_main.options[MENU_TREASURE_HUTS_INDEX]
 #define MENU_ARCHER_FREQ     menu_main.options[MENU_ARCHER_FREQ_INDEX]
+#define MENU_KNIGHT_BEHAVIOR menu_main.options[MENU_KNIGHT_BEHAVIOR_INDEX]
 #define MENU_LEVEL_TRAN      menu_main.options[MENU_LEVEL_TRAN_INDEX]
 #define MENU_COMMENT_FREQ    menu_main.options[MENU_COMMENT_FREQ_INDEX]
 #define MENU_SCALING         menu_main.options[MENU_SCALING_INDEX]

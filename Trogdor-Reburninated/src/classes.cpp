@@ -1121,10 +1121,12 @@ void GameManager::arrowHitEventHandler() {
 }
 
 inline void GameManager::toggleKnightMotion(bool hasMotion) {
-	for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
-		knightArray[i].moving = hasMotion;
-		if (hasMotion) {
-			knightArray[i].frameState = 0;
+	if (MENU_KNIGHT_BEHAVIOR->isValue(0)) {
+		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
+			knightArray[i].moving = hasMotion;
+			if (hasMotion) {
+				knightArray[i].frameState = 0;
+			}
 		}
 	}
 }

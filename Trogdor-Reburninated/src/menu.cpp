@@ -464,6 +464,10 @@ std::string option_main_archer_freq_choices[6] = { "Original", "New", "Low", "Me
 std::string option_main_archer_freq_descriptions_line_1[6] = { "Archers appear more in later levels.", "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"};
 std::string option_main_archer_freq_descriptions_line_2[6] = { "Same as the original game.", "New scaling that's more evenly", "", "", "", ""};
 std::string option_main_archer_freq_descriptions_line_3[6] = { "", "distributed between levels.", "", "", "", ""};
+std::string option_main_knight_behavior_choices[2] = { "Original", "New" };
+std::string option_main_knight_behavior_descriptions_line_1[2] = { "Knights briefly pause and change", "Knights do not change their" };
+std::string option_main_knight_behavior_descriptions_line_2[2] = { "position after you die.", "movement after you die." };
+std::string option_main_knight_behavior_descriptions_line_3[2] = { "", "Behavior is similar to the HTML5 port." };
 std::string option_main_level_tran_choices[2] = { "Original", "Button Press" };
 std::string option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press " + INPUT_CONFIRM };
 std::string option_main_level_tran_descriptions_line_2[2] = { "level will load automatically.", "to load the next level." };
@@ -561,6 +565,9 @@ void InitializeMenus() {
 	MENU_ARCHER_FREQ->prepareMenuOption("Archer Frequency", option_main_archer_freq_choices,
 		option_main_archer_freq_descriptions_line_1, option_main_archer_freq_descriptions_line_2, option_main_archer_freq_descriptions_line_3,
 		"", 6, false, 0, true);
+	MENU_KNIGHT_BEHAVIOR->prepareMenuOption("Knight Behavior", option_main_knight_behavior_choices,
+		option_main_knight_behavior_descriptions_line_1, option_main_knight_behavior_descriptions_line_2, option_main_knight_behavior_descriptions_line_3,
+		"", 2, false, 0, true);
 	MENU_LEVEL_TRAN->prepareMenuOption("Level Transition", option_main_level_tran_choices,
 		option_main_level_tran_descriptions_line_1, option_main_level_tran_descriptions_line_2, option_main_level_tran_descriptions_line_3,
 		"", 2, false, 0, true);
