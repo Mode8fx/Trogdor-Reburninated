@@ -112,9 +112,11 @@ Uint8 loadAndPlaySound(SoundEffect *sfx) {
 		sfxIndex = PLAY_SFX(sfx, SFX_CHANNEL_GAME);
 #endif
 		sfxChannelArr[sfxIndex] = sfx;
+		return sfxIndex;
 	} else {
 		PLAY_SFX(sfx, SFX_CHANNEL_STRONG_BAD);
 		sfxChannel_strongBad = sfx;
+		return SFX_CHANNEL_STRONG_BAD;
 	}
 }
 
