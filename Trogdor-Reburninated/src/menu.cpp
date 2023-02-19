@@ -283,7 +283,7 @@ Sint8 Menu::handleInput() {
 	if (keyPressed(INPUT_RIGHT)) {
 		incrementCurrOptionChoice();
 	}
-	if (keyPressed(INPUT_A)) {
+	if (keyPressed(INPUT_A) || keyPressed(INPUT_START)) {
 		return cursorIndex;
 	}
 	if (keyPressed(INPUT_B) || keyPressed(INPUT_SELECT)) {
@@ -666,16 +666,16 @@ void InitializeMenus() {
 	}
 	CHEAT_INF_LIVES->prepareMenuOption("Infinite Lives", option_on_off,
 		option_cheats_inf_lives_descriptions_line_1, option_cheats_inf_lives_descriptions_line_2, option_cheats_inf_lives_descriptions_line_3,
-		"Secret Code?!?!", 2, true, 0, true);
+		"Secret Code?!?!", 2, true, 1, true);
 	CHEAT_DEBUG_MODE->prepareMenuOption("Debug Mode", option_on_off,
 		option_cheats_debug_mode_descriptions_line_1, option_cheats_debug_mode_descriptions_line_2, option_empty,
-		"Class of 1981", 2, true, 0, true);
+		"Class of 1981", 2, true, 1, true);
 	CHEAT_BIG_HEAD_MODE->prepareMenuOption("Big Head Mode", option_on_off,
 		option_cheats_big_head_mode_descriptions_line_1, option_empty, option_empty,
-		"S&K Mushroom Pulley", 2, true, 0, true);
+		"S&K Mushroom Pulley", 2, true, 1, true);
 	CHEAT_NOCLIP->prepareMenuOption("Noclip", option_on_off,
 		option_cheats_noclip_descriptions_line_1, option_cheats_noclip_descriptions_line_2, option_empty,
-		"1994 Country", 2, true, 0, true);
+		"1994 Country", 2, true, 1, true);
 
 	/* Credits Notebook */
 	menu_credits.prepareMenuNotebook(5, 304, 216, 2);
@@ -788,4 +788,30 @@ void InitializeMenus() {
 
 	TTF_CloseFont(menuFont->font);
 	TTF_Quit();
+}
+
+State_Settings getSettings() {
+	return {
+		DEFAULT_VOLUME_MUSIC,
+		100,
+		MENU_STARTING_LEVEL->index,
+		MENU_EXTRA_LIVES->index,
+		MENU_LIVES_INTERVAL->index,
+		MENU_PEASANT_PENALTY->index,
+		MENU_TREASURE_HUTS->index,
+		MENU_ARCHER_FREQ->index,
+		MENU_KNIGHT_BEHAVIOR->index,
+		MENU_LEVEL_TRAN->index,
+		MENU_MUSIC->index,
+		MENU_COMMENT_FREQ->index,
+		MENU_SCALING->index,
+		CHEAT_INF_LIVES->index,
+		CHEAT_DEBUG_MODE->index,
+		CHEAT_BIG_HEAD_MODE->index,
+		CHEAT_NOCLIP->index,
+		CHEAT_INF_LIVES->optionIsLocked,
+		CHEAT_DEBUG_MODE->optionIsLocked,
+		CHEAT_BIG_HEAD_MODE->optionIsLocked,
+		CHEAT_NOCLIP->optionIsLocked
+	};
 }

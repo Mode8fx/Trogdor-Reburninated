@@ -67,9 +67,8 @@ Sint32 mouseInput_y_last;
 #endif
 
 /* Save File */
-SDL_RWops *saveFile;
-SoundSettings soundSettings;
-VideoSettings videoSettings;
+SDL_RWops *saveBin;
+GameState gameState;
 
 /* Cutscenes */
 bool cutsceneIsPlaying = false;

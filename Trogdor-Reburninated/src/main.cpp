@@ -34,8 +34,8 @@ int main(int argv, char** args) {
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 	try {
 #endif
-	loadSaveFile();
 	InitializeDisplay();
+	loadGameState();
 
 #if defined(ANDROID)
 	/* Initialize SDL_ttf, fonts, text objects, and sprite objects (already done for other systems in InitializeDisplay() via setScaling() */
@@ -463,6 +463,7 @@ int main(int argv, char** args) {
 					case -1: // Press B/Select
 						g_sceneState = 3;
 						pauseMusic();
+						saveGameState();
 						break;
 					default:
 						break;
@@ -542,6 +543,7 @@ int main(int argv, char** args) {
 						break;
 					case QUIT_CONFIRM_INDEX:
 						stopMusic();
+						saveGameState();
 						loadAndPlaySound(SFX_ITSOVER);
 						while (sfxChannel_strongBad != NULL) {
 							freeFinishedSoundChunks(); // wait for sound to stop playing

@@ -13,20 +13,37 @@ constexpr auto DEFAULT_VOLUME_MUSIC = 35;
 #define MAX_PAGE_NUM_HIRES 3
 #endif
 
-struct SoundSettings {
+struct State_Settings {
 	Sint8 bgmVolume;
 	Sint8 sfxVolume;
+	Sint8 startingLevel;
+	Sint8 extraLives;
+	Sint8 livesInterval;
+	Sint8 peasantPenalty;
+	Sint8 treasureHuts;
+	Sint8 archerFreq;
+	Sint8 knightBehavior;
+	Sint8 levelTran;
+	Sint8 music;
+	Sint8 commentFreq;
+	Sint8 scaling;
+	Sint8 infLives;
+	Sint8 debugMode;
+	Sint8 bigHeadMode;
+	Sint8 noclip;
+	bool  locked_infLives;
+	bool  locked_debugMode;
+	bool  locked_bigHeadMode;
+	bool  locked_noclip;
 };
 
-struct VideoSettings {
-	Uint16 widthSetting;
-	Uint16 heightSetting;
+struct GameState {
+	State_Settings settings;
 };
 
 /* Save File */
-extern SDL_RWops *saveFile;
-extern SoundSettings soundSettings;
-extern VideoSettings videoSettings;
+extern SDL_RWops *saveBin;
+extern GameState gameState;
 
 /* System-Specific Variables */
 #if defined(VITA)
@@ -44,8 +61,8 @@ const string rootDir = "";
 #define SAVE_FILE (rootDir+"save.bin").c_str()
 
 #define CREATE_DEBUG_FILE(str) \
-	saveFile = SDL_RWFromFile((rootDir + str).c_str(), "w+b"); \
-	SDL_RWclose(saveFile);
+	saveBin = SDL_RWFromFile((rootDir + str).c_str(), "w+b"); \
+	SDL_RWclose(saveBin);
 
 #if !defined(SDL1)
 extern SDL_DisplayMode DM;
@@ -80,8 +97,7 @@ constexpr auto DEFAULT_WIDTH = 640;
 constexpr auto DEFAULT_HEIGHT = 480;
 #endif
 
-extern void loadSaveFile();
-extern void initializeSaveFileNew();
-//extern void SAVE_CURRENT_SAVE();
+extern void saveGameState();
+extern void loadGameState();
 
 #endif

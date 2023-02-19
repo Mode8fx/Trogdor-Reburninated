@@ -1,6 +1,7 @@
 #include "include.h"
 #include "text_objects.h"
 #include "sprite_objects.h"
+#include "config.h"
 
 #ifndef MENU_H
 #define MENU_H
@@ -241,5 +242,7 @@ constexpr auto QUIT_CONFIRM_INDEX = 1;
 constexpr auto QUIT_NUM_OPTIONS = 2;
 #define QUIT_BACK    menu_quit.options[QUIT_BACK_INDEX]
 #define QUIT_CONFIRM menu_quit.options[QUIT_CONFIRM_INDEX]
+
+extern State_Settings getSettings();
 
 #endif

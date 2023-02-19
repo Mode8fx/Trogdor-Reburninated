@@ -443,7 +443,7 @@ bool MenuManager::handleCheat(Uint8 menuIndex, const Uint8 *cheatArrayKey, Uint8
 					// this was originally played upon starting the game, but I'm changing it; it's much clearer this way, especially since the controls are different for each system
 					loadAndPlaySound(sfx);
 					menu_cheats.options[menuIndex]->setLocked(false);
-					menu_cheats.options[menuIndex]->index = 0;
+					menu_cheats.setOptionChoice(menuIndex, 0);
 					if (menuIndex == 0) {
 						MENU_EXTRA_LIVES->choiceIsAllowed[6] = true;
 						MENU_EXTRA_LIVES->choiceIsAllowed[7] = true;
