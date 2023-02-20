@@ -326,7 +326,7 @@ Loot::Loot(Sint16 pos_x, Sint16 pos_y) {
 }
 
 Trogdor::Trogdor(bool bigHead = false) {
-	SET_FRAMESTATE(0);
+	SET_FRAMESTATE(1);
 	if (bigHead) {
 		sprite = SpriteInstance(&sprite_trogdor_bighead, 0, 1, 0, 0);
 		sprite_death = SpriteInstance(&sprite_trogdor_dead, 0, 1);
@@ -342,7 +342,7 @@ Trogdor::Trogdor(bool bigHead = false) {
 	sprite.setPosX(spawnPos_x);
 	sprite.setPosY(spawnPos_y);
 	sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
-	SET_FRAMESTATE_SPECIAL(fire_frameState, fire_frameState_double, 0);
+	SET_FRAMESTATE_SPECIAL(fire_frameState, fire_frameState_double, 1);
 	sprite_fire = SpriteInstance(&sprite_trogdor_fire, 0, sprite.facingRight, (double)sprite.dstrect.x - 24 + ((double)sprite.facingRight * 62), (double)sprite.dstrect.y + 10);
 	invince = 0;
 	sprite.isActive = true;
@@ -353,21 +353,23 @@ Trogdor::Trogdor(bool bigHead = false) {
 }
 
 void Trogdor::updateFrameState() {
-	INCREMENT_FRAMESTATE();
 	switch (frameState) {
 		case 20: // sworded
 			sprite_death.setFrame(0);
 			sprite_death.setPosX(sprite.dstrect.x + ((sprite.spriteObj->dstrect.w - sprite_death.spriteObj->dstrect.w) / 2));
 			sprite_death.setPosY(sprite.dstrect.y + (sprite.spriteObj->dstrect.h - sprite_death.spriteObj->dstrect.h) - 7);
+			INCREMENT_FRAMESTATE();
 			break;
 		case 50: // arrowed
 			sprite_death.setFrame(1);
 			sprite_death.setPosX(sprite.dstrect.x + ((sprite.spriteObj->dstrect.w - sprite_death.spriteObj->dstrect.w) / 2));
 			sprite_death.setPosY(sprite.dstrect.y + (sprite.spriteObj->dstrect.h - sprite_death.spriteObj->dstrect.h) - 7);
+			INCREMENT_FRAMESTATE();
 			break;
 		case 22:
 		case 52:
 			loadAndPlaySound(SFX_DEATH);
+			INCREMENT_FRAMESTATE();
 			break;
 		case 34:
 		case 38:
@@ -376,17 +378,22 @@ void Trogdor::updateFrameState() {
 		case 68:
 		case 72:
 			sprite.isActive = false;
+			INCREMENT_FRAMESTATE();
 			break;
 		case 36:
 		case 40:
 		case 66:
 		case 70:
 			sprite.isActive = true;
+			INCREMENT_FRAMESTATE();
 			break;
 		case 48:
 		case 78:
 			sprite.isActive = true;
-			SET_FRAMESTATE(0);
+			SET_FRAMESTATE(1);
+			break;
+		default:
+			INCREMENT_FRAMESTATE();
 			break;
 	}
 }
@@ -1406,7 +1413,7 @@ void GameManager::dm_updateFrameState() { // death message
 			sprite_dm.setFrame(0);
 			sprite_dm.setForm(0);
 			sprite_dm.isActive = true;
-			SET_FRAMESTATE_FOR_OBJ(player, 19);
+			SET_FRAMESTATE_FOR_OBJ(player, 20);
 			paused = true;
 			arched = false;
 			break;
@@ -1426,7 +1433,7 @@ void GameManager::dm_updateFrameState() { // death message
 		case 27:
 		case 52:
 			sprite_dm.isActive = false;
-			SET_FRAMESTATE_FOR_OBJ(player, 0);
+			SET_FRAMESTATE_FOR_OBJ(player, 1);
 			updateMans(-1);
 			peasantometer = 0;
 			if (mans < 0) {
@@ -1443,7 +1450,7 @@ void GameManager::dm_updateFrameState() { // death message
 			sprite_dm.setFrame(1);
 			sprite_dm.setForm(0);
 			sprite_dm.isActive = true;
-			SET_FRAMESTATE_FOR_OBJ(player, 49);
+			SET_FRAMESTATE_FOR_OBJ(player, 50);
 			paused = true;
 			arched = true;
 			break;
