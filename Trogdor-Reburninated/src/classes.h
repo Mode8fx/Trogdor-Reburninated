@@ -40,8 +40,8 @@ class Knight {
 		Sint8 direction;
 		Sint16 home_x;    // the parent (x,y) coordinates
 		Sint16 home_y;    // the parent (x,y) coordinates
-		Sint16 offset_x;  // the offset relative to home
-		Sint16 offset_y;  // the offset relative to home
+		double offset_x;  // the offset relative to home
+		double offset_y;  // the offset relative to home
 		Knight(Sint16, Sint16, Sint8, bool);
 		inline void updateCollision();
 		void updateHome(Sint8);

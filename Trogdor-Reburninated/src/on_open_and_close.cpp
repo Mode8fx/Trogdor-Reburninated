@@ -17,7 +17,7 @@ void InitializeDisplay() {
 	appWidth = 320;
 	appHeight = 240;
 	appSrcRect = { 0, 0, appWidth, appHeight };
-	frameRate = DEFAULT_FRAME_RATE;
+	frameRate = ORIGINAL_FRAME_RATE;
 	ticksPerFrame = (Uint32)(1000 / frameRate);
 	setWidthHeightMults();
 

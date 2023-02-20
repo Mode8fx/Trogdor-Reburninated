@@ -175,15 +175,15 @@ void Knight::updateFrameStateAndMove() {
 	if (frameState <= 30) {
 		offset_x = frameState * 34 / 30;
 	} else {
-		offset_x = 68 - (frameState * 34 / 30);
+		offset_x = 68.0 - (frameState * 34 / 30);
 	}
 	offset_y = -offset_x;
 	if (!sprite.facingRight) {
 		offset_x *= -1;
 	}
 
-	sprite.dstrect.x = home_x + offset_x - half_src_w;
-	sprite.dstrect.y = home_y + offset_y - half_src_h;
+	sprite.setPosX(home_x + (Sint16)offset_x - half_src_w);
+	sprite.setPosY(home_y + (Sint16)offset_y - half_src_h);
 	updateCollision();
 }
 
@@ -351,13 +351,13 @@ void Trogdor::updateFrameState() {
 	switch (frameState) {
 		case 20: // sworded
 			sprite_death.setFrame(0);
-			sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.spriteObj->dstrect.w - sprite_death.spriteObj->dstrect.w) / 2);
-			sprite_death.dstrect.y = sprite.dstrect.y + (sprite.spriteObj->dstrect.h - sprite_death.spriteObj->dstrect.h) - 7;
+			sprite_death.setPosX(sprite.dstrect.x + ((sprite.spriteObj->dstrect.w - sprite_death.spriteObj->dstrect.w) / 2));
+			sprite_death.setPosY(sprite.dstrect.y + (sprite.spriteObj->dstrect.h - sprite_death.spriteObj->dstrect.h) - 7);
 			break;
 		case 50: // arrowed
 			sprite_death.setFrame(1);
-			sprite_death.dstrect.x = sprite.dstrect.x + ((sprite.spriteObj->dstrect.w - sprite_death.spriteObj->dstrect.w) / 2);
-			sprite_death.dstrect.y = sprite.dstrect.y + (sprite.spriteObj->dstrect.h - sprite_death.spriteObj->dstrect.h) - 7;
+			sprite_death.setPosX(sprite.dstrect.x + ((sprite.spriteObj->dstrect.w - sprite_death.spriteObj->dstrect.w) / 2));
+			sprite_death.setPosY(sprite.dstrect.y + (sprite.spriteObj->dstrect.h - sprite_death.spriteObj->dstrect.h) - 7);
 			break;
 		case 22:
 		case 52:
@@ -884,12 +884,12 @@ void GameManager::getPlayerInput() {
 }
 
 inline void GameManager::trogdor_add_x_delta(Sint8 dx) {
-	player.sprite.dstrect.x += dx;
+	player.sprite.addPosX(dx);
 	player.sprite.collision.x = 11 + player.sprite.dstrect.x;
 }
 
 inline void GameManager::trogdor_add_y_delta(Sint8 dy) {
-	player.sprite.dstrect.y += dy;
+	player.sprite.addPosY(dy);
 	player.sprite.collision.y = 11 + player.sprite.dstrect.y;
 }
 
@@ -1020,13 +1020,13 @@ void GameManager::popArchers() {
 		if (rand_var % 2 == 0) {
 			if (!archerR.sprite.isActive) {
 				archerR.sprite.isActive = true;
-				archerR.sprite.dstrect.y = rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER;
+				archerR.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
 				archerR.frameState = 4;
 			}
 		} else {
 			if (!archerL.sprite.isActive) {
 				archerL.sprite.isActive = true;
-				archerL.sprite.dstrect.y = rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER;
+				archerL.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
 				archerL.frameState = 4;
 			}
 		}
@@ -1195,22 +1195,22 @@ void GameManager::updateBurnmeter() {
 }
 
 inline void GameManager::peasant_set_x_delta(Sint16 new_x) {
-	peasantArray[i].sprite.dstrect.x = new_x;
+	peasantArray[i].sprite.setPosX(new_x);
 	peasantArray[i].sprite.collision.x = 8 + peasantArray[i].sprite.dstrect.x;
 }
 
 inline void GameManager::peasant_set_y_delta(Sint16 new_y) {
-	peasantArray[i].sprite.dstrect.y = new_y;
+	peasantArray[i].sprite.setPosY(new_y);
 	peasantArray[i].sprite.collision.y = 5 + peasantArray[i].sprite.dstrect.y;
 }
 
 inline void GameManager::peasant_add_x_delta(Sint8 dx) {
-	peasantArray[i].sprite.dstrect.x += dx;
+	peasantArray[i].sprite.addPosX(dx);
 	peasantArray[i].sprite.collision.x = 8 + peasantArray[i].sprite.dstrect.x;
 }
 
 inline void GameManager::peasant_add_y_delta(Sint8 dy) {
-	peasantArray[i].sprite.dstrect.y += dy;
+	peasantArray[i].sprite.addPosY(dy);
 	peasantArray[i].sprite.collision.y = 5 + peasantArray[i].sprite.dstrect.y;
 }
 
