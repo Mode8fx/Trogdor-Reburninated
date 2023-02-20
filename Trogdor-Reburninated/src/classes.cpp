@@ -579,10 +579,10 @@ GameManager::GameManager(MenuManager mm) {
 	}
 	extraMansCounter = 1;
 	arched = false;
-	SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 0);
+	SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 1);
 	sprite_dm = SpriteInstance(&sprite_death_message, 0, 0);
 	sprite_dm.isActive = false;
-	SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 0);
+	SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 1);
 	sprite_bt = SpriteInstance(&sprite_burninate_text, 0, 0);
 	sprite_bf = SpriteInstance(&sprite_burninate_fire, 0, 0);
 	sprite_bf.setPosX(OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire));
@@ -591,7 +591,7 @@ GameManager::GameManager(MenuManager mm) {
 	sprite_bmFull = SpriteInstance(&sprite_burnination_meter_full, 0, 0);
 	sprite_pm_on = SpriteInstance(&sprite_peasantometer_icon, 1, 0);
 	sprite_pm_off = SpriteInstance(&sprite_peasantometer_icon, 0, 0);
-	SET_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double, 0);
+	SET_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double, 1);
 	numHuts = 0;
 	treasureHutFound = false;
 	inTreasureHut = false;
@@ -896,8 +896,8 @@ void GameManager::getPlayerInput() {
 		setVolume_music(DEFAULT_VOLUME_MUSIC / 3);
 		sdl1_createTransparentScreen();
 	}
-	if (keyHeld(INPUT_L) && kick_frameState == 0) {
-		SET_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double, 3);
+	if (keyHeld(INPUT_L) && kick_frameState == 1) {
+		SET_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double, 4);
 	}
 }
 
@@ -1130,7 +1130,7 @@ void GameManager::testKnightHit() {
 				paused = true;
 				toggleKnightMotion(false);
 				clearArrows();
-				SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 3); // 28 for arrow
+				SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 4); // 29 for arrow
 			}
 		}
 	}
@@ -1143,14 +1143,14 @@ void GameManager::arrowHitEventHandler() {
 				paused = true;
 				// the original game does NOT pause knights when you are arrowed
 				clearArrows();
-				SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 28);
+				SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 29);
 				break;
 			}
 			if (arrowArrayR[i].sprite.isActive && SDL_HasIntersection(&player.sprite.collision, &arrowArrayR[i].sprite.collision)) {
 				paused = true;
 				// the original game does NOT pause knights when you are arrowed
 				clearArrows();
-				SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 28);
+				SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 29);
 				break;
 			}
 		}
@@ -1310,7 +1310,7 @@ void GameManager::peasantEatTest() {
 				peasantometer++;
 			} else {
 				peasantometer = 10;
-				SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 3);
+				SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 4);
 			}
 		}
 	}
@@ -1407,7 +1407,6 @@ void GameManager::testBurnPeasant() {
 }
 
 void GameManager::dm_updateFrameState() { // death message
-	INCREMENT_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double);
 	switch (dm_frameState) {
 		case 4:
 			sprite_dm.setFrame(0);
@@ -1429,6 +1428,7 @@ void GameManager::dm_updateFrameState() { // death message
 			} else {
 				fadeMusic(1200);
 			}
+			sprite_dm.setForm(1);
 			break;
 		case 27:
 		case 52:
@@ -1444,7 +1444,7 @@ void GameManager::dm_updateFrameState() { // death message
 				paused = false;
 				toggleKnightMotion(true);
 			}
-			SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 0);
+			SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 1);
 			break;
 		case 29:
 			sprite_dm.setFrame(1);
@@ -1458,17 +1458,22 @@ void GameManager::dm_updateFrameState() { // death message
 			if (mans > 0 && (rand() % 100) < 20 * sbVoiceMult) {
 				loadAndPlaySound(SFX_SBARCH);
 			}
+			sprite_dm.setForm(1);
+			break;
+		default:
+			if (dm_frameState < 28) {
+				sprite_dm.setForm((((dm_frameState - 4) / 2) % 5));
+			} else {
+				sprite_dm.setForm((((dm_frameState - 29) / 2) % 5));
+			}
 			break;
 	}
-	if (dm_frameState < 28) {
-		sprite_dm.setForm((((dm_frameState - 4) / 2) % 5));
-	} else {
-		sprite_dm.setForm((((dm_frameState - 29) / 2) % 5));
+	if (dm_frameState >= 4) {
+		INCREMENT_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double);
 	}
 }
 
 void GameManager::b_updateFrameState() { // burninate message
-	INCREMENT_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double);
 	// hardcoded is messier, but faster
 	switch (b_frameState) {
 		case 4:
@@ -1526,24 +1531,31 @@ void GameManager::b_updateFrameState() { // burninate message
 			peasantometer = 10;
 			setBurnination(100);
 			player.updateBreathLoc();
-			SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 0);
+			SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 1);
 			break;
 		default:
 			break;
 	}
+	if (b_frameState >= 4) {
+		INCREMENT_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double);
+	}
 }
 
 void GameManager::kick_updateFrameState() {
-	INCREMENT_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double);
 	switch (kick_frameState) {
 		case 4:
 			loadAndPlaySound(SFX_KICK);
+			INCREMENT_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double);
 			break;
 		case 9:
 			loadAndPlaySound(SFX_TROGADOR);
+			INCREMENT_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double);
 			break;
 		case 29:
-			SET_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double, 0);
+			SET_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double, 1);
+			break;
+		default:
+			INCREMENT_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double);
 			break;
 	}
 }
@@ -1553,7 +1565,7 @@ void GameManager::burninationIncreaseCheat() {
 		peasantometer++;
 	} else {
 		peasantometer = 10;
-		SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 3);
+		SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 4);
 	}
 }
 

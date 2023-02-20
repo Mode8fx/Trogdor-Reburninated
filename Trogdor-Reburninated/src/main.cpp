@@ -613,13 +613,13 @@ int main(int argv, char** args) {
 					}
 				}
 				if (!GM.manually_paused) {
-					if (GM.dm_frameState >= 3) {
+					if (GM.dm_frameState >= 4) {
 						GM.dm_updateFrameState();
 					}
-					if (GM.b_frameState >= 1) {
+					if (GM.b_frameState >= 2) {
 						GM.b_updateFrameState();
 					}
-					if (GM.player.frameState >= 19) {
+					if (GM.player.frameState >= 20) {
 						GM.player.updateFrameState();
 					}
 				}
@@ -628,7 +628,7 @@ int main(int argv, char** args) {
 					SET_GLOBAL_FRAMESTATE(321);
 					// no break; it should continue directly to the next state on the current frame
 				} else {
-					if (GM.kick_frameState > 0) {
+					if (GM.kick_frameState > 1) {
 						GM.kick_updateFrameState();
 					}
 					// render everything
@@ -714,13 +714,13 @@ int main(int argv, char** args) {
 				} else {
 					GM.handle_treasure_hut();
 					GM.updateKnightOffsetAndMove();
-					if (GM.dm_frameState >= 3) {
+					if (GM.dm_frameState >= 4) {
 						GM.dm_updateFrameState();
 					}
-					if (GM.b_frameState >= 1) {
+					if (GM.b_frameState >= 2) {
 						GM.b_updateFrameState();
 					}
-					if (GM.player.frameState >= 19) {
+					if (GM.player.frameState >= 20) {
 						GM.player.updateFrameState();
 					}
 				}
@@ -729,7 +729,7 @@ int main(int argv, char** args) {
 					SET_GLOBAL_FRAMESTATE(321);
 					break;
 				} else {
-					if (GM.kick_frameState > 0) {
+					if (GM.kick_frameState > 1) {
 						GM.kick_updateFrameState();
 					}
 					// render everything
