@@ -222,6 +222,7 @@ class GameManager {
 		GameManager(MenuManager);
 		void resetAllSrcRects();
 		void setArcherFrequency();
+		void setBurnRate();
 		void setMusic();
 		void levelInit();
 		void set_level_background(Sint16);

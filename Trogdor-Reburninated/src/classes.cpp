@@ -688,6 +688,22 @@ void GameManager::setArcherFrequency() {
 	}
 }
 
+void GameManager::setBurnRate() {
+	if (level > 25) {
+		burnRate = 1.3 * FRAME_RATE_MULT;
+	} else if (level > 20) {
+		burnRate = 1.2 * FRAME_RATE_MULT;
+	} else if (level > 15) {
+		burnRate = 1.1 * FRAME_RATE_MULT;
+	} else if (level > 10) {
+		burnRate = 1 * FRAME_RATE_MULT;
+	} else if (level > 5) {
+		burnRate = 0.9 * FRAME_RATE_MULT;
+	} else {
+		burnRate = 0.7 * FRAME_RATE_MULT;
+	}
+}
+
 void GameManager::setMusic() {
 	switch (MENU_MUSIC->index) {
 		case 1:
@@ -755,19 +771,7 @@ void GameManager::setMusic() {
 void GameManager::levelInit() {
 	setBurnination(0);
 	setArcherFrequency();
-	if (level > 25) {
-		burnRate = 1.3;
-	} else if (level > 20) {
-		burnRate = 1.2;
-	} else if (level > 15) {
-		burnRate = 1.1;
-	} else if (level > 10) {
-		burnRate = 1;
-	} else if (level > 5) {
-		burnRate = 0.9;
-	} else {
-		burnRate = 0.7;
-	}
+	setBurnRate();
 	if (level == 1) {
 		levelIndex = 0;
 	} else {
