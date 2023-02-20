@@ -172,10 +172,10 @@ void Knight::updateFrameStateAndMove() {
 		default:
 			break;
 	}
-	if (frameState <= 30) {
-		offset_x = frameState * 34 / 30;
+	if (frameState_double <= 30) {
+		offset_x = frameState_double * 34 / 30;
 	} else {
-		offset_x = 68.0 - (frameState * 34 / 30);
+		offset_x = 68.0 - (frameState_double * 34 / 30);
 	}
 	offset_y = -offset_x;
 	if (!sprite.facingRight) {
