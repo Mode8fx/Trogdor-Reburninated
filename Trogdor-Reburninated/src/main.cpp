@@ -12,7 +12,7 @@ bool menuMusicHasStarted = false;
 int main(int argv, char** args) {
 	isRunning = true;
 	g_sceneState = 0;
-	g_frameState = 1;
+	SET_GLOBAL_FRAMESTATE(1);
 	systemSpecificOpen();
 
 	/* Initialize SDL */
@@ -171,83 +171,83 @@ int main(int argv, char** args) {
 					case 1:
 						renderText(text_0_loading, font_serif_white_14);
 						text_0_loading_censor_rect.x = text_0_loading.dstrect.x;
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 2:
 						renderText(text_0_loading, font_serif_white_14);
 						text_0_loading_censor_rect.x += font_serif_white_14.textChars['l' - 32].dstrect.w;
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 3:
 						renderText(text_0_loading, font_serif_white_14);
 						text_0_loading_censor_rect.x += font_serif_white_14.textChars['o' - 32].dstrect.w;
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 4:
 						renderText(text_0_loading, font_serif_white_14);
 						text_0_loading_censor_rect.x += font_serif_white_14.textChars['a' - 32].dstrect.w;
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 5:
 						renderText(text_0_loading, font_serif_white_14);
 						text_0_loading_censor_rect.x += font_serif_white_14.textChars['d' - 32].dstrect.w;
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 6:
 						renderText(text_0_loading, font_serif_white_14);
 						text_0_loading_censor_rect.x += font_serif_white_14.textChars['i' - 32].dstrect.w;
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 7:
 						renderText(text_0_loading, font_serif_white_14);
 						text_0_loading_censor_rect.x += font_serif_white_14.textChars['n' - 32].dstrect.w;
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 8:
 						renderText(text_0_loading, font_serif_white_14);
 						text_0_loading_censor_rect.x += font_serif_white_14.textChars['g' - 32].dstrect.w;
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 9:
 						renderText(text_0_loading, font_serif_white_14);
 						text_0_loading_censor_rect.x += font_serif_white_14.textChars['.' - 32].dstrect.w;
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 10:
 						InitializeSound();
 						renderText(text_0_loading, font_serif_white_14);
 						text_0_loading_censor_rect.x += font_serif_white_14.textChars['.' - 32].dstrect.w;
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 11:
 						InitializeMusic();
 						renderText(text_0_loading, font_serif_white_14);
 						text_0_loading_censor_rect.x += font_serif_white_14.textChars['.' - 32].dstrect.w;
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 12:
 						renderText(text_0_loading, font_serif_white_14);
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 13:
 						InitializeSFX();
 						renderText(text_0_loading, font_serif_white_14);
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 14:
 						renderText(text_0_loading, font_serif_white_14);
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 15:
 						renderText(text_0_loading, font_serif_white_14);
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					case 16:
-						g_frameState++;
+						INCREMENT_GLOBAL_FRAMESTATE();
 						break;
 					default:
 						g_sceneState = 1;
-						g_frameState = 18;
+						SET_GLOBAL_FRAMESTATE(18);
 						break;
 				}
 				drawRect_gameTextScreen(text_0_loading_censor_rect, color_black.r, color_black.g, color_black.b);
@@ -260,15 +260,15 @@ int main(int argv, char** args) {
 					renderText(text_1_presents_2, font_nokia_12);
 				}
 				if (g_frameState < 72) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				} else {
 					g_sceneState = 2;
-					g_frameState = 73;
+					SET_GLOBAL_FRAMESTATE(73);
 				}
 				if (keyPressed(INPUT_START)) {
 					loadAndPlaySound(SFX_TROGADOR);
 					g_sceneState = 3;
-					g_frameState = 3; // 3 is intentional
+					SET_GLOBAL_FRAMESTATE(3); // 3 is intentional
 					MM = MenuManager();
 				}
 				break;
@@ -279,18 +279,18 @@ int main(int argv, char** args) {
 					renderOverlay = true;
 				}
 				if (g_frameState < 192) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				} else {
 					loadAndPlaySound(SFX_TROGADOR);
 					g_sceneState = 3;
-					g_frameState = 3; // 3 is intentional
+					SET_GLOBAL_FRAMESTATE(3); // 3 is intentional
 					MM = MenuManager();
 				}
 				sprite_title_screen_ins.renderSprite_game();
 				break;
 			/* Instructions Screen */
 			case 3:
-				g_frameState++;
+				INCREMENT_GLOBAL_FRAMESTATE();
 				renderOverlay = true;
 				MM.typeStuff();
 				MM.handlePageChange();
@@ -413,7 +413,7 @@ int main(int argv, char** args) {
 				break;
 			/* Options Menu */
 			case 301:
-				g_frameState++;
+				INCREMENT_GLOBAL_FRAMESTATE();
 				renderOverlay = false;
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_main.renderMenu();
@@ -471,7 +471,7 @@ int main(int argv, char** args) {
 				break;
 			/* Difficulty Settings Menu */
 			case 302:
-				g_frameState++;
+				INCREMENT_GLOBAL_FRAMESTATE();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_difficulty.renderMenu();
 				switch (menu_difficulty.handleInput()) {
@@ -485,7 +485,7 @@ int main(int argv, char** args) {
 				break;
 			/* Cosmetic Settings Menu */
 			case 303:
-				g_frameState++;
+				INCREMENT_GLOBAL_FRAMESTATE();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_cosmetic.renderMenu();
 				switch (menu_cosmetic.handleInput()) {
@@ -505,7 +505,7 @@ int main(int argv, char** args) {
 				break;
 			/* Cheats Menu */
 			case 304:
-				g_frameState++;
+				INCREMENT_GLOBAL_FRAMESTATE();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_cheats.renderMenu();
 				switch (menu_cheats.handleInput()) {
@@ -519,7 +519,7 @@ int main(int argv, char** args) {
 				break;
 			/* Credits Screen */
 			case 305:
-				g_frameState++;
+				INCREMENT_GLOBAL_FRAMESTATE();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_credits.renderNotebook();
 				switch (menu_credits.handleInput()) {
@@ -533,7 +533,7 @@ int main(int argv, char** args) {
 				break;
 			/* Quit Screen */
 			case 306:
-				g_frameState++;
+				INCREMENT_GLOBAL_FRAMESTATE();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_quit.renderMenu();
 				switch (menu_quit.handleInput()) {
@@ -578,7 +578,7 @@ int main(int argv, char** args) {
 							fadeMusic(1200);
 						}
 						g_sceneState = 8;
-						g_frameState = 256;
+						SET_GLOBAL_FRAMESTATE(256);
 					}
 					if (!GM.burnination) {
 						GM.popPeasants();
@@ -625,7 +625,7 @@ int main(int argv, char** args) {
 				}
 				if (GM.gameOver) {
 					g_sceneState = 5;
-					g_frameState = 321;
+					SET_GLOBAL_FRAMESTATE(321);
 					// no break; it should continue directly to the next state on the current frame
 				} else {
 					if (GM.kick_frameState > 0) {
@@ -685,7 +685,7 @@ int main(int argv, char** args) {
 				GM.renderTopBar();
 				cutscene_game_over();
 				if (g_sceneState == 5) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				if (keyPressed(INPUT_START)) {
 					g_sceneState = 3;
@@ -694,7 +694,7 @@ int main(int argv, char** args) {
 					MM = MenuManager();
 				}
 				if (g_sceneState == 5) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Game (Treasure Hut) */
@@ -726,7 +726,7 @@ int main(int argv, char** args) {
 				}
 				if (GM.gameOver) {
 					g_sceneState = 5;
-					g_frameState = 321;
+					SET_GLOBAL_FRAMESTATE(321);
 					break;
 				} else {
 					if (GM.kick_frameState > 0) {
@@ -799,13 +799,13 @@ int main(int argv, char** args) {
 						break;
 					case 276:
 						g_sceneState = 9;
-						g_frameState = 277;
+						SET_GLOBAL_FRAMESTATE(277);
 						break;
 					default:
 						break;
 				}
 				if (g_sceneState == 8) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				GM.player.sprite_end_of_level.renderSprite_game();
 				break;
@@ -822,55 +822,55 @@ int main(int argv, char** args) {
 					switch (GM.level) {
 						case 5:
 							g_sceneState = 11;
-							g_frameState = 420;
+							SET_GLOBAL_FRAMESTATE(420);
 							break;
 						case 9:
 							g_sceneState = 12;
-							g_frameState = 493;
+							SET_GLOBAL_FRAMESTATE(493);
 							break;
 						case 13:
 							g_sceneState = 13;
-							g_frameState = 567;
+							SET_GLOBAL_FRAMESTATE(567);
 							break;
 						case 17:
 							g_sceneState = 14;
-							g_frameState = 641;
+							SET_GLOBAL_FRAMESTATE(641);
 							break;
 						case 21:
 							g_sceneState = 15;
-							g_frameState = 710;
+							SET_GLOBAL_FRAMESTATE(710);
 							break;
 						case 25:
 							g_sceneState = 16;
-							g_frameState = 780;
+							SET_GLOBAL_FRAMESTATE(780);
 							break;
 						case 31:
 							g_sceneState = 17;
-							g_frameState = 853;
+							SET_GLOBAL_FRAMESTATE(853);
 							break;
 						case 35:
 							g_sceneState = 18;
-							g_frameState = 927;
+							SET_GLOBAL_FRAMESTATE(927);
 							break;
 						case 39:
 							g_sceneState = 19;
-							g_frameState = 1000;
+							SET_GLOBAL_FRAMESTATE(1000);
 							break;
 						case 43:
 							g_sceneState = 20;
-							g_frameState = 1076;
+							SET_GLOBAL_FRAMESTATE(1076);
 							break;
 						case 47:
 							g_sceneState = 21;
-							g_frameState = 1153;
+							SET_GLOBAL_FRAMESTATE(1153);
 							break;
 						case 51:
 							g_sceneState = 22;
-							g_frameState = 1226;
+							SET_GLOBAL_FRAMESTATE(1226);
 							break;
 						case 101:
 							g_sceneState = 23;
-							g_frameState = 1337;
+							SET_GLOBAL_FRAMESTATE(1337);
 							break;
 						default:
 							GM.levelInit();
@@ -883,7 +883,7 @@ int main(int argv, char** args) {
 					sound_channel_level_beaten = 99;
 				}
 				if (g_sceneState == 9) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Nothing */
@@ -898,7 +898,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 11) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Level 8 Interlude */
@@ -910,7 +910,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 12) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Level 12 Interlude */
@@ -922,7 +922,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 13) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Level 16 Interlude */
@@ -934,7 +934,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 14) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Level 20 Interlude */
@@ -946,7 +946,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 15) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Level 24 Interlude */
@@ -958,7 +958,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 16) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Level 30 Interlude */
@@ -970,7 +970,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 17) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Level 34 Interlude */
@@ -982,7 +982,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 18) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Level 38 Interlude */
@@ -994,7 +994,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 19) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Level 42 Interlude */
@@ -1006,7 +1006,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 20) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Level 46 Interlude */
@@ -1018,7 +1018,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 21) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Level 50 Interlude */
@@ -1030,7 +1030,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 22) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Level 100 Interlude (Credits) */
@@ -1056,7 +1056,7 @@ int main(int argv, char** args) {
 					g_sceneState = 4;
 				}
 				if (g_sceneState == 23) {
-					g_frameState++;
+					INCREMENT_GLOBAL_FRAMESTATE();
 				}
 				break;
 			/* Nothing? (or maybe blank transition from Credits to High Scores Screen) */

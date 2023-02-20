@@ -13,6 +13,7 @@ extern bool isRunning;
 extern bool windowSizeChanged;
 extern Sint16 g_sceneState;
 extern Sint16 g_frameState;
+extern double g_frameState_double;
 extern Uint16 rand_var;
 extern SDL_Event event;
 

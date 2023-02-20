@@ -18,9 +18,38 @@ constexpr auto MAX_NUM_LOOT = 7;
 inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B);
 #endif
 
+#define SET_FRAMESTATE(num)  \
+	frameState_double = num; \
+	frameState = num;
+
+#define SET_FRAMESTATE_FOR_OBJ(obj, num) \
+	obj.frameState_double = num;         \
+	obj.frameState = num;
+
+#define SET_FRAMESTATE_SPECIAL(fr, fr_d, num) \
+	fr_d = num;                               \
+	fr = num;
+
+#define SET_GLOBAL_FRAMESTATE(num) \
+	g_frameState_double = num;     \
+	g_frameState = num;
+
+#define INCREMENT_FRAMESTATE()            \
+	frameState_double += FRAME_RATE_MULT; \
+	frameState = (Uint8)frameState_double;
+
+#define INCREMENT_FRAMESTATE_SPECIAL(fr, fr_d) \
+	fr_d += FRAME_RATE_MULT;                   \
+	fr = (Uint8)fr_d;
+
+#define INCREMENT_GLOBAL_FRAMESTATE()       \
+	g_frameState_double += FRAME_RATE_MULT; \
+	g_frameState = (Sint16)g_frameState_double;
+
 class Cottage {
 	public:
 		Uint8 frameState;
+		double frameState_double;
 		SpriteInstance sprite;
 		SpriteInstance sprite_fire;
 		bool burning;
@@ -33,6 +62,7 @@ class Cottage {
 class Knight {
 	public:
 		Uint8 frameState;
+		double frameState_double;
 		bool moving;      // used in toggleKnightMotion()
 		SpriteInstance sprite;
 		Sint16 half_src_w;
@@ -51,6 +81,7 @@ class Knight {
 class Peasant {
 	public:
 		Uint8 frameState;
+		double frameState_double;
 		SpriteInstance sprite;
 		Sint8 myHome;
 		bool stomped;
@@ -70,6 +101,7 @@ class Peasant {
 class Archer {
 	public:
 		Uint8 frameState;
+		double frameState_double;
 		SpriteInstance sprite; // facing right == on the left; facing left == on the right
 		Archer(Sint16, Sint16, bool);
 		void updateFrameState();
@@ -78,6 +110,7 @@ class Archer {
 class Arrow {
 	public:
 		Uint8 frameState;
+		double frameState_double;
 		SpriteInstance sprite;
 		Arrow(Sint16, Sint16, bool);
 		void updateFrameState();
@@ -94,8 +127,10 @@ class Loot {
 class Trogdor {
 	public:
 		Uint8 frameState;
+		double frameState_double;
 		SpriteInstance sprite;
 		Uint8 fire_frameState;
+		double fire_frameState_double;
 		SpriteInstance sprite_fire;
 		SpriteInstance sprite_death;
 		SpriteInstance sprite_end_of_level;
@@ -160,7 +195,9 @@ class GameManager {
 		bool arched;                            // previous death was to arrow
 		SpriteInstance sprite_dm;               // Death Message ("SWORDED!", "ARROWED!")
 		Uint8 dm_frameState;                    // Death Message ("SWORDED!", "ARROWED!")
+		double dm_frameState_double;
 		Uint8 b_frameState;                     // BURNINATE! Message
+		double b_frameState_double;
 		SpriteInstance sprite_bt;               // BURNINATE! Message Text
 		SpriteInstance sprite_bf;               // BURNINATE! Message Fire
 		bool b_visible;                         // BURNINATE! Message
@@ -168,6 +205,7 @@ class GameManager {
 		SpriteInstance sprite_pm_on;            // peasantometer (on)
 		SpriteInstance sprite_pm_off;           // peasantometer (off)
 		Uint8 kick_frameState;                  // kick the machine
+		double kick_frameState_double;
 		bool treasureHutFound;                  // treasure hut has been found in this level
 		bool inTreasureHut;                     // player is currently in treasure hut
 		Sint16 treasureHutIndex;                // index of hut that contains treasure (0 = no treasure hut)

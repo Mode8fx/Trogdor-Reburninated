@@ -37,7 +37,7 @@ inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
 #endif
 
 Cottage::Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
-	frameState = 9;
+	SET_FRAMESTATE(9);
 	sprite = SpriteInstance(&sprite_cottage, 0, (dir - 1), pos_x, pos_y);
 	sprite_fire = SpriteInstance(&sprite_cottage_fire, 0, 0, (double)sprite.dstrect.x + 5, (double)sprite.dstrect.y - 5);
 	burning = false;
@@ -68,7 +68,7 @@ Cottage::Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
 }
 
 void Cottage::updateFrameState() {
-	frameState++;
+	INCREMENT_FRAMESTATE();
 	if (frameState == 10) {
 		loadAndPlaySound(SFX_BURN_HUT);
 	}
@@ -85,7 +85,7 @@ void Cottage::updateFrameState() {
 }
 
 Knight::Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true) {
-	frameState = 0;
+	SET_FRAMESTATE(0);
 	moving = true;
 	sprite = SpriteInstance(&sprite_knight, 0, fr, pos_x, pos_y);
 	sprite.facingRight = fr;
@@ -143,8 +143,9 @@ void Knight::updateHome(Sint8 knightIncrement) {
 }
 
 void Knight::updateFrameStateAndMove() {
-	frameState++;
+	INCREMENT_FRAMESTATE();
 	if (frameState > 60) { // a while loop isn't necessary; it'll never go that far above 60
+		frameState_double -= 60;
 		frameState -= 60;
 	}
 	switch (frameState) {
@@ -188,7 +189,7 @@ void Knight::updateFrameStateAndMove() {
 }
 
 Peasant::Peasant() {
-	frameState = 0;
+	SET_FRAMESTATE(0);
 	sprite = SpriteInstance(&sprite_peasant, 0, 0, 0, 0);
 	sprite.isActive = false;
 	myHome = 0;
@@ -206,7 +207,7 @@ Peasant::Peasant() {
 }
 
 void Peasant::updateFrameState(double sbVoiceMult) {
-	frameState++;
+	INCREMENT_FRAMESTATE();
 	switch (frameState) {
 		case 1:
 			sprite.setFrame(0);
@@ -216,7 +217,7 @@ void Peasant::updateFrameState(double sbVoiceMult) {
 			sprite.setFrame(1);
 			break;
 		case 6:
-			frameState = 0;
+			SET_FRAMESTATE(0);
 			break;
 		case 8:
 			sprite.setFrame(0);
@@ -242,7 +243,7 @@ void Peasant::updateFrameState(double sbVoiceMult) {
 			break;
 		case 27:
 			sprite.setFrame(1);
-			frameState = 25;
+			SET_FRAMESTATE(25);
 			break;
 		default:
 			break;
@@ -250,14 +251,14 @@ void Peasant::updateFrameState(double sbVoiceMult) {
 }
 
 Archer::Archer(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
-	frameState = 0;
+	SET_FRAMESTATE(0);
 	sprite = SpriteInstance(&sprite_archer, 0, fr, pos_x, pos_y);
 	sprite.facingRight = fr;
 	sprite.isActive = false;
 }
 
 void Archer::updateFrameState() {
-	frameState++;
+	INCREMENT_FRAMESTATE();
 	switch (frameState) {
 		case 14:
 			sprite.setFrame(1);
@@ -275,7 +276,7 @@ void Archer::updateFrameState() {
 }
 
 Arrow::Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
-	frameState = 0;
+	SET_FRAMESTATE(0);
 	sprite = SpriteInstance(&sprite_arrow, 0, fr, pos_x, pos_y);
 	sprite.facingRight = fr;
 	sprite.isActive = false;
@@ -283,7 +284,7 @@ Arrow::Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 }
 
 void Arrow::updateFrameState() {
-	frameState++;
+	INCREMENT_FRAMESTATE();
 	if (frameState == 1) { // 4?
 		loadAndPlaySound(SFX_ARROW);
 	}
@@ -320,7 +321,7 @@ Loot::Loot(Sint16 pos_x, Sint16 pos_y) {
 }
 
 Trogdor::Trogdor(bool bigHead = false) {
-	frameState = 0;
+	SET_FRAMESTATE(0);
 	if (bigHead) {
 		sprite = SpriteInstance(&sprite_trogdor_bighead, 0, 1, 0, 0);
 		sprite_death = SpriteInstance(&sprite_trogdor_dead, 0, 1);
@@ -336,7 +337,7 @@ Trogdor::Trogdor(bool bigHead = false) {
 	sprite.setPosX(spawnPos_x);
 	sprite.setPosY(spawnPos_y);
 	sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
-	fire_frameState = 0;
+	SET_FRAMESTATE_SPECIAL(fire_frameState, fire_frameState_double, 0);
 	sprite_fire = SpriteInstance(&sprite_trogdor_fire, 0, sprite.facingRight, (double)sprite.dstrect.x - 24 + ((double)sprite.facingRight * 62), (double)sprite.dstrect.y + 10);
 	invince = 0;
 	sprite.isActive = true;
@@ -347,7 +348,7 @@ Trogdor::Trogdor(bool bigHead = false) {
 }
 
 void Trogdor::updateFrameState() {
-	frameState++;
+	INCREMENT_FRAMESTATE();
 	switch (frameState) {
 		case 20: // sworded
 			sprite_death.setFrame(0);
@@ -380,7 +381,7 @@ void Trogdor::updateFrameState() {
 		case 48:
 		case 78:
 			sprite.isActive = true;
-			frameState = 0;
+			SET_FRAMESTATE(0);
 			break;
 	}
 }
@@ -565,10 +566,10 @@ GameManager::GameManager(MenuManager mm) {
 	}
 	extraMansCounter = 1;
 	arched = false;
-	dm_frameState = 0;
+	SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 0);
 	sprite_dm = SpriteInstance(&sprite_death_message, 0, 0);
 	sprite_dm.isActive = false;
-	b_frameState = 0;
+	SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 0);
 	sprite_bt = SpriteInstance(&sprite_burninate_text, 0, 0);
 	sprite_bf = SpriteInstance(&sprite_burninate_fire, 0, 0);
 	sprite_bf.setPosX(OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire));
@@ -577,7 +578,7 @@ GameManager::GameManager(MenuManager mm) {
 	sprite_bmFull = SpriteInstance(&sprite_burnination_meter_full, 0, 0);
 	sprite_pm_on = SpriteInstance(&sprite_peasantometer_icon, 1, 0);
 	sprite_pm_off = SpriteInstance(&sprite_peasantometer_icon, 0, 0);
-	kick_frameState = 0;
+	SET_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double, 0);
 	numHuts = 0;
 	treasureHutFound = false;
 	inTreasureHut = false;
@@ -879,7 +880,7 @@ void GameManager::getPlayerInput() {
 		sdl1_createTransparentScreen();
 	}
 	if (keyHeld(INPUT_L) && kick_frameState == 0) {
-		kick_frameState = 3;
+		SET_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double, 3);
 	}
 }
 
@@ -953,22 +954,30 @@ void GameManager::playerMove(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
 	}
 	// Animate sprite
 	if (trog->frameStateFlag & 2) {
-		trog->frameState = 0;
+		SET_FRAMESTATE_SPECIAL(trog->frameState, trog->frameState_double, 0);
 		trog->sprite.setFrame(0);
 		trog->sprite.setForm(trog->sprite.facingRight);
 	} else if (trog->frameStateFlag & 1) {
-		trog->frameState = (++trog->frameState % 8);
+		INCREMENT_FRAMESTATE_SPECIAL(trog->frameState, trog->frameState_double);
+		if (trog->frameState_double >= 8) {
+			trog->frameState_double -= 8;
+			trog->frameState -= 8;
+		}
 		trog->sprite.setFrame(trog->frameState / 2);
 	}
 	if (burnination > 0) {
 		trog->updateBreathLoc();
 		// Animate sprite
 		if (trog->frameStateFlag & 2) {
-			trog->fire_frameState = 0;
+			SET_FRAMESTATE_SPECIAL(trog->fire_frameState, trog->fire_frameState_double, 0);
 			trog->sprite_fire.setFrame(0);
 			trog->sprite_fire.setForm(trog->sprite.facingRight);
 		} else {
-			trog->fire_frameState = (++trog->fire_frameState % 12);
+			INCREMENT_FRAMESTATE_SPECIAL(trog->fire_frameState, trog->fire_frameState_double);
+			if (trog->fire_frameState_double >= 12) {
+				trog->fire_frameState_double -= 12;
+				trog->fire_frameState -= 12;
+			}
 			trog->sprite_fire.setFrame(trog->fire_frameState / 3);
 		}
 	}
@@ -993,22 +1002,30 @@ void GameManager::playerMove_treasureHut(Trogdor *trog, Sint8 delta_x, Sint8 del
 	}
 	// Animate sprite
 	if (trog->frameStateFlag & 2) {
-		trog->frameState = 0;
+		SET_FRAMESTATE_SPECIAL(trog->frameState, trog->frameState_double, 0);
 		trog->sprite.setFrame(0);
 		trog->sprite.setForm(trog->sprite.facingRight);
 	} else if (trog->frameStateFlag & 1) {
-		trog->frameState = (++trog->frameState % 8);
+		INCREMENT_FRAMESTATE_SPECIAL(trog->frameState, trog->frameState_double);
+		if (trog->frameState_double >= 8) {
+			trog->frameState_double -= 8;
+			trog->frameState -= 8;
+		}
 		trog->sprite.setFrame((trog->frameState / 2));
 	}
 	if (burnination > 0) {
 		trog->updateBreathLoc();
 		// Animate sprite
 		if (trog->frameStateFlag & 2) {
-			trog->fire_frameState = 0;
+			SET_FRAMESTATE_SPECIAL(trog->fire_frameState, trog->fire_frameState_double, 0);
 			trog->sprite_fire.setFrame(0);
 			trog->sprite_fire.setForm(trog->sprite.facingRight);
 		} else {
-			trog->fire_frameState = (++trog->fire_frameState % 12);
+			INCREMENT_FRAMESTATE_SPECIAL(trog->fire_frameState, trog->fire_frameState_double);
+			if (trog->fire_frameState_double >= 12) {
+				trog->fire_frameState_double -= 12;
+				trog->fire_frameState -= 12;
+			}
 			trog->sprite_fire.setFrame(trog->fire_frameState / 3);
 		}
 	}
@@ -1021,13 +1038,13 @@ void GameManager::popArchers() {
 			if (!archerR.sprite.isActive) {
 				archerR.sprite.isActive = true;
 				archerR.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
-				archerR.frameState = 4;
+				SET_FRAMESTATE_FOR_OBJ(archerR, 4);
 			}
 		} else {
 			if (!archerL.sprite.isActive) {
 				archerL.sprite.isActive = true;
 				archerL.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
-				archerL.frameState = 4;
+				SET_FRAMESTATE_FOR_OBJ(archerL, 4);
 			}
 		}
 	}
@@ -1039,7 +1056,7 @@ void GameManager::updateArchersAndArrows() {
 		if (archerR.frameState == 20) {
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
 				if (!arrowArrayR[i].sprite.isActive) {
-					arrowArrayR[i].frameState = 0;
+					SET_FRAMESTATE_FOR_OBJ(arrowArrayR[i], 0);
 					arrowArrayR[i].sprite.isActive = true;
 					arrowArrayR[i].sprite.setPosX((double)archerR.sprite.dstrect.x + (archerR.sprite.spriteObj->dstrect.w / 2) - (arrowArrayR[i].sprite.spriteObj->dstrect.w / 2));
 					arrowArrayR[i].sprite.setPosY((double)archerR.sprite.dstrect.y + (archerR.sprite.spriteObj->dstrect.h / 2) - (arrowArrayR[i].sprite.spriteObj->dstrect.h / 2));
@@ -1053,7 +1070,7 @@ void GameManager::updateArchersAndArrows() {
 		if (archerL.frameState == 20) {
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
 				if (!arrowArrayL[i].sprite.isActive) {
-					arrowArrayL[i].frameState = 0;
+					SET_FRAMESTATE_FOR_OBJ(arrowArrayL[i], 0);
 					arrowArrayL[i].sprite.isActive = true;
 					arrowArrayL[i].sprite.setPosX((double)archerL.sprite.dstrect.x + (archerL.sprite.dstrect.w / 2) - (arrowArrayL[i].sprite.dstrect.w / 2));
 					arrowArrayL[i].sprite.setPosY((double)archerL.sprite.dstrect.y + (archerL.sprite.dstrect.h / 2) - (arrowArrayL[i].sprite.dstrect.h / 2));
@@ -1093,7 +1110,7 @@ void GameManager::testKnightHit() {
 				paused = true;
 				toggleKnightMotion(false);
 				clearArrows();
-				dm_frameState = 3; // 28 for arrow
+				SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 3); // 28 for arrow
 			}
 		}
 	}
@@ -1106,14 +1123,14 @@ void GameManager::arrowHitEventHandler() {
 				paused = true;
 				// the original game does NOT pause knights when you are arrowed
 				clearArrows();
-				dm_frameState = 28;
+				SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 28);
 				break;
 			}
 			if (arrowArrayR[i].sprite.isActive && SDL_HasIntersection(&player.sprite.collision, &arrowArrayR[i].sprite.collision)) {
 				paused = true;
 				// the original game does NOT pause knights when you are arrowed
 				clearArrows();
-				dm_frameState = 28;
+				SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 28);
 				break;
 			}
 		}
@@ -1125,7 +1142,7 @@ inline void GameManager::toggleKnightMotion(bool hasMotion) {
 		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 			knightArray[i].moving = hasMotion;
 			if (hasMotion) {
-				knightArray[i].frameState = 0;
+				SET_FRAMESTATE_FOR_OBJ(knightArray[i], 0);
 			}
 		}
 	}
@@ -1219,7 +1236,7 @@ void GameManager::popPeasants() {
 		for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 			if (!peasantArray[i].sprite.isActive) {
 				peasantArray[i].sprite.isActive = true;
-				peasantArray[i].frameState = 0;
+				SET_FRAMESTATE_FOR_OBJ(peasantArray[i], 0);
 				j = rand() % numHuts; // j = hutChoice
 				peasantArray[i].myHome = j;
 				peasantArray[i].returning = false;
@@ -1267,13 +1284,13 @@ void GameManager::peasantEatTest() {
 	for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 		if (peasantArray[i].sprite.isActive && !peasantArray[i].stomped && SDL_HasIntersection(&player.sprite.collision, &peasantArray[i].sprite.collision)) {
 			peasantArray[i].stomped = true;
-			peasantArray[i].frameState = 7;
+			SET_FRAMESTATE_FOR_OBJ(peasantArray[i], 7);
 			updateScore(2);
 			if (peasantometer < 9) {
 				peasantometer++;
 			} else {
 				peasantometer = 10;
-				b_frameState = 3;
+				SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 3);
 			}
 		}
 	}
@@ -1364,19 +1381,19 @@ void GameManager::testBurnPeasant() {
 			peasantArray[i].waiting = false;
 			peasantArray[i].timer = false;
 			peasantArray[i].burning = true;
-			peasantArray[i].frameState = 25;
+			SET_FRAMESTATE_FOR_OBJ(peasantArray[i], 25);
 		}
 	}
 }
 
 void GameManager::dm_updateFrameState() { // death message
-	dm_frameState++;
+	INCREMENT_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double);
 	switch (dm_frameState) {
 		case 4:
 			sprite_dm.setFrame(0);
 			sprite_dm.setForm(0);
 			sprite_dm.isActive = true;
-			player.frameState = 19;
+			SET_FRAMESTATE_FOR_OBJ(player, 19);
 			paused = true;
 			arched = false;
 			break;
@@ -1396,7 +1413,7 @@ void GameManager::dm_updateFrameState() { // death message
 		case 27:
 		case 52:
 			sprite_dm.isActive = false;
-			player.frameState = 0;
+			SET_FRAMESTATE_FOR_OBJ(player, 0);
 			updateMans(-1);
 			peasantometer = 0;
 			if (mans < 0) {
@@ -1407,13 +1424,13 @@ void GameManager::dm_updateFrameState() { // death message
 				paused = false;
 				toggleKnightMotion(true);
 			}
-			dm_frameState = 0;
+			SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 0);
 			break;
 		case 29:
 			sprite_dm.setFrame(1);
 			sprite_dm.setForm(0);
 			sprite_dm.isActive = true;
-			player.frameState = 49;
+			SET_FRAMESTATE_FOR_OBJ(player, 49);
 			paused = true;
 			arched = true;
 			break;
@@ -1431,7 +1448,7 @@ void GameManager::dm_updateFrameState() { // death message
 }
 
 void GameManager::b_updateFrameState() { // burninate message
-	b_frameState++;
+	INCREMENT_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double);
 	// hardcoded is messier, but faster
 	switch (b_frameState) {
 		case 4:
@@ -1489,7 +1506,7 @@ void GameManager::b_updateFrameState() { // burninate message
 			peasantometer = 10;
 			setBurnination(100);
 			player.updateBreathLoc();
-			b_frameState = 0;
+			SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 0);
 			break;
 		default:
 			break;
@@ -1497,7 +1514,7 @@ void GameManager::b_updateFrameState() { // burninate message
 }
 
 void GameManager::kick_updateFrameState() {
-	kick_frameState++;
+	INCREMENT_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double);
 	switch (kick_frameState) {
 		case 4:
 			loadAndPlaySound(SFX_KICK);
@@ -1506,7 +1523,7 @@ void GameManager::kick_updateFrameState() {
 			loadAndPlaySound(SFX_TROGADOR);
 			break;
 		case 29:
-			kick_frameState = 0;
+			SET_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double, 0);
 			break;
 	}
 }
@@ -1516,7 +1533,7 @@ void GameManager::burninationIncreaseCheat() {
 		peasantometer++;
 	} else {
 		peasantometer = 10;
-		b_frameState = 3;
+		SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 3);
 	}
 }
 

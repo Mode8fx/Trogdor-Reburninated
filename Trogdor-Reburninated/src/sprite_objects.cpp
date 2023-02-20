@@ -379,12 +379,12 @@ void SpriteInstance::setPosY(double y) {
 }
 
 void SpriteInstance::addPosX(double x) {
-    pos_x += x;
+    pos_x += (x * FRAME_RATE_MULT);
     dstrect.x = (Sint16)pos_x;
 }
 
 void SpriteInstance::addPosY(double y) {
-    pos_y += y;
+    pos_y += (y * FRAME_RATE_MULT);
     dstrect.y = (Sint16)pos_y;
 }
 

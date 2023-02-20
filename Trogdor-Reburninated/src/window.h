@@ -6,6 +6,8 @@
 constexpr auto gameWidth = 250;
 constexpr auto gameHeight = 180;
 constexpr auto ORIGINAL_FRAME_RATE = 16;
+constexpr auto ENHANCED_FRAME_RATE = 16;
+constexpr auto FRAME_RATE_MULT = static_cast<double>(ORIGINAL_FRAME_RATE) / ENHANCED_FRAME_RATE;
 constexpr auto TWIPS_PER_PIXEL = 20;
 
 extern Uint16 gameHiResWidth;
