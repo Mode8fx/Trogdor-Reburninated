@@ -16,7 +16,7 @@ bool windowSizeChanged;
 Sint16 g_sceneState;
 Sint16 g_frameState;
 double g_frameState_double;
-Uint16 rand_var;
+Uint32 rand_var;
 SDL_Event event;
 
 /* General-use Variables */

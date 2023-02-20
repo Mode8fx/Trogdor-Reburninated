@@ -14,7 +14,7 @@ extern bool windowSizeChanged;
 extern Sint16 g_sceneState;
 extern Sint16 g_frameState;
 extern double g_frameState_double;
-extern Uint16 rand_var;
+extern Uint32 rand_var;
 extern SDL_Event event;
 
 /* General-use Variables */

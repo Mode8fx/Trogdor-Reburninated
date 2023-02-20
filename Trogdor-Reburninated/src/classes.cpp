@@ -37,7 +37,7 @@ inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
 #endif
 
 Cottage::Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
-	SET_FRAMESTATE(9);
+	SET_FRAMESTATE(10);
 	sprite = SpriteInstance(&sprite_cottage, 0, (dir - 1), pos_x, pos_y);
 	sprite_fire = SpriteInstance(&sprite_cottage_fire, 0, 0, (double)sprite.dstrect.x + 5, (double)sprite.dstrect.y - 5);
 	burning = false;
@@ -68,7 +68,6 @@ Cottage::Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
 }
 
 void Cottage::updateFrameState() {
-	INCREMENT_FRAMESTATE();
 	if (frameState == 10) {
 		loadAndPlaySound(SFX_BURN_HUT);
 	}
@@ -82,10 +81,11 @@ void Cottage::updateFrameState() {
 	if (frameState == 30) {
 		burned = true;
 	}
+	INCREMENT_FRAMESTATE();
 }
 
 Knight::Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true) {
-	SET_FRAMESTATE(0);
+	SET_FRAMESTATE(1);
 	moving = true;
 	sprite = SpriteInstance(&sprite_knight, 0, fr, pos_x, pos_y);
 	sprite.facingRight = fr;
@@ -107,7 +107,7 @@ inline void Knight::updateCollision() {
 	}
 }
 
-void Knight::updateHome(Sint8 knightIncrement) {
+void Knight::updateHome(double knightIncrement) {
 	if (home_x < LEFT_BOUND_KNIGHT) {
 		direction = rand() % 6;
 		home_x = LEFT_BOUND_KNIGHT + 1;
@@ -143,7 +143,6 @@ void Knight::updateHome(Sint8 knightIncrement) {
 }
 
 void Knight::updateFrameStateAndMove() {
-	INCREMENT_FRAMESTATE();
 	if (frameState > 60) { // a while loop isn't necessary; it'll never go that far above 60
 		frameState_double -= 60;
 		frameState -= 60;
@@ -183,13 +182,14 @@ void Knight::updateFrameStateAndMove() {
 		offset_x *= -1;
 	}
 
-	sprite.setPosX(home_x + (Sint16)offset_x - half_src_w);
-	sprite.setPosY(home_y + (Sint16)offset_y - half_src_h);
+	sprite.setPosX(home_x + offset_x - half_src_w);
+	sprite.setPosY(home_y + offset_y - half_src_h);
 	updateCollision();
+	INCREMENT_FRAMESTATE();
 }
 
 Peasant::Peasant() {
-	SET_FRAMESTATE(0);
+	SET_FRAMESTATE(1);
 	sprite = SpriteInstance(&sprite_peasant, 0, 0, 0, 0);
 	sprite.isActive = false;
 	myHome = 0;
@@ -207,17 +207,18 @@ Peasant::Peasant() {
 }
 
 void Peasant::updateFrameState(double sbVoiceMult) {
-	INCREMENT_FRAMESTATE();
 	switch (frameState) {
 		case 1:
 			sprite.setFrame(0);
 			sprite.setForm(0);
+			INCREMENT_FRAMESTATE();
 			break;
 		case 4:
 			sprite.setFrame(1);
+			INCREMENT_FRAMESTATE();
 			break;
 		case 6:
-			SET_FRAMESTATE(0);
+			SET_FRAMESTATE(1);
 			break;
 		case 8:
 			sprite.setFrame(0);
@@ -231,34 +232,37 @@ void Peasant::updateFrameState(double sbVoiceMult) {
 			} else if (rand_var < 10 * sbVoiceMult) {
 				loadAndPlaySound(SFX_SBSQUISH2);
 			}
+			INCREMENT_FRAMESTATE();
 			break;
 		case 25:
 			sprite.isActive = false;
 			stomped = false;
 			sprite.setPosX(-300);
+			INCREMENT_FRAMESTATE();
 			break;
 		case 26:
 			sprite.setFrame(0);
 			sprite.setForm(1);
+			INCREMENT_FRAMESTATE();
 			break;
 		case 27:
 			sprite.setFrame(1);
-			SET_FRAMESTATE(25);
+			SET_FRAMESTATE(26);
 			break;
 		default:
+			INCREMENT_FRAMESTATE();
 			break;
 	}
 }
 
 Archer::Archer(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
-	SET_FRAMESTATE(0);
+	SET_FRAMESTATE(1);
 	sprite = SpriteInstance(&sprite_archer, 0, fr, pos_x, pos_y);
 	sprite.facingRight = fr;
 	sprite.isActive = false;
 }
 
 void Archer::updateFrameState() {
-	INCREMENT_FRAMESTATE();
 	switch (frameState) {
 		case 14:
 			sprite.setFrame(1);
@@ -273,10 +277,11 @@ void Archer::updateFrameState() {
 		default:
 			break;
 	}
+	INCREMENT_FRAMESTATE();
 }
 
 Arrow::Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
-	SET_FRAMESTATE(0);
+	SET_FRAMESTATE(1);
 	sprite = SpriteInstance(&sprite_arrow, 0, fr, pos_x, pos_y);
 	sprite.facingRight = fr;
 	sprite.isActive = false;
@@ -284,7 +289,6 @@ Arrow::Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 }
 
 void Arrow::updateFrameState() {
-	INCREMENT_FRAMESTATE();
 	if (frameState == 1) { // 4?
 		loadAndPlaySound(SFX_ARROW);
 	}
@@ -304,6 +308,7 @@ void Arrow::updateFrameState() {
 		sprite.collision.x = 1 + sprite.dstrect.x;
 		sprite.collision.y = 1 + sprite.dstrect.y;
 	}
+	INCREMENT_FRAMESTATE();
 }
 
 void Arrow::clear() {
@@ -408,14 +413,14 @@ void Trogdor::updateBreathLoc() {
 }
 
 void Trogdor::invinceCheck() {
-	if (invince >= 1) {
-		invince--;
-		if (invince % 3 == 0) {
+	if (invince > 0) {
+		invince -= FRAME_RATE_MULT;
+		if ((Uint8)invince % 3 == 0) {
 			sprite.isActive = false;
 		} else {
 			sprite.isActive = true;
 		}
-		if (invince == 0) {
+		if (invince <= 0) {
 			sprite.isActive = true;
 		}
 	}
@@ -530,7 +535,7 @@ GameManager::GameManager(MenuManager mm) {
 	bigHeadMode = CHEAT_BIG_HEAD_MODE->isValue(0);
 	player = Trogdor(bigHeadMode);
 	player.sprite.facingRight = true;
-	knightIncrement = 1;
+	knightIncrement = FRAME_RATE_MULT;
 	switch (MENU_LIVES_INTERVAL->index) {
 		case 0:
 			extraMansBreak = 300;
@@ -1035,17 +1040,20 @@ void GameManager::playerMove_treasureHut(Trogdor *trog, Sint8 delta_x, Sint8 del
 void GameManager::popArchers() {
 	rand_var = rand() % 10000;
 	if (rand_var < archerFrequency) {
-		if (rand_var % 2 == 0) {
-			if (!archerR.sprite.isActive) {
-				archerR.sprite.isActive = true;
-				archerR.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
-				SET_FRAMESTATE_FOR_OBJ(archerR, 4);
-			}
-		} else {
-			if (!archerL.sprite.isActive) {
-				archerL.sprite.isActive = true;
-				archerL.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
-				SET_FRAMESTATE_FOR_OBJ(archerL, 4);
+		rand_var = rand() % ARCHER_RAND_VAL; // account for variable framerate
+		if (rand_var < 100) {
+			if (rand_var % 2 == 0) {
+				if (!archerR.sprite.isActive) {
+					archerR.sprite.isActive = true;
+					archerR.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
+					SET_FRAMESTATE_FOR_OBJ(archerR, 5);
+				}
+			} else {
+				if (!archerL.sprite.isActive) {
+					archerL.sprite.isActive = true;
+					archerL.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
+					SET_FRAMESTATE_FOR_OBJ(archerL, 5);
+				}
 			}
 		}
 	}
@@ -1057,7 +1065,7 @@ void GameManager::updateArchersAndArrows() {
 		if (archerR.frameState == 20) {
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
 				if (!arrowArrayR[i].sprite.isActive) {
-					SET_FRAMESTATE_FOR_OBJ(arrowArrayR[i], 0);
+					SET_FRAMESTATE_FOR_OBJ(arrowArrayR[i], 1);
 					arrowArrayR[i].sprite.isActive = true;
 					arrowArrayR[i].sprite.setPosX((double)archerR.sprite.dstrect.x + (archerR.sprite.spriteObj->dstrect.w / 2) - (arrowArrayR[i].sprite.spriteObj->dstrect.w / 2));
 					arrowArrayR[i].sprite.setPosY((double)archerR.sprite.dstrect.y + (archerR.sprite.spriteObj->dstrect.h / 2) - (arrowArrayR[i].sprite.spriteObj->dstrect.h / 2));
@@ -1071,7 +1079,7 @@ void GameManager::updateArchersAndArrows() {
 		if (archerL.frameState == 20) {
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
 				if (!arrowArrayL[i].sprite.isActive) {
-					SET_FRAMESTATE_FOR_OBJ(arrowArrayL[i], 0);
+					SET_FRAMESTATE_FOR_OBJ(arrowArrayL[i], 1);
 					arrowArrayL[i].sprite.isActive = true;
 					arrowArrayL[i].sprite.setPosX((double)archerL.sprite.dstrect.x + (archerL.sprite.dstrect.w / 2) - (arrowArrayL[i].sprite.dstrect.w / 2));
 					arrowArrayL[i].sprite.setPosY((double)archerL.sprite.dstrect.y + (archerL.sprite.dstrect.h / 2) - (arrowArrayL[i].sprite.dstrect.h / 2));
@@ -1143,7 +1151,7 @@ inline void GameManager::toggleKnightMotion(bool hasMotion) {
 		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 			knightArray[i].moving = hasMotion;
 			if (hasMotion) {
-				SET_FRAMESTATE_FOR_OBJ(knightArray[i], 0);
+				SET_FRAMESTATE_FOR_OBJ(knightArray[i], 1);
 			}
 		}
 	}
@@ -1237,7 +1245,7 @@ void GameManager::popPeasants() {
 		for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 			if (!peasantArray[i].sprite.isActive) {
 				peasantArray[i].sprite.isActive = true;
-				SET_FRAMESTATE_FOR_OBJ(peasantArray[i], 0);
+				SET_FRAMESTATE_FOR_OBJ(peasantArray[i], 1);
 				j = rand() % numHuts; // j = hutChoice
 				peasantArray[i].myHome = j;
 				peasantArray[i].returning = false;
@@ -1285,7 +1293,7 @@ void GameManager::peasantEatTest() {
 	for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 		if (peasantArray[i].sprite.isActive && !peasantArray[i].stomped && SDL_HasIntersection(&player.sprite.collision, &peasantArray[i].sprite.collision)) {
 			peasantArray[i].stomped = true;
-			SET_FRAMESTATE_FOR_OBJ(peasantArray[i], 7);
+			SET_FRAMESTATE_FOR_OBJ(peasantArray[i], 8);
 			updateScore(2);
 			if (peasantometer < 9) {
 				peasantometer++;
@@ -1382,7 +1390,7 @@ void GameManager::testBurnPeasant() {
 			peasantArray[i].waiting = false;
 			peasantArray[i].timer = false;
 			peasantArray[i].burning = true;
-			SET_FRAMESTATE_FOR_OBJ(peasantArray[i], 25);
+			SET_FRAMESTATE_FOR_OBJ(peasantArray[i], 26);
 		}
 	}
 }

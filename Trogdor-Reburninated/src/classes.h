@@ -68,13 +68,13 @@ class Knight {
 		Sint16 half_src_w;
 		Sint16 half_src_h;
 		Sint8 direction;
-		Sint16 home_x;    // the parent (x,y) coordinates
-		Sint16 home_y;    // the parent (x,y) coordinates
+		double home_x;    // the parent (x,y) coordinates
+		double home_y;    // the parent (x,y) coordinates
 		double offset_x;  // the offset relative to home
 		double offset_y;  // the offset relative to home
 		Knight(Sint16, Sint16, Sint8, bool);
 		inline void updateCollision();
-		void updateHome(Sint8);
+		void updateHome(double);
 		void updateFrameStateAndMove();
 };
 
@@ -136,7 +136,7 @@ class Trogdor {
 		SpriteInstance sprite_end_of_level;
 		double spawnPos_x;
 		double spawnPos_y;
-		Sint8 invince;        // remaining invincibility time (after respawn)
+		double invince;       // remaining invincibility time (after respawn)
 		Sint8 x_offset;       // used for movement
 		Sint8 y_offset;       // used for movement
 		Sint8 moveSpeed;      // used for movement
@@ -188,7 +188,7 @@ class GameManager {
 		Knight knightArray[MAX_NUM_KNIGHTS];    // array of Knight objects
 		Archer archerArray[2];                  // array of Archer objects
 		Trogdor player;                         // the player
-		Sint8 knightIncrement;                  // knight movement speed
+		double knightIncrement;                 // knight movement speed
 		Uint16 extraMansBreak;                  // # of points for an extra life
 		Uint16 extraMansCounter;                // how many extra lives have been earned so far + 1
 		Uint16 maxExtraMans;                    // how many extra lives are allowed to be earned
