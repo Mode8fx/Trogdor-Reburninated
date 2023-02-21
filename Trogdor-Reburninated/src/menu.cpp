@@ -650,7 +650,7 @@ void InitializeMenus() {
 	}
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
-		"", 8, true, 0, true);
+		"", 8, true, 4, true);
 	MENU_LEVEL_TRAN->prepareMenuOption("Level Transition", option_main_level_tran_choices,
 		option_main_level_tran_descriptions_line_1, option_main_level_tran_descriptions_line_2, option_main_level_tran_descriptions_line_3,
 		"", 2, false, 0, true);

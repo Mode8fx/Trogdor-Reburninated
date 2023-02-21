@@ -33,7 +33,7 @@ Uint32 deltaTime;
 /* Framerate */
 Uint32 frameTime;
 Uint32 frameCounter_global;
-Uint8 frameRate = 16;
+Uint8 frameRate = 60;
 double frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / frameRate;
 Uint16 popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 
