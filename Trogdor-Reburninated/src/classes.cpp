@@ -1061,21 +1061,18 @@ void GameManager::playerMove_treasureHut(Trogdor *trog, Sint8 delta_x, Sint8 del
 
 void GameManager::popArchers() {
 	rand_var = rand() % 10000;
-	if (rand_var < archerFrequency) {
-		rand_var = rand() % ARCHER_RAND_VAL; // account for variable framerate
-		if (rand_var < 100) {
-			if (rand_var % 2 == 0) {
-				if (!archerR.sprite.isActive) {
-					archerR.sprite.isActive = true;
-					archerR.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
-					archerR.frameState.set(5);
-				}
-			} else {
-				if (!archerL.sprite.isActive) {
-					archerL.sprite.isActive = true;
-					archerL.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
-					archerL.frameState.set(5);
-				}
+	if ((rand_var < archerFrequency) && (rand() % POP_RAND_VAL < 100)) {
+		if (rand_var % 2 == 0) {
+			if (!archerR.sprite.isActive) {
+				archerR.sprite.isActive = true;
+				archerR.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
+				archerR.frameState.set(5);
+			}
+		} else {
+			if (!archerL.sprite.isActive) {
+				archerL.sprite.isActive = true;
+				archerL.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
+				archerL.frameState.set(5);
 			}
 		}
 	}
@@ -1263,7 +1260,7 @@ inline void GameManager::peasant_add_y_delta(Sint8 dy) {
 }
 
 void GameManager::popPeasants() {
-	if ((rand() % 100) < 4) {
+	if (((rand() % 100) < 4) && (rand() % POP_RAND_VAL) < 100) {
 		for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 			if (!peasantArray[i].sprite.isActive) {
 				peasantArray[i].sprite.isActive = true;

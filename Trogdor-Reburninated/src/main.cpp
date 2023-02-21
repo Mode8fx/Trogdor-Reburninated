@@ -624,7 +624,7 @@ int main(int argv, char** args) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
 						// I think it's a mistake? I may add it later, but I'll leave it out for now.
 						renderTransparentForeground();
-						if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
+						if ((int)((frameCounter_global - GM.manually_paused) * FRAME_RATE_MULT) % 10 < 5) {
 							renderText(text_4_paused_1, font_serif_white_6);
 							renderText(text_4_paused_2, font_serif_white_6);
 							renderText(text_4_paused_3, font_serif_white_6);
@@ -721,7 +721,7 @@ int main(int argv, char** args) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
 						// I think it's a mistake? I may add it later, but I'll leave it out for now.
 						renderTransparentForeground();
-						if ((frameCounter_global - GM.manually_paused) % 10 < 5) {
+						if ((int)((frameCounter_global - GM.manually_paused) * FRAME_RATE_MULT) % 10 < 5) {
 							renderText(text_4_paused_1, font_serif_white_6);
 							renderText(text_4_paused_2, font_serif_white_6);
 							renderText(text_4_paused_3, font_serif_white_6);

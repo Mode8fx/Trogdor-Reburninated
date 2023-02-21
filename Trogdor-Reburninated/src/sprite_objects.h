@@ -97,9 +97,9 @@ class SpriteInstance {
         Sint8 animFrame;
         Sint8 animForm;
         Sint8 animFrameTime;
-        Uint8 animFrameCounter;
+        double animFrameCounter;
         Sint8 animFormTime;
-        Uint8 animFormCounter;
+        double animFormCounter;
         SDL_Rect collision;
         bool isActive;
         bool facingRight;

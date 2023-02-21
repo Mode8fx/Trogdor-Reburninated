@@ -6,7 +6,7 @@
 
 constexpr auto gameWidth = 250;
 constexpr auto gameHeight = 180;
-constexpr auto ARCHER_RAND_VAL = ENHANCED_FRAME_RATE * 100 / ORIGINAL_FRAME_RATE;
+constexpr auto POP_RAND_VAL = ENHANCED_FRAME_RATE * 100 / ORIGINAL_FRAME_RATE;
 constexpr auto TWIPS_PER_PIXEL = 20;
 
 extern Uint16 gameHiResWidth;

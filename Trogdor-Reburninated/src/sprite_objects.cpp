@@ -318,7 +318,7 @@ void SpriteInstance::setFrameAndForm(Sint8 frame, Sint8 form) {
 
 void SpriteInstance::animateFrame() {
     if (animFrameTime > 0) {
-        animFrameCounter++;
+        animFrameCounter += FRAME_RATE_MULT;
         while (animFrameCounter >= animFrameTime) {
             animFrameCounter -= animFrameTime;
             setFrame((animFrame + 1) % spriteObj->numFrames);
@@ -328,7 +328,7 @@ void SpriteInstance::animateFrame() {
 
 void SpriteInstance::animateForm() {
     if (animFormTime > 0) {
-        animFormCounter++;
+        animFormCounter += FRAME_RATE_MULT;
         while (animFormCounter >= animFormTime) {
             animFormCounter -= animFormTime;
             setForm((animForm + 1) % spriteObj->numForms);
