@@ -650,7 +650,11 @@ void InitializeMenus() {
 	}
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
+		"", 5, true, 4, true);
+#else
 		"", 8, true, 4, true);
+#endif
 	MENU_LEVEL_TRAN->prepareMenuOption("Level Transition", option_main_level_tran_choices,
 		option_main_level_tran_descriptions_line_1, option_main_level_tran_descriptions_line_2, option_main_level_tran_descriptions_line_3,
 		"", 2, false, 0, true);
