@@ -827,32 +827,31 @@ State_Settings getSettings() {
 void updateFrameRate() {
 	switch (MENU_FRAME_RATE->index) {
 		case 1:
-			enhancedFrameRate = 30;
+			frameRate = 30;
 			break;
 		case 2:
-			enhancedFrameRate = 32;
+			frameRate = 32;
 			break;
 		case 3:
-			enhancedFrameRate = 48;
+			frameRate = 48;
 			break;
 		case 4:
-			enhancedFrameRate = 60;
+			frameRate = 60;
 			break;
 		case 5:
-			enhancedFrameRate = 90;
+			frameRate = 90;
 			break;
 		case 6:
-			enhancedFrameRate = 120;
+			frameRate = 120;
 			break;
 		case 7:
-			enhancedFrameRate = 144;
+			frameRate = 144;
 			break;
 		default:
-			enhancedFrameRate = 16;
+			frameRate = 16;
 			break;
 	}
-	frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / enhancedFrameRate;
-	popRandVal = enhancedFrameRate * 100 / ORIGINAL_FRAME_RATE;
-	frameRate = enhancedFrameRate;
+	frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / frameRate;
+	popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 	ticksPerFrame = (Uint32)(1000 / frameRate);
 }

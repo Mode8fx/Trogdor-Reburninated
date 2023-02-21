@@ -49,7 +49,7 @@ extern Uint32 deltaTime;
 extern Uint32 frameTime;
 extern Uint32 frameCounter_global;
 constexpr auto ORIGINAL_FRAME_RATE = 16;
-extern Uint8 enhancedFrameRate;
+extern Uint8 frameRate;
 extern double frameRateMult;
 extern Uint16 popRandVal;
 

@@ -33,9 +33,9 @@ Uint32 deltaTime;
 /* Framerate */
 Uint32 frameTime;
 Uint32 frameCounter_global;
-Uint8 enhancedFrameRate = 16;
-double frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / enhancedFrameRate;
-Uint16 popRandVal = enhancedFrameRate * 100 / ORIGINAL_FRAME_RATE;
+Uint8 frameRate = 16;
+double frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / frameRate;
+Uint16 popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 
 /* SDL Input */
 #if !defined(SDL1) && !defined(PSP)
@@ -394,7 +394,6 @@ Uint16 windowWidth;
 Uint16 windowHeight;
 double appWidthMult;
 double appHeightMult;
-Uint16 frameRate;
 Uint32 ticksPerFrame;
 
 #if !defined(SDL1)
