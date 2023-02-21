@@ -213,11 +213,13 @@ constexpr auto DIFFICULTY_NUM_OPTIONS = 7;
 #define MENU_KNIGHT_BEHAVIOR menu_difficulty.options[MENU_KNIGHT_BEHAVIOR_INDEX]
 
 extern Menu menu_cosmetic;
-constexpr auto MENU_MUSIC_INDEX = 0;
-constexpr auto MENU_LEVEL_TRAN_INDEX = 1;
-constexpr auto MENU_COMMENT_FREQ_INDEX = 2;
-constexpr auto MENU_SCALING_INDEX = 3;
-constexpr auto COSMETIC_NUM_OPTIONS = 4;
+constexpr auto MENU_FRAME_RATE_INDEX = 0;
+constexpr auto MENU_MUSIC_INDEX = 1;
+constexpr auto MENU_LEVEL_TRAN_INDEX = 2;
+constexpr auto MENU_COMMENT_FREQ_INDEX = 3;
+constexpr auto MENU_SCALING_INDEX = 4;
+constexpr auto COSMETIC_NUM_OPTIONS = 5;
+#define MENU_FRAME_RATE   menu_cosmetic.options[MENU_FRAME_RATE_INDEX]
 #define MENU_MUSIC        menu_cosmetic.options[MENU_MUSIC_INDEX]
 #define MENU_LEVEL_TRAN   menu_cosmetic.options[MENU_LEVEL_TRAN_INDEX]
 #define MENU_COMMENT_FREQ menu_cosmetic.options[MENU_COMMENT_FREQ_INDEX]
@@ -244,5 +246,6 @@ constexpr auto QUIT_NUM_OPTIONS = 2;
 #define QUIT_CONFIRM menu_quit.options[QUIT_CONFIRM_INDEX]
 
 extern State_Settings getSettings();
+extern void updateFrameRate();
 
 #endif

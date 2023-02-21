@@ -23,6 +23,7 @@ struct State_Settings {
 	Sint8 treasureHuts;
 	Sint8 archerFreq;
 	Sint8 knightBehavior;
+	Sint8 frameRate;
 	Sint8 levelTran;
 	Sint8 music;
 	Sint8 commentFreq;

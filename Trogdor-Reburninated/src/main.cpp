@@ -409,6 +409,8 @@ int main(int argv, char** args) {
 						menu_difficulty.setOptionChoice(MENU_TREASURE_HUTS_INDEX, MENU_TREASURE_HUTS->index_init);
 						menu_difficulty.setOptionChoice(MENU_ARCHER_FREQ_INDEX, MENU_ARCHER_FREQ->index_init);
 						menu_difficulty.setOptionChoice(MENU_KNIGHT_BEHAVIOR_INDEX, MENU_KNIGHT_BEHAVIOR->index_init);
+						menu_cosmetic.setOptionChoice(MENU_FRAME_RATE_INDEX, MENU_FRAME_RATE->index_init);
+						updateFrameRate();
 						menu_cosmetic.setOptionChoice(MENU_LEVEL_TRAN_INDEX, MENU_LEVEL_TRAN->index_init);
 						menu_cosmetic.setOptionChoice(MENU_MUSIC_INDEX, MENU_MUSIC->index_init);
 						menu_cosmetic.setOptionChoice(MENU_COMMENT_FREQ_INDEX, MENU_COMMENT_FREQ->index_init);
@@ -468,6 +470,7 @@ int main(int argv, char** args) {
 #endif
 					case -1: // Press B/Select
 						menu_main.setOptionChoice(MENU_SCALING_INDEX, scalingType);
+						updateFrameRate();
 						g_sceneState = 301;
 						break;
 					default:
@@ -624,7 +627,7 @@ int main(int argv, char** args) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
 						// I think it's a mistake? I may add it later, but I'll leave it out for now.
 						renderTransparentForeground();
-						if ((int)((frameCounter_global - GM.manually_paused) * FRAME_RATE_MULT) % 10 < 5) {
+						if ((int)((frameCounter_global - GM.manually_paused) * frameRateMult) % 10 < 5) {
 							renderText(text_4_paused_1, font_serif_white_6);
 							renderText(text_4_paused_2, font_serif_white_6);
 							renderText(text_4_paused_3, font_serif_white_6);
@@ -721,7 +724,7 @@ int main(int argv, char** args) {
 						// Here, the original game renders a black circle around the top-right of the center of the screen...
 						// I think it's a mistake? I may add it later, but I'll leave it out for now.
 						renderTransparentForeground();
-						if ((int)((frameCounter_global - GM.manually_paused) * FRAME_RATE_MULT) % 10 < 5) {
+						if ((int)((frameCounter_global - GM.manually_paused) * frameRateMult) % 10 < 5) {
 							renderText(text_4_paused_1, font_serif_white_6);
 							renderText(text_4_paused_2, font_serif_white_6);
 							renderText(text_4_paused_3, font_serif_white_6);

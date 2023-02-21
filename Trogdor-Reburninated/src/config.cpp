@@ -20,6 +20,8 @@ void loadGameState() {
 		menu_difficulty.setOptionChoice(MENU_TREASURE_HUTS_INDEX, gameState.settings.treasureHuts);
 		menu_difficulty.setOptionChoice(MENU_ARCHER_FREQ_INDEX, gameState.settings.archerFreq);
 		menu_difficulty.setOptionChoice(MENU_KNIGHT_BEHAVIOR_INDEX, gameState.settings.knightBehavior);
+		menu_cosmetic.setOptionChoice(MENU_FRAME_RATE_INDEX, gameState.settings.frameRate);
+		updateFrameRate();
 		menu_cosmetic.setOptionChoice(MENU_LEVEL_TRAN_INDEX, gameState.settings.levelTran);
 		menu_cosmetic.setOptionChoice(MENU_MUSIC_INDEX, gameState.settings.music);
 		menu_cosmetic.setOptionChoice(MENU_COMMENT_FREQ_INDEX, gameState.settings.commentFreq);

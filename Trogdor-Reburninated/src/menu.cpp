@@ -474,6 +474,10 @@ std::string option_main_knight_behavior_choices[2] = { "Original", "New" };
 std::string option_main_knight_behavior_descriptions_line_1[2] = { "Knights briefly pause and change", "Knights do not change their" };
 std::string option_main_knight_behavior_descriptions_line_2[2] = { "position after you die.", "movement after you die." };
 std::string option_main_knight_behavior_descriptions_line_3[2] = { "", "Behavior is similar to the HTML5 port." };
+std::string option_main_frame_rate_choices[8] = { "16 FPS [original]", "30 FPS", "32 FPS [2x]", "48 FPS [3x]", "60 FPS", "90 FPS", "120 FPS", "144 FPS [9x]" };
+std::string option_main_frame_rate_descriptions_line_1[1] = { "Higher frame rate = smoother gameplay." };
+std::string option_main_frame_rate_descriptions_line_2[1] = { "(Original Flash game is 16 FPS)" };
+std::string option_main_frame_rate_descriptions_line_3[1] = { "" };
 std::string option_main_level_tran_choices[2] = { "Original", "Button Press" };
 std::string option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press " + INPUT_CONFIRM };
 std::string option_main_level_tran_descriptions_line_2[2] = { "level will load automatically.", "to load the next level." };
@@ -644,6 +648,9 @@ void InitializeMenus() {
 			menu_cosmetic.options[i] = new MenuOption();
 		}
 	}
+	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
+		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
+		"", 8, true, 0, true);
 	MENU_LEVEL_TRAN->prepareMenuOption("Level Transition", option_main_level_tran_choices,
 		option_main_level_tran_descriptions_line_1, option_main_level_tran_descriptions_line_2, option_main_level_tran_descriptions_line_3,
 		"", 2, false, 0, true);
@@ -801,6 +808,7 @@ State_Settings getSettings() {
 		MENU_TREASURE_HUTS->index,
 		MENU_ARCHER_FREQ->index,
 		MENU_KNIGHT_BEHAVIOR->index,
+		MENU_FRAME_RATE->index,
 		MENU_LEVEL_TRAN->index,
 		MENU_MUSIC->index,
 		MENU_COMMENT_FREQ->index,
@@ -814,4 +822,37 @@ State_Settings getSettings() {
 		CHEAT_BIG_HEAD_MODE->optionIsLocked,
 		CHEAT_NOCLIP->optionIsLocked
 	};
+}
+
+void updateFrameRate() {
+	switch (MENU_FRAME_RATE->index) {
+		case 1:
+			enhancedFrameRate = 30;
+			break;
+		case 2:
+			enhancedFrameRate = 32;
+			break;
+		case 3:
+			enhancedFrameRate = 48;
+			break;
+		case 4:
+			enhancedFrameRate = 60;
+			break;
+		case 5:
+			enhancedFrameRate = 90;
+			break;
+		case 6:
+			enhancedFrameRate = 120;
+			break;
+		case 7:
+			enhancedFrameRate = 144;
+			break;
+		default:
+			enhancedFrameRate = 16;
+			break;
+	}
+	frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / enhancedFrameRate;
+	popRandVal = enhancedFrameRate * 100 / ORIGINAL_FRAME_RATE;
+	frameRate = enhancedFrameRate;
+	ticksPerFrame = (Uint32)(1000 / frameRate);
 }

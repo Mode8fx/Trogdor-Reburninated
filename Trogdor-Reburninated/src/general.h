@@ -49,8 +49,9 @@ extern Uint32 deltaTime;
 extern Uint32 frameTime;
 extern Uint32 frameCounter_global;
 constexpr auto ORIGINAL_FRAME_RATE = 16;
-constexpr auto ENHANCED_FRAME_RATE = 16;
-constexpr auto FRAME_RATE_MULT = static_cast<double>(ORIGINAL_FRAME_RATE) / ENHANCED_FRAME_RATE;
+extern Uint8 enhancedFrameRate;
+extern double frameRateMult;
+extern Uint16 popRandVal;
 
 constexpr auto PI = 3.14159265;
 

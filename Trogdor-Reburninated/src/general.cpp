@@ -16,7 +16,7 @@ void FrameState::set(Uint16 num) {
 	atStartOfFrame = true;
 	subFrame = num;
 	frame = num;
-	nextSubFrame = subFrame + FRAME_RATE_MULT;
+	nextSubFrame = subFrame + frameRateMult;
 	nextFrame = (Uint16)nextSubFrame;
 	atEndOfFrame = (frame != nextFrame);
 }
@@ -25,7 +25,7 @@ void FrameState::increment() {
 	atStartOfFrame = atEndOfFrame;
 	subFrame = nextSubFrame;
 	frame = nextFrame;
-	nextSubFrame = subFrame + FRAME_RATE_MULT;
+	nextSubFrame = subFrame + frameRateMult;
 	nextFrame = (Uint16)nextSubFrame;
 	atEndOfFrame = (frame != nextFrame);
 }

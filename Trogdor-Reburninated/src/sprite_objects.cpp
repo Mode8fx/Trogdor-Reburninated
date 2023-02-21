@@ -318,7 +318,7 @@ void SpriteInstance::setFrameAndForm(Sint8 frame, Sint8 form) {
 
 void SpriteInstance::animateFrame() {
     if (animFrameTime > 0) {
-        animFrameCounter += FRAME_RATE_MULT;
+        animFrameCounter += frameRateMult;
         while (animFrameCounter >= animFrameTime) {
             animFrameCounter -= animFrameTime;
             setFrame((animFrame + 1) % spriteObj->numFrames);
@@ -328,7 +328,7 @@ void SpriteInstance::animateFrame() {
 
 void SpriteInstance::animateForm() {
     if (animFormTime > 0) {
-        animFormCounter += FRAME_RATE_MULT;
+        animFormCounter += frameRateMult;
         while (animFormCounter >= animFormTime) {
             animFormCounter -= animFormTime;
             setForm((animForm + 1) % spriteObj->numForms);
@@ -377,12 +377,12 @@ void SpriteInstance::setPosY(double y) {
 }
 
 void SpriteInstance::addPosX(double x) {
-    pos_x += (x * FRAME_RATE_MULT);
+    pos_x += (x * frameRateMult);
     dstrect.x = (Sint16)pos_x;
 }
 
 void SpriteInstance::addPosY(double y) {
-    pos_y += (y * FRAME_RATE_MULT);
+    pos_y += (y * frameRateMult);
     dstrect.y = (Sint16)pos_y;
 }
 

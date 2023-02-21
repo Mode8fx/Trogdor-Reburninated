@@ -440,7 +440,7 @@ void Trogdor::updateBreathLoc() {
 
 void Trogdor::invinceCheck() {
 	if (invince > 0) {
-		invince -= FRAME_RATE_MULT;
+		invince -= frameRateMult;
 		if ((Uint8)invince % 3 == 0) {
 			sprite.isActive = false;
 		} else {
@@ -565,7 +565,7 @@ GameManager::GameManager(MenuManager mm) {
 	bigHeadMode = CHEAT_BIG_HEAD_MODE->isValue(0);
 	player = Trogdor(bigHeadMode);
 	player.sprite.facingRight = true;
-	knightIncrement = FRAME_RATE_MULT;
+	knightIncrement = frameRateMult;
 	switch (MENU_LIVES_INTERVAL->index) {
 		case 0:
 			extraMansBreak = 300;
@@ -720,17 +720,17 @@ void GameManager::setArcherFrequency() {
 
 void GameManager::setBurnRate() {
 	if (level > 25) {
-		burnRate = 1.3 * FRAME_RATE_MULT;
+		burnRate = 1.3 * frameRateMult;
 	} else if (level > 20) {
-		burnRate = 1.2 * FRAME_RATE_MULT;
+		burnRate = 1.2 * frameRateMult;
 	} else if (level > 15) {
-		burnRate = 1.1 * FRAME_RATE_MULT;
+		burnRate = 1.1 * frameRateMult;
 	} else if (level > 10) {
-		burnRate = 1 * FRAME_RATE_MULT;
+		burnRate = 1 * frameRateMult;
 	} else if (level > 5) {
-		burnRate = 0.9 * FRAME_RATE_MULT;
+		burnRate = 0.9 * frameRateMult;
 	} else {
-		burnRate = 0.7 * FRAME_RATE_MULT;
+		burnRate = 0.7 * frameRateMult;
 	}
 }
 
@@ -949,7 +949,7 @@ inline void GameManager::handle_treasure_hut_entry(Trogdor *trog, Sint8 delta_x,
 }
 
 void GameManager::handle_treasure_hut() {
-	treasureHut_timer -= FRAME_RATE_MULT;
+	treasureHut_timer -= frameRateMult;
 	getPlayerInput();
 	testLootHit();
 	if (treasureHut_timer <= 0) {
@@ -1061,7 +1061,7 @@ void GameManager::playerMove_treasureHut(Trogdor *trog, Sint8 delta_x, Sint8 del
 
 void GameManager::popArchers() {
 	rand_var = rand() % 10000;
-	if ((rand_var < archerFrequency) && (rand() % POP_RAND_VAL < 100)) {
+	if ((rand_var < archerFrequency) && (rand() % popRandVal < 100)) {
 		if (rand_var % 2 == 0) {
 			if (!archerR.sprite.isActive) {
 				archerR.sprite.isActive = true;
@@ -1260,7 +1260,7 @@ inline void GameManager::peasant_add_y_delta(Sint8 dy) {
 }
 
 void GameManager::popPeasants() {
-	if (((rand() % 100) < 4) && (rand() % POP_RAND_VAL) < 100) {
+	if (((rand() % 100) < 4) && (rand() % popRandVal) < 100) {
 		for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 			if (!peasantArray[i].sprite.isActive) {
 				peasantArray[i].sprite.isActive = true;
