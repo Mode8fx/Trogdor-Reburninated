@@ -18,38 +18,11 @@ constexpr auto MAX_NUM_LOOT = 7;
 inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B);
 #endif
 
-#define SET_FRAMESTATE(num)  \
-	frameState_double = num; \
-	frameState = num;
-
-#define SET_FRAMESTATE_FOR_OBJ(obj, num) \
-	obj.frameState_double = num;         \
-	obj.frameState = num;
-
-#define SET_FRAMESTATE_SPECIAL(fr, fr_d, num) \
-	fr_d = num;                               \
-	fr = num;
-
-#define SET_GLOBAL_FRAMESTATE(num) \
-	g_frameState_double = num;     \
-	g_frameState = num;
-
-#define INCREMENT_FRAMESTATE()            \
-	frameState_double += FRAME_RATE_MULT; \
-	frameState = (Uint8)frameState_double;
-
-#define INCREMENT_FRAMESTATE_SPECIAL(fr, fr_d) \
-	fr_d += FRAME_RATE_MULT;                   \
-	fr = (Uint8)fr_d;
-
-#define INCREMENT_GLOBAL_FRAMESTATE()       \
-	g_frameState_double += FRAME_RATE_MULT; \
-	g_frameState = (Sint16)g_frameState_double;
+// FrameState class is in general.h
 
 class Cottage {
 	public:
-		Uint8 frameState;
-		double frameState_double;
+		FrameState frameState;
 		SpriteInstance sprite;
 		SpriteInstance sprite_fire;
 		bool burning;
@@ -61,8 +34,7 @@ class Cottage {
 
 class Knight {
 	public:
-		Uint8 frameState;
-		double frameState_double;
+		FrameState frameState;
 		bool moving;      // used in toggleKnightMotion()
 		SpriteInstance sprite;
 		Sint16 half_src_w;
@@ -80,8 +52,7 @@ class Knight {
 
 class Peasant {
 	public:
-		Uint8 frameState;
-		double frameState_double;
+		FrameState frameState;
 		SpriteInstance sprite;
 		Sint8 myHome;
 		bool stomped;
@@ -100,8 +71,7 @@ class Peasant {
 
 class Archer {
 	public:
-		Uint8 frameState;
-		double frameState_double;
+		FrameState frameState;
 		SpriteInstance sprite; // facing right == on the left; facing left == on the right
 		Archer(Sint16, Sint16, bool);
 		void updateFrameState();
@@ -109,8 +79,7 @@ class Archer {
 
 class Arrow {
 	public:
-		Uint8 frameState;
-		double frameState_double;
+		FrameState frameState;
 		SpriteInstance sprite;
 		Arrow(Sint16, Sint16, bool);
 		void updateFrameState();
@@ -126,11 +95,9 @@ class Loot {
 
 class Trogdor {
 	public:
-		Uint8 frameState;
-		double frameState_double;
+		FrameState frameState;
 		SpriteInstance sprite;
-		Uint8 fire_frameState;
-		double fire_frameState_double;
+		FrameState fire_frameState;
 		SpriteInstance sprite_fire;
 		SpriteInstance sprite_death;
 		SpriteInstance sprite_end_of_level;
@@ -194,25 +161,22 @@ class GameManager {
 		Uint16 maxExtraMans;                    // how many extra lives are allowed to be earned
 		bool arched;                            // previous death was to arrow
 		SpriteInstance sprite_dm;               // Death Message ("SWORDED!", "ARROWED!")
-		Uint8 dm_frameState;                    // Death Message ("SWORDED!", "ARROWED!")
-		double dm_frameState_double;
-		Uint8 b_frameState;                     // BURNINATE! Message
-		double b_frameState_double;
+		FrameState dm_frameState;               // Death Message ("SWORDED!", "ARROWED!")
+		FrameState b_frameState;                // BURNINATE! Message
 		SpriteInstance sprite_bt;               // BURNINATE! Message Text
 		SpriteInstance sprite_bf;               // BURNINATE! Message Fire
 		bool b_visible;                         // BURNINATE! Message
 		SpriteInstance sprite_bmFull;           // burnination meter
 		SpriteInstance sprite_pm_on;            // peasantometer (on)
 		SpriteInstance sprite_pm_off;           // peasantometer (off)
-		Uint8 kick_frameState;                  // kick the machine
-		double kick_frameState_double;
+		FrameState kick_frameState;             // kick the machine
 		bool treasureHutFound;                  // treasure hut has been found in this level
 		bool inTreasureHut;                     // player is currently in treasure hut
 		Sint16 treasureHutIndex;                // index of hut that contains treasure (0 = no treasure hut)
 		Sint8 treasureHutLevel;                 // the level index of the first treasure hut you entered; default is 0
 		Sint16 store_x;                         // old player X position (used for treasure huts)
 		Sint16 store_y;                         // old player Y position (used for treasure huts)
-		Sint16 treasureHut_timer;               // remaining time in treasure hut
+		double treasureHut_timer;               // remaining time in treasure hut
 		Loot lootArray[MAX_NUM_LOOT];           // array of Loot objects
 		double sbVoiceMult;                     // a multiplier for how often Strong Bad talks
 		bool bigHeadMode;                       // big head mode

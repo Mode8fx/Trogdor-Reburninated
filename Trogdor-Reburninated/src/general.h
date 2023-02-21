@@ -8,12 +8,28 @@ struct Timer {
     double last;
 };
 
+class FrameState {
+	public:
+		Uint16 frame;
+		double subFrame;
+		Uint16 nextFrame;
+		double nextSubFrame;
+		bool atStartOfFrame; // for things that should only happen once, at the start of a frame (e.g. playing a sound)
+		bool atEndOfFrame;   // for things that shouldn't happen until the end of a frame (e.g. changing scenes)
+		FrameState();
+		void set(Uint16);
+		void increment();
+		bool startingFrame(Uint16);
+		bool endingFrame(Uint16);
+		void subtract(Uint8);
+		void mod(Uint8);
+};
+
 /* Program State */
 extern bool isRunning;
 extern bool windowSizeChanged;
 extern Sint16 g_sceneState;
-extern Sint16 g_frameState;
-extern double g_frameState_double;
+extern FrameState g_frameState;
 extern Uint32 rand_var;
 extern SDL_Event event;
 
@@ -32,6 +48,9 @@ extern Uint32 deltaTime;
 /* Framerate */
 extern Uint32 frameTime;
 extern Uint32 frameCounter_global;
+constexpr auto ORIGINAL_FRAME_RATE = 16;
+constexpr auto ENHANCED_FRAME_RATE = 16;
+constexpr auto FRAME_RATE_MULT = static_cast<double>(ORIGINAL_FRAME_RATE) / ENHANCED_FRAME_RATE;
 
 constexpr auto PI = 3.14159265;
 

@@ -359,12 +359,10 @@ void SpriteInstance::updateCurrSprite() {
 
 inline void SpriteInstance::moveSprite() {
     if (vel_x != 0) {
-        pos_x += vel_x;
-        dstrect.x = (Sint16)pos_x;
+        addPosX(vel_x);
     }
     if (vel_y != 0) {
-        pos_y += vel_y;
-        dstrect.y = (Sint16)pos_y;
+        addPosY(vel_y);
     }
 }
 
@@ -389,10 +387,8 @@ void SpriteInstance::addPosY(double y) {
 }
 
 void SpriteInstance::setPos(double x, double y) {
-    pos_x = x;
-    dstrect.x = (Sint16)x;
-    pos_y = y;
-    dstrect.y = (Sint16)y;
+    setPosX(x);
+    setPosY(y);
 }
 
 void SpriteInstance::renderSprite_game() {

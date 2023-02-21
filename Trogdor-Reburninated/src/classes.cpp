@@ -37,7 +37,7 @@ inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
 #endif
 
 Cottage::Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
-	SET_FRAMESTATE(10);
+	frameState.set(10);
 	sprite = SpriteInstance(&sprite_cottage, 0, (dir - 1), pos_x, pos_y);
 	sprite_fire = SpriteInstance(&sprite_cottage_fire, 0, 0, (double)sprite.dstrect.x + 5, (double)sprite.dstrect.y - 5);
 	burning = false;
@@ -68,24 +68,24 @@ Cottage::Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
 }
 
 void Cottage::updateFrameState() {
-	if (frameState == 10) {
+	if (frameState.startingFrame(10)) {
 		loadAndPlaySound(SFX_BURN_HUT);
 	}
-	if (frameState >= 12 && frameState <= 28) {
-		sprite_fire.setFrame(((frameState - 12) / 3) % 4);
+	if (frameState.frame >= 12 && frameState.frame <= 28 && frameState.atStartOfFrame) {
+		sprite_fire.setFrame(((frameState.frame - 12) / 3) % 4);
 		sprite_fire.setForm(direction == 3);
-		if (frameState == 26) {
+		if (frameState.startingFrame(26)) {
 			sprite.setFrame(1);
 		}
 	}
-	if (frameState == 30) {
+	if (frameState.startingFrame(30)) {
 		burned = true;
 	}
-	INCREMENT_FRAMESTATE();
+	frameState.increment();
 }
 
 Knight::Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true) {
-	SET_FRAMESTATE(1);
+	frameState.set(1);
 	moving = true;
 	sprite = SpriteInstance(&sprite_knight, 0, fr, pos_x, pos_y);
 	sprite.facingRight = fr;
@@ -143,39 +143,40 @@ void Knight::updateHome(double knightIncrement) {
 }
 
 void Knight::updateFrameStateAndMove() {
-	if (frameState > 60) { // a while loop isn't necessary; it'll never go that far above 60
-		frameState_double -= 60;
-		frameState -= 60;
+	if (frameState.frame > 60) {
+		frameState.subtract(60);
 	}
-	switch (frameState) {
-		case 1:
-		case 9:
-		case 17:
-		case 25:
-		case 33:
-		case 41:
-		case 49:
-		case 57:
-			sprite.setFrame(0);
-			break;
-		case 5:
-		case 29:
-		case 53:
-			sprite.setFrame(1);
-			break;
-		case 13:
-		case 21:
-		case 37:
-		case 45:
-			sprite.setFrame(3);
-			break;
-		default:
-			break;
+	if (frameState.atStartOfFrame) {
+		switch (frameState.frame) {
+			case 1:
+			case 9:
+			case 17:
+			case 25:
+			case 33:
+			case 41:
+			case 49:
+			case 57:
+				sprite.setFrame(0);
+				break;
+			case 5:
+			case 29:
+			case 53:
+				sprite.setFrame(1);
+				break;
+			case 13:
+			case 21:
+			case 37:
+			case 45:
+				sprite.setFrame(3);
+				break;
+			default:
+				break;
+		}
 	}
-	if (frameState_double <= 30) {
-		offset_x = frameState_double * 34 / 30;
+	if (frameState.frame <= 30) {
+		offset_x = frameState.subFrame * 34 / 30;
 	} else {
-		offset_x = 68.0 - (frameState_double * 34 / 30);
+		offset_x = 68.0 - (frameState.subFrame * 34 / 30);
 	}
 	offset_y = -offset_x;
 	if (!sprite.facingRight) {
@@ -185,11 +186,11 @@ void Knight::updateFrameStateAndMove() {
 	sprite.setPosX(home_x + offset_x - half_src_w);
 	sprite.setPosY(home_y + offset_y - half_src_h);
 	updateCollision();
-	INCREMENT_FRAMESTATE();
+	frameState.increment();
 }
 
 Peasant::Peasant() {
-	SET_FRAMESTATE(1);
+	frameState.set(1);
 	sprite = SpriteInstance(&sprite_peasant, 0, 0, 0, 0);
 	sprite.isActive = false;
 	myHome = 0;
@@ -207,81 +208,94 @@ Peasant::Peasant() {
 }
 
 void Peasant::updateFrameState(double sbVoiceMult) {
-	switch (frameState) {
-		case 1:
-			sprite.setFrame(0);
-			sprite.setForm(0);
-			INCREMENT_FRAMESTATE();
-			break;
-		case 4:
-			sprite.setFrame(1);
-			INCREMENT_FRAMESTATE();
-			break;
+	if (frameState.atStartOfFrame) {
+		switch (frameState.frame) {
+			case 1:
+				sprite.setFrame(0);
+				sprite.setForm(0);
+				break;
+			case 4:
+				sprite.setFrame(1);
+				break;
+			case 8:
+				sprite.setFrame(0);
+				sprite.setForm(3);
+				loadAndPlaySound(SFX_SQUISH);
+				rand_var = rand() % 1000;
+				if (rand_var < 3 * sbVoiceMult) {
+					loadAndPlaySound(SFX_SB2);
+				} else if (rand_var < 6 * sbVoiceMult) {
+					loadAndPlaySound(SFX_SBSQUISH1);
+				} else if (rand_var < 10 * sbVoiceMult) {
+					loadAndPlaySound(SFX_SBSQUISH2);
+				}
+				break;
+			case 25:
+				sprite.isActive = false;
+				stomped = false;
+				sprite.setPosX(-300);
+				break;
+			case 26:
+				sprite.setFrame(0);
+				sprite.setForm(1);
+				break;
+			case 27:
+				sprite.setFrame(1);
+				break;
+			default:
+				break;
+		}
+	}
+	switch (frameState.frame) {
 		case 6:
-			SET_FRAMESTATE(1);
-			break;
-		case 8:
-			sprite.setFrame(0);
-			sprite.setForm(3);
-			loadAndPlaySound(SFX_SQUISH);
-			rand_var = rand() % 1000;
-			if (rand_var < 3 * sbVoiceMult) {
-				loadAndPlaySound(SFX_SB2);
-			} else if (rand_var < 6 * sbVoiceMult) {
-				loadAndPlaySound(SFX_SBSQUISH1);
-			} else if (rand_var < 10 * sbVoiceMult) {
-				loadAndPlaySound(SFX_SBSQUISH2);
+			if (frameState.atEndOfFrame) {
+				frameState.set(1);
+			} else {
+				frameState.increment();
 			}
-			INCREMENT_FRAMESTATE();
-			break;
-		case 25:
-			sprite.isActive = false;
-			stomped = false;
-			sprite.setPosX(-300);
-			INCREMENT_FRAMESTATE();
-			break;
-		case 26:
-			sprite.setFrame(0);
-			sprite.setForm(1);
-			INCREMENT_FRAMESTATE();
 			break;
 		case 27:
-			sprite.setFrame(1);
-			SET_FRAMESTATE(26);
+			if (frameState.atEndOfFrame) {
+				frameState.set(26);
+			} else {
+				frameState.increment();
+			}
 			break;
 		default:
-			INCREMENT_FRAMESTATE();
+			frameState.increment();
 			break;
 	}
 }
 
 Archer::Archer(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
-	SET_FRAMESTATE(1);
+	frameState.set(1);
 	sprite = SpriteInstance(&sprite_archer, 0, fr, pos_x, pos_y);
 	sprite.facingRight = fr;
 	sprite.isActive = false;
 }
 
 void Archer::updateFrameState() {
-	switch (frameState) {
-		case 14:
-			sprite.setFrame(1);
-			break;
-		case 20:
-			sprite.setFrame(0);
-			// shoot arrow; this is handled by GameManager
-			break;
-		case 23:
-			sprite.setPosY(-300);
-			sprite.isActive = false;
-		default:
-			break;
+	if (frameState.atStartOfFrame) {
+		switch (frameState.frame) {
+			case 14:
+				sprite.setFrame(1);
+				break;
+			case 20:
+				sprite.setFrame(0);
+				// shoot arrow; this is handled by GameManager
+				break;
+			case 23:
+				sprite.setPosY(-300);
+				sprite.isActive = false;
+			default:
+				break;
+		}
 	}
-	INCREMENT_FRAMESTATE();
+	frameState.increment();
 }
 
 Arrow::Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
-	SET_FRAMESTATE(1);
+	frameState.set(1);
 	sprite = SpriteInstance(&sprite_arrow, 0, fr, pos_x, pos_y);
 	sprite.facingRight = fr;
 	sprite.isActive = false;
@@ -289,7 +303,7 @@ Arrow::Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 }
 
 void Arrow::updateFrameState() {
-	if (frameState == 1) { // 4?
+	if (frameState.startingFrame(1)) { // 4?
 		loadAndPlaySound(SFX_ARROW);
 	}
 	if (sprite.facingRight) {
@@ -308,7 +322,7 @@ void Arrow::updateFrameState() {
 		sprite.collision.x = 1 + sprite.dstrect.x;
 		sprite.collision.y = 1 + sprite.dstrect.y;
 	}
-	INCREMENT_FRAMESTATE();
+	frameState.increment();
 }
 
 void Arrow::clear() {
@@ -326,7 +340,7 @@ Loot::Loot(Sint16 pos_x, Sint16 pos_y) {
 }
 
 Trogdor::Trogdor(bool bigHead = false) {
-	SET_FRAMESTATE(1);
+	frameState.set(1);
 	if (bigHead) {
 		sprite = SpriteInstance(&sprite_trogdor_bighead, 0, 1, 0, 0);
 		sprite_death = SpriteInstance(&sprite_trogdor_dead, 0, 1);
@@ -342,7 +356,7 @@ Trogdor::Trogdor(bool bigHead = false) {
 	sprite.setPosX(spawnPos_x);
 	sprite.setPosY(spawnPos_y);
 	sprite.collision = { 11 + sprite.dstrect.x, 11 + sprite.dstrect.y, 18, 24 };
-	SET_FRAMESTATE_SPECIAL(fire_frameState, fire_frameState_double, 1);
+	fire_frameState.set(1);
 	sprite_fire = SpriteInstance(&sprite_trogdor_fire, 0, sprite.facingRight, (double)sprite.dstrect.x - 24 + ((double)sprite.facingRight * 62), (double)sprite.dstrect.y + 10);
 	invince = 0;
 	sprite.isActive = true;
@@ -353,47 +367,52 @@ Trogdor::Trogdor(bool bigHead = false) {
 }
 
 void Trogdor::updateFrameState() {
-	switch (frameState) {
-		case 20: // sworded
-			sprite_death.setFrame(0);
-			sprite_death.setPosX(sprite.dstrect.x + ((sprite.spriteObj->dstrect.w - sprite_death.spriteObj->dstrect.w) / 2));
-			sprite_death.setPosY(sprite.dstrect.y + (sprite.spriteObj->dstrect.h - sprite_death.spriteObj->dstrect.h) - 7);
-			INCREMENT_FRAMESTATE();
-			break;
-		case 50: // arrowed
-			sprite_death.setFrame(1);
-			sprite_death.setPosX(sprite.dstrect.x + ((sprite.spriteObj->dstrect.w - sprite_death.spriteObj->dstrect.w) / 2));
-			sprite_death.setPosY(sprite.dstrect.y + (sprite.spriteObj->dstrect.h - sprite_death.spriteObj->dstrect.h) - 7);
-			INCREMENT_FRAMESTATE();
-			break;
+	if (frameState.atStartOfFrame) {
+		switch (frameState.frame) {
+			case 20: // sworded
+				sprite_death.setFrame(0);
+				sprite_death.setPosX(sprite.dstrect.x + (int)((sprite.spriteObj->dstrect.w - sprite_death.spriteObj->dstrect.w) / 2));
+				sprite_death.setPosY(sprite.dstrect.y + (int)(sprite.spriteObj->dstrect.h - sprite_death.spriteObj->dstrect.h) - 7);
+				break;
+			case 50: // arrowed
+				sprite_death.setFrame(1);
+				sprite_death.setPosX(sprite.dstrect.x + (int)((sprite.spriteObj->dstrect.w - sprite_death.spriteObj->dstrect.w) / 2));
+				sprite_death.setPosY(sprite.dstrect.y + (int)(sprite.spriteObj->dstrect.h - sprite_death.spriteObj->dstrect.h) - 7);
+				break;
+			case 34:
+			case 38:
+			case 42:
+			case 64:
+			case 68:
+			case 72:
+				sprite.isActive = false;
+				break;
+			case 36:
+			case 40:
+			case 66:
+			case 70:
+				sprite.isActive = true;
+				break;
+			case 48:
+			case 78:
+				sprite.isActive = true;
+				frameState.set(0); // 0 is intentional
+				break;
+			default:
+				break;
+		}
+	}
+	switch (frameState.frame) {
 		case 22:
 		case 52:
-			loadAndPlaySound(SFX_DEATH);
-			INCREMENT_FRAMESTATE();
-			break;
-		case 34:
-		case 38:
-		case 42:
-		case 64:
-		case 68:
-		case 72:
-			sprite.isActive = false;
-			INCREMENT_FRAMESTATE();
-			break;
-		case 36:
-		case 40:
-		case 66:
-		case 70:
-			sprite.isActive = true;
-			INCREMENT_FRAMESTATE();
+			if (frameState.atEndOfFrame) loadAndPlaySound(SFX_DEATH);
+			frameState.increment();
 			break;
 		case 48:
 		case 78:
-			sprite.isActive = true;
-			SET_FRAMESTATE(1);
 			break;
 		default:
-			INCREMENT_FRAMESTATE();
+			frameState.increment();
 			break;
 	}
 }
@@ -579,10 +598,10 @@ GameManager::GameManager(MenuManager mm) {
 	}
 	extraMansCounter = 1;
 	arched = false;
-	SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 1);
+	dm_frameState.set(1);
 	sprite_dm = SpriteInstance(&sprite_death_message, 0, 0);
 	sprite_dm.isActive = false;
-	SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 1);
+	b_frameState.set(1);
 	sprite_bt = SpriteInstance(&sprite_burninate_text, 0, 0);
 	sprite_bf = SpriteInstance(&sprite_burninate_fire, 0, 0);
 	sprite_bf.setPosX(OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire));
@@ -591,7 +610,7 @@ GameManager::GameManager(MenuManager mm) {
 	sprite_bmFull = SpriteInstance(&sprite_burnination_meter_full, 0, 0);
 	sprite_pm_on = SpriteInstance(&sprite_peasantometer_icon, 1, 0);
 	sprite_pm_off = SpriteInstance(&sprite_peasantometer_icon, 0, 0);
-	SET_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double, 1);
+	kick_frameState.set(1);
 	numHuts = 0;
 	treasureHutFound = false;
 	inTreasureHut = false;
@@ -896,8 +915,8 @@ void GameManager::getPlayerInput() {
 		setVolume_music(DEFAULT_VOLUME_MUSIC / 3);
 		sdl1_createTransparentScreen();
 	}
-	if (keyHeld(INPUT_L) && kick_frameState == 1) {
-		SET_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double, 4);
+	if (keyHeld(INPUT_L) && kick_frameState.frame == 1) {
+		kick_frameState.set(4);
 	}
 }
 
@@ -926,7 +945,7 @@ inline void GameManager::handle_treasure_hut_entry(Trogdor *trog, Sint8 delta_x,
 }
 
 void GameManager::handle_treasure_hut() {
-	treasureHut_timer--;
+	treasureHut_timer -= FRAME_RATE_MULT;
 	getPlayerInput();
 	testLootHit();
 	if (treasureHut_timer <= 0) {
@@ -971,31 +990,25 @@ void GameManager::playerMove(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
 	}
 	// Animate sprite
 	if (trog->frameStateFlag & 2) {
-		SET_FRAMESTATE_SPECIAL(trog->frameState, trog->frameState_double, 0);
+		trog->frameState.set(0);
 		trog->sprite.setFrame(0);
 		trog->sprite.setForm(trog->sprite.facingRight);
 	} else if (trog->frameStateFlag & 1) {
-		INCREMENT_FRAMESTATE_SPECIAL(trog->frameState, trog->frameState_double);
-		if (trog->frameState_double >= 8) {
-			trog->frameState_double -= 8;
-			trog->frameState -= 8;
-		}
-		trog->sprite.setFrame(trog->frameState / 2);
+		trog->frameState.increment();
+		trog->frameState.mod(8);
+		trog->sprite.setFrame(trog->frameState.frame / 2);
 	}
 	if (burnination > 0) {
 		trog->updateBreathLoc();
 		// Animate sprite
 		if (trog->frameStateFlag & 2) {
-			SET_FRAMESTATE_SPECIAL(trog->fire_frameState, trog->fire_frameState_double, 0);
+			trog->fire_frameState.set(0);
 			trog->sprite_fire.setFrame(0);
 			trog->sprite_fire.setForm(trog->sprite.facingRight);
 		} else {
-			INCREMENT_FRAMESTATE_SPECIAL(trog->fire_frameState, trog->fire_frameState_double);
-			if (trog->fire_frameState_double >= 12) {
-				trog->fire_frameState_double -= 12;
-				trog->fire_frameState -= 12;
-			}
-			trog->sprite_fire.setFrame(trog->fire_frameState / 3);
+			trog->fire_frameState.increment();
+			trog->fire_frameState.mod(12);
+			trog->sprite_fire.setFrame(trog->fire_frameState.frame / 3);
 		}
 	}
 }
@@ -1019,31 +1032,25 @@ void GameManager::playerMove_treasureHut(Trogdor *trog, Sint8 delta_x, Sint8 del
 	}
 	// Animate sprite
 	if (trog->frameStateFlag & 2) {
-		SET_FRAMESTATE_SPECIAL(trog->frameState, trog->frameState_double, 0);
+		trog->frameState.set(0);
 		trog->sprite.setFrame(0);
 		trog->sprite.setForm(trog->sprite.facingRight);
 	} else if (trog->frameStateFlag & 1) {
-		INCREMENT_FRAMESTATE_SPECIAL(trog->frameState, trog->frameState_double);
-		if (trog->frameState_double >= 8) {
-			trog->frameState_double -= 8;
-			trog->frameState -= 8;
-		}
-		trog->sprite.setFrame((trog->frameState / 2));
+		trog->frameState.increment();
+		trog->frameState.mod(8);
+		trog->sprite.setFrame((trog->frameState.frame / 2));
 	}
 	if (burnination > 0) {
 		trog->updateBreathLoc();
 		// Animate sprite
 		if (trog->frameStateFlag & 2) {
-			SET_FRAMESTATE_SPECIAL(trog->fire_frameState, trog->fire_frameState_double, 0);
+			trog->fire_frameState.set(0);
 			trog->sprite_fire.setFrame(0);
 			trog->sprite_fire.setForm(trog->sprite.facingRight);
 		} else {
-			INCREMENT_FRAMESTATE_SPECIAL(trog->fire_frameState, trog->fire_frameState_double);
-			if (trog->fire_frameState_double >= 12) {
-				trog->fire_frameState_double -= 12;
-				trog->fire_frameState -= 12;
-			}
-			trog->sprite_fire.setFrame(trog->fire_frameState / 3);
+			trog->fire_frameState.increment();
+			trog->fire_frameState.mod(12);
+			trog->sprite_fire.setFrame(trog->fire_frameState.frame / 3);
 		}
 	}
 }
@@ -1057,13 +1064,13 @@ void GameManager::popArchers() {
 				if (!archerR.sprite.isActive) {
 					archerR.sprite.isActive = true;
 					archerR.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
-					SET_FRAMESTATE_FOR_OBJ(archerR, 5);
+					archerR.frameState.set(5);
 				}
 			} else {
 				if (!archerL.sprite.isActive) {
 					archerL.sprite.isActive = true;
 					archerL.sprite.setPosY(rand() % (ARCHER_Y_LOWER - ARCHER_Y_UPPER + 1) + ARCHER_Y_UPPER);
-					SET_FRAMESTATE_FOR_OBJ(archerL, 5);
+					archerL.frameState.set(5);
 				}
 			}
 		}
@@ -1073,10 +1080,10 @@ void GameManager::popArchers() {
 void GameManager::updateArchersAndArrows() {
 	if (archerR.sprite.isActive) {
 		archerR.updateFrameState();
-		if (archerR.frameState == 20) {
+		if (archerR.frameState.startingFrame(20)) {
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
 				if (!arrowArrayR[i].sprite.isActive) {
-					SET_FRAMESTATE_FOR_OBJ(arrowArrayR[i], 1);
+					arrowArrayR[i].frameState.set(1);
 					arrowArrayR[i].sprite.isActive = true;
 					arrowArrayR[i].sprite.setPosX((double)archerR.sprite.dstrect.x + (archerR.sprite.spriteObj->dstrect.w / 2) - (arrowArrayR[i].sprite.spriteObj->dstrect.w / 2));
 					arrowArrayR[i].sprite.setPosY((double)archerR.sprite.dstrect.y + (archerR.sprite.spriteObj->dstrect.h / 2) - (arrowArrayR[i].sprite.spriteObj->dstrect.h / 2));
@@ -1087,10 +1094,10 @@ void GameManager::updateArchersAndArrows() {
 	}
 	if (archerL.sprite.isActive) {
 		archerL.updateFrameState();
-		if (archerL.frameState == 20) {
+		if (archerL.frameState.startingFrame(20)) {
 			for (i = 0; i < MAX_NUM_ARROWS; i++) {
 				if (!arrowArrayL[i].sprite.isActive) {
-					SET_FRAMESTATE_FOR_OBJ(arrowArrayL[i], 1);
+					arrowArrayL[i].frameState.set(1);
 					arrowArrayL[i].sprite.isActive = true;
 					arrowArrayL[i].sprite.setPosX((double)archerL.sprite.dstrect.x + (archerL.sprite.dstrect.w / 2) - (arrowArrayL[i].sprite.dstrect.w / 2));
 					arrowArrayL[i].sprite.setPosY((double)archerL.sprite.dstrect.y + (archerL.sprite.dstrect.h / 2) - (arrowArrayL[i].sprite.dstrect.h / 2));
@@ -1130,7 +1137,7 @@ void GameManager::testKnightHit() {
 				paused = true;
 				toggleKnightMotion(false);
 				clearArrows();
-				SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 4); // 29 for arrow
+				dm_frameState.set(4); // 29 for arrow
 			}
 		}
 	}
@@ -1143,14 +1150,14 @@ void GameManager::arrowHitEventHandler() {
 				paused = true;
 				// the original game does NOT pause knights when you are arrowed
 				clearArrows();
-				SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 29);
+				dm_frameState.set(29);
 				break;
 			}
 			if (arrowArrayR[i].sprite.isActive && SDL_HasIntersection(&player.sprite.collision, &arrowArrayR[i].sprite.collision)) {
 				paused = true;
 				// the original game does NOT pause knights when you are arrowed
 				clearArrows();
-				SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 29);
+				dm_frameState.set(29);
 				break;
 			}
 		}
@@ -1162,7 +1169,7 @@ inline void GameManager::toggleKnightMotion(bool hasMotion) {
 		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 			knightArray[i].moving = hasMotion;
 			if (hasMotion) {
-				SET_FRAMESTATE_FOR_OBJ(knightArray[i], 1);
+				knightArray[i].frameState.set(1);
 			}
 		}
 	}
@@ -1256,7 +1263,7 @@ void GameManager::popPeasants() {
 		for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 			if (!peasantArray[i].sprite.isActive) {
 				peasantArray[i].sprite.isActive = true;
-				SET_FRAMESTATE_FOR_OBJ(peasantArray[i], 1);
+				peasantArray[i].frameState.set(1);
 				j = rand() % numHuts; // j = hutChoice
 				peasantArray[i].myHome = j;
 				peasantArray[i].returning = false;
@@ -1304,13 +1311,13 @@ void GameManager::peasantEatTest() {
 	for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 		if (peasantArray[i].sprite.isActive && !peasantArray[i].stomped && SDL_HasIntersection(&player.sprite.collision, &peasantArray[i].sprite.collision)) {
 			peasantArray[i].stomped = true;
-			SET_FRAMESTATE_FOR_OBJ(peasantArray[i], 8);
+			peasantArray[i].frameState.set(8);
 			updateScore(2);
 			if (peasantometer < 9) {
 				peasantometer++;
 			} else {
 				peasantometer = 10;
-				SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 4);
+				b_frameState.set(4);
 			}
 		}
 	}
@@ -1401,161 +1408,175 @@ void GameManager::testBurnPeasant() {
 			peasantArray[i].waiting = false;
 			peasantArray[i].timer = false;
 			peasantArray[i].burning = true;
-			SET_FRAMESTATE_FOR_OBJ(peasantArray[i], 26);
+			peasantArray[i].frameState.set(26);
 		}
 	}
 }
 
 void GameManager::dm_updateFrameState() { // death message
-	switch (dm_frameState) {
-		case 4:
-			sprite_dm.setFrame(0);
-			sprite_dm.setForm(0);
-			sprite_dm.isActive = true;
-			SET_FRAMESTATE_FOR_OBJ(player, 20);
-			paused = true;
-			arched = false;
-			break;
-		case 6:
-			if (mans > 0) {
-				if (peasantometer == 9) {
-					if (sbVoiceMult > 0) {
-						loadAndPlaySound(SFX_SB3);
+	if (dm_frameState.atStartOfFrame) {
+		switch (dm_frameState.frame) {
+			case 4:
+				sprite_dm.setFrame(0);
+				sprite_dm.setForm(0);
+				sprite_dm.isActive = true;
+				player.frameState.set(20);
+				paused = true;
+				arched = false;
+				break;
+			case 6:
+				if (mans > 0) {
+					if (peasantometer == 9) {
+						if (sbVoiceMult > 0) {
+							loadAndPlaySound(SFX_SB3);
+						}
+					} else if ((rand() % 100) < 20 * sbVoiceMult) {
+						loadAndPlaySound(SFX_SBWORST);
 					}
-				} else if ((rand() % 100) < 20 * sbVoiceMult) {
-					loadAndPlaySound(SFX_SBWORST);
+				} else {
+					fadeMusic(1200);
 				}
-			} else {
-				fadeMusic(1200);
-			}
-			sprite_dm.setForm(1);
-			break;
-		case 27:
-		case 52:
-			sprite_dm.isActive = false;
-			SET_FRAMESTATE_FOR_OBJ(player, 1);
-			updateMans(-1);
-			peasantometer = 0;
-			if (mans < 0) {
-				setMans(0);
-				gameOver = true;
-			} else {
-				player.resetPos(true);
-				paused = false;
-				toggleKnightMotion(true);
-			}
-			SET_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double, 1);
-			break;
-		case 29:
-			sprite_dm.setFrame(1);
-			sprite_dm.setForm(0);
-			sprite_dm.isActive = true;
-			SET_FRAMESTATE_FOR_OBJ(player, 50);
-			paused = true;
-			arched = true;
-			break;
-		case 31:
-			if (mans > 0 && (rand() % 100) < 20 * sbVoiceMult) {
-				loadAndPlaySound(SFX_SBARCH);
-			}
-			sprite_dm.setForm(1);
-			break;
-		default:
-			if (dm_frameState < 28) {
-				sprite_dm.setForm((((dm_frameState - 4) / 2) % 5));
-			} else {
-				sprite_dm.setForm((((dm_frameState - 29) / 2) % 5));
-			}
-			break;
+				sprite_dm.setForm(1);
+				break;
+			case 27:
+			case 52:
+				sprite_dm.isActive = false;
+				player.frameState.set(1);
+				updateMans(-1);
+				peasantometer = 0;
+				if (mans < 0) {
+					setMans(0);
+					gameOver = true;
+				} else {
+					player.resetPos(true);
+					paused = false;
+					toggleKnightMotion(true);
+				}
+				break;
+			case 29:
+				sprite_dm.setFrame(1);
+				sprite_dm.setForm(0);
+				sprite_dm.isActive = true;
+				player.frameState.set(50);
+				paused = true;
+				arched = true;
+				break;
+			case 31:
+				if (mans > 0 && (rand() % 100) < 20 * sbVoiceMult) {
+					loadAndPlaySound(SFX_SBARCH);
+				}
+				sprite_dm.setForm(1);
+				break;
+			default:
+				if (dm_frameState.frame < 28) {
+					sprite_dm.setForm((((dm_frameState.frame - 4) / 2) % 5));
+				} else {
+					sprite_dm.setForm((((dm_frameState.frame - 29) / 2) % 5));
+				}
+				break;
+		}
 	}
-	if (dm_frameState >= 4) {
-		INCREMENT_FRAMESTATE_SPECIAL(dm_frameState, dm_frameState_double);
+	if (dm_frameState.atEndOfFrame) {
+		if (dm_frameState.frame == 27 || dm_frameState.frame == 52) {
+			dm_frameState.set(1);
+		}
+	}
+	if (dm_frameState.frame >= 4) {
+		dm_frameState.increment();
 	}
 }
 
 void GameManager::b_updateFrameState() { // burninate message
 	// hardcoded is messier, but faster
-	switch (b_frameState) {
-		case 4:
-			sprite_bf.setForm(0);
-			rand_var = rand() % 100;
-			if (rand_var < 10 * sbVoiceMult) {
-				if (rand_var < 5) { // the original game used 50 instead of 5, leaving SFX_SB5 unused
-					loadAndPlaySound(SFX_SB4);
-				} else {
-					loadAndPlaySound(SFX_SB5);
+	if (b_frameState.atStartOfFrame) {
+		switch (b_frameState.frame) {
+			case 4:
+				sprite_bf.setForm(0);
+				rand_var = rand() % 100;
+				if (rand_var < 10 * sbVoiceMult) {
+					if (rand_var < 5) { // the original game used 50 instead of 5, leaving SFX_SB5 unused
+						loadAndPlaySound(SFX_SB4);
+					} else {
+						loadAndPlaySound(SFX_SB5);
+					}
 				}
-			}
-			b_visible = true;
-			loadAndPlaySound(SFX_BURNINATE);
-			//player.visible = true;
-			paused = true;
-			break;
-		case 5:
-		case 17:
-			sprite_bf.setForm(1);
-			break;
-		case 6:
-			sprite_bf.setForm(2);
-			break;
-		case 7:
-		case 15:
-			sprite_bf.setForm(3);
-			break;
-		case 8:
-			sprite_bf.setForm(4);
-			break;
-		case 9:
-		case 13:
-			sprite_bf.setForm(5);
-			break;
-		case 10:
-			sprite_bf.setForm(6);
-			break;
-		case 11:
-			sprite_bf.setForm(7);
-			break;
-		case 12:
-			sprite_bf.setForm(8);
-			break;
-		case 14:
-			sprite_bf.setForm(9);
-			break;
-		case 16:
-			sprite_bf.setForm(10);
-			break;
-		case 18:
-			sprite_bf.setForm(11);
-			b_visible = false;
-			paused = false;
-			peasantometer = 10;
-			setBurnination(100);
-			player.updateBreathLoc();
-			SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 1);
-			break;
-		default:
-			break;
+				b_visible = true;
+				loadAndPlaySound(SFX_BURNINATE);
+				//player.visible = true;
+				paused = true;
+				break;
+			case 5:
+			case 17:
+				sprite_bf.setForm(1);
+				break;
+			case 6:
+				sprite_bf.setForm(2);
+				break;
+			case 7:
+			case 15:
+				sprite_bf.setForm(3);
+				break;
+			case 8:
+				sprite_bf.setForm(4);
+				break;
+			case 9:
+			case 13:
+				sprite_bf.setForm(5);
+				break;
+			case 10:
+				sprite_bf.setForm(6);
+				break;
+			case 11:
+				sprite_bf.setForm(7);
+				break;
+			case 12:
+				sprite_bf.setForm(8);
+				break;
+			case 14:
+				sprite_bf.setForm(9);
+				break;
+			case 16:
+				sprite_bf.setForm(10);
+				break;
+			case 18:
+				sprite_bf.setForm(11);
+				b_visible = false;
+				paused = false;
+				peasantometer = 10;
+				setBurnination(100);
+				player.updateBreathLoc();
+				break;
+			default:
+				break;
+		}
 	}
-	if (b_frameState >= 4) {
-		INCREMENT_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double);
+	if (b_frameState.endingFrame(18)) {
+		b_frameState.set(1);
+	}
+	if (b_frameState.frame >= 4) {
+		b_frameState.increment();
 	}
 }
 
 void GameManager::kick_updateFrameState() {
-	switch (kick_frameState) {
+	switch (kick_frameState.frame) {
 		case 4:
-			loadAndPlaySound(SFX_KICK);
-			INCREMENT_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double);
+			if (kick_frameState.atStartOfFrame) loadAndPlaySound(SFX_KICK);
+			kick_frameState.increment();
 			break;
 		case 9:
-			loadAndPlaySound(SFX_TROGADOR);
-			INCREMENT_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double);
+			if (kick_frameState.atStartOfFrame) loadAndPlaySound(SFX_TROGADOR);
+			kick_frameState.increment();
 			break;
 		case 29:
-			SET_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double, 1);
+			if (kick_frameState.atEndOfFrame) {
+				kick_frameState.set(1);
+			} else {
+				kick_frameState.increment();
+			}
 			break;
 		default:
-			INCREMENT_FRAMESTATE_SPECIAL(kick_frameState, kick_frameState_double);
+			kick_frameState.increment();
 			break;
 	}
 }
@@ -1565,7 +1586,7 @@ void GameManager::burninationIncreaseCheat() {
 		peasantometer++;
 	} else {
 		peasantometer = 10;
-		SET_FRAMESTATE_SPECIAL(b_frameState, b_frameState_double, 4);
+		b_frameState.set(4);
 	}
 }
 
@@ -1627,7 +1648,7 @@ void GameManager::renderAndAnimateCottages() {
 				hutArray[i].updateFrameState();
 			}
 			hutArray[i].sprite.renderSprite_game();
-			if (hutArray[i].frameState >= 12 && hutArray[i].frameState <= 28) {
+			if (hutArray[i].frameState.frame >= 12 && hutArray[i].frameState.frame <= 28) {
 				hutArray[i].sprite_fire.renderSprite_game();
 			}
 		}
@@ -1681,7 +1702,7 @@ void GameManager::renderPeasants() {
 
 void GameManager::renderTrogdor() {
 	if (player.sprite.isActive) {
-		if (player.frameState >= 19) {
+		if (player.frameState.frame >= 19) {
 			player.sprite_death.renderSprite_game();
 		} else {
 			player.sprite.renderSprite_game();

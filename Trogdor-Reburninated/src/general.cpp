@@ -8,6 +8,49 @@ FILE * __cdecl __iob_func(void) {
 }
 #endif
 
+FrameState::FrameState() {
+	set(1);
+}
+
+void FrameState::set(Uint16 num) {
+	atStartOfFrame = true;
+	subFrame = num;
+	frame = num;
+	nextSubFrame = subFrame + FRAME_RATE_MULT;
+	nextFrame = (Uint16)nextSubFrame;
+	atEndOfFrame = (frame != nextFrame);
+}
+
+void FrameState::increment() {
+	atStartOfFrame = atEndOfFrame;
+	subFrame = nextSubFrame;
+	frame = nextFrame;
+	nextSubFrame = subFrame + FRAME_RATE_MULT;
+	nextFrame = (Uint16)nextSubFrame;
+	atEndOfFrame = (frame != nextFrame);
+}
+
+bool FrameState::startingFrame(Uint16 num) {
+	return atStartOfFrame && (frame == num);
+}
+
+bool FrameState::endingFrame(Uint16 num) {
+	return atEndOfFrame && (frame == num);
+}
+
+void FrameState::subtract(Uint8 num) {
+	subFrame -= num;
+	frame -= num;
+	nextSubFrame -= num;
+	nextFrame -= num;
+}
+
+void FrameState::mod(Uint8 num) {
+	if (frame >= num) {
+		subtract(num);
+	}
+}
+
 void applyColorKey(SDL_Surface *surface) {
 #if !defined(SDL1)
 	SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
