@@ -1381,11 +1381,11 @@ void GameManager::peasantTimerClick() {
 				peasant_add_y_delta(k);
 			} else {
 				peasantArray[i].waiting = true;
-				peasantArray[i].timer = (60 / level) + 24;
+				peasantArray[i].timer = ((double)60 / level) + 24;
 			}
 		}
 		if (peasantArray[i].sprite.isActive && peasantArray[i].waiting) {
-			peasantArray[i].timer--;
+			peasantArray[i].timer -= frameRateMult;
 			if (peasantArray[i].timer < 0) {
 				peasantArray[i].waiting = false;
 				peasantArray[i].returning = true;

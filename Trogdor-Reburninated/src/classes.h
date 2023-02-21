@@ -64,7 +64,7 @@ class Peasant {
 		Sint16 myTargetx;
 		Sint16 myTargety;
 		bool returning;
-		Sint16 timer;
+		double timer;
 		Peasant();
 		void updateFrameState(double);
 };
