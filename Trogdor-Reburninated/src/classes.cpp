@@ -472,16 +472,9 @@ bool MenuManager::handleCheat(Uint8 menuIndex, const Uint8 *cheatArrayKey, Uint8
 			if (keyInputs == (1 << (cheatArrayKey[cheatIndex]))) {
 				cheatIndex++;
 				if ((Uint32)cheatIndex == cheatLen) {
-					menu_cheats.options[menuIndex]->setLocked(false);
-					menu_cheats.setOptionChoice(menuIndex, 0);
-					if (menuIndex == 0) {
-						MENU_EXTRA_LIVES->choiceIsAllowed[6] = true;
-						MENU_EXTRA_LIVES->choiceIsAllowed[7] = true;
-						MENU_EXTRA_LIVES->choiceIsAllowed[8] = true;
-					}
+					unlockCheat(menuIndex);
 					// this was originally played upon starting the game, but I'm changing it; it's much clearer this way, especially since the controls are different for each system
 					loadAndPlaySound(sfx);
-					saveGameState();
 					return true;
 				}
 			} else {
@@ -490,6 +483,17 @@ bool MenuManager::handleCheat(Uint8 menuIndex, const Uint8 *cheatArrayKey, Uint8
 		}
 	}
 	return false;
+}
+
+void MenuManager::unlockCheat(Uint8 menuIndex) {
+	menu_cheats.options[menuIndex]->setLocked(false);
+	menu_cheats.setOptionChoice(menuIndex, 0);
+	if (menuIndex == 0) {
+		MENU_EXTRA_LIVES->choiceIsAllowed[6] = true;
+		MENU_EXTRA_LIVES->choiceIsAllowed[7] = true;
+		MENU_EXTRA_LIVES->choiceIsAllowed[8] = true;
+	}
+	saveGameState();
 }
 
 void MenuManager::typeStuff() {

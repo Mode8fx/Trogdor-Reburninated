@@ -126,6 +126,7 @@ class MenuManager {
 		Sint8 maxPageNum;  // maxPageNum
 		MenuManager();
 		bool handleCheat(Uint8, const Uint8 *, Uint8, Sint8 &, SoundEffect *);
+		void unlockCheat(Uint8);
 		void typeStuff();
 		void handlePageChange();
 };
