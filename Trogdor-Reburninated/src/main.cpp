@@ -248,13 +248,14 @@ int main(int argv, char** args) {
 					playMusic(MUSIC_TITLE_SCREEN, false, DEFAULT_VOLUME_GAME);
 					renderOverlay = true;
 				}
-				if (g_frameState.frame < 192) {
-					g_frameState.increment();
-				} else {
+				if (g_frameState.frame >= 192 || keyPressed(INPUT_START)) {
+					if (keyPressed(INPUT_START)) stopMusic();
 					loadAndPlaySound(SFX_TROGADOR);
 					g_sceneState = 3;
 					g_frameState.set(3); // 3 is intentional
 					MM = MenuManager();
+				} else {
+					g_frameState.increment();
 				}
 				sprite_title_screen_ins.renderSprite_game();
 				break;
