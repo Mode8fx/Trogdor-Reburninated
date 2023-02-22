@@ -38,11 +38,11 @@ bool FrameState::endingFrame(Uint16 num) {
 	return atEndOfFrame && (frame == num);
 }
 
-void FrameState::subtract(Uint8 num) {
+void FrameState::subtract(double num) {
 	subFrame -= num;
-	frame -= num;
+	frame = (Uint16)subFrame;
 	nextSubFrame -= num;
-	nextFrame -= num;
+	nextFrame = (Uint16)nextSubFrame;
 }
 
 void FrameState::mod(Uint8 num) {

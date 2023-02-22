@@ -474,6 +474,8 @@ std::string option_main_knight_behavior_choices[2] = { "Original", "New" };
 std::string option_main_knight_behavior_descriptions_line_1[2] = { "Knights briefly pause and change", "Knights do not change their" };
 std::string option_main_knight_behavior_descriptions_line_2[2] = { "position after you die.", "movement after you die." };
 std::string option_main_knight_behavior_descriptions_line_3[2] = { "", "Behavior is similar to the HTML5 port." };
+std::string option_main_knight_speed_choices[5] = { "Very Slow", "Slow", "Normal", "Fast", "Very Fast" };
+std::string option_main_knight_speed_descriptions_line_1[1] = { "Change how quickly knights move." };
 std::string option_main_frame_rate_choices[8] = { "16 FPS [original]", "30 FPS", "32 FPS [2x]", "48 FPS [3x]", "60 FPS", "90 FPS", "120 FPS", "144 FPS [9x]" };
 std::string option_main_frame_rate_descriptions_line_1[1] = { "Higher frame rate = smoother gameplay." };
 std::string option_main_frame_rate_descriptions_line_2[1] = { "(Original Flash game is 16 FPS)" };
@@ -642,6 +644,9 @@ void InitializeMenus() {
 	MENU_KNIGHT_BEHAVIOR->prepareMenuOption("Knight Behavior", option_main_knight_behavior_choices,
 		option_main_knight_behavior_descriptions_line_1, option_main_knight_behavior_descriptions_line_2, option_main_knight_behavior_descriptions_line_3,
 		"", 2, false, 0, true);
+	MENU_KNIGHT_SPEED->prepareMenuOption("Knight Speed", option_main_knight_speed_choices,
+		option_main_knight_speed_descriptions_line_1, option_empty, option_empty,
+		"", 5, true, 2, true);
 
 	/* Cosmetic Settings Menu */
 	menu_cosmetic.prepareMenu(COSMETIC_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -817,6 +822,7 @@ State_Settings getSettings() {
 		MENU_TREASURE_HUTS->index,
 		MENU_ARCHER_FREQ->index,
 		MENU_KNIGHT_BEHAVIOR->index,
+		MENU_KNIGHT_SPEED->index,
 		MENU_FRAME_RATE->index,
 		MENU_LEVEL_TRAN->index,
 		MENU_MUSIC->index,

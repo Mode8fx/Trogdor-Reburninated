@@ -34,7 +34,8 @@ class Cottage {
 
 class Knight {
 	public:
-		FrameState frameState;
+		FrameState anim_frameState;
+		FrameState move_frameState;
 		bool moving;      // used in toggleKnightMotion()
 		SpriteInstance sprite;
 		Sint16 half_src_w;
@@ -44,10 +45,13 @@ class Knight {
 		double home_y;    // the parent (x,y) coordinates
 		double offset_x;  // the offset relative to home
 		double offset_y;  // the offset relative to home
-		Knight(Sint16, Sint16, Sint8, bool);
+		double moveFrameCap;
+		double offsetConst;
+		Knight(Sint16, Sint16, Sint8, bool, double);
 		inline void updateCollision();
 		void updateHome(double);
-		void updateFrameStateAndMove();
+		void updateFrameState();
+		void move(double knightSpeed);
 };
 
 class Peasant {
@@ -156,6 +160,7 @@ class GameManager {
 		Knight knightArray[MAX_NUM_KNIGHTS];    // array of Knight objects
 		Archer archerArray[2];                  // array of Archer objects
 		Trogdor player;                         // the player
+		double knightSpeed;                     // knight speed setting
 		double knightIncrement;                 // knight movement speed
 		Uint16 extraMansBreak;                  // # of points for an extra life
 		Uint16 extraMansCounter;                // how many extra lives have been earned so far + 1

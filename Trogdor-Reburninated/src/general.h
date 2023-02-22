@@ -21,7 +21,7 @@ class FrameState {
 		void increment();
 		bool startingFrame(Uint16);
 		bool endingFrame(Uint16);
-		void subtract(Uint8);
+		void subtract(double);
 		void mod(Uint8);
 };
 

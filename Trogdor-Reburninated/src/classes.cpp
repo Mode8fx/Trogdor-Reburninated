@@ -84,8 +84,9 @@ void Cottage::updateFrameState() {
 	frameState.increment();
 }
 
-Knight::Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true) {
-	frameState.set(1);
+Knight::Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true, double knightSpeed = 1) {
+	anim_frameState.set(1);
+	move_frameState.set(1);
 	moving = true;
 	sprite = SpriteInstance(&sprite_knight, 0, fr, pos_x, pos_y);
 	sprite.facingRight = fr;
@@ -97,6 +98,8 @@ Knight::Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true
 	offset_y = 0;
 	direction = dir;
 	updateCollision();
+	moveFrameCap = 60 / knightSpeed;
+	offsetConst = knightSpeed * 34 / 30;
 }
 
 inline void Knight::updateCollision() {
@@ -142,12 +145,12 @@ void Knight::updateHome(double knightIncrement) {
 	}
 }
 
-void Knight::updateFrameStateAndMove() {
-	if (frameState.frame > 60) {
-		frameState.subtract(60);
+void Knight::updateFrameState() {
+	if (anim_frameState.frame > 60) {
+		anim_frameState.subtract(60);
 	}
-	if (frameState.atStartOfFrame) {
-		switch (frameState.frame) {
+	if (anim_frameState.atStartOfFrame) {
+		switch (anim_frameState.frame) {
 			case 1:
 			case 9:
 			case 17:
@@ -173,10 +176,17 @@ void Knight::updateFrameStateAndMove() {
 				break;
 		}
 	}
-	if (frameState.frame <= 30) {
-		offset_x = frameState.subFrame * 34 / 30;
+	anim_frameState.increment();
+}
+
+void Knight::move(double knightSpeed) {
+	if (move_frameState.frame > moveFrameCap) {
+		move_frameState.subtract(moveFrameCap);
+	}
+	if (move_frameState.frame * knightSpeed <= 30) {
+		offset_x = move_frameState.subFrame * offsetConst;
 	} else {
-		offset_x = 68.0 - (frameState.subFrame * 34 / 30);
+		offset_x = 68.0 - (move_frameState.subFrame * offsetConst);
 	}
 	offset_y = -offset_x;
 	if (!sprite.facingRight) {
@@ -186,7 +196,7 @@ void Knight::updateFrameStateAndMove() {
 	sprite.setPosX(home_x + offset_x - half_src_w);
 	sprite.setPosY(home_y + offset_y - half_src_h);
 	updateCollision();
-	frameState.increment();
+	move_frameState.increment();
 }
 
 Peasant::Peasant() {
@@ -565,7 +575,8 @@ GameManager::GameManager(MenuManager mm) {
 	speedyMode = CHEAT_SPEEDY_MODE->index;
 	player = Trogdor(bigHeadMode, speedyMode);
 	player.sprite.facingRight = true;
-	knightIncrement = frameRateMult;
+	knightSpeed = (0.7 + (MENU_KNIGHT_SPEED->index * 0.15));
+	knightIncrement = knightSpeed * frameRateMult;
 	switch (MENU_LIVES_INTERVAL->index) {
 		case 0:
 			extraMansBreak = 300;
@@ -841,8 +852,8 @@ void GameManager::levelInit() {
 	lootArray[6] = Loot((Sint16)(gameWidth * 0.688), (Sint16)(gameHeight * 0.644));
 	archerArray[0] = Archer(ARCHER_LEFT_X, 0, true);   // archerR (on the left, facing right)
 	archerArray[1] = Archer(ARCHER_RIGHT_X, 0, false); // archerL (on the right, facing left)
-	knightArray[0] = Knight(61, 111, 1, false);
-	knightArray[1] = Knight(163, 40, 1, true);
+	knightArray[0] = Knight(61, 111, 1, false, knightSpeed);
+	knightArray[1] = Knight(163, 40, 1, true, knightSpeed);
 	peasantometer = 0;
 	player.resetPos(false);
 	treasureHutFound = false;
@@ -1126,7 +1137,8 @@ void GameManager::updateKnightHome() {
 void GameManager::updateKnightOffsetAndMove() {
 	for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 		if (knightArray[i].moving) {
-			knightArray[i].updateFrameStateAndMove();
+			knightArray[i].updateFrameState();
+			knightArray[i].move(knightSpeed);
 		}
 	}
 }
@@ -1170,7 +1182,8 @@ inline void GameManager::toggleKnightMotion(bool hasMotion) {
 		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 			knightArray[i].moving = hasMotion;
 			if (hasMotion) {
-				knightArray[i].frameState.set(1);
+				knightArray[i].anim_frameState.set(1);
+				knightArray[i].move_frameState.set(1);
 			}
 		}
 	}
