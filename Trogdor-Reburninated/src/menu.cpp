@@ -530,6 +530,7 @@ std::string option_main_difficulty_descriptions_line_1[1] = { "Change settings r
 std::string option_main_difficulty_descriptions_line_2[1] = { "game difficulty." };
 std::string option_main_cosmetic_descriptions_line_1[1] = { "Change settings related to" };
 std::string option_main_cosmetic_descriptions_line_2[1] = { "game audio and video." };
+std::string option_main_other_descriptions_line_1[1] = { "Change miscellaneous settings." };
 std::string option_main_cheats_descriptions_line_1[1] = { "Toggle secret cheats." };
 std::string option_main_cheats_descriptions_line_2[1] = { "Follow the hints!" };
 std::string option_main_credits_descriptions_line_1[1] = { "View the credits." };
@@ -605,6 +606,9 @@ void InitializeMenus() {
 	MENU_COSMETIC->prepareMenuOption("Cosmetic Settings", option_empty,
 		option_main_cosmetic_descriptions_line_1, option_main_cosmetic_descriptions_line_2, option_empty,
 		"", 1, true, 0, true);
+	MENU_OTHER->prepareMenuOption("Other Settings", option_empty,
+		option_main_other_descriptions_line_1, option_empty, option_empty,
+		"", 1, true, 0, true);
 	MENU_CHEATS->prepareMenuOption("Cheats", option_empty,
 		option_main_cheats_descriptions_line_1, option_main_cheats_descriptions_line_2, option_empty,
 		"", 1, true, 0, true);
@@ -625,9 +629,6 @@ void InitializeMenus() {
 			menu_difficulty.options[i] = new MenuOption();
 		}
 	}
-	MENU_STARTING_LEVEL->prepareMenuOption("Starting Level", option_main_starting_level_choices,
-		option_main_starting_level_descriptions_line_1, option_empty, option_empty,
-		"", 10, true, 0, true);
 	MENU_EXTRA_LIVES->prepareMenuOption("Extra Lives", option_main_extra_lives_choices,
 		option_main_extra_lives_descriptions_line_1, option_empty, option_empty,
 		"", 9, true, 3, true);
@@ -637,21 +638,18 @@ void InitializeMenus() {
 	MENU_PEASANT_PENALTY->prepareMenuOption("Peasant Penalty", option_on_off,
 		option_main_peasant_penalty_descriptions_line_1, option_main_peasant_penalty_descriptions_line_2, option_main_peasant_penalty_descriptions_line_3,
 		"", 2, false, 0, true);
-	MENU_TREASURE_HUTS->prepareMenuOption("Treasure Huts", option_main_treasure_huts_choices,
-		option_main_treasure_huts_descriptions_line_1, option_main_treasure_huts_descriptions_line_2, option_main_treasure_huts_descriptions_line_3,
-		"", 3, false, 0, true);
-	MENU_ARCHER_FREQ->prepareMenuOption("Archer Frequency", option_main_archer_freq_choices,
-		option_main_archer_freq_descriptions_line_1, option_main_archer_freq_descriptions_line_2, option_main_archer_freq_descriptions_line_3,
-		"", 6, false, 0, true);
-	MENU_KNIGHT_BEHAVIOR->prepareMenuOption("Knight Behavior", option_main_knight_behavior_choices,
-		option_main_knight_behavior_descriptions_line_1, option_main_knight_behavior_descriptions_line_2, option_main_knight_behavior_descriptions_line_3,
-		"", 2, false, 1, true);
 	MENU_KNIGHT_SPEED->prepareMenuOption("Knight Speed", option_main_knight_speed_choices,
 		option_main_knight_speed_descriptions_line_1, option_empty, option_empty,
 		"", 5, true, 2, true);
 	MENU_ARROW_SPEED->prepareMenuOption("Arrow Speed", option_main_arrow_speed_choices,
 		option_main_arrow_speed_descriptions_line_1, option_empty, option_empty,
 		"", 5, true, 1, true);
+	MENU_ARCHER_FREQ->prepareMenuOption("Archer Frequency", option_main_archer_freq_choices,
+		option_main_archer_freq_descriptions_line_1, option_main_archer_freq_descriptions_line_2, option_main_archer_freq_descriptions_line_3,
+		"", 6, false, 0, true);
+	MENU_TREASURE_HUTS->prepareMenuOption("Treasure Huts", option_main_treasure_huts_choices,
+		option_main_treasure_huts_descriptions_line_1, option_main_treasure_huts_descriptions_line_2, option_main_treasure_huts_descriptions_line_3,
+		"", 3, false, 0, true);
 
 	/* Cosmetic Settings Menu */
 	menu_cosmetic.prepareMenu(COSMETIC_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -667,9 +665,6 @@ void InitializeMenus() {
 #else
 		"", 8, true, 4, true);
 #endif
-	MENU_LEVEL_TRAN->prepareMenuOption("Level Transition", option_main_level_tran_choices,
-		option_main_level_tran_descriptions_line_1, option_main_level_tran_descriptions_line_2, option_main_level_tran_descriptions_line_3,
-		"", 2, false, 0, true);
 	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
 		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
 		"", 2, false, 0, true);
@@ -682,6 +677,23 @@ void InitializeMenus() {
 	MENU_SCALING->prepareMenuOption("Screen Scaling", option_main_scaling_choices,
 		option_main_scaling_descriptions_line_1, option_main_scaling_descriptions_line_2, option_main_scaling_descriptions_line_3,
 		"", 4, false, scalingType, true);
+
+	/* Other Settings Menu */
+	menu_other.prepareMenu(OTHER_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
+	if (!menusAreInitialized) {
+		for (i = 0; i < OTHER_NUM_OPTIONS; i++) {
+			menu_other.options[i] = new MenuOption();
+		}
+	}
+	MENU_STARTING_LEVEL->prepareMenuOption("Starting Level", option_main_starting_level_choices,
+		option_main_starting_level_descriptions_line_1, option_empty, option_empty,
+		"", 10, true, 0, true);
+	MENU_KNIGHT_BEHAVIOR->prepareMenuOption("Knight Behavior", option_main_knight_behavior_choices,
+		option_main_knight_behavior_descriptions_line_1, option_main_knight_behavior_descriptions_line_2, option_main_knight_behavior_descriptions_line_3,
+		"", 2, false, 1, true);
+	MENU_LEVEL_TRAN->prepareMenuOption("Level Transition", option_main_level_tran_choices,
+		option_main_level_tran_descriptions_line_1, option_main_level_tran_descriptions_line_2, option_main_level_tran_descriptions_line_3,
+		"", 2, false, 0, true);
 
 	/* Cheats Menu */
 	menu_cheats.prepareMenu(CHEAT_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -820,21 +832,21 @@ State_Settings getSettings() {
 	return {
 		DEFAULT_VOLUME_MUSIC,
 		100,
-		MENU_STARTING_LEVEL->index,
 		MENU_EXTRA_LIVES->index,
 		MENU_LIVES_INTERVAL->index,
 		MENU_PEASANT_PENALTY->index,
-		MENU_TREASURE_HUTS->index,
-		MENU_ARCHER_FREQ->index,
-		MENU_KNIGHT_BEHAVIOR->index,
 		MENU_KNIGHT_SPEED->index,
 		MENU_ARROW_SPEED->index,
+		MENU_ARCHER_FREQ->index,
+		MENU_TREASURE_HUTS->index,
 		MENU_FRAME_RATE->index,
-		MENU_LEVEL_TRAN->index,
 		MENU_MUSIC->index,
 		MENU_COMMENT_FREQ->index,
 		MENU_BIG_HEAD_MODE->index,
 		MENU_SCALING->index,
+		MENU_STARTING_LEVEL->index,
+		MENU_KNIGHT_BEHAVIOR->index,
+		MENU_LEVEL_TRAN->index,
 		MENU_INF_LIVES->index,
 		MENU_SPEEDY_MODE->index,
 		MENU_NOCLIP->index,

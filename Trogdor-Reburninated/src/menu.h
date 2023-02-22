@@ -7,7 +7,7 @@
 #define MENU_H
 
 constexpr auto MAX_NUM_OPTION_CHOICES = 10;
-constexpr auto MAX_NUM_MENU_OPTIONS = 9;
+constexpr auto MAX_NUM_MENU_OPTIONS = 7;
 constexpr auto MAX_NUM_MENU_PAGES = 5;
 constexpr auto MAX_NUM_MENU_LINES = 9;
 
@@ -183,53 +183,58 @@ class Menu {
 extern Menu menu_main;
 constexpr auto MENU_DIFFICULTY_INDEX = 0;
 constexpr auto MENU_COSMETIC_INDEX = 1;
-constexpr auto MENU_CHEATS_INDEX = 2;
-constexpr auto MENU_RESET_SETTINGS_INDEX = 3;
-constexpr auto MENU_CREDITS_INDEX = 4;
-constexpr auto MENU_QUIT_INDEX = 5;
-constexpr auto MENU_NUM_OPTIONS = 6;
+constexpr auto MENU_OTHER_INDEX = 2;
+constexpr auto MENU_CHEATS_INDEX = 3;
+constexpr auto MENU_RESET_SETTINGS_INDEX = 4;
+constexpr auto MENU_CREDITS_INDEX = 5;
+constexpr auto MENU_QUIT_INDEX = 6;
+constexpr auto MENU_NUM_OPTIONS = 7;
 #define MENU_DIFFICULTY     menu_main.options[MENU_DIFFICULTY_INDEX]
 #define MENU_COSMETIC       menu_main.options[MENU_COSMETIC_INDEX]
+#define MENU_OTHER          menu_main.options[MENU_OTHER_INDEX]
 #define MENU_CHEATS         menu_main.options[MENU_CHEATS_INDEX]
 #define MENU_RESET_SETTINGS menu_main.options[MENU_RESET_SETTINGS_INDEX]
 #define MENU_CREDITS        menu_main.options[MENU_CREDITS_INDEX]
 #define MENU_QUIT           menu_main.options[MENU_QUIT_INDEX]
 
 extern Menu menu_difficulty;
-constexpr auto MENU_STARTING_LEVEL_INDEX = 0;
-constexpr auto MENU_EXTRA_LIVES_INDEX = 1;
-constexpr auto MENU_LIVES_INTERVAL_INDEX = 2;
-constexpr auto MENU_PEASANT_PENALTY_INDEX = 3;
-constexpr auto MENU_TREASURE_HUTS_INDEX = 4;
+constexpr auto MENU_EXTRA_LIVES_INDEX = 0;
+constexpr auto MENU_LIVES_INTERVAL_INDEX = 1;
+constexpr auto MENU_PEASANT_PENALTY_INDEX = 2;
+constexpr auto MENU_KNIGHT_SPEED_INDEX = 3;
+constexpr auto MENU_ARROW_SPEED_INDEX = 4;
 constexpr auto MENU_ARCHER_FREQ_INDEX = 5;
-constexpr auto MENU_KNIGHT_BEHAVIOR_INDEX = 6;
-constexpr auto MENU_KNIGHT_SPEED_INDEX = 7;
-constexpr auto MENU_ARROW_SPEED_INDEX = 8;
-constexpr auto DIFFICULTY_NUM_OPTIONS = 9;
-#define MENU_STARTING_LEVEL  menu_difficulty.options[MENU_STARTING_LEVEL_INDEX]
+constexpr auto MENU_TREASURE_HUTS_INDEX = 6;
+constexpr auto DIFFICULTY_NUM_OPTIONS = 7;
 #define MENU_EXTRA_LIVES     menu_difficulty.options[MENU_EXTRA_LIVES_INDEX]
 #define MENU_LIVES_INTERVAL  menu_difficulty.options[MENU_LIVES_INTERVAL_INDEX]
 #define MENU_PEASANT_PENALTY menu_difficulty.options[MENU_PEASANT_PENALTY_INDEX]
-#define MENU_TREASURE_HUTS   menu_difficulty.options[MENU_TREASURE_HUTS_INDEX]
-#define MENU_ARCHER_FREQ     menu_difficulty.options[MENU_ARCHER_FREQ_INDEX]
-#define MENU_KNIGHT_BEHAVIOR menu_difficulty.options[MENU_KNIGHT_BEHAVIOR_INDEX]
 #define MENU_KNIGHT_SPEED    menu_difficulty.options[MENU_KNIGHT_SPEED_INDEX]
 #define MENU_ARROW_SPEED     menu_difficulty.options[MENU_ARROW_SPEED_INDEX]
+#define MENU_ARCHER_FREQ     menu_difficulty.options[MENU_ARCHER_FREQ_INDEX]
+#define MENU_TREASURE_HUTS   menu_difficulty.options[MENU_TREASURE_HUTS_INDEX]
 
 extern Menu menu_cosmetic;
 constexpr auto MENU_FRAME_RATE_INDEX = 0;
 constexpr auto MENU_MUSIC_INDEX = 1;
-constexpr auto MENU_LEVEL_TRAN_INDEX = 2;
-constexpr auto MENU_COMMENT_FREQ_INDEX = 3;
-constexpr auto MENU_BIG_HEAD_MODE_INDEX = 4;
-constexpr auto MENU_SCALING_INDEX = 5;
-constexpr auto COSMETIC_NUM_OPTIONS = 6;
+constexpr auto MENU_COMMENT_FREQ_INDEX = 2;
+constexpr auto MENU_BIG_HEAD_MODE_INDEX = 3;
+constexpr auto MENU_SCALING_INDEX = 4;
+constexpr auto COSMETIC_NUM_OPTIONS = 5;
 #define MENU_FRAME_RATE    menu_cosmetic.options[MENU_FRAME_RATE_INDEX]
 #define MENU_MUSIC         menu_cosmetic.options[MENU_MUSIC_INDEX]
-#define MENU_LEVEL_TRAN    menu_cosmetic.options[MENU_LEVEL_TRAN_INDEX]
 #define MENU_COMMENT_FREQ  menu_cosmetic.options[MENU_COMMENT_FREQ_INDEX]
 #define MENU_BIG_HEAD_MODE menu_cosmetic.options[MENU_BIG_HEAD_MODE_INDEX]
 #define MENU_SCALING       menu_cosmetic.options[MENU_SCALING_INDEX]
+
+extern Menu menu_other;
+constexpr auto MENU_STARTING_LEVEL_INDEX = 0;
+constexpr auto MENU_KNIGHT_BEHAVIOR_INDEX = 1;
+constexpr auto MENU_LEVEL_TRAN_INDEX = 2;
+constexpr auto OTHER_NUM_OPTIONS = 3;
+#define MENU_STARTING_LEVEL  menu_other.options[MENU_STARTING_LEVEL_INDEX]
+#define MENU_KNIGHT_BEHAVIOR menu_other.options[MENU_KNIGHT_BEHAVIOR_INDEX]
+#define MENU_LEVEL_TRAN      menu_other.options[MENU_LEVEL_TRAN_INDEX]
 
 extern Menu menu_cheats;
 constexpr auto MENU_INF_LIVES_INDEX = 0;
