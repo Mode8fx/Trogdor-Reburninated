@@ -180,10 +180,10 @@ void Knight::updateFrameState() {
 }
 
 void Knight::move(double knightSpeed) {
-	if (move_frameState.frame > moveFrameCap) {
+	if (move_frameState.subFrame > moveFrameCap) {
 		move_frameState.subtract(moveFrameCap);
 	}
-	if (move_frameState.frame * knightSpeed <= 30) {
+	if (move_frameState.subFrame * knightSpeed <= 30) {
 		offset_x = move_frameState.subFrame * offsetConst;
 	} else {
 		offset_x = 68.0 - (move_frameState.subFrame * offsetConst);
