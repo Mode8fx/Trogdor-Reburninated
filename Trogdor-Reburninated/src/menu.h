@@ -7,7 +7,7 @@
 #define MENU_H
 
 constexpr auto MAX_NUM_OPTION_CHOICES = 10;
-constexpr auto MAX_NUM_MENU_OPTIONS = 8;
+constexpr auto MAX_NUM_MENU_OPTIONS = 9;
 constexpr auto MAX_NUM_MENU_PAGES = 5;
 constexpr auto MAX_NUM_MENU_LINES = 9;
 
@@ -204,7 +204,8 @@ constexpr auto MENU_TREASURE_HUTS_INDEX = 4;
 constexpr auto MENU_ARCHER_FREQ_INDEX = 5;
 constexpr auto MENU_KNIGHT_BEHAVIOR_INDEX = 6;
 constexpr auto MENU_KNIGHT_SPEED_INDEX = 7;
-constexpr auto DIFFICULTY_NUM_OPTIONS = 8;
+constexpr auto MENU_ARROW_SPEED_INDEX = 8;
+constexpr auto DIFFICULTY_NUM_OPTIONS = 9;
 #define MENU_STARTING_LEVEL  menu_difficulty.options[MENU_STARTING_LEVEL_INDEX]
 #define MENU_EXTRA_LIVES     menu_difficulty.options[MENU_EXTRA_LIVES_INDEX]
 #define MENU_LIVES_INTERVAL  menu_difficulty.options[MENU_LIVES_INTERVAL_INDEX]
@@ -213,6 +214,7 @@ constexpr auto DIFFICULTY_NUM_OPTIONS = 8;
 #define MENU_ARCHER_FREQ     menu_difficulty.options[MENU_ARCHER_FREQ_INDEX]
 #define MENU_KNIGHT_BEHAVIOR menu_difficulty.options[MENU_KNIGHT_BEHAVIOR_INDEX]
 #define MENU_KNIGHT_SPEED    menu_difficulty.options[MENU_KNIGHT_SPEED_INDEX]
+#define MENU_ARROW_SPEED     menu_difficulty.options[MENU_ARROW_SPEED_INDEX]
 
 extern Menu menu_cosmetic;
 constexpr auto MENU_FRAME_RATE_INDEX = 0;

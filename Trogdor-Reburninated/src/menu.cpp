@@ -476,6 +476,8 @@ std::string option_main_knight_behavior_descriptions_line_2[2] = { "position aft
 std::string option_main_knight_behavior_descriptions_line_3[2] = { "", "Behavior is similar to the HTML5 port." };
 std::string option_main_knight_speed_choices[5] = { "Very Slow", "Slow", "Normal", "Fast", "Very Fast" };
 std::string option_main_knight_speed_descriptions_line_1[1] = { "Change how quickly knights move." };
+std::string option_main_arrow_speed_choices[5] = { "Slow", "Normal", "Fast", "Very Fast", "Insane" };
+std::string option_main_arrow_speed_descriptions_line_1[1] = { "Change how quickly arrows move." };
 std::string option_main_frame_rate_choices[8] = { "16 FPS [original]", "30 FPS", "32 FPS [2x]", "48 FPS [3x]", "60 FPS", "90 FPS", "120 FPS", "144 FPS [9x]" };
 std::string option_main_frame_rate_descriptions_line_1[1] = { "Higher frame rate = smoother gameplay." };
 std::string option_main_frame_rate_descriptions_line_2[1] = { "(Original Flash game is 16 FPS)" };
@@ -647,6 +649,9 @@ void InitializeMenus() {
 	MENU_KNIGHT_SPEED->prepareMenuOption("Knight Speed", option_main_knight_speed_choices,
 		option_main_knight_speed_descriptions_line_1, option_empty, option_empty,
 		"", 5, true, 2, true);
+	MENU_ARROW_SPEED->prepareMenuOption("Arrow Speed", option_main_arrow_speed_choices,
+		option_main_arrow_speed_descriptions_line_1, option_empty, option_empty,
+		"", 5, true, 1, true);
 
 	/* Cosmetic Settings Menu */
 	menu_cosmetic.prepareMenu(COSMETIC_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);

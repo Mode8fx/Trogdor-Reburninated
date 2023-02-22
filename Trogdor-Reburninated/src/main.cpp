@@ -410,6 +410,7 @@ int main(int argv, char** args) {
 						menu_difficulty.setOptionChoice(MENU_ARCHER_FREQ_INDEX, MENU_ARCHER_FREQ->index_init);
 						menu_difficulty.setOptionChoice(MENU_KNIGHT_BEHAVIOR_INDEX, MENU_KNIGHT_BEHAVIOR->index_init);
 						menu_difficulty.setOptionChoice(MENU_KNIGHT_SPEED_INDEX, MENU_KNIGHT_SPEED->index_init);
+						menu_difficulty.setOptionChoice(MENU_ARROW_SPEED_INDEX, MENU_ARROW_SPEED->index_init);
 						menu_cosmetic.setOptionChoice(MENU_FRAME_RATE_INDEX, MENU_FRAME_RATE->index_init);
 						updateFrameRate();
 						menu_cosmetic.setOptionChoice(MENU_LEVEL_TRAN_INDEX, MENU_LEVEL_TRAN->index_init);

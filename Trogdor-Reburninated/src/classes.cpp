@@ -312,12 +312,12 @@ Arrow::Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
 	sprite.collision = { 1 + sprite.facingRight + sprite.dstrect.x, 1 + sprite.dstrect.y, 12, 3 };
 }
 
-void Arrow::updateFrameState() {
+void Arrow::updateFrameState(Sint8 arrowSpeed) {
 	if (frameState.startingFrame(1)) { // 4?
 		loadAndPlaySound(SFX_ARROW);
 	}
 	if (sprite.facingRight) {
-		sprite.addPosX(5);
+		sprite.addPosX(arrowSpeed);
 		if (sprite.dstrect.x > gameWidth) { // not exactly the same as the original, but close enough
 			clear();
 		}
@@ -325,7 +325,7 @@ void Arrow::updateFrameState() {
 		sprite.collision.y = 1 + sprite.dstrect.y;
 
 	} else {
-		sprite.addPosX(-5);
+		sprite.addPosX(-arrowSpeed);
 		if (sprite.dstrect.x < -8) { // not exactly the same as the original, but close enough
 			clear();
 		}
@@ -569,7 +569,25 @@ GameManager::GameManager(MenuManager mm) {
 	level = MENU_STARTING_LEVEL->index * 10 + 1;
 	//levelIndex = 1; // set via levelInit()
 	setBurnination(0);
+	archerFrequencySetting = MENU_ARCHER_FREQ->index;
 	archerFrequency = 0;
+	switch (MENU_ARROW_SPEED->index) {
+		case 0:
+			arrowSpeed = 3;
+			break;
+		case 2:
+			arrowSpeed = 10;
+			break;
+		case 3:
+			arrowSpeed = 15;
+			break;
+		case 4:
+			arrowSpeed = 25;
+			break;
+		default:
+			arrowSpeed = 5;
+			break;
+	}
 	burnRate = 0;
 	bigHeadMode = MENU_BIG_HEAD_MODE->isValue(0);
 	speedyMode = CHEAT_SPEEDY_MODE->index;
@@ -695,7 +713,7 @@ void GameManager::resetAllSrcRects() {
 }
 
 void GameManager::setArcherFrequency() {
-	switch (MENU_ARCHER_FREQ->index) {
+	switch (archerFrequencySetting) {
 		case 0:
 			if (level > 25) {
 				archerFrequency = 400; // 4
@@ -1120,10 +1138,10 @@ void GameManager::updateArchersAndArrows() {
 	}
 	for (i = 0; i < MAX_NUM_ARROWS; i++) {
 		if (arrowArrayR[i].sprite.isActive) {
-			arrowArrayR[i].updateFrameState();
+			arrowArrayR[i].updateFrameState(arrowSpeed);
 		}
 		if (arrowArrayL[i].sprite.isActive) {
-			arrowArrayL[i].updateFrameState();
+			arrowArrayL[i].updateFrameState(arrowSpeed);
 		}
 	}
 }

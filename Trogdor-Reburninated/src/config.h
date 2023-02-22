@@ -24,6 +24,7 @@ struct State_Settings {
 	Sint8 archerFreq;
 	Sint8 knightBehavior;
 	Sint8 knightSpeed;
+	Sint8 arrowSpeed;
 	Sint8 frameRate;
 	Sint8 levelTran;
 	Sint8 music;
