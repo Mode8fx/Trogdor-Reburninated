@@ -828,6 +828,7 @@ State_Settings getSettings() {
 		MENU_ARCHER_FREQ->index,
 		MENU_KNIGHT_BEHAVIOR->index,
 		MENU_KNIGHT_SPEED->index,
+		MENU_ARROW_SPEED->index,
 		MENU_FRAME_RATE->index,
 		MENU_LEVEL_TRAN->index,
 		MENU_MUSIC->index,
