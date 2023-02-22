@@ -108,7 +108,7 @@ class Trogdor {
 		Sint8 y_offset;       // used for movement
 		Sint8 moveSpeed;      // used for movement
 		Uint8 frameStateFlag; // used for movement
-		Trogdor(bool, bool);
+		Trogdor(bool, Sint8);
 		void updateFrameState();
 		void resetPos(bool);
 		void updateBreathLoc();
@@ -125,8 +125,8 @@ class MenuManager {
 		Sint8 page;        // the current page number
 		Sint8 maxPageNum;  // maxPageNum
 		MenuManager();
-		bool handleCheat(Uint8, const Uint8 *, Uint8, Sint8 &, SoundEffect *);
-		void unlockCheat(Uint8);
+		bool handleCheat(Uint8, const Uint8 *, Uint8, Sint8 &, SoundEffect *, Sint8);
+		void unlockCheat(Uint8, Sint8);
 		void typeStuff();
 		void handlePageChange();
 };
@@ -181,7 +181,7 @@ class GameManager {
 		Loot lootArray[MAX_NUM_LOOT];           // array of Loot objects
 		double sbVoiceMult;                     // a multiplier for how often Strong Bad talks
 		bool bigHeadMode;                       // big head mode
-		bool speedyMode;                        // speedy mode
+		Sint8 speedyMode;                       // speedy mode
 		bool debugMode;                         // debug mode
 		bool noclip;                            // noclip cheat to walk through cottages
 		GameManager();

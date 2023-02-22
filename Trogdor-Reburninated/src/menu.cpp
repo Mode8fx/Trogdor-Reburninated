@@ -534,6 +534,7 @@ std::string option_main_quit_descriptions_line_1[1] = { "Quit the game." };
 std::string option_cheats_inf_lives_descriptions_line_1[1] = { "Infinite lives, play forever!" };
 std::string option_cheats_inf_lives_descriptions_line_2[1] = { "Unlocking this cheat also unlocks" };
 std::string option_cheats_inf_lives_descriptions_line_3[1] = { "more starting lives options." };
+std::string option_speedy_mode_choices[4] = { "Off", "Fast", "Faster", "Fastest" };
 std::string option_cheats_speedy_mode_descriptions_line_1[1] = { "Trogdor moves much faster!" };
 std::string option_cheats_debug_mode_descriptions_line_1[1] = { "Enable Debug Mode." };
 std::string option_cheats_debug_mode_descriptions_line_2[1] = { "Press buttons to do things." };
@@ -682,9 +683,9 @@ void InitializeMenus() {
 	CHEAT_INF_LIVES->prepareMenuOption("Infinite Lives", option_on_off,
 		option_cheats_inf_lives_descriptions_line_1, option_cheats_inf_lives_descriptions_line_2, option_cheats_inf_lives_descriptions_line_3,
 		"Secret Code?!?!", 2, true, 1, true);
-	CHEAT_SPEEDY_MODE->prepareMenuOption("Speedy Trogdor", option_on_off,
+	CHEAT_SPEEDY_MODE->prepareMenuOption("Speedy Trogdor", option_speedy_mode_choices,
 		option_cheats_speedy_mode_descriptions_line_1, option_empty, option_empty,
-		"S&K Mushroom Pulley", 2, true, 1, true);
+		"S&K Mushroom Pulley", 4, true, 0, true);
 	CHEAT_NOCLIP->prepareMenuOption("Noclip", option_on_off,
 		option_cheats_noclip_descriptions_line_1, option_cheats_noclip_descriptions_line_2, option_empty,
 		"1994 Country", 2, true, 1, true);

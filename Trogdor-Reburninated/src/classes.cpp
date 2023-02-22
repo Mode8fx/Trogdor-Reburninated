@@ -339,7 +339,7 @@ Loot::Loot(Sint16 pos_x, Sint16 pos_y) {
 	sprite.isActive = false;
 }
 
-Trogdor::Trogdor(bool bigHead = false, bool speedyMode = false) {
+Trogdor::Trogdor(bool bigHead = false, Sint8 speedyMode = 0) {
 	frameState.set(1);
 	if (bigHead) {
 		sprite = SpriteInstance(&sprite_trogdor_bighead, 0, 1, 0, 0);
@@ -362,11 +362,7 @@ Trogdor::Trogdor(bool bigHead = false, bool speedyMode = false) {
 	sprite.isActive = true;
 	x_offset = 0;
 	y_offset = 0;
-	if (speedyMode) {
-		moveSpeed = 6;
-	} else {
-		moveSpeed = 3;
-	}
+	moveSpeed = 3 + speedyMode;
 	frameStateFlag = 0;
 }
 
@@ -470,13 +466,13 @@ MenuManager::MenuManager() {
 	}
 }
 
-bool MenuManager::handleCheat(Uint8 menuIndex, const Uint8 *cheatArrayKey, Uint8 cheatLen, Sint8 &cheatIndex, SoundEffect *sfx) {
+bool MenuManager::handleCheat(Uint8 menuIndex, const Uint8 *cheatArrayKey, Uint8 cheatLen, Sint8 &cheatIndex, SoundEffect *sfx, Sint8 indexAtUnlock) {
 	if (menu_cheats.options[menuIndex]->optionIsLocked) {
 		if (keyInputs != 0) {
 			if (keyInputs == (1 << (cheatArrayKey[cheatIndex]))) {
 				cheatIndex++;
 				if ((Uint32)cheatIndex == cheatLen) {
-					unlockCheat(menuIndex);
+					unlockCheat(menuIndex, indexAtUnlock);
 					// this was originally played upon starting the game, but I'm changing it; it's much clearer this way, especially since the controls are different for each system
 					loadAndPlaySound(sfx);
 					return true;
@@ -489,9 +485,9 @@ bool MenuManager::handleCheat(Uint8 menuIndex, const Uint8 *cheatArrayKey, Uint8
 	return false;
 }
 
-void MenuManager::unlockCheat(Uint8 menuIndex) {
+void MenuManager::unlockCheat(Uint8 menuIndex, Sint8 indexAtUnlock) {
 	menu_cheats.options[menuIndex]->setLocked(false);
-	menu_cheats.setOptionChoice(menuIndex, 0);
+	menu_cheats.setOptionChoice(menuIndex, indexAtUnlock);
 	if (menuIndex == 0) {
 		MENU_EXTRA_LIVES->choiceIsAllowed[6] = true;
 		MENU_EXTRA_LIVES->choiceIsAllowed[7] = true;
@@ -501,10 +497,10 @@ void MenuManager::unlockCheat(Uint8 menuIndex) {
 }
 
 void MenuManager::typeStuff() {
-	if (handleCheat(0, contraArrayKey, 10, contraIndex, SFX_SFX2)
-		|| handleCheat(1, s3kArrayKey, 9, s3kIndex, SFX_SPEEDINCREASED)
-		|| handleCheat(2, dkcArrayKey, 6, dkcIndex, SFX_SBDOOJ)
-		|| handleCheat(3, pacmanArrayKey, 11, pacmanIndex, SFX_GOLDGET)
+	if (handleCheat(0, contraArrayKey, 10, contraIndex, SFX_SFX2, 0)
+		|| handleCheat(1, s3kArrayKey, 9, s3kIndex, SFX_SPEEDINCREASED, 3)
+		|| handleCheat(2, dkcArrayKey, 6, dkcIndex, SFX_SBDOOJ, 0)
+		|| handleCheat(3, pacmanArrayKey, 11, pacmanIndex, SFX_GOLDGET, 0)
 		) {
 		contraIndex = 0;
 		pacmanIndex = 0;
@@ -566,7 +562,7 @@ GameManager::GameManager(MenuManager mm) {
 	archerFrequency = 0;
 	burnRate = 0;
 	bigHeadMode = MENU_BIG_HEAD_MODE->isValue(0);
-	speedyMode = CHEAT_SPEEDY_MODE->isValue(0);
+	speedyMode = CHEAT_SPEEDY_MODE->index;
 	player = Trogdor(bigHeadMode, speedyMode);
 	player.sprite.facingRight = true;
 	knightIncrement = frameRateMult;
