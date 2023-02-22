@@ -690,16 +690,16 @@ void InitializeMenus() {
 			menu_cheats.options[i] = new MenuOption();
 		}
 	}
-	CHEAT_INF_LIVES->prepareMenuOption("Infinite Lives", option_on_off,
+	MENU_INF_LIVES->prepareMenuOption("Infinite Lives", option_on_off,
 		option_cheats_inf_lives_descriptions_line_1, option_cheats_inf_lives_descriptions_line_2, option_cheats_inf_lives_descriptions_line_3,
 		"Secret Code?!?!", 2, true, 1, true);
-	CHEAT_SPEEDY_MODE->prepareMenuOption("Speedy Trogdor", option_speedy_mode_choices,
+	MENU_SPEEDY_MODE->prepareMenuOption("Speedy Trogdor", option_speedy_mode_choices,
 		option_cheats_speedy_mode_descriptions_line_1, option_empty, option_empty,
 		"S&K Mushroom Pulley", 4, true, 0, true);
-	CHEAT_NOCLIP->prepareMenuOption("Noclip", option_on_off,
+	MENU_NOCLIP->prepareMenuOption("Noclip", option_on_off,
 		option_cheats_noclip_descriptions_line_1, option_cheats_noclip_descriptions_line_2, option_empty,
 		"1994 Country", 2, true, 1, true);
-	CHEAT_DEBUG_MODE->prepareMenuOption("Debug Mode", option_on_off,
+	MENU_DEBUG_MODE->prepareMenuOption("Debug Mode", option_on_off,
 		option_cheats_debug_mode_descriptions_line_1, option_cheats_debug_mode_descriptions_line_2, option_empty,
 		"Class of 1981", 2, true, 1, true);
 
@@ -789,10 +789,10 @@ void InitializeMenus() {
 		MENU_EXTRA_LIVES->choiceIsAllowed[6] = false;
 		MENU_EXTRA_LIVES->choiceIsAllowed[7] = false;
 		MENU_EXTRA_LIVES->choiceIsAllowed[8] = false;
-		CHEAT_INF_LIVES->setLocked(true);
-		CHEAT_SPEEDY_MODE->setLocked(true);
-		CHEAT_NOCLIP->setLocked(true);
-		CHEAT_DEBUG_MODE->setLocked(true);
+		MENU_INF_LIVES->setLocked(true);
+		MENU_SPEEDY_MODE->setLocked(true);
+		MENU_NOCLIP->setLocked(true);
+		MENU_DEBUG_MODE->setLocked(true);
 #if defined(THREEDS) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
 		MENU_SCALING->choiceIsAllowed[1] = false;
 #endif
@@ -835,14 +835,14 @@ State_Settings getSettings() {
 		MENU_COMMENT_FREQ->index,
 		MENU_BIG_HEAD_MODE->index,
 		MENU_SCALING->index,
-		CHEAT_INF_LIVES->index,
-		CHEAT_SPEEDY_MODE->index,
-		CHEAT_NOCLIP->index,
-		CHEAT_DEBUG_MODE->index,
-		CHEAT_INF_LIVES->optionIsLocked,
-		CHEAT_SPEEDY_MODE->optionIsLocked,
-		CHEAT_NOCLIP->optionIsLocked,
-		CHEAT_DEBUG_MODE->optionIsLocked,
+		MENU_INF_LIVES->index,
+		MENU_SPEEDY_MODE->index,
+		MENU_NOCLIP->index,
+		MENU_DEBUG_MODE->index,
+		MENU_INF_LIVES->optionIsLocked,
+		MENU_SPEEDY_MODE->optionIsLocked,
+		MENU_NOCLIP->optionIsLocked,
+		MENU_DEBUG_MODE->optionIsLocked,
 	};
 }
 

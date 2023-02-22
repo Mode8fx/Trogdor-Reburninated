@@ -539,7 +539,7 @@ GameManager::GameManager(MenuManager mm) {
 	srand(SDL_GetTicks());
 	initialized = true;
 	forceMusicStart = true;
-	infiniteLives = CHEAT_INF_LIVES->isValue(0);
+	infiniteLives = MENU_INF_LIVES->isValue(0);
 	if (infiniteLives) {
 		mans = 99;
 	} else {
@@ -590,7 +590,7 @@ GameManager::GameManager(MenuManager mm) {
 	}
 	burnRate = 0;
 	bigHeadMode = MENU_BIG_HEAD_MODE->isValue(0);
-	speedyMode = CHEAT_SPEEDY_MODE->index;
+	speedyMode = MENU_SPEEDY_MODE->index;
 	player = Trogdor(bigHeadMode, speedyMode);
 	player.sprite.facingRight = true;
 	knightSpeed = (0.7 + (MENU_KNIGHT_SPEED->index * 0.15));
@@ -675,8 +675,8 @@ GameManager::GameManager(MenuManager mm) {
 			sbVoiceMult = 2;
 			break;
 	}
-	debugMode = CHEAT_DEBUG_MODE->isValue(0);
-	noclip = CHEAT_NOCLIP->isValue(0);
+	debugMode = MENU_DEBUG_MODE->isValue(0);
+	noclip = MENU_NOCLIP->isValue(0);
 }
 
 void GameManager::resetAllSrcRects() {

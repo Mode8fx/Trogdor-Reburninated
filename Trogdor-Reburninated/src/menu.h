@@ -232,15 +232,15 @@ constexpr auto COSMETIC_NUM_OPTIONS = 6;
 #define MENU_SCALING       menu_cosmetic.options[MENU_SCALING_INDEX]
 
 extern Menu menu_cheats;
-constexpr auto CHEAT_INF_LIVES_INDEX = 0;
-constexpr auto CHEAT_SPEEDY_MODE_INDEX = 1;
-constexpr auto CHEAT_NOCLIP_INDEX = 2;
-constexpr auto CHEAT_DEBUG_MODE_INDEX = 3;
+constexpr auto MENU_INF_LIVES_INDEX = 0;
+constexpr auto MENU_SPEEDY_MODE_INDEX = 1;
+constexpr auto MENU_NOCLIP_INDEX = 2;
+constexpr auto MENU_DEBUG_MODE_INDEX = 3;
 constexpr auto CHEAT_NUM_OPTIONS = 4;
-#define CHEAT_INF_LIVES       menu_cheats.options[CHEAT_INF_LIVES_INDEX]
-#define CHEAT_SPEEDY_MODE  menu_cheats.options[CHEAT_SPEEDY_MODE_INDEX]
-#define CHEAT_NOCLIP          menu_cheats.options[CHEAT_NOCLIP_INDEX]
-#define CHEAT_DEBUG_MODE      menu_cheats.options[CHEAT_DEBUG_MODE_INDEX]
+#define MENU_INF_LIVES   menu_cheats.options[MENU_INF_LIVES_INDEX]
+#define MENU_SPEEDY_MODE menu_cheats.options[MENU_SPEEDY_MODE_INDEX]
+#define MENU_NOCLIP      menu_cheats.options[MENU_NOCLIP_INDEX]
+#define MENU_DEBUG_MODE  menu_cheats.options[MENU_DEBUG_MODE_INDEX]
 
 extern MenuNotebook menu_credits;
 

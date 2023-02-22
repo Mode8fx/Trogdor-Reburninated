@@ -418,10 +418,10 @@ int main(int argv, char** args) {
 						menu_cosmetic.setOptionChoice(MENU_COMMENT_FREQ_INDEX, MENU_COMMENT_FREQ->index_init);
 						menu_cosmetic.setOptionChoice(MENU_BIG_HEAD_MODE_INDEX, MENU_BIG_HEAD_MODE->index_init);
 						//menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, MENU_SCALING->index_init);
-						menu_cheats.setOptionChoice(CHEAT_INF_LIVES_INDEX, CHEAT_INF_LIVES->index_init);
-						menu_cheats.setOptionChoice(CHEAT_SPEEDY_MODE_INDEX, CHEAT_SPEEDY_MODE->index_init);
-						menu_cheats.setOptionChoice(CHEAT_NOCLIP_INDEX, CHEAT_NOCLIP->index_init);
-						menu_cheats.setOptionChoice(CHEAT_DEBUG_MODE_INDEX, CHEAT_DEBUG_MODE->index_init);
+						menu_cheats.setOptionChoice(MENU_INF_LIVES_INDEX, MENU_INF_LIVES->index_init);
+						menu_cheats.setOptionChoice(MENU_SPEEDY_MODE_INDEX, MENU_SPEEDY_MODE->index_init);
+						menu_cheats.setOptionChoice(MENU_NOCLIP_INDEX, MENU_NOCLIP->index_init);
+						menu_cheats.setOptionChoice(MENU_DEBUG_MODE_INDEX, MENU_DEBUG_MODE->index_init);
 						loadAndPlaySound(SFX_SBDOOJ_SHORT);
 						break;
 					case MENU_CREDITS_INDEX:
