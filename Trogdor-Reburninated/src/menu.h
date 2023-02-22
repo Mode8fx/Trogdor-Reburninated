@@ -217,24 +217,26 @@ constexpr auto MENU_FRAME_RATE_INDEX = 0;
 constexpr auto MENU_MUSIC_INDEX = 1;
 constexpr auto MENU_LEVEL_TRAN_INDEX = 2;
 constexpr auto MENU_COMMENT_FREQ_INDEX = 3;
-constexpr auto MENU_SCALING_INDEX = 4;
-constexpr auto COSMETIC_NUM_OPTIONS = 5;
-#define MENU_FRAME_RATE   menu_cosmetic.options[MENU_FRAME_RATE_INDEX]
-#define MENU_MUSIC        menu_cosmetic.options[MENU_MUSIC_INDEX]
-#define MENU_LEVEL_TRAN   menu_cosmetic.options[MENU_LEVEL_TRAN_INDEX]
-#define MENU_COMMENT_FREQ menu_cosmetic.options[MENU_COMMENT_FREQ_INDEX]
-#define MENU_SCALING      menu_cosmetic.options[MENU_SCALING_INDEX]
+constexpr auto MENU_BIG_HEAD_MODE_INDEX = 4;
+constexpr auto MENU_SCALING_INDEX = 5;
+constexpr auto COSMETIC_NUM_OPTIONS = 6;
+#define MENU_FRAME_RATE    menu_cosmetic.options[MENU_FRAME_RATE_INDEX]
+#define MENU_MUSIC         menu_cosmetic.options[MENU_MUSIC_INDEX]
+#define MENU_LEVEL_TRAN    menu_cosmetic.options[MENU_LEVEL_TRAN_INDEX]
+#define MENU_COMMENT_FREQ  menu_cosmetic.options[MENU_COMMENT_FREQ_INDEX]
+#define MENU_BIG_HEAD_MODE menu_cosmetic.options[MENU_BIG_HEAD_MODE_INDEX]
+#define MENU_SCALING       menu_cosmetic.options[MENU_SCALING_INDEX]
 
 extern Menu menu_cheats;
 constexpr auto CHEAT_INF_LIVES_INDEX = 0;
-constexpr auto CHEAT_BIG_HEAD_MODE_INDEX = 1;
+constexpr auto CHEAT_SPEEDY_MODE_INDEX = 1;
 constexpr auto CHEAT_NOCLIP_INDEX = 2;
 constexpr auto CHEAT_DEBUG_MODE_INDEX = 3;
 constexpr auto CHEAT_NUM_OPTIONS = 4;
-#define CHEAT_INF_LIVES     menu_cheats.options[CHEAT_INF_LIVES_INDEX]
-#define CHEAT_BIG_HEAD_MODE menu_cheats.options[CHEAT_BIG_HEAD_MODE_INDEX]
-#define CHEAT_NOCLIP        menu_cheats.options[CHEAT_NOCLIP_INDEX]
-#define CHEAT_DEBUG_MODE    menu_cheats.options[CHEAT_DEBUG_MODE_INDEX]
+#define CHEAT_INF_LIVES       menu_cheats.options[CHEAT_INF_LIVES_INDEX]
+#define CHEAT_SPEEDY_MODE  menu_cheats.options[CHEAT_SPEEDY_MODE_INDEX]
+#define CHEAT_NOCLIP          menu_cheats.options[CHEAT_NOCLIP_INDEX]
+#define CHEAT_DEBUG_MODE      menu_cheats.options[CHEAT_DEBUG_MODE_INDEX]
 
 extern MenuNotebook menu_credits;
 

@@ -108,7 +108,7 @@ class Trogdor {
 		Sint8 y_offset;       // used for movement
 		Sint8 moveSpeed;      // used for movement
 		Uint8 frameStateFlag; // used for movement
-		Trogdor(bool);
+		Trogdor(bool, bool);
 		void updateFrameState();
 		void resetPos(bool);
 		void updateBreathLoc();
@@ -181,6 +181,7 @@ class GameManager {
 		Loot lootArray[MAX_NUM_LOOT];           // array of Loot objects
 		double sbVoiceMult;                     // a multiplier for how often Strong Bad talks
 		bool bigHeadMode;                       // big head mode
+		bool speedyMode;                        // speedy mode
 		bool debugMode;                         // debug mode
 		bool noclip;                            // noclip cheat to walk through cottages
 		GameManager();

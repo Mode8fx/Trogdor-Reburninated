@@ -339,7 +339,7 @@ Loot::Loot(Sint16 pos_x, Sint16 pos_y) {
 	sprite.isActive = false;
 }
 
-Trogdor::Trogdor(bool bigHead = false) {
+Trogdor::Trogdor(bool bigHead = false, bool speedyMode = false) {
 	frameState.set(1);
 	if (bigHead) {
 		sprite = SpriteInstance(&sprite_trogdor_bighead, 0, 1, 0, 0);
@@ -362,7 +362,11 @@ Trogdor::Trogdor(bool bigHead = false) {
 	sprite.isActive = true;
 	x_offset = 0;
 	y_offset = 0;
-	moveSpeed = 3;
+	if (speedyMode) {
+		moveSpeed = 6;
+	} else {
+		moveSpeed = 3;
+	}
 	frameStateFlag = 0;
 }
 
@@ -498,10 +502,9 @@ void MenuManager::unlockCheat(Uint8 menuIndex) {
 
 void MenuManager::typeStuff() {
 	if (handleCheat(0, contraArrayKey, 10, contraIndex, SFX_SFX2)
-		|| handleCheat(1, pacmanArrayKey, 11, pacmanIndex, SFX_GOLDGET)
-		|| handleCheat(2, s3kArrayKey, 9, s3kIndex, SFX_HUSKYHEAD)
-		//|| handleCheat(3, fzxArrayKey, 8, fzxIndex, SFX_SBKERREK)
-		|| handleCheat(3, dkcArrayKey, 6, dkcIndex, SFX_SBDOOJ)
+		|| handleCheat(1, s3kArrayKey, 9, s3kIndex, SFX_SPEEDINCREASED)
+		|| handleCheat(2, dkcArrayKey, 6, dkcIndex, SFX_SBDOOJ)
+		|| handleCheat(3, pacmanArrayKey, 11, pacmanIndex, SFX_GOLDGET)
 		) {
 		contraIndex = 0;
 		pacmanIndex = 0;
@@ -562,8 +565,9 @@ GameManager::GameManager(MenuManager mm) {
 	setBurnination(0);
 	archerFrequency = 0;
 	burnRate = 0;
-	bigHeadMode = CHEAT_BIG_HEAD_MODE->isValue(0);
-	player = Trogdor(bigHeadMode);
+	bigHeadMode = MENU_BIG_HEAD_MODE->isValue(0);
+	speedyMode = CHEAT_SPEEDY_MODE->isValue(0);
+	player = Trogdor(bigHeadMode, speedyMode);
 	player.sprite.facingRight = true;
 	knightIncrement = frameRateMult;
 	switch (MENU_LIVES_INTERVAL->index) {

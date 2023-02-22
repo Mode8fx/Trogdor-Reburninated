@@ -421,8 +421,8 @@ void InitializeSFX() {
 	sfx_cutscene.path = "sfx/cutscene.ogg";
 	sfxArr[11] = &sfx_gameover;
 	sfx_gameover.path = "sfx/gameover.ogg";
-	sfxArr[12] = &sfx_huskyhead;
-	sfx_huskyhead.path = "sfx/huskyhead.ogg";
+	sfxArr[12] = &sfx_speedincreased;
+	sfx_speedincreased.path = "sfx/speedincreased.ogg";
 	sfxArr_strongBad[0] = &sfx_sb1;
 	sfx_sb1.path = "sfx/trog_sb1.ogg";
 	sfxArr_strongBad[1] = &sfx_sb2;

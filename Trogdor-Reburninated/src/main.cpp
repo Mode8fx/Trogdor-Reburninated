@@ -414,11 +414,12 @@ int main(int argv, char** args) {
 						menu_cosmetic.setOptionChoice(MENU_LEVEL_TRAN_INDEX, MENU_LEVEL_TRAN->index_init);
 						menu_cosmetic.setOptionChoice(MENU_MUSIC_INDEX, MENU_MUSIC->index_init);
 						menu_cosmetic.setOptionChoice(MENU_COMMENT_FREQ_INDEX, MENU_COMMENT_FREQ->index_init);
+						menu_cosmetic.setOptionChoice(MENU_BIG_HEAD_MODE_INDEX, MENU_BIG_HEAD_MODE->index_init);
 						//menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, MENU_SCALING->index_init);
 						menu_cheats.setOptionChoice(CHEAT_INF_LIVES_INDEX, CHEAT_INF_LIVES->index_init);
-						menu_cheats.setOptionChoice(CHEAT_DEBUG_MODE_INDEX, CHEAT_DEBUG_MODE->index_init);
-						menu_cheats.setOptionChoice(CHEAT_BIG_HEAD_MODE_INDEX, CHEAT_BIG_HEAD_MODE->index_init);
+						menu_cheats.setOptionChoice(CHEAT_SPEEDY_MODE_INDEX, CHEAT_SPEEDY_MODE->index_init);
 						menu_cheats.setOptionChoice(CHEAT_NOCLIP_INDEX, CHEAT_NOCLIP->index_init);
+						menu_cheats.setOptionChoice(CHEAT_DEBUG_MODE_INDEX, CHEAT_DEBUG_MODE->index_init);
 						loadAndPlaySound(SFX_SBDOOJ_SHORT);
 						break;
 					case MENU_CREDITS_INDEX:
@@ -768,7 +769,7 @@ int main(int argv, char** args) {
 							}
 							break;
 						case 265:
-							if ((rand() % 100) < 10 * GM.sbVoiceMult) {
+							if ((sfxChannel_strongBad == NULL) && ((rand() % 100) < 10 * GM.sbVoiceMult)) {
 								loadAndPlaySound(SFX_SBBEST);
 							}
 							break;

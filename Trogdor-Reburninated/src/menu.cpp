@@ -534,9 +534,10 @@ std::string option_main_quit_descriptions_line_1[1] = { "Quit the game." };
 std::string option_cheats_inf_lives_descriptions_line_1[1] = { "Infinite lives, play forever!" };
 std::string option_cheats_inf_lives_descriptions_line_2[1] = { "Unlocking this cheat also unlocks" };
 std::string option_cheats_inf_lives_descriptions_line_3[1] = { "more starting lives options." };
+std::string option_cheats_speedy_mode_descriptions_line_1[1] = { "Trogdor moves much faster!" };
 std::string option_cheats_debug_mode_descriptions_line_1[1] = { "Enable Debug Mode." };
 std::string option_cheats_debug_mode_descriptions_line_2[1] = { "Press buttons to do things." };
-std::string option_cheats_big_head_mode_descriptions_line_1[1] = { "Give Trogdor a more husky head." };
+std::string option_main_big_head_mode_descriptions_line_1[1] = { "Give Trogdor a more husky head." };
 std::string option_cheats_noclip_descriptions_line_1[1] = { "Remove the game's difficulty" };
 std::string option_cheats_noclip_descriptions_line_2[1] = { "by walking through cottages." };
 #if defined(WII_U) || defined(VITA) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
@@ -664,6 +665,9 @@ void InitializeMenus() {
 	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_comment_freq_choices,
 		option_main_comment_freq_descriptions_line_1, option_main_comment_freq_descriptions_line_2, option_main_comment_freq_descriptions_line_3,
 		"", 7, false, 3, true);
+	MENU_BIG_HEAD_MODE->prepareMenuOption("Big Head Mode", option_on_off,
+		option_main_big_head_mode_descriptions_line_1, option_empty, option_empty,
+		"", 2, true, 1, true);
 	MENU_SCALING->prepareMenuOption("Screen Scaling", option_main_scaling_choices,
 		option_main_scaling_descriptions_line_1, option_main_scaling_descriptions_line_2, option_main_scaling_descriptions_line_3,
 		"", 4, false, scalingType, true);
@@ -678,8 +682,8 @@ void InitializeMenus() {
 	CHEAT_INF_LIVES->prepareMenuOption("Infinite Lives", option_on_off,
 		option_cheats_inf_lives_descriptions_line_1, option_cheats_inf_lives_descriptions_line_2, option_cheats_inf_lives_descriptions_line_3,
 		"Secret Code?!?!", 2, true, 1, true);
-	CHEAT_BIG_HEAD_MODE->prepareMenuOption("Big Head Mode", option_on_off,
-		option_cheats_big_head_mode_descriptions_line_1, option_empty, option_empty,
+	CHEAT_SPEEDY_MODE->prepareMenuOption("Speedy Trogdor", option_on_off,
+		option_cheats_speedy_mode_descriptions_line_1, option_empty, option_empty,
 		"S&K Mushroom Pulley", 2, true, 1, true);
 	CHEAT_NOCLIP->prepareMenuOption("Noclip", option_on_off,
 		option_cheats_noclip_descriptions_line_1, option_cheats_noclip_descriptions_line_2, option_empty,
@@ -775,9 +779,9 @@ void InitializeMenus() {
 		MENU_EXTRA_LIVES->choiceIsAllowed[7] = false;
 		MENU_EXTRA_LIVES->choiceIsAllowed[8] = false;
 		CHEAT_INF_LIVES->setLocked(true);
-		CHEAT_DEBUG_MODE->setLocked(true);
-		CHEAT_BIG_HEAD_MODE->setLocked(true);
+		CHEAT_SPEEDY_MODE->setLocked(true);
 		CHEAT_NOCLIP->setLocked(true);
+		CHEAT_DEBUG_MODE->setLocked(true);
 #if defined(THREEDS) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
 		MENU_SCALING->choiceIsAllowed[1] = false;
 #endif
@@ -816,15 +820,16 @@ State_Settings getSettings() {
 		MENU_LEVEL_TRAN->index,
 		MENU_MUSIC->index,
 		MENU_COMMENT_FREQ->index,
+		MENU_BIG_HEAD_MODE->index,
 		MENU_SCALING->index,
 		CHEAT_INF_LIVES->index,
-		CHEAT_DEBUG_MODE->index,
-		CHEAT_BIG_HEAD_MODE->index,
+		CHEAT_SPEEDY_MODE->index,
 		CHEAT_NOCLIP->index,
+		CHEAT_DEBUG_MODE->index,
 		CHEAT_INF_LIVES->optionIsLocked,
+		CHEAT_SPEEDY_MODE->optionIsLocked,
+		CHEAT_NOCLIP->optionIsLocked,
 		CHEAT_DEBUG_MODE->optionIsLocked,
-		CHEAT_BIG_HEAD_MODE->optionIsLocked,
-		CHEAT_NOCLIP->optionIsLocked
 	};
 }
 

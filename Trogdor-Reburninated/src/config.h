@@ -27,15 +27,16 @@ struct State_Settings {
 	Sint8 levelTran;
 	Sint8 music;
 	Sint8 commentFreq;
+	Sint8 bigHeadMode;
 	Sint8 scaling;
 	Sint8 infLives;
-	Sint8 debugMode;
-	Sint8 bigHeadMode;
+	Sint8 speedyMode;
 	Sint8 noclip;
+	Sint8 debugMode;
 	bool  locked_infLives;
-	bool  locked_debugMode;
-	bool  locked_bigHeadMode;
+	bool  locked_speedyMode;
 	bool  locked_noclip;
+	bool  locked_debugMode;
 };
 
 struct GameState {

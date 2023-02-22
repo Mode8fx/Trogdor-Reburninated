@@ -94,7 +94,7 @@ extern void setVolume_music(Uint8);
 #define SFX_BURNINATE     sfxArr[9]
 #define SFX_CUTSCENE      sfxArr[10]
 #define SFX_GAMEOVER      sfxArr[11]
-#define SFX_HUSKYHEAD     sfxArr[12]
+#define SFX_SPEEDINCREASED sfxArr[12]
 #define SFX_SB1           sfxArr_strongBad[0]
 #define SFX_SB2           sfxArr_strongBad[1]
 #define SFX_SB3           sfxArr_strongBad[2]
@@ -151,7 +151,7 @@ extern SoundEffect sfx_kick;
 extern SoundEffect sfx_burninate;
 extern SoundEffect sfx_cutscene;
 extern SoundEffect sfx_gameover;
-extern SoundEffect sfx_huskyhead;
+extern SoundEffect sfx_speedincreased;
 extern SoundEffect sfx_sbdooj_short;
 extern SoundEffect sfx_itsover;
 
