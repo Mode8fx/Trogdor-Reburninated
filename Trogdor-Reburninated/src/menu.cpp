@@ -643,7 +643,7 @@ void InitializeMenus() {
 		"", 6, false, 0, true);
 	MENU_KNIGHT_BEHAVIOR->prepareMenuOption("Knight Behavior", option_main_knight_behavior_choices,
 		option_main_knight_behavior_descriptions_line_1, option_main_knight_behavior_descriptions_line_2, option_main_knight_behavior_descriptions_line_3,
-		"", 2, false, 0, true);
+		"", 2, false, 1, true);
 	MENU_KNIGHT_SPEED->prepareMenuOption("Knight Speed", option_main_knight_speed_choices,
 		option_main_knight_speed_descriptions_line_1, option_empty, option_empty,
 		"", 5, true, 2, true);
