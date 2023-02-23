@@ -82,6 +82,7 @@ class MenuNotebook {
 * @param index The index of the currently-selected choice.
 * @param index_init The default index.
 * @param choicesWrap Whether or not navigating past the last option choice should wrap around to the first choice, and vice-versa.
+* @param optionCanFreeze Whether or not an option can be frozen.
 * @param optionIsFrozen If the option is frozen, its index cannot change, and its text is grayed out.
 * @param optionIsLocked If the option is locked, then in addition to being frozen, its choices do not appear and the alt description is used in place of the normal description.
 */
@@ -104,11 +105,12 @@ class MenuOption {
 		Sint8 index;
 		Sint8 index_init;
 		bool choicesWrap;
+		bool optionCanFreeze;
 		bool optionIsFrozen;
 		bool optionIsLocked;
 		MenuOption() {
 		}
-		void prepareMenuOption(const char [], std::string [], std::string [], std::string [], std::string [], std::string, Uint8, bool, Sint8, bool);
+		void prepareMenuOption(const char [], std::string [], std::string [], std::string [], std::string [], std::string, Uint8, bool, Sint8, bool, bool);
 		void setFrozen(bool);
 		void setLocked(bool);
 		void initLabel();

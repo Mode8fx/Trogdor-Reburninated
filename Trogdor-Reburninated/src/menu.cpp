@@ -129,7 +129,7 @@ void MenuNotebook::renderNotebook() {
 /* MENU OPTION */
 /***************/
 
-void MenuOption::prepareMenuOption(const char label_ptr[], std::string choice_ptr[], std::string desc_ptr_1[], std::string desc_ptr_2[], std::string desc_ptr_3[], std::string altDesc_ptr, Uint8 numCh, bool oneDesc, Sint8 start, bool wrap) {
+void MenuOption::prepareMenuOption(const char label_ptr[], std::string choice_ptr[], std::string desc_ptr_1[], std::string desc_ptr_2[], std::string desc_ptr_3[], std::string altDesc_ptr, Uint8 numCh, bool oneDesc, Sint8 start, bool wrap, bool canFreeze) {
 	labelPtr = label_ptr;
 	if (!menusAreInitialized) {
 		choicePtr = choice_ptr;
@@ -145,6 +145,7 @@ void MenuOption::prepareMenuOption(const char label_ptr[], std::string choice_pt
 		index = start;
 		index_init = start;
 		choicesWrap = wrap;
+		optionCanFreeze = canFreeze;
 		optionIsFrozen = false;
 		optionIsLocked = false;
 	}
@@ -169,7 +170,10 @@ void MenuOption::setLocked(bool locked) {
 
 void MenuOption::initLabel() {
 	if (!labelPtr.empty()) {
-		setText(labelPtr, &label, menuFont_frozen);
+		if (optionCanFreeze) {
+			setText("???", &label, menuFont_frozen);
+			setText(labelPtr, &label, menuFont_frozen);
+		}
 		setText(labelPtr, &label, menuFont);
 	}
 }
@@ -177,10 +181,10 @@ void MenuOption::initLabel() {
 void MenuOption::updateLabel() {
 	if (!optionIsLocked) {
 		if (!labelPtr.empty()) {
-			if (!optionIsFrozen) {
-				setText(labelPtr, &label, menuFont);
-			} else {
+			if (optionCanFreeze && optionIsFrozen) {
 				setText(labelPtr, &label, menuFont_frozen);
+			} else {
+				setText(labelPtr, &label, menuFont);
 			}
 		}
 	} else {
@@ -192,16 +196,18 @@ void MenuOption::updateLabel() {
 void MenuOption::initChoicesAndDescriptions() {
 	if (choicePtr != NULL) {
 		for (counter = 0; counter < numChoices; counter++) {
-			setText(choicePtr[counter], &choice, menuFont_frozen);
+			if (optionCanFreeze) setText(choicePtr[counter], &choice, menuFont_frozen);
 			setText(choicePtr[counter], &choice, menuFont);
 		}
 	}
 	if (descPtr_1 != NULL) {
 		if (!oneDescription) {
 			for (counter = 0; counter < numChoices; counter++) {
-				setText(descPtr_1[counter], &description_1, menuFont_frozen);
-				setText(descPtr_2[counter], &description_1, menuFont_frozen);
-				setText(descPtr_3[counter], &description_1, menuFont_frozen);
+				if (optionCanFreeze) {
+					setText(descPtr_1[counter], &description_1, menuFont_frozen);
+					setText(descPtr_2[counter], &description_1, menuFont_frozen);
+					setText(descPtr_3[counter], &description_1, menuFont_frozen);
+				}
 				setText(descPtr_1[counter], &description_1, menuFont);
 				setText(descPtr_2[counter], &description_1, menuFont);
 				setText(descPtr_3[counter], &description_1, menuFont);
@@ -213,10 +219,10 @@ void MenuOption::initChoicesAndDescriptions() {
 void MenuOption::updateChoice() {
 	if (!optionIsLocked) {
 		if (choicePtr != NULL) {
-			if (!optionIsFrozen) {
-				setText(choicePtr[index], &choice, menuFont);
-			} else {
+			if (optionCanFreeze && optionIsFrozen) {
 				setText(choicePtr[index], &choice, menuFont_frozen);
+			} else {
+				setText(choicePtr[index], &choice, menuFont);
 			}
 		}
 	} else {
@@ -253,12 +259,12 @@ void MenuOption::setDescriptionToIndex(Uint8 forcedIndex) {
 }
 
 void MenuOption::render(bool renderDescription) {
-	if (!optionIsFrozen) {
-		renderText_menu(label, *menuFont);
-		renderText_menu(choice, *menuFont);
-	} else {
+	if (optionCanFreeze && optionIsFrozen) {
 		renderText_menu(label, *menuFont_frozen);
 		renderText_menu(choice, *menuFont_frozen);
+	} else {
+		renderText_menu(label, *menuFont);
+		renderText_menu(choice, *menuFont);
 	}
 	if (renderDescription) {
 		renderText_menu(description_1, *menuFont);
@@ -636,25 +642,25 @@ void InitializeMenus() {
 
 	MENU_DIFFICULTY->prepareMenuOption("Difficulty Settings", option_empty,
 		option_main_difficulty_descriptions_line_1, option_main_difficulty_descriptions_line_2, option_empty,
-		"", 1, true, 0, true);
+		"", 1, true, 0, true, false);
 	MENU_COSMETIC->prepareMenuOption("Cosmetic Settings", option_empty,
 		option_main_cosmetic_descriptions_line_1, option_main_cosmetic_descriptions_line_2, option_empty,
-		"", 1, true, 0, true);
+		"", 1, true, 0, true, false);
 	MENU_OTHER->prepareMenuOption("Other Settings", option_empty,
 		option_main_other_descriptions_line_1, option_empty, option_empty,
-		"", 1, true, 0, true);
+		"", 1, true, 0, true, false);
 	MENU_CHEATS->prepareMenuOption("Cheats", option_empty,
 		option_main_cheats_descriptions_line_1, option_main_cheats_descriptions_line_2, option_empty,
-		"", 1, true, 0, true);
+		"", 1, true, 0, true, false);
 	MENU_RESET_SETTINGS->prepareMenuOption("Reset to Default", option_empty,
 		option_main_reset_settings_descriptions_line_1, option_empty, option_empty,
-		"", 1, true, 0, true);
+		"", 1, true, 0, true, false);
 	MENU_CREDITS->prepareMenuOption("Credits", option_empty,
 		option_main_credits_descriptions_line_1, option_empty, option_empty,
-		"", 1, true, 0, true);
+		"", 1, true, 0, true, false);
 	MENU_QUIT->prepareMenuOption("Quit Game", option_empty,
 		option_main_quit_descriptions_line_1, option_empty, option_empty,
-		"", 1, true, 0, true);
+		"", 1, true, 0, true, false);
 
 	/* Difficulty Settings Menu */
 	menu_difficulty.prepareMenu(DIFFICULTY_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -665,25 +671,25 @@ void InitializeMenus() {
 	}
 	MENU_EXTRA_LIVES->prepareMenuOption("Extra Lives", option_main_extra_lives_choices,
 		option_main_extra_lives_descriptions_line_1, option_empty, option_empty,
-		"", 9, true, 3, true);
+		"", 9, true, 3, true, true);
 	MENU_LIVES_INTERVAL->prepareMenuOption("Lives Interval", option_main_lives_interval_choices,
 		option_main_lives_interval_descriptions_line_1, option_main_lives_interval_descriptions_line_2, option_main_lives_interval_descriptions_line_3,
-		"", 8, false, 0, true);
+		"", 8, false, 0, true, true);
 	MENU_PEASANT_PENALTY->prepareMenuOption("Peasant Penalty", option_on_off,
 		option_main_peasant_penalty_descriptions_line_1, option_main_peasant_penalty_descriptions_line_2, option_main_peasant_penalty_descriptions_line_3,
-		"", 2, false, 0, true);
+		"", 2, false, 0, true, true);
 	MENU_KNIGHT_SPEED->prepareMenuOption("Knight Speed", option_main_knight_speed_choices,
 		option_main_knight_speed_descriptions_line_1, option_empty, option_empty,
-		"", 5, true, 2, true);
+		"", 5, true, 2, true, true);
 	MENU_ARROW_SPEED->prepareMenuOption("Arrow Speed", option_main_arrow_speed_choices,
 		option_main_arrow_speed_descriptions_line_1, option_empty, option_empty,
-		"", 5, true, 1, true);
+		"", 5, true, 1, true, true);
 	MENU_ARCHER_FREQ->prepareMenuOption("Archer Frequency", option_main_archer_freq_choices,
 		option_main_archer_freq_descriptions_line_1, option_main_archer_freq_descriptions_line_2, option_main_archer_freq_descriptions_line_3,
-		"", 6, false, 0, true);
+		"", 6, false, 0, true, true);
 	MENU_TREASURE_HUTS->prepareMenuOption("Treasure Huts", option_main_treasure_huts_choices,
 		option_main_treasure_huts_descriptions_line_1, option_main_treasure_huts_descriptions_line_2, option_main_treasure_huts_descriptions_line_3,
-		"", 3, false, 0, true);
+		"", 3, false, 0, true, true);
 
 	/* Cosmetic Settings Menu */
 	menu_cosmetic.prepareMenu(COSMETIC_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -695,22 +701,22 @@ void InitializeMenus() {
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
 #if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
-		"", 5, true, 4, true);
+		"", 5, true, 4, true, false);
 #else
-		"", 8, true, 4, true);
+		"", 8, true, 4, true, false);
 #endif
 	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
 		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
-		"", 2, false, 0, true);
+		"", 2, false, 0, true, false);
 	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_comment_freq_choices,
 		option_main_comment_freq_descriptions_line_1, option_main_comment_freq_descriptions_line_2, option_main_comment_freq_descriptions_line_3,
-		"", 7, false, 3, true);
+		"", 7, false, 3, true, false);
 	MENU_BIG_HEAD_MODE->prepareMenuOption("Big Head Mode", option_on_off,
 		option_main_big_head_mode_descriptions_line_1, option_empty, option_empty,
-		"", 2, true, 1, true);
+		"", 2, true, 1, true, false);
 	MENU_SCALING->prepareMenuOption("Screen Scaling", option_main_scaling_choices,
 		option_main_scaling_descriptions_line_1, option_main_scaling_descriptions_line_2, option_main_scaling_descriptions_line_3,
-		"", 4, false, scalingType, true);
+		"", 4, false, scalingType, true, false);
 
 	/* Other Settings Menu */
 	menu_other.prepareMenu(OTHER_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -721,13 +727,13 @@ void InitializeMenus() {
 	}
 	MENU_STARTING_LEVEL->prepareMenuOption("Starting Level", option_main_starting_level_choices,
 		option_main_starting_level_descriptions_line_1, option_empty, option_empty,
-		"", 10, true, 0, true);
+		"", 10, true, 0, true, true);
 	MENU_KNIGHT_BEHAVIOR->prepareMenuOption("Knight Behavior", option_main_knight_behavior_choices,
 		option_main_knight_behavior_descriptions_line_1, option_main_knight_behavior_descriptions_line_2, option_main_knight_behavior_descriptions_line_3,
-		"", 2, false, 1, true);
+		"", 2, false, 1, true, false);
 	MENU_LEVEL_TRAN->prepareMenuOption("Level Transition", option_main_level_tran_choices,
 		option_main_level_tran_descriptions_line_1, option_main_level_tran_descriptions_line_2, option_main_level_tran_descriptions_line_3,
-		"", 2, false, 0, true);
+		"", 2, false, 0, true, false);
 
 	/* Cheats Menu */
 	menu_cheats.prepareMenu(CHEAT_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -738,16 +744,16 @@ void InitializeMenus() {
 	}
 	MENU_INF_LIVES->prepareMenuOption("Infinite Lives", option_on_off,
 		option_cheats_inf_lives_descriptions_line_1, option_cheats_inf_lives_descriptions_line_2, option_cheats_inf_lives_descriptions_line_3,
-		"Secret Code?!?!", 2, true, 1, true);
+		"Secret Code?!?!", 2, true, 1, true, true);
 	MENU_SPEEDY_MODE->prepareMenuOption("Speedy Trogdor", option_speedy_mode_choices,
 		option_cheats_speedy_mode_descriptions_line_1, option_empty, option_empty,
-		"S&K Mushroom Pulley", 4, true, 0, true);
+		"S&K Mushroom Pulley", 4, true, 0, true, true);
 	MENU_NOCLIP->prepareMenuOption("Noclip", option_on_off,
 		option_cheats_noclip_descriptions_line_1, option_cheats_noclip_descriptions_line_2, option_empty,
-		"1994 Country", 2, true, 1, true);
+		"1994 Country", 2, true, 1, true, true);
 	MENU_DEBUG_MODE->prepareMenuOption("Debug Mode", option_on_off,
 		option_cheats_debug_mode_descriptions_line_1, option_cheats_debug_mode_descriptions_line_2, option_empty,
-		"Class of 1981", 2, true, 1, true);
+		"Class of 1981", 2, true, 1, true, true);
 
 	/* Credits Notebook */
 	menu_credits.prepareMenuNotebook(5, 304, 216, 2);
@@ -825,10 +831,10 @@ void InitializeMenus() {
 	}
 	QUIT_BACK->prepareMenuOption("Keep playing", option_empty,
 		option_quit_descriptions_line_1, option_quit_descriptions_line_2, option_quit_descriptions_line_3,
-		"", 1, false, 0, true);
+		"", 1, false, 0, true, false);
 	QUIT_CONFIRM->prepareMenuOption("Quit it!", option_empty,
 		option_quit_descriptions_line_1, option_quit_descriptions_line_2, option_quit_descriptions_line_3,
-		"", 1, false, 0, true);
+		"", 1, false, 0, true, false);
 
 	/* Initializing Values */
 	if (!menusAreInitialized) {
