@@ -112,6 +112,7 @@ class SpriteInstance {
         void setFrameAndForm(Sint8, Sint8);
         void animateFrame();
         void animateForm();
+        void animateWrap();
         void updateCurrSprite();
         void moveSprite();
         void setPosX(double);

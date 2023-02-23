@@ -336,6 +336,20 @@ void SpriteInstance::animateForm() {
     }
 }
 
+// used only in special cases; it is assumed that animFrameTime is > 0; animFormTime is unused
+void SpriteInstance::animateWrap() {
+    animFrameCounter += frameRateMult;
+    while (animFrameCounter >= animFrameTime) {
+        animFrameCounter -= animFrameTime;
+        if (animFrame + 1 < spriteObj->numFrames) {
+            setFrame(animFrame + 1);
+        } else {
+            setFrame((animFrame + 1) % spriteObj->numFrames);
+            setForm((animForm + 1) % spriteObj->numForms);
+        }
+    }
+}
+
 void SpriteInstance::updateCurrSprite() {
 #if !defined(SDL1)
     currSprite = spriteObj->sub[animFrame][animForm].texture;
@@ -469,15 +483,22 @@ void SpriteInstance::prepareAsCSO(double x, double y, Sint8 frame, Sint8 form, S
     isActive = true;
 }
 
-void SpriteInstance::renderAsCSO(bool useTwips = true) {
+void SpriteInstance::renderAsCSO(bool useWrap = false) {
     if (isActive) {
-        if (useTwips) {
-            renderSpriteAsCSO_game();
-        } else if (SDL_HasIntersection(&gameSrcRect_unscaled, &dstrect)) {
+        //if (useTwips) {
+        //    renderSpriteAsCSO_game();
+        //} else if (SDL_HasIntersection(&gameSrcRect_unscaled, &dstrect)) {
+        //    renderSprite_game();
+        //}
+        if (SDL_HasIntersection(&gameSrcRect_unscaled, &dstrect)) {
             renderSprite_game();
         }
         moveSprite();
-        animateFrame();
-        animateForm();
+        if (useWrap) {
+            animateWrap();
+        } else {
+            animateFrame();
+            animateForm();
+        }
     }
 }

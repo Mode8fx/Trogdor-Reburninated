@@ -133,7 +133,7 @@ void cutscene_level_beaten() {
 		}
 	}
 	cutscene_level_beaten_trogdor.renderAsCSO(false);
-	cutscene_level_beaten_smoke.renderAsCSO(false);
+	cutscene_level_beaten_smoke.renderAsCSO(true);
 	cutscene_cottage_fire.renderAsCSO(false);
 	renderText(text_9_nice_work, font_serif_white_10);
 	renderText(text_9_level_gray, font_serif_gray_12);
