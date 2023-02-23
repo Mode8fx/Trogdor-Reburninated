@@ -194,6 +194,8 @@ class GameManager {
 		Sint8 speedyMode;                       // speedy mode
 		bool debugMode;                         // debug mode
 		bool noclip;                            // noclip cheat to walk through cottages
+		bool peasantPenalty;                    // peasant penalty setting is enabled
+		Sint8 treasureHutSetting;               // treasure hut setting
 		GameManager();
 		GameManager(MenuManager);
 		void resetAllSrcRects();

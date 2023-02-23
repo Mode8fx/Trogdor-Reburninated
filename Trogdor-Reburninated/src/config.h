@@ -56,6 +56,16 @@ struct State_Settings_Unlocks {
 	bool locked_debugMode;
 };
 
+struct State_Autosave {
+	Sint16 mans;                          // lives
+	Uint32 score;                         // score
+	Uint8 level;                          // current level
+	bool treasureHutFound;                // treasure hut has been found in this level
+	Sint8 treasureHutLevel;               // the level index of the first treasure hut you entered; default is 0
+	State_Settings_Difficulty difficulty; // Difficulty settings when the game was started
+	State_Settings_Cheats cheats;         // Cheat settings when the game was started
+};
+
 struct GameState {
 	State_Settings_General    settings_general;
 	State_Settings_Difficulty settings_difficulty;
@@ -63,6 +73,7 @@ struct GameState {
 	State_Settings_Other      settings_other;
 	State_Settings_Cheats     settings_cheats;
 	State_Settings_Unlocks    settings_unlocks;
+	State_Autosave            autosave;
 };
 
 /* Save File */

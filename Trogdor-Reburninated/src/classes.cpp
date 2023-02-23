@@ -541,6 +541,7 @@ GameManager::GameManager(MenuManager mm) {
 	srand(SDL_GetTicks());
 	initialized = true;
 	forceMusicStart = true;
+
 	infiniteLives = MENU_INF_LIVES->isValue(0);
 	if (infiniteLives) {
 		mans = 99;
@@ -561,18 +562,12 @@ GameManager::GameManager(MenuManager mm) {
 		}
 	}
 	score = 0;
-	peasantometer = 0;
-	paused = false;
-	startDown = false;
-	manually_paused = 0;
-	gameOver = false;
-	//if (mm.fzxActive) level = 81;
-	//else level = 1;
 	level = MENU_STARTING_LEVEL->index * 10 + 1;
-	//levelIndex = 1; // set via levelInit()
-	setBurnination(0);
-	archerFrequencySetting = MENU_ARCHER_FREQ->index;
-	archerFrequency = 0;
+	treasureHutFound = false;
+	treasureHutLevel = -1;
+	livesIntervalSetting = MENU_LIVES_INTERVAL->index;
+	peasantPenalty = MENU_PEASANT_PENALTY->isValue(0);
+	knightSpeed = (0.7 + (MENU_KNIGHT_SPEED->index * 0.15));
 	switch (MENU_ARROW_SPEED->index) {
 		case 0:
 			arrowSpeed = 3;
@@ -590,14 +585,24 @@ GameManager::GameManager(MenuManager mm) {
 			arrowSpeed = 5;
 			break;
 	}
+	archerFrequencySetting = MENU_ARCHER_FREQ->index;
+	treasureHutSetting = MENU_TREASURE_HUTS->index;
+	speedyMode = MENU_SPEEDY_MODE->index;
+	noclip = MENU_NOCLIP->isValue(0);
+	debugMode = MENU_DEBUG_MODE->isValue(0);
+
+	peasantometer = 0;
+	paused = false;
+	startDown = false;
+	manually_paused = 0;
+	gameOver = false;
+	setBurnination(0);
+	archerFrequency = 0;
 	burnRate = 0;
 	bigHeadMode = MENU_BIG_HEAD_MODE->isValue(0);
-	speedyMode = MENU_SPEEDY_MODE->index;
 	player = Trogdor(bigHeadMode, speedyMode);
 	player.sprite.facingRight = true;
-	knightSpeed = (0.7 + (MENU_KNIGHT_SPEED->index * 0.15));
 	knightIncrement = knightSpeed * frameRateMult;
-	livesIntervalSetting = MENU_LIVES_INTERVAL->index;
 	switch (MENU_LIVES_INTERVAL->index) {
 		case 0:
 			extraMansBreak = 300;
@@ -632,7 +637,7 @@ GameManager::GameManager(MenuManager mm) {
 			maxExtraMans = 0;
 			break;
 	}
-	extraMansCounter = 1;
+	extraMansCounter = (score / extraMansBreak) + 1;
 	arched = false;
 	dm_frameState.set(1);
 	sprite_dm = SpriteInstance(&sprite_death_message, 0, 0);
@@ -648,10 +653,8 @@ GameManager::GameManager(MenuManager mm) {
 	sprite_pm_off = SpriteInstance(&sprite_peasantometer_icon, 0, 0);
 	kick_frameState.set(1);
 	numHuts = 0;
-	treasureHutFound = false;
 	inTreasureHut = false;
 	treasureHutIndex = 0;
-	treasureHutLevel = -1;
 	store_x = 0;
 	store_y = 0;
 	treasureHut_timer = 0;
@@ -678,8 +681,6 @@ GameManager::GameManager(MenuManager mm) {
 			sbVoiceMult = 2;
 			break;
 	}
-	debugMode = MENU_DEBUG_MODE->isValue(0);
-	noclip = MENU_NOCLIP->isValue(0);
 }
 
 void GameManager::resetAllSrcRects() {
@@ -969,7 +970,7 @@ inline void GameManager::trogdor_add_y_delta(Sint8 dy) {
 inline void GameManager::handle_treasure_hut_entry(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
 	// Technically, the original treasure_button collision is different from the hut fire collision used here, but it's both negligible and inconsistent between huts (seems like a bug), so I'm not gonna bother
 	if (treasureHutIndex && !treasureHutFound && !hutArray[treasureHutIndex - 1].burned && SDL_HasIntersection(&trog->sprite.dstrect, &hutArray[treasureHutIndex - 1].sprite.collision)
-		&& (MENU_TREASURE_HUTS->index == 0 || (MENU_TREASURE_HUTS->index == 1 && (treasureHutLevel == -1 || treasureHutLevel == levelIndex)))) {
+		&& (treasureHutSetting == 0 || (treasureHutSetting == 1 && (treasureHutLevel == -1 || treasureHutLevel == levelIndex)))) {
 		inTreasureHut = true;
 		treasureHutLevel = levelIndex;
 		for (i = 0; i < MAX_NUM_LOOT; i++) {
@@ -1401,7 +1402,7 @@ void GameManager::peasantTimerClick() {
 					if (peasantArray[i].burning) {
 						hutArray[peasantArray[i].myHome].burning = true;
 						// if (peasantometer > 0 && !peasantArray[i].burning) { // I added the burning check; this looks like an oversight in the original game (though it's very rare that it would actually affect the player)
-					} else if (peasantometer > 0 && MENU_PEASANT_PENALTY->isValue(0)) {
+					} else if (peasantometer > 0 && peasantPenalty) {
 						peasantometer--;
 					}
 					peasantArray[i].burning = false;
