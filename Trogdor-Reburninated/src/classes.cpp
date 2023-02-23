@@ -597,6 +597,7 @@ GameManager::GameManager(MenuManager mm) {
 	player.sprite.facingRight = true;
 	knightSpeed = (0.7 + (MENU_KNIGHT_SPEED->index * 0.15));
 	knightIncrement = knightSpeed * frameRateMult;
+	livesIntervalSetting = MENU_LIVES_INTERVAL->index;
 	switch (MENU_LIVES_INTERVAL->index) {
 		case 0:
 			extraMansBreak = 300;

@@ -256,7 +256,12 @@ constexpr auto QUIT_NUM_OPTIONS = 2;
 #define QUIT_BACK    menu_quit.options[QUIT_BACK_INDEX]
 #define QUIT_CONFIRM menu_quit.options[QUIT_CONFIRM_INDEX]
 
-extern State_Settings getSettings();
+extern State_Settings_General getSettingsGeneral();
+extern State_Settings_Difficulty getSettingsDifficulty();
+extern State_Settings_Cosmetic getSettingsCosmetic();
+extern State_Settings_Other getSettingsOther();
+extern State_Settings_Cheats getSettingsCheats();
+extern State_Settings_Unlocks getSettingsUnlocks();
 extern void updateFrameRate();
 
 #endif

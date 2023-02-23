@@ -166,6 +166,7 @@ class GameManager {
 		Trogdor player;                         // the player
 		double knightSpeed;                     // knight speed setting
 		double knightIncrement;                 // knight movement speed
+		Sint8 livesIntervalSetting;             // setting for lives interval
 		Uint16 extraMansBreak;                  // # of points for an extra life
 		Uint16 extraMansCounter;                // how many extra lives have been earned so far + 1
 		Uint16 maxExtraMans;                    // how many extra lives are allowed to be earned

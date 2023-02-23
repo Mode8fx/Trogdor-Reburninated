@@ -54,10 +54,10 @@ void InitializeSound() {
 		SDL_Log(Mix_GetError());
 #endif
 	}
-	setVolume_music(gameState.settings.bgmVolume);
+	setVolume_music(gameState.settings_general.bgmVolume);
 	Mix_AllocateChannels(NUM_SOUND_CHANNELS);
-	Mix_Volume(SFX_CHANNEL_GAME, (int)(gameState.settings.sfxVolume * 128.0 / 100));
-	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(gameState.settings.sfxVolume * 128.0 / 100));
+	Mix_Volume(SFX_CHANNEL_GAME, (int)(gameState.settings_general.sfxVolume * 128.0 / 100));
+	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(gameState.settings_general.sfxVolume * 128.0 / 100));
 #endif
 }
 

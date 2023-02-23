@@ -828,33 +828,58 @@ void InitializeMenus() {
 	TTF_Quit();
 }
 
-State_Settings getSettings() {
+State_Settings_General getSettingsGeneral() {
 	return {
 		DEFAULT_VOLUME_MUSIC,
-		100,
+		100
+	};
+}
+
+State_Settings_Difficulty getSettingsDifficulty() {
+	return {
 		MENU_EXTRA_LIVES->index,
 		MENU_LIVES_INTERVAL->index,
 		MENU_PEASANT_PENALTY->index,
 		MENU_KNIGHT_SPEED->index,
 		MENU_ARROW_SPEED->index,
 		MENU_ARCHER_FREQ->index,
-		MENU_TREASURE_HUTS->index,
+		MENU_TREASURE_HUTS->index
+	};
+}
+
+State_Settings_Cosmetic getSettingsCosmetic() {
+	return {
 		MENU_FRAME_RATE->index,
 		MENU_MUSIC->index,
 		MENU_COMMENT_FREQ->index,
 		MENU_BIG_HEAD_MODE->index,
-		MENU_SCALING->index,
+		MENU_SCALING->index
+	};
+}
+
+State_Settings_Other getSettingsOther() {
+	return {
 		MENU_STARTING_LEVEL->index,
 		MENU_KNIGHT_BEHAVIOR->index,
-		MENU_LEVEL_TRAN->index,
+		MENU_LEVEL_TRAN->index
+	};
+}
+
+State_Settings_Cheats getSettingsCheats() {
+	return {
 		MENU_INF_LIVES->index,
 		MENU_SPEEDY_MODE->index,
 		MENU_NOCLIP->index,
-		MENU_DEBUG_MODE->index,
+		MENU_DEBUG_MODE->index
+	};
+}
+
+State_Settings_Unlocks getSettingsUnlocks() {
+	return {
 		MENU_INF_LIVES->optionIsLocked,
 		MENU_SPEEDY_MODE->optionIsLocked,
 		MENU_NOCLIP->optionIsLocked,
-		MENU_DEBUG_MODE->optionIsLocked,
+		MENU_DEBUG_MODE->optionIsLocked
 	};
 }
 

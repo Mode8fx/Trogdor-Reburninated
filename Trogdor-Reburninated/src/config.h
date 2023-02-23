@@ -13,9 +13,12 @@ constexpr auto DEFAULT_VOLUME_MUSIC = 35;
 #define MAX_PAGE_NUM_HIRES 3
 #endif
 
-struct State_Settings {
+struct State_Settings_General {
 	Sint8 bgmVolume;
 	Sint8 sfxVolume;
+};
+
+struct State_Settings_Difficulty {
 	Sint8 extraLives;
 	Sint8 livesInterval;
 	Sint8 peasantPenalty;
@@ -23,26 +26,43 @@ struct State_Settings {
 	Sint8 arrowSpeed;
 	Sint8 archerFreq;
 	Sint8 treasureHuts;
+};
+
+struct State_Settings_Cosmetic {
 	Sint8 frameRate;
 	Sint8 music;
 	Sint8 commentFreq;
 	Sint8 bigHeadMode;
 	Sint8 scaling;
+};
+
+struct State_Settings_Other {
 	Sint8 startingLevel;
 	Sint8 knightBehavior;
 	Sint8 levelTran;
+};
+
+struct State_Settings_Cheats {
 	Sint8 infLives;
 	Sint8 speedyMode;
 	Sint8 noclip;
 	Sint8 debugMode;
-	bool  locked_infLives;
-	bool  locked_speedyMode;
-	bool  locked_noclip;
-	bool  locked_debugMode;
+};
+
+struct State_Settings_Unlocks {
+	bool locked_infLives;
+	bool locked_speedyMode;
+	bool locked_noclip;
+	bool locked_debugMode;
 };
 
 struct GameState {
-	State_Settings settings;
+	State_Settings_General    settings_general;
+	State_Settings_Difficulty settings_difficulty;
+	State_Settings_Cosmetic   settings_cosmetic;
+	State_Settings_Other      settings_other;
+	State_Settings_Cheats     settings_cheats;
+	State_Settings_Unlocks    settings_unlocks;
 };
 
 /* Save File */
