@@ -76,6 +76,7 @@ extern SDL_Color color_brown;
 extern FontObject font_serif_brown_6;
 extern FontObject font_serif_brown_8;
 extern FontObject font_serif_gray_6;
+extern FontObject font_serif_gray_8;
 extern FontObject font_serif_gray_12;
 extern FontObject font_serif_orange_6;
 extern FontObject font_serif_red_6;

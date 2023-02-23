@@ -392,7 +392,7 @@ int main(int argv, char** args) {
 			/* Continue Screen */
 				case 3001:
 					g_frameState.increment();
-					if (keyPressed(INPUT_B)) {
+					if (keyPressed(INPUT_B) || keyPressed(INPUT_SELECT)) {
 						g_sceneState = 3;
 					} else if (keyPressed(INPUT_UP) || keyPressed(INPUT_DOWN)) {
 						MM.continueHighlighted = !MM.continueHighlighted;

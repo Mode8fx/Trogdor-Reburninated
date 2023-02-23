@@ -213,6 +213,7 @@ SDL_Color color_brown  = { 153, 102,   0 };
 FontObject font_serif_brown_6;
 FontObject font_serif_brown_8;
 FontObject font_serif_gray_6;
+FontObject font_serif_gray_8;
 FontObject font_serif_gray_12;
 FontObject font_serif_orange_6;
 FontObject font_serif_red_6;

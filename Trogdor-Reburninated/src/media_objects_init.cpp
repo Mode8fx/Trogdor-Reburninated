@@ -715,6 +715,7 @@ void destroyAllTextChars() {
 	//destroyTextChars(&font_serif_brown_6);
 	//destroyTextChars(&font_serif_brown_8);
 	//destroyTextChars(&font_serif_gray_6);
+	destroyTextChars(&font_serif_gray_8);
 	destroyTextChars(&font_serif_gray_12);
 	//destroyTextChars(&font_serif_orange_6);
 	destroyTextChars(&font_serif_red_6);
@@ -742,6 +743,7 @@ void closeAllFonts() {
 	TTF_CloseFont(font_serif_brown_6.font);
 	TTF_CloseFont(font_serif_brown_8.font);
 	TTF_CloseFont(font_serif_gray_6.font);
+	TTF_CloseFont(font_serif_gray_8.font);
 	TTF_CloseFont(font_serif_gray_12.font);
 	TTF_CloseFont(font_serif_orange_6.font);
 	TTF_CloseFont(font_serif_red_6.font);

@@ -7,6 +7,7 @@ Sint8 currOnscreenIndex;
 Sint8 counter;
 bool menusAreInitialized = false;
 FontObject *menuFont;
+FontObject *menuFont_frozen;
 
 #define CURR_OPTION options[cursorIndex]
 #define CURR_OPTION_ONSCREEN options[currOnscreenIndex]
@@ -144,28 +145,46 @@ void MenuOption::prepareMenuOption(const char label_ptr[], std::string choice_pt
 		index = start;
 		index_init = start;
 		choicesWrap = wrap;
+		optionIsFrozen = false;
 		optionIsLocked = false;
 	}
+	initLabel();
 	updateLabel();
 	initChoicesAndDescriptions();
 	updateChoice();
 	updateDescription();
 }
 
+void MenuOption::setFrozen(bool frozen) {
+	optionIsFrozen = frozen;
+}
+
 void MenuOption::setLocked(bool locked) {
 	optionIsLocked = locked;
+	setFrozen(locked);
 	updateLabel();
 	updateChoice();
 	updateDescription();
 }
 
+void MenuOption::initLabel() {
+	if (!labelPtr.empty()) {
+		setText(labelPtr, &label, menuFont_frozen);
+		setText(labelPtr, &label, menuFont);
+	}
+}
+
 void MenuOption::updateLabel() {
 	if (!optionIsLocked) {
 		if (!labelPtr.empty()) {
-			setText(labelPtr, &label, menuFont);
+			if (!optionIsFrozen) {
+				setText(labelPtr, &label, menuFont);
+			} else {
+				setText(labelPtr, &label, menuFont_frozen);
+			}
 		}
 	} else {
-		setText("???", &label, menuFont);
+		setText("???", &label, menuFont_frozen);
 	}
 }
 
@@ -173,12 +192,16 @@ void MenuOption::updateLabel() {
 void MenuOption::initChoicesAndDescriptions() {
 	if (choicePtr != NULL) {
 		for (counter = 0; counter < numChoices; counter++) {
+			setText(choicePtr[counter], &choice, menuFont_frozen);
 			setText(choicePtr[counter], &choice, menuFont);
 		}
 	}
 	if (descPtr_1 != NULL) {
 		if (!oneDescription) {
 			for (counter = 0; counter < numChoices; counter++) {
+				setText(descPtr_1[counter], &description_1, menuFont_frozen);
+				setText(descPtr_2[counter], &description_1, menuFont_frozen);
+				setText(descPtr_3[counter], &description_1, menuFont_frozen);
 				setText(descPtr_1[counter], &description_1, menuFont);
 				setText(descPtr_2[counter], &description_1, menuFont);
 				setText(descPtr_3[counter], &description_1, menuFont);
@@ -190,10 +213,14 @@ void MenuOption::initChoicesAndDescriptions() {
 void MenuOption::updateChoice() {
 	if (!optionIsLocked) {
 		if (choicePtr != NULL) {
-			setText(choicePtr[index], &choice, menuFont);
+			if (!optionIsFrozen) {
+				setText(choicePtr[index], &choice, menuFont);
+			} else {
+				setText(choicePtr[index], &choice, menuFont_frozen);
+			}
 		}
 	} else {
-		setText("", &choice, menuFont);
+		setText("", &choice, menuFont_frozen);
 	}
 }
 
@@ -226,8 +253,13 @@ void MenuOption::setDescriptionToIndex(Uint8 forcedIndex) {
 }
 
 void MenuOption::render(bool renderDescription) {
-	renderText_menu(label, *menuFont);
-	renderText_menu(choice, *menuFont);
+	if (!optionIsFrozen) {
+		renderText_menu(label, *menuFont);
+		renderText_menu(choice, *menuFont);
+	} else {
+		renderText_menu(label, *menuFont_frozen);
+		renderText_menu(choice, *menuFont_frozen);
+	}
 	if (renderDescription) {
 		renderText_menu(description_1, *menuFont);
 		renderText_menu(description_2, *menuFont);
@@ -277,10 +309,10 @@ Sint8 Menu::handleInput() {
 	if (keyPressed(INPUT_DOWN)) {
 		incrementOption();
 	}
-	if (keyPressed(INPUT_LEFT)) {
+	if (keyPressed(INPUT_LEFT) && !(CURR_OPTION->optionIsLocked || CURR_OPTION->optionIsFrozen)) {
 		decrementCurrOptionChoice();
 	}
-	if (keyPressed(INPUT_RIGHT)) {
+	if (keyPressed(INPUT_RIGHT) && !(CURR_OPTION->optionIsLocked || CURR_OPTION->optionIsFrozen)) {
 		incrementCurrOptionChoice();
 	}
 	if (keyPressed(INPUT_A) || keyPressed(INPUT_START)) {
@@ -591,6 +623,8 @@ void InitializeMenus() {
 		menuFont = &font_serif_white_8;
 		setFont(menuFont, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white, true);
 	}
+	menuFont_frozen = &font_serif_gray_8;
+	setFont(&font_serif_gray_8, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_gray, false);
 
 	/* Options Menu */
 	menu_main.prepareMenu(MENU_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 168 + (8 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -825,6 +859,7 @@ void InitializeMenus() {
 	menusAreInitialized = true;
 
 	TTF_CloseFont(menuFont->font);
+	TTF_CloseFont(menuFont_frozen->font);
 	TTF_Quit();
 }
 
