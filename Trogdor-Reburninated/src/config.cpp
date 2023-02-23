@@ -1,7 +1,7 @@
 #include "config.h"
 #include "menu.h"
 
-void saveGameState() {
+void saveGameState_settings() {
 	gameState.settings_general = getSettingsGeneral();
 	gameState.settings_difficulty = getSettingsDifficulty();
 	gameState.settings_cosmetic = getSettingsCosmetic();
@@ -55,5 +55,6 @@ void loadGameState() {
 		gameState.settings_other = getSettingsOther();
 		gameState.settings_cheats = getSettingsCheats();
 		gameState.settings_unlocks = getSettingsUnlocks();
+		gameState.autosave = { -1, 0, 0, 0, 0, gameState.settings_difficulty, gameState.settings_cheats };
 	}
 }

@@ -132,7 +132,7 @@ constexpr auto DEFAULT_WIDTH = 640;
 constexpr auto DEFAULT_HEIGHT = 480;
 #endif
 
-extern void saveGameState();
+extern void saveGameState_settings();
 extern void loadGameState();
 
 #endif

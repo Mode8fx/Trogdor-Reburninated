@@ -267,9 +267,20 @@ int main(int argv, char** args) {
 				MM.handlePageChange();
 				if (MM.page == 1) {
 					if (keyPressed(INPUT_START)) {
-						MM.continueHighlighted = true;
-						MM.cursor.dstrect.y = (int)(text_3_continue_1.dstrect.y / gameHiResMult);
-						g_sceneState = 3001;
+						if (gameState.autosave.mans >= 0) {
+							MM.continueHighlighted = true;
+							MM.cursor.dstrect.y = (int)(text_3_continue_1.dstrect.y / gameHiResMult);
+							g_sceneState = 3001;
+						} else {
+							MM.continueHighlighted = false;
+							GM = GameManager(MM);
+							GM.levelInit();
+							updateText(&text_4_score_val, to_string(GM.score));
+							updateText(&text_4_mans_val, to_string(GM.mans));
+							updateText(&text_4_level_val, to_string(GM.level));
+							InitializeCutsceneObjects_trogdor(); // needed in case Big Head Mode was toggled
+							g_sceneState = 4;
+						}
 					} else if (keyPressed(INPUT_SELECT)) {
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						menu_main.openMenu();
@@ -391,17 +402,13 @@ int main(int argv, char** args) {
 							MM.cursor.dstrect.y = (int)(text_3_continue_2.dstrect.y / gameHiResMult);
 						}
 					} else if (keyPressed(INPUT_A) || keyPressed(INPUT_START)) {
-						if (MM.continueHighlighted) {
-
-						} else {
-							GM = GameManager(MM);
-							GM.levelInit();
-							updateText(&text_4_score_val, to_string(GM.score));
-							updateText(&text_4_mans_val, to_string(GM.mans));
-							updateText(&text_4_level_val, to_string(GM.level));
-							InitializeCutsceneObjects_trogdor(); // needed in case Big Head Mode was toggled
-							g_sceneState = 4;
-						}
+						GM = GameManager(MM);
+						GM.levelInit();
+						updateText(&text_4_score_val, to_string(GM.score));
+						updateText(&text_4_mans_val, to_string(GM.mans));
+						updateText(&text_4_level_val, to_string(GM.level));
+						InitializeCutsceneObjects_trogdor(); // needed in case Big Head Mode was toggled
+						g_sceneState = 4;
 					}
 					renderText(text_3_continue_1, font_serif_white_8_mult);
 					renderText(text_3_continue_2, font_serif_white_8_mult);
@@ -469,7 +476,7 @@ int main(int argv, char** args) {
 					case -1: // Press B/Select
 						g_sceneState = 3;
 						pauseMusic();
-						saveGameState();
+						saveGameState_settings();
 						break;
 					default:
 						break;
@@ -564,7 +571,7 @@ int main(int argv, char** args) {
 						break;
 					case QUIT_CONFIRM_INDEX:
 						stopMusic();
-						saveGameState();
+						saveGameState_settings();
 						loadAndPlaySound(SFX_ITSOVER);
 						while (sfxChannel_strongBad != NULL) {
 							freeFinishedSoundChunks(); // wait for sound to stop playing
@@ -838,9 +845,11 @@ int main(int argv, char** args) {
 				cutscene_level_beaten();
 				if (g_frameState.startingFrame(285)) {
 					GM.updateLevel(1);
+					GM.saveGameState_autosave();
 				} else if ((MENU_LEVEL_TRAN->isValue(0) && g_frameState.frame == 316) || (MENU_LEVEL_TRAN->isValue(1) && keyPressed(INPUT_A))) {
 					if (g_frameState.frame < 285) {
 						GM.updateLevel(1);
+						GM.saveGameState_autosave();
 					}
 					switch (GM.level) {
 						case 5:

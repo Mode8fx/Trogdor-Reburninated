@@ -505,7 +505,7 @@ void MenuManager::unlockCheat(Uint8 menuIndex, Sint8 indexAtUnlock) {
 		MENU_EXTRA_LIVES->choiceIsAllowed[7] = true;
 		MENU_EXTRA_LIVES->choiceIsAllowed[8] = true;
 	}
-	saveGameState();
+	saveGameState_settings();
 }
 
 void MenuManager::typeStuff() {
@@ -542,32 +542,57 @@ GameManager::GameManager(MenuManager mm) {
 	initialized = true;
 	forceMusicStart = true;
 
-	infiniteLives = MENU_INF_LIVES->isValue(0);
-	if (infiniteLives) {
-		mans = 99;
+	if (MM.continueHighlighted) {
+		mans = gameState.autosave.mans;
+		score = gameState.autosave.score;
+		level = gameState.autosave.level;
+		treasureHutFound = gameState.autosave.treasureHutFound;
+		treasureHutLevel = gameState.autosave.treasureHutLevel;
+		livesIntervalSetting = gameState.autosave.difficulty.livesInterval;
+		peasantPenalty = gameState.autosave.difficulty.peasantPenalty;
+		knightSpeedSetting = gameState.autosave.difficulty.knightSpeed;
+		arrowSpeed = gameState.autosave.difficulty.arrowSpeed;
+		archerFrequencySetting = gameState.autosave.difficulty.archerFreq;
+		treasureHutSetting = gameState.autosave.difficulty.treasureHuts;
+		infiniteLives = gameState.autosave.cheats.infLives;
+		speedyMode = gameState.autosave.cheats.speedyMode;
+		noclip = gameState.autosave.cheats.noclip;
+		debugMode = gameState.autosave.cheats.debugMode;
 	} else {
-		switch (MENU_EXTRA_LIVES->index) {
-			case 6:
-				mans = 10;
-				break;
-			case 7:
-				mans = 20;
-				break;
-			case 8:
-				mans = 30;
-				break;
-			default:
-				mans = MENU_EXTRA_LIVES->index;
-				break;
+		infiniteLives = MENU_INF_LIVES->isValue(0);
+		if (infiniteLives) {
+			mans = 99;
+		} else {
+			switch (MENU_EXTRA_LIVES->index) {
+				case 6:
+					mans = 10;
+					break;
+				case 7:
+					mans = 20;
+					break;
+				case 8:
+					mans = 30;
+					break;
+				default:
+					mans = MENU_EXTRA_LIVES->index;
+					break;
+			}
 		}
+		score = 0;
+		level = MENU_STARTING_LEVEL->index * 10 + 1;
+		treasureHutFound = false;
+		treasureHutLevel = -1;
+		livesIntervalSetting = MENU_LIVES_INTERVAL->index;
+		peasantPenalty = MENU_PEASANT_PENALTY->isValue(0);
+		knightSpeedSetting = MENU_KNIGHT_SPEED->index;
+		archerFrequencySetting = MENU_ARCHER_FREQ->index;
+		treasureHutSetting = MENU_TREASURE_HUTS->index;
+		speedyMode = MENU_SPEEDY_MODE->index;
+		noclip = MENU_NOCLIP->isValue(0);
+		debugMode = MENU_DEBUG_MODE->isValue(0);
 	}
-	score = 0;
-	level = MENU_STARTING_LEVEL->index * 10 + 1;
-	treasureHutFound = false;
-	treasureHutLevel = -1;
-	livesIntervalSetting = MENU_LIVES_INTERVAL->index;
-	peasantPenalty = MENU_PEASANT_PENALTY->isValue(0);
-	knightSpeed = (0.7 + (MENU_KNIGHT_SPEED->index * 0.15));
+
+	knightSpeed = (0.7 + (knightSpeedSetting * 0.15));
 	switch (MENU_ARROW_SPEED->index) {
 		case 0:
 			arrowSpeed = 3;
@@ -585,12 +610,6 @@ GameManager::GameManager(MenuManager mm) {
 			arrowSpeed = 5;
 			break;
 	}
-	archerFrequencySetting = MENU_ARCHER_FREQ->index;
-	treasureHutSetting = MENU_TREASURE_HUTS->index;
-	speedyMode = MENU_SPEEDY_MODE->index;
-	noclip = MENU_NOCLIP->isValue(0);
-	debugMode = MENU_DEBUG_MODE->isValue(0);
-
 	peasantometer = 0;
 	paused = false;
 	startDown = false;
@@ -1166,7 +1185,7 @@ void GameManager::updateKnightOffsetAndMove() {
 }
 
 void GameManager::testKnightHit() {
-	if (!player.invince) {
+	if (player.invince <= 0) {
 		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 			if (SDL_HasIntersection(&player.sprite.dstrect, &knightArray[i].sprite.collision)) {
 				paused = true;
@@ -1179,7 +1198,7 @@ void GameManager::testKnightHit() {
 }
 
 void GameManager::arrowHitEventHandler() {
-	if (!player.invince) { // (burnination == 0 && !paused) has already been checked
+	if (player.invince <= 0) { // (burnination == 0 && !paused) has already been checked
 		for (i = 0; i < MAX_NUM_ARROWS; i++) {
 			if (arrowArrayL[i].sprite.isActive && SDL_HasIntersection(&player.sprite.collision, &arrowArrayL[i].sprite.collision)) {
 				paused = true;
@@ -1479,6 +1498,7 @@ void GameManager::dm_updateFrameState() { // death message
 				sprite_dm.isActive = false;
 				player.frameState.set(1);
 				updateMans(-1);
+				saveGameState_autosave();
 				peasantometer = 0;
 				if (mans < 0) {
 					setMans(0);
@@ -1776,4 +1796,17 @@ void GameManager::renderTopBar() {
 			sprite_pm_off.dstrect.x += sprite_peasantometer_icon_step;
 		}
 	}
+}
+
+void GameManager::saveGameState_autosave() {
+	gameState.autosave.mans = mans;
+	gameState.autosave.score = score;
+	gameState.autosave.level = level;
+	gameState.autosave.treasureHutFound = treasureHutFound;
+	gameState.autosave.treasureHutLevel = treasureHutLevel;
+	gameState.autosave.difficulty = { MENU_EXTRA_LIVES->index, livesIntervalSetting, peasantPenalty, knightSpeedSetting, arrowSpeed, archerFrequencySetting, treasureHutSetting };
+	gameState.autosave.cheats = { infiniteLives, speedyMode, noclip, debugMode };
+	saveBin = SDL_RWFromFile(SAVE_FILE, "wb");
+	SDL_RWwrite(saveBin, &gameState, sizeof(gameState), 1);
+	SDL_RWclose(saveBin);
 }

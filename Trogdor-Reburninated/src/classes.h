@@ -164,7 +164,8 @@ class GameManager {
 		Knight knightArray[MAX_NUM_KNIGHTS];    // array of Knight objects
 		Archer archerArray[2];                  // array of Archer objects
 		Trogdor player;                         // the player
-		double knightSpeed;                     // knight speed setting
+		Sint8 knightSpeedSetting;               // knight speed setting
+		double knightSpeed;                     // knight speed
 		double knightIncrement;                 // knight movement speed
 		Sint8 livesIntervalSetting;             // setting for lives interval
 		Uint16 extraMansBreak;                  // # of points for an extra life
@@ -251,6 +252,7 @@ class GameManager {
 		void renderTrogdor();
 		void setBurnination(double);
 		void renderTopBar();
+		void saveGameState_autosave();
 };
 
 extern MenuManager MM;
