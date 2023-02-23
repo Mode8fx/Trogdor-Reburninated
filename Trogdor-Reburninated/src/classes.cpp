@@ -474,6 +474,8 @@ MenuManager::MenuManager() {
 	} else {
 		maxPageNum = MAX_PAGE_NUM_HIRES;
 	}
+	cursor = SpriteInstance(&sprite_cursor, 0, 0);
+	cursor.dstrect.x = (int)((double)text_3_continue_1.dstrect.x / gameHiResMult) - (cursor.dstrect.w * 2);
 }
 
 bool MenuManager::handleCheat(Uint8 menuIndex, const Uint8 *cheatArrayKey, Uint8 cheatLen, Sint8 &cheatIndex, SoundEffect *sfx, Sint8 indexAtUnlock) {

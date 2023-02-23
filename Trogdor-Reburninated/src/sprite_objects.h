@@ -235,6 +235,7 @@ extern SpriteObject sprite_kerrek;
 extern SpriteObject sprite_kerrek_smoked;
 extern SpriteObject sprite_strong_bad;
 extern SpriteObject sprite_strong_bad_ending;
+extern SpriteObject sprite_cursor;
 extern SpriteObject sprite_menu_cursor;
 extern SpriteObject sprite_menu_background;
 extern SpriteInstance sprite_menu_background_ins;

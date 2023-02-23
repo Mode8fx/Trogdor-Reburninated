@@ -18,11 +18,13 @@ void InitializeFontsAndText() {
 	TTF_CloseFont(font_serif_white_14.font);
 
 	setFont(&font_serif_white_6_mult, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white, false);
+	setFont(&font_serif_white_8_mult, "fonts/serif_v01.ttf", 8, 6.666, TTF_STYLE_NORMAL, color_white, false);
 	setFont(&font_serif_red_6_mult, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_red, false);
 	setFont(&font_serif_red_8_mult, "fonts/serif_v01.ttf", 8, 6.666, TTF_STYLE_NORMAL, color_red, false);
 	initializeFont_numbers(&font_serif_white_6_mult);
 	InitializeText_HomeScreen();
 	TTF_CloseFont(font_serif_white_6_mult.font);
+	TTF_CloseFont(font_serif_white_8_mult.font);
 	TTF_CloseFont(font_serif_red_6_mult.font);
 	TTF_CloseFont(font_serif_red_8_mult.font);
 
@@ -275,6 +277,10 @@ void InitializeText_HomeScreen() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_keyboard_4), 115 * gameHiResMult);
 	SET_TEXT(" L -> Q      R -> E", text_3_keyboard_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_keyboard_5), 129 * gameHiResMult);
+	SET_TEXT("Continue", text_3_continue_1, font_serif_white_8_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_continue_1), 110 * gameHiResMult);
+	SET_TEXT("New Game", text_3_continue_2, font_serif_white_8_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_continue_2), 130 * gameHiResMult);
 #endif
 }
 
@@ -596,6 +602,8 @@ void InitializeSpritesPart2() {
 		0, 0, 2, 2, 1);
 	PREPARE_SPRITE(sprite_strong_bad_ending, (rootDir + "graphics/strong_bad_ending.bmp").c_str(),
 		0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_cursor, (rootDir + "graphics/menu_cursor.bmp").c_str(),
+		0, 0, 1, 1, 1);
 	PREPARE_SPRITE_MENU(sprite_menu_cursor, (rootDir + "graphics/menu_cursor.bmp").c_str(),
 		0, 0, 1, 1, 1);
 	PREPARE_SPRITE_MENU(sprite_menu_background, (rootDir + "graphics/options_menu.bmp").c_str(),
@@ -717,6 +725,7 @@ void destroyAllTextChars() {
 	destroyTextChars(&font_serif_white_6);
 	destroyTextChars(&font_serif_white_6_mult);
 	destroyTextChars(&font_serif_white_8);
+	destroyTextChars(&font_serif_white_8_mult);
 	destroyTextChars(&font_serif_white_9);
 	destroyTextChars(&font_serif_white_10);
 	destroyTextChars(&font_serif_white_14);
@@ -743,6 +752,7 @@ void closeAllFonts() {
 	TTF_CloseFont(font_serif_white_6.font);
 	TTF_CloseFont(font_serif_white_6_mult.font);
 	TTF_CloseFont(font_serif_white_8.font);
+	TTF_CloseFont(font_serif_white_8_mult.font);
 	TTF_CloseFont(font_serif_white_9.font);
 	TTF_CloseFont(font_serif_white_10.font);
 	TTF_CloseFont(font_serif_white_14.font);

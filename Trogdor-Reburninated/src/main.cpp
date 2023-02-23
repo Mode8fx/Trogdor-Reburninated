@@ -267,13 +267,9 @@ int main(int argv, char** args) {
 				MM.handlePageChange();
 				if (MM.page == 1) {
 					if (keyPressed(INPUT_START)) {
-						GM = GameManager(MM);
-						GM.levelInit();
-						updateText(&text_4_score_val, to_string(GM.score));
-						updateText(&text_4_mans_val, to_string(GM.mans));
-						updateText(&text_4_level_val, to_string(GM.level));
-						InitializeCutsceneObjects_trogdor(); // needed in case Big Head Mode was toggled
-						g_sceneState = 4;
+						MM.continueHighlighted = true;
+						MM.cursor.dstrect.y = (int)(text_3_continue_1.dstrect.y / gameHiResMult);
+						g_sceneState = 3001;
 					} else if (keyPressed(INPUT_SELECT)) {
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						menu_main.openMenu();
@@ -382,6 +378,36 @@ int main(int argv, char** args) {
 				}
 				renderText(text_3_page, font_serif_white_6_mult);
 				break;
+			/* Continue Screen */
+				case 3001:
+					g_frameState.increment();
+					if (keyPressed(INPUT_B)) {
+						g_sceneState = 3;
+					} else if (keyPressed(INPUT_UP) || keyPressed(INPUT_DOWN)) {
+						MM.continueHighlighted = !MM.continueHighlighted;
+						if (MM.continueHighlighted) {
+							MM.cursor.dstrect.y = (int)(text_3_continue_1.dstrect.y / gameHiResMult);
+						} else {
+							MM.cursor.dstrect.y = (int)(text_3_continue_2.dstrect.y / gameHiResMult);
+						}
+					} else if (keyPressed(INPUT_A) || keyPressed(INPUT_START)) {
+						if (MM.continueHighlighted) {
+
+						} else {
+							GM = GameManager(MM);
+							GM.levelInit();
+							updateText(&text_4_score_val, to_string(GM.score));
+							updateText(&text_4_mans_val, to_string(GM.mans));
+							updateText(&text_4_level_val, to_string(GM.level));
+							InitializeCutsceneObjects_trogdor(); // needed in case Big Head Mode was toggled
+							g_sceneState = 4;
+						}
+					}
+					renderText(text_3_continue_1, font_serif_white_8_mult);
+					renderText(text_3_continue_2, font_serif_white_8_mult);
+					sprite_trogdor_logo_ins.renderSprite_game();
+					MM.cursor.renderSprite_game();
+					break;
 			/* Options Menu */
 			case 301:
 				g_frameState.increment();

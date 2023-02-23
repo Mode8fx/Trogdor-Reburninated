@@ -128,6 +128,8 @@ class MenuManager {
 		Sint8 dkcIndex;    // the current index of the Noclip cheat input
 		Sint8 page;        // the current page number
 		Sint8 maxPageNum;  // maxPageNum
+		bool continueHighlighted; // the cursor index on the Continue screen
+		SpriteInstance cursor;
 		MenuManager();
 		bool handleCheat(Uint8, const Uint8 *, Uint8, Sint8 &, SoundEffect *, Sint8);
 		void unlockCheat(Uint8, Sint8);
