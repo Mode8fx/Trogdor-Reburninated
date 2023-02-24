@@ -19,6 +19,7 @@ struct State_Settings_General {
 };
 
 struct State_Settings_Difficulty {
+	Sint8 preset;
 	Sint8 extraLives;
 	Sint8 livesInterval;
 	Sint8 peasantPenalty;

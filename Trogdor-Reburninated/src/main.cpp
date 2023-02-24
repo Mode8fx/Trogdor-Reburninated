@@ -421,7 +421,7 @@ int main(int argv, char** args) {
 				renderOverlay = false;
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_main.renderMenu();
-				switch (menu_main.handleInput()) {
+				switch (menu_main.handleInput(false)) {
 					case MENU_DIFFICULTY_INDEX:
 						menu_difficulty.openMenu();
 						g_sceneState = 302;
@@ -439,6 +439,7 @@ int main(int argv, char** args) {
 						g_sceneState = 305;
 						break;
 					case MENU_RESET_SETTINGS_INDEX:
+						menu_difficulty.setOptionChoice(MENU_PRESET_INDEX, MENU_PRESET->index_init);
 						menu_difficulty.setOptionChoice(MENU_EXTRA_LIVES_INDEX, MENU_EXTRA_LIVES->index_init);
 						menu_difficulty.setOptionChoice(MENU_LIVES_INTERVAL_INDEX, MENU_LIVES_INTERVAL->index_init);
 						menu_difficulty.setOptionChoice(MENU_PEASANT_PENALTY_INDEX, MENU_PEASANT_PENALTY->index_init);
@@ -487,7 +488,7 @@ int main(int argv, char** args) {
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_difficulty.renderMenu();
-				switch (menu_difficulty.handleInput()) {
+				switch (menu_difficulty.handleInput(true)) {
 					case -1: // Press B/Select
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;
@@ -501,7 +502,7 @@ int main(int argv, char** args) {
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_cosmetic.renderMenu();
-				switch (menu_cosmetic.handleInput()) {
+				switch (menu_cosmetic.handleInput(false)) {
 #if !defined(THREEDS)
 					case MENU_SCALING_INDEX:
 						scalingType = MENU_SCALING->index;
@@ -522,7 +523,7 @@ int main(int argv, char** args) {
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_other.renderMenu();
-				switch (menu_other.handleInput()) {
+				switch (menu_other.handleInput(false)) {
 					case -1: // Press B/Select
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;
@@ -536,7 +537,7 @@ int main(int argv, char** args) {
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_cheats.renderMenu();
-				switch (menu_cheats.handleInput()) {
+				switch (menu_cheats.handleInput(false)) {
 					case -1: // Press B/Select
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;
@@ -564,7 +565,7 @@ int main(int argv, char** args) {
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_quit.renderMenu();
-				switch (menu_quit.handleInput()) {
+				switch (menu_quit.handleInput(false)) {
 					case QUIT_BACK_INDEX:
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;

@@ -154,6 +154,7 @@ class GameManager {
 		double burnination;                     // amount of time left in burnination state
 		Uint16 archerFrequency;                 // frequency at which archers appear
 		Sint8 archerFrequencySetting;           // setting for archer frequency
+		Sint8 arrowSpeedSetting;                // arrow speed setting
 		Sint8 arrowSpeed;                       // speed of arrows
 		double burnRate;                        // rate at which the burnination meter decreases
 		Arrow arrowArrayL[MAX_NUM_ARROWS];      // array of Arrow objects (facing left, firing from right to left)
@@ -197,6 +198,7 @@ class GameManager {
 		bool noclip;                            // noclip cheat to walk through cottages
 		bool peasantPenalty;                    // peasant penalty setting is enabled
 		Sint8 treasureHutSetting;               // treasure hut setting
+		Sint8 preset;                           // difficulty preset
 		GameManager();
 		GameManager(MenuManager);
 		void resetAllSrcRects();

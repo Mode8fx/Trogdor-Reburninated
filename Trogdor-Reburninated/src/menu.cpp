@@ -152,20 +152,27 @@ void MenuOption::prepareMenuOption(const char label_ptr[], std::string choice_pt
 	initLabel();
 	updateLabel();
 	initChoicesAndDescriptions();
-	updateChoice();
-	updateDescription();
+	updateChoice(index);
+	updateDescription(index);
 }
 
-void MenuOption::setFrozen(bool frozen) {
+void MenuOption::setFrozen(bool frozen, Sint8 ind) {
 	optionIsFrozen = frozen;
+	if (optionIsFrozen) {
+		updateChoice(ind);
+		updateDescription(ind);
+	} else {
+		updateChoice(index);
+		updateDescription(index);
+	}
 }
 
 void MenuOption::setLocked(bool locked) {
 	optionIsLocked = locked;
-	setFrozen(locked);
+	//setFrozen(locked, index);
 	updateLabel();
-	updateChoice();
-	updateDescription();
+	updateChoice(index);
+	updateDescription(index);
 }
 
 void MenuOption::initLabel() {
@@ -181,7 +188,7 @@ void MenuOption::initLabel() {
 void MenuOption::updateLabel() {
 	if (!optionIsLocked) {
 		if (!labelPtr.empty()) {
-			if (optionCanFreeze && optionIsFrozen) {
+			if (optionCanFreeze && (optionIsFrozen || optionIsLocked)) {
 				setText(labelPtr, &label, menuFont_frozen);
 			} else {
 				setText(labelPtr, &label, menuFont);
@@ -216,13 +223,13 @@ void MenuOption::initChoicesAndDescriptions() {
 	}
 }
 
-void MenuOption::updateChoice() {
+void MenuOption::updateChoice(Sint8 ind) {
 	if (!optionIsLocked) {
 		if (choicePtr != NULL) {
-			if (optionCanFreeze && optionIsFrozen) {
-				setText(choicePtr[index], &choice, menuFont_frozen);
+			if (optionCanFreeze && (optionIsFrozen || optionIsLocked)) {
+				setText(choicePtr[ind], &choice, menuFont_frozen);
 			} else {
-				setText(choicePtr[index], &choice, menuFont);
+				setText(choicePtr[ind], &choice, menuFont);
 			}
 		}
 	} else {
@@ -230,7 +237,7 @@ void MenuOption::updateChoice() {
 	}
 }
 
-void MenuOption::updateDescription() {
+void MenuOption::updateDescription(Sint8 ind) {
 	if (!optionIsLocked) {
 		if (descPtr_1 != NULL) {
 			if (oneDescription) {
@@ -238,9 +245,9 @@ void MenuOption::updateDescription() {
 				setText(descPtr_2[0], &description_2, menuFont);
 				setText(descPtr_3[0], &description_3, menuFont);
 			} else {
-				setText(descPtr_1[index], &description_1, menuFont);
-				setText(descPtr_2[index], &description_2, menuFont);
-				setText(descPtr_3[index], &description_3, menuFont);
+				setText(descPtr_1[ind], &description_1, menuFont);
+				setText(descPtr_2[ind], &description_2, menuFont);
+				setText(descPtr_3[ind], &description_3, menuFont);
 			}
 		}
 	} else {
@@ -259,7 +266,7 @@ void MenuOption::setDescriptionToIndex(Uint8 forcedIndex) {
 }
 
 void MenuOption::render(bool renderDescription) {
-	if (optionCanFreeze && optionIsFrozen) {
+	if (optionCanFreeze && (optionIsFrozen || optionIsLocked)) {
 		renderText_menu(label, *menuFont_frozen);
 		renderText_menu(choice, *menuFont_frozen);
 	} else {
@@ -308,18 +315,24 @@ void Menu::prepareMenu(Uint8 numOpt, Uint8 numOns, SpriteObject *spriteObj, bool
 	}
 }
 
-Sint8 Menu::handleInput() {
+Sint8 Menu::handleInput(bool isDifficultyMenu) {
 	if (keyPressed(INPUT_UP)) {
 		decrementOption();
 	}
 	if (keyPressed(INPUT_DOWN)) {
 		incrementOption();
 	}
-	if (keyPressed(INPUT_LEFT) && !(CURR_OPTION->optionIsLocked || CURR_OPTION->optionIsFrozen)) {
+	if (keyPressed(INPUT_LEFT) && !(CURR_OPTION->optionIsFrozen || CURR_OPTION->optionIsLocked)) {
 		decrementCurrOptionChoice();
+		if (isDifficultyMenu && cursorIndex == 0) {
+			setPreset(CURR_OPTION->index);
+		}
 	}
-	if (keyPressed(INPUT_RIGHT) && !(CURR_OPTION->optionIsLocked || CURR_OPTION->optionIsFrozen)) {
+	if (keyPressed(INPUT_RIGHT) && !(CURR_OPTION->optionIsFrozen || CURR_OPTION->optionIsLocked)) {
 		incrementCurrOptionChoice();
+		if (isDifficultyMenu && cursorIndex == 0) {
+			setPreset(CURR_OPTION->index);
+		}
 	}
 	if (keyPressed(INPUT_A) || keyPressed(INPUT_START)) {
 		return cursorIndex;
@@ -375,8 +388,8 @@ void Menu::incrementCurrOptionChoice() {
 			CURR_OPTION->index++;
 		} while (CURR_OPTION->index < CURR_OPTION->numChoices - 1 && !CURR_OPTION->choiceIsAllowed[CURR_OPTION->index]);
 	}
-	CURR_OPTION->updateChoice();
-	CURR_OPTION->updateDescription();
+	CURR_OPTION->updateChoice(CURR_OPTION->index);
+	CURR_OPTION->updateDescription(CURR_OPTION->index);
 	updateOptionChoicePosition(cursorIndex);
 }
 
@@ -394,15 +407,15 @@ void Menu::decrementCurrOptionChoice() {
 			CURR_OPTION->index--;
 		} while (CURR_OPTION->index > 0 && !CURR_OPTION->choiceIsAllowed[CURR_OPTION->index]);
 	}
-	CURR_OPTION->updateChoice();
-	CURR_OPTION->updateDescription();
+	CURR_OPTION->updateChoice(CURR_OPTION->index);
+	CURR_OPTION->updateDescription(CURR_OPTION->index);
 	updateOptionChoicePosition(cursorIndex);
 }
 
 void Menu::setOptionChoice(Sint8 optionIndex, Sint8 choiceIndex) {
 	options[optionIndex]->index = choiceIndex;
-	options[optionIndex]->updateChoice();
-	options[optionIndex]->updateDescription();
+	options[optionIndex]->updateChoice(options[optionIndex]->index);
+	options[optionIndex]->updateDescription(options[optionIndex]->index);
 	updateOptionChoicePosition(optionIndex);
 }
 
@@ -485,8 +498,13 @@ void Menu::renderMenu() {
 
 std::string option_on_off[2] = { "On", "Off" };
 std::string option_empty[1] = { "" };
+std::string option_custom_only[1] = { "(Custom preset only.)" };
 std::string option_main_starting_level_choices[10] = { "1", "11", "21", "31", "41", "51", "61", "71", "81", "91" };
 std::string option_main_starting_level_descriptions_line_1[1] = { "The level that the game starts on." };
+std::string option_main_preset_choices[6] = { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mips's Choice" };
+std::string option_main_preset_descriptions_line_1[6] = { "Make your own rules!", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "Someone's favorite..." };
+std::string option_main_preset_descriptions_line_2[6] = { "Cheats and level select", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "For Trogdor masters!", "Fewer extra lives, crazy fast arrows," };
+std::string option_main_preset_descriptions_line_3[6] = { "are also allowed.", "", "", "For Trogdor pros.", "", "all treasure huts." };
 std::string option_main_extra_lives_choices[9] = { "0", "1", "2", "3", "4", "5", "10", "20", "30" };
 std::string option_main_extra_lives_descriptions_line_1[1] = { "The number of extra lives you start with." };
 std::string option_main_lives_interval_choices[8] = { "Every 300 points", "Every 500 points", "Every 1000 points", "500 points only", "500 and 1000 only", "1000 points only", "1000 and 2000 only", "None" };
@@ -650,7 +668,7 @@ void InitializeMenus() {
 		option_main_other_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
 	MENU_CHEATS->prepareMenuOption("Cheats", option_empty,
-		option_main_cheats_descriptions_line_1, option_main_cheats_descriptions_line_2, option_empty,
+		option_main_cheats_descriptions_line_1, option_main_cheats_descriptions_line_2, option_custom_only,
 		"", 1, true, 0, true, false);
 	MENU_RESET_SETTINGS->prepareMenuOption("Reset to Default", option_empty,
 		option_main_reset_settings_descriptions_line_1, option_empty, option_empty,
@@ -669,6 +687,9 @@ void InitializeMenus() {
 			menu_difficulty.options[i] = new MenuOption();
 		}
 	}
+	MENU_PRESET->prepareMenuOption("Preset", option_main_preset_choices,
+		option_main_preset_descriptions_line_1, option_main_preset_descriptions_line_2, option_main_preset_descriptions_line_3,
+		"", 6, false, 1, true, true);
 	MENU_EXTRA_LIVES->prepareMenuOption("Extra Lives", option_main_extra_lives_choices,
 		option_main_extra_lives_descriptions_line_1, option_empty, option_empty,
 		"", 9, true, 3, true, true);
@@ -726,7 +747,7 @@ void InitializeMenus() {
 		}
 	}
 	MENU_STARTING_LEVEL->prepareMenuOption("Starting Level", option_main_starting_level_choices,
-		option_main_starting_level_descriptions_line_1, option_empty, option_empty,
+		option_main_starting_level_descriptions_line_1, option_custom_only, option_empty,
 		"", 10, true, 0, true, true);
 	MENU_KNIGHT_BEHAVIOR->prepareMenuOption("Knight Behavior", option_main_knight_behavior_choices,
 		option_main_knight_behavior_descriptions_line_1, option_main_knight_behavior_descriptions_line_2, option_main_knight_behavior_descriptions_line_3,
@@ -861,6 +882,7 @@ void InitializeMenus() {
 	menu_cosmetic.updateOptionPositions();
 	menu_cheats.updateOptionPositions();
 	menu_quit.updateOptionPositions();
+	setPreset(MENU_PRESET->index);
 
 	menusAreInitialized = true;
 
@@ -878,6 +900,7 @@ State_Settings_General getSettingsGeneral() {
 
 State_Settings_Difficulty getSettingsDifficulty() {
 	return {
+		MENU_PRESET->index,
 		MENU_EXTRA_LIVES->index,
 		MENU_LIVES_INTERVAL->index,
 		MENU_PEASANT_PENALTY->index,
@@ -954,4 +977,93 @@ void updateFrameRate() {
 	frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / frameRate;
 	popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 	ticksPerFrame = (Uint32)(1000 / frameRate);
+}
+
+void setPreset(Sint8 ind) {
+	switch (ind) {
+		case 1:
+			MENU_EXTRA_LIVES->setFrozen(true, 3);
+			MENU_LIVES_INTERVAL->setFrozen(true, 0);
+			MENU_PEASANT_PENALTY->setFrozen(true, 0);
+			MENU_KNIGHT_SPEED->setFrozen(true, 2);
+			MENU_ARROW_SPEED->setFrozen(true, 1);
+			MENU_ARCHER_FREQ->setFrozen(true, 0);
+			MENU_TREASURE_HUTS->setFrozen(true, 0);
+			MENU_STARTING_LEVEL->setFrozen(true, 0);
+			MENU_INF_LIVES->setFrozen(true, 1);
+			MENU_SPEEDY_MODE->setFrozen(true, 0);
+			MENU_NOCLIP->setFrozen(true, 1);
+			MENU_DEBUG_MODE->setFrozen(true, 1);
+			break;
+		case 2:
+			MENU_EXTRA_LIVES->setFrozen(true, 3);
+			MENU_LIVES_INTERVAL->setFrozen(true, 0);
+			MENU_PEASANT_PENALTY->setFrozen(true, 1);
+			MENU_KNIGHT_SPEED->setFrozen(true, 2);
+			MENU_ARROW_SPEED->setFrozen(true, 1);
+			MENU_ARCHER_FREQ->setFrozen(true, 0);
+			MENU_TREASURE_HUTS->setFrozen(true, 1);
+			MENU_STARTING_LEVEL->setFrozen(true, 0);
+			MENU_INF_LIVES->setFrozen(true, 1);
+			MENU_SPEEDY_MODE->setFrozen(true, 0);
+			MENU_NOCLIP->setFrozen(true, 1);
+			MENU_DEBUG_MODE->setFrozen(true, 1);
+			break;
+		case 3:
+			MENU_EXTRA_LIVES->setFrozen(true, 3);
+			MENU_LIVES_INTERVAL->setFrozen(true, 6);
+			MENU_PEASANT_PENALTY->setFrozen(true, 0);
+			MENU_KNIGHT_SPEED->setFrozen(true, 3);
+			MENU_ARROW_SPEED->setFrozen(true, 3);
+			MENU_ARCHER_FREQ->setFrozen(true, 4);
+			MENU_TREASURE_HUTS->setFrozen(true, 0);
+			MENU_STARTING_LEVEL->setFrozen(true, 0);
+			MENU_INF_LIVES->setFrozen(true, 1);
+			MENU_SPEEDY_MODE->setFrozen(true, 0);
+			MENU_NOCLIP->setFrozen(true, 1);
+			MENU_DEBUG_MODE->setFrozen(true, 1);
+			break;
+		case 4:
+			MENU_EXTRA_LIVES->setFrozen(true, 3);
+			MENU_LIVES_INTERVAL->setFrozen(true, 7);
+			MENU_PEASANT_PENALTY->setFrozen(true, 0);
+			MENU_KNIGHT_SPEED->setFrozen(true, 4);
+			MENU_ARROW_SPEED->setFrozen(true, 4);
+			MENU_ARCHER_FREQ->setFrozen(true, 5);
+			MENU_TREASURE_HUTS->setFrozen(true, 0);
+			MENU_STARTING_LEVEL->setFrozen(true, 0);
+			MENU_INF_LIVES->setFrozen(true, 1);
+			MENU_SPEEDY_MODE->setFrozen(true, 0);
+			MENU_NOCLIP->setFrozen(true, 1);
+			MENU_DEBUG_MODE->setFrozen(true, 1);
+			break;
+		case 5:
+			MENU_EXTRA_LIVES->setFrozen(true, 3);
+			MENU_LIVES_INTERVAL->setFrozen(true, 1);
+			MENU_PEASANT_PENALTY->setFrozen(true, 0);
+			MENU_KNIGHT_SPEED->setFrozen(true, 2);
+			MENU_ARROW_SPEED->setFrozen(true, 4);
+			MENU_ARCHER_FREQ->setFrozen(true, 1);
+			MENU_TREASURE_HUTS->setFrozen(true, 1);
+			MENU_STARTING_LEVEL->setFrozen(true, 0);
+			MENU_INF_LIVES->setFrozen(true, 1);
+			MENU_SPEEDY_MODE->setFrozen(true, 0);
+			MENU_NOCLIP->setFrozen(true, 1);
+			MENU_DEBUG_MODE->setFrozen(true, 1);
+			break;
+		default:
+			MENU_EXTRA_LIVES->setFrozen(false, 0);
+			MENU_LIVES_INTERVAL->setFrozen(false, 0);
+			MENU_PEASANT_PENALTY->setFrozen(false, 0);
+			MENU_KNIGHT_SPEED->setFrozen(false, 0);
+			MENU_ARROW_SPEED->setFrozen(false, 0);
+			MENU_ARCHER_FREQ->setFrozen(false, 0);
+			MENU_TREASURE_HUTS->setFrozen(false, 0);
+			MENU_STARTING_LEVEL->setFrozen(false, 0);
+			MENU_INF_LIVES->setFrozen(false, 0);
+			MENU_SPEEDY_MODE->setFrozen(false, 0);
+			MENU_NOCLIP->setFrozen(false, 0);
+			MENU_DEBUG_MODE->setFrozen(false, 0);
+			break;
+	}
 }

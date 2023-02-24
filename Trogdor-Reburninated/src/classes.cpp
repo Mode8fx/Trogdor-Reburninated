@@ -505,6 +505,7 @@ void MenuManager::unlockCheat(Uint8 menuIndex, Sint8 indexAtUnlock) {
 		MENU_EXTRA_LIVES->choiceIsAllowed[7] = true;
 		MENU_EXTRA_LIVES->choiceIsAllowed[8] = true;
 	}
+	setPreset(MENU_PRESET->index);
 	saveGameState_settings();
 }
 
@@ -543,6 +544,7 @@ GameManager::GameManager(MenuManager mm) {
 	forceMusicStart = true;
 
 	if (MM.continueHighlighted) {
+		preset = gameState.autosave.difficulty.preset;
 		mans = gameState.autosave.mans;
 		score = gameState.autosave.score;
 		level = gameState.autosave.level;
@@ -551,7 +553,7 @@ GameManager::GameManager(MenuManager mm) {
 		livesIntervalSetting = gameState.autosave.difficulty.livesInterval;
 		peasantPenalty = gameState.autosave.difficulty.peasantPenalty;
 		knightSpeedSetting = gameState.autosave.difficulty.knightSpeed;
-		arrowSpeed = gameState.autosave.difficulty.arrowSpeed;
+		arrowSpeedSetting = gameState.autosave.difficulty.arrowSpeed;
 		archerFrequencySetting = gameState.autosave.difficulty.archerFreq;
 		treasureHutSetting = gameState.autosave.difficulty.treasureHuts;
 		infiniteLives = gameState.autosave.cheats.infLives;
@@ -559,41 +561,93 @@ GameManager::GameManager(MenuManager mm) {
 		noclip = gameState.autosave.cheats.noclip;
 		debugMode = gameState.autosave.cheats.debugMode;
 	} else {
-		infiniteLives = MENU_INF_LIVES->isValue(0);
-		if (infiniteLives) {
-			mans = 99;
-		} else {
-			switch (MENU_EXTRA_LIVES->index) {
-				case 6:
-					mans = 10;
-					break;
-				case 7:
-					mans = 20;
-					break;
-				case 8:
-					mans = 30;
-					break;
-				default:
-					mans = MENU_EXTRA_LIVES->index;
-					break;
-			}
+		preset = MENU_PRESET->index;
+		mans = 3;
+		level = 1;
+		infiniteLives = false;
+		speedyMode = 0;
+		noclip = false;
+		debugMode = false;
+		switch (preset) {
+			case 0:
+				level = MENU_STARTING_LEVEL->index * 10 + 1;
+				livesIntervalSetting = MENU_LIVES_INTERVAL->index;
+				peasantPenalty = MENU_PEASANT_PENALTY->isValue(0);
+				knightSpeedSetting = MENU_KNIGHT_SPEED->index;
+				arrowSpeedSetting = MENU_ARROW_SPEED->index;
+				archerFrequencySetting = MENU_ARCHER_FREQ->index;
+				treasureHutSetting = MENU_TREASURE_HUTS->index;
+				infiniteLives = MENU_INF_LIVES->isValue(0);
+				if (infiniteLives) {
+					mans = 99;
+				} else {
+					switch (MENU_EXTRA_LIVES->index) {
+						case 6:
+							mans = 10;
+							break;
+						case 7:
+							mans = 20;
+							break;
+						case 8:
+							mans = 30;
+							break;
+						default:
+							mans = MENU_EXTRA_LIVES->index;
+							break;
+					}
+				}
+				speedyMode = MENU_SPEEDY_MODE->index;
+				noclip = MENU_NOCLIP->isValue(0);
+				debugMode = MENU_DEBUG_MODE->isValue(0);
+				break;
+			case 1:
+				livesIntervalSetting = 0;
+				peasantPenalty = true;
+				knightSpeedSetting = 2;
+				arrowSpeedSetting = 1;
+				archerFrequencySetting = 0;
+				treasureHutSetting = 0;
+				break;
+			case 2:
+				livesIntervalSetting = 0;
+				peasantPenalty = false;
+				knightSpeedSetting = 2;
+				arrowSpeedSetting = 1;
+				archerFrequencySetting = 0;
+				treasureHutSetting = 1;
+				break;
+			case 3:
+				livesIntervalSetting = 6;
+				peasantPenalty = true;
+				knightSpeedSetting = 3;
+				arrowSpeedSetting = 3;
+				archerFrequencySetting = 4;
+				treasureHutSetting = 0;
+				break;
+			case 4:
+				livesIntervalSetting = 7;
+				peasantPenalty = true;
+				knightSpeedSetting = 4;
+				arrowSpeedSetting = 4;
+				archerFrequencySetting = 5;
+				treasureHutSetting = 0;
+				break;
+			case 5:
+				livesIntervalSetting = 1;
+				peasantPenalty = true;
+				knightSpeedSetting = 2;
+				arrowSpeedSetting = 4;
+				archerFrequencySetting = 1;
+				treasureHutSetting = 1;
+				break;
 		}
 		score = 0;
-		level = MENU_STARTING_LEVEL->index * 10 + 1;
 		treasureHutFound = false;
 		treasureHutLevel = -1;
-		livesIntervalSetting = MENU_LIVES_INTERVAL->index;
-		peasantPenalty = MENU_PEASANT_PENALTY->isValue(0);
-		knightSpeedSetting = MENU_KNIGHT_SPEED->index;
-		archerFrequencySetting = MENU_ARCHER_FREQ->index;
-		treasureHutSetting = MENU_TREASURE_HUTS->index;
-		speedyMode = MENU_SPEEDY_MODE->index;
-		noclip = MENU_NOCLIP->isValue(0);
-		debugMode = MENU_DEBUG_MODE->isValue(0);
 	}
 
 	knightSpeed = (0.7 + (knightSpeedSetting * 0.15));
-	switch (MENU_ARROW_SPEED->index) {
+	switch (arrowSpeedSetting) {
 		case 0:
 			arrowSpeed = 3;
 			break;
@@ -1804,7 +1858,7 @@ void GameManager::saveGameState_autosave() {
 	gameState.autosave.level = level;
 	gameState.autosave.treasureHutFound = treasureHutFound;
 	gameState.autosave.treasureHutLevel = treasureHutLevel;
-	gameState.autosave.difficulty = { MENU_EXTRA_LIVES->index, livesIntervalSetting, peasantPenalty, knightSpeedSetting, arrowSpeed, archerFrequencySetting, treasureHutSetting };
+	gameState.autosave.difficulty = { preset, MENU_EXTRA_LIVES->index, livesIntervalSetting, peasantPenalty, knightSpeedSetting, arrowSpeedSetting, archerFrequencySetting, treasureHutSetting };
 	gameState.autosave.cheats = { infiniteLives, speedyMode, noclip, debugMode };
 	saveBin = SDL_RWFromFile(SAVE_FILE, "wb");
 	SDL_RWwrite(saveBin, &gameState, sizeof(gameState), 1);

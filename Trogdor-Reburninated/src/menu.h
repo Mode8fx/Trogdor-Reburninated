@@ -7,7 +7,7 @@
 #define MENU_H
 
 constexpr auto MAX_NUM_OPTION_CHOICES = 10;
-constexpr auto MAX_NUM_MENU_OPTIONS = 7;
+constexpr auto MAX_NUM_MENU_OPTIONS = 8;
 constexpr auto MAX_NUM_MENU_PAGES = 5;
 constexpr auto MAX_NUM_MENU_LINES = 9;
 
@@ -111,13 +111,13 @@ class MenuOption {
 		MenuOption() {
 		}
 		void prepareMenuOption(const char [], std::string [], std::string [], std::string [], std::string [], std::string, Uint8, bool, Sint8, bool, bool);
-		void setFrozen(bool);
+		void setFrozen(bool, Sint8);
 		void setLocked(bool);
 		void initLabel();
 		void updateLabel();
 		void initChoicesAndDescriptions();
-		void updateChoice();
-		void updateDescription();
+		void updateChoice(Sint8);
+		void updateDescription(Sint8);
 		void setDescriptionToIndex(Uint8);
 		void render(bool);
 		bool isValue(Uint8);
@@ -173,7 +173,7 @@ class Menu {
 		Menu() {
 		}
 		void prepareMenu(Uint8, Uint8, SpriteObject *, bool, Sint8, Sint16, Sint16, Sint16, Sint16, Sint16, Sint16, Sint16, Sint8, Sint8, bool);
-		Sint8 handleInput();
+		Sint8 handleInput(bool);
 		void incrementOption();
 		void decrementOption();
 		void incrementCurrOptionChoice();
@@ -204,14 +204,16 @@ constexpr auto MENU_NUM_OPTIONS = 7;
 #define MENU_QUIT           menu_main.options[MENU_QUIT_INDEX]
 
 extern Menu menu_difficulty;
-constexpr auto MENU_EXTRA_LIVES_INDEX = 0;
-constexpr auto MENU_LIVES_INTERVAL_INDEX = 1;
-constexpr auto MENU_PEASANT_PENALTY_INDEX = 2;
-constexpr auto MENU_KNIGHT_SPEED_INDEX = 3;
-constexpr auto MENU_ARROW_SPEED_INDEX = 4;
-constexpr auto MENU_ARCHER_FREQ_INDEX = 5;
-constexpr auto MENU_TREASURE_HUTS_INDEX = 6;
-constexpr auto DIFFICULTY_NUM_OPTIONS = 7;
+constexpr auto MENU_PRESET_INDEX = 0;
+constexpr auto MENU_EXTRA_LIVES_INDEX = 1;
+constexpr auto MENU_LIVES_INTERVAL_INDEX = 2;
+constexpr auto MENU_PEASANT_PENALTY_INDEX = 3;
+constexpr auto MENU_KNIGHT_SPEED_INDEX = 4;
+constexpr auto MENU_ARROW_SPEED_INDEX = 5;
+constexpr auto MENU_ARCHER_FREQ_INDEX = 6;
+constexpr auto MENU_TREASURE_HUTS_INDEX = 7;
+constexpr auto DIFFICULTY_NUM_OPTIONS = 8;
+#define MENU_PRESET          menu_difficulty.options[MENU_PRESET_INDEX]
 #define MENU_EXTRA_LIVES     menu_difficulty.options[MENU_EXTRA_LIVES_INDEX]
 #define MENU_LIVES_INTERVAL  menu_difficulty.options[MENU_LIVES_INTERVAL_INDEX]
 #define MENU_PEASANT_PENALTY menu_difficulty.options[MENU_PEASANT_PENALTY_INDEX]
@@ -269,5 +271,6 @@ extern State_Settings_Other getSettingsOther();
 extern State_Settings_Cheats getSettingsCheats();
 extern State_Settings_Unlocks getSettingsUnlocks();
 extern void updateFrameRate();
+extern void setPreset(Sint8);
 
 #endif

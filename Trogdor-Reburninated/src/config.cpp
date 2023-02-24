@@ -18,6 +18,8 @@ void loadGameState() {
 
 	if (saveBin) {
 		SDL_RWread(saveBin, &gameState, sizeof(gameState), 1);
+		SDL_RWclose(saveBin);
+		menu_difficulty.setOptionChoice(MENU_PRESET_INDEX, gameState.settings_difficulty.preset);
 		menu_difficulty.setOptionChoice(MENU_EXTRA_LIVES_INDEX, gameState.settings_difficulty.extraLives);
 		menu_difficulty.setOptionChoice(MENU_LIVES_INTERVAL_INDEX, gameState.settings_difficulty.livesInterval);
 		menu_difficulty.setOptionChoice(MENU_PEASANT_PENALTY_INDEX, gameState.settings_difficulty.peasantPenalty);
@@ -45,7 +47,7 @@ void loadGameState() {
 		MENU_SPEEDY_MODE->setLocked(gameState.settings_unlocks.locked_speedyMode);
 		MENU_NOCLIP->setLocked(gameState.settings_unlocks.locked_noclip);
 		MENU_DEBUG_MODE->setLocked(gameState.settings_unlocks.locked_debugMode);
-		SDL_RWclose(saveBin);
+		setPreset(MENU_PRESET->index);
 	}
 	else {
 		// File does not exist, initialize default game state
