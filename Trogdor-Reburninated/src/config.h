@@ -70,6 +70,15 @@ struct State_Autosave {
 	State_Settings_Cheats cheats;         // Cheat settings when the game was started
 };
 
+struct State_HighScores {
+	Uint32 custom;
+	Uint32 flash;
+	Uint32 html5;
+	Uint32 hard;
+	Uint32 cruel;
+	Uint32 mips;
+};
+
 struct GameState {
 	State_Settings_General    settings_general;
 	State_Settings_Difficulty settings_difficulty;
@@ -78,6 +87,7 @@ struct GameState {
 	State_Settings_Cheats     settings_cheats;
 	State_Settings_Unlocks    settings_unlocks;
 	State_Autosave            autosave;
+	State_HighScores          highscores;
 };
 
 /* Save File */

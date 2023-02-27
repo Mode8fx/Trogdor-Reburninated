@@ -59,5 +59,6 @@ void loadGameState() {
 		gameState.settings_cheats = getSettingsCheats();
 		gameState.settings_unlocks = getSettingsUnlocks();
 		gameState.autosave = { -1, 0, 0, 0, 0, false, gameState.settings_difficulty, gameState.settings_other.shuffleLevels, gameState.settings_cheats };
+		gameState.highscores = { 0, 0, 0, 0, 0, 0 };
 	}
 }

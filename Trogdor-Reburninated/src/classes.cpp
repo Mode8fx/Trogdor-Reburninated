@@ -1578,6 +1578,26 @@ void GameManager::dm_updateFrameState() { // death message
 				if (mans < 0) {
 					setMans(0);
 					gameOver = true;
+					switch (preset) {
+						case 1:
+							gameState.highscores.flash = max(score, gameState.highscores.flash);
+							break;
+						case 2:
+							gameState.highscores.html5 = max(score, gameState.highscores.html5);
+							break;
+						case 3:
+							gameState.highscores.hard = max(score, gameState.highscores.hard);
+							break;
+						case 4:
+							gameState.highscores.cruel = max(score, gameState.highscores.cruel);
+							break;
+						case 5:
+							gameState.highscores.mips = max(score, gameState.highscores.mips);
+							break;
+						default:
+							gameState.highscores.custom = max(score, gameState.highscores.custom);
+							break;
+					}
 				} else {
 					player.resetPos(true);
 					paused = false;
