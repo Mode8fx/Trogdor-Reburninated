@@ -63,6 +63,7 @@ struct State_Autosave {
 	Uint8 level;                          // current level
 	bool treasureHutFound;                // treasure hut has been found in this level
 	Sint8 treasureHutLevel;               // the level index of the first treasure hut you entered; default is 0
+	Uint32 randomSeed;                    // random seed
 	State_Settings_Difficulty difficulty; // Difficulty settings when the game was started
 	State_Settings_Cheats cheats;         // Cheat settings when the game was started
 };

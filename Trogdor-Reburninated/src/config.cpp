@@ -57,6 +57,6 @@ void loadGameState() {
 		gameState.settings_other = getSettingsOther();
 		gameState.settings_cheats = getSettingsCheats();
 		gameState.settings_unlocks = getSettingsUnlocks();
-		gameState.autosave = { -1, 0, 0, 0, 0, gameState.settings_difficulty, gameState.settings_cheats };
+		gameState.autosave = { -1, 0, 0, 0, 0, false, gameState.settings_difficulty, gameState.settings_cheats };
 	}
 }

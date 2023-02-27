@@ -539,7 +539,6 @@ GameManager::GameManager() {
 }
 
 GameManager::GameManager(MenuManager mm) {
-	srand(SDL_GetTicks());
 	initialized = true;
 	forceMusicStart = true;
 
@@ -550,6 +549,7 @@ GameManager::GameManager(MenuManager mm) {
 		level = gameState.autosave.level;
 		treasureHutFound = gameState.autosave.treasureHutFound;
 		treasureHutLevel = gameState.autosave.treasureHutLevel;
+		randomSeed = gameState.autosave.randomSeed;
 		livesIntervalSetting = gameState.autosave.difficulty.livesInterval;
 		peasantPenalty = gameState.autosave.difficulty.peasantPenalty;
 		knightSpeedSetting = gameState.autosave.difficulty.knightSpeed;
@@ -644,8 +644,21 @@ GameManager::GameManager(MenuManager mm) {
 		score = 0;
 		treasureHutFound = false;
 		treasureHutLevel = -1;
+		randomSeed = SDL_GetTicks();
 	}
 
+	srand(randomSeed);
+	for (i = 0; i < 33; i++) {
+		levelIndices[i] = i;
+	}
+	if (shuffleLevels) {
+		for (i = 32; i > 0; i--) {
+			j = rand() % (i + 1);
+			k = levelIndices[i];
+			levelIndices[i] = levelIndices[j];
+			levelIndices[j] = k;
+		}
+	}
 	knightSpeed = (0.7 + (knightSpeedSetting * 0.15));
 	switch (arrowSpeedSetting) {
 		case 0:
@@ -913,6 +926,7 @@ void GameManager::levelInit() {
 	} else {
 		levelIndex = ((level - 2) % 32 + 2) - 1;
 	}
+	levelIndex = levelIndices[levelIndex];
 	set_level_background(levels[levelIndex][0]);
 	numHuts = 0;
 	for (i = 0; i < MAX_NUM_HUTS; i++) {
@@ -1858,6 +1872,7 @@ void GameManager::saveGameState_autosave() {
 	gameState.autosave.level = level;
 	gameState.autosave.treasureHutFound = treasureHutFound;
 	gameState.autosave.treasureHutLevel = treasureHutLevel;
+	gameState.autosave.randomSeed = randomSeed;
 	gameState.autosave.difficulty = { preset, MENU_EXTRA_LIVES->index, livesIntervalSetting, peasantPenalty, knightSpeedSetting, arrowSpeedSetting, archerFrequencySetting, treasureHutSetting };
 	gameState.autosave.cheats = { infiniteLives, speedyMode, noclip, debugMode };
 	saveBin = SDL_RWFromFile(SAVE_FILE, "wb");

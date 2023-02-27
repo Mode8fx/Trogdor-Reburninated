@@ -199,6 +199,9 @@ class GameManager {
 		bool peasantPenalty;                    // peasant penalty setting is enabled
 		Sint8 treasureHutSetting;               // treasure hut setting
 		Sint8 preset;                           // difficulty preset
+		bool shuffleLevels;                     // the setting for shuffelling levels
+		Uint8 levelIndices[33];                 // used for "Shuffle Levels" setting
+		Uint32 randomSeed;                      // random seed used for several things; saved for level shuffling
 		GameManager();
 		GameManager(MenuManager);
 		void resetAllSrcRects();
