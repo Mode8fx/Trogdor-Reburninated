@@ -463,9 +463,16 @@ int main(int argv, char** args) {
 						menu_cheats.setOptionChoice(MENU_DEBUG_MODE_INDEX, MENU_DEBUG_MODE->index_init);
 						loadAndPlaySound(SFX_SBDOOJ_SHORT);
 						break;
+					case MENU_HIGHSCORES_INDEX:
+						menu_highscores_1.openNotebook();
+						menu_highscores_2.openNotebook();
+						menu_highscores_3.openNotebook();
+						updateHighScores();
+						g_sceneState = 306;
+						break;
 					case MENU_CREDITS_INDEX:
 						menu_credits.openNotebook();
-						g_sceneState = 306;
+						g_sceneState = 307;
 						break;
 					case MENU_QUIT_INDEX: // Quit Game
 						menu_quit.openMenu();
@@ -473,7 +480,7 @@ int main(int argv, char** args) {
 						QUIT_BACK->setDescriptionToIndex(j);
 						QUIT_CONFIRM->setDescriptionToIndex(j);
 						menu_quit.updateOptionPositions();
-						g_sceneState = 307;
+						g_sceneState = 308;
 						break;
 					case -1: // Press B/Select
 						g_sceneState = 3;
@@ -547,8 +554,24 @@ int main(int argv, char** args) {
 						break;
 				}
 				break;
-			/* Credits Screen */
+			/* High Scores Screen */
 			case 306:
+				g_frameState.increment();
+				sprite_menu_background_ins.renderSprite_menu();
+				menu_highscores_1.renderNotebook();
+				menu_highscores_2.renderNotebook();
+				menu_highscores_3.renderNotebook();
+				switch (menu_highscores_1.handleInput()) {
+					case -1: // Press B/Select
+						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
+						g_sceneState = 301;
+						break;
+					default:
+						break;
+				}
+				break;
+			/* Credits Screen */
+			case 307:
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_credits.renderNotebook();
@@ -562,7 +585,7 @@ int main(int argv, char** args) {
 				}
 				break;
 			/* Quit Screen */
-			case 307:
+			case 308:
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_quit.renderMenu();

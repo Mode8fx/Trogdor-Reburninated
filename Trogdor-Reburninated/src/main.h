@@ -82,6 +82,9 @@ Menu menu_difficulty;
 Menu menu_cosmetic;
 Menu menu_other;
 Menu menu_cheats;
+MenuNotebook menu_highscores_1;
+MenuNotebook menu_highscores_2;
+MenuNotebook menu_highscores_3;
 MenuNotebook menu_credits;
 Menu menu_quit;
 

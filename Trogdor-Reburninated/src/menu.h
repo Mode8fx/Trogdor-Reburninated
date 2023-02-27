@@ -192,14 +192,16 @@ constexpr auto MENU_COSMETIC_INDEX = 1;
 constexpr auto MENU_OTHER_INDEX = 2;
 constexpr auto MENU_CHEATS_INDEX = 3;
 constexpr auto MENU_RESET_SETTINGS_INDEX = 4;
-constexpr auto MENU_CREDITS_INDEX = 5;
-constexpr auto MENU_QUIT_INDEX = 6;
-constexpr auto MENU_NUM_OPTIONS = 7;
+constexpr auto MENU_HIGHSCORES_INDEX = 5;
+constexpr auto MENU_CREDITS_INDEX = 6;
+constexpr auto MENU_QUIT_INDEX = 7;
+constexpr auto MENU_NUM_OPTIONS = 8;
 #define MENU_DIFFICULTY     menu_main.options[MENU_DIFFICULTY_INDEX]
 #define MENU_COSMETIC       menu_main.options[MENU_COSMETIC_INDEX]
 #define MENU_OTHER          menu_main.options[MENU_OTHER_INDEX]
 #define MENU_CHEATS         menu_main.options[MENU_CHEATS_INDEX]
 #define MENU_RESET_SETTINGS menu_main.options[MENU_RESET_SETTINGS_INDEX]
+#define MENU_HIGHSCORES     menu_main.options[MENU_HIGHSCORES_INDEX]
 #define MENU_CREDITS        menu_main.options[MENU_CREDITS_INDEX]
 #define MENU_QUIT           menu_main.options[MENU_QUIT_INDEX]
 
@@ -257,6 +259,10 @@ constexpr auto CHEAT_NUM_OPTIONS = 4;
 #define MENU_NOCLIP      menu_cheats.options[MENU_NOCLIP_INDEX]
 #define MENU_DEBUG_MODE  menu_cheats.options[MENU_DEBUG_MODE_INDEX]
 
+extern MenuNotebook menu_highscores_1;
+extern MenuNotebook menu_highscores_2;
+extern MenuNotebook menu_highscores_3;
+
 extern MenuNotebook menu_credits;
 
 extern Menu menu_quit;
@@ -274,5 +280,6 @@ extern State_Settings_Cheats getSettingsCheats();
 extern State_Settings_Unlocks getSettingsUnlocks();
 extern void updateFrameRate();
 extern void setPreset(Sint8);
+extern void updateHighScores();
 
 #endif

@@ -36,13 +36,13 @@ void MenuPage::setTextLine(Sint8 index, const char text[]) {
 	setText(text, &lines[index], menuFont);
 	switch (alignType) {
 		case 0:
-			lines[index].dstrect.x = start_x;
+			lines[index].dstrect.x = (Sint16)(start_x * screenScale_menu);
 			break;
 		case 1:
 			lines[index].dstrect.x = CENTER_X(lines[index]);
 			break;
 		default:
-			lines[index].dstrect.x = start_x - lines[index].dstrect.w;
+			lines[index].dstrect.x = (Sint16)(start_x * screenScale_menu) - lines[index].dstrect.w;
 			break;
 	}
 	lines[index].dstrect.y = (Sint16)((start_y + (spacer_y * index)) * screenScale_menu);
@@ -84,8 +84,11 @@ void MenuNotebook::updatePageCounterText() {
 		case 1:
 			pageCounter.dstrect.x = pageCounter_x - (pageCounter.dstrect.w / 2);
 			break;
-		default:
+		case 2:
 			pageCounter.dstrect.x = pageCounter_x - pageCounter.dstrect.w;
+			break;
+		default:
+			pageCounter.dstrect.x = -3000;
 			break;
 	}
 }
@@ -122,7 +125,9 @@ void MenuNotebook::incrementPageNum() {
 
 void MenuNotebook::renderNotebook() {
 	pages[index]->render();
-	renderText_menu(pageCounter, *menuFont);
+	if (alignType_pageCounter < 3) {
+		renderText_menu(pageCounter, *menuFont);
+	}
 }
 
 /***************/
@@ -593,6 +598,7 @@ std::string option_main_cosmetic_descriptions_line_2[1] = { "game audio and vide
 std::string option_main_other_descriptions_line_1[1] = { "Change miscellaneous settings." };
 std::string option_main_cheats_descriptions_line_1[1] = { "Toggle secret cheats." };
 std::string option_main_cheats_descriptions_line_2[1] = { "Follow the hints!" };
+std::string option_main_highscores_descriptions_line_1[1] = { "View your high scores." };
 std::string option_main_credits_descriptions_line_1[1] = { "View the credits." };
 std::string option_main_reset_settings_descriptions_line_1[1] = { "Reset all settings to default." };
 std::string option_main_quit_descriptions_line_1[1] = { "Quit the game." };
@@ -676,6 +682,9 @@ void InitializeMenus() {
 		"", 1, true, 0, true, false);
 	MENU_RESET_SETTINGS->prepareMenuOption("Reset to Default", option_empty,
 		option_main_reset_settings_descriptions_line_1, option_empty, option_empty,
+		"", 1, true, 0, true, false);
+	MENU_HIGHSCORES->prepareMenuOption("High Scores", option_empty,
+		option_main_highscores_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
 	MENU_CREDITS->prepareMenuOption("Credits", option_empty,
 		option_main_credits_descriptions_line_1, option_empty, option_empty,
@@ -783,6 +792,33 @@ void InitializeMenus() {
 		option_cheats_debug_mode_descriptions_line_1, option_cheats_debug_mode_descriptions_line_2, option_empty,
 		"Class of 1981", 2, true, 1, true, true);
 
+	/* High Scores Notebooks */
+	menu_highscores_1.prepareMenuNotebook(1, 304, 216, 3);
+	menu_highscores_2.prepareMenuNotebook(1, 304, 216, 3);
+	menu_highscores_3.prepareMenuNotebook(1, 304, 216, 3);
+	if (!menusAreInitialized) {
+		for (i = 0; i < 1; i++) {
+			menu_highscores_1.pages[i] = new MenuPage();
+			menu_highscores_2.pages[i] = new MenuPage();
+			menu_highscores_3.pages[i] = new MenuPage();
+		}
+	}
+	menu_highscores_1.pages[0]->prepareMenuPage(1, 0, 30, 20, 1);
+	menu_highscores_1.pages[0]->setTextLine(0, "YE OLDE HIGH SCORES");
+	menu_highscores_2.pages[0]->prepareMenuPage(8, 96, 30, 20, 0);
+	menu_highscores_2.pages[0]->setTextLine(0, "");
+	menu_highscores_2.pages[0]->setTextLine(1, "");
+	menu_highscores_2.pages[0]->setTextLine(2, "Flash:");
+	menu_highscores_2.pages[0]->setTextLine(3, "HTML5:");
+	menu_highscores_2.pages[0]->setTextLine(4, "Hard:");
+	menu_highscores_2.pages[0]->setTextLine(5, "Cruel:");
+	menu_highscores_2.pages[0]->setTextLine(6, "Mips:");
+	menu_highscores_2.pages[0]->setTextLine(7, "Custom:");
+	menu_highscores_3.pages[0]->prepareMenuPage(8, 224, 30, 20, 2);
+	menu_highscores_3.pages[0]->setTextLine(0, "");
+	menu_highscores_3.pages[0]->setTextLine(1, "");
+	updateHighScores();
+
 	/* Credits Notebook */
 	menu_credits.prepareMenuNotebook(5, 304, 216, 2);
 	if (!menusAreInitialized) {
@@ -809,7 +845,7 @@ void InitializeMenus() {
 	menu_credits.pages[1]->setTextLine(4, "https://github.com/Mips96");
 	menu_credits.pages[1]->setTextLine(5, "/Trogdor-Reburninated");
 	menu_credits.pages[1]->setTextLine(6, "");
-	menu_credits.pages[1]->setTextLine(7, "v1.2");
+	menu_credits.pages[1]->setTextLine(7, "v2.0");
 
 	menu_credits.pages[2]->prepareMenuPage(5, 0, 30, 20, 1);
 	menu_credits.pages[2]->setTextLine(0, "- STINKOMAN MUSIC -");
@@ -890,6 +926,7 @@ void InitializeMenus() {
 	menu_cheats.updateOptionPositions();
 	menu_quit.updateOptionPositions();
 	setPreset(MENU_PRESET->index);
+	updateHighScores();
 
 	menusAreInitialized = true;
 
@@ -1080,4 +1117,13 @@ void setPreset(Sint8 ind) {
 			MENU_DEBUG_MODE->setFrozen(false, 0);
 			break;
 	}
+}
+
+void updateHighScores() {
+	menu_highscores_3.pages[0]->setTextLine(2, to_string(gameState.highscores.flash).c_str());
+	menu_highscores_3.pages[0]->setTextLine(3, to_string(gameState.highscores.html5).c_str());
+	menu_highscores_3.pages[0]->setTextLine(4, to_string(gameState.highscores.hard).c_str());
+	menu_highscores_3.pages[0]->setTextLine(5, to_string(gameState.highscores.cruel).c_str());
+	menu_highscores_3.pages[0]->setTextLine(6, to_string(gameState.highscores.mips).c_str());
+	menu_highscores_3.pages[0]->setTextLine(7, to_string(gameState.highscores.custom).c_str());
 }
