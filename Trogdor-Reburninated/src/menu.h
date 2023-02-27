@@ -9,7 +9,7 @@
 constexpr auto MAX_NUM_OPTION_CHOICES = 10;
 constexpr auto MAX_NUM_MENU_OPTIONS = 8;
 constexpr auto MAX_NUM_MENU_PAGES = 6;
-constexpr auto MAX_NUM_MENU_LINES = 9;
+constexpr auto MAX_NUM_MENU_LINES = 10;
 
 /* @brief A page of text within a menu.
 * 

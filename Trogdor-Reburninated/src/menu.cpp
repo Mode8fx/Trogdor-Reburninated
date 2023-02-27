@@ -826,16 +826,17 @@ void InitializeMenus() {
 			menu_credits.pages[i] = new MenuPage();
 		}
 	}
-	menu_credits.pages[0]->prepareMenuPage(9, 0, 30, 20, 1);
-	menu_credits.pages[0]->setTextLine(0, "- ORIGINAL FLASH GAME -");
+	menu_credits.pages[0]->prepareMenuPage(10, 0, 30, 20, 1);
+	menu_credits.pages[0]->setTextLine(0, "- ORIGINAL GAME -");
 	menu_credits.pages[0]->setTextLine(1, "");
 	menu_credits.pages[0]->setTextLine(2, "Programming: Jonathan Howe");
 	menu_credits.pages[0]->setTextLine(3, "Design: Mike Chapman, Matt Chapman");
-	menu_credits.pages[0]->setTextLine(4, "");
-	menu_credits.pages[0]->setTextLine(5, "https://homestarrunner.com");
-	menu_credits.pages[0]->setTextLine(6, "");
-	menu_credits.pages[0]->setTextLine(7, "https://www.youtube.com/user");
-	menu_credits.pages[0]->setTextLine(8, "/homestarrunnerdotcom");
+	menu_credits.pages[0]->setTextLine(4, "HTML5 Port: Aeon Softworks");
+	menu_credits.pages[0]->setTextLine(5, "");
+	menu_credits.pages[0]->setTextLine(6, "https://homestarrunner.com");
+	menu_credits.pages[0]->setTextLine(7, "");
+	menu_credits.pages[0]->setTextLine(8, "https://www.youtube.com/user");
+	menu_credits.pages[0]->setTextLine(9, "/homestarrunnerdotcom");
 
 	menu_credits.pages[1]->prepareMenuPage(8, 0, 30, 20, 1);
 	menu_credits.pages[1]->setTextLine(0, "- THIS RECREATION -");
