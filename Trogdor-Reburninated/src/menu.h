@@ -237,10 +237,12 @@ constexpr auto COSMETIC_NUM_OPTIONS = 5;
 
 extern Menu menu_other;
 constexpr auto MENU_STARTING_LEVEL_INDEX = 0;
-constexpr auto MENU_KNIGHT_BEHAVIOR_INDEX = 1;
-constexpr auto MENU_LEVEL_TRAN_INDEX = 2;
-constexpr auto OTHER_NUM_OPTIONS = 3;
+constexpr auto MENU_SHUFFLE_LEVELS_INDEX = 1;
+constexpr auto MENU_KNIGHT_BEHAVIOR_INDEX = 2;
+constexpr auto MENU_LEVEL_TRAN_INDEX = 3;
+constexpr auto OTHER_NUM_OPTIONS = 4;
 #define MENU_STARTING_LEVEL  menu_other.options[MENU_STARTING_LEVEL_INDEX]
+#define MENU_SHUFFLE_LEVELS  menu_other.options[MENU_SHUFFLE_LEVELS_INDEX]
 #define MENU_KNIGHT_BEHAVIOR menu_other.options[MENU_KNIGHT_BEHAVIOR_INDEX]
 #define MENU_LEVEL_TRAN      menu_other.options[MENU_LEVEL_TRAN_INDEX]
 

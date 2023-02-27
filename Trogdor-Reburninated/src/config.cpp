@@ -34,6 +34,7 @@ void loadGameState() {
 		menu_cosmetic.setOptionChoice(MENU_BIG_HEAD_MODE_INDEX, gameState.settings_cosmetic.bigHeadMode);
 		menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, gameState.settings_cosmetic.scaling);
 		menu_other.setOptionChoice(MENU_STARTING_LEVEL_INDEX, gameState.settings_other.startingLevel);
+		menu_other.setOptionChoice(MENU_SHUFFLE_LEVELS_INDEX, gameState.settings_other.shuffleLevels);
 		menu_other.setOptionChoice(MENU_KNIGHT_BEHAVIOR_INDEX, gameState.settings_other.knightBehavior);
 		menu_other.setOptionChoice(MENU_LEVEL_TRAN_INDEX, gameState.settings_other.levelTran);
 		menu_cheats.setOptionChoice(MENU_INF_LIVES_INDEX, gameState.settings_cheats.infLives);
@@ -57,6 +58,6 @@ void loadGameState() {
 		gameState.settings_other = getSettingsOther();
 		gameState.settings_cheats = getSettingsCheats();
 		gameState.settings_unlocks = getSettingsUnlocks();
-		gameState.autosave = { -1, 0, 0, 0, 0, false, gameState.settings_difficulty, gameState.settings_cheats };
+		gameState.autosave = { -1, 0, 0, 0, 0, false, gameState.settings_difficulty, gameState.settings_other.shuffleLevels, gameState.settings_cheats };
 	}
 }

@@ -501,10 +501,14 @@ std::string option_empty[1] = { "" };
 std::string option_custom_only[1] = { "(Custom preset only.)" };
 std::string option_main_starting_level_choices[10] = { "1", "11", "21", "31", "41", "51", "61", "71", "81", "91" };
 std::string option_main_starting_level_descriptions_line_1[1] = { "The level that the game starts on." };
+std::string option_main_level_order_choices[2] = { "Original", "Shuffled" };
+std::string option_shuffle_levels_descriptions_line_1[2] = { "Shuffle the level order so it's", "Play using the original level order." };
+std::string option_shuffle_levels_descriptions_line_2[2] = { "different every time you play.", "" };
+std::string option_shuffle_levels_descriptions_line_3[2] = { "(Custom / Mips's Choice presets only.)", "" };
 std::string option_main_preset_choices[6] = { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mips's Choice" };
 std::string option_main_preset_descriptions_line_1[6] = { "Make your own rules!", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "Someone's favorite..." };
 std::string option_main_preset_descriptions_line_2[6] = { "Cheats and level select", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "For Trogdor masters!", "Fewer extra lives, crazy fast arrows," };
-std::string option_main_preset_descriptions_line_3[6] = { "are also allowed.", "", "", "For Trogdor pros.", "", "all treasure huts." };
+std::string option_main_preset_descriptions_line_3[6] = { "are also allowed.", "", "", "For Trogdor pros.", "", "all treasure huts, shuffled levels." };
 std::string option_main_extra_lives_choices[9] = { "0", "1", "2", "3", "4", "5", "10", "20", "30" };
 std::string option_main_extra_lives_descriptions_line_1[1] = { "The number of extra lives you start with." };
 std::string option_main_lives_interval_choices[8] = { "Every 300 points", "Every 500 points", "Every 1000 points", "500 points only", "500 and 1000 only", "1000 points only", "1000 and 2000 only", "None" };
@@ -749,6 +753,9 @@ void InitializeMenus() {
 	MENU_STARTING_LEVEL->prepareMenuOption("Starting Level", option_main_starting_level_choices,
 		option_main_starting_level_descriptions_line_1, option_custom_only, option_empty,
 		"", 10, true, 0, true, true);
+	MENU_SHUFFLE_LEVELS->prepareMenuOption("Shuffle Levels", option_on_off,
+		option_shuffle_levels_descriptions_line_1, option_shuffle_levels_descriptions_line_2, option_shuffle_levels_descriptions_line_3,
+		"", 2, false, 1, true, true);
 	MENU_KNIGHT_BEHAVIOR->prepareMenuOption("Knight Behavior", option_main_knight_behavior_choices,
 		option_main_knight_behavior_descriptions_line_1, option_main_knight_behavior_descriptions_line_2, option_main_knight_behavior_descriptions_line_3,
 		"", 2, false, 1, true, false);
@@ -924,6 +931,7 @@ State_Settings_Cosmetic getSettingsCosmetic() {
 State_Settings_Other getSettingsOther() {
 	return {
 		MENU_STARTING_LEVEL->index,
+		MENU_SHUFFLE_LEVELS->index,
 		MENU_KNIGHT_BEHAVIOR->index,
 		MENU_LEVEL_TRAN->index
 	};
@@ -990,6 +998,7 @@ void setPreset(Sint8 ind) {
 			MENU_ARCHER_FREQ->setFrozen(true, 0);
 			MENU_TREASURE_HUTS->setFrozen(true, 0);
 			MENU_STARTING_LEVEL->setFrozen(true, 0);
+			MENU_SHUFFLE_LEVELS->setFrozen(true, 1);
 			MENU_INF_LIVES->setFrozen(true, 1);
 			MENU_SPEEDY_MODE->setFrozen(true, 0);
 			MENU_NOCLIP->setFrozen(true, 1);
@@ -1004,6 +1013,7 @@ void setPreset(Sint8 ind) {
 			MENU_ARCHER_FREQ->setFrozen(true, 0);
 			MENU_TREASURE_HUTS->setFrozen(true, 1);
 			MENU_STARTING_LEVEL->setFrozen(true, 0);
+			MENU_SHUFFLE_LEVELS->setFrozen(true, 1);
 			MENU_INF_LIVES->setFrozen(true, 1);
 			MENU_SPEEDY_MODE->setFrozen(true, 0);
 			MENU_NOCLIP->setFrozen(true, 1);
@@ -1018,6 +1028,7 @@ void setPreset(Sint8 ind) {
 			MENU_ARCHER_FREQ->setFrozen(true, 4);
 			MENU_TREASURE_HUTS->setFrozen(true, 0);
 			MENU_STARTING_LEVEL->setFrozen(true, 0);
+			MENU_SHUFFLE_LEVELS->setFrozen(true, 1);
 			MENU_INF_LIVES->setFrozen(true, 1);
 			MENU_SPEEDY_MODE->setFrozen(true, 0);
 			MENU_NOCLIP->setFrozen(true, 1);
@@ -1032,6 +1043,7 @@ void setPreset(Sint8 ind) {
 			MENU_ARCHER_FREQ->setFrozen(true, 5);
 			MENU_TREASURE_HUTS->setFrozen(true, 0);
 			MENU_STARTING_LEVEL->setFrozen(true, 0);
+			MENU_SHUFFLE_LEVELS->setFrozen(true, 1);
 			MENU_INF_LIVES->setFrozen(true, 1);
 			MENU_SPEEDY_MODE->setFrozen(true, 0);
 			MENU_NOCLIP->setFrozen(true, 1);
@@ -1046,6 +1058,7 @@ void setPreset(Sint8 ind) {
 			MENU_ARCHER_FREQ->setFrozen(true, 1);
 			MENU_TREASURE_HUTS->setFrozen(true, 1);
 			MENU_STARTING_LEVEL->setFrozen(true, 0);
+			MENU_SHUFFLE_LEVELS->setFrozen(true, 0);
 			MENU_INF_LIVES->setFrozen(true, 1);
 			MENU_SPEEDY_MODE->setFrozen(true, 0);
 			MENU_NOCLIP->setFrozen(true, 1);
@@ -1060,6 +1073,7 @@ void setPreset(Sint8 ind) {
 			MENU_ARCHER_FREQ->setFrozen(false, 0);
 			MENU_TREASURE_HUTS->setFrozen(false, 0);
 			MENU_STARTING_LEVEL->setFrozen(false, 0);
+			MENU_SHUFFLE_LEVELS->setFrozen(false, 0);
 			MENU_INF_LIVES->setFrozen(false, 0);
 			MENU_SPEEDY_MODE->setFrozen(false, 0);
 			MENU_NOCLIP->setFrozen(false, 0);

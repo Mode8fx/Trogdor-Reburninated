@@ -549,7 +549,7 @@ GameManager::GameManager(MenuManager mm) {
 		level = gameState.autosave.level;
 		treasureHutFound = gameState.autosave.treasureHutFound;
 		treasureHutLevel = gameState.autosave.treasureHutLevel;
-		randomSeed = gameState.autosave.randomSeed;
+		shuffleLevels = gameState.autosave.shuffleLevels;
 		livesIntervalSetting = gameState.autosave.difficulty.livesInterval;
 		peasantPenalty = gameState.autosave.difficulty.peasantPenalty;
 		knightSpeedSetting = gameState.autosave.difficulty.knightSpeed;
@@ -560,6 +560,7 @@ GameManager::GameManager(MenuManager mm) {
 		speedyMode = gameState.autosave.cheats.speedyMode;
 		noclip = gameState.autosave.cheats.noclip;
 		debugMode = gameState.autosave.cheats.debugMode;
+		randomSeed = gameState.autosave.randomSeed;
 	} else {
 		preset = MENU_PRESET->index;
 		mans = 3;
@@ -577,6 +578,7 @@ GameManager::GameManager(MenuManager mm) {
 				arrowSpeedSetting = MENU_ARROW_SPEED->index;
 				archerFrequencySetting = MENU_ARCHER_FREQ->index;
 				treasureHutSetting = MENU_TREASURE_HUTS->index;
+				shuffleLevels = MENU_SHUFFLE_LEVELS->isValue(0);
 				infiniteLives = MENU_INF_LIVES->isValue(0);
 				if (infiniteLives) {
 					mans = 99;
@@ -607,6 +609,7 @@ GameManager::GameManager(MenuManager mm) {
 				arrowSpeedSetting = 1;
 				archerFrequencySetting = 0;
 				treasureHutSetting = 0;
+				shuffleLevels = false;
 				break;
 			case 2:
 				livesIntervalSetting = 0;
@@ -615,6 +618,7 @@ GameManager::GameManager(MenuManager mm) {
 				arrowSpeedSetting = 1;
 				archerFrequencySetting = 0;
 				treasureHutSetting = 1;
+				shuffleLevels = false;
 				break;
 			case 3:
 				livesIntervalSetting = 6;
@@ -623,6 +627,7 @@ GameManager::GameManager(MenuManager mm) {
 				arrowSpeedSetting = 3;
 				archerFrequencySetting = 4;
 				treasureHutSetting = 0;
+				shuffleLevels = false;
 				break;
 			case 4:
 				livesIntervalSetting = 7;
@@ -631,6 +636,7 @@ GameManager::GameManager(MenuManager mm) {
 				arrowSpeedSetting = 4;
 				archerFrequencySetting = 5;
 				treasureHutSetting = 0;
+				shuffleLevels = false;
 				break;
 			case 5:
 				livesIntervalSetting = 1;
@@ -639,6 +645,7 @@ GameManager::GameManager(MenuManager mm) {
 				arrowSpeedSetting = 4;
 				archerFrequencySetting = 1;
 				treasureHutSetting = 1;
+				shuffleLevels = true;
 				break;
 		}
 		score = 0;
