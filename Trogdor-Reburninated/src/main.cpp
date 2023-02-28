@@ -112,6 +112,12 @@ int main(int argv, char** args) {
 			updateText(&text_4_score_val, to_string(GM.score));
 			updateText(&text_4_mans_val, to_string(GM.mans));
 			updateText(&text_4_level_val, to_string(GM.level));
+			menu_main.updateOptionPositions();
+			menu_difficulty.updateOptionPositions();
+			menu_cosmetic.updateOptionPositions();
+			menu_other.updateOptionPositions();
+			menu_cheats.updateOptionPositions();
+			menu_quit.updateOptionPositions();
 			if (gameHiResMult < 2) {
 				MM.maxPageNum = MAX_PAGE_NUM_LOWRES;
 				updateText(&text_3_page, "("+to_string(MM.page)+"/"+to_string(MM.maxPageNum)+")");
@@ -875,7 +881,7 @@ int main(int argv, char** args) {
 				if (g_frameState.startingFrame(285)) {
 					GM.updateLevel(1);
 					GM.saveGameState_autosave();
-				} else if ((MENU_LEVEL_TRAN->isValue(0) && g_frameState.frame == 316) || (MENU_LEVEL_TRAN->isValue(1) && keyPressed(INPUT_A))) {
+				} else if ((MENU_LEVEL_TRAN->isValue(0) && g_frameState.frame == 316) || (MENU_LEVEL_TRAN->isValue(1) && (keyPressed(INPUT_A) || keyPressed(INPUT_START)))) {
 					if (g_frameState.frame < 285) {
 						GM.updateLevel(1);
 						GM.saveGameState_autosave();
