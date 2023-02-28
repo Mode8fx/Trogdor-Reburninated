@@ -256,7 +256,7 @@ void InitializeText_HomeScreen() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("-Press C / X to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
-	SET_TEXT("-Press F (KB) to toggle fullscreen", text_3_controls_6, font_serif_white_6_mult,
+	SET_TEXT("-Press F/ESC to toggle fullscreen", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #endif
 #if defined(THREEDS)

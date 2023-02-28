@@ -215,7 +215,7 @@ void handleInput() {
 					heldKeys |= INPUT_SELECT;
 					break;
 				}
-				if (event.key.keysym.sym == SDLK_f) {
+				if (event.key.keysym.sym == SDLK_f || event.key.keysym.sym == SDLK_ESCAPE) {
 					heldKeys |= INPUT_FULLSCREEN;
 					break;
 				}
@@ -269,7 +269,7 @@ void handleInput() {
 					heldKeys &= ~INPUT_SELECT;
 					break;
 				}
-				if (event.key.keysym.sym == SDLK_f) {
+				if (event.key.keysym.sym == SDLK_f || event.key.keysym.sym == SDLK_ESCAPE) {
 					heldKeys &= ~INPUT_FULLSCREEN;
 					break;
 				}
