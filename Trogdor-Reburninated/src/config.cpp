@@ -62,3 +62,22 @@ void loadGameState() {
 		gameState.highscores = { 0, 0, 0, 0, 0, 0 };
 	}
 }
+
+void loadGameState_partial() { // used for display init (saved scaling option wouldn't load properly otherwise)
+	saveBin = SDL_RWFromFile(SAVE_FILE, "rb");
+
+	if (saveBin) {
+		SDL_RWread(saveBin, &gameState, sizeof(gameState), 1);
+		SDL_RWclose(saveBin);
+	}
+	else {
+		// File does not exist, use default scaling
+#if defined(VITA) || defined(WII_U) || defined(SWITCH)
+		gameState.settings_cosmetic.scaling = 1;
+#elif defined(PSP)
+		gameState.settings_cosmetic.scaling = 3;
+#else
+		gameState.settings_cosmetic.scaling = 0;
+#endif
+	}
+}

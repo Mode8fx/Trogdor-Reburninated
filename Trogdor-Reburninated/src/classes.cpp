@@ -512,7 +512,7 @@ void MenuManager::unlockCheat(Uint8 menuIndex, Sint8 indexAtUnlock) {
 void MenuManager::typeStuff() {
 	if (handleCheat(0, contraArrayKey, 10, contraIndex, SFX_SFX2, 0)
 		|| handleCheat(1, s3kArrayKey, 9, s3kIndex, SFX_SPEEDINCREASED, 3)
-		|| handleCheat(2, dkcArrayKey, 6, dkcIndex, SFX_SBDOOJ, 0)
+		|| handleCheat(2, dkcArrayKey, 6, dkcIndex, SFX_SBDOOJ_SHORT, 0)
 		|| handleCheat(3, pacmanArrayKey, 11, pacmanIndex, SFX_GOLDGET, 0)
 		) {
 		contraIndex = 0;

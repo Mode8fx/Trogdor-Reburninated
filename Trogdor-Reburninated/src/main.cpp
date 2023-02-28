@@ -38,6 +38,8 @@ int main(int argv, char** args) {
 #if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 	try {
 #endif
+	loadGameState_partial();
+	scalingType = gameState.settings_cosmetic.scaling;
 	InitializeDisplay();
 	loadGameState();
 

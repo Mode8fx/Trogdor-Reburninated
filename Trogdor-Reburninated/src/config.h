@@ -148,5 +148,6 @@ constexpr auto DEFAULT_HEIGHT = 480;
 
 extern void saveGameState_settings();
 extern void loadGameState();
+extern void loadGameState_partial();
 
 #endif
