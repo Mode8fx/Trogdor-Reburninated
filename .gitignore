@@ -400,7 +400,9 @@ music_wav/
 sfx_wav/
 music_ogg/
 sfx_ogg/
+sfx_all/
 music_psp/
+music_all/
 save.bin
 docs/
 *.dol

@@ -12,35 +12,27 @@ constexpr auto SFX_CHANNEL_GAME = -1; // any free channel
 constexpr auto SFX_CHANNEL_GAME_MUSIC = NUM_SOUND_CHANNELS - 2;
 constexpr auto SFX_CHANNEL_STRONG_BAD = NUM_SOUND_CHANNELS - 1; // highest channel
 
-#if !defined(PSP)
-constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.ogg";
-constexpr auto MUSIC_MENU = "music/menu.ogg";
-constexpr auto MUSIC_ENDING_1 = "music/ending_1.ogg";
-constexpr auto MUSIC_ENDING_2 = "music/ending_2.ogg";
-constexpr auto MUSIC_STINKOMAN_DAY = "music/stinkoman_level_1.ogg";
-constexpr auto MUSIC_STINKOMAN_EVENING = "music/stinkoman_level_2.ogg";
-constexpr auto MUSIC_STINKOMAN_NIGHT = "music/stinkoman_level_5.ogg";
-constexpr auto MUSIC_STINKOMAN_DAWN = "music/stinkoman_level_6.ogg";
-constexpr auto MUSIC_STINKOMAN_MIDPOINT = "music/stinkoman_level_9.ogg";
-constexpr auto MUSIC_STINKOMAN_LAST_10 = "music/stinkoman_level_10.ogg";
-constexpr auto MUSIC_STINKOMAN_BOSS = "music/stinkoman_boss_fight.ogg";
-constexpr auto MUSIC_STINKOMAN_HOMESTRETCH = "music/stinkoman_z_sabre.ogg";
-constexpr auto MUSIC_STINKOMAN_FINAL_BOSS = "music/stinkoman_mecha_trogador.ogg";
+#if defined(PSP) // proprietary
+const string musicFormat = ".bgm";
+#elif defined(THREEDS) // an old 3DS can already barely keep up without needing to decompress OGG
+const string musicFormat = ".wav";
 #else
-constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.bgm";
-constexpr auto MUSIC_MENU = "music/menu.bgm";
-constexpr auto MUSIC_ENDING_1 = "music/ending_1.bgm";
-constexpr auto MUSIC_ENDING_2 = "music/ending_2.bgm";
-constexpr auto MUSIC_STINKOMAN_DAY = "music/stinkoman_level_1.bgm";
-constexpr auto MUSIC_STINKOMAN_EVENING = "music/stinkoman_level_2.bgm";
-constexpr auto MUSIC_STINKOMAN_NIGHT = "music/stinkoman_level_5.bgm";
-constexpr auto MUSIC_STINKOMAN_DAWN = "music/stinkoman_level_6.bgm";
-constexpr auto MUSIC_STINKOMAN_MIDPOINT = "music/stinkoman_level_9.bgm";
-constexpr auto MUSIC_STINKOMAN_LAST_10 = "music/stinkoman_level_10.bgm";
-constexpr auto MUSIC_STINKOMAN_BOSS = "music/stinkoman_boss_fight.bgm";
-constexpr auto MUSIC_STINKOMAN_HOMESTRETCH = "music/stinkoman_z_sabre.bgm";
-constexpr auto MUSIC_STINKOMAN_FINAL_BOSS = "music/stinkoman_mecha_trogador.bgm";
+const string musicFormat = ".ogg";
 #endif
+
+#define MUSIC_TITLE_SCREEN ("music/title_screen" + musicFormat).c_str();
+#define MUSIC_MENU ("music/menu" + musicFormat).c_str();
+#define MUSIC_ENDING_1 ("music/ending_1" + musicFormat).c_str();
+#define MUSIC_ENDING_2 ("music/ending_2" + musicFormat).c_str();
+#define MUSIC_STINKOMAN_DAY ("music/stinkoman_level_1" + musicFormat).c_str();
+#define MUSIC_STINKOMAN_EVENING ("music/stinkoman_level_2" + musicFormat).c_str();
+#define MUSIC_STINKOMAN_NIGHT ("music/stinkoman_level_5" + musicFormat).c_str();
+#define MUSIC_STINKOMAN_DAWN ("music/stinkoman_level_6" + musicFormat).c_str();
+#define MUSIC_STINKOMAN_MIDPOINT ("music/stinkoman_level_9" + musicFormat).c_str();
+#define MUSIC_STINKOMAN_LAST_10 ("music/stinkoman_level_10" + musicFormat).c_str();
+#define MUSIC_STINKOMAN_BOSS ("music/stinkoman_boss_fight" + musicFormat).c_str();
+#define MUSIC_STINKOMAN_HOMESTRETCH ("music/stinkoman_z_sabre" + musicFormat).c_str();
+#define MUSIC_STINKOMAN_FINAL_BOSS ("music/stinkoman_mecha_trogador" + musicFormat).c_str();
 
 struct SoundEffect {
 	bool isPlaying = false;
