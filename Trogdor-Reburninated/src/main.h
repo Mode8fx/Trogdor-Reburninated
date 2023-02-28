@@ -33,7 +33,11 @@ Uint32 deltaTime;
 /* Framerate */
 Uint32 frameTime;
 Uint32 frameCounter_global;
+#if defined(THREEDS)
+Uint8 frameRate = 16;
+#else
 Uint8 frameRate = 60;
+#endif
 double frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / frameRate;
 Uint16 popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 
