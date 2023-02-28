@@ -6,7 +6,11 @@
 #include "level_data.h"
 
 bool renderOverlay;
+#if defined(THREEDS)
+bool showOverlay = false;
+#else
 bool showOverlay = true;
+#endif
 bool menuMusicHasStarted = false;
 
 int main(int argv, char** args) {

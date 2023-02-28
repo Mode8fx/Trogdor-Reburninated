@@ -238,11 +238,11 @@ void InitializeText_HomeScreen() {
 	SET_TEXT(" ", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #elif defined(THREEDS)
-	SET_TEXT(" ", text_3_controls_3, font_serif_white_6_mult,
+	SET_TEXT("-Press X to toggle overlay", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
-	SET_TEXT("-Press X to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 101 * gameHiResMult);
-	SET_TEXT(" ", text_3_controls_6, font_serif_white_6_mult,
+	SET_TEXT("(Warning: Overlay may cause", text_3_controls_5, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
+	SET_TEXT("minor graphical issues on O3DS)", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #elif defined(WII_U) || defined(SWITCH) || defined(GAMECUBE) || defined(ANDROID) || defined(XBOX)
 	SET_TEXT("-Press Y to change scaling", text_3_controls_3, font_serif_white_6_mult,

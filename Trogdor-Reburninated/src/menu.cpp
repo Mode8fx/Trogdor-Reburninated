@@ -547,11 +547,10 @@ std::string option_main_frame_rate_descriptions_line_1[1] = { "Higher frame rate
 std::string option_main_frame_rate_descriptions_line_2[1] = { "(Original Flash game is 16 FPS)" };
 #if defined(THREEDS)
 std::string option_main_frame_rate_choices[8] = { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "35 FPS", "40 FPS", "50 FPS", "60 FPS" };
-std::string option_main_frame_rate_descriptions_line_3[1] = { "(Higher than 16 may be unstable on O3DS!)" };
 #else
 std::string option_main_frame_rate_choices[8] = { "16 FPS [original]", "30 FPS", "32 FPS [2x]", "48 FPS [3x]", "60 FPS", "90 FPS", "120 FPS", "144 FPS [9x]" };
-std::string option_main_frame_rate_descriptions_line_3[1] = { "" };
 #endif
+std::string option_main_frame_rate_descriptions_line_3[1] = { "" };
 std::string option_main_level_tran_choices[2] = { "Original", "Button Press" };
 std::string option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press " + INPUT_CONFIRM };
 std::string option_main_level_tran_descriptions_line_2[2] = { "level will load automatically.", "to load the next level." };
