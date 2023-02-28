@@ -741,7 +741,7 @@ void InitializeMenus() {
 #if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
 		"", 5, true, 4, true, false);
 #elif defined(THREEDS)
-		"", 4, true, 0, true, false);
+		"", 4, true, 3, true, false);
 #else
 		"", 8, true, 4, true, false);
 #endif

@@ -277,11 +277,11 @@ void InitializeText_HomeScreen() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_keyboard_4), 115 * gameHiResMult);
 	SET_TEXT(" L -> Q      R -> E", text_3_keyboard_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_keyboard_5), 129 * gameHiResMult);
+#endif
 	SET_TEXT("Continue", text_3_continue_1, font_serif_white_8_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_continue_1), 110 * gameHiResMult);
 	SET_TEXT("New Game", text_3_continue_2, font_serif_white_8_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_continue_2), 130 * gameHiResMult);
-#endif
 }
 
 void InitializeText_Cutscenes() {

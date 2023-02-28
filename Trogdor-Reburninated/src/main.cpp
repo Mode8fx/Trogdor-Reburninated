@@ -414,9 +414,9 @@ int main(int argv, char** args) {
 						InitializeCutsceneObjects_trogdor(); // needed in case Big Head Mode was toggled
 						g_sceneState = 4;
 					}
+					sprite_trogdor_logo_ins.renderSprite_game();
 					renderText(text_3_continue_1, font_serif_white_8_mult);
 					renderText(text_3_continue_2, font_serif_white_8_mult);
-					sprite_trogdor_logo_ins.renderSprite_game();
 					MM.cursor.renderSprite_game();
 					break;
 			/* Options Menu */

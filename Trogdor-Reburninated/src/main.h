@@ -34,7 +34,7 @@ Uint32 deltaTime;
 Uint32 frameTime;
 Uint32 frameCounter_global;
 #if defined(THREEDS)
-Uint8 frameRate = 16;
+Uint8 frameRate = 30;
 #else
 Uint8 frameRate = 60;
 #endif
