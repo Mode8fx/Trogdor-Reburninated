@@ -1901,6 +1901,7 @@ void GameManager::saveGameState_autosave() {
 	gameState.autosave.treasureHutLevel = treasureHutLevel;
 	gameState.autosave.randomSeed = randomSeed;
 	gameState.autosave.difficulty = { preset, MENU_EXTRA_LIVES->index, livesIntervalSetting, peasantPenalty, knightSpeedSetting, arrowSpeedSetting, archerFrequencySetting, treasureHutSetting };
+	gameState.autosave.shuffleLevels = shuffleLevels;
 	gameState.autosave.cheats = { infiniteLives, speedyMode, noclip, debugMode };
 	saveBin = SDL_RWFromFile(SAVE_FILE, "wb");
 	SDL_RWwrite(saveBin, &gameState, sizeof(gameState), 1);
