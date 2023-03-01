@@ -38,7 +38,11 @@ Uint8 frameRate = 30;
 #else
 Uint8 frameRate = 60;
 #endif
+#if defined(PSP) // I have no idea why this is required, but it is
+double frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / 60;
+#else
 double frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / frameRate;
+#endif
 Uint16 popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 
 /* SDL Input */
