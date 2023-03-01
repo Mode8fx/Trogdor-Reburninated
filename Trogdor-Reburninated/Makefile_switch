@@ -46,7 +46,7 @@ INCLUDES	:=	include
 
 APP_TITLE   := Trogdor: Reburninated
 APP_AUTHOR  := Mips96
-APP_VERSION := 1.1
+APP_VERSION := 2.0
 ICON        := release-resources/logo_icon_switch.jpg
 
 #---------------------------------------------------------------------------------
