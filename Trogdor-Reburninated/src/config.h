@@ -130,8 +130,8 @@ constexpr auto DEFAULT_HEIGHT = 1080;
 constexpr auto DEFAULT_WIDTH = 480;
 constexpr auto DEFAULT_HEIGHT = 272;
 #elif defined(WII) || defined(GAMECUBE) || defined(XBOX)
-constexpr auto DEFAULT_WIDTH = 640;
-constexpr auto DEFAULT_HEIGHT = 480;
+constexpr auto DEFAULT_WIDTH = 320;
+constexpr auto DEFAULT_HEIGHT = 240;
 #elif defined(THREEDS)
 constexpr auto DEFAULT_WIDTH = 400;
 constexpr auto DEFAULT_HEIGHT = 240;

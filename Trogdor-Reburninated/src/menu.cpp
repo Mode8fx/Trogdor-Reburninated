@@ -543,13 +543,13 @@ std::string option_main_knight_speed_choices[5] = { "Very Slow", "Slow", "Normal
 std::string option_main_knight_speed_descriptions_line_1[1] = { "Change how quickly knights move." };
 std::string option_main_arrow_speed_choices[5] = { "Slow", "Normal", "Fast", "Very Fast", "Insane" };
 std::string option_main_arrow_speed_descriptions_line_1[1] = { "Change how quickly arrows move." };
-std::string option_main_frame_rate_descriptions_line_1[1] = { "Higher frame rate = smoother gameplay." };
-std::string option_main_frame_rate_descriptions_line_2[1] = { "(Original Flash game is 16 FPS)" };
-#if defined(THREEDS)
-std::string option_main_frame_rate_choices[8] = { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "35 FPS", "40 FPS", "50 FPS", "60 FPS" };
+#if defined(WII) || defined(GAMECUBE) || defined(THREEDS)
+std::string option_main_frame_rate_choices[8] = { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "35 FPS", "40 FPS", "50 FPS", "58 FPS" };
 #else
 std::string option_main_frame_rate_choices[8] = { "16 FPS [original]", "30 FPS", "32 FPS [2x]", "48 FPS [3x]", "60 FPS", "90 FPS", "120 FPS", "144 FPS [9x]" };
 #endif
+std::string option_main_frame_rate_descriptions_line_1[1] = { "Higher frame rate = smoother gameplay." };
+std::string option_main_frame_rate_descriptions_line_2[1] = { "(Original Flash game is 16 FPS)" };
 std::string option_main_frame_rate_descriptions_line_3[1] = { "" };
 std::string option_main_level_tran_choices[2] = { "Original", "Button Press" };
 std::string option_main_level_tran_descriptions_line_1[2] = { "After beating a level, the next", "After beating a level, press " + INPUT_CONFIRM };
@@ -737,10 +737,12 @@ void InitializeMenus() {
 	}
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP) || defined(XBOX)
 		"", 5, true, 4, true, false);
 #elif defined(THREEDS)
 		"", 4, true, 3, true, false);
+#elif defined(WII) || defined(GAMECUBE)
+		"", 8, true, 7, true, false);
 #else
 		"", 8, true, 4, true, false);
 #endif
@@ -1008,7 +1010,7 @@ State_Settings_Unlocks getSettingsUnlocks() {
 }
 
 void updateFrameRate() {
-#if defined(THREEDS)
+#if defined(WII) || defined(GAMECUBE) || defined(THREEDS)
 	switch (MENU_FRAME_RATE->index) {
 		case 1:
 			frameRate = 20;
@@ -1018,6 +1020,18 @@ void updateFrameRate() {
 			break;
 		case 3:
 			frameRate = 30;
+			break;
+		case 4:
+			frameRate = 35;
+			break;
+		case 5:
+			frameRate = 40;
+			break;
+		case 6:
+			frameRate = 50;
+			break;
+		case 7:
+			frameRate = 58;
 			break;
 		default:
 			frameRate = 16;

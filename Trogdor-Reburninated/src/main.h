@@ -35,6 +35,8 @@ Uint32 frameTime;
 Uint32 frameCounter_global;
 #if defined(THREEDS)
 Uint8 frameRate = 30;
+#elif defined(WII)
+Uint8 frameRate = 58;
 #else
 Uint8 frameRate = 60;
 #endif
