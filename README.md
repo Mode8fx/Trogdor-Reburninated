@@ -25,7 +25,7 @@ It was made by opening the original game in a Flash decompiler and porting its A
 That being said, almost all art and sound assets are ported directly from the original game, just reorganized into sprite sheets, with modifications only being made when necessary.
 
 ### Future updates?
-A substantial update will be released before the end of February 2023, in time for the Flash game's 20th anniversary.
+A substantial v2.0 update will be released in the first week of March 2023, in time for the Flash game's 20th anniversary.
 
 ### Will this be ported to \_\_\_\_\_?
 This game was made to be compatible with both SDL 1.2 and SDL2 specifically so it could be ported to many systems. In particular, I would like to create a LibRetro core so it runs on a wide variety of systems. You could also try porting it yourself; this is open-source, after all.
