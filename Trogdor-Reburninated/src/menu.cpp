@@ -1157,6 +1157,6 @@ void updateHighScores() {
 	menu_highscores_3.pages[0]->setTextLine(3, to_string(gameState.highscores.html5).c_str());
 	menu_highscores_3.pages[0]->setTextLine(4, to_string(gameState.highscores.hard).c_str());
 	menu_highscores_3.pages[0]->setTextLine(5, to_string(gameState.highscores.cruel).c_str());
-	menu_highscores_3.pages[0]->setTextLine(6, to_string(gameState.highscores.mips).c_str());
+	menu_highscores_3.pages[0]->setTextLine(6, to_string(gameState.highscores.mipsChoice).c_str());
 	menu_highscores_3.pages[0]->setTextLine(7, to_string(gameState.highscores.custom).c_str());
 }

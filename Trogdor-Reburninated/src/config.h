@@ -76,7 +76,7 @@ struct State_HighScores {
 	Uint32 html5;
 	Uint32 hard;
 	Uint32 cruel;
-	Uint32 mips;
+	Uint32 mipsChoice;
 };
 
 struct GameState {

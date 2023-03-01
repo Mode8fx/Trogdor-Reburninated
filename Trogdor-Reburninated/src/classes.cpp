@@ -1592,7 +1592,7 @@ void GameManager::dm_updateFrameState() { // death message
 							gameState.highscores.cruel = max(score, gameState.highscores.cruel);
 							break;
 						case 5:
-							gameState.highscores.mips = max(score, gameState.highscores.mips);
+							gameState.highscores.mipsChoice = max(score, gameState.highscores.mipsChoice);
 							break;
 						default:
 							gameState.highscores.custom = max(score, gameState.highscores.custom);
