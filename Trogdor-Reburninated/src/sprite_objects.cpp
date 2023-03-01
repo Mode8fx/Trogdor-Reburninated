@@ -290,7 +290,7 @@ SpriteInstance::SpriteInstance(SpriteObject *so, Sint8 frame, Sint8 form) {
     }
 }
 
-SpriteInstance::SpriteInstance(SpriteObject *so, Sint8 frame, Sint8 form, double x, double y) {
+SpriteInstance::SpriteInstance(SpriteObject *so, Sint8 frame, Sint8 form, float x, float y) {
     spriteObj = so;
     if (spriteObj->numFrames > 0) {
         srcrect.x = 0;
@@ -380,27 +380,27 @@ inline void SpriteInstance::moveSprite() {
     }
 }
 
-void SpriteInstance::setPosX(double x) {
+void SpriteInstance::setPosX(float x) {
     pos_x = x;
     dstrect.x = (Sint16)x;
 }
 
-void SpriteInstance::setPosY(double y) {
+void SpriteInstance::setPosY(float y) {
     pos_y = y;
     dstrect.y = (Sint16)y;
 }
 
-void SpriteInstance::addPosX(double x) {
+void SpriteInstance::addPosX(float x) {
     pos_x += (x * frameRateMult);
     dstrect.x = (Sint16)pos_x;
 }
 
-void SpriteInstance::addPosY(double y) {
+void SpriteInstance::addPosY(float y) {
     pos_y += (y * frameRateMult);
     dstrect.y = (Sint16)pos_y;
 }
 
-void SpriteInstance::setPos(double x, double y) {
+void SpriteInstance::setPos(float x, float y) {
     setPosX(x);
     setPosY(y);
 }
@@ -471,7 +471,7 @@ void SpriteInstance::renderEmptyOverlay() {
 #endif
 }
 
-void SpriteInstance::prepareAsCSO(double x, double y, Sint8 frame, Sint8 form, Sint8 frameTime, Sint8 formTime, float vx, float vy) {
+void SpriteInstance::prepareAsCSO(float x, float y, Sint8 frame, Sint8 form, Sint8 frameTime, Sint8 formTime, float vx, float vy) {
     setPos(x, y);
     setFrameAndForm(frame, form);
     animFrameTime = frameTime;

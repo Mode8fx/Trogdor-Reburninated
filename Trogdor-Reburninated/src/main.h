@@ -430,10 +430,10 @@ SDL_Rect gameToWindowDstRect = { 0, 0, gameWidth, gameHeight };
 SDL_Rect menuToWindowDstRect = { 0, 0, appWidth, appHeight };
 
 bool isWindowed = true;
-double screenScale = 1;
+float screenScale = 1;
 int trueScreenScaleInt = 1;
-double trueScreenScaleFull = 1;
-double screenScale_menu = 1;
+float trueScreenScaleFull = 1;
+float screenScale_menu = 1;
 bool allowHiRes = true;
 #if defined(VITA) || defined(WII_U) || defined(SWITCH)
 Sint8 scalingType = 1;

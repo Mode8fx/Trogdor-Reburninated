@@ -92,8 +92,8 @@ class SpriteInstance {
         SDL_Rect dstrect;
         float vel_x;
         float vel_y;
-        double pos_x;
-        double pos_y;
+        float pos_x;
+        float pos_y;
         Sint8 animFrame;
         Sint8 animForm;
         Sint8 animFrameTime;
@@ -106,7 +106,7 @@ class SpriteInstance {
         SpriteInstance() {
         }
         SpriteInstance(SpriteObject *, Sint8, Sint8);
-        SpriteInstance(SpriteObject *, Sint8, Sint8, double, double);
+        SpriteInstance(SpriteObject *, Sint8, Sint8, float, float);
         void setFrame(Sint8);
         void setForm(Sint8);
         void setFrameAndForm(Sint8, Sint8);
@@ -115,18 +115,18 @@ class SpriteInstance {
         void animateWrap();
         void updateCurrSprite();
         void moveSprite();
-        void setPosX(double);
-        void setPosY(double);
-        void addPosX(double);
-        void addPosY(double);
-        void setPos(double, double);
+        void setPosX(float);
+        void setPosY(float);
+        void addPosX(float);
+        void addPosY(float);
+        void setPos(float, float);
         void renderSprite_game();
         void renderSpriteAsCSO_game();
         void renderSprite_app();
         void renderSprite_menu();
         void renderSprite_overlay();
         void renderEmptyOverlay();
-        void prepareAsCSO(double, double, Sint8, Sint8, Sint8, Sint8, float, float);
+        void prepareAsCSO(float, float, Sint8, Sint8, Sint8, Sint8, float, float);
         void renderAsCSO(bool);
 };
 

@@ -105,8 +105,8 @@ class Trogdor {
 		SpriteInstance sprite_fire;
 		SpriteInstance sprite_death;
 		SpriteInstance sprite_end_of_level;
-		double spawnPos_x;
-		double spawnPos_y;
+		float spawnPos_x;
+		float spawnPos_y;
 		float invince;        // remaining invincibility time (after respawn)
 		Sint8 x_offset;       // used for movement
 		Sint8 y_offset;       // used for movement
@@ -151,12 +151,12 @@ class GameManager {
 		bool gameOver;                          // game is over
 		Uint8 level;                            // current level
 		Uint8 levelIndex;                       // current level index (determined by level)
-		double burnination;                     // amount of time left in burnination state
+		float burnination;                      // amount of time left in burnination state
 		Uint16 archerFrequency;                 // frequency at which archers appear
 		Sint8 archerFrequencySetting;           // setting for archer frequency
 		Sint8 arrowSpeedSetting;                // arrow speed setting
 		Sint8 arrowSpeed;                       // speed of arrows
-		double burnRate;                        // rate at which the burnination meter decreases
+		float burnRate;                         // rate at which the burnination meter decreases
 		Arrow arrowArrayL[MAX_NUM_ARROWS];      // array of Arrow objects (facing left, firing from right to left)
 		Arrow arrowArrayR[MAX_NUM_ARROWS];      // array of Arrow objects (facing right, firing from left to right)
 		Cottage hutArray[MAX_NUM_HUTS];         // array of Cottage objects
@@ -255,7 +255,7 @@ class GameManager {
 		void renderKnights();
 		void renderPeasants();
 		void renderTrogdor();
-		void setBurnination(double);
+		void setBurnination(float);
 		void renderTopBar();
 		void saveGameState_autosave();
 };

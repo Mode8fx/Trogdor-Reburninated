@@ -117,7 +117,7 @@ void cutscene_level_beaten() {
 				cutscene_level_beaten_smoke.isActive = false;
 				cutscene_cottage_fire.isActive = false;
 				cutscene_level_beaten_trogdor.prepareAsCSO(-5, 41, 0, 0, 0, 0, 0, 0);
-				cutscene_level_beaten_smoke.prepareAsCSO(125, 83.0 - cutscene_level_beaten_smoke.spriteObj->dstrect.h, 0, 0, 1, 8, 0, 0);
+				cutscene_level_beaten_smoke.prepareAsCSO(125, (float)83 - cutscene_level_beaten_smoke.spriteObj->dstrect.h, 0, 0, 1, 8, 0, 0);
 				break;
 			case 281:
 				cutscene_cottage_fire.prepareAsCSO(222, 0, 0, 0, 2, 0, 0, 0);
@@ -1067,7 +1067,7 @@ void cutscene_level_100() {
 				cutscene_level_100_screen_counter++;
 				cutscene_knight_1.isActive = false;
 				cutscene_archer_1.prepareAsCSO(106, 94, 1, 0, 0, 0, 0, 0);
-				cutscene_archer_2.prepareAsCSO(106 + (double)cutscene_archer_1.spriteObj->dstrect.w, 94, 0, 1, 0, 0, 0, 0);
+				cutscene_archer_2.prepareAsCSO((float)106 + cutscene_archer_1.spriteObj->dstrect.w, 94, 0, 1, 0, 0, 0, 0);
 				break;
 			case 1660:
 				cutscene_level_100_screen_counter++;

@@ -12,9 +12,9 @@ void setWidthHeightMults() {
 	gameHiResMult = (double)gameHiResWidth / gameWidth;
 }
 
-double getScreenScale_app() {
+float getScreenScale_app() {
 	if (windowWidth <= appWidth || windowHeight <= appHeight) return 1;
-	return min(((double)windowWidth / appWidth), ((double)windowHeight / appHeight));
+	return min(((float)windowWidth / appWidth), ((float)windowHeight / appHeight));
 }
 
 void scaleGameByApp() {
@@ -22,9 +22,9 @@ void scaleGameByApp() {
 	trueScreenScaleInt = (int)screenScale;
 }
 
-double getScreenScale_game() {
+float getScreenScale_game() {
 	if (windowWidth <= gameWidth || windowHeight <= gameHeight) return 1;
-	return min(((double)windowWidth / gameWidth), ((double)windowHeight / gameHeight));
+	return min(((float)windowWidth / gameWidth), ((float)windowHeight / gameHeight));
 }
 
 void scaleAppByGame() {
@@ -48,20 +48,20 @@ void scaleGameAndApp() {
 	switch (scalingType) {
 		case 0:  // integer app
 			scaleGameByApp();
-			screenScale = (int)screenScale;
+			screenScale = std::floor(screenScale);
 			if (allowHiRes) {
-				trueScreenScaleFull = (double)trueScreenScaleInt - (trueScreenScaleInt % 2); // integer scale relative to hi-res
+				trueScreenScaleFull = (float)trueScreenScaleInt - (trueScreenScaleInt % 2); // integer scale relative to hi-res
 			} else {
-				trueScreenScaleFull = (double)trueScreenScaleInt;
+				trueScreenScaleFull = (float)trueScreenScaleInt;
 			}
 			break;
 		case 1:  // integer game
 			scaleAppByGame();
-			screenScale = (int)screenScale;
+			screenScale = std::floor(screenScale);
 			if (allowHiRes) {
-				trueScreenScaleFull = (double)trueScreenScaleInt - (trueScreenScaleInt % 2); // integer scale relative to hi-res
+				trueScreenScaleFull = (float)trueScreenScaleInt - (trueScreenScaleInt % 2); // integer scale relative to hi-res
 			} else {
-				trueScreenScaleFull = (double)trueScreenScaleInt;
+				trueScreenScaleFull = (float)trueScreenScaleInt;
 			}
 			break;
 		case 2:  // non-integer app
@@ -89,7 +89,7 @@ void scaleGameAndApp() {
 	gameHiResHeight = gameToWindowDstRect.h;
 	gameHiResSrcRect.w = gameHiResWidth;
 	gameHiResSrcRect.h = gameHiResHeight;
-	screenScale_menu = (int)getScreenScale_app();
+	screenScale_menu = std::floor(getScreenScale_app());
 	menuToWindowDstRect.w = (int)(appWidth * screenScale_menu);
 	menuToWindowDstRect.h = (int)(appHeight * screenScale_menu);
 	menuToWindowDstRect.x = max((int)((windowWidth - menuToWindowDstRect.w) / 2), 0);
