@@ -471,7 +471,7 @@ void SpriteInstance::renderEmptyOverlay() {
 #endif
 }
 
-void SpriteInstance::prepareAsCSO(double x, double y, Sint8 frame, Sint8 form, Sint8 frameTime, Sint8 formTime, double vx, double vy) {
+void SpriteInstance::prepareAsCSO(double x, double y, Sint8 frame, Sint8 form, Sint8 frameTime, Sint8 formTime, float vx, float vy) {
     setPos(x, y);
     setFrameAndForm(frame, form);
     animFrameTime = frameTime;

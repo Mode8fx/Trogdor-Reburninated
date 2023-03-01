@@ -36,22 +36,22 @@ class Knight {
 	public:
 		FrameState anim_frameState;
 		FrameState move_frameState;
-		bool moving;      // used in toggleKnightMotion()
+		bool moving;    // used in toggleKnightMotion()
 		SpriteInstance sprite;
 		Sint16 half_src_w;
 		Sint16 half_src_h;
 		Sint8 direction;
-		double home_x;    // the parent (x,y) coordinates
-		double home_y;    // the parent (x,y) coordinates
-		double offset_x;  // the offset relative to home
-		double offset_y;  // the offset relative to home
-		double moveFrameCap;
-		double offsetConst;
-		Knight(Sint16, Sint16, Sint8, bool, double);
+		float home_x;   // the parent (x,y) coordinates
+		float home_y;   // the parent (x,y) coordinates
+		float offset_x; // the offset relative to home
+		float offset_y; // the offset relative to home
+		float moveFrameCap;
+		float offsetConst;
+		Knight(Sint16, Sint16, Sint8, bool, float);
 		inline void updateCollision();
-		void updateHome(double);
+		void updateHome(float);
 		void updateFrameState();
-		void move(double knightSpeed);
+		void move(float);
 };
 
 class Peasant {
@@ -68,9 +68,9 @@ class Peasant {
 		Sint16 myTargetx;
 		Sint16 myTargety;
 		bool returning;
-		double timer;
+		float timer;
 		Peasant();
-		void updateFrameState(double);
+		void updateFrameState(float);
 };
 
 class Archer {
@@ -107,7 +107,7 @@ class Trogdor {
 		SpriteInstance sprite_end_of_level;
 		double spawnPos_x;
 		double spawnPos_y;
-		double invince;       // remaining invincibility time (after respawn)
+		float invince;        // remaining invincibility time (after respawn)
 		Sint8 x_offset;       // used for movement
 		Sint8 y_offset;       // used for movement
 		Sint8 moveSpeed;      // used for movement
@@ -166,8 +166,8 @@ class GameManager {
 		Archer archerArray[2];                  // array of Archer objects
 		Trogdor player;                         // the player
 		Sint8 knightSpeedSetting;               // knight speed setting
-		double knightSpeed;                     // knight speed
-		double knightIncrement;                 // knight movement speed
+		float knightSpeed;                      // knight speed
+		float knightIncrement;                  // knight movement speed
 		Sint8 livesIntervalSetting;             // setting for lives interval
 		Uint16 extraMansBreak;                  // # of points for an extra life
 		Uint16 extraMansCounter;                // how many extra lives have been earned so far + 1
@@ -189,9 +189,9 @@ class GameManager {
 		Sint8 treasureHutLevel;                 // the level index of the first treasure hut you entered; default is 0
 		Sint16 store_x;                         // old player X position (used for treasure huts)
 		Sint16 store_y;                         // old player Y position (used for treasure huts)
-		double treasureHut_timer;               // remaining time in treasure hut
+		float treasureHut_timer;                // remaining time in treasure hut
 		Loot lootArray[MAX_NUM_LOOT];           // array of Loot objects
-		double sbVoiceMult;                     // a multiplier for how often Strong Bad talks
+		float sbVoiceMult;                      // a multiplier for how often Strong Bad talks
 		bool bigHeadMode;                       // big head mode
 		Sint8 speedyMode;                       // speedy mode
 		bool debugMode;                         // debug mode

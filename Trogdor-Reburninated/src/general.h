@@ -11,9 +11,9 @@ struct Timer {
 class FrameState {
 	public:
 		Uint16 frame;
-		double subFrame;
+		float subFrame;
 		Uint16 nextFrame;
-		double nextSubFrame;
+		float nextSubFrame;
 		bool atStartOfFrame; // for things that should only happen once, at the start of a frame (e.g. playing a sound)
 		bool atEndOfFrame;   // for things that shouldn't happen until the end of a frame (e.g. changing scenes)
 		FrameState();
@@ -21,7 +21,7 @@ class FrameState {
 		void increment();
 		bool startingFrame(Uint16);
 		bool endingFrame(Uint16);
-		void subtract(double);
+		void subtract(float);
 		void mod(Uint8);
 };
 
@@ -50,7 +50,7 @@ extern Uint32 frameTime;
 extern Uint32 frameCounter_global;
 constexpr auto ORIGINAL_FRAME_RATE = 16;
 extern Uint8 frameRate;
-extern double frameRateMult;
+extern float frameRateMult;
 extern Uint16 popRandVal;
 
 constexpr auto PI = 3.14159265;

@@ -811,7 +811,7 @@ void InitializeMenus() {
 		}
 	}
 	menu_highscores_1.pages[0]->prepareMenuPage(1, 0, 30, 20, 1);
-	menu_highscores_1.pages[0]->setTextLine(0, "YE OLDE HIGH SCORES");
+	menu_highscores_1.pages[0]->setTextLine(0, "YE OLDE HI-SCORES");
 	menu_highscores_2.pages[0]->prepareMenuPage(8, 96, 30, 20, 0);
 	menu_highscores_2.pages[0]->setTextLine(0, "");
 	menu_highscores_2.pages[0]->setTextLine(1, "");
@@ -1042,25 +1042,25 @@ void updateFrameRate() {
 		case 1:
 			frameRate = 30;
 #if defined(PSP)
-			frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / 30; // this may seem redundant, but it's the only it'll work on PSP; using the frameRate variable just... doesn't work
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 30; // this may seem redundant, but it's the only it'll work on PSP; using the frameRate variable just... doesn't work
 #endif
 			break;
 		case 2:
 			frameRate = 32;
 #if defined(PSP)
-			frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / 32;
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 32;
 #endif
 			break;
 		case 3:
 			frameRate = 48;
 #if defined(PSP)
-			frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / 48;
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 48;
 #endif
 			break;
 		case 4:
 			frameRate = 60;
 #if defined(PSP)
-			frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / 60;
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 60;
 #endif
 			break;
 		case 5:
@@ -1075,13 +1075,13 @@ void updateFrameRate() {
 		default:
 			frameRate = 16;
 #if defined(PSP)
-			frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / 16;
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 16;
 #endif
 			break;
 	}
 #endif
 #if !defined(PSP)
-	frameRateMult = static_cast<double>(ORIGINAL_FRAME_RATE) / frameRate;
+	frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / frameRate;
 #endif
 	popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 	ticksPerFrame = (Uint32)(1000 / frameRate);

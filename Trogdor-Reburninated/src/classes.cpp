@@ -84,7 +84,7 @@ void Cottage::updateFrameState() {
 	frameState.increment();
 }
 
-Knight::Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true, double knightSpeed = 1) {
+Knight::Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true, float knightSpeed = 1) {
 	anim_frameState.set(1);
 	move_frameState.set(1);
 	moving = true;
@@ -110,7 +110,7 @@ inline void Knight::updateCollision() {
 	}
 }
 
-void Knight::updateHome(double knightIncrement) {
+void Knight::updateHome(float knightIncrement) {
 	if (home_x < LEFT_BOUND_KNIGHT) {
 		direction = rand() % 6;
 		home_x = LEFT_BOUND_KNIGHT + 1;
@@ -179,14 +179,14 @@ void Knight::updateFrameState() {
 	anim_frameState.increment();
 }
 
-void Knight::move(double knightSpeed) {
+void Knight::move(float knightSpeed) {
 	if (move_frameState.subFrame > moveFrameCap) {
 		move_frameState.subtract(moveFrameCap);
 	}
 	if (move_frameState.subFrame * knightSpeed <= 30) {
 		offset_x = move_frameState.subFrame * offsetConst;
 	} else {
-		offset_x = 68.0 - (move_frameState.subFrame * offsetConst);
+		offset_x = (float)68 - (move_frameState.subFrame * offsetConst);
 	}
 	offset_y = -offset_x;
 	if (!sprite.facingRight) {
@@ -217,7 +217,7 @@ Peasant::Peasant() {
 	sprite.collision = { 8 + sprite.dstrect.x, 5 + sprite.dstrect.y, 8, 19 };
 }
 
-void Peasant::updateFrameState(double sbVoiceMult) {
+void Peasant::updateFrameState(float sbVoiceMult) {
 	if (frameState.atStartOfFrame) {
 		switch (frameState.frame) {
 			case 1:
@@ -666,7 +666,7 @@ GameManager::GameManager(MenuManager mm) {
 			levelIndices[j] = k;
 		}
 	}
-	knightSpeed = (0.7 + (knightSpeedSetting * 0.15));
+	knightSpeed = (float)(0.7 + (knightSpeedSetting * 0.15));
 	switch (arrowSpeedSetting) {
 		case 0:
 			arrowSpeed = 3;
@@ -756,19 +756,19 @@ GameManager::GameManager(MenuManager mm) {
 			sbVoiceMult = 0;
 			break;
 		case 1:
-			sbVoiceMult = 0.3333;
+			sbVoiceMult = (float)0.3333;
 			break;
 		case 2:
-			sbVoiceMult = 0.6666;
+			sbVoiceMult = (float)0.6666;
 			break;
 		case 3:
 			sbVoiceMult = 1;
 			break;
 		case 4:
-			sbVoiceMult = 1.3333;
+			sbVoiceMult = (float)1.3333;
 			break;
 		case 5:
-			sbVoiceMult = 1.6666;
+			sbVoiceMult = (float)1.6666;
 			break;
 		default:
 			sbVoiceMult = 2;
@@ -1510,7 +1510,7 @@ void GameManager::peasantTimerClick() {
 				peasant_add_y_delta(k);
 			} else {
 				peasantArray[i].waiting = true;
-				peasantArray[i].timer = ((double)60 / level) + 24;
+				peasantArray[i].timer = ((float)60 / level) + 24;
 			}
 		}
 		if (peasantArray[i].sprite.isActive && peasantArray[i].waiting) {

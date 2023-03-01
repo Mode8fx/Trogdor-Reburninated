@@ -90,16 +90,16 @@ class SpriteInstance {
         Uint8 currSpriteCenterY;
         SDL_Rect srcrect;
         SDL_Rect dstrect;
-        double vel_x;
-        double vel_y;
+        float vel_x;
+        float vel_y;
         double pos_x;
         double pos_y;
         Sint8 animFrame;
         Sint8 animForm;
         Sint8 animFrameTime;
-        double animFrameCounter;
+        float animFrameCounter;
         Sint8 animFormTime;
-        double animFormCounter;
+        float animFormCounter;
         SDL_Rect collision;
         bool isActive;
         bool facingRight;
@@ -126,7 +126,7 @@ class SpriteInstance {
         void renderSprite_menu();
         void renderSprite_overlay();
         void renderEmptyOverlay();
-        void prepareAsCSO(double, double, Sint8, Sint8, Sint8, Sint8, double, double);
+        void prepareAsCSO(double, double, Sint8, Sint8, Sint8, Sint8, float, float);
         void renderAsCSO(bool);
 };
 

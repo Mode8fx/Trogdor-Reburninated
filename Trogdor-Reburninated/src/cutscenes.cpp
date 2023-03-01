@@ -588,8 +588,8 @@ void cutscene_level_30() {
 				cutscene_trogdor_fire.isActive = false;
 				break;
 			case 860:
-				cutscene_peasant_1.prepareAsCSO(17, 95, 1, 0, 0, 0, 3.2, 0);
-				cutscene_peasant_2.prepareAsCSO(200, 95, 1, 0, 0, 0, -2.76, 0);
+				cutscene_peasant_1.prepareAsCSO(17, 95, 1, 0, 0, 0, (float)3.2, 0);
+				cutscene_peasant_2.prepareAsCSO(200, 95, 1, 0, 0, 0, (float)-2.76, 0);
 				break;
 			case 885:
 				cutscene_peasant_1.vel_x = 0;
@@ -654,19 +654,19 @@ void cutscene_level_34() {
 				cutscene_trogdor_1.prepareAsCSO(9, 87, 0, 1, 2, 0, 2, 0);
 				break;
 			case 936:
-				cutscene_trogdor_2.prepareAsCSO(4, 101, 0, 1, 2, 0, 3.544, 0); // 202.0 / 57
+				cutscene_trogdor_2.prepareAsCSO(4, 101, 0, 1, 2, 0, (float)3.544, 0); // 202.0 / 57
 				break;
 			case 941:
-				cutscene_trogdor_1.vel_x = 6.667; // 60.0 / 9
+				cutscene_trogdor_1.vel_x = (float)6.667; // 60.0 / 9
 				break;
 			case 950:
-				cutscene_trogdor_1.vel_x = 1.667; // 5.0 / 3
+				cutscene_trogdor_1.vel_x = (float)1.667; // 5.0 / 3
 				break;
 			case 962:
-				cutscene_trogdor_1.vel_x = 2.692; // 35.0 / 13
+				cutscene_trogdor_1.vel_x = (float)2.692; // 35.0 / 13
 				break;
 			case 975:
-				cutscene_trogdor_1.vel_x = 5.455; // 60.0 / 11
+				cutscene_trogdor_1.vel_x = (float)5.455; // 60.0 / 11
 				break;
 			case 987:
 				cutscene_trogdor_1.isActive = false;
@@ -735,12 +735,12 @@ void cutscene_level_38() {
 				cutscene_peasant_2.isActive = false;
 				cutscene_heart.isActive = false;
 				cutscene_knight_1.isActive = false;
-				cutscene_peasant_1.prepareAsCSO(190, 95, 1, 0, 0, 0, -2.732, 0);
-				cutscene_peasant_2.prepareAsCSO(204, 95, 1, 0, 0, 0, -2.732, 0);
-				cutscene_heart.prepareAsCSO(197, 85, 0, 0, 0, 0, -2.732, 0);
+				cutscene_peasant_1.prepareAsCSO(190, 95, 1, 0, 0, 0, (float)-2.732, 0);
+				cutscene_peasant_2.prepareAsCSO(204, 95, 1, 0, 0, 0, (float)-2.732, 0);
+				cutscene_heart.prepareAsCSO(197, 85, 0, 0, 0, 0, (float)-2.732, 0);
 				break;
 			case 1021:
-				cutscene_knight_1.prepareAsCSO(224, 95, 1, 0, 4, 0, -8.316, 0);
+				cutscene_knight_1.prepareAsCSO(224, 95, 1, 0, 4, 0, (float)-8.316, 0);
 				break;
 			case 1040:
 				cutscene_knight_1.vel_x = 0;
@@ -753,8 +753,8 @@ void cutscene_level_38() {
 				cutscene_knight_1.setForm(1);
 				break;
 			case 1046:
-				cutscene_knight_1.vel_x = 9.867;
-				cutscene_peasant_1.vel_x = 10.067;
+				cutscene_knight_1.vel_x = (float)9.867;
+				cutscene_peasant_1.vel_x = (float)10.067;
 				break;
 			case 1062:
 				cutscene_peasant_1.isActive = false;
@@ -811,7 +811,7 @@ void cutscene_level_46_arrow_helper(SpriteInstance *arrowObj, Sint16 startingFra
 				break;
 			case 3:
 				cutscene_archer_1.setFrame(0);
-				arrowObj->prepareAsCSO(199, 93, 0, 0, 0, 0, -18.343, 0);
+				arrowObj->prepareAsCSO(199, 93, 0, 0, 0, 0, (float)-18.343, 0);
 				break;
 			case 11:
 				cutscene_knight_funnyjoke.setFrame(1);
@@ -851,7 +851,7 @@ void cutscene_level_46() {
 				cutscene_knight_funnyjoke.prepareAsCSO(58, 91, 0, 0, 0, 0, 0, 0);
 				break;
 			case 1166:
-				cutscene_archer_1.prepareAsCSO(248, 90, 0, 0, 0, 0, -3.6, 0); // was 246; changed since there's no outer screen frame
+				cutscene_archer_1.prepareAsCSO(248, 90, 0, 0, 0, 0, (float)-3.6, 0); // was 246; changed since there's no outer screen frame
 				break;
 			case 1171:
 				cutscene_archer_1.vel_x = 0;
@@ -991,7 +991,7 @@ void cutscene_level_100() {
 				cutscene_strong_bad_ending.isActive = false;
 				break;
 			case 1347:
-				cutscene_strong_bad.prepareAsCSO(220, 100, 0, 0, 1, 0, -3.372, 0);
+				cutscene_strong_bad.prepareAsCSO(220, 100, 0, 0, 1, 0, (float)-3.372, 0);
 				break;
 			case 1349:
 				if (rand() % 100 < 50 * GM.sbVoiceMult) {
