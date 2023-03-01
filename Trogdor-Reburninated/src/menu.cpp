@@ -544,9 +544,9 @@ std::string option_main_knight_speed_descriptions_line_1[1] = { "Change how quic
 std::string option_main_arrow_speed_choices[5] = { "Slow", "Normal", "Fast", "Very Fast", "Insane" };
 std::string option_main_arrow_speed_descriptions_line_1[1] = { "Change how quickly arrows move." };
 #if defined(WII) || defined(GAMECUBE) || defined(THREEDS)
-std::string option_main_frame_rate_choices[8] = { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "35 FPS", "40 FPS", "50 FPS", "58 FPS" };
+std::string option_main_frame_rate_choices[11] = { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS (may run slow)", "90 FPS", "120 FPS", "144 FPS" };
 #else
-std::string option_main_frame_rate_choices[8] = { "16 FPS [original]", "30 FPS", "32 FPS [2x]", "48 FPS [3x]", "60 FPS", "90 FPS", "120 FPS", "144 FPS [9x]" };
+std::string option_main_frame_rate_choices[11] = { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS", "90 FPS", "120 FPS", "144 FPS" };
 #endif
 std::string option_main_frame_rate_descriptions_line_1[1] = { "Higher frame rate = smoother gameplay." };
 std::string option_main_frame_rate_descriptions_line_2[1] = { "(Original Flash game is 16 FPS)" };
@@ -737,14 +737,14 @@ void InitializeMenus() {
 	}
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP) || defined(XBOX)
-		"", 5, true, 4, true, false);
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(PSP) || defined(XBOX)
+		"", 8, true, 7, true, false);
 #elif defined(THREEDS)
 		"", 4, true, 3, true, false);
 #elif defined(WII) || defined(GAMECUBE)
-		"", 8, true, 7, true, false);
+		"", 8, true, 6, true, false);
 #else
-		"", 8, true, 4, true, false);
+		"", 11, true, 7, true, false);
 #endif
 	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
 		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
@@ -1022,16 +1022,16 @@ void updateFrameRate() {
 			frameRate = 30;
 			break;
 		case 4:
-			frameRate = 35;
-			break;
-		case 5:
 			frameRate = 40;
 			break;
-		case 6:
+		case 5:
 			frameRate = 50;
 			break;
+		case 6:
+			frameRate = 55;
+			break;
 		case 7:
-			frameRate = 58;
+			frameRate = 60;
 			break;
 		default:
 			frameRate = 16;
@@ -1040,36 +1040,54 @@ void updateFrameRate() {
 #else
 	switch (MENU_FRAME_RATE->index) {
 		case 1:
-			frameRate = 30;
+			frameRate = 20;
 #if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 30; // this may seem redundant, but it's the only it'll work on PSP; using the frameRate variable just... doesn't work
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 20; // this may seem redundant, but it's the only it'll work on PSP; using the frameRate variable just... doesn't work
 #endif
 			break;
 		case 2:
-			frameRate = 32;
+			frameRate = 25;
 #if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 32;
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 25;
 #endif
 			break;
 		case 3:
-			frameRate = 48;
+			frameRate = 30;
 #if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 48;
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 30;
 #endif
 			break;
 		case 4:
+			frameRate = 40;
+#if defined(PSP)
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 40;
+#endif
+			break;
+		case 5:
+			frameRate = 50;
+#if defined(PSP)
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 50;
+#endif
+			break;
+		case 6:
+			frameRate = 55;
+#if defined(PSP)
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 55;
+#endif
+			break;
+		case 7:
 			frameRate = 60;
 #if defined(PSP)
 			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 60;
 #endif
 			break;
-		case 5:
+		case 8:
 			frameRate = 90;
 			break;
-		case 6:
+		case 9:
 			frameRate = 120;
 			break;
-		case 7:
+		case 10:
 			frameRate = 144;
 			break;
 		default:
