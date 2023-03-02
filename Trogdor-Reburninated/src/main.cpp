@@ -281,6 +281,7 @@ int main(int argv, char** args) {
 					if (keyPressed(INPUT_START)) {
 						if (gameState.autosave.mans >= 0) {
 							MM.continueHighlighted = true;
+							MM.cursor.dstrect.x = (int)((double)text_3_continue_1.dstrect.x / gameHiResMult) - (MM.cursor.dstrect.w * 2);
 							MM.cursor.dstrect.y = (int)(text_3_continue_1.dstrect.y / gameHiResMult);
 							g_sceneState = 3001;
 						} else {
