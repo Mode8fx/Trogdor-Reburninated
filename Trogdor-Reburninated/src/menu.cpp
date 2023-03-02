@@ -543,8 +543,10 @@ std::string option_main_knight_speed_choices[5] = { "Very Slow", "Slow", "Normal
 std::string option_main_knight_speed_descriptions_line_1[1] = { "Change how quickly knights move." };
 std::string option_main_arrow_speed_choices[5] = { "Slow", "Normal", "Fast", "Very Fast", "Insane" };
 std::string option_main_arrow_speed_descriptions_line_1[1] = { "Change how quickly arrows move." };
-#if defined(WII) || defined(GAMECUBE) || defined(THREEDS)
-std::string option_main_frame_rate_choices[11] = { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS (may run slow)", "90 FPS", "120 FPS", "144 FPS" };
+#if defined(THREEDS)
+std::string option_main_frame_rate_choices[11] = { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "", "", "", "", "", "", "" };
+#elif defined(WII) || defined(GAMECUBE)
+std::string option_main_frame_rate_choices[11] = { "16 FPS (orig.) (480p)", "20 FPS (480p)", "25 FPS (480p)", "30 FPS (240p)", "40 FPS (240p)", "50 FPS (240p)", "55 FPS (240p)", "60 FPS (240p)", "", "", "" };
 #else
 std::string option_main_frame_rate_choices[11] = { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS", "90 FPS", "120 FPS", "144 FPS" };
 #endif
@@ -742,7 +744,7 @@ void InitializeMenus() {
 #elif defined(THREEDS)
 		"", 4, true, 3, true, false);
 #elif defined(WII) || defined(GAMECUBE)
-		"", 8, true, 6, true, false);
+		"", 8, true, 2, true, false);
 #else
 		"", 11, true, 7, true, false);
 #endif
@@ -1011,6 +1013,7 @@ State_Settings_Unlocks getSettingsUnlocks() {
 
 void updateFrameRate() {
 #if defined(WII) || defined(GAMECUBE) || defined(THREEDS)
+	uint_i = DEFAULT_WIDTH;
 	switch (MENU_FRAME_RATE->index) {
 		case 1:
 			frameRate = 20;
@@ -1042,7 +1045,7 @@ void updateFrameRate() {
 		case 1:
 			frameRate = 20;
 #if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 20; // this may seem redundant, but it's the only it'll work on PSP; using the frameRate variable just... doesn't work
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 20; // this may seem redundant, but it's the only way it'll work on PSP; using the frameRate variable just... doesn't work
 #endif
 			break;
 		case 2:
@@ -1103,6 +1106,19 @@ void updateFrameRate() {
 #endif
 	popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 	ticksPerFrame = (Uint32)(1000 / frameRate);
+#if defined(WII) || defined(GAMECUBE)
+	if (frameRate <= 25) {
+		DEFAULT_WIDTH = 640;
+		DEFAULT_HEIGHT = 480;
+	} else {
+		DEFAULT_WIDTH = 320;
+		DEFAULT_HEIGHT = 240;
+	}
+	if (uint_i != DEFAULT_WIDTH) {
+		windowScreen = SDL_SetVideoMode(DEFAULT_WIDTH, DEFAULT_HEIGHT, 24, SDL_DOUBLEBUF);
+		setScaling();
+	}
+#endif
 }
 
 void setPreset(Sint8 ind) {

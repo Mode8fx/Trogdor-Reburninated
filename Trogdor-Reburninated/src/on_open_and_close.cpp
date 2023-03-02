@@ -30,6 +30,13 @@ void InitializeDisplay() {
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII) || defined(GAMECUBE) || defined(THREEDS)
+	if (frameRate <= 25) {
+		DEFAULT_WIDTH = 640;
+		DEFAULT_HEIGHT = 480;
+	} else {
+		DEFAULT_WIDTH = 320;
+		DEFAULT_HEIGHT = 240;
+	}
 	SDL_WM_SetCaption("Trogdor: Reburninated", NULL);
 	windowScreen = SDL_SetVideoMode(DEFAULT_WIDTH, DEFAULT_HEIGHT, 24, SDL_DOUBLEBUF);
 #elif defined(SDL1)
