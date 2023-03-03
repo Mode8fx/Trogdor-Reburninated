@@ -7,12 +7,15 @@ Homestar Runner is no stranger to [fan ports](https://www.mrphlip.com/ds/pop_tir
 
 ## Features
 - A faithful recreation of the original Flash game, including intermissions
-- New Options menu allows you to change archer frequency, points needed for extra lives, how often Strong Bad talks, and more
-- Level select
+- Change gameplay settings such as enemy speed and points needed for extra lives, or use one of the new difficulty presets
+- Support for any frame rate up to 144 FPS (or 30/60, depending on console)
+- Save data support, including mid-game progress and high score
+- Level select and shuffle
 - New cheats, in addition to the original game's Konami code
-- Optional soundtrack from Stinkoman 20X6, another Homestar Runner game
+- Optional soundtrack from the Homestar Runner game *Stinkoman 20X6*
 - Screen scaling options for both full-screen and integer scaling/"pixel-perfect"
 - Bugs from the original game have been fixed
+- Big head mode!
 
 <img src="https://github.com/Mips96/Trogdor-Reburninated/blob/main/screenshots/options_v1.0.png?raw=true" width="480" height="360"/>
 
@@ -23,9 +26,6 @@ A bit of everything, but I'm calling it a "recreation".
 It was made by opening the original game in a Flash decompiler and porting its ActionScript code and Flash assets to C++ code by hand. There's no way to automate this as far as I know, so everything was rewritten manually. Additionally, Flash and C++ are two completely separate beasts that handle many things in completely different ways; many things that do not require coding in Flash (like animation frames and screen scaling) need to be recreated as code in C++.
 
 That being said, almost all art and sound assets are ported directly from the original game, just reorganized into sprite sheets, with modifications only being made when necessary.
-
-### Future updates?
-A substantial v2.0 update will be released in the first week of March 2023, in time for the Flash game's 20th anniversary.
 
 ### Will this be ported to \_\_\_\_\_?
 This game was made to be compatible with both SDL 1.2 and SDL2 specifically so it could be ported to many systems. In particular, I would like to create a LibRetro core so it runs on a wide variety of systems. You could also try porting it yourself; this is open-source, after all.
