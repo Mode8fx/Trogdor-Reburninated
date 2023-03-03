@@ -499,6 +499,7 @@ int main(int argv, char** args) {
 						g_sceneState = 3;
 						pauseMusic();
 						saveGameState_settings();
+						MM = MenuManager();
 						break;
 					default:
 						break;
