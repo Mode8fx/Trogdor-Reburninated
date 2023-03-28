@@ -409,6 +409,7 @@ docs/
 *.elf
 fonts/
 graphics/
+graphics_unused/
 music/
 sfx/
 Preparation/
@@ -430,3 +431,4 @@ Makefile
 *.iso
 *.exe
 *.lib
+Trogdor-Reburninated.zip
