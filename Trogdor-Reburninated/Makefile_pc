@@ -30,13 +30,11 @@ ifeq ($(ARCH),x64)
 				-L./SDL2/SDL2_image/lib/x64 \
 				-L./SDL2/SDL2_ttf/lib/x64 \
 				-L./SDL2/SDL2_mixer/lib/x64
-	else ifeq ($(SDL_VERSION), 1)
+	else
 		LDFLAGS=-L./SDL1/SDL/lib/x64 \
 				-L./SDL1/SDL_image/lib/x64 \
 				-L./SDL1/SDL_ttf/lib/x64 \
 				-L./SDL1/SDL_mixer/lib/x64
-	else
-		$(error Unsupported SDL version $(SDL_VERSION))
 	endif
 else ifeq ($(ARCH),x86)
 	CXXFLAGS += -m32
@@ -45,13 +43,11 @@ else ifeq ($(ARCH),x86)
 				-L./SDL2/SDL2_image/lib/x86 \
 				-L./SDL2/SDL2_ttf/lib/x86 \
 				-L./SDL2/SDL2_mixer/lib/x86
-	else ifeq ($(SDL_VERSION),1)
+	else
 		LDFLAGS=-L./SDL1/SDL/lib/x86 \
 				-L./SDL1/SDL_image/lib/x86 \
 				-L./SDL1/SDL_ttf/lib/x86 \
 				-L./SDL1/SDL_mixer/lib/x86
-	else
-		$(error Unsupported SDL version $(SDL_VERSION))
 	endif
 else
 	$(error Unsupported architecture $(ARCH))

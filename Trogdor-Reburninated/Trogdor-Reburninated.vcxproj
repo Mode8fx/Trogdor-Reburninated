@@ -100,33 +100,33 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)\SDL2\SDL2-2.0.16\include;$(ProjectDir)\SDL2\SDL2_image-2.0.5\include;$(ProjectDir)\SDL2\SDL2_mixer-2.0.4\include;$(ProjectDir)\SDL2\SDL2_ttf-2.0.15\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\SDL2\SDL2-2.0.16\lib\x86;$(ProjectDir)\SDL2\SDL2_image-2.0.5\lib\x86;$(ProjectDir)\SDL2\SDL2_mixer-2.0.4\lib\x86;$(ProjectDir)\SDL2\SDL2_ttf-2.0.15\lib\x86;$(IncludePath);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\SDL2\SDL2\lib\x86;$(ProjectDir)\SDL2\SDL2_image\lib\x86;$(ProjectDir)\SDL2\SDL2_mixer\lib\x86;$(ProjectDir)\SDL2\SDL2_ttf\lib\x86;$(IncludePath);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)\SDL2\SDL2-2.0.16\include;$(ProjectDir)\SDL2\SDL2_image-2.0.5\include;$(ProjectDir)\SDL2\SDL2_mixer-2.0.4\include;$(ProjectDir)\SDL2\SDL2_ttf-2.0.15\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\SDL2\SDL2-2.0.16\lib\x86;$(ProjectDir)\SDL2\SDL2_image-2.0.5\lib\x86;$(ProjectDir)\SDL2\SDL2_mixer-2.0.4\lib\x86;$(ProjectDir)\SDL2\SDL2_ttf-2.0.15\lib\x86;$(IncludePath);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\SDL2\SDL2\lib\x86;$(ProjectDir)\SDL2\SDL2_image\lib\x86;$(ProjectDir)\SDL2\SDL2_mixer\lib\x86;$(ProjectDir)\SDL2\SDL2_ttf\lib\x86;$(IncludePath);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release (SDL1)|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)\SDL1\SDL-1.2.15\include;$(ProjectDir)\SDL1\SDL_image-1.2.12\include;$(ProjectDir)\SDL1\SDL_mixer-1.2.12\include;$(ProjectDir)\SDL1\SDL_ttf-2.0.11\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\SDL1\SDL-1.2.15\lib\x86;$(ProjectDir)\SDL1\SDL_image-1.2.12\lib\x86;$(ProjectDir)\SDL1\SDL_mixer-1.2.12\lib\x86;$(ProjectDir)\SDL1\SDL_ttf-2.0.11\lib\x86;$(IncludePath);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\SDL1\SDL\include;$(ProjectDir)\SDL1\SDL_image\include;$(ProjectDir)\SDL1\SDL_mixer\include;$(ProjectDir)\SDL1\SDL_ttf\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\SDL1\SDL\lib\x86;$(ProjectDir)\SDL1\SDL_image\lib\x86;$(ProjectDir)\SDL1\SDL_mixer\lib\x86;$(ProjectDir)\SDL1\SDL_ttf\lib\x86;$(IncludePath);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)/SDL2/SDL2-2.0.16/include;$(ProjectDir)/SDL2/SDL2_image-2.0.5/include;$(ProjectDir)/SDL2/SDL2_mixer-2.0.4/include;$(ProjectDir)/SDL2/SDL2_ttf-2.0.15/include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)/SDL2/SDL2-2.0.16/lib/x64;$(ProjectDir)/SDL2/SDL2_image-2.0.5/lib/x64;$(ProjectDir)/SDL2/SDL2_mixer-2.0.4/lib/x64;$(ProjectDir)/SDL2/SDL2_ttf-2.0.15/lib/x64;$(IncludePath);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)/SDL2/SDL2/include;$(ProjectDir)/SDL2/SDL2_image/include;$(ProjectDir)/SDL2/SDL2_mixer/include;$(ProjectDir)/SDL2/SDL2_ttf/include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)/SDL2/SDL2/lib/x64;$(ProjectDir)/SDL2/SDL2_image/lib/x64;$(ProjectDir)/SDL2/SDL2_mixer/lib/x64;$(ProjectDir)/SDL2/SDL2_ttf/lib/x64;$(IncludePath);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)/SDL2/SDL2-2.0.16/include;$(ProjectDir)/SDL2/SDL2_image-2.0.5/include;$(ProjectDir)/SDL2/SDL2_mixer-2.0.4/include;$(ProjectDir)/SDL2/SDL2_ttf-2.0.15/include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)/SDL2/SDL2-2.0.16/lib/x64;$(ProjectDir)/SDL2/SDL2_image-2.0.5/lib/x64;$(ProjectDir)/SDL2/SDL2_mixer-2.0.4/lib/x64;$(ProjectDir)/SDL2/SDL2_ttf-2.0.15/lib/x64;$(IncludePath);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)/SDL2/SDL2/include;$(ProjectDir)/SDL2/SDL2_image/include;$(ProjectDir)/SDL2/SDL2_mixer/include;$(ProjectDir)/SDL2/SDL2_ttf/include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)/SDL2/SDL2/lib/x64;$(ProjectDir)/SDL2/SDL2_image/lib/x64;$(ProjectDir)/SDL2/SDL2_mixer/lib/x64;$(ProjectDir)/SDL2/SDL2_ttf/lib/x64;$(IncludePath);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release (SDL1)|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)/SDL2/SDL2-2.0.16/include;$(ProjectDir)/SDL2/SDL2_image-2.0.5/include;$(ProjectDir)/SDL2/SDL2_mixer-2.0.4/include;$(ProjectDir)/SDL2/SDL2_ttf-2.0.15/include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)/SDL2/SDL2-2.0.16/lib/x64;$(ProjectDir)/SDL2/SDL2_image-2.0.5/lib/x64;$(ProjectDir)/SDL2/SDL2_mixer-2.0.4/lib/x64;$(ProjectDir)/SDL2/SDL2_ttf-2.0.15/lib/x64;$(IncludePath);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)\SDL1\SDL\include;$(ProjectDir)\SDL1\SDL_image\include;$(ProjectDir)\SDL1\SDL_mixer\include;$(ProjectDir)\SDL1\SDL_ttf\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)\SDL1\SDL\lib\x86;$(ProjectDir)\SDL1\SDL_image\lib\x86;$(ProjectDir)\SDL1\SDL_mixer\lib\x86;$(ProjectDir)\SDL1\SDL_ttf\lib\x86;$(IncludePath);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -134,7 +134,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2-2.0.16\include;$(ProjectDir)\SDL2\SDL2_image-2.0.5\include;$(ProjectDir)\SDL2\SDL2_mixer-2.0.4\include;$(ProjectDir)\SDL2\SDL2_ttf-2.0.15\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
@@ -152,7 +152,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2-2.0.16\include;$(ProjectDir)\SDL2\SDL2_image-2.0.5\include;$(ProjectDir)\SDL2\SDL2_mixer-2.0.4\include;$(ProjectDir)\SDL2\SDL2_ttf-2.0.15\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -171,7 +171,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;SDL1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\SDL1\SDL-1.2.15\include;$(ProjectDir)\SDL1\SDL_image-1.2.12\include;$(ProjectDir)\SDL1\SDL_mixer-1.2.12\include;$(ProjectDir)\SDL1\SDL_ttf-2.0.11\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\SDL1\SDL\include;$(ProjectDir)\SDL1\SDL_image\include;$(ProjectDir)\SDL1\SDL_mixer\include;$(ProjectDir)\SDL1\SDL_ttf\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -188,7 +188,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2-2.0.16\include;$(ProjectDir)\SDL2\SDL2_image-2.0.5\include;$(ProjectDir)\SDL2\SDL2_mixer-2.0.4\include;$(ProjectDir)\SDL2\SDL2_ttf-2.0.15\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
@@ -206,7 +206,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2-2.0.16\include;$(ProjectDir)\SDL2\SDL2_image-2.0.5\include;$(ProjectDir)\SDL2\SDL2_mixer-2.0.4\include;$(ProjectDir)\SDL2\SDL2_ttf-2.0.15\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -225,7 +225,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2-2.0.16\include;$(ProjectDir)\SDL2\SDL2_image-2.0.5\include;$(ProjectDir)\SDL2\SDL2_mixer-2.0.4\include;$(ProjectDir)\SDL2\SDL2_ttf-2.0.15\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>

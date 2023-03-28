@@ -31,7 +31,9 @@
 
 #include <fstream>
 #include <iostream>
-//#include <stdio.h>
+#if defined(SDL1)
+#include <stdio.h>
+#endif
 #include <string.h>
 #include <sstream>
 #include <stdbool.h>
