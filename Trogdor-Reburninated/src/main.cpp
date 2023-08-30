@@ -607,20 +607,11 @@ int main(int argv, char** args) {
 						if (wait_for_gba() == 0) {
 							menu_gba_demo.index = 2;
 						}
-						//if (keyPressed(INPUT_A)) {
-						//	menu_gba_demo.index = 2;
-						//}
 						break;
 					case 2:
 						SDL_Flip(windowScreen);
-						if (send_rom() == 0) {
-							menu_gba_demo.index = 3;
-						} else {
-							menu_gba_demo.index = 4;
-						}
-						//if (keyPressed(INPUT_A)) {
-						//	menu_gba_demo.index = 3;
-						//}
+						send_rom();
+						menu_gba_demo.index = 3;
 						break;
 					default:
 						break;

@@ -837,7 +837,7 @@ void InitializeMenus() {
 
 #if defined(WII)
 	/* GBA Demo Notebook */
-	menu_gba_demo.prepareMenuNotebook(5, 304, 216, 3);
+	menu_gba_demo.prepareMenuNotebook(4, 304, 216, 3);
 	if (!menusAreInitialized) {
 		for (i = 0; i < menu_gba_demo.numPages; i++) {
 			menu_gba_demo.pages[i] = new MenuPage();
@@ -848,7 +848,7 @@ void InitializeMenus() {
 	menu_gba_demo.pages[0]->setTextLine(1, "");
 	menu_gba_demo.pages[0]->setTextLine(2, "Transfer a demo of Trogba to your");
 	menu_gba_demo.pages[0]->setTextLine(3, "Game Boy Advance!");
-	menu_gba_demo.pages[0]->setTextLine(4, "The full version has audio, more");
+	menu_gba_demo.pages[0]->setTextLine(4, "The full version has audio, better");
 	menu_gba_demo.pages[0]->setTextLine(5, "graphics, and more gameplay options,");
 	menu_gba_demo.pages[0]->setTextLine(6, "including the threat of the deadly");
 	menu_gba_demo.pages[0]->setTextLine(7, "Troghammer from Trogdor: The Board Game.");
@@ -879,12 +879,6 @@ void InitializeMenus() {
 	menu_gba_demo.pages[3]->setTextLine(2, "It's over!");
 	menu_gba_demo.pages[3]->setTextLine(3, "");
 	menu_gba_demo.pages[3]->setTextLine(4, "Transfer complete.");
-
-	menu_gba_demo.pages[4]->prepareMenuPage(4, 0, 30, 20, 1);
-	menu_gba_demo.pages[4]->setTextLine(0, "TROGDOR ON GBA");
-	menu_gba_demo.pages[4]->setTextLine(1, "");
-	menu_gba_demo.pages[4]->setTextLine(2, "I'm afraid I've got some bad news, boys.");
-	menu_gba_demo.pages[4]->setTextLine(3, "Transfer failed...");
 #endif
 
 	/* Credits Notebook */
