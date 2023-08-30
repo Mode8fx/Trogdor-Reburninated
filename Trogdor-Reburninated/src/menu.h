@@ -7,9 +7,9 @@
 #define MENU_H
 
 constexpr auto MAX_NUM_OPTION_CHOICES = 11;
-constexpr auto MAX_NUM_MENU_OPTIONS = 8;
-constexpr auto MAX_NUM_MENU_PAGES = 6;
-constexpr auto MAX_NUM_MENU_LINES = 10;
+constexpr auto MAX_NUM_MENU_OPTIONS = 9;
+constexpr auto MAX_NUM_MENU_PAGES = 7;
+constexpr auto MAX_NUM_MENU_LINES = 12;
 
 /* @brief A page of text within a menu.
 * 
@@ -193,15 +193,25 @@ constexpr auto MENU_OTHER_INDEX = 2;
 constexpr auto MENU_CHEATS_INDEX = 3;
 constexpr auto MENU_RESET_SETTINGS_INDEX = 4;
 constexpr auto MENU_HIGHSCORES_INDEX = 5;
+#if defined(WII)
+constexpr auto MENU_GBA_DEMO_INDEX = 6;
+constexpr auto MENU_CREDITS_INDEX = 7;
+constexpr auto MENU_QUIT_INDEX = 8;
+constexpr auto MENU_NUM_OPTIONS = 9;
+#else
 constexpr auto MENU_CREDITS_INDEX = 6;
 constexpr auto MENU_QUIT_INDEX = 7;
 constexpr auto MENU_NUM_OPTIONS = 8;
+#endif
 #define MENU_DIFFICULTY     menu_main.options[MENU_DIFFICULTY_INDEX]
 #define MENU_COSMETIC       menu_main.options[MENU_COSMETIC_INDEX]
 #define MENU_OTHER          menu_main.options[MENU_OTHER_INDEX]
 #define MENU_CHEATS         menu_main.options[MENU_CHEATS_INDEX]
 #define MENU_RESET_SETTINGS menu_main.options[MENU_RESET_SETTINGS_INDEX]
 #define MENU_HIGHSCORES     menu_main.options[MENU_HIGHSCORES_INDEX]
+#if defined(WII)
+#define MENU_GBA_DEMO       menu_main.options[MENU_GBA_DEMO_INDEX]
+#endif
 #define MENU_CREDITS        menu_main.options[MENU_CREDITS_INDEX]
 #define MENU_QUIT           menu_main.options[MENU_QUIT_INDEX]
 
@@ -264,6 +274,8 @@ extern MenuNotebook menu_highscores_2;
 extern MenuNotebook menu_highscores_3;
 
 extern MenuNotebook menu_credits;
+
+extern MenuNotebook menu_gba_demo;
 
 extern Menu menu_quit;
 constexpr auto QUIT_BACK_INDEX = 0;

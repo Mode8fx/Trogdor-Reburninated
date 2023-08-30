@@ -815,7 +815,11 @@ void HandleErrorText(const char *badPath) {
 #else
 	quickErrorTextRender_1("Press ENTER/START to quit.", 0.825);
 #endif
+#if defined(WII)
+	quickErrorTextRender_2("[Trogdor: Reburninated v2.01]", 0.9);
+#else
 	quickErrorTextRender_2("[Trogdor: Reburninated v2.0]", 0.9);
+#endif
 	TTF_CloseFont(font_commodore_error_1.font);
 	TTF_CloseFont(font_commodore_error_2.font);
 

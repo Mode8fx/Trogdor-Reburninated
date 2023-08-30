@@ -6,6 +6,11 @@
 #include "config.h"
 #include "window.h"
 #include "classes.h"
+#if defined(WII)
+extern "C" {
+#include "goombasend.h"
+}
+#endif
 
 #ifndef MAIN_H
 #define MAIN_H
@@ -95,6 +100,9 @@ Menu menu_cheats;
 MenuNotebook menu_highscores_1;
 MenuNotebook menu_highscores_2;
 MenuNotebook menu_highscores_3;
+#if defined(WII)
+MenuNotebook menu_gba_demo;
+#endif
 MenuNotebook menu_credits;
 Menu menu_quit;
 
@@ -449,5 +457,12 @@ SDL_DisplayMode DM;
 /* Managers */
 MenuManager MM;
 GameManager GM;
+
+#if defined(WII)
+/* GoombaSend */
+u8 *resbuf, *cmdbuf;
+volatile u32 transval = 0;
+volatile u32 resval = 0;
+#endif
 
 #endif

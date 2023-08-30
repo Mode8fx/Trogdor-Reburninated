@@ -74,6 +74,10 @@ SRCS=src/main.cpp \
      src/text_objects.cpp \
      src/window.cpp
 
+ifeq ($(SDL_VERSION), 1)
+	SRCS+=src/SDL_rotozoom.c
+endif
+
 OBJS=$(subst .cpp,.o,$(SRCS))
 
 myprogram: $(OBJS) $(RESOURCE_OBJECT)

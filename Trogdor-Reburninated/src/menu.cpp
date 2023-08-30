@@ -605,6 +605,10 @@ std::string option_main_other_descriptions_line_1[1] = { "Change miscellaneous s
 std::string option_main_cheats_descriptions_line_1[1] = { "Toggle secret cheats." };
 std::string option_main_cheats_descriptions_line_2[1] = { "Follow the hints!" };
 std::string option_main_highscores_descriptions_line_1[1] = { "View your high scores." };
+#if defined(WII)
+std::string option_main_gba_demo_descriptions_line_1[1] = { "Transfer a demo of TroGBA" };
+std::string option_main_gba_demo_descriptions_line_2[1] = { "to your Game Boy Advance." };
+#endif
 std::string option_main_credits_descriptions_line_1[1] = { "View the credits." };
 std::string option_main_reset_settings_descriptions_line_1[1] = { "Reset all settings to default." };
 std::string option_main_quit_descriptions_line_1[1] = { "Quit the game." };
@@ -691,6 +695,11 @@ void InitializeMenus() {
 	MENU_HIGHSCORES->prepareMenuOption("High Scores", option_empty,
 		option_main_highscores_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
+#if defined(WII)
+	MENU_GBA_DEMO->prepareMenuOption("Send GBA Demo", option_empty,
+		option_main_gba_demo_descriptions_line_1, option_main_gba_demo_descriptions_line_2, option_empty,
+		"", 1, true, 0, true, false);
+#endif
 	MENU_CREDITS->prepareMenuOption("Credits", option_empty,
 		option_main_credits_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
@@ -806,11 +815,9 @@ void InitializeMenus() {
 	menu_highscores_2.prepareMenuNotebook(1, 304, 216, 3);
 	menu_highscores_3.prepareMenuNotebook(1, 304, 216, 3);
 	if (!menusAreInitialized) {
-		for (i = 0; i < 1; i++) {
-			menu_highscores_1.pages[i] = new MenuPage();
-			menu_highscores_2.pages[i] = new MenuPage();
-			menu_highscores_3.pages[i] = new MenuPage();
-		}
+		menu_highscores_1.pages[0] = new MenuPage();
+		menu_highscores_2.pages[0] = new MenuPage();
+		menu_highscores_3.pages[0] = new MenuPage();
 	}
 	menu_highscores_1.pages[0]->prepareMenuPage(1, 0, 30, 20, 1);
 	menu_highscores_1.pages[0]->setTextLine(0, "YE OLDE HI-SCORES");
@@ -828,10 +835,66 @@ void InitializeMenus() {
 	menu_highscores_3.pages[0]->setTextLine(1, "");
 	updateHighScores();
 
-	/* Credits Notebook */
-	menu_credits.prepareMenuNotebook(6, 304, 216, 2);
+#if defined(WII)
+	/* GBA Demo Notebook */
+	menu_gba_demo.prepareMenuNotebook(5, 304, 216, 3);
 	if (!menusAreInitialized) {
-		for (i = 0; i < 6; i++) {
+		for (i = 0; i < menu_gba_demo.numPages; i++) {
+			menu_gba_demo.pages[i] = new MenuPage();
+		}
+	}
+	menu_gba_demo.pages[0]->prepareMenuPage(12, 0, 30, 16, 1);
+	menu_gba_demo.pages[0]->setTextLine(0, "TROGDOR ON GBA");
+	menu_gba_demo.pages[0]->setTextLine(1, "");
+	menu_gba_demo.pages[0]->setTextLine(2, "Transfer a demo of Trogba to your");
+	menu_gba_demo.pages[0]->setTextLine(3, "Game Boy Advance!");
+	menu_gba_demo.pages[0]->setTextLine(4, "The full version has audio, more");
+	menu_gba_demo.pages[0]->setTextLine(5, "graphics, and more gameplay options,");
+	menu_gba_demo.pages[0]->setTextLine(6, "including the threat of the deadly");
+	menu_gba_demo.pages[0]->setTextLine(7, "Troghammer from Trogdor: The Board Game.");
+	menu_gba_demo.pages[0]->setTextLine(8, "And it's free!");
+	menu_gba_demo.pages[0]->setTextLine(9, "https://jeremyelkayam.itch.io/trogba");
+	menu_gba_demo.pages[0]->setTextLine(10, "");
+	menu_gba_demo.pages[0]->setTextLine(11, "(Or press 2 to play the demo right now)");
+
+	menu_gba_demo.pages[1]->prepareMenuPage(6, 0, 30, 20, 1);
+	menu_gba_demo.pages[1]->setTextLine(0, "TROGDOR ON GBA");
+	menu_gba_demo.pages[1]->setTextLine(1, "");
+	menu_gba_demo.pages[1]->setTextLine(2, "Ready to transfer...");
+	menu_gba_demo.pages[1]->setTextLine(3, "Plug your GBA into the second Gamecube");
+	menu_gba_demo.pages[1]->setTextLine(4, "controller port, remove the game");
+	menu_gba_demo.pages[1]->setTextLine(5, "cartridge, and turn it on.");
+
+	menu_gba_demo.pages[2]->prepareMenuPage(6, 0, 30, 20, 1);
+	menu_gba_demo.pages[2]->setTextLine(0, "TROGDOR ON GBA");
+	menu_gba_demo.pages[2]->setTextLine(1, "");
+	menu_gba_demo.pages[2]->setTextLine(2, "Transferring...");
+	menu_gba_demo.pages[2]->setTextLine(3, "");
+	menu_gba_demo.pages[2]->setTextLine(4, "Do not turn off the GBA");
+	menu_gba_demo.pages[2]->setTextLine(5, "or unplug the link cable.");
+
+	menu_gba_demo.pages[3]->prepareMenuPage(5, 0, 30, 20, 1);
+	menu_gba_demo.pages[3]->setTextLine(0, "TROGDOR ON GBA");
+	menu_gba_demo.pages[3]->setTextLine(1, "");
+	menu_gba_demo.pages[3]->setTextLine(2, "It's over!");
+	menu_gba_demo.pages[3]->setTextLine(3, "");
+	menu_gba_demo.pages[3]->setTextLine(4, "Transfer complete.");
+
+	menu_gba_demo.pages[4]->prepareMenuPage(4, 0, 30, 20, 1);
+	menu_gba_demo.pages[4]->setTextLine(0, "TROGDOR ON GBA");
+	menu_gba_demo.pages[4]->setTextLine(1, "");
+	menu_gba_demo.pages[4]->setTextLine(2, "I'm afraid I've got some bad news, boys.");
+	menu_gba_demo.pages[4]->setTextLine(3, "Transfer failed...");
+#endif
+
+	/* Credits Notebook */
+#if defined(WII)
+	menu_credits.prepareMenuNotebook(7, 304, 216, 2);
+#else
+	menu_credits.prepareMenuNotebook(6, 304, 216, 2);
+#endif
+	if (!menusAreInitialized) {
+		for (i = 0; i < menu_credits.numPages; i++) {
 			menu_credits.pages[i] = new MenuPage();
 		}
 	}
@@ -855,7 +918,11 @@ void InitializeMenus() {
 	menu_credits.pages[1]->setTextLine(4, "https://github.com/Mips96");
 	menu_credits.pages[1]->setTextLine(5, "/Trogdor-Reburninated");
 	menu_credits.pages[1]->setTextLine(6, "");
+#if defined(WII)
+	menu_credits.pages[1]->setTextLine(7, "v2.01");
+#else
 	menu_credits.pages[1]->setTextLine(7, "v2.0");
+#endif
 
 	menu_credits.pages[2]->prepareMenuPage(5, 0, 30, 20, 1);
 	menu_credits.pages[2]->setTextLine(0, "- STINKOMAN MUSIC -");
@@ -863,47 +930,62 @@ void InitializeMenus() {
 	menu_credits.pages[2]->setTextLine(2, "Jonathan Howe");
 	menu_credits.pages[2]->setTextLine(3, "");
 	menu_credits.pages[2]->setTextLine(4, "U.Z. Inu");
+	j = 3;
 
-	menu_credits.pages[3]->prepareMenuPage(7, 0, 30, 20, 1);
-	menu_credits.pages[3]->setTextLine(0, "- SPECIAL THANKS -");
-	menu_credits.pages[3]->setTextLine(1, "");
-	menu_credits.pages[3]->setTextLine(2, "Autosave + Level Transition ideas:");
-	menu_credits.pages[3]->setTextLine(3, "Jeremy Elkayam's Trogba");
-	menu_credits.pages[3]->setTextLine(4, "");
-	menu_credits.pages[3]->setTextLine(5, "https://jeremyelkayam.itch.io");
-	menu_credits.pages[3]->setTextLine(6, "/trogba");
+#if defined(WII)
+	menu_credits.pages[j]->prepareMenuPage(9, 0, 30, 20, 1);
+	menu_credits.pages[j]->setTextLine(0, "- GBA DEMO -");
+	menu_credits.pages[j]->setTextLine(1, "");
+	menu_credits.pages[j]->setTextLine(2, "Original GBA Version + Demo:");
+	menu_credits.pages[j]->setTextLine(3, "Jeremy Elkayam's Trogba");
+	menu_credits.pages[j]->setTextLine(4, "https://jeremyelkayam.itch.io/trogba");
+	menu_credits.pages[j]->setTextLine(5, "");
+	menu_credits.pages[j]->setTextLine(6, "GBA Transfer Code:");
+	menu_credits.pages[j]->setTextLine(7, "FIX94's GoombaSend");
+	menu_credits.pages[j]->setTextLine(8, "https://github.com/FIX94/GoombaSend");
+	j++;
+#endif
 
-	menu_credits.pages[4]->prepareMenuPage(7, 0, 30, 20, 1);
-	menu_credits.pages[4]->setTextLine(0, "- LIBRARIES -");
-	menu_credits.pages[4]->setTextLine(1, "");
+	menu_credits.pages[j]->prepareMenuPage(5, 0, 30, 20, 1);
+	menu_credits.pages[j]->setTextLine(0, "- SPECIAL THANKS -");
+	menu_credits.pages[j]->setTextLine(1, "");
+	menu_credits.pages[j]->setTextLine(2, "Autosave + Level Transition ideas:");
+	menu_credits.pages[j]->setTextLine(3, "Jeremy Elkayam's Trogba");
+	menu_credits.pages[j]->setTextLine(4, "https://jeremyelkayam.itch.io/trogba");
+	j++;
+
+	menu_credits.pages[j]->prepareMenuPage(7, 0, 30, 20, 1);
+	menu_credits.pages[j]->setTextLine(0, "- LIBRARIES -");
+	menu_credits.pages[j]->setTextLine(1, "");
 #if defined(SDL1)
-	menu_credits.pages[4]->setTextLine(2, "SDL");
-	menu_credits.pages[4]->setTextLine(3, "SDL_image");
-	menu_credits.pages[4]->setTextLine(4, "SDL_mixer");
-	menu_credits.pages[4]->setTextLine(5, "SDL_ttf");
-	menu_credits.pages[4]->setTextLine(6, "SDL_gfx");
+	menu_credits.pages[j]->setTextLine(2, "SDL");
+	menu_credits.pages[j]->setTextLine(3, "SDL_image");
+	menu_credits.pages[j]->setTextLine(4, "SDL_mixer");
+	menu_credits.pages[j]->setTextLine(5, "SDL_ttf");
+	menu_credits.pages[j]->setTextLine(6, "SDL_gfx");
 #else
-	menu_credits.pages[4]->setTextLine(2, "SDL2");
-	menu_credits.pages[4]->setTextLine(3, "SDL2_image");
+	menu_credits.pages[j]->setTextLine(2, "SDL2");
+	menu_credits.pages[j]->setTextLine(3, "SDL2_image");
 #if defined(PSP)
-	menu_credits.pages[4]->setTextLine(4, "OSLibAudio");
+	menu_credits.pages[j]->setTextLine(4, "OSLibAudio");
 #else
-	menu_credits.pages[4]->setTextLine(4, "SDL2_mixer");
+	menu_credits.pages[j]->setTextLine(4, "SDL2_mixer");
 #endif
-	menu_credits.pages[4]->setTextLine(5, "SDL2_ttf");
-	menu_credits.pages[4]->setTextLine(6, "");
+	menu_credits.pages[j]->setTextLine(5, "SDL2_ttf");
+	menu_credits.pages[j]->setTextLine(6, "");
 #endif
+	j++;
 
-	menu_credits.pages[5]->prepareMenuPage(9, 0, 30, 20, 1);
-	menu_credits.pages[5]->setTextLine(0, "- WANT MORE? -");
-	menu_credits.pages[5]->setTextLine(1, "");
-	menu_credits.pages[5]->setTextLine(2, "Trogdor: Reburninated is available");
-	menu_credits.pages[5]->setTextLine(3, "for a wide variety of");
-	menu_credits.pages[5]->setTextLine(4, "homebrew-enabled systems, old and new.");
-	menu_credits.pages[5]->setTextLine(5, "Play it everywhere!");
-	menu_credits.pages[5]->setTextLine(6, "");
-	menu_credits.pages[5]->setTextLine(7, "https://github.com/Mips96");
-	menu_credits.pages[5]->setTextLine(8, "/Trogdor-Reburninated");
+	menu_credits.pages[j]->prepareMenuPage(9, 0, 30, 20, 1);
+	menu_credits.pages[j]->setTextLine(0, "- WANT MORE? -");
+	menu_credits.pages[j]->setTextLine(1, "");
+	menu_credits.pages[j]->setTextLine(2, "Trogdor: Reburninated is available");
+	menu_credits.pages[j]->setTextLine(3, "for a wide variety of");
+	menu_credits.pages[j]->setTextLine(4, "homebrew-enabled systems, old and new.");
+	menu_credits.pages[j]->setTextLine(5, "Play it everywhere!");
+	menu_credits.pages[j]->setTextLine(6, "");
+	menu_credits.pages[j]->setTextLine(7, "https://github.com/Mips96");
+	menu_credits.pages[j]->setTextLine(8, "/Trogdor-Reburninated");
 
 	/* Quit Menu */
 	menu_quit.prepareMenu(QUIT_NUM_OPTIONS, 7, &sprite_menu_cursor, false, 1, 128 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 132, 60, 25, 15, 0, 0, true);

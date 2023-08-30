@@ -483,9 +483,15 @@ int main(int argv, char** args) {
 						updateHighScores();
 						g_sceneState = 306;
 						break;
+#if defined(WII)
+					case MENU_GBA_DEMO_INDEX:
+						menu_gba_demo.openNotebook();
+						g_sceneState = 307;
+						break;
+#endif
 					case MENU_CREDITS_INDEX:
 						menu_credits.openNotebook();
-						g_sceneState = 307;
+						g_sceneState = 308;
 						break;
 					case MENU_QUIT_INDEX: // Quit Game
 						menu_quit.openMenu();
@@ -493,7 +499,7 @@ int main(int argv, char** args) {
 						QUIT_BACK->setDescriptionToIndex(j);
 						QUIT_CONFIRM->setDescriptionToIndex(j);
 						menu_quit.updateOptionPositions();
-						g_sceneState = 308;
+						g_sceneState = 309;
 						break;
 					case -1: // Press B/Select
 						g_sceneState = 3;
@@ -584,8 +590,49 @@ int main(int argv, char** args) {
 						break;
 				}
 				break;
-			/* Credits Screen */
+#if defined(WII)
+			/* Trogba Demo Screen */
 			case 307:
+				g_frameState.increment();
+				sprite_menu_background_ins.renderSprite_menu();
+				menu_gba_demo.renderNotebook();
+				switch (menu_gba_demo.index) {
+					case 0:
+						if (keyPressed(INPUT_A)) {
+							prepare_rom();
+							menu_gba_demo.index = 1;
+						}
+						break;
+					case 1:
+						if (wait_for_gba() == 0) {
+							menu_gba_demo.index = 2;
+						}
+						//if (keyPressed(INPUT_A)) {
+						//	menu_gba_demo.index = 2;
+						//}
+						break;
+					case 2:
+						SDL_Flip(windowScreen);
+						if (send_rom() == 0) {
+							menu_gba_demo.index = 3;
+						} else {
+							menu_gba_demo.index = 4;
+						}
+						//if (keyPressed(INPUT_A)) {
+						//	menu_gba_demo.index = 3;
+						//}
+						break;
+					default:
+						break;
+				}
+				if (menu_gba_demo.index != 2 && (keyPressed(INPUT_B) || keyPressed(INPUT_SELECT))) {
+					menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
+					g_sceneState = 301;
+				}
+				break;
+#endif
+			/* Credits Screen */
+			case 308:
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_credits.renderNotebook();
@@ -599,7 +646,7 @@ int main(int argv, char** args) {
 				}
 				break;
 			/* Quit Screen */
-			case 308:
+			case 309:
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_quit.renderMenu();
