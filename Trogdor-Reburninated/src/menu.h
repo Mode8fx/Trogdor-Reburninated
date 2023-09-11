@@ -91,13 +91,13 @@ class MenuOption {
 		TextObject label;
 		std::string labelPtr;
 		TextObject choice;
-		std::string *choicePtr;
+		std::vector<std::string> choicePtr;
 		TextObject description_1;
 		TextObject description_2;
 		TextObject description_3;
-		std::string *descPtr_1;
-		std::string *descPtr_2;
-		std::string *descPtr_3;
+		std::vector<std::string> descPtr_1;
+		std::vector<std::string> descPtr_2;
+		std::vector<std::string> descPtr_3;
 		std::string altDescPtr;
 		Uint8 numChoices;
 		bool oneDescription;
@@ -110,7 +110,7 @@ class MenuOption {
 		bool optionIsLocked;
 		MenuOption() {
 		}
-		void prepareMenuOption(const char [], std::string [], std::string [], std::string [], std::string [], std::string, Uint8, bool, Sint8, bool, bool);
+		void prepareMenuOption(std::string, const std::vector<std::string>, const std::vector<std::string>, const std::vector<std::string>, const std::vector<std::string>, std::string, Uint8, bool, Sint8, bool, bool);
 		void setFrozen(bool, Sint8);
 		void setLocked(bool);
 		void initLabel();
