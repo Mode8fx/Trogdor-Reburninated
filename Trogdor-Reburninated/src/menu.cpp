@@ -501,162 +501,161 @@ void Menu::renderMenu() {
 /* MENU INITIALIZATION */
 /***********************/
 
-std::vector<std::string> option_on_off = { "On", "Off" };
-std::vector<std::string> option_empty = { "" };
-std::vector<std::string> option_custom_only = { "(Custom preset only.)" };
-std::vector<std::string> option_main_starting_level_choices = { "1", "11", "21", "31", "41", "51", "61", "71", "81", "91" };
-std::vector<std::string> option_main_starting_level_descriptions_line_1 = { "The level that the game starts on." };
-std::vector<std::string> option_main_level_order_choices = { "Original", "Shuffled" };
-std::vector<std::string> option_shuffle_levels_descriptions_line_1 = { "Shuffle the level order so it's", "Play using the original level order." };
-std::vector<std::string> option_shuffle_levels_descriptions_line_2 = { "different every time you play.", "" };
-std::vector<std::string> option_shuffle_levels_descriptions_line_3 = { "(Custom / Mips's Choice presets only.)", "" };
-std::vector<std::string> option_main_preset_choices = { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mips's Choice" };
-std::vector<std::string> option_main_preset_descriptions_line_1 = { "Make your own rules!", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "Someone's favorite..." };
-std::vector<std::string> option_main_preset_descriptions_line_2 = { "Cheats and level select", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "For Trogdor masters!", "Fewer extra lives, crazy fast arrows," };
-std::vector<std::string> option_main_preset_descriptions_line_3 = { "are also allowed.", "", "", "For Trogdor pros.", "", "all treasure huts, shuffled levels." };
-std::vector<std::string> option_main_extra_lives_choices = { "0", "1", "2", "3", "4", "5", "10", "20", "30" };
-std::vector<std::string> option_main_extra_lives_descriptions_line_1 = { "The number of extra lives you start with." };
-std::vector<std::string> option_main_lives_interval_choices = { "Every 300 points", "Every 500 points", "Every 1000 points", "500 points only", "500 and 1000 only", "1000 points only", "1000 and 2000 only", "None" };
-std::vector<std::string> option_main_lives_interval_descriptions_line_1 = { "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "No extra lives." };
-std::vector<std::string> option_main_lives_interval_descriptions_line_2 = { "every 300 points.", "every 500 points.", "every 1000 points.", "at 500 points.", "at 500 and 1000 points.", "at 1000 points.", "at 1000 and 2000 points.", "" };
-std::vector<std::string> option_main_lives_interval_descriptions_line_3 = { "", "", "", "", "", "", "", "" };
-std::vector<std::string> option_main_music_choices = { "Off", "Stinkoman 20X6"};
-std::vector<std::string> option_main_music_descriptions_line_1 = { "Don't play music in-game.", "Play music from Stinkoman 20X6." };
-std::vector<std::string> option_main_music_descriptions_line_2 = { "", "The song changes depending on the level." };
-std::vector<std::string> option_main_music_descriptions_line_3 = { "", "" };
-std::vector<std::string> option_main_peasant_penalty_descriptions_line_1 = { "The peasant meter decreases", "No penalty for escaped peasants." };
-std::vector<std::string> option_main_peasant_penalty_descriptions_line_2 = { "every time a peasant escapes.", "" };
-std::vector<std::string> option_main_peasant_penalty_descriptions_line_3 = { "", "" };
-std::vector<std::string> option_main_treasure_huts_choices = { "Original", "New", "Off" };
-std::vector<std::string> option_main_treasure_huts_descriptions_line_1 = { "After you enter a treasure hut, you cannot", "You can enter all treasure huts.", "Treasure huts are disabled."};
-std::vector<std::string> option_main_treasure_huts_descriptions_line_2 = { "enter huts from other level layouts.", "Same behavior as the HTML5 port.", ""};
-std::vector<std::string> option_main_treasure_huts_descriptions_line_3 = { "Same behavior as the original game.", "", ""};
-//std::vector<std::string> option_main_archer_freq_choices = { "Original", "New", "Low", "Medium", "High", "Non-stop" };
-std::vector<std::string> option_main_archer_freq_choices;
-std::vector<std::string> option_main_archer_freq_descriptions_line_1 = { "Archers appear more in later levels.", "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"};
-std::vector<std::string> option_main_archer_freq_descriptions_line_2 = { "Same behavior as the original game.", "New scaling that's more evenly", "", "", "", ""};
-std::vector<std::string> option_main_archer_freq_descriptions_line_3 = { "", "distributed between levels.", "", "", "", ""};
-std::vector<std::string> option_main_knight_behavior_choices = { "Original", "New" };
-std::vector<std::string> option_main_knight_behavior_descriptions_line_1 = { "Knights briefly pause and change", "Knights do not change their" };
-std::vector<std::string> option_main_knight_behavior_descriptions_line_2 = { "position after you die.", "movement after you die." };
-std::vector<std::string> option_main_knight_behavior_descriptions_line_3 = { "", "Behavior is similar to the HTML5 port." };
-std::vector<std::string> option_main_knight_speed_choices = { "Very Slow", "Slow", "Normal", "Fast", "Very Fast" };
-std::vector<std::string> option_main_knight_speed_descriptions_line_1 = { "Change how quickly knights move." };
-std::vector<std::string> option_main_arrow_speed_choices = { "Slow", "Normal", "Fast", "Very Fast", "Insane" };
-std::vector<std::string> option_main_arrow_speed_descriptions_line_1 = { "Change how quickly arrows move." };
+#define option_on_off { "On", "Off" }
+#define option_empty { "" }
+#define option_custom_only { "(Custom preset only.)" }
+#define option_main_starting_level_choices { "1", "11", "21", "31", "41", "51", "61", "71", "81", "91" }
+#define option_main_starting_level_descriptions_line_1 { "The level that the game starts on." }
+#define option_main_level_order_choices { "Original", "Shuffled" }
+#define option_shuffle_levels_descriptions_line_1 { "Shuffle the level order so it's", "Play using the original level order." }
+#define option_shuffle_levels_descriptions_line_2 { "different every time you play.", "" }
+#define option_shuffle_levels_descriptions_line_3 { "(Custom / Mips's Choice presets only.)", "" }
+#define option_main_preset_choices { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mips's Choice" }
+#define option_main_preset_descriptions_line_1 { "Make your own rules!", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "Someone's favorite..." }
+#define option_main_preset_descriptions_line_2 { "Cheats and level select", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "For Trogdor masters!", "Fewer extra lives, crazy fast arrows," }
+#define option_main_preset_descriptions_line_3 { "are also allowed.", "", "", "For Trogdor pros.", "", "all treasure huts, shuffled levels." }
+#define option_main_extra_lives_choices { "0", "1", "2", "3", "4", "5", "10", "20", "30" }
+#define option_main_extra_lives_descriptions_line_1 { "The number of extra lives you start with." }
+#define option_main_lives_interval_choices { "Every 300 points", "Every 500 points", "Every 1000 points", "500 points only", "500 and 1000 only", "1000 points only", "1000 and 2000 only", "None" }
+#define option_main_lives_interval_descriptions_line_1 { "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "No extra lives." }
+#define option_main_lives_interval_descriptions_line_2 { "every 300 points.", "every 500 points.", "every 1000 points.", "at 500 points.", "at 500 and 1000 points.", "at 1000 points.", "at 1000 and 2000 points.", "" }
+#define option_main_lives_interval_descriptions_line_3 { "", "", "", "", "", "", "", "" }
+#define option_main_music_choices { "Off", "Stinkoman 20X6"}
+#define option_main_music_descriptions_line_1 { "Don't play music in-game.", "Play music from Stinkoman 20X6." }
+#define option_main_music_descriptions_line_2 { "", "The song changes depending on the level." }
+#define option_main_music_descriptions_line_3 { "", "" }
+#define option_main_peasant_penalty_descriptions_line_1 { "The peasant meter decreases", "No penalty for escaped peasants." }
+#define option_main_peasant_penalty_descriptions_line_2 { "every time a peasant escapes.", "" }
+#define option_main_peasant_penalty_descriptions_line_3 { "", "" }
+#define option_main_treasure_huts_choices { "Original", "New", "Off" }
+#define option_main_treasure_huts_descriptions_line_1 { "After you enter a treasure hut, you cannot", "You can enter all treasure huts.", "Treasure huts are disabled."}
+#define option_main_treasure_huts_descriptions_line_2 { "enter huts from other level layouts.", "Same behavior as the HTML5 port.", ""}
+#define option_main_treasure_huts_descriptions_line_3 { "Same behavior as the original game.", "", ""}
+#define option_main_archer_freq_choices { "Original", "New", "Low", "Medium", "High", "Non-stop" }
+#define option_main_archer_freq_descriptions_line_1 { "Archers appear more in later levels.", "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"}
+#define option_main_archer_freq_descriptions_line_2 { "Same behavior as the original game.", "New scaling that's more evenly", "", "", "", ""}
+#define option_main_archer_freq_descriptions_line_3 { "", "distributed between levels.", "", "", "", ""}
+#define option_main_knight_behavior_choices { "Original", "New" }
+#define option_main_knight_behavior_descriptions_line_1 { "Knights briefly pause and change", "Knights do not change their" }
+#define option_main_knight_behavior_descriptions_line_2 { "position after you die.", "movement after you die." }
+#define option_main_knight_behavior_descriptions_line_3 { "", "Behavior is similar to the HTML5 port." }
+#define option_main_knight_speed_choices { "Very Slow", "Slow", "Normal", "Fast", "Very Fast" }
+#define option_main_knight_speed_descriptions_line_1 { "Change how quickly knights move." }
+#define option_main_arrow_speed_choices { "Slow", "Normal", "Fast", "Very Fast", "Insane" }
+#define option_main_arrow_speed_descriptions_line_1 { "Change how quickly arrows move." }
 #if defined(THREEDS)
-std::vector<std::string> option_main_frame_rate_choices = { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "", "", "", "", "", "", "" };
+#define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "", "", "", "", "", "", "" }
 #elif defined(WII) || defined(GAMECUBE)
-std::vector<std::string> option_main_frame_rate_choices = { "16 FPS (orig.) (480p)", "20 FPS (480p)", "25 FPS (480p)", "30 FPS (240p)", "40 FPS (240p)", "50 FPS (240p)", "55 FPS (240p)", "60 FPS (240p)", "", "", "" };
+#define option_main_frame_rate_choices { "16 FPS (orig.) (480p)", "20 FPS (480p)", "25 FPS (480p)", "30 FPS (240p)", "40 FPS (240p)", "50 FPS (240p)", "55 FPS (240p)", "60 FPS (240p)", "", "", "" }
 #else
-std::vector<std::string> option_main_frame_rate_choices = { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS", "90 FPS", "120 FPS", "144 FPS" };
+#define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS", "90 FPS", "120 FPS", "144 FPS" }
 #endif
-std::vector<std::string> option_main_frame_rate_descriptions_line_1 = { "Higher frame rate = smoother gameplay." };
-std::vector<std::string> option_main_frame_rate_descriptions_line_2 = { "(Original Flash game is 16 FPS)" };
-std::vector<std::string> option_main_frame_rate_descriptions_line_3 = { "" };
-std::vector<std::string> option_main_level_tran_choices = { "Original", "Button Press" };
-std::vector<std::string> option_main_level_tran_descriptions_line_1 = { "After beating a level, the next", "After beating a level, press " + INPUT_CONFIRM };
-std::vector<std::string> option_main_level_tran_descriptions_line_2 = { "level will load automatically.", "or " + INPUT_PAUSE + " to load the next level." };
-std::vector<std::string> option_main_level_tran_descriptions_line_3 = { "", "" };
-std::vector<std::string> option_main_comment_freq_choices = { "Off", "Very Low", "Low", "Normal", "High", "Very High", "Let's-Player" };
-std::vector<std::string> option_main_comment_freq_descriptions_line_1 = { "Strong Bad does not talk.", "Strong Bad rarely talks.", "Strong Bad talks less than usual.", "Strong Bad talks as often", "Strong Bad talks a bit more often.", "Strong Bad talks much more often.", "Strong Bad won't shut up!" };
-std::vector<std::string> option_main_comment_freq_descriptions_line_2 = { "", "", "", "as he did in the original game.", "", "", "(He talks twice as much as usual.)"};
-std::vector<std::string> option_main_comment_freq_descriptions_line_3 = { "", "", "", "", "", "", "" };
+#define option_main_frame_rate_descriptions_line_1 { "Higher frame rate smoother gameplay." }
+#define option_main_frame_rate_descriptions_line_2 { "(Original Flash game is 16 FPS)" }
+#define option_main_frame_rate_descriptions_line_3 { "" }
+#define option_main_level_tran_choices { "Original", "Button Press" }
+#define option_main_level_tran_descriptions_line_1 { "After beating a level, the next", "After beating a level, press " + INPUT_CONFIRM }
+#define option_main_level_tran_descriptions_line_2 { "level will load automatically.", "or " + INPUT_PAUSE + " to load the next level." }
+#define option_main_level_tran_descriptions_line_3 { "", "" }
+#define option_main_comment_freq_choices { "Off", "Very Low", "Low", "Normal", "High", "Very High", "Let's-Player" }
+#define option_main_comment_freq_descriptions_line_1 { "Strong Bad does not talk.", "Strong Bad rarely talks.", "Strong Bad talks less than usual.", "Strong Bad talks as often", "Strong Bad talks a bit more often.", "Strong Bad talks much more often.", "Strong Bad won't shut up!" }
+#define option_main_comment_freq_descriptions_line_2 { "", "", "", "as he did in the original game.", "", "", "(He talks twice as much as usual.)"}
+#define option_main_comment_freq_descriptions_line_3 { "", "", "", "", "", "", "" }
 #if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
-std::string press_confirm_to_apply = "(Press " + INPUT_CONFIRM + " to apply, may take a few seconds)";
+#define press_confirm_to_apply "(Press " + INPUT_CONFIRM + " to apply, may take a few seconds)"
 #else
-std::string press_confirm_to_apply = "(Press " + INPUT_CONFIRM + " to apply)";
+#define press_confirm_to_apply "(Press " + INPUT_CONFIRM + " to apply)"
 #endif
 #if defined(THREEDS)
-std::vector<std::string> option_main_scaling_choices = { "N/A", "N/A", "N/A", "N/A" };
-std::vector<std::string> option_main_scaling_descriptions_line_1 = { "(Unused)", "(Unused)", "(Unused)", "(Unused)" };
-std::vector<std::string> option_main_scaling_descriptions_line_2 = { "", "", "", "" };
-std::vector<std::string> option_main_scaling_descriptions_line_3 = { "", "", "", "" };
+#define option_main_scaling_choices { "N/A", "N/A", "N/A", "N/A" }
+#define option_main_scaling_descriptions_line_1 { "(Unused)", "(Unused)", "(Unused)", "(Unused)" }
+#define option_main_scaling_descriptions_line_2 { "", "", "", "" }
+#define option_main_scaling_descriptions_line_3 { "", "", "", "" }
 #elif defined(PSP)
-std::vector<std::string> option_main_scaling_choices = { "Pixel-Perfect", "", "Full", "Full Game" };
-std::vector<std::string> option_main_scaling_descriptions_line_1 = { "Scale so that everything uses integer", "", "Scale everything so that", "Scale the game to fill the screen." };
-std::vector<std::string> option_main_scaling_descriptions_line_2 = { "scaling. Accurate, but small.", "", "the overlay fills the screen.", "The overlay will be cut off." };
-std::vector<std::string> option_main_scaling_descriptions_line_3 = { press_confirm_to_apply, "", press_confirm_to_apply, press_confirm_to_apply };
+#define option_main_scaling_choices { "Pixel-Perfect", "", "Full", "Full Game" }
+#define option_main_scaling_descriptions_line_1 { "Scale so that everything uses integer", "", "Scale everything so that", "Scale the game to fill the screen." }
+#define option_main_scaling_descriptions_line_2 { "scaling. Accurate, but small.", "", "the overlay fills the screen.", "The overlay will be cut off." }
+#define option_main_scaling_descriptions_line_3 { press_confirm_to_apply, "", press_confirm_to_apply, press_confirm_to_apply }
 #elif defined(WII) || defined(GAMECUBE) || defined(XBOX)
-std::vector<std::string> option_main_scaling_choices = { "Pixel-Perfect", "", "", "Full Game" };
-std::vector<std::string> option_main_scaling_descriptions_line_1 = { "Scale so that everything uses integer", "", "", "Scale the game to fill the screen." };
-std::vector<std::string> option_main_scaling_descriptions_line_2 = { "scaling. The most accurate.", "", "", "The overlay will be cut off." };
-std::vector<std::string> option_main_scaling_descriptions_line_3 = { press_confirm_to_apply, "", "", press_confirm_to_apply };
+#define option_main_scaling_choices { "Pixel-Perfect", "", "", "Full Game" }
+#define option_main_scaling_descriptions_line_1 { "Scale so that everything uses integer", "", "", "Scale the game to fill the screen." }
+#define option_main_scaling_descriptions_line_2 { "scaling. The most accurate.", "", "", "The overlay will be cut off." }
+#define option_main_scaling_descriptions_line_3 { press_confirm_to_apply, "", "", press_confirm_to_apply }
 #elif defined(WII_U)
-std::vector<std::string> option_main_scaling_choices = { "Pixel-Perfect", "Pixel-Perfect Game", "", "" };
-std::vector<std::string> option_main_scaling_descriptions_line_1 = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "", "" };
-std::vector<std::string> option_main_scaling_descriptions_line_2 = { "scaling. Accurate, but small.", "with integer scaling. The most accurate.", "", "" };
-std::vector<std::string> option_main_scaling_descriptions_line_3 = { press_confirm_to_apply, press_confirm_to_apply, "", "" };
+#define option_main_scaling_choices { "Pixel-Perfect", "Pixel-Perfect Game", "", "" }
+#define option_main_scaling_descriptions_line_1 { "Scale so that everything uses integer", "Scale the game to be as big as possible", "", "" }
+#define option_main_scaling_descriptions_line_2 { "scaling. Accurate, but small.", "with integer scaling. The most accurate.", "", "" }
+#define option_main_scaling_descriptions_line_3 { press_confirm_to_apply, press_confirm_to_apply, "", "" }
 #elif defined(SWITCH)
-std::vector<std::string> option_main_scaling_choices = { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "" };
-std::vector<std::string> option_main_scaling_descriptions_line_1 = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "" };
-std::vector<std::string> option_main_scaling_descriptions_line_2 = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "" };
-std::vector<std::string> option_main_scaling_descriptions_line_3 = { press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply, "" };
+#define option_main_scaling_choices { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "" }
+#define option_main_scaling_descriptions_line_1 { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "" }
+#define option_main_scaling_descriptions_line_2 { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "" }
+#define option_main_scaling_descriptions_line_3 { press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply, "" }
 #else
-std::vector<std::string> option_main_scaling_choices = { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "Full Game" };
-std::vector<std::string> option_main_scaling_descriptions_line_1 = { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "Scale the game to fill the screen." };
-std::vector<std::string> option_main_scaling_descriptions_line_2 = { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." };
-std::vector<std::string> option_main_scaling_descriptions_line_3 = { press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply };
+#define option_main_scaling_choices { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "Full Game" }
+#define option_main_scaling_descriptions_line_1 { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "Scale the game to fill the screen." }
+#define option_main_scaling_descriptions_line_2 { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." }
+#define option_main_scaling_descriptions_line_3 { press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply }
 #endif
-std::vector<std::string> option_main_difficulty_descriptions_line_1 = { "Change settings related to" };
-std::vector<std::string> option_main_difficulty_descriptions_line_2 = { "game difficulty." };
-std::vector<std::string> option_main_cosmetic_descriptions_line_1 = { "Change settings related to" };
-std::vector<std::string> option_main_cosmetic_descriptions_line_2 = { "game audio and video." };
-std::vector<std::string> option_main_other_descriptions_line_1 = { "Change miscellaneous settings." };
-std::vector<std::string> option_main_cheats_descriptions_line_1 = { "Toggle secret cheats." };
-std::vector<std::string> option_main_cheats_descriptions_line_2 = { "Follow the hints!" };
-std::vector<std::string> option_main_highscores_descriptions_line_1 = { "View your high scores." };
+#define option_main_difficulty_descriptions_line_1 { "Change settings related to" }
+#define option_main_difficulty_descriptions_line_2 { "game difficulty." }
+#define option_main_cosmetic_descriptions_line_1 { "Change settings related to" }
+#define option_main_cosmetic_descriptions_line_2 { "game audio and video." }
+#define option_main_other_descriptions_line_1 { "Change miscellaneous settings." }
+#define option_main_cheats_descriptions_line_1 { "Toggle secret cheats." }
+#define option_main_cheats_descriptions_line_2 { "Follow the hints!" }
+#define option_main_highscores_descriptions_line_1 { "View your high scores." }
 #if defined(WII)
-std::vector<std::string> option_main_gba_demo_descriptions_line_1 = { "Transfer a demo of TroGBA" };
-std::vector<std::string> option_main_gba_demo_descriptions_line_2 = { "to your Game Boy Advance." };
+#define option_main_gba_demo_descriptions_line_1 { "Transfer a demo of TroGBA" }
+#define option_main_gba_demo_descriptions_line_2 { "to your Game Boy Advance." }
 #endif
-std::vector<std::string> option_main_credits_descriptions_line_1 = { "View the credits." };
-std::vector<std::string> option_main_reset_settings_descriptions_line_1 = { "Reset all settings to default." };
-std::vector<std::string> option_main_quit_descriptions_line_1 = { "Quit the game." };
-std::vector<std::string> option_cheats_inf_lives_descriptions_line_1 = { "Infinite lives, play forever!" };
-std::vector<std::string> option_cheats_inf_lives_descriptions_line_2 = { "Unlocking this cheat also unlocks" };
-std::vector<std::string> option_cheats_inf_lives_descriptions_line_3 = { "more starting lives options." };
-std::vector<std::string> option_speedy_mode_choices = { "Off", "Fast", "Faster", "Fastest" };
-std::vector<std::string> option_cheats_speedy_mode_descriptions_line_1 = { "Trogdor moves much faster!" };
-std::vector<std::string> option_cheats_debug_mode_descriptions_line_1 = { "Enable Debug Mode." };
-std::vector<std::string> option_cheats_debug_mode_descriptions_line_2 = { "Press buttons to do things." };
-std::vector<std::string> option_main_big_head_mode_descriptions_line_1 = { "Give Trogdor a more husky head." };
-std::vector<std::string> option_cheats_noclip_descriptions_line_1 = { "Remove the game's difficulty" };
-std::vector<std::string> option_cheats_noclip_descriptions_line_2 = { "by walking through cottages." };
+#define option_main_credits_descriptions_line_1 { "View the credits." }
+#define option_main_reset_settings_descriptions_line_1 { "Reset all settings to default." }
+#define option_main_quit_descriptions_line_1 { "Quit the game." }
+#define option_cheats_inf_lives_descriptions_line_1 { "Infinite lives, play forever!" }
+#define option_cheats_inf_lives_descriptions_line_2 { "Unlocking this cheat also unlocks" }
+#define option_cheats_inf_lives_descriptions_line_3 { "more starting lives options." }
+#define option_speedy_mode_choices { "Off", "Fast", "Faster", "Fastest" }
+#define option_cheats_speedy_mode_descriptions_line_1 { "Trogdor moves much faster!" }
+#define option_cheats_debug_mode_descriptions_line_1 { "Enable Debug Mode." }
+#define option_cheats_debug_mode_descriptions_line_2 { "Press buttons to do things." }
+#define option_main_big_head_mode_descriptions_line_1 { "Give Trogdor a more husky head." }
+#define option_cheats_noclip_descriptions_line_1 { "Remove the game's difficulty" }
+#define option_cheats_noclip_descriptions_line_2 { "by walking through cottages." }
 #if defined(WII_U) || defined(VITA) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
 #if defined(WII_U)
-std::string console_quit_line_1 = "WHY ARE YOU STILL USING A WII U?!";
+#define console_quit_line_1 "WHY ARE YOU STILL USING A WII U?!"
 #elif defined(VITA)
-std::string console_quit_line_1 = "WHY ARE YOU STILL USING A VITA?!";
+#define console_quit_line_1 "WHY ARE YOU STILL USING A VITA?!"
 #elif defined(PSP)
-std::string console_quit_line_1 = "WHY ARE YOU STILL USING A PSP?!";
+#define console_quit_line_1 "WHY ARE YOU STILL USING A PSP?!"
 #elif defined(WII)
-std::string console_quit_line_1 = "WHY ARE YOU STILL USING A WII?!";
+#define console_quit_line_1 "WHY ARE YOU STILL USING A WII?!"
 #elif defined(GAMECUBE)
-std::string console_quit_line_1 = "WHY ARE YOU STILL USING A GAMECUBE?!";
+#define console_quit_line_1 "WHY ARE YOU STILL USING A GAMECUBE?!"
 #elif defined(THREEDS)
-std::string console_quit_line_1 = "WHY ARE YOU STILL USING A 3DS?!";
+#define console_quit_line_1 "WHY ARE YOU STILL USING A 3DS?!"
 #elif defined(XBOX)
-std::string console_quit_line_1 = "WHY ARE YOU STILL USING AN XBOX?!";
+#define console_quit_line_1 "WHY ARE YOU STILL USING AN XBOX?!"
 #else
-std::string console_quit_line_1 = "WHY ARE YOU STILL USING WINDOWS 98?!";
+#define console_quit_line_1 "WHY ARE YOU STILL USING WINDOWS 98?!"
 #endif
-std::string console_quit_line_2 = "WHAT IS WRONG WITH YOU?! STOP BUYING";
-std::string console_quit_line_3 = "CONSOLES FROM THRIFT STORES, MAN!";
+#define console_quit_line_2 "WHAT IS WRONG WITH YOU?! STOP BUYING"
+#define console_quit_line_3 "CONSOLES FROM THRIFT STORES, MAN!"
 #else
 #if defined(SWITCH)
-std::string console_quit_line_1 = "Switch over? Virus equals very yes?";
+#define console_quit_line_1 "Switch over? Virus equals very yes?"
 #elif defined(ANDROID)
-std::string console_quit_line_1 = "Android over? Virus equals very yes?";
+#define console_quit_line_1 "Android over? Virus equals very yes?"
 #else
-std::string console_quit_line_1 = "Computer over? Virus equals very yes?";
+#define console_quit_line_1 "Computer over? Virus equals very yes?"
 #endif
-std::string console_quit_line_2 = "";
-std::string console_quit_line_3 = "";
+#define console_quit_line_2 ""
+#define console_quit_line_3 ""
 #endif
-std::vector<std::string> option_quit_descriptions_line_1 = { "Hey Player, I really like your", "Strong Bad's gonna get the", "Are you sure you want to quit this", "Don't leave yet -- There's a", "If you leave now, how will you", "Click \"Keep playing\" to email strong bad", console_quit_line_1 };
-std::vector<std::string> option_quit_descriptions_line_2 = { "\"quitting to play a different game\"", "high score, man, 50,000.", "great game?", "peasant around that corner!", "get ye flask?", "", console_quit_line_2 };
-std::vector<std::string> option_quit_descriptions_line_3 = { "costume.", "", "", "", "", "", console_quit_line_3 };
+#define option_quit_descriptions_line_1 { "Hey Player, I really like your", "Strong Bad's gonna get the", "Are you sure you want to quit this", "Don't leave yet -- There's a", "If you leave now, how will you", "Click \"Keep playing\" to email strong bad", console_quit_line_1 }
+#define option_quit_descriptions_line_2 { "\"quitting to play a different game\"", "high score, man, 50,000.", "great game?", "peasant around that corner!", "get ye flask?", "", console_quit_line_2 }
+#define option_quit_descriptions_line_3 { "costume.", "", "", "", "", "", console_quit_line_3 }
 
 void InitializeMenus() {
 	TTF_Init();

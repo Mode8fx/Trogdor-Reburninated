@@ -50,9 +50,33 @@ constexpr auto INPUT_START      = (1 << 10); // enter
 constexpr auto INPUT_SELECT     = (1 << 11); // backspace
 constexpr auto INPUT_FULLSCREEN = (1 << 12); // f
 constexpr auto INPUT_ALL_DIRS   = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIGHT;
-extern std::string INPUT_CONFIRM;
-extern std::string INPUT_PAUSE;
-extern std::string INPUT_MISC;
+
+#if defined(WII_U) || defined(SWITCH) || defined(ANDROID) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
+#define INPUT_CONFIRM std::string("A")
+#elif defined(VITA) || defined(PSP)
+#define INPUT_CONFIRM std::string("X")
+#elif defined(WII)
+#define INPUT_CONFIRM std::string("2")
+#else
+#define INPUT_CONFIRM std::string("Z / A")
+#endif
+
+#if defined(WII_U) || defined(VITA) || defined(ANDROID) || defined(PSP) || defined(WII)
+#define INPUT_PAUSE std::string("START")
+#define INPUT_MISC std::string("SELECT")
+#elif defined(SWITCH)
+#define INPUT_PAUSE std::string("+")
+#define INPUT_MISC std::string("-")
+#elif defined(GAMECUBE)
+#define INPUT_PAUSE std::string("START")
+#define INPUT_MISC std::string("Z")
+#elif defined(XBOX)
+#define INPUT_PAUSE std::string("START")
+#define INPUT_MISC std::string("BACK")
+#else
+#define INPUT_PAUSE std::string("ENTER/START")
+#define INPUT_MISC std::string("BACK/SELECT")
+#endif
 
 bool keyPressed(Uint16 key);
 bool keyHeld(Uint16 button);

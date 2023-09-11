@@ -3,33 +3,6 @@
 
 constexpr auto STICK_DEADZONE = 10922; // 32767 / 3
 
-#if defined(WII_U) || defined(SWITCH) || defined(ANDROID) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
-std::string INPUT_CONFIRM = "A";
-#elif defined(VITA) || defined(PSP)
-std::string INPUT_CONFIRM = "X";
-#elif defined(WII)
-std::string INPUT_CONFIRM = "2";
-#else
-std::string INPUT_CONFIRM = "Z / A";
-#endif
-
-#if defined(WII_U) || defined(VITA) || defined(ANDROID) || defined(PSP) || defined(WII)
-std::string INPUT_PAUSE = "START";
-std::string INPUT_MISC = "SELECT";
-#elif defined(SWITCH)
-std::string INPUT_PAUSE = "+";
-std::string INPUT_MISC = "-";
-#elif defined(GAMECUBE)
-std::string INPUT_PAUSE = "START";
-std::string INPUT_MISC = "Z";
-#elif defined(XBOX)
-std::string INPUT_PAUSE = "START";
-std::string INPUT_MISC = "BACK";
-#else
-std::string INPUT_PAUSE = "ENTER/START";
-std::string INPUT_MISC = "BACK/SELECT";
-#endif
-
 bool keyPressed(Uint16 key) {
 	return (keyInputs & key);
 }
