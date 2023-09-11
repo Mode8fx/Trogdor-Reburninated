@@ -434,7 +434,7 @@ int main(int argv, char** args) {
 				renderOverlay = false;
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_main.renderMenu();
-				switch (menu_main.handleInput(false)) {
+				switch (menu_main.handleInput(0)) {
 					case MENU_DIFFICULTY_INDEX:
 						menu_difficulty.openMenu();
 						g_sceneState = 302;
@@ -516,7 +516,7 @@ int main(int argv, char** args) {
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_difficulty.renderMenu();
-				switch (menu_difficulty.handleInput(true)) {
+				switch (menu_difficulty.handleInput(1)) {
 					case -1: // Press B/Select
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;
@@ -530,7 +530,7 @@ int main(int argv, char** args) {
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_cosmetic.renderMenu();
-				switch (menu_cosmetic.handleInput(false)) {
+				switch (menu_cosmetic.handleInput(0)) {
 #if !defined(THREEDS)
 					case MENU_SCALING_INDEX:
 						scalingType = MENU_SCALING->index;
@@ -551,7 +551,7 @@ int main(int argv, char** args) {
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_other.renderMenu();
-				switch (menu_other.handleInput(false)) {
+				switch (menu_other.handleInput(0)) {
 					case -1: // Press B/Select
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;
@@ -565,7 +565,7 @@ int main(int argv, char** args) {
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_cheats.renderMenu();
-				switch (menu_cheats.handleInput(false)) {
+				switch (menu_cheats.handleInput(0)) {
 					case -1: // Press B/Select
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;
@@ -641,7 +641,7 @@ int main(int argv, char** args) {
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_quit.renderMenu();
-				switch (menu_quit.handleInput(false)) {
+				switch (menu_quit.handleInput(2)) {
 					case QUIT_BACK_INDEX:
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;

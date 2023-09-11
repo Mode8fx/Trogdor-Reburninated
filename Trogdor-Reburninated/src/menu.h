@@ -173,7 +173,7 @@ class Menu {
 		Menu() {
 		}
 		void prepareMenu(Uint8, Uint8, SpriteObject *, bool, Sint8, Sint16, Sint16, Sint16, Sint16, Sint16, Sint16, Sint16, Sint8, Sint8, bool);
-		Sint8 handleInput(bool);
+		Sint8 handleInput(Uint8);
 		void incrementOption();
 		void decrementOption();
 		void incrementCurrOptionChoice();

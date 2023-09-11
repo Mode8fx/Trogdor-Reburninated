@@ -320,22 +320,23 @@ void Menu::prepareMenu(Uint8 numOpt, Uint8 numOns, SpriteObject *spriteObj, bool
 	}
 }
 
-Sint8 Menu::handleInput(bool isDifficultyMenu) {
+// menuType: 0 is normal, 1 is difficulty menu, 2 is quit menu
+Sint8 Menu::handleInput(Uint8 menuType) {
 	if (keyPressed(INPUT_UP)) {
 		decrementOption();
 	}
 	if (keyPressed(INPUT_DOWN)) {
 		incrementOption();
 	}
-	if (keyPressed(INPUT_LEFT) && !(CURR_OPTION->optionIsFrozen || CURR_OPTION->optionIsLocked)) {
+	if (keyPressed(INPUT_LEFT) && !(CURR_OPTION->optionIsFrozen || CURR_OPTION->optionIsLocked || (menuType == 2))) {
 		decrementCurrOptionChoice();
-		if (isDifficultyMenu && cursorIndex == 0) {
+		if ((menuType == 1) && cursorIndex == 0) {
 			setPreset(CURR_OPTION->index);
 		}
 	}
-	if (keyPressed(INPUT_RIGHT) && !(CURR_OPTION->optionIsFrozen || CURR_OPTION->optionIsLocked)) {
+	if (keyPressed(INPUT_RIGHT) && !(CURR_OPTION->optionIsFrozen || CURR_OPTION->optionIsLocked || (menuType == 2))) {
 		incrementCurrOptionChoice();
-		if (isDifficultyMenu && cursorIndex == 0) {
+		if ((menuType == 1) && cursorIndex == 0) {
 			setPreset(CURR_OPTION->index);
 		}
 	}
