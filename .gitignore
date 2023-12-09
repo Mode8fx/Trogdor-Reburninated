@@ -396,6 +396,7 @@ build_switch/
 build_wii_u/
 build_vita/
 build_3ds/
+build_linux/
 music_wav/
 sfx_wav/
 music_ogg/

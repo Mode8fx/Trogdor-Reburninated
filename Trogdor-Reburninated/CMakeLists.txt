@@ -31,10 +31,10 @@ add_executable(trogdorrb
 	"src/window.cpp"
 	"src/window.h"
 )
+find_package(PkgConfig REQUIRED)
 
 if (WIIU)
 	include("${DEVKITPRO}/wut/share/wut.cmake" REQUIRED)
-	find_package(PkgConfig REQUIRED)
 	add_definitions(-DWII_U)
 
 	target_link_libraries(trogdorrb -L${DEVKITPRO}/portlibs/wiiu/lib -L${DEVKITPRO}/portlibs/ppc/lib -L${DEVKITPRO}/wut/lib)
@@ -58,11 +58,9 @@ if (WIIU)
 
 	install(FILES "${CMAKE_CURRENT_BINARY_DIR}/trogdorrb.rpx"
 			DESTINATION "${CMAKE_INSTALL_PREFIX}")
-endif()
 
-if (VITA)
+elseif (VITA)
 	include("${VITASDK}/share/vita.cmake" REQUIRED)
-	# find_package(PkgConfig REQUIRED)
 	add_definitions(-DVITA)
 	
 	set(VITA_APP_NAME "Trogdor: Reburninated")
@@ -97,7 +95,20 @@ if (VITA)
 		FILE release-resources/logo_startup_vita.png sce_sys/livearea/contents/startup.png
 		FILE release-resources/template_vita.xml sce_sys/livearea/contents/template.xml
 	)
+
+else()
+	if (LINUX)
+		add_definitions(-DLINUX)
+	endif()
+	PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
+	PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
+	PKG_SEARCH_MODULE(SDL2MIXER REQUIRED SDL2_mixer>=2.0.0)
+	PKG_SEARCH_MODULE(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
+	INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2MIXER_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
+	TARGET_LINK_LIBRARIES(${PROJECT_NAME} ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2MIXER_LIBRARIES} ${SDL2TTF_LIBRARIES})
+
 endif()
 
 unset(WIIU CACHE)
 unset(VITA CACHE)
+unset(LINUX CACHE)

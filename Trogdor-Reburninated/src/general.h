@@ -65,7 +65,7 @@ extern void applyColorKey(SDL_Surface *);
 extern void systemSpecificOpen();
 extern void systemSpecificClose();
 
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
+#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX) || defined(LINUX))
 #define STRCPY(dest, src) strcpy_s(dest, src);
 #else
 #define STRCPY(dest, src) strcpy(dest, src);
