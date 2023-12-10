@@ -36,7 +36,10 @@ inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B) {
 }
 #endif
 
-Cottage::Cottage(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint16 dir = 1) {
+Cottage::Cottage() {
+}
+
+Cottage::Cottage(Sint16 pos_x, Sint16 pos_y, Sint16 dir) {
 	frameState.set(10);
 	sprite = SpriteInstance(&sprite_cottage, 0, (dir - 1), (float)pos_x, (float)pos_y);
 	sprite_fire = SpriteInstance(&sprite_cottage_fire, 0, 0, (float)sprite.dstrect.x + 5, (float)sprite.dstrect.y - 5);
@@ -84,7 +87,10 @@ void Cottage::updateFrameState() {
 	frameState.increment();
 }
 
-Knight::Knight(Sint16 pos_x = 0, Sint16 pos_y = 0, Sint8 dir = 1, bool fr = true, float knightSpeed = 1) {
+Knight::Knight() {
+}
+
+Knight::Knight(Sint16 pos_x, Sint16 pos_y, Sint8 dir, bool fr, float knightSpeed) {
 	anim_frameState.set(1);
 	move_frameState.set(1);
 	moving = true;
@@ -277,7 +283,10 @@ void Peasant::updateFrameState(float sbVoiceMult) {
 	}
 }
 
-Archer::Archer(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
+Archer::Archer() {
+}
+
+Archer::Archer(Sint16 pos_x, Sint16 pos_y, bool fr) {
 	frameState.set(1);
 	sprite = SpriteInstance(&sprite_archer, 0, fr, pos_x, pos_y);
 	sprite.facingRight = fr;
@@ -304,7 +313,10 @@ void Archer::updateFrameState() {
 	frameState.increment();
 }
 
-Arrow::Arrow(Sint16 pos_x = 0, Sint16 pos_y = 0, bool fr = true) {
+Arrow::Arrow() {
+}
+
+Arrow::Arrow(Sint16 pos_x, Sint16 pos_y, bool fr) {
 	frameState.set(1);
 	sprite = SpriteInstance(&sprite_arrow, 0, fr, pos_x, pos_y);
 	sprite.facingRight = fr;
@@ -349,7 +361,10 @@ Loot::Loot(Sint16 pos_x, Sint16 pos_y) {
 	sprite.isActive = false;
 }
 
-Trogdor::Trogdor(bool bigHead = false, Sint8 speedyMode = 0) {
+Trogdor::Trogdor() {
+}
+
+Trogdor::Trogdor(bool bigHead, Sint8 speedyMode) {
 	frameState.set(1);
 	if (bigHead) {
 		sprite = SpriteInstance(&sprite_trogdor_bighead, 0, 1, 0, 0);

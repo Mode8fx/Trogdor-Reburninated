@@ -40,6 +40,9 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#if defined(ANDROID)
+#include <cmath>
+#endif
 #include <chrono>
 #include <algorithm>
 #include <vector>

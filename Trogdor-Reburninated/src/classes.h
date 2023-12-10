@@ -28,6 +28,7 @@ class Cottage {
 		bool burning;
 		bool burned;
 		Sint16 direction;
+		Cottage();
 		Cottage(Sint16, Sint16, Sint16);
 		void updateFrameState();
 };
@@ -47,6 +48,7 @@ class Knight {
 		float offset_y; // the offset relative to home
 		float moveFrameCap;
 		float offsetConst;
+		Knight();
 		Knight(Sint16, Sint16, Sint8, bool, float);
 		inline void updateCollision();
 		void updateHome(float);
@@ -77,6 +79,7 @@ class Archer {
 	public:
 		FrameState frameState;
 		SpriteInstance sprite; // facing right == on the left; facing left == on the right
+		Archer();
 		Archer(Sint16, Sint16, bool);
 		void updateFrameState();
 };
@@ -85,6 +88,7 @@ class Arrow {
 	public:
 		FrameState frameState;
 		SpriteInstance sprite;
+		Arrow();
 		Arrow(Sint16, Sint16, bool);
 		void updateFrameState(Sint8);
 		void clear();
@@ -112,6 +116,7 @@ class Trogdor {
 		Sint8 y_offset;       // used for movement
 		Sint8 moveSpeed;      // used for movement
 		Uint8 frameStateFlag; // used for movement
+		Trogdor();
 		Trogdor(bool, Sint8);
 		void updateFrameState();
 		void resetPos(bool);
