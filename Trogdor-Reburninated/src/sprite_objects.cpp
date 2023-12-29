@@ -2,6 +2,7 @@
 #include "general.h"
 #include "window.h"
 
+SDL_RWops *rw;
 SDL_Surface *temp_sprite_sheet;
 SDL_Surface *temp_sprite_single;
 #if defined(SDL1)
@@ -112,7 +113,7 @@ void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
     SDL_BlitSurface(temp_sprite_sheet, &single_srcrect, temp_sprite_single, &single_dstrect);
 }
 
-void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, Sint8 numForms, double scale, bool isMenuSprite) {
+void prepareSprite(SpriteObject *spriteObj, unsigned char sprite_data[], unsigned int sprite_len, Sint8 numFrames, Sint8 numForms, double scale, bool isMenuSprite) {
     spriteObj->spriteScale = scale;
     // Check if the surface/texture already exists
 #if !defined(SDL1)
@@ -138,13 +139,8 @@ void prepareSprite(SpriteObject *spriteObj, const char path[], Sint8 numFrames, 
         spriteObj->sub[i] = (SpriteSubObject*)malloc(numForms * sizeof(SpriteSubObject));
     }
     // Load the sprite sheet as a surface
-    temp_sprite_sheet = IMG_Load(path);
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
-    // If there was an error (e.g. missing file), crash to error screen
-    if (temp_sprite_sheet == NULL) {
-        throw(path);
-    }
-#endif
+    rw = SDL_RWFromConstMem(sprite_data, sprite_len);
+    temp_sprite_sheet = IMG_Load_RW(rw, 1);
     SDL_SetColorKey(temp_sprite_sheet, SDL_TRUE, 0xFF00FF);
     // Store the size values of the sprite sheet
     frame_w = (Sint16)(temp_sprite_sheet->w / numFrames);

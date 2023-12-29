@@ -6,6 +6,7 @@
 #include "config.h"
 #include "general.h"
 #include "input.h"
+#include "include_graphics.h"
 
 ifstream ifile;
 
@@ -495,126 +496,84 @@ void InitializeSFX() {
 }
 
 void InitializeSpritesPart1() {
-	PREPARE_SPRITE(sprite_videlectrix_logo, (rootDir + "graphics/videlectrix_logo_big.bmp").c_str(),
-		0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_videlectrix_logo, videlectrix_logo_big_bmp, videlectrix_logo_big_bmp_len, 0, 0, 1, 1, 1);
 	sprite_videlectrix_logo_ins = SpriteInstance(&sprite_videlectrix_logo, 0, 0);
 	sprite_videlectrix_logo_ins.setPos((windowWidth - (sprite_videlectrix_logo_ins.dstrect.w * screenScale)) / 2, (windowHeight - (sprite_videlectrix_logo_ins.dstrect.h * screenScale)) / 2);
-	PREPARE_SPRITE(sprite_title_screen, (rootDir + "graphics/title_screen.bmp").c_str(),
-		0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_title_screen, title_screen_bmp, title_screen_bmp_len, 0, 0, 1, 1, 1);
 	sprite_title_screen_ins = SpriteInstance(&sprite_title_screen, 0, 0);
-	PREPARE_SPRITE(sprite_trogdor_logo, (rootDir + "graphics/trogdor_logo.bmp").c_str(),
+	PREPARE_SPRITE(sprite_trogdor_logo, trogdor_logo_bmp, trogdor_logo_bmp_len,
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_trogdor_logo), 15, 1, 1, 1);
 	sprite_trogdor_logo_ins = SpriteInstance(&sprite_trogdor_logo, 0, 0);
-	PREPARE_SPRITE_BG(sprite_level_background_1, (rootDir + "graphics/backgrounds/1.bmp").c_str(),
-		0, 25);
-	PREPARE_SPRITE_BG(sprite_level_background_2, (rootDir + "graphics/backgrounds/2.bmp").c_str(),
-		0, 25);
-	PREPARE_SPRITE_BG(sprite_level_background_3, (rootDir + "graphics/backgrounds/3.bmp").c_str(),
-		0, 25);
-	PREPARE_SPRITE_BG(sprite_level_background_4, (rootDir + "graphics/backgrounds/4.bmp").c_str(),
-		0, 25);
-	PREPARE_SPRITE_BG(sprite_level_background_th, (rootDir + "graphics/backgrounds/treasure_hut.bmp").c_str(),
-		0, 25);
-	PREPARE_SPRITE(sprite_burnination_meter_full, (rootDir + "graphics/burnination_meter/full.bmp").c_str(),
+	PREPARE_SPRITE_BG(sprite_level_background_1, bg_1_bmp, bg_1_bmp_len, 0, 25);
+	PREPARE_SPRITE_BG(sprite_level_background_2, bg_2_bmp, bg_2_bmp_len, 0, 25);
+	PREPARE_SPRITE_BG(sprite_level_background_3, bg_3_bmp, bg_3_bmp_len, 0, 25);
+	PREPARE_SPRITE_BG(sprite_level_background_4, bg_4_bmp, bg_4_bmp_len, 0, 25);
+	PREPARE_SPRITE_BG(sprite_level_background_th, bg_treasure_hut_bmp, bg_treasure_hut_bmp_len, 0, 25);
+	PREPARE_SPRITE(sprite_burnination_meter_full, bm_full_bmp, bm_full_bmp_len,
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_full), 8, 1, 1, 1);
-	PREPARE_SPRITE(sprite_burnination_meter_empty, (rootDir + "graphics/burnination_meter/empty.bmp").c_str(),
+	PREPARE_SPRITE(sprite_burnination_meter_empty, bm_empty_bmp, bm_empty_bmp_len,
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burnination_meter_empty), 8, 1, 1, 1);
 	sprite_burnination_meter_empty_ins = SpriteInstance(&sprite_burnination_meter_empty, 0, 0);
-	PREPARE_SPRITE(sprite_end_of_level_flash, (rootDir + "graphics/end_of_level_flash.bmp").c_str(),
-		65, 53, 1, 1, 1);
+	PREPARE_SPRITE(sprite_end_of_level_flash, end_of_level_flash_bmp, end_of_level_flash_bmp_len, 65, 53, 1, 1, 1);
 	sprite_end_of_level_flash_ins = SpriteInstance(&sprite_end_of_level_flash, 0, 0);
-	PREPARE_SPRITE(sprite_death_message, (rootDir + "graphics/death_message.bmp").c_str(),
+	PREPARE_SPRITE(sprite_death_message, death_message_bmp, death_message_bmp_len,
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_death_message), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_death_message), 2, 5, 1);
-	PREPARE_SPRITE(sprite_burninate_text, (rootDir + "graphics/burninate_text.bmp").c_str(),
+	PREPARE_SPRITE(sprite_burninate_text, burninate_text_bmp, burninate_text_bmp_len,
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_text), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_text), 1, 1, 1);
-	PREPARE_SPRITE(sprite_burninate_fire, (rootDir + "graphics/burninate_message_fire.bmp").c_str(),
+	PREPARE_SPRITE(sprite_burninate_fire, burninate_message_fire_bmp, burninate_message_fire_bmp_len,
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_fire), 1, 12, 1);
-	PREPARE_SPRITE(sprite_level_beaten_trogdor, (rootDir + "graphics/level_beaten_trogdor_scaled.bmp").c_str(),
-		-5, 41, 1, 1, 1);
-	PREPARE_SPRITE(sprite_level_beaten_smoke, (rootDir + "graphics/level_beaten_smoke.bmp").c_str(),
-		100, 100, 8, 4, 0.6667);
-	PREPARE_SPRITE(sprite_game_over_trogdor, (rootDir + "graphics/game_over_trogdor.bmp").c_str(),
-		-13, 75, 1, 1, 1);
-	PREPARE_SPRITE(sprite_overlay_basement_top, (rootDir + "graphics/overlays/basement_top.bmp").c_str(),
-		0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_level_beaten_trogdor, level_beaten_trogdor_scaled_bmp, level_beaten_trogdor_scaled_bmp_len, -5, 41, 1, 1, 1);
+	PREPARE_SPRITE(sprite_level_beaten_smoke, level_beaten_smoke_bmp, level_beaten_smoke_bmp_len, 100, 100, 8, 4, 0.6667);
+	PREPARE_SPRITE(sprite_game_over_trogdor, game_over_trogdor_bmp, game_over_trogdor_bmp_len, -13, 75, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_basement_top, basement_top_bmp, basement_top_bmp_len, 0, 0, 1, 1, 1);
 	sprite_overlay_basement_top_ins = SpriteInstance(&sprite_overlay_basement_top, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_basement_bottom, (rootDir + "graphics/overlays/basement_bottom.bmp").c_str(),
-		0, 210, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_basement_bottom, basement_bottom_bmp, basement_bottom_bmp_len, 0, 210, 1, 1, 1);
 	sprite_overlay_basement_bottom_ins = SpriteInstance(&sprite_overlay_basement_bottom, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_basement_left, (rootDir + "graphics/overlays/basement_left.bmp").c_str(),
-		0, 30, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_basement_left, basement_left_bmp, basement_left_bmp_len, 0, 30, 1, 1, 1);
 	sprite_overlay_basement_left_ins = SpriteInstance(&sprite_overlay_basement_left, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_basement_right, (rootDir + "graphics/overlays/basement_right.bmp").c_str(),
-		285, 30, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_basement_right, basement_right_bmp, basement_right_bmp_len, 285, 30, 1, 1, 1);
 	sprite_overlay_basement_right_ins = SpriteInstance(&sprite_overlay_basement_right, 0, 0);
 	divider_level_beaten_rect = { 0, 25, gameWidth, 2 };
 }
 
 void InitializeSpritesPart2() {
-	PREPARE_SPRITE(sprite_trogdor, (rootDir + "graphics/trogdor.bmp").c_str(),
-		0, 0, 4, 2, 1);
-	PREPARE_SPRITE(sprite_trogdor_bighead, (rootDir + "graphics/trogdor_bighead.bmp").c_str(),
-		0, 0, 4, 2, 1);
-	PREPARE_SPRITE(sprite_cottage, (rootDir + "graphics/cottage.bmp").c_str(),
-		0, 0, 2, 4, 1);
-	PREPARE_SPRITE(sprite_cottage_fire, (rootDir + "graphics/cottage_fire.bmp").c_str(),
-		0, 0, 4, 2, 1);
-	PREPARE_SPRITE(sprite_peasantometer_icon, (rootDir + "graphics/peasantometer.bmp").c_str(),
-		0, 3, 2, 1, 1);
+	PREPARE_SPRITE(sprite_trogdor, trogdor_bmp, trogdor_bmp_len, 0, 0, 4, 2, 1);
+	PREPARE_SPRITE(sprite_trogdor_bighead, trogdor_bighead_bmp, trogdor_bighead_bmp_len, 0, 0, 4, 2, 1);
+	PREPARE_SPRITE(sprite_cottage, cottage_bmp, cottage_bmp_len, 0, 0, 2, 4, 1);
+	PREPARE_SPRITE(sprite_cottage_fire, cottage_fire_bmp, cottage_fire_bmp_len, 0, 0, 4, 2, 1);
+	PREPARE_SPRITE(sprite_peasantometer_icon, peasantometer_bmp, peasantometer_bmp_len, 0, 3, 2, 1, 1);
 	sprite_peasantometer_icon_init_x = (Uint8)(gameWidth * 66 / gameWidth);
 	sprite_peasantometer_icon_step = (int)(sprite_peasantometer_icon.dstrect.w * 1.5);
-	PREPARE_SPRITE(sprite_archer, (rootDir + "graphics/archer.bmp").c_str(),
-		0, 0, 2, 2, 1);
-	PREPARE_SPRITE(sprite_arrow, (rootDir + "graphics/arrow.bmp").c_str(),
-		0, 0, 1, 2, 1);
-	PREPARE_SPRITE(sprite_trogdor_fire, (rootDir + "graphics/trogdor_fire.bmp").c_str(),
-		0, 0, 4, 2, 1);
-	PREPARE_SPRITE(sprite_trogdor_dead, (rootDir + "graphics/trogdor_dead.bmp").c_str(),
-		0, 0, 2, 2, 1);
-	PREPARE_SPRITE(sprite_knight, (rootDir + "graphics/knight.bmp").c_str(),
-		0, 0, 6, 2, 1);
-	PREPARE_SPRITE(sprite_peasant, (rootDir + "graphics/peasant.bmp").c_str(),
-		0, 0, 2, 4, 1);
+	PREPARE_SPRITE(sprite_archer, archer_bmp, archer_bmp_len, 0, 0, 2, 2, 1);
+	PREPARE_SPRITE(sprite_arrow, arrow_bmp, arrow_bmp_len, 0, 0, 1, 2, 1);
+	PREPARE_SPRITE(sprite_trogdor_fire, trogdor_fire_bmp, trogdor_fire_bmp_len, 0, 0, 4, 2, 1);
+	PREPARE_SPRITE(sprite_trogdor_dead, trogdor_dead_bmp, trogdor_dead_bmp_len, 0, 0, 2, 2, 1);
+	PREPARE_SPRITE(sprite_knight, knight_bmp, knight_bmp_len, 0, 0, 6, 2, 1);
+	PREPARE_SPRITE(sprite_peasant, peasant_bmp, peasant_bmp_len, 0, 0, 2, 4, 1);
 	if (gameHiResMult < 1.6) {
-		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor.bmp").c_str(),
+		PREPARE_SPRITE(sprite_end_of_level_trogdor, end_of_level_trogdor_bmp, end_of_level_trogdor_bmp_len,
 			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 2, 2);
 	} else { // TODO: this could be polished a bit further for (1.6 <= gameHiResMult < 2)
-		PREPARE_SPRITE(sprite_end_of_level_trogdor, (rootDir + "graphics/end_of_level_trogdor.bmp").c_str(),
+		PREPARE_SPRITE(sprite_end_of_level_trogdor, end_of_level_trogdor_bmp, end_of_level_trogdor_bmp_len,
 			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 2, 1.5);
 	}
-	PREPARE_SPRITE(sprite_loot, (rootDir + "graphics/loot.bmp").c_str(),
-		0, 0, 1, 1, 1);
-	PREPARE_SPRITE(sprite_trogdor_flexing, (rootDir + "graphics/trogdor_flexing.bmp").c_str(),
-		0, 0, 4, 2, 1);
-	PREPARE_SPRITE(sprite_trogdor_ending, (rootDir + "graphics/trogdor_ending.bmp").c_str(),
-		0, 0, 1, 2, 1);
-	PREPARE_SPRITE(sprite_heart, (rootDir + "graphics/heart.bmp").c_str(),
-		0, 0, 5, 1, 1);
-	PREPARE_SPRITE(sprite_knight_funnyjoke, (rootDir + "graphics/knight_funnyjoke.bmp").c_str(),
-		0, 0, 3, 1, 1);
-	PREPARE_SPRITE(sprite_arrow_funnyjoke, (rootDir + "graphics/arrow_funnyjoke.bmp").c_str(),
-		0, 0, 4, 1, 1);
-	PREPARE_SPRITE(sprite_kerrek, (rootDir + "graphics/kerrek.bmp").c_str(),
-		0, 0, 9, 1, 1);
-	PREPARE_SPRITE(sprite_kerrek_smoked, (rootDir + "graphics/kerrek_smoked.bmp").c_str(),
-		0, 0, 5, 1, 1);
-	PREPARE_SPRITE(sprite_strong_bad, (rootDir + "graphics/strong_bad.bmp").c_str(),
-		0, 0, 2, 2, 1);
-	PREPARE_SPRITE(sprite_strong_bad_ending, (rootDir + "graphics/strong_bad_ending.bmp").c_str(),
-		0, 0, 1, 1, 1);
-	PREPARE_SPRITE(sprite_cursor, (rootDir + "graphics/menu_cursor.bmp").c_str(),
-		0, 0, 1, 1, 1);
-	PREPARE_SPRITE_MENU(sprite_menu_cursor, (rootDir + "graphics/menu_cursor.bmp").c_str(),
-		0, 0, 1, 1, 1);
-	PREPARE_SPRITE_MENU(sprite_menu_background, (rootDir + "graphics/options_menu.bmp").c_str(),
-		0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_loot, loot_bmp, loot_bmp_len, 0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_trogdor_flexing, trogdor_flexing_bmp, trogdor_flexing_bmp_len, 0, 0, 4, 2, 1);
+	PREPARE_SPRITE(sprite_trogdor_ending, trogdor_ending_bmp, trogdor_ending_bmp_len, 0, 0, 1, 2, 1);
+	PREPARE_SPRITE(sprite_heart, heart_bmp, heart_bmp_len, 0, 0, 5, 1, 1);
+	PREPARE_SPRITE(sprite_knight_funnyjoke, knight_funnyjoke_bmp, knight_funnyjoke_bmp_len, 0, 0, 3, 1, 1);
+	PREPARE_SPRITE(sprite_arrow_funnyjoke, arrow_funnyjoke_bmp, arrow_funnyjoke_bmp_len, 0, 0, 4, 1, 1);
+	PREPARE_SPRITE(sprite_kerrek, kerrek_bmp, kerrek_bmp_len, 0, 0, 9, 1, 1);
+	PREPARE_SPRITE(sprite_kerrek_smoked, kerrek_smoked_bmp, kerrek_smoked_bmp_len, 0, 0, 5, 1, 1);
+	PREPARE_SPRITE(sprite_strong_bad, strong_bad_bmp, strong_bad_bmp_len, 0, 0, 2, 2, 1);
+	PREPARE_SPRITE(sprite_strong_bad_ending, strong_bad_ending_bmp, strong_bad_ending_bmp_len, 0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_cursor, menu_cursor_bmp, menu_cursor_bmp_len, 0, 0, 1, 1, 1);
+	PREPARE_SPRITE_MENU(sprite_menu_cursor, menu_cursor_bmp, menu_cursor_bmp_len, 0, 0, 1, 1, 1);
+	PREPARE_SPRITE_MENU(sprite_menu_background, options_menu_bmp, options_menu_bmp_len, 0, 0, 1, 1, 1);
 	sprite_menu_background_ins = SpriteInstance(&sprite_menu_background, 0, 0);
-	//PREPARE_SPRITE(sprite_game_over_banner, (rootDir + "graphics/game_over_banner.bmp").c_str(),
-	//	0, 0, 1, 1, 1);
-	PREPARE_SPRITE(sprite_game_over_text, (rootDir + "graphics/game_over_text.bmp").c_str(),
-		0, 0, 1, 5, 1);
-	PREPARE_SPRITE(sprite_game_over_jonathan_howe, (rootDir + "graphics/jonathan_howe.bmp").c_str(),
-		0, 0, 1, 6, 1);
+	// PREPARE_SPRITE(sprite_game_over_banner, game_over_banner_bmp, game_over_banner_bmp_len, 0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_game_over_text, game_over_text_bmp, game_over_text_bmp_len, 0, 0, 1, 5, 1);
+	PREPARE_SPRITE(sprite_game_over_jonathan_howe, jonathan_howe_bmp, jonathan_howe_bmp_len, 0, 0, 1, 6, 1);
 }
 
 void exceptMissingFile(const char *path) {

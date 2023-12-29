@@ -243,6 +243,7 @@
     <ClInclude Include="src\cutscenes.h" />
     <ClInclude Include="src\general.h" />
     <ClInclude Include="src\include.h" />
+    <ClInclude Include="src\include_graphics.h" />
     <ClInclude Include="src\input.h" />
     <ClInclude Include="src\level_data.h" />
     <ClInclude Include="src\main.h" />
