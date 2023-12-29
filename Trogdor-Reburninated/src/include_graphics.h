@@ -1,3 +1,6 @@
+#ifndef INCLUDE_GRAPHICS_H
+#define INCLUDE_GRAPHICS_H
+
 #include "graphics_h/backgrounds/bg_1.h"
 #include "graphics_h/backgrounds/bg_2.h"
 #include "graphics_h/backgrounds/bg_3.h"
@@ -46,3 +49,5 @@
 #include "graphics_h/trogdor_flexing.h"
 #include "graphics_h/trogdor_logo.h"
 #include "graphics_h/videlectrix_logo_big.h"
+
+#endif

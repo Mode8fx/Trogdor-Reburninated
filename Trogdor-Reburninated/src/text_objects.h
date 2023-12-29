@@ -56,7 +56,7 @@ extern void setTextCharPosX(TextCharObject *, int);
 extern void setTextCharPosY(TextCharObject *, int);
 extern void destroyTextObjectTexture(TextCharObject);
 extern int getDesiredFontSize(FontObject *);
-extern void setFont(FontObject *, const char *, int, double, int, SDL_Color, bool);
+extern void setFont(FontObject *, unsigned char[], unsigned int, int, double, int, SDL_Color, bool);
 extern void initializeFont_numbers(FontObject *);
 
 // This should be a macro since pos_x and pos_y may (and likely will) change before they're needed

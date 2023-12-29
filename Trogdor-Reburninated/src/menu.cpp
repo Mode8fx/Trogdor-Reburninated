@@ -2,6 +2,7 @@
 #include "input.h"
 #include "general.h"
 #include "window.h"
+#include "include_fonts.h"
 
 Sint8 currOnscreenIndex;
 Sint8 counter;
@@ -666,9 +667,9 @@ void InitializeMenus() {
 	} else {
 		menuFont = &font_serif_white_8;
 	}
-	setFont(menuFont, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_white, true);
+	setFont(menuFont, serif_v01_ttf, serif_v01_ttf_len, 8, 5, TTF_STYLE_NORMAL, color_white, true);
 	menuFont_frozen = &font_serif_gray_8;
-	setFont(&font_serif_gray_8, "fonts/serif_v01.ttf", 8, 5, TTF_STYLE_NORMAL, color_gray, true);
+	setFont(&font_serif_gray_8, serif_v01_ttf, serif_v01_ttf_len, 8, 5, TTF_STYLE_NORMAL, color_gray, true);
 
 	/* Options Menu */
 	menu_main.prepareMenu(MENU_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 168 + (8 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
