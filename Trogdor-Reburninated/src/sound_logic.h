@@ -61,8 +61,8 @@ struct SoundEffect {
 	Uint8 type = 0;
 	bool isStatic = false;
 	const char *path;
-	unsigned char *data;
-	unsigned int len;
+	//unsigned char *data;
+	//unsigned int len;
 #if defined(PSP)
 	OSL_SOUND *chunk;
 #elif defined(XBOX)
