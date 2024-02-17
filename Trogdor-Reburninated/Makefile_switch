@@ -39,9 +39,9 @@ include $(DEVKITPRO)/libnx/switch_rules
 #---------------------------------------------------------------------------------
 TARGET		:=	$(notdir $(CURDIR))
 BUILD		:=	build_switch
-SOURCES		:=	src
+SOURCES		:=	src src/fonts_h src/graphics_h src/graphics_h/backgrounds src/graphics_h/overlays
 DATA		:=	data
-INCLUDES	:=	include
+INCLUDES	:=	src src/fonts_h src/graphics_h src/graphics_h/backgrounds src/graphics_h/overlays
 # ROMFS		:=	romfs
 
 APP_TITLE   := Trogdor: Reburninated

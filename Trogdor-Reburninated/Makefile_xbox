@@ -1,18 +1,8 @@
-XBE_TITLE = Trogdor:\ Reburninated
+XBE_TITLE = Trogdor\ Reburninated
 GEN_XISO = $(XBE_TITLE).iso
-SRCS =	$(CURDIR)/src/main.cpp \
-		$(CURDIR)/src/classes.cpp \
-		$(CURDIR)/src/config.cpp \
-		$(CURDIR)/src/cutscenes.cpp \
-		$(CURDIR)/src/general.cpp \
-		$(CURDIR)/src/input.cpp \
-		$(CURDIR)/src/media_objects_init.cpp \
-		$(CURDIR)/src/menu.cpp \
-		$(CURDIR)/src/on_open_and_close.cpp \
-		$(CURDIR)/src/sound_logic.cpp \
-		$(CURDIR)/src/sprite_objects.cpp \
-		$(CURDIR)/src/text_objects.cpp \
-		$(CURDIR)/src/window.cpp
+SRC_DIR = src
+EXCLUDED=$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(wildcard $(SRC_DIR)/OSLibAudio/*)
+SRCS = $(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/**/*.cpp), $(wildcard $(SRC_DIR)/**/*.c))
 
 NXDK_DIR ?= $(CURDIR)/../..
 NXDK_SDL = y
@@ -22,8 +12,3 @@ NXDK_CXX = y
 CFLAGS += -O2 -DXBOX
 
 include $(NXDK_DIR)/Makefile
-
-TARGET += $(OUTPUT_DIR)/fonts/Commodore\ Pixelized\ v1.2.ttf
-$(GEN_XISO): $(OUTPUT_DIR)/fonts/Commodore\ Pixelized\ v1.2.ttf
-$(OUTPUT_DIR)/fonts/Commodore\ Pixelized\ v1.2.ttf: $(CURDIR)/fonts/Commodore\ Pixelized\ v1.2.ttf $(OUTPUT_DIR)
-	$(VE)cp '$<' '$@'
