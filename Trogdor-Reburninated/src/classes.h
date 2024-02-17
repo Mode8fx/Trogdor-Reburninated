@@ -54,6 +54,7 @@ class Knight {
 		void updateHome(float);
 		void updateFrameState();
 		void move(float);
+		void move_alt(float, float, float);
 };
 
 class Peasant {
@@ -173,6 +174,7 @@ class GameManager {
 		Sint8 knightSpeedSetting;               // knight speed setting
 		float knightSpeed;                      // knight speed
 		float knightIncrement;                  // knight movement speed
+		float knightIncrement_slower;           // knight movement speed (slower)
 		Sint8 livesIntervalSetting;             // setting for lives interval
 		Uint16 extraMansBreak;                  // # of points for an extra life
 		Uint16 extraMansCounter;                // how many extra lives have been earned so far + 1

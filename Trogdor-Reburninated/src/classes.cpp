@@ -25,6 +25,10 @@ constexpr auto LEFT_BOUND_KNIGHT = 7; // LEFT_BOUND  - (21 / 2)
 constexpr auto RIGHT_BOUND_KNIGHT = 223; // RIGHT_BOUND - (21 / 2)
 constexpr auto UPPER_BOUND_KNIGHT = 18; // UPPER_BOUND - (24 / 2)
 constexpr auto LOWER_BOUND_KNIGHT = 143; // LOWER_BOUND - (24 / 2)
+constexpr auto LEFT_BOUND_KNIGHT_ALT = 11; // 0 + (21 / 2)
+constexpr auto RIGHT_BOUND_KNIGHT_ALT = 240; // 250 - (21 / 2)
+constexpr auto UPPER_BOUND_KNIGHT_ALT = 37; // 25 + (24 / 2)
+constexpr auto LOWER_BOUND_KNIGHT_ALT = 168; // 180 - (24 / 2)
 constexpr auto ARCHER_Y_UPPER = 20; //   30 - (20 / 2)
 constexpr auto ARCHER_Y_LOWER = 145; //  155 - (20 / 2)
 constexpr auto ARCHER_LEFT_X = -1; //  179 / 5000 * 250 - (20 / 2)
@@ -201,6 +205,68 @@ void Knight::move(float knightSpeed) {
 
 	sprite.setPosX(home_x + offset_x - half_src_w);
 	sprite.setPosY(home_y + offset_y - half_src_h);
+	updateCollision();
+	move_frameState.increment();
+}
+
+void Knight::move_alt(float knightIncrement, float knightIncrement_slower, float knightSpeed) {
+	offset_y = 0;
+
+	if (move_frameState.subFrame > moveFrameCap) {
+		move_frameState.subtract(moveFrameCap);
+	}
+	if (move_frameState.subFrame * knightSpeed <= 30) {
+		offset_x = knightIncrement * 32 / 15;
+		offset_y = -knightIncrement * 32 / 15;
+	} else {
+		offset_x = -knightIncrement_slower * 32 / 15;
+	}
+	if (!sprite.facingRight) {
+		offset_x *= -1;
+	}
+	switch (direction) {
+		case 0:
+			offset_y *= -1;
+			float_i = offset_x;
+			offset_x = offset_y;
+			offset_y = float_i;
+			break;
+		case 1:
+			offset_x *= -1;
+			offset_y *= -1;
+			break;
+		case 2:
+			offset_x *= -1;
+			float_i = offset_x;
+			offset_x = offset_y;
+			offset_y = float_i;
+			break;
+		default:
+			break;
+	};
+
+	home_x += offset_x;
+	home_y += offset_y;
+
+	if (home_x < LEFT_BOUND_KNIGHT_ALT) {
+		direction = rand() % 4;
+		home_x = LEFT_BOUND_KNIGHT_ALT;
+	}
+	else if (home_x > RIGHT_BOUND_KNIGHT_ALT) {
+		direction = rand() % 4;
+		home_x = RIGHT_BOUND_KNIGHT_ALT;
+	}
+	if (home_y < UPPER_BOUND_KNIGHT_ALT) {
+		direction = rand() % 4;
+		home_y = UPPER_BOUND_KNIGHT_ALT;
+	}
+	else if (home_y > LOWER_BOUND_KNIGHT_ALT) {
+		direction = rand() % 4;
+		home_y = LOWER_BOUND_KNIGHT_ALT;
+	}
+
+	sprite.setPosX(home_x - half_src_w);
+	sprite.setPosY(home_y - half_src_h);
 	updateCollision();
 	move_frameState.increment();
 }
@@ -711,6 +777,7 @@ GameManager::GameManager(MenuManager mm) {
 	player = Trogdor(bigHeadMode, speedyMode);
 	player.sprite.facingRight = true;
 	knightIncrement = knightSpeed * frameRateMult;
+	knightIncrement_slower = knightIncrement * 0.8;
 	switch (MENU_LIVES_INTERVAL->index) {
 		case 0:
 			extraMansBreak = 300;
@@ -1260,16 +1327,27 @@ void GameManager::updateArchersAndArrows() {
 }
 
 void GameManager::updateKnightHome() {
-	for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
-		knightArray[i].updateHome(knightIncrement);
+	if (true) {
+		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
+			knightArray[i].updateHome(knightIncrement);
+		}
 	}
 }
 
 void GameManager::updateKnightOffsetAndMove() {
-	for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
-		if (knightArray[i].moving) {
-			knightArray[i].updateFrameState();
-			knightArray[i].move(knightSpeed);
+	if (true) {
+		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
+			if (knightArray[i].moving) {
+				knightArray[i].updateFrameState();
+				knightArray[i].move(knightSpeed);
+			}
+		}
+	} else {
+		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
+			if (knightArray[i].moving) {
+				knightArray[i].updateFrameState();
+				knightArray[i].move_alt(knightIncrement, knightIncrement_slower, knightSpeed);
+			}
 		}
 	}
 }
