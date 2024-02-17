@@ -277,7 +277,7 @@
     <ClCompile Include="src\window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="resource1.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="src\classes.h" />
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\cutscenes.h" />
@@ -353,8 +353,8 @@
     <ResourceCompile Include="Trogdor-Reburninated.rc" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="release-resources\logo_icon_pc_64.ico" />
-    <Image Include="release-resources\logo_icon_pc_64.png" />
+    <Image Include="release-resources\logo_icon_pc_256.ico" />
+    <Image Include="release-resources\logo_icon_pc_256.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
