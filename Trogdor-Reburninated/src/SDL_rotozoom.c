@@ -27,6 +27,15 @@ Andreas Schiffler -- aschiffler at ferzkopp dot net
 
 */
 
+/*
+
+In accordance with the above disclaimer, one modification has been made:
+All code is wrapped in an #if defined(SDL1) block.
+
+*/
+
+#if defined(SDL1)
+
 #ifdef WIN32
 #include <windows.h>
 #endif
@@ -1715,3 +1724,5 @@ exitShrinkSurface:
 	*/
 	return (rz_dst);
 }
+
+#endif

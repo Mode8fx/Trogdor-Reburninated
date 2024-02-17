@@ -27,6 +27,15 @@ Andreas Schiffler -- aschiffler at ferzkopp dot net
 
 */
 
+/*
+
+In accordance with the above disclaimer, one modification has been made:
+All code is wrapped in an #if defined(SDL1) block.
+
+*/
+
+#if defined(SDL1)
+
 #ifndef _SDL_rotozoom_h
 #define _SDL_rotozoom_h
 
@@ -121,3 +130,5 @@ extern "C" {
 #endif
 
 #endif				/* _SDL_rotozoom_h */
+
+#endif

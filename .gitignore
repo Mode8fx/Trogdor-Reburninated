@@ -432,3 +432,4 @@ Makefile
 *.exe
 *.lib
 Trogdor-Reburninated.zip
+out/

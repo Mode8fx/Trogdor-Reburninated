@@ -27,50 +27,50 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
+    <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{ab0b878c-e7cc-4cb6-8b0d-43909aea182c}</ProjectGuid>
-    <RootNamespace>Trogdor-Reburninated</RootNamespace>
+    <ProjectGuid>{b369d965-d1f2-460d-acc7-af789b2353be}</ProjectGuid>
+    <RootNamespace>TrogdorReburninated</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release (SDL1)|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release (SDL1)|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -98,35 +98,21 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\SDL2\SDL2\lib\x86;$(ProjectDir)\SDL2\SDL2_image\lib\x86;$(ProjectDir)\SDL2\SDL2_mixer\lib\x86;$(ProjectDir)\SDL2\SDL2_ttf\lib\x86;$(IncludePath);$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\SDL2\SDL2\lib\x86;$(ProjectDir)\SDL2\SDL2_image\lib\x86;$(ProjectDir)\SDL2\SDL2_mixer\lib\x86;$(ProjectDir)\SDL2\SDL2_ttf\lib\x86;$(IncludePath);$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release (SDL1)|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)\SDL1\SDL\include;$(ProjectDir)\SDL1\SDL_image\include;$(ProjectDir)\SDL1\SDL_mixer\include;$(ProjectDir)\SDL1\SDL_ttf\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\SDL1\SDL\lib\x86;$(ProjectDir)\SDL1\SDL_image\lib\x86;$(ProjectDir)\SDL1\SDL_mixer\lib\x86;$(ProjectDir)\SDL1\SDL_ttf\lib\x86;$(IncludePath);$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)/SDL2/SDL2/include;$(ProjectDir)/SDL2/SDL2_image/include;$(ProjectDir)/SDL2/SDL2_mixer/include;$(ProjectDir)/SDL2/SDL2_ttf/include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)/SDL2/SDL2/lib/x64;$(ProjectDir)/SDL2/SDL2_image/lib/x64;$(ProjectDir)/SDL2/SDL2_mixer/lib/x64;$(ProjectDir)/SDL2/SDL2_ttf/lib/x64;$(IncludePath);$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2\include;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2_image\include;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2_mixer\include;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2_ttf\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2\lib\x86;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2_image\lib\x86;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2_mixer\lib\x86;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2_ttf\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)/SDL2/SDL2/include;$(ProjectDir)/SDL2/SDL2_image/include;$(ProjectDir)/SDL2/SDL2_mixer/include;$(ProjectDir)/SDL2/SDL2_ttf/include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)/SDL2/SDL2/lib/x64;$(ProjectDir)/SDL2/SDL2_image/lib/x64;$(ProjectDir)/SDL2/SDL2_mixer/lib/x64;$(ProjectDir)/SDL2/SDL2_ttf/lib/x64;$(IncludePath);$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2\include;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2_image\include;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2_mixer\include;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2_ttf\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2\lib\x64;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2_image\lib\x64;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2_mixer\lib\x64;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL2\SDL2_ttf\lib\x64;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release (SDL1)|Win32'">
+    <IncludePath>D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL\include;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL_image\include;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL_mixer\include;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL_ttf\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL\lib\x86;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL_image\lib\x86;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL_mixer\lib\x86;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL_ttf\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release (SDL1)|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)\SDL1\SDL\include;$(ProjectDir)\SDL1\SDL_image\include;$(ProjectDir)\SDL1\SDL_mixer\include;$(ProjectDir)\SDL1\SDL_ttf\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)\SDL1\SDL\lib\x86;$(ProjectDir)\SDL1\SDL_image\lib\x86;$(ProjectDir)\SDL1\SDL_mixer\lib\x86;$(ProjectDir)\SDL1\SDL_ttf\lib\x86;$(IncludePath);$(LibraryPath)</LibraryPath>
+    <IncludePath>D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL\include;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL_image\include;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL_mixer\include;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL_ttf\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL\lib\x64;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL_image\lib\x64;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL_mixer\lib\x64;D:\GitHub\Trogdor-Reburninated\Trogdor-Reburninated\SDL1\SDL_ttf\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -134,14 +120,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -152,15 +134,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release (SDL1)|Win32'">
@@ -169,17 +149,16 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;SDL1;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\SDL1\SDL\include;$(ProjectDir)\SDL1\SDL_image\include;$(ProjectDir)\SDL1\SDL_mixer\include;$(ProjectDir)\SDL1\SDL_ttf\include</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <AdditionalOptions>/DSDL1 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL.lib;SDLmain.lib;SDL_ttf.lib;SDL_image.lib;SDL_mixer.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDLmain.lib;SDL.lib;SDL_image.lib;SDL_mixer.lib;SDL_ttf.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -188,14 +167,10 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -206,15 +181,13 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2main.lib;SDL2.lib;SDL2_image.lib;SDL2_mixer.lib;SDL2_ttf.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release (SDL1)|x64'">
@@ -225,98 +198,16 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)\SDL2\SDL2\include;$(ProjectDir)\SDL2\SDL2_image\include;$(ProjectDir)\SDL2\SDL2_mixer\include;$(ProjectDir)\SDL2\SDL2_ttf\include</AdditionalIncludeDirectories>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/DSDL1 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;SDL2_mixer.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDLmain.lib;SDL.lib;SDL_image.lib;SDL_mixer.lib;SDL_ttf.lib;legacy_stdio_definitions.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="src\classes.h" />
-    <ClInclude Include="src\config.h" />
-    <ClInclude Include="src\cutscenes.h" />
-    <ClInclude Include="src\fonts_h\29_NOKIA_5110_FontSet.h" />
-    <ClInclude Include="src\fonts_h\54_serif_v01.h" />
-    <ClInclude Include="src\fonts_h\Commodore_Pixelized_v1_2.h" />
-    <ClInclude Include="src\fonts_h\serif_v01.h" />
-    <ClInclude Include="src\general.h" />
-    <ClInclude Include="src\graphics_h\archer.h" />
-    <ClInclude Include="src\graphics_h\arrow.h" />
-    <ClInclude Include="src\graphics_h\arrow_funnyjoke.h" />
-    <ClInclude Include="src\graphics_h\backgrounds\bg_1.h" />
-    <ClInclude Include="src\graphics_h\backgrounds\bg_2.h" />
-    <ClInclude Include="src\graphics_h\backgrounds\bg_3.h" />
-    <ClInclude Include="src\graphics_h\backgrounds\bg_4.h" />
-    <ClInclude Include="src\graphics_h\backgrounds\bg_treasure_hut.h" />
-    <ClInclude Include="src\graphics_h\bm_empty.h" />
-    <ClInclude Include="src\graphics_h\bm_full.h" />
-    <ClInclude Include="src\graphics_h\burninate_message_fire.h" />
-    <ClInclude Include="src\graphics_h\burninate_text.h" />
-    <ClInclude Include="src\graphics_h\cottage.h" />
-    <ClInclude Include="src\graphics_h\cottage_fire.h" />
-    <ClInclude Include="src\graphics_h\death_message.h" />
-    <ClInclude Include="src\graphics_h\end_of_level_flash.h" />
-    <ClInclude Include="src\graphics_h\end_of_level_trogdor.h" />
-    <ClInclude Include="src\graphics_h\game_over_banner.h" />
-    <ClInclude Include="src\graphics_h\game_over_text.h" />
-    <ClInclude Include="src\graphics_h\game_over_trogdor.h" />
-    <ClInclude Include="src\graphics_h\heart.h" />
-    <ClInclude Include="src\graphics_h\jonathan_howe.h" />
-    <ClInclude Include="src\graphics_h\kerrek.h" />
-    <ClInclude Include="src\graphics_h\kerrek_smoked.h" />
-    <ClInclude Include="src\graphics_h\knight.h" />
-    <ClInclude Include="src\graphics_h\knight_funnyjoke.h" />
-    <ClInclude Include="src\graphics_h\level_beaten_smoke.h" />
-    <ClInclude Include="src\graphics_h\level_beaten_trogdor_scaled.h" />
-    <ClInclude Include="src\graphics_h\loot.h" />
-    <ClInclude Include="src\graphics_h\menu_cursor.h" />
-    <ClInclude Include="src\graphics_h\options_menu.h" />
-    <ClInclude Include="src\graphics_h\overlays\basement_bottom.h" />
-    <ClInclude Include="src\graphics_h\overlays\basement_left.h" />
-    <ClInclude Include="src\graphics_h\overlays\basement_right.h" />
-    <ClInclude Include="src\graphics_h\overlays\basement_top.h" />
-    <ClInclude Include="src\graphics_h\peasant.h" />
-    <ClInclude Include="src\graphics_h\peasantometer.h" />
-    <ClInclude Include="src\graphics_h\strong_bad.h" />
-    <ClInclude Include="src\graphics_h\strong_bad_ending.h" />
-    <ClInclude Include="src\graphics_h\title_screen.h" />
-    <ClInclude Include="src\graphics_h\trogdor.h" />
-    <ClInclude Include="src\graphics_h\trogdor_bighead.h" />
-    <ClInclude Include="src\graphics_h\trogdor_dead.h" />
-    <ClInclude Include="src\graphics_h\trogdor_ending.h" />
-    <ClInclude Include="src\graphics_h\trogdor_fire.h" />
-    <ClInclude Include="src\graphics_h\trogdor_flexing.h" />
-    <ClInclude Include="src\graphics_h\trogdor_logo.h" />
-    <ClInclude Include="src\graphics_h\videlectrix_logo_big.h" />
-    <ClInclude Include="src\include.h" />
-    <ClInclude Include="src\include_fonts.h" />
-    <ClInclude Include="src\include_graphics.h" />
-    <ClInclude Include="src\input.h" />
-    <ClInclude Include="src\level_data.h" />
-    <ClInclude Include="src\main.h" />
-    <ClInclude Include="src\media_objects_init.h" />
-    <ClInclude Include="src\menu.h" />
-    <ClInclude Include="src\on_open_and_close.h" />
-    <ClInclude Include="src\sound_logic.h" />
-    <ClInclude Include="src\sprite_objects.h" />
-    <ClInclude Include="src\text_objects.h" />
-    <ClInclude Include="src\window.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="Trogdor-Reburninated.rc" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="release-resources\logo_icon_pc_64.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="cpp.hint" />
-  </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\classes.cpp" />
     <ClCompile Include="src\config.cpp" />
@@ -379,10 +270,164 @@
     <ClCompile Include="src\media_objects_init.cpp" />
     <ClCompile Include="src\menu.cpp" />
     <ClCompile Include="src\on_open_and_close.cpp" />
+    <ClCompile Include="src\SDL_rotozoom.c" />
+    <ClCompile Include="src\sfx_h\burninate.cpp" />
+    <ClCompile Include="src\sfx_h\burn_hut.cpp" />
+    <ClCompile Include="src\sfx_h\cutscene.cpp" />
+    <ClCompile Include="src\sfx_h\death.cpp" />
+    <ClCompile Include="src\sfx_h\gameover.cpp" />
+    <ClCompile Include="src\sfx_h\kick.cpp" />
+    <ClCompile Include="src\sfx_h\sbdooj_short.cpp" />
+    <ClCompile Include="src\sfx_h\soundboard_itsover.cpp" />
+    <ClCompile Include="src\sfx_h\speedincreased.cpp" />
+    <ClCompile Include="src\sfx_h\squish.cpp" />
+    <ClCompile Include="src\sfx_h\trogador.cpp" />
+    <ClCompile Include="src\sfx_h\trog_arrow.cpp" />
+    <ClCompile Include="src\sfx_h\trog_goldget.cpp" />
+    <ClCompile Include="src\sfx_h\trog_peasantscream.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sb1.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sb2.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sb3.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sb4.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sb5.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sb6.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sb7.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbarch.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbarchend.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbbest.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbdooj.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbgameover.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbkerrek.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sblevelbeat.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbscore.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbsecret.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbsquish1.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbsquish2.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbwin.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbwin2.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sbworst.cpp" />
+    <ClCompile Include="src\sfx_h\trog_sfx2.cpp" />
     <ClCompile Include="src\sound_logic.cpp" />
     <ClCompile Include="src\sprite_objects.cpp" />
     <ClCompile Include="src\text_objects.cpp" />
     <ClCompile Include="src\window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="resource1.h" />
+    <ClInclude Include="src\classes.h" />
+    <ClInclude Include="src\config.h" />
+    <ClInclude Include="src\cutscenes.h" />
+    <ClInclude Include="src\fonts_h\29_NOKIA_5110_FontSet.h" />
+    <ClInclude Include="src\fonts_h\54_serif_v01.h" />
+    <ClInclude Include="src\fonts_h\Commodore_Pixelized_v1_2.h" />
+    <ClInclude Include="src\fonts_h\serif_v01.h" />
+    <ClInclude Include="src\general.h" />
+    <ClInclude Include="src\graphics_h\archer.h" />
+    <ClInclude Include="src\graphics_h\arrow.h" />
+    <ClInclude Include="src\graphics_h\arrow_funnyjoke.h" />
+    <ClInclude Include="src\graphics_h\backgrounds\bg_1.h" />
+    <ClInclude Include="src\graphics_h\backgrounds\bg_2.h" />
+    <ClInclude Include="src\graphics_h\backgrounds\bg_3.h" />
+    <ClInclude Include="src\graphics_h\backgrounds\bg_4.h" />
+    <ClInclude Include="src\graphics_h\backgrounds\bg_treasure_hut.h" />
+    <ClInclude Include="src\graphics_h\bm_empty.h" />
+    <ClInclude Include="src\graphics_h\bm_full.h" />
+    <ClInclude Include="src\graphics_h\burninate_message_fire.h" />
+    <ClInclude Include="src\graphics_h\burninate_text.h" />
+    <ClInclude Include="src\graphics_h\cottage.h" />
+    <ClInclude Include="src\graphics_h\cottage_fire.h" />
+    <ClInclude Include="src\graphics_h\death_message.h" />
+    <ClInclude Include="src\graphics_h\end_of_level_flash.h" />
+    <ClInclude Include="src\graphics_h\end_of_level_trogdor.h" />
+    <ClInclude Include="src\graphics_h\game_over_banner.h" />
+    <ClInclude Include="src\graphics_h\game_over_text.h" />
+    <ClInclude Include="src\graphics_h\game_over_trogdor.h" />
+    <ClInclude Include="src\graphics_h\heart.h" />
+    <ClInclude Include="src\graphics_h\jonathan_howe.h" />
+    <ClInclude Include="src\graphics_h\kerrek.h" />
+    <ClInclude Include="src\graphics_h\kerrek_smoked.h" />
+    <ClInclude Include="src\graphics_h\knight.h" />
+    <ClInclude Include="src\graphics_h\knight_funnyjoke.h" />
+    <ClInclude Include="src\graphics_h\level_beaten_smoke.h" />
+    <ClInclude Include="src\graphics_h\level_beaten_trogdor_scaled.h" />
+    <ClInclude Include="src\graphics_h\loot.h" />
+    <ClInclude Include="src\graphics_h\menu_cursor.h" />
+    <ClInclude Include="src\graphics_h\options_menu.h" />
+    <ClInclude Include="src\graphics_h\overlays\basement_bottom.h" />
+    <ClInclude Include="src\graphics_h\overlays\basement_left.h" />
+    <ClInclude Include="src\graphics_h\overlays\basement_right.h" />
+    <ClInclude Include="src\graphics_h\overlays\basement_top.h" />
+    <ClInclude Include="src\graphics_h\peasant.h" />
+    <ClInclude Include="src\graphics_h\peasantometer.h" />
+    <ClInclude Include="src\graphics_h\strong_bad.h" />
+    <ClInclude Include="src\graphics_h\strong_bad_ending.h" />
+    <ClInclude Include="src\graphics_h\title_screen.h" />
+    <ClInclude Include="src\graphics_h\trogdor.h" />
+    <ClInclude Include="src\graphics_h\trogdor_bighead.h" />
+    <ClInclude Include="src\graphics_h\trogdor_dead.h" />
+    <ClInclude Include="src\graphics_h\trogdor_ending.h" />
+    <ClInclude Include="src\graphics_h\trogdor_fire.h" />
+    <ClInclude Include="src\graphics_h\trogdor_flexing.h" />
+    <ClInclude Include="src\graphics_h\trogdor_logo.h" />
+    <ClInclude Include="src\graphics_h\videlectrix_logo_big.h" />
+    <ClInclude Include="src\include.h" />
+    <ClInclude Include="src\include_fonts.h" />
+    <ClInclude Include="src\include_graphics.h" />
+    <ClInclude Include="src\include_sfx.h" />
+    <ClInclude Include="src\input.h" />
+    <ClInclude Include="src\level_data.h" />
+    <ClInclude Include="src\main.h" />
+    <ClInclude Include="src\media_objects_init.h" />
+    <ClInclude Include="src\menu.h" />
+    <ClInclude Include="src\on_open_and_close.h" />
+    <ClInclude Include="src\SDL_rotozoom.h" />
+    <ClInclude Include="src\sfx_h\burninate.h" />
+    <ClInclude Include="src\sfx_h\burn_hut.h" />
+    <ClInclude Include="src\sfx_h\cutscene.h" />
+    <ClInclude Include="src\sfx_h\death.h" />
+    <ClInclude Include="src\sfx_h\gameover.h" />
+    <ClInclude Include="src\sfx_h\kick.h" />
+    <ClInclude Include="src\sfx_h\sbdooj_short.h" />
+    <ClInclude Include="src\sfx_h\soundboard_itsover.h" />
+    <ClInclude Include="src\sfx_h\speedincreased.h" />
+    <ClInclude Include="src\sfx_h\squish.h" />
+    <ClInclude Include="src\sfx_h\trogador.h" />
+    <ClInclude Include="src\sfx_h\trog_arrow.h" />
+    <ClInclude Include="src\sfx_h\trog_goldget.h" />
+    <ClInclude Include="src\sfx_h\trog_peasantscream.h" />
+    <ClInclude Include="src\sfx_h\trog_sb1.h" />
+    <ClInclude Include="src\sfx_h\trog_sb2.h" />
+    <ClInclude Include="src\sfx_h\trog_sb3.h" />
+    <ClInclude Include="src\sfx_h\trog_sb4.h" />
+    <ClInclude Include="src\sfx_h\trog_sb5.h" />
+    <ClInclude Include="src\sfx_h\trog_sb6.h" />
+    <ClInclude Include="src\sfx_h\trog_sb7.h" />
+    <ClInclude Include="src\sfx_h\trog_sbarch.h" />
+    <ClInclude Include="src\sfx_h\trog_sbarchend.h" />
+    <ClInclude Include="src\sfx_h\trog_sbbest.h" />
+    <ClInclude Include="src\sfx_h\trog_sbdooj.h" />
+    <ClInclude Include="src\sfx_h\trog_sbgameover.h" />
+    <ClInclude Include="src\sfx_h\trog_sbkerrek.h" />
+    <ClInclude Include="src\sfx_h\trog_sblevelbeat.h" />
+    <ClInclude Include="src\sfx_h\trog_sbscore.h" />
+    <ClInclude Include="src\sfx_h\trog_sbsecret.h" />
+    <ClInclude Include="src\sfx_h\trog_sbsquish1.h" />
+    <ClInclude Include="src\sfx_h\trog_sbsquish2.h" />
+    <ClInclude Include="src\sfx_h\trog_sbwin.h" />
+    <ClInclude Include="src\sfx_h\trog_sbwin2.h" />
+    <ClInclude Include="src\sfx_h\trog_sbworst.h" />
+    <ClInclude Include="src\sfx_h\trog_sfx2.h" />
+    <ClInclude Include="src\sound_logic.h" />
+    <ClInclude Include="src\sprite_objects.h" />
+    <ClInclude Include="src\text_objects.h" />
+    <ClInclude Include="src\window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Trogdor-Reburninated.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="release-resources\logo_icon_pc_64.ico" />
+    <Image Include="release-resources\logo_icon_pc_64.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
