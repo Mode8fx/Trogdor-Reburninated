@@ -45,7 +45,7 @@ INCLUDES	:=	src src/fonts_h src/graphics_h src/graphics_h/backgrounds src/graphi
 # ROMFS		:=	romfs
 
 APP_TITLE   := Trogdor: Reburninated
-APP_AUTHOR  := Mips96
+APP_AUTHOR  := Mode8fx
 APP_VERSION := 2.0
 ICON        := release-resources/logo_icon_switch.jpg
 

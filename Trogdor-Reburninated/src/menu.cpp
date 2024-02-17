@@ -511,9 +511,9 @@ void Menu::renderMenu() {
 #define option_main_level_order_choices { "Original", "Shuffled" }
 #define option_shuffle_levels_descriptions_line_1 { "Shuffle the level order so it's", "Play using the original level order." }
 #define option_shuffle_levels_descriptions_line_2 { "different every time you play.", "" }
-#define option_shuffle_levels_descriptions_line_3 { "(Custom / Mips's Choice presets only.)", "" }
-#define option_main_preset_choices { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mips's Choice" }
-#define option_main_preset_descriptions_line_1 { "Make your own rules!", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "Someone's favorite..." }
+#define option_shuffle_levels_descriptions_line_3 { "(Custom / Mode 8 presets only.)", "" }
+#define option_main_preset_choices { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mode 8" }
+#define option_main_preset_descriptions_line_1 { "Make your own rules!", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "They invented it just for this game!" }
 #define option_main_preset_descriptions_line_2 { "Cheats and level select", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "For Trogdor masters!", "Fewer extra lives, crazy fast arrows," }
 #define option_main_preset_descriptions_line_3 { "are also allowed.", "", "", "For Trogdor pros.", "", "all treasure huts, shuffled levels." }
 #define option_main_extra_lives_choices { "0", "1", "2", "3", "4", "5", "10", "20", "30" }
@@ -830,7 +830,7 @@ void InitializeMenus() {
 	menu_highscores_2.pages[0]->setTextLine(3, "HTML5:");
 	menu_highscores_2.pages[0]->setTextLine(4, "Hard:");
 	menu_highscores_2.pages[0]->setTextLine(5, "Cruel:");
-	menu_highscores_2.pages[0]->setTextLine(6, "Mips:");
+	menu_highscores_2.pages[0]->setTextLine(6, "Mode 8:");
 	menu_highscores_2.pages[0]->setTextLine(7, "Custom:");
 	menu_highscores_3.pages[0]->prepareMenuPage(8, 224, 30, 20, 2);
 	menu_highscores_3.pages[0]->setTextLine(0, "");
@@ -909,16 +909,12 @@ void InitializeMenus() {
 	menu_credits.pages[1]->prepareMenuPage(8, 0, 30, 20, 1);
 	menu_credits.pages[1]->setTextLine(0, "- THIS RECREATION -");
 	menu_credits.pages[1]->setTextLine(1, "");
-	menu_credits.pages[1]->setTextLine(2, "Mips96");
+	menu_credits.pages[1]->setTextLine(2, "Mode8fx");
 	menu_credits.pages[1]->setTextLine(3, "");
-	menu_credits.pages[1]->setTextLine(4, "https://github.com/Mips96");
+	menu_credits.pages[1]->setTextLine(4, "https://github.com/Mode8fx");
 	menu_credits.pages[1]->setTextLine(5, "/Trogdor-Reburninated");
 	menu_credits.pages[1]->setTextLine(6, "");
-#if defined(WII)
-	menu_credits.pages[1]->setTextLine(7, "v2.01");
-#else
-	menu_credits.pages[1]->setTextLine(7, "v2.0");
-#endif
+	menu_credits.pages[1]->setTextLine(7, "v2.1-beta");
 
 	menu_credits.pages[2]->prepareMenuPage(5, 0, 30, 20, 1);
 	menu_credits.pages[2]->setTextLine(0, "- STINKOMAN MUSIC -");
@@ -980,7 +976,7 @@ void InitializeMenus() {
 	menu_credits.pages[j]->setTextLine(4, "homebrew-enabled systems, old and new.");
 	menu_credits.pages[j]->setTextLine(5, "Play it everywhere!");
 	menu_credits.pages[j]->setTextLine(6, "");
-	menu_credits.pages[j]->setTextLine(7, "https://github.com/Mips96");
+	menu_credits.pages[j]->setTextLine(7, "https://github.com/Mode8fx");
 	menu_credits.pages[j]->setTextLine(8, "/Trogdor-Reburninated");
 
 	/* Quit Menu */

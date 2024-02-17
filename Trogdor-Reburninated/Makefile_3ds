@@ -42,7 +42,7 @@ GFXBUILD		:=
 #GFXBUILD		:=	$(ROMFS)/gfx
 APP_TITLE		:=	Trogdor: Reburninated
 APP_DESCRIPTION	:=	Burninate the countryside!
-APP_AUTHOR		:=	Mips96
+APP_AUTHOR		:=	Mode8fx
 ICON			:=	release-resources/logo_icon_android_48.png
 
 #---------------------------------------------------------------------------------

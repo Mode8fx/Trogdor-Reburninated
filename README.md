@@ -3,7 +3,7 @@ This is an enhanced recreation of the Homestar Runner Flash game, _Trogdor_. It 
 
 Homestar Runner is no stranger to [fan ports](https://www.mrphlip.com/ds/pop_tire/) of its [Flash games](https://www.mrphlip.com/ds/secret/), and its impact on Flash media, as well as Internet media as a whole, cannot be overstated. Though the original game is still playable on modern devices through its [HTML5 port](https://old.homestarrunner.com/trogdor-canvas/index.html), this project aims to expand on the original release with new features and multiplatform libraries that allow for porting to a wide variety of systems.
 
-<img src="https://github.com/Mips96/Trogdor-Reburninated/blob/main/screenshots/gameplay_v1.0.png?raw=true" width="480" height="360"/>
+<img src="https://github.com/Mode8fx/Trogdor-Reburninated/blob/main/screenshots/gameplay_v1.0.png?raw=true" width="480" height="360"/>
 
 ## Features
 - A faithful recreation of the original Flash game, including intermissions
@@ -17,7 +17,7 @@ Homestar Runner is no stranger to [fan ports](https://www.mrphlip.com/ds/pop_tir
 - Bugs from the original game have been fixed
 - Big head mode!
 
-<img src="https://github.com/Mips96/Trogdor-Reburninated/blob/main/screenshots/options_v1.0.png?raw=true" width="480" height="360"/>
+<img src="https://github.com/Mode8fx/Trogdor-Reburninated/blob/main/screenshots/options_v1.0.png?raw=true" width="480" height="360"/>
 
 ## FAQ
 ### Is this a port? Remake? Remaster?

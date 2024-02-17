@@ -7,7 +7,7 @@
 
 /*
  * This program has been modified from its original version for
- * use within Trogdor: Reburninated by Mips96. It has also been
+ * use within Trogdor: Reburninated by Mode8fx. It has also been
  * split into an additional header file, goombasend.h
  */
 
