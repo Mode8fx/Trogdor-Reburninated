@@ -3,9 +3,9 @@ PSP_LARGE_MEMORY=1
 TARGET		=	trogdor-reburninated
 BUILD		=	build_psp
 SRC_DIR		=	src
-EXCLUDED	=	$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(wildcard $(SRC_DIR)/sfx_h/*)
-SRCS		=	$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/**/*.c))
-OBJS		=	$(SRCS:.cpp=.o) $(SRCS:.c=.o)
+EXCLUDED	=	$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(SRC_DIR)/fonts_h/54_serif_v01.cpp $(wildcard $(SRC_DIR)/sfx_h/*)
+SRCS		=	$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/**/*.c) $(wildcard $(SRC_DIR)/graphics_h/**/*.cpp) $(wildcard $(SRC_DIR)/graphics_h/**/*.c))
+OBJS		=	$(patsubst %.cpp, %.o, $(patsubst %.c, %.o, $(SRCS)))
 
 INCDIR =
 CFLAGS = -G0 -O2 -DPSP
@@ -14,7 +14,7 @@ ASFLAGS = $(CFLAGS)
 
 LIBDIR =
 LDFLAGS =
-LIBS = -lSDL2main -lSDL2_image -lpng -ljpeg -lSDL2_mixer -lstdc++ -lSDL2_ttf -lSDL2_gfx -lSDL2 -lGL -lGLU -lglut -lfreetype -lz -lbz2 -lpspmp3 -lmad -logg -lvorbisenc -lvorbisidec -lvorbis -lvorbisfile -lmikmod \
+LIBS = -lSDL2main -lSDL2_image -lpng -ljpeg -lSDL2_mixer -lstdc++ -lSDL2_ttf -lSDL2_gfx -lSDL2 -lGL -lGLU -lglut -lfreetype -lz -lbz2 -lpspmp3 -lmad -logg -lvorbisenc -lvorbis -lvorbisfile -lmikmod \
          -lpspvfpu -lpsphprm -lpspsdk -lpspctrl -lpspumd -lpsprtc -lpsppower -lpspgum -lpspgu -lpspaudiolib -lpspaudio \
          -lm -lpspvram
 
