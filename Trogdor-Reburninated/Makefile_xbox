@@ -1,8 +1,8 @@
 XBE_TITLE = Trogdor\ Reburninated
 GEN_XISO = $(XBE_TITLE).iso
 SRC_DIR = src
-EXCLUDED=$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(wildcard $(SRC_DIR)/OSLibAudio/*)
-SRCS = $(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/**/*.cpp), $(wildcard $(SRC_DIR)/**/*.c))
+EXCLUDED = $(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(wildcard $(SRC_DIR)/sfx_h/*) $(wildcard $(SRC_DIR)/OSLibAudio/*)
+SRCS = $(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/**/*.c))
 
 NXDK_DIR ?= $(CURDIR)/../..
 NXDK_SDL = y

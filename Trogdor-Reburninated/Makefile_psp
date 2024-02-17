@@ -3,9 +3,9 @@ PSP_LARGE_MEMORY=1
 TARGET		=	trogdor-reburninated
 BUILD		=	build_psp
 SRC_DIR		=	src
-EXCLUDED	=	$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c
-SRCS		=	$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/**/*.cpp), $(wildcard $(SRC_DIR)/**/*.c))
-OBJS		=	$(subst .*,.o,$(SRCS))
+EXCLUDED	=	$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(wildcard $(SRC_DIR)/sfx_h/*)
+SRCS		=	$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/**/*.c))
+OBJS		=	$(SRCS:.cpp=.o) $(SRCS:.c=.o)
 
 INCDIR =
 CFLAGS = -G0 -O2 -DPSP

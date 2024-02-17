@@ -61,14 +61,14 @@ RESOURCES=release-resources/logo_icon_pc_64.png \
 RESOURCE_OBJECT=release-resources/resource.o
 
 SRC_DIR=src
-EXCLUDED=$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(wildcard $(SRC_DIR)/OSLibAudio/*)
-SRCS=$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/**/*.cpp), $(wildcard $(SRC_DIR)/**/*.c))
+EXCLUDED=$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(wildcard $(SRC_DIR)/sfx_h/*) $(wildcard $(SRC_DIR)/OSLibAudio/*)
+SRCS=$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/**/*.c))
 
 ifeq ($(SDL_VERSION), 1)
 	SRCS+=src/SDL_rotozoom.c
 endif
 
-OBJS=$(subst .cpp,.o,$(SRCS))
+OBJS=$(SRCS:.cpp=.o) $(SRCS:.c=.o)
 
 myprogram: $(OBJS) $(RESOURCE_OBJECT)
 	$(CXX) $(LDFLAGS) $(OBJS) $(RESOURCE_OBJECT) $(LDLIBS) -o Trogdor-Reburninated_$(ARCH)_SDL$(SDL_VERSION).exe
