@@ -200,7 +200,7 @@ void Knight::move(float knightSpeed) {
 	}
 	offset_y = -offset_x;
 	if (!sprite.facingRight) {
-		offset_x *= -1;
+		offset_x = -offset_x;
 	}
 
 	sprite.setPosX(home_x + offset_x - half_src_w);
@@ -209,34 +209,34 @@ void Knight::move(float knightSpeed) {
 	move_frameState.increment();
 }
 
-void Knight::move_alt(float knightIncrement, float knightIncrement_slower, float knightSpeed) {
+void Knight::move_alt(float knightIncrement_alt, float knightIncrement_alt_2, float knightSpeed) {
 	offset_y = 0;
 
 	if (move_frameState.subFrame > moveFrameCap) {
 		move_frameState.subtract(moveFrameCap);
 	}
 	if (move_frameState.subFrame * knightSpeed <= 30) {
-		offset_x = knightIncrement * 32 / 15;
-		offset_y = -knightIncrement * 32 / 15;
+		offset_x = knightIncrement_alt;
+		offset_y = -knightIncrement_alt;
 	} else {
-		offset_x = -knightIncrement_slower * 32 / 15;
+		offset_x = -knightIncrement_alt_2;
 	}
 	if (!sprite.facingRight) {
-		offset_x *= -1;
+		offset_x = -offset_x;
 	}
 	switch (direction) {
 		case 0:
-			offset_y *= -1;
+			offset_y = -offset_y;
 			float_i = offset_x;
 			offset_x = offset_y;
 			offset_y = float_i;
 			break;
 		case 1:
-			offset_x *= -1;
-			offset_y *= -1;
+			offset_x = -offset_x;
+			offset_y = -offset_y;
 			break;
 		case 2:
-			offset_x *= -1;
+			offset_x = -offset_x;
 			float_i = offset_x;
 			offset_x = offset_y;
 			offset_y = float_i;
@@ -777,7 +777,8 @@ GameManager::GameManager(MenuManager mm) {
 	player = Trogdor(bigHeadMode, speedyMode);
 	player.sprite.facingRight = true;
 	knightIncrement = knightSpeed * frameRateMult;
-	knightIncrement_slower = knightIncrement * 0.8;
+	knightIncrement_alt = knightIncrement * 32 / 15;
+	knightIncrement_alt_2 = knightIncrement_alt * 4 / 5;
 	switch (MENU_LIVES_INTERVAL->index) {
 		case 0:
 			extraMansBreak = 300;
@@ -1346,7 +1347,7 @@ void GameManager::updateKnightOffsetAndMove() {
 		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 			if (knightArray[i].moving) {
 				knightArray[i].updateFrameState();
-				knightArray[i].move_alt(knightIncrement, knightIncrement_slower, knightSpeed);
+				knightArray[i].move_alt(knightIncrement_alt, knightIncrement_alt_2, knightSpeed);
 			}
 		}
 	}

@@ -174,7 +174,8 @@ class GameManager {
 		Sint8 knightSpeedSetting;               // knight speed setting
 		float knightSpeed;                      // knight speed
 		float knightIncrement;                  // knight movement speed
-		float knightIncrement_slower;           // knight movement speed (slower)
+		float knightIncrement_alt;              // knight movement speed (alt behavior)
+		float knightIncrement_alt_2;            // knight movement speed (alt behavior, 0.8x speed)
 		Sint8 livesIntervalSetting;             // setting for lives interval
 		Uint16 extraMansBreak;                  // # of points for an extra life
 		Uint16 extraMansCounter;                // how many extra lives have been earned so far + 1
