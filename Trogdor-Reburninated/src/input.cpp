@@ -280,7 +280,7 @@ void handleInput() {
 					heldDirs_dpad |= INPUT_RIGHT;
 					break;
 				}
-#if defined(WII_U) || defined(SWITCH)
+#if defined(SWITCH)
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
 #else
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
@@ -288,7 +288,7 @@ void handleInput() {
 					heldKeys |= INPUT_A;
 					break;
 				}
-#if defined(WII_U) || defined(SWITCH)
+#if defined(SWITCH)
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
 #else
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
@@ -296,7 +296,7 @@ void handleInput() {
 					heldKeys |= INPUT_B;
 					break;
 				}
-#if defined(WII_U) || defined(SWITCH)
+#if defined(SWITCH)
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
 #else
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
@@ -304,7 +304,7 @@ void handleInput() {
 					heldKeys |= INPUT_X;
 					break;
 				}
-#if defined(WII_U) || defined(SWITCH)
+#if defined(SWITCH)
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
 #else
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
@@ -346,7 +346,7 @@ void handleInput() {
 					heldDirs_dpad &= ~INPUT_RIGHT;
 					break;
 				}
-#if defined(WII_U) || defined(SWITCH)
+#if defined(SWITCH)
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
 #else
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
@@ -354,7 +354,7 @@ void handleInput() {
 					heldKeys &= ~INPUT_A;
 					break;
 				}
-#if defined(WII_U) || defined(SWITCH)
+#if defined(SWITCH)
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
 #else
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
@@ -362,7 +362,7 @@ void handleInput() {
 					heldKeys &= ~INPUT_B;
 					break;
 				}
-#if defined(WII_U) || defined(SWITCH)
+#if defined(SWITCH)
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
 #else
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
@@ -370,7 +370,7 @@ void handleInput() {
 					heldKeys &= ~INPUT_X;
 					break;
 				}
-#if defined(WII_U) || defined(SWITCH)
+#if defined(SWITCH)
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
 #else
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
