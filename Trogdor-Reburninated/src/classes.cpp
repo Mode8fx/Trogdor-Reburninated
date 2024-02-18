@@ -727,6 +727,15 @@ GameManager::GameManager(MenuManager mm) {
 				treasureHutSetting = 1;
 				shuffleLevels = true;
 				break;
+			case 6:
+				livesIntervalSetting = 4;
+				peasantPenalty = true;
+				knightSpeedSetting = 2;
+				arrowSpeedSetting = 1;
+				archerFrequencySetting = 0;
+				treasureHutSetting = 1;
+				shuffleLevels = true;
+				break;
 		}
 		score = 0;
 		treasureHutFound = false;
@@ -747,6 +756,7 @@ GameManager::GameManager(MenuManager mm) {
 		}
 	}
 	knightSpeed = (float)(0.7 + (knightSpeedSetting * 0.15));
+	updateKnightIncrement();
 	switch (arrowSpeedSetting) {
 		case 0:
 			arrowSpeed = 3;
@@ -775,9 +785,6 @@ GameManager::GameManager(MenuManager mm) {
 	bigHeadMode = MENU_BIG_HEAD_MODE->isValue(0);
 	player = Trogdor(bigHeadMode, speedyMode);
 	player.sprite.facingRight = true;
-	knightIncrement = knightSpeed * frameRateMult;
-	knightIncrement_alt = knightIncrement * float(1.7082); // sqrt(1313/2)*knightIncrement/15 = 1.7082*knightIncrement to match max speed of old movement
-	knightIncrement_alt_2 = knightIncrement * float(1.1411); // sqrt(293)*knightIncrement/15 = 1.1411*knightIncrement to match min speed of old movement
 	switch (MENU_LIVES_INTERVAL->index) {
 		case 0:
 			extraMansBreak = 300;
@@ -942,6 +949,12 @@ void GameManager::setBurnRate() {
 	}
 }
 
+void GameManager::updateKnightIncrement() {
+	knightIncrement = knightSpeed * frameRateMult;
+	knightIncrement_alt = knightIncrement * float(1.7082); // sqrt(1313/2)*knightIncrement/15 = 1.7082*knightIncrement to match max speed of old movement
+	knightIncrement_alt_2 = knightIncrement * float(1.1411); // sqrt(293)*knightIncrement/15 = 1.1411*knightIncrement to match min speed of old movement
+}
+
 void GameManager::setMusic() {
 	switch (MENU_MUSIC->index) {
 		case 1:
@@ -1008,7 +1021,14 @@ void GameManager::setMusic() {
 
 void GameManager::levelInit() {
 	setBurnination(0);
-	setArcherFrequency();
+	if (preset == 6) {
+		knightSpeed = (float)(0.7 + ((rand() % 41) * 0.015));
+		updateKnightIncrement();
+		arrowSpeed = (rand() % 23) + 3;
+		archerFrequency = (rand() % 381) + 20;
+	} else {
+		setArcherFrequency();
+	}
 	setBurnRate();
 	if (level == 1) {
 		levelIndex = 0;
@@ -1691,6 +1711,9 @@ void GameManager::dm_updateFrameState() { // death message
 							break;
 						case 5:
 							gameState.highscores.mipsChoice = max(score, gameState.highscores.mipsChoice);
+							break;
+						case 6:
+							gameState.addon_v_2_1.chaos = max(score, gameState.addon_v_2_1.chaos);
 							break;
 						default:
 							gameState.highscores.custom = max(score, gameState.highscores.custom);

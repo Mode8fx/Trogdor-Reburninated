@@ -511,11 +511,11 @@ void Menu::renderMenu() {
 #define option_main_level_order_choices { "Original", "Shuffled" }
 #define option_shuffle_levels_descriptions_line_1 { "Shuffle the level order so it's", "Play using the original level order." }
 #define option_shuffle_levels_descriptions_line_2 { "different every time you play.", "" }
-#define option_shuffle_levels_descriptions_line_3 { "(Custom / Mode 8 presets only.)", "" }
-#define option_main_preset_choices { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mode 8" }
-#define option_main_preset_descriptions_line_1 { "Make your own rules!", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "They invented it just for this game!" }
-#define option_main_preset_descriptions_line_2 { "Cheats and level select", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "For Trogdor masters!", "Fewer extra lives, crazy fast arrows," }
-#define option_main_preset_descriptions_line_3 { "are also allowed.", "", "", "For Trogdor pros.", "", "all treasure huts, shuffled levels." }
+#define option_shuffle_levels_descriptions_line_3 { "(Custom / Mode 8 / Chaos presets only.)", "" }
+#define option_main_preset_choices { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mode 8", "Chaos" }
+#define option_main_preset_descriptions_line_1 { "Make your own rules!", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "They invented it just for this game!", "Knight/arrow speed and archer freq. are" }
+#define option_main_preset_descriptions_line_2 { "Cheats and level select", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "Do you has what it takes?", "Fewer extra lives, crazy fast arrows,", "shuffled every level, and levels are" }
+#define option_main_preset_descriptions_line_3 { "are also allowed.", "", "", "For Trogdor pros.", "", "all treasure huts, shuffled levels.", "shuffled! Who knows what could happen?" }
 #define option_main_extra_lives_choices { "0", "1", "2", "3", "4", "5", "10", "20", "30" }
 #define option_main_extra_lives_descriptions_line_1 { "The number of extra lives you start with." }
 #define option_main_lives_interval_choices { "Every 300 points", "Every 500 points", "Every 1000 points", "500 points only", "500 and 1000 only", "1000 points only", "1000 and 2000 only", "None" }
@@ -722,7 +722,7 @@ void InitializeMenus() {
 	}
 	MENU_PRESET->prepareMenuOption("Preset", option_main_preset_choices,
 		option_main_preset_descriptions_line_1, option_main_preset_descriptions_line_2, option_main_preset_descriptions_line_3,
-		"", 6, false, 1, true, true);
+		"", 7, false, 1, true, true);
 	MENU_EXTRA_LIVES->prepareMenuOption("Extra Lives", option_main_extra_lives_choices,
 		option_main_extra_lives_descriptions_line_1, option_empty, option_empty,
 		"", 9, true, 3, true, true);
@@ -830,7 +830,7 @@ void InitializeMenus() {
 	}
 	menu_highscores_1.pages[0]->prepareMenuPage(1, 0, 30, 20, 1);
 	menu_highscores_1.pages[0]->setTextLine(0, "YE OLDE HI-SCORES");
-	menu_highscores_2.pages[0]->prepareMenuPage(8, 96, 30, 20, 0);
+	menu_highscores_2.pages[0]->prepareMenuPage(9, 96, 30, 20, 0);
 	menu_highscores_2.pages[0]->setTextLine(0, "");
 	menu_highscores_2.pages[0]->setTextLine(1, "");
 	menu_highscores_2.pages[0]->setTextLine(2, "Flash:");
@@ -838,8 +838,9 @@ void InitializeMenus() {
 	menu_highscores_2.pages[0]->setTextLine(4, "Hard:");
 	menu_highscores_2.pages[0]->setTextLine(5, "Cruel:");
 	menu_highscores_2.pages[0]->setTextLine(6, "Mode 8:");
-	menu_highscores_2.pages[0]->setTextLine(7, "Custom:");
-	menu_highscores_3.pages[0]->prepareMenuPage(8, 224, 30, 20, 2);
+	menu_highscores_2.pages[0]->setTextLine(7, "Chaos:");
+	menu_highscores_2.pages[0]->setTextLine(8, "Custom:");
+	menu_highscores_3.pages[0]->prepareMenuPage(9, 224, 30, 20, 2);
 	menu_highscores_3.pages[0]->setTextLine(0, "");
 	menu_highscores_3.pages[0]->setTextLine(1, "");
 	updateHighScores();
@@ -1285,6 +1286,21 @@ void setPreset(Sint8 ind) {
 			MENU_NOCLIP->setFrozen(true, 1);
 			MENU_DEBUG_MODE->setFrozen(true, 1);
 			break;
+		case 6:
+			MENU_EXTRA_LIVES->setFrozen(true, 3);
+			MENU_LIVES_INTERVAL->setFrozen(true, 4);
+			MENU_PEASANT_PENALTY->setFrozen(true, 0);
+			MENU_KNIGHT_SPEED->setFrozen(true, 2);
+			MENU_ARROW_SPEED->setFrozen(true, 1);
+			MENU_ARCHER_FREQ->setFrozen(true, 0);
+			MENU_TREASURE_HUTS->setFrozen(true, 0);
+			MENU_STARTING_LEVEL->setFrozen(true, 0);
+			MENU_SHUFFLE_LEVELS->setFrozen(true, 0);
+			MENU_INF_LIVES->setFrozen(true, 1);
+			MENU_SPEEDY_MODE->setFrozen(true, 0);
+			MENU_NOCLIP->setFrozen(true, 1);
+			MENU_DEBUG_MODE->setFrozen(true, 1);
+			break;
 		default:
 			MENU_EXTRA_LIVES->setFrozen(false, 0);
 			MENU_LIVES_INTERVAL->setFrozen(false, 0);
@@ -1309,5 +1325,6 @@ void updateHighScores() {
 	menu_highscores_3.pages[0]->setTextLine(4, to_string(gameState.highscores.hard).c_str());
 	menu_highscores_3.pages[0]->setTextLine(5, to_string(gameState.highscores.cruel).c_str());
 	menu_highscores_3.pages[0]->setTextLine(6, to_string(gameState.highscores.mipsChoice).c_str());
-	menu_highscores_3.pages[0]->setTextLine(7, to_string(gameState.highscores.custom).c_str());
+	menu_highscores_3.pages[0]->setTextLine(7, to_string(gameState.addon_v_2_1.chaos).c_str());
+	menu_highscores_3.pages[0]->setTextLine(8, to_string(gameState.highscores.custom).c_str());
 }

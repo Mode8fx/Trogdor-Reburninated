@@ -81,6 +81,7 @@ struct State_HighScores {
 
 struct State_Addon_v_2_1 {
 	Sint8 knightMovement;
+	Uint32 chaos;
 };
 
 struct GameState {
