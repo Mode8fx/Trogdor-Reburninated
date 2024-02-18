@@ -213,7 +213,6 @@
     <ClCompile Include="src\config.cpp" />
     <ClCompile Include="src\cutscenes.cpp" />
     <ClCompile Include="src\fonts_h\29_NOKIA_5110_FontSet.cpp" />
-    <ClCompile Include="src\fonts_h\54_serif_v01.cpp" />
     <ClCompile Include="src\fonts_h\Commodore_Pixelized_v1_2.cpp" />
     <ClCompile Include="src\fonts_h\serif_v01.cpp" />
     <ClCompile Include="src\general.cpp" />
@@ -282,7 +281,6 @@
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\cutscenes.h" />
     <ClInclude Include="src\fonts_h\29_NOKIA_5110_FontSet.h" />
-    <ClInclude Include="src\fonts_h\54_serif_v01.h" />
     <ClInclude Include="src\fonts_h\Commodore_Pixelized_v1_2.h" />
     <ClInclude Include="src\fonts_h\serif_v01.h" />
     <ClInclude Include="src\general.h" />

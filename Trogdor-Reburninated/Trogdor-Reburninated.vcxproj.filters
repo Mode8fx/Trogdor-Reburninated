@@ -18,9 +18,6 @@
     <ClCompile Include="src\fonts_h\29_NOKIA_5110_FontSet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\fonts_h\54_serif_v01.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\fonts_h\Commodore_Pixelized_v1_2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -216,9 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\fonts_h\29_NOKIA_5110_FontSet.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\fonts_h\54_serif_v01.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\fonts_h\Commodore_Pixelized_v1_2.h">
