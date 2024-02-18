@@ -556,7 +556,7 @@ void Menu::renderMenu() {
 #else
 #define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS", "90 FPS", "120 FPS", "144 FPS" }
 #endif
-#define option_main_frame_rate_descriptions_line_1 { "Higher frame rate smoother gameplay." }
+#define option_main_frame_rate_descriptions_line_1 { "Higher frame rate, smoother gameplay." }
 #define option_main_frame_rate_descriptions_line_2 { "(Original Flash game is 16 FPS)" }
 #define option_main_frame_rate_descriptions_line_3 { "" }
 #define option_main_level_tran_choices { "Original", "Button Press" }
