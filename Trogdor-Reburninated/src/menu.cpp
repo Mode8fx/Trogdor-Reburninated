@@ -984,7 +984,7 @@ void InitializeMenus() {
 	menu_credits.pages[j]->setTextLine(3, "SDL_image");
 	menu_credits.pages[j]->setTextLine(4, "SDL_mixer");
 	menu_credits.pages[j]->setTextLine(5, "SDL_ttf");
-	menu_credits.pages[j]->setTextLine(6, "SDL_gfx");
+	menu_credits.pages[j]->setTextLine(6, "");
 #else
 	menu_credits.pages[j]->setTextLine(2, "SDL2");
 	menu_credits.pages[j]->setTextLine(3, "SDL2_image");
