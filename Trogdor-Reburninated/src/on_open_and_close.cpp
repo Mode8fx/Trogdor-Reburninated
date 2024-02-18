@@ -59,7 +59,7 @@ void InitializeSound() {
 #elif defined(XBOX)
 #else
 	//if (Mix_OpenAudio(5513, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+	if (Mix_OpenAudio(44100, AUDIO_TROG_FORMAT, 2, 2048) < 0) {
 #if !defined(SDL1) && !defined(ANDROID)
 		SDL_Log(Mix_GetError());
 #endif
