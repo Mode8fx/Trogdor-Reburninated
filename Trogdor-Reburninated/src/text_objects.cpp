@@ -47,9 +47,9 @@ void setTextChar(const char *text, TTF_Font *font, SDL_Color text_color, TextCha
 	temp_text = TTF_RenderText_Solid(font, text, text_color);
 #else
 	if (int(text[0]) != 32) {
-		temp_text = TTF_RenderText_Solid(font, text, text_color);
+		temp_text = TTF_RenderUTF8_Blended(font, text, text_color);
 	} else {
-		temp_text = TTF_RenderText_Solid(font, "", text_color);
+		temp_text = TTF_RenderUTF8_Blended(font, "", text_color);
 	}
 #endif
 	textCharObj->texture = SDL_CreateTextureFromSurface(renderer, temp_text);
