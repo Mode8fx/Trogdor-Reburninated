@@ -142,13 +142,18 @@ if (WIIU)
 	add_definitions(-DWII_U)
 
 	target_link_libraries(trogdorrb -L${DEVKITPRO}/portlibs/wiiu/lib -L${DEVKITPRO}/portlibs/ppc/lib -L${DEVKITPRO}/wut/lib)
-	pkg_check_modules(SDL2 REQUIRED IMPORTED_TARGET SDL2)
-	pkg_check_modules(SDL2_image REQUIRED IMPORTED_TARGET SDL2_image)
-	pkg_check_modules(SDL2_mixer REQUIRED IMPORTED_TARGET SDL2_mixer)
-	pkg_check_modules(SDL2_ttf REQUIRED IMPORTED_TARGET SDL2_ttf)
-	pkg_check_modules(SDL2_gfx REQUIRED IMPORTED_TARGET SDL2_gfx)
-	# target_link_libraries(trogdorrb PkgConfig::SDL2 PkgConfig::SDL2_image PkgConfig::SDL2_mixer PkgConfig::SDL2_ttf PkgConfig::SDL2_gfx)
-	target_link_libraries(trogdorrb -lSDL2_ttf -lSDL2_mixer -lmodplug -lvorbisfile -lvorbis -logg -lSDL2_gfx -lSDL2_image -lSDL2 -lfreetype -lpng -lmpg123 -lbz2 -ljpeg -lz -lwut)
+	# pkg_check_modules(SDL2 REQUIRED IMPORTED_TARGET SDL2)
+	# pkg_check_modules(SDL2_image REQUIRED IMPORTED_TARGET SDL2_image)
+	# pkg_check_modules(SDL2_mixer REQUIRED IMPORTED_TARGET SDL2_mixer)
+	# pkg_check_modules(SDL2_ttf REQUIRED IMPORTED_TARGET SDL2_ttf)
+	# target_link_libraries(trogdorrb PkgConfig::SDL2 PkgConfig::SDL2_image PkgConfig::SDL2_mixer PkgConfig::SDL2_ttf)
+	# target_link_libraries(trogdorrb -lSDL2_ttf -lSDL2_mixer -lmodplug -lvorbisfile -lvorbis -logg -lSDL2_image -lSDL2 -lfreetype -lpng -lmpg123 -lbz2 -ljpeg -lz -lwut)
+	PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
+	PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
+	PKG_SEARCH_MODULE(SDL2MIXER REQUIRED SDL2_mixer>=2.0.0)
+	PKG_SEARCH_MODULE(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
+	INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2MIXER_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
+	TARGET_LINK_LIBRARIES(trogdorrb ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2MIXER_LIBRARIES} ${SDL2TTF_LIBRARIES})
 
 	set(SDL2_INCLUDE_DIRS
 	"${DEVKITPRO}/portlibs/wiiu/include/SDL2;\
@@ -170,10 +175,17 @@ elseif (VITA)
 	set(VITA_APP_NAME "Trogdor: Reburninated")
 	set(VITA_TITLEID  "TROG73287")
 	set(VITA_VERSION  "01.00")
+	
+	PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
+	PKG_SEARCH_MODULE(SDL2IMAGE REQUIRED SDL2_image>=2.0.0)
+	PKG_SEARCH_MODULE(SDL2MIXER REQUIRED SDL2_mixer>=2.0.0)
+	PKG_SEARCH_MODULE(SDL2TTF REQUIRED SDL2_ttf>=2.0.0)
+	INCLUDE_DIRECTORIES(${SDL2_INCLUDE_DIRS} ${SDL2IMAGE_INCLUDE_DIRS} ${SDL2MIXER_INCLUDE_DIRS} ${SDL2TTF_INCLUDE_DIRS})
+	TARGET_LINK_LIBRARIES(trogdorrb ${SDL2_LIBRARIES} ${SDL2IMAGE_LIBRARIES} ${SDL2MIXER_LIBRARIES} ${SDL2TTF_LIBRARIES})
 
-	target_link_libraries(trogdorrb SDL2_ttf SDL2_mixer SDL2_image SDL2_gfx SDL2 freetype png png16 bz2 jpeg z mikmod mpg123 FLAC vorbisfile vorbis ogg webp pthread)
+	# target_link_libraries(trogdorrb SDL2_ttf SDL2_mixer SDL2_image SDL2 freetype png png16 bz2 jpeg z mikmod modplug mpg123 xmp FLAC vorbisfile vorbis ogg webp pthread)
 	# find_package(SDL2 REQUIRED)
-	# target_link_libraries(trogdorrb SDL2_ttf SDL2_mixer SDL2_image SDL2_gfx SDL2)
+	# target_link_libraries(trogdorrb SDL2_ttf SDL2_mixer SDL2_image SDL2)
 	target_link_libraries(trogdorrb
 		SceDisplay_stub
 		SceCtrl_stub
