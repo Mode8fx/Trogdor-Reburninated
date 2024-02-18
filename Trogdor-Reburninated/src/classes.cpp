@@ -1328,7 +1328,7 @@ void GameManager::updateArchersAndArrows() {
 }
 
 void GameManager::updateKnightHome() {
-	if (true) {
+	if (MENU_KNIGHT_MOVEMENT->isValue(0)) {
 		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 			knightArray[i].updateHome(knightIncrement);
 		}
@@ -1336,7 +1336,7 @@ void GameManager::updateKnightHome() {
 }
 
 void GameManager::updateKnightOffsetAndMove() {
-	if (true) {
+	if (MENU_KNIGHT_MOVEMENT->isValue(0)) {
 		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 			if (knightArray[i].moving) {
 				knightArray[i].updateFrameState();
@@ -1388,7 +1388,7 @@ void GameManager::arrowHitEventHandler() {
 }
 
 inline void GameManager::toggleKnightMotion(bool hasMotion) {
-	if (MENU_KNIGHT_BEHAVIOR->isValue(0)) {
+	if (MENU_RESPAWN_BEHAVIOR->isValue(0)) {
 		for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
 			knightArray[i].moving = hasMotion;
 			if (hasMotion) {

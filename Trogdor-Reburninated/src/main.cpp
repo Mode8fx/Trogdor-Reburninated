@@ -468,7 +468,8 @@ int main(int argv, char** args) {
 						//menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, MENU_SCALING->index_init);
 						menu_other.setOptionChoice(MENU_STARTING_LEVEL_INDEX, MENU_STARTING_LEVEL->index_init);
 						menu_other.setOptionChoice(MENU_SHUFFLE_LEVELS_INDEX, MENU_SHUFFLE_LEVELS->index_init);
-						menu_other.setOptionChoice(MENU_KNIGHT_BEHAVIOR_INDEX, MENU_KNIGHT_BEHAVIOR->index_init);
+						menu_other.setOptionChoice(MENU_KNIGHT_MOVEMENT_INDEX, MENU_KNIGHT_MOVEMENT->index_init);
+						menu_other.setOptionChoice(MENU_RESPAWN_BEHAVIOR_INDEX, MENU_RESPAWN_BEHAVIOR->index_init);
 						menu_other.setOptionChoice(MENU_LEVEL_TRAN_INDEX, MENU_LEVEL_TRAN->index_init);
 						menu_cheats.setOptionChoice(MENU_INF_LIVES_INDEX, MENU_INF_LIVES->index_init);
 						menu_cheats.setOptionChoice(MENU_SPEEDY_MODE_INDEX, MENU_SPEEDY_MODE->index_init);
@@ -711,7 +712,7 @@ int main(int argv, char** args) {
 #endif
 						}
 					} else {
-						if (MENU_KNIGHT_BEHAVIOR->isValue(1)) {
+						if (MENU_RESPAWN_BEHAVIOR->isValue(1)) {
 							GM.updateKnightHome();
 						}
 						GM.updateKnightOffsetAndMove();

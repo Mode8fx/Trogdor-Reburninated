@@ -40,7 +40,8 @@ struct State_Settings_Cosmetic {
 struct State_Settings_Other {
 	Sint8 startingLevel;
 	Sint8 shuffleLevels;
-	Sint8 knightBehavior;
+	Sint8 knightMovement;
+	Sint8 respawnBehavior;
 	Sint8 levelTran;
 };
 

@@ -40,7 +40,8 @@ void loadGameState() {
 		menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, gameState.settings_cosmetic.scaling);
 		menu_other.setOptionChoice(MENU_STARTING_LEVEL_INDEX, gameState.settings_other.startingLevel);
 		menu_other.setOptionChoice(MENU_SHUFFLE_LEVELS_INDEX, gameState.settings_other.shuffleLevels);
-		menu_other.setOptionChoice(MENU_KNIGHT_BEHAVIOR_INDEX, gameState.settings_other.knightBehavior);
+		menu_other.setOptionChoice(MENU_KNIGHT_MOVEMENT_INDEX, gameState.settings_other.knightMovement);
+		menu_other.setOptionChoice(MENU_RESPAWN_BEHAVIOR_INDEX, gameState.settings_other.respawnBehavior);
 		menu_other.setOptionChoice(MENU_LEVEL_TRAN_INDEX, gameState.settings_other.levelTran);
 		menu_cheats.setOptionChoice(MENU_INF_LIVES_INDEX, gameState.settings_cheats.infLives);
 		menu_cheats.setOptionChoice(MENU_SPEEDY_MODE_INDEX, gameState.settings_cheats.speedyMode);

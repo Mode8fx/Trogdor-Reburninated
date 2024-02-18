@@ -537,10 +537,14 @@ void Menu::renderMenu() {
 #define option_main_archer_freq_descriptions_line_1 { "Archers appear more in later levels.", "Archers appear more in later levels.", "Archers do not appear often.", "Archers appear semi-often.", "Archers appear very often.", "Archers appear non-stop!"}
 #define option_main_archer_freq_descriptions_line_2 { "Same behavior as the original game.", "New scaling that's more evenly", "", "", "", ""}
 #define option_main_archer_freq_descriptions_line_3 { "", "distributed between levels.", "", "", "", ""}
-#define option_main_knight_behavior_choices { "Original", "New" }
-#define option_main_knight_behavior_descriptions_line_1 { "Knights briefly pause and change", "Knights do not change their" }
-#define option_main_knight_behavior_descriptions_line_2 { "position after you die.", "movement after you die." }
-#define option_main_knight_behavior_descriptions_line_3 { "", "Behavior is similar to the HTML5 port." }
+#define option_main_knight_movement_choices { "Original", "New" }
+#define option_main_knight_movement_descriptions_line_1 { "Knight movement is mostly", "Knight movement is a bit more varied," }
+#define option_main_knight_movement_descriptions_line_2 { "consistent and predictable.", "but can still be predicted." }
+#define option_main_knight_movement_descriptions_line_3 { "", "Behavior is similar to the HTML5 port." }
+#define option_main_respawn_behavior_choices { "Original", "New" }
+#define option_main_respawn_behavior_descriptions_line_1 { "Knights briefly pause and change", "Knights do not change their" }
+#define option_main_respawn_behavior_descriptions_line_2 { "position after you die.", "movement after you die." }
+#define option_main_respawn_behavior_descriptions_line_3 { "", "Behavior is similar to the HTML5 port." }
 #define option_main_knight_speed_choices { "Very Slow", "Slow", "Normal", "Fast", "Very Fast" }
 #define option_main_knight_speed_descriptions_line_1 { "Change how quickly knights move." }
 #define option_main_arrow_speed_choices { "Slow", "Normal", "Fast", "Very Fast", "Insane" }
@@ -785,8 +789,11 @@ void InitializeMenus() {
 	MENU_SHUFFLE_LEVELS->prepareMenuOption("Shuffle Levels", option_on_off,
 		option_shuffle_levels_descriptions_line_1, option_shuffle_levels_descriptions_line_2, option_shuffle_levels_descriptions_line_3,
 		"", 2, false, 1, true, true);
-	MENU_KNIGHT_BEHAVIOR->prepareMenuOption("Knight Behavior", option_main_knight_behavior_choices,
-		option_main_knight_behavior_descriptions_line_1, option_main_knight_behavior_descriptions_line_2, option_main_knight_behavior_descriptions_line_3,
+	MENU_KNIGHT_MOVEMENT->prepareMenuOption("Knight Movement", option_main_knight_movement_choices,
+		option_main_knight_movement_descriptions_line_1, option_main_knight_movement_descriptions_line_2, option_main_knight_movement_descriptions_line_3,
+		"", 2, false, 1, true, false);
+	MENU_RESPAWN_BEHAVIOR->prepareMenuOption("Respawn Behavior", option_main_respawn_behavior_choices,
+		option_main_respawn_behavior_descriptions_line_1, option_main_respawn_behavior_descriptions_line_2, option_main_respawn_behavior_descriptions_line_3,
 		"", 2, false, 1, true, false);
 	MENU_LEVEL_TRAN->prepareMenuOption("Level Transition", option_main_level_tran_choices,
 		option_main_level_tran_descriptions_line_1, option_main_level_tran_descriptions_line_2, option_main_level_tran_descriptions_line_3,
@@ -1062,7 +1069,8 @@ State_Settings_Other getSettingsOther() {
 	return {
 		MENU_STARTING_LEVEL->index,
 		MENU_SHUFFLE_LEVELS->index,
-		MENU_KNIGHT_BEHAVIOR->index,
+		MENU_KNIGHT_MOVEMENT->index,
+		MENU_RESPAWN_BEHAVIOR->index,
 		MENU_LEVEL_TRAN->index
 	};
 }
