@@ -538,9 +538,9 @@ void Menu::renderMenu() {
 #define option_main_archer_freq_descriptions_line_2 { "Same behavior as the original game.", "New scaling that's more evenly", "", "", "", ""}
 #define option_main_archer_freq_descriptions_line_3 { "", "distributed between levels.", "", "", "", ""}
 #define option_main_knight_movement_choices { "Original", "New" }
-#define option_main_knight_movement_descriptions_line_1 { "Knight movement is mostly", "Knight movement is a bit more varied," }
-#define option_main_knight_movement_descriptions_line_2 { "consistent and predictable.", "but can still be predicted." }
-#define option_main_knight_movement_descriptions_line_3 { "", "Behavior is similar to the HTML5 port." }
+#define option_main_knight_movement_descriptions_line_1 { "Knights are more predictable", "Knights cover more ground and stay" }
+#define option_main_knight_movement_descriptions_line_2 { "and can wander offscreen.", "onscreen. Slightly more challenging." }
+#define option_main_knight_movement_descriptions_line_3 { "Slightly easier.", "Behavior is similar to the HTML5 port." }
 #define option_main_respawn_behavior_choices { "Original", "New" }
 #define option_main_respawn_behavior_descriptions_line_1 { "Knights briefly pause and change", "Knights do not change their" }
 #define option_main_respawn_behavior_descriptions_line_2 { "position after you die.", "movement after you die." }

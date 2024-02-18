@@ -210,8 +210,6 @@ void Knight::move(float knightSpeed) {
 }
 
 void Knight::move_alt(float knightIncrement_alt, float knightIncrement_alt_2, float knightSpeed) {
-	offset_y = 0;
-
 	if (move_frameState.subFrame > moveFrameCap) {
 		move_frameState.subtract(moveFrameCap);
 	}
@@ -220,6 +218,7 @@ void Knight::move_alt(float knightIncrement_alt, float knightIncrement_alt_2, fl
 		offset_y = -knightIncrement_alt;
 	} else {
 		offset_x = -knightIncrement_alt_2;
+		offset_y = 0;
 	}
 	if (!sprite.facingRight) {
 		offset_x = -offset_x;
@@ -777,8 +776,8 @@ GameManager::GameManager(MenuManager mm) {
 	player = Trogdor(bigHeadMode, speedyMode);
 	player.sprite.facingRight = true;
 	knightIncrement = knightSpeed * frameRateMult;
-	knightIncrement_alt = knightIncrement * 32 / 15;
-	knightIncrement_alt_2 = knightIncrement_alt * 4 / 5;
+	knightIncrement_alt = knightIncrement * float(1.7082); // sqrt(1313/2)*knightIncrement/15 = 1.7082*knightIncrement to match max speed of old movement
+	knightIncrement_alt_2 = knightIncrement * float(1.1411); // sqrt(293)*knightIncrement/15 = 1.1411*knightIncrement to match min speed of old movement
 	switch (MENU_LIVES_INTERVAL->index) {
 		case 0:
 			extraMansBreak = 300;
@@ -1051,8 +1050,13 @@ void GameManager::levelInit() {
 	lootArray[6] = Loot((Sint16)(gameWidth * 0.688), (Sint16)(gameHeight * 0.644));
 	archerArray[0] = Archer(ARCHER_LEFT_X, 0, true);   // archerR (on the left, facing right)
 	archerArray[1] = Archer(ARCHER_RIGHT_X, 0, false); // archerL (on the right, facing left)
-	knightArray[0] = Knight(61, 111, 1, false, knightSpeed);
-	knightArray[1] = Knight(163, 40, 1, true, knightSpeed);
+	if (MENU_KNIGHT_MOVEMENT->isValue(0)) {
+		knightArray[0] = Knight(61, 111, 1, false, knightSpeed);
+		knightArray[1] = Knight(163, 40, 1, true, knightSpeed);
+	} else {
+		knightArray[0] = Knight(61, 111, rand() % 4, false, knightSpeed);
+		knightArray[1] = Knight(163, 40, rand() % 4, true, knightSpeed);
+	}
 	peasantometer = 0;
 	player.resetPos(false);
 	treasureHutFound = false;

@@ -92,7 +92,7 @@ struct GameState {
 	State_Settings_Unlocks    settings_unlocks;
 	State_Autosave            autosave;
 	State_HighScores          highscores;
-	State_Addon_v_2_1               addon_v_2_1;
+	State_Addon_v_2_1         addon_v_2_1;
 };
 
 /* Save File */
