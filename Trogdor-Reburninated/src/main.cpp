@@ -848,6 +848,7 @@ int main(int argv, char** args) {
 						}
 						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
 							g_sceneState = 3;
+							lastMusicPlayed = -1;
 							stopMusic();
 							setVolume_music(DEFAULT_VOLUME_MUSIC);
 							menuMusicHasStarted = false;
@@ -877,6 +878,7 @@ int main(int argv, char** args) {
 				}
 				if (keyPressed(INPUT_START)) {
 					g_sceneState = 3;
+					lastMusicPlayed = -1;
 					stopMusic();
 					menuMusicHasStarted = false;
 					MM = MenuManager();
@@ -945,6 +947,7 @@ int main(int argv, char** args) {
 						}
 						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
 							g_sceneState = 3;
+							lastMusicPlayed = -1;
 							stopMusic();
 							menuMusicHasStarted = false;
 							MM = MenuManager();

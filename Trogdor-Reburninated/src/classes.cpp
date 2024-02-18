@@ -1022,10 +1022,10 @@ void GameManager::setMusic() {
 void GameManager::levelInit() {
 	setBurnination(0);
 	if (preset == 6) {
-		knightSpeed = (float)(0.7 + ((rand() % 41) * 0.015));
+		knightSpeed = (float)(0.9 + ((rand() % 25) * 0.025)); // normal range: 0.7~1.3; this is 0.9~1.5
 		updateKnightIncrement();
-		arrowSpeed = (rand() % 23) + 3;
-		archerFrequency = (rand() % 381) + 20;
+		arrowSpeed = 5 + (rand() % 26); // normal range: 3~25; this is 5~30
+		archerFrequency = 20 + ((rand() % 39) * 10); // normal range: 20~400
 	} else {
 		setArcherFrequency();
 	}

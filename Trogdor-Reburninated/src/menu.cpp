@@ -540,11 +540,11 @@ void Menu::renderMenu() {
 #define option_main_knight_movement_choices { "Original", "New" }
 #define option_main_knight_movement_descriptions_line_1 { "Knights are more predictable", "Knights cover more ground and stay" }
 #define option_main_knight_movement_descriptions_line_2 { "and can wander offscreen.", "onscreen. Slightly more challenging." }
-#define option_main_knight_movement_descriptions_line_3 { "Slightly easier.", "Behavior is similar to the HTML5 port." }
+#define option_main_knight_movement_descriptions_line_3 { "Similar to the original game.", "Similar to the HTML5 port." }
 #define option_main_respawn_behavior_choices { "Original", "New" }
 #define option_main_respawn_behavior_descriptions_line_1 { "Knights briefly pause and change", "Knights do not change their" }
 #define option_main_respawn_behavior_descriptions_line_2 { "position after you die.", "movement after you die." }
-#define option_main_respawn_behavior_descriptions_line_3 { "", "Behavior is similar to the HTML5 port." }
+#define option_main_respawn_behavior_descriptions_line_3 { "Same behavior as the original game.", "Same behavior as the HTML5 port." }
 #define option_main_knight_speed_choices { "Very Slow", "Slow", "Normal", "Fast", "Very Fast" }
 #define option_main_knight_speed_descriptions_line_1 { "Change how quickly knights move." }
 #define option_main_arrow_speed_choices { "Slow", "Normal", "Fast", "Very Fast", "Insane" }
