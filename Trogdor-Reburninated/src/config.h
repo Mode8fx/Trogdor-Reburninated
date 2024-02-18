@@ -40,7 +40,6 @@ struct State_Settings_Cosmetic {
 struct State_Settings_Other {
 	Sint8 startingLevel;
 	Sint8 shuffleLevels;
-	Sint8 knightMovement;
 	Sint8 respawnBehavior;
 	Sint8 levelTran;
 };
@@ -80,6 +79,10 @@ struct State_HighScores {
 	Uint32 mipsChoice;
 };
 
+struct State_Addon_v_2_1 {
+	Sint8 knightMovement;
+};
+
 struct GameState {
 	State_Settings_General    settings_general;
 	State_Settings_Difficulty settings_difficulty;
@@ -89,6 +92,7 @@ struct GameState {
 	State_Settings_Unlocks    settings_unlocks;
 	State_Autosave            autosave;
 	State_HighScores          highscores;
+	State_Addon_v_2_1               addon_v_2_1;
 };
 
 /* Save File */
@@ -150,5 +154,8 @@ constexpr auto DEFAULT_HEIGHT = 480;
 extern void saveGameState_settings();
 extern void loadGameState();
 extern void loadGameState_partial();
+extern void setOptionsFromSaveData();
+extern void initializeDefaultGameState();
+extern void fixSaveDataIntegrity();
 
 #endif

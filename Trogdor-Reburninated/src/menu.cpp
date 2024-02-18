@@ -1069,7 +1069,6 @@ State_Settings_Other getSettingsOther() {
 	return {
 		MENU_STARTING_LEVEL->index,
 		MENU_SHUFFLE_LEVELS->index,
-		MENU_KNIGHT_MOVEMENT->index,
 		MENU_RESPAWN_BEHAVIOR->index,
 		MENU_LEVEL_TRAN->index
 	};
@@ -1090,6 +1089,12 @@ State_Settings_Unlocks getSettingsUnlocks() {
 		MENU_SPEEDY_MODE->optionIsLocked,
 		MENU_NOCLIP->optionIsLocked,
 		MENU_DEBUG_MODE->optionIsLocked
+	};
+}
+
+State_Addon_v_2_1 getSettings_v_2_1() {
+	return {
+		MENU_KNIGHT_MOVEMENT->index,
 	};
 }
 
