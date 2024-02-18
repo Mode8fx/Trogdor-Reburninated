@@ -97,6 +97,12 @@ void InitializeFontsAndText() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents_1, 0.7));
 	SET_TEXT(" ", text_1_presents_2, font_nokia_12,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents_2), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents_2, 0.8));
+#elif defined(THREEDS)
+	// on 3DS, this is offset by three characters for some reason
+	SET_TEXT("lofdfk^i d^jb", text_1_presents_1, font_nokia_12,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents_1, 0.23));
+	SET_TEXT("_v", text_1_presents_2, font_nokia_12,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents_2), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents_2, 0.3));
 #else
 	SET_TEXT("original game", text_1_presents_1, font_nokia_12,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents_1, 0.23));
