@@ -125,7 +125,7 @@ void cutscene_level_beaten() {
 			case 289:
 				cutscene_cottage_fire.isActive = false;
 				break;
-			case 309:
+			case 308:
 				cutscene_level_beaten_smoke.isActive = false;
 				break;
 			default:
