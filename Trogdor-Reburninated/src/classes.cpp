@@ -1692,6 +1692,9 @@ void GameManager::dm_updateFrameState() { // death message
 							gameState.highscores.custom = max(score, gameState.highscores.custom);
 							break;
 					}
+					saveBin = SDL_RWFromFile(SAVE_FILE, "wb");
+					SDL_RWwrite(saveBin, &gameState, sizeof(gameState), 1);
+					SDL_RWclose(saveBin);
 				} else {
 					player.resetPos(true);
 					paused = false;
