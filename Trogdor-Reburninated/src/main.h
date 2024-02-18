@@ -103,6 +103,7 @@ MenuNotebook menu_highscores_3;
 #if defined(WII)
 MenuNotebook menu_gba_demo;
 #endif
+Menu menu_sound;
 MenuNotebook menu_credits;
 Menu menu_quit;
 

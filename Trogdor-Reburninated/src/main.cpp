@@ -12,6 +12,7 @@ bool showOverlay = false;
 bool showOverlay = true;
 #endif
 bool menuMusicHasStarted = false;
+Sint8 lastMusicPlayed = -1;
 
 int main(int argv, char** args) {
 	isRunning = true;
@@ -490,9 +491,16 @@ int main(int argv, char** args) {
 						g_sceneState = 307;
 						break;
 #endif
+					case MENU_SOUND_INDEX:
+						menu_sound.openMenu();
+						if (lastMusicPlayed == -1) {
+							stopMusic();
+						}
+						g_sceneState = 308;
+						break;
 					case MENU_CREDITS_INDEX:
 						menu_credits.openNotebook();
-						g_sceneState = 308;
+						g_sceneState = 309;
 						break;
 					case MENU_QUIT_INDEX: // Quit Game
 						menu_quit.openMenu();
@@ -500,7 +508,7 @@ int main(int argv, char** args) {
 						QUIT_BACK->setDescriptionToIndex(j);
 						QUIT_CONFIRM->setDescriptionToIndex(j);
 						menu_quit.updateOptionPositions();
-						g_sceneState = 309;
+						g_sceneState = 310;
 						break;
 					case -1: // Press B/Select
 						g_sceneState = 3;
@@ -623,8 +631,82 @@ int main(int argv, char** args) {
 				}
 				break;
 #endif
-			/* Credits Screen */
+			/* Sound Menu */
 			case 308:
+				g_frameState.increment();
+				sprite_menu_background_ins.renderSprite_menu();
+				menu_sound.renderMenu();
+				switch (menu_sound.handleInput(0)) {
+					case 0:
+						if (lastMusicPlayed == MENU_MUSIC_TEST->index) {
+							stopMusic();
+							lastMusicPlayed = -1;
+						} else {
+							switch (MENU_MUSIC_TEST->index) {
+								case 0:
+									playMusic(MUSIC_TITLE_SCREEN, false, DEFAULT_VOLUME_GAME);
+									break;
+								case 1:
+									playMusic(MUSIC_MENU, true, DEFAULT_VOLUME_MUSIC);
+									break;
+								case 2:
+									playMusic(MUSIC_STINKOMAN_DAY, true, DEFAULT_VOLUME_MUSIC);
+									break;
+								case 3:
+									playMusic(MUSIC_STINKOMAN_EVENING, true, DEFAULT_VOLUME_MUSIC);
+									break;
+								case 4:
+									playMusic(MUSIC_STINKOMAN_NIGHT, true, DEFAULT_VOLUME_MUSIC);
+									break;
+								case 5:
+									playMusic(MUSIC_STINKOMAN_DAWN, true, DEFAULT_VOLUME_MUSIC);
+									break;
+								case 6:
+									playMusic(MUSIC_STINKOMAN_MIDPOINT, true, DEFAULT_VOLUME_MUSIC);
+									break;
+								case 7:
+									playMusic(MUSIC_STINKOMAN_BOSS, true, DEFAULT_VOLUME_MUSIC);
+									break;
+								case 8:
+									playMusic(MUSIC_STINKOMAN_LAST_10, true, DEFAULT_VOLUME_MUSIC);
+									break;
+								case 9:
+									playMusic(MUSIC_STINKOMAN_HOMESTRETCH, true, DEFAULT_VOLUME_MUSIC);
+									break;
+								case 10:
+									playMusic(MUSIC_STINKOMAN_FINAL_BOSS, true, DEFAULT_VOLUME_MUSIC);
+									break;
+								case 11:
+									playMusic(MUSIC_ENDING_1, false, DEFAULT_VOLUME_MUSIC);
+									break;
+								case 12:
+									playMusic(MUSIC_ENDING_2, false, DEFAULT_VOLUME_MUSIC);
+									break;
+								default:
+									break;
+							}
+							lastMusicPlayed = MENU_MUSIC_TEST->index;
+						}
+						break;
+					case 1:
+						loadAndPlaySound(sfxArr[MENU_SFX_TEST->index]);
+						break;
+					case 2:
+						loadAndPlaySound(sfxArr_strongBad[MENU_VOICE_TEST->index]);
+						break;
+					case -1: // Press B/Select
+						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
+						g_sceneState = 301;
+						if (lastMusicPlayed == -1) {
+							playMusic(MUSIC_MENU, true, DEFAULT_VOLUME_MUSIC);
+						}
+						break;
+					default:
+						break;
+				}
+				break;
+			/* Credits Screen */
+			case 309:
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_credits.renderNotebook();
@@ -638,7 +720,7 @@ int main(int argv, char** args) {
 				}
 				break;
 			/* Quit Screen */
-			case 309:
+			case 310:
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_quit.renderMenu();

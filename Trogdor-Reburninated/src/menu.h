@@ -6,7 +6,7 @@
 #ifndef MENU_H
 #define MENU_H
 
-constexpr auto MAX_NUM_OPTION_CHOICES = 11;
+constexpr auto MAX_NUM_OPTION_CHOICES = 23;
 constexpr auto MAX_NUM_MENU_OPTIONS = 9;
 constexpr auto MAX_NUM_MENU_PAGES = 7;
 constexpr auto MAX_NUM_MENU_LINES = 12;
@@ -195,13 +195,15 @@ constexpr auto MENU_RESET_SETTINGS_INDEX = 4;
 constexpr auto MENU_HIGHSCORES_INDEX = 5;
 #if defined(WII)
 constexpr auto MENU_GBA_DEMO_INDEX = 6;
+constexpr auto MENU_SOUND_INDEX = 7;
+constexpr auto MENU_CREDITS_INDEX = 8;
+constexpr auto MENU_QUIT_INDEX = 9;
+constexpr auto MENU_NUM_OPTIONS = 10;
+#else
+constexpr auto MENU_SOUND_INDEX = 6;
 constexpr auto MENU_CREDITS_INDEX = 7;
 constexpr auto MENU_QUIT_INDEX = 8;
 constexpr auto MENU_NUM_OPTIONS = 9;
-#else
-constexpr auto MENU_CREDITS_INDEX = 6;
-constexpr auto MENU_QUIT_INDEX = 7;
-constexpr auto MENU_NUM_OPTIONS = 8;
 #endif
 #define MENU_DIFFICULTY     menu_main.options[MENU_DIFFICULTY_INDEX]
 #define MENU_COSMETIC       menu_main.options[MENU_COSMETIC_INDEX]
@@ -212,6 +214,7 @@ constexpr auto MENU_NUM_OPTIONS = 8;
 #if defined(WII)
 #define MENU_GBA_DEMO       menu_main.options[MENU_GBA_DEMO_INDEX]
 #endif
+#define MENU_SOUND          menu_main.options[MENU_SOUND_INDEX]
 #define MENU_CREDITS        menu_main.options[MENU_CREDITS_INDEX]
 #define MENU_QUIT           menu_main.options[MENU_QUIT_INDEX]
 
@@ -274,6 +277,15 @@ constexpr auto CHEAT_NUM_OPTIONS = 4;
 extern MenuNotebook menu_highscores_1;
 extern MenuNotebook menu_highscores_2;
 extern MenuNotebook menu_highscores_3;
+
+extern Menu menu_sound;
+constexpr auto MENU_MUSIC_TEST_INDEX = 0;
+constexpr auto MENU_SFX_TEST_INDEX = 1;
+constexpr auto MENU_VOICE_TEST_INDEX = 2;
+constexpr auto SOUND_NUM_OPTIONS = 3;
+#define MENU_MUSIC_TEST  menu_sound.options[MENU_MUSIC_TEST_INDEX]
+#define MENU_SFX_TEST    menu_sound.options[MENU_SFX_TEST_INDEX]
+#define MENU_VOICE_TEST menu_sound.options[MENU_VOICE_TEST_INDEX]
 
 extern MenuNotebook menu_credits;
 

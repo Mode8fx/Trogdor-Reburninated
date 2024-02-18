@@ -40,7 +40,7 @@ SoundEffect *sfxChannel_strongBad = NULL;
 #define RESUME_MUSIC()         Mix_ResumeMusic()
 #define FADE_MUSIC(ms)         Mix_FadeOutMusic(ms)
 //#define LOAD_SFX(sfx)          Mix_QuickLoad_RAW(sfx->data, sfx->len)
-#define LOAD_SFX(sfx)         Mix_LoadWAV((rootDir + sfx->path).c_str())
+#define LOAD_SFX(sfx)          Mix_LoadWAV((rootDir + sfx->path).c_str())
 #define PLAY_SFX(sfx, channel) Mix_PlayChannel(channel, sfx->chunk, 0)
 #define FREE_SFX(sfx)          Mix_FreeChunk(sfx->chunk)
 #define SET_VOLUME_MUSIC(vol)  Mix_VolumeMusic(vol * 128 / 100)
