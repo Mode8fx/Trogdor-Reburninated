@@ -67,6 +67,12 @@ extern "C" FILE * __cdecl __iob_func(void);
 #define AUDIO_TROG_FORMAT MIX_DEFAULT_FORMAT
 #endif
 
+#if defined(THREEDS) || defined(VITA)
+constexpr auto AUDIO_SAMPLE_RATE = 22050;
+#else
+constexpr auto AUDIO_SAMPLE_RATE = 44100;
+#endif
+
 extern void applyColorKey(SDL_Surface *);
 extern void systemSpecificOpen();
 extern void systemSpecificClose();
