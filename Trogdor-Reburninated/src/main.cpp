@@ -731,8 +731,8 @@ int main(int argv, char** args) {
 						break;
 					case QUIT_CONFIRM_INDEX:
 						stopMusic();
-						saveGameState_settings();
 						loadAndPlaySound(SFX_ITSOVER);
+						saveGameState_settings();
 						while (sfxChannel_strongBad != NULL) {
 							freeFinishedSoundChunks(); // wait for sound to stop playing
 						}
