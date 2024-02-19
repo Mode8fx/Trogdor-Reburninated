@@ -366,7 +366,7 @@ void InitializeText_Cutscenes() {
 void InitializeText_PauseScreen() {
 	SET_TEXT("paused", text_4_paused_1, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 130 * gameHiResMult);
-#if defined(WII_U) || defined(GAMECUBE) || defined(ANDROID) || defined(THREEDS)
+#if defined(WII_U) || defined(ANDROID) || defined(THREEDS)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
 	SET_TEXT("press 'A+SELECT' to quit", text_4_paused_3, font_serif_white_6,
@@ -375,6 +375,11 @@ void InitializeText_PauseScreen() {
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
 	SET_TEXT("press '2+SELECT' to quit", text_4_paused_3, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
+#elif defined(GAMECUBE)
+	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
+	SET_TEXT("press 'A+Z' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(VITA) || defined(PSP)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
