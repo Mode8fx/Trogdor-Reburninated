@@ -68,7 +68,7 @@ int main(int argv, char** args) {
 			timer_buttonHold = 0;
 			timer_buttonHold_repeater = 0;
 		}
-		handleInput();
+		handlePlayerInput();
 		if (keyPressed(INPUT_FULLSCREEN)) {
 			SDL_toggleFullscreen();
 		}
@@ -1320,7 +1320,7 @@ int main(int argv, char** args) {
 #endif
 
 		while (1) {
-			handleInput();
+			handlePlayerInput();
 			if (!isRunning || keyPressed(INPUT_START)) {
 				break;
 			}

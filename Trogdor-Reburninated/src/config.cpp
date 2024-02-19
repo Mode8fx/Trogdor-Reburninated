@@ -1,7 +1,7 @@
 #include "config.h"
 #include "menu.h"
 
-#if defined(WII) || defined(GAMECUBE) || defined(XBOX)
+#if defined(WII)
 Uint16 DEFAULT_WIDTH = 640;
 Uint16 DEFAULT_HEIGHT = 480;
 #endif
@@ -13,9 +13,8 @@ void saveGameState_settings() {
 	gameState.settings_other = getSettingsOther();
 	gameState.settings_cheats = getSettingsCheats();
 	gameState.settings_unlocks = getSettingsUnlocks();
-	saveBin = SDL_RWFromFile(SAVE_FILE, "wb");
-	SDL_RWwrite(saveBin, &gameState, sizeof(gameState), 1);
-	SDL_RWclose(saveBin);
+	gameState.addon_v_2_1 = getSettings_v_2_1();
+	saveGameState_all();
 }
 
 void loadGameState() {
@@ -83,8 +82,8 @@ void setOptionsFromSaveData() {
 	MENU_SPEEDY_MODE->setLocked(gameState.settings_unlocks.locked_speedyMode);
 	MENU_NOCLIP->setLocked(gameState.settings_unlocks.locked_noclip);
 	MENU_DEBUG_MODE->setLocked(gameState.settings_unlocks.locked_debugMode);
-	setPreset(MENU_PRESET->index);
 	menu_other.setOptionChoice(MENU_KNIGHT_MOVEMENT_INDEX, gameState.addon_v_2_1.knightMovement);
+	setPreset(MENU_PRESET->index);
 }
 
 void initializeDefaultGameState() {
@@ -94,8 +93,10 @@ void initializeDefaultGameState() {
 	gameState.settings_other = getSettingsOther();
 	gameState.settings_cheats = getSettingsCheats();
 	gameState.settings_unlocks = getSettingsUnlocks();
+	gameState.addon_v_2_1 = getSettings_v_2_1();
 	gameState.autosave = { -1, 0, 0, 0, 0, false, gameState.settings_difficulty, gameState.settings_other.shuffleLevels, gameState.settings_cheats };
 	gameState.highscores = { 0, 0, 0, 0, 0, 0 };
+	updateFrameRate();
 }
 
 void fixSaveDataIntegrity() {
@@ -122,4 +123,12 @@ void fixSaveDataIntegrity() {
 	gameState.settings_cheats.debugMode %= MENU_DEBUG_MODE->numChoices;
 	MENU_PRESET->index %= MENU_PRESET->numChoices;
 	gameState.addon_v_2_1.knightMovement %= MENU_KNIGHT_MOVEMENT->numChoices;
+}
+
+void saveGameState_all() {
+	saveBin = SDL_RWFromFile(SAVE_FILE, "wb");
+	if (saveBin) {
+		SDL_RWwrite(saveBin, &gameState, sizeof(gameState), 1);
+		SDL_RWclose(saveBin);
+	}
 }

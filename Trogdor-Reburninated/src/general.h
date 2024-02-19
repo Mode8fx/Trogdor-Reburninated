@@ -67,7 +67,7 @@ extern "C" FILE * __cdecl __iob_func(void);
 #define AUDIO_TROG_FORMAT MIX_DEFAULT_FORMAT
 #endif
 
-#if defined(THREEDS) || defined(VITA)
+#if defined(THREEDS)
 constexpr auto AUDIO_SAMPLE_RATE = 22050;
 #else
 constexpr auto AUDIO_SAMPLE_RATE = 44100;

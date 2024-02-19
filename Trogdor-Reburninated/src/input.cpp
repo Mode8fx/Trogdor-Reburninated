@@ -11,11 +11,11 @@ bool keyHeld(Uint16 button) {
 	return (heldKeys & button);
 }
 
-inline bool dirHeld(Uint8 dir) {
+inline static bool dirHeld(Uint8 dir) {
 	return (heldDirs & dir);
 }
 
-inline void handleAnalogInput() {
+inline static void handleAnalogInput() {
 	if (controllerAxis_leftStickY < 0) {
 		heldDirs_stick |= INPUT_UP;
 	} else {
@@ -38,7 +38,7 @@ inline void handleAnalogInput() {
 	}
 }
 
-inline void handleHeldKeys(Uint32 deltaTime) {
+inline static void handleHeldKeys(Uint32 deltaTime) {
 	heldDirs = heldDirs_kb | heldDirs_dpad | heldDirs_stick;
 	heldKeys &= ~INPUT_ALL_DIRS;
 	heldKeys |= heldDirs;
@@ -56,7 +56,7 @@ inline void handleHeldKeys(Uint32 deltaTime) {
 }
 
 #if defined(WII)
-inline void wii_mapWiiDir(Uint32 wiimoteInput, Uint32 ccInput, Uint32 output) {
+inline static void wii_mapWiiDir(Uint32 wiimoteInput, Uint32 ccInput, Uint32 output) {
 	if (wii_keysDown & wiimoteInput || wii_keysDown & ccInput) {
 		heldDirs_dpad |= output;
 	} else if (wii_keysUp & wiimoteInput || wii_keysUp & ccInput) {
@@ -64,7 +64,7 @@ inline void wii_mapWiiDir(Uint32 wiimoteInput, Uint32 ccInput, Uint32 output) {
 	}
 }
 
-inline void wii_mapWiiButton(Uint32 wiimoteInput, Uint32 ccInput, Uint32 output) {
+inline static void wii_mapWiiButton(Uint32 wiimoteInput, Uint32 ccInput, Uint32 output) {
 	if (wii_keysDown & wiimoteInput || wii_keysDown & ccInput) {
 		heldKeys |= output;
 	} else if (wii_keysUp & wiimoteInput || wii_keysUp & ccInput) {
@@ -72,7 +72,7 @@ inline void wii_mapWiiButton(Uint32 wiimoteInput, Uint32 ccInput, Uint32 output)
 	}
 }
 
-inline void wii_mapGCDir(Uint32 gcInput, Uint32 output) {
+inline static void wii_mapGCDir(Uint32 gcInput, Uint32 output) {
 	if (wii_keysDown & gcInput) {
 		heldDirs_dpad |= output;
 	} else if (wii_keysUp & gcInput) {
@@ -80,17 +80,99 @@ inline void wii_mapGCDir(Uint32 gcInput, Uint32 output) {
 	}
 }
 
-inline void wii_mapGCButton(Uint32 gcInput, Uint32 output) {
+inline static void wii_mapGCButton(Uint32 gcInput, Uint32 output) {
 	if (wii_keysDown & gcInput) {
 		heldKeys |= output;
 	} else if (wii_keysUp & gcInput) {
+		heldKeys &= ~output;
+	}
+}
+#elif defined(GAMECUBE)
+inline static void gc_mapDir(Uint32 gcInput, Uint32 output) {
+	if (gc_keysDown & gcInput) {
+		heldDirs_dpad |= output;
+	} else if (gc_keysUp & gcInput) {
+		heldDirs_dpad &= ~output;
+	}
+}
+
+inline static void gc_mapButton(Uint32 gcInput, Uint32 output) {
+	if (gc_keysDown & gcInput) {
+		heldKeys |= output;
+	} else if (gc_keysUp & gcInput) {
 		heldKeys &= ~output;
 	}
 }
 #endif
 
-void handleInput() {
-#if !defined(WII)
+void handlePlayerInput() {
+#if defined(WII)
+	WPAD_ScanPads();
+	wii_keysDown = WPAD_ButtonsDown(0);
+	wii_keysUp = WPAD_ButtonsUp(0);
+	wii_mapWiiDir(WPAD_BUTTON_UP, WPAD_CLASSIC_BUTTON_LEFT, INPUT_LEFT);
+	wii_mapWiiDir(WPAD_BUTTON_DOWN, WPAD_CLASSIC_BUTTON_RIGHT, INPUT_RIGHT);
+	wii_mapWiiDir(WPAD_BUTTON_LEFT, WPAD_CLASSIC_BUTTON_DOWN, INPUT_DOWN);
+	wii_mapWiiDir(WPAD_BUTTON_RIGHT, WPAD_CLASSIC_BUTTON_UP, INPUT_UP);
+	wii_mapWiiButton(WPAD_BUTTON_A, WPAD_CLASSIC_BUTTON_FULL_R, INPUT_R);
+	wii_mapWiiButton(WPAD_BUTTON_B, WPAD_CLASSIC_BUTTON_FULL_L, INPUT_L);
+	wii_mapWiiButton(WPAD_BUTTON_1, WPAD_CLASSIC_BUTTON_B, INPUT_B);
+	wii_mapWiiButton(WPAD_BUTTON_2, WPAD_CLASSIC_BUTTON_A, INPUT_A);
+	wii_mapWiiButton(WPAD_BUTTON_PLUS, WPAD_CLASSIC_BUTTON_PLUS, INPUT_START);
+	wii_mapWiiButton(WPAD_BUTTON_MINUS, WPAD_CLASSIC_BUTTON_MINUS, INPUT_SELECT);
+	wii_mapWiiButton(WPAD_BUTTON_HOME, WPAD_CLASSIC_BUTTON_HOME, INPUT_Y);
+
+	PAD_ScanPads();
+	wii_keysDown = PAD_ButtonsDown(0);
+	wii_keysUp = PAD_ButtonsUp(0);
+	wii_mapGCDir(PAD_BUTTON_UP, INPUT_UP);
+	wii_mapGCDir(PAD_BUTTON_DOWN, INPUT_DOWN);
+	wii_mapGCDir(PAD_BUTTON_LEFT, INPUT_LEFT);
+	wii_mapGCDir(PAD_BUTTON_RIGHT, INPUT_RIGHT);
+	wii_mapGCButton(PAD_BUTTON_A, INPUT_A);
+	wii_mapGCButton(PAD_BUTTON_B, INPUT_B);
+	wii_mapGCButton(PAD_BUTTON_X, INPUT_X);
+	wii_mapGCButton(PAD_BUTTON_Y, INPUT_Y);
+	wii_mapGCButton(PAD_TRIGGER_L, INPUT_L);
+	wii_mapGCButton(PAD_TRIGGER_R, INPUT_R);
+	wii_mapGCButton(PAD_TRIGGER_Z, INPUT_SELECT);
+	wii_mapGCButton(PAD_BUTTON_START, INPUT_START);
+	controllerAxis_leftStickX = PAD_StickX(0) * 256;
+	controllerAxis_leftStickY = PAD_StickY(0) * -256;
+	if ((controllerAxis_leftStickX > -STICK_DEADZONE) && (controllerAxis_leftStickX < STICK_DEADZONE)) {
+		controllerAxis_leftStickX = 0;
+	}
+	if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
+		controllerAxis_leftStickY = 0;
+	}
+#elif defined(GAMECUBE)
+	// TODO: Gamecube controls go here
+	PAD_ScanPads();
+	gc_keysDown = PAD_ButtonsDown(0);
+	gc_keysUp = PAD_ButtonsUp(0);
+	gc_keysDown = PAD_ButtonsDown(0);
+	gc_keysUp = PAD_ButtonsUp(0);
+	gc_mapDir(PAD_BUTTON_UP, INPUT_UP);
+	gc_mapDir(PAD_BUTTON_DOWN, INPUT_DOWN);
+	gc_mapDir(PAD_BUTTON_LEFT, INPUT_LEFT);
+	gc_mapDir(PAD_BUTTON_RIGHT, INPUT_RIGHT);
+	gc_mapButton(PAD_BUTTON_A, INPUT_A);
+	gc_mapButton(PAD_BUTTON_B, INPUT_B);
+	gc_mapButton(PAD_BUTTON_X, INPUT_X);
+	gc_mapButton(PAD_BUTTON_Y, INPUT_Y);
+	gc_mapButton(PAD_TRIGGER_L, INPUT_L);
+	gc_mapButton(PAD_TRIGGER_R, INPUT_R);
+	gc_mapButton(PAD_TRIGGER_Z, INPUT_SELECT);
+	gc_mapButton(PAD_BUTTON_START, INPUT_START);
+	controllerAxis_leftStickX = PAD_StickX(0) * 256;
+	controllerAxis_leftStickY = PAD_StickY(0) * -256;
+	if ((controllerAxis_leftStickX > -STICK_DEADZONE) && (controllerAxis_leftStickX < STICK_DEADZONE)) {
+		controllerAxis_leftStickX = 0;
+	}
+	if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
+		controllerAxis_leftStickY = 0;
+	}
+#else
 	keyInputs = 0;
 	/* Update Key/Button Presses, Mouse/Touch Input, and Window Resizing */
 #if !defined(SDL1) && !defined(PSP)
@@ -104,7 +186,7 @@ void handleInput() {
 		controllerAxis_leftStickY = 0;
 	}
 	/* Update Controller Hat Positions (SDL1 only; SDL2 D-Pad buttons are handled later) */
-#elif defined(GAMECUBE) || defined(THREEDS)
+#elif defined(THREEDS)
 	joystickHat = SDL_JoystickGetHat(joystick, 0);
 	if (joystickHat & SDL_HAT_UP) {
 		heldDirs_dpad |= INPUT_UP;
@@ -410,76 +492,7 @@ void handleInput() {
 			default:
 				break;
 #else
-#if defined(GAMECUBE)
-			case SDL_JOYBUTTONDOWN:
-				if (event.jbutton.button == 0) {
-					heldKeys |= INPUT_A;
-					break;
-				}
-				if (event.jbutton.button == 1) {
-					heldKeys |= INPUT_B;
-					break;
-				}
-				if (event.jbutton.button == 2) {
-					heldKeys |= INPUT_X;
-					break;
-				}
-				if (event.jbutton.button == 3) {
-					heldKeys |= INPUT_Y;
-					break;
-				}
-				if (event.jbutton.button == 4) {
-					heldKeys |= INPUT_SELECT;
-					break;
-				}
-				if (event.jbutton.button == 5) {
-					heldKeys |= INPUT_R;
-					break;
-				}
-				if (event.jbutton.button == 6) {
-					heldKeys |= INPUT_L;
-					break;
-				}
-				if (event.jbutton.button == 7) {
-					heldKeys |= INPUT_START;
-					break;
-				}
-				break;
-			case SDL_JOYBUTTONUP:
-				if (event.jbutton.button == 0) {
-					heldKeys &= ~INPUT_A;
-					break;
-				}
-				if (event.jbutton.button == 1) {
-					heldKeys &= ~INPUT_B;
-					break;
-				}
-				if (event.jbutton.button == 2) {
-					heldKeys &= ~INPUT_X;
-					break;
-				}
-				if (event.jbutton.button == 3) {
-					heldKeys &= ~INPUT_Y;
-					break;
-				}
-				if (event.jbutton.button == 4) {
-					heldKeys &= ~INPUT_SELECT;
-					break;
-				}
-				if (event.jbutton.button == 5) {
-					heldKeys &= ~INPUT_R;
-					break;
-				}
-				if (event.jbutton.button == 6) {
-					heldKeys &= ~INPUT_L;
-					break;
-				}
-				if (event.jbutton.button == 7) {
-					heldKeys &= ~INPUT_START;
-					break;
-				}
-				break;
-#elif defined(THREEDS)
+#if defined(THREEDS)
 			case SDL_JOYBUTTONDOWN:
 				if (event.jbutton.button == 0) {
 					heldKeys |= INPUT_START;
@@ -671,49 +684,7 @@ void handleInput() {
 #endif
 		}
 	}
-	handleAnalogInput();
-	handleHeldKeys(deltaTime);
-#else // Wii
-	WPAD_ScanPads();
-	wii_keysDown = WPAD_ButtonsDown(0);
-	wii_keysUp = WPAD_ButtonsUp(0);
-	wii_mapWiiDir(WPAD_BUTTON_UP, WPAD_CLASSIC_BUTTON_LEFT, INPUT_LEFT);
-	wii_mapWiiDir(WPAD_BUTTON_DOWN, WPAD_CLASSIC_BUTTON_RIGHT, INPUT_RIGHT);
-	wii_mapWiiDir(WPAD_BUTTON_LEFT, WPAD_CLASSIC_BUTTON_DOWN, INPUT_DOWN);
-	wii_mapWiiDir(WPAD_BUTTON_RIGHT, WPAD_CLASSIC_BUTTON_UP, INPUT_UP);
-	wii_mapWiiButton(WPAD_BUTTON_A, WPAD_CLASSIC_BUTTON_FULL_R, INPUT_R);
-	wii_mapWiiButton(WPAD_BUTTON_B, WPAD_CLASSIC_BUTTON_FULL_L, INPUT_L);
-	wii_mapWiiButton(WPAD_BUTTON_1, WPAD_CLASSIC_BUTTON_B, INPUT_B);
-	wii_mapWiiButton(WPAD_BUTTON_2, WPAD_CLASSIC_BUTTON_A, INPUT_A);
-	wii_mapWiiButton(WPAD_BUTTON_PLUS, WPAD_CLASSIC_BUTTON_PLUS, INPUT_START);
-	wii_mapWiiButton(WPAD_BUTTON_MINUS, WPAD_CLASSIC_BUTTON_MINUS, INPUT_SELECT);
-	wii_mapWiiButton(WPAD_BUTTON_HOME, WPAD_CLASSIC_BUTTON_HOME, INPUT_Y);
-
-	PAD_ScanPads();
-	wii_keysDown = PAD_ButtonsDown(0);
-	wii_keysUp = PAD_ButtonsUp(0);
-	wii_mapGCDir(PAD_BUTTON_UP, INPUT_UP);
-	wii_mapGCDir(PAD_BUTTON_DOWN, INPUT_DOWN);
-	wii_mapGCDir(PAD_BUTTON_LEFT, INPUT_LEFT);
-	wii_mapGCDir(PAD_BUTTON_RIGHT, INPUT_RIGHT);
-	wii_mapGCButton(PAD_BUTTON_A, INPUT_A);
-	wii_mapGCButton(PAD_BUTTON_B, INPUT_B);
-	wii_mapGCButton(PAD_BUTTON_X, INPUT_X);
-	wii_mapGCButton(PAD_BUTTON_Y, INPUT_Y);
-	wii_mapGCButton(PAD_TRIGGER_L, INPUT_L);
-	wii_mapGCButton(PAD_TRIGGER_R, INPUT_R);
-	wii_mapGCButton(PAD_TRIGGER_Z, INPUT_SELECT);
-	wii_mapGCButton(PAD_BUTTON_START, INPUT_START);
-	controllerAxis_leftStickX = PAD_StickX(0) * 256;
-	controllerAxis_leftStickY = PAD_StickY(0) * -256;
-	if ((controllerAxis_leftStickX > -STICK_DEADZONE) && (controllerAxis_leftStickX < STICK_DEADZONE)) {
-		controllerAxis_leftStickX = 0;
-	}
-	if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
-		controllerAxis_leftStickY = 0;
-	}
-
-	handleAnalogInput();
-	handleHeldKeys(deltaTime);
 #endif
+	handleAnalogInput();
+	handleHeldKeys(deltaTime);
 }

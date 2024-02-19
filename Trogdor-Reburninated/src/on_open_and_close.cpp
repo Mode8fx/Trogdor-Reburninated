@@ -30,7 +30,7 @@ void InitializeDisplay() {
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #elif defined(WII) || defined(GAMECUBE) || defined(THREEDS)
-#if defined(WII) || defined(GAMECUBE)
+#if defined(WII)
 	if (frameRate <= 25) {
 		DEFAULT_WIDTH = 640;
 		DEFAULT_HEIGHT = 480;

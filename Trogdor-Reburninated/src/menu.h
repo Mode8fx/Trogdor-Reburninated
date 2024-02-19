@@ -304,6 +304,7 @@ extern State_Settings_Cosmetic getSettingsCosmetic();
 extern State_Settings_Other getSettingsOther();
 extern State_Settings_Cheats getSettingsCheats();
 extern State_Settings_Unlocks getSettingsUnlocks();
+extern State_Addon_v_2_1 getSettings_v_2_1();
 extern void updateFrameRate();
 extern void setPreset(Sint8);
 extern void updateHighScores();

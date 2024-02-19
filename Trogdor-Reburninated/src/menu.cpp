@@ -511,8 +511,8 @@ void Menu::renderMenu() {
 #define option_main_level_order_choices { "Original", "Shuffled" }
 #define option_shuffle_levels_descriptions_line_1 { "Shuffle the level order so it's", "Play using the original level order." }
 #define option_shuffle_levels_descriptions_line_2 { "different every time you play.", "" }
-#define option_shuffle_levels_descriptions_line_3 { "(Custom / Mode 8 / Chaos presets only.)", "" }
-#define option_main_preset_choices { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mode 8", "Chaos" }
+#define option_shuffle_levels_descriptions_line_3 { "(Custom / Mode 8 / Chance presets only.)", "" }
+#define option_main_preset_choices { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mode 8", "Chance" }
 #define option_main_preset_descriptions_line_1 { "Make your own rules!", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "They invented it just for this game!", "Knight/arrow speed and archer freq. are" }
 #define option_main_preset_descriptions_line_2 { "Cheats and level select", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "Do you has what it takes?", "Fewer extra lives, crazy fast arrows,", "shuffled every level, and levels are" }
 #define option_main_preset_descriptions_line_3 { "are also allowed.", "", "", "For Trogdor pros.", "", "all treasure huts, shuffled levels.", "shuffled! Who knows what could happen?" }
@@ -551,7 +551,7 @@ void Menu::renderMenu() {
 #define option_main_arrow_speed_descriptions_line_1 { "Change how quickly arrows move." }
 #if defined(THREEDS)
 #define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "", "", "", "", "", "", "" }
-#elif defined(WII) || defined(GAMECUBE)
+#elif defined(WII)
 #define option_main_frame_rate_choices { "16 FPS (orig.) (480p)", "20 FPS (480p)", "25 FPS (480p)", "30 FPS (240p)", "40 FPS (240p)", "50 FPS (240p)", "55 FPS (240p)", "60 FPS (240p)", "", "", "" }
 #else
 #define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS", "90 FPS", "120 FPS", "144 FPS" }
@@ -759,11 +759,11 @@ void InitializeMenus() {
 	}
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(PSP) || defined(XBOX)
+#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(PSP) || defined(GAMECUBE) || defined(XBOX)
 		"", 8, true, 7, true, false);
 #elif defined(THREEDS)
 		"", 4, true, 3, true, false);
-#elif defined(WII) || defined(GAMECUBE)
+#elif defined(WII)
 		"", 8, true, 2, true, false);
 #else
 		"", 11, true, 7, true, false);
@@ -843,7 +843,7 @@ void InitializeMenus() {
 	menu_highscores_2.pages[0]->setTextLine(4, "Hard:");
 	menu_highscores_2.pages[0]->setTextLine(5, "Cruel:");
 	menu_highscores_2.pages[0]->setTextLine(6, "Mode 8:");
-	menu_highscores_2.pages[0]->setTextLine(7, "Chaos:");
+	menu_highscores_2.pages[0]->setTextLine(7, "Chance:");
 	menu_highscores_2.pages[0]->setTextLine(8, "Custom:");
 	menu_highscores_3.pages[0]->prepareMenuPage(9, 224, 30, 20, 2);
 	menu_highscores_3.pages[0]->setTextLine(0, "");
@@ -944,7 +944,11 @@ void InitializeMenus() {
 	menu_credits.pages[1]->setTextLine(4, "https://github.com/Mode8fx");
 	menu_credits.pages[1]->setTextLine(5, "/Trogdor-Reburninated");
 	menu_credits.pages[1]->setTextLine(6, "");
+#if defined(GAMECUBE)
+	menu_credits.pages[1]->setTextLine(7, "v2.1-beta");
+#else
 	menu_credits.pages[1]->setTextLine(7, "v2.1");
+#endif
 
 	menu_credits.pages[2]->prepareMenuPage(5, 0, 30, 20, 1);
 	menu_credits.pages[2]->setTextLine(0, "- STINKOMAN MUSIC -");
@@ -1122,35 +1126,9 @@ State_Addon_v_2_1 getSettings_v_2_1() {
 }
 
 void updateFrameRate() {
-#if defined(WII) || defined(GAMECUBE) || defined(THREEDS)
+#if defined(WII)
 	uint_i = DEFAULT_WIDTH;
-	switch (MENU_FRAME_RATE->index) {
-		case 1:
-			frameRate = 20;
-			break;
-		case 2:
-			frameRate = 25;
-			break;
-		case 3:
-			frameRate = 30;
-			break;
-		case 4:
-			frameRate = 40;
-			break;
-		case 5:
-			frameRate = 50;
-			break;
-		case 6:
-			frameRate = 55;
-			break;
-		case 7:
-			frameRate = 60;
-			break;
-		default:
-			frameRate = 16;
-			break;
-	}
-#else
+#endif
 	switch (MENU_FRAME_RATE->index) {
 		case 1:
 			frameRate = 20;
@@ -1210,13 +1188,12 @@ void updateFrameRate() {
 #endif
 			break;
 	}
-#endif
 #if !defined(PSP)
 	frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / frameRate;
 #endif
 	popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 	ticksPerFrame = (Uint32)(1000 / frameRate);
-#if defined(WII) || defined(GAMECUBE)
+#if defined(WII)
 	if (frameRate <= 25) {
 		DEFAULT_WIDTH = 640;
 		DEFAULT_HEIGHT = 480;
@@ -1347,6 +1324,6 @@ void updateHighScores() {
 	menu_highscores_3.pages[0]->setTextLine(4, to_string(gameState.highscores.hard).c_str());
 	menu_highscores_3.pages[0]->setTextLine(5, to_string(gameState.highscores.cruel).c_str());
 	menu_highscores_3.pages[0]->setTextLine(6, to_string(gameState.highscores.mipsChoice).c_str());
-	menu_highscores_3.pages[0]->setTextLine(7, to_string(gameState.addon_v_2_1.chaos).c_str());
+	menu_highscores_3.pages[0]->setTextLine(7, to_string(gameState.addon_v_2_1.chance).c_str());
 	menu_highscores_3.pages[0]->setTextLine(8, to_string(gameState.highscores.custom).c_str());
 }

@@ -81,7 +81,7 @@ struct State_HighScores {
 
 struct State_Addon_v_2_1 {
 	Sint8 knightMovement;
-	Uint32 chaos;
+	Uint32 chance;
 };
 
 struct GameState {
@@ -135,7 +135,7 @@ constexpr auto DEFAULT_HEIGHT = 1080;
 #elif defined(PSP)
 constexpr auto DEFAULT_WIDTH = 480;
 constexpr auto DEFAULT_HEIGHT = 272;
-#elif defined(WII) || defined(GAMECUBE) || defined(XBOX)
+#elif defined(WII)
 extern Uint16 DEFAULT_WIDTH;
 extern Uint16 DEFAULT_HEIGHT;
 #elif defined(THREEDS)
@@ -158,5 +158,6 @@ extern void loadGameState_partial();
 extern void setOptionsFromSaveData();
 extern void initializeDefaultGameState();
 extern void fixSaveDataIntegrity();
+extern void saveGameState_all();
 
 #endif

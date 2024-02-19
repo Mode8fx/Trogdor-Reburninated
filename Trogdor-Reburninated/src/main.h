@@ -76,6 +76,9 @@ Sint16 controllerAxis_leftStickY;
 #if defined(WII)
 Uint32 wii_keysDown;
 Uint32 wii_keysUp;
+#elif defined(GAMECUBE)
+Uint32 gc_keysDown;
+Uint32 gc_keysUp;
 #endif
 #if !(defined(GAMECUBE) || defined(PSP) || defined(XBOX))
 Sint32 mouseInput_x;

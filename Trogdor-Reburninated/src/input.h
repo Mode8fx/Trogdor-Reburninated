@@ -27,6 +27,9 @@ extern Sint16 controllerAxis_leftStickY;
 #if defined(WII)
 extern Uint32 wii_keysDown;
 extern Uint32 wii_keysUp;
+#elif defined(GAMECUBE)
+extern Uint32 gc_keysDown;
+extern Uint32 gc_keysUp;
 #endif
 #if !(defined(GAMECUBE) || defined(PSP) || defined(XBOX))
 extern Sint32 mouseInput_x;
@@ -80,15 +83,6 @@ constexpr auto INPUT_ALL_DIRS   = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIG
 
 bool keyPressed(Uint16 key);
 bool keyHeld(Uint16 button);
-inline bool dirHeld(Uint8 dir);
-inline void handleAnalogInput();
-inline void handleHeldKeys(Uint32 deltaTime);
-#if defined(WII)
-inline void wii_mapWiiDir(Uint32 wiimoteInput, Uint32 ccInput, Uint32 output);
-inline void wii_mapWiiButton(Uint32 wiimoteInput, Uint32 ccInput, Uint32 output);
-inline void wii_mapGCDir(Uint32 gcInput, Uint32 output);
-inline void wii_mapGCButton(Uint32 gcInput, Uint32 output);
-#endif
-void handleInput();
+void handlePlayerInput();
 
 #endif

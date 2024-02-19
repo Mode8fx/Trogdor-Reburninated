@@ -1714,15 +1714,13 @@ void GameManager::dm_updateFrameState() { // death message
 							gameState.highscores.mipsChoice = max(score, gameState.highscores.mipsChoice);
 							break;
 						case 6:
-							gameState.addon_v_2_1.chaos = max(score, gameState.addon_v_2_1.chaos);
+							gameState.addon_v_2_1.chance = max(score, gameState.addon_v_2_1.chance);
 							break;
 						default:
 							gameState.highscores.custom = max(score, gameState.highscores.custom);
 							break;
 					}
-					saveBin = SDL_RWFromFile(SAVE_FILE, "wb");
-					SDL_RWwrite(saveBin, &gameState, sizeof(gameState), 1);
-					SDL_RWclose(saveBin);
+					saveGameState_all();
 				} else {
 					player.resetPos(true);
 					paused = false;
@@ -2028,7 +2026,5 @@ void GameManager::saveGameState_autosave() {
 	gameState.autosave.difficulty = { preset, MENU_EXTRA_LIVES->index, livesIntervalSetting, peasantPenalty, knightSpeedSetting, arrowSpeedSetting, archerFrequencySetting, treasureHutSetting };
 	gameState.autosave.shuffleLevels = shuffleLevels;
 	gameState.autosave.cheats = { infiniteLives, speedyMode, noclip, debugMode };
-	saveBin = SDL_RWFromFile(SAVE_FILE, "wb");
-	SDL_RWwrite(saveBin, &gameState, sizeof(gameState), 1);
-	SDL_RWclose(saveBin);
+	saveGameState_all();
 }
