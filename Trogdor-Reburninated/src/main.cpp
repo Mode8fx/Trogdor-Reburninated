@@ -849,6 +849,7 @@ int main(int argv, char** args) {
 						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
 							g_sceneState = 3;
 							lastMusicPlayed = -1;
+							GM.saveGameState_autosave();
 							stopMusic();
 							setVolume_music(DEFAULT_VOLUME_MUSIC);
 							menuMusicHasStarted = false;
@@ -948,6 +949,7 @@ int main(int argv, char** args) {
 						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
 							g_sceneState = 3;
 							lastMusicPlayed = -1;
+							GM.saveGameState_autosave();
 							stopMusic();
 							menuMusicHasStarted = false;
 							MM = MenuManager();

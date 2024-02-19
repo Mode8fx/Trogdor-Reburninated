@@ -1020,6 +1020,7 @@ void GameManager::setMusic() {
 }
 
 void GameManager::levelInit() {
+	srand(randomSeed + level);
 	setBurnination(0);
 	if (preset == 6) {
 		knightSpeed = (float)(0.9 + ((rand() % 25) * 0.025)); // normal range: 0.7~1.3; this is 0.9~1.5
