@@ -567,7 +567,7 @@ void Menu::renderMenu() {
 #define option_main_comment_freq_descriptions_line_1 { "Strong Bad does not talk.", "Strong Bad rarely talks.", "Strong Bad talks less than usual.", "Strong Bad talks as often", "Strong Bad talks a bit more often.", "Strong Bad talks much more often.", "Strong Bad won't shut up!" }
 #define option_main_comment_freq_descriptions_line_2 { "", "", "", "as he did in the original game.", "", "", "(He talks twice as much as usual.)"}
 #define option_main_comment_freq_descriptions_line_3 { "", "", "", "", "", "", "" }
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
+#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
 #define press_confirm_to_apply "(Press " + INPUT_CONFIRM + " to apply, may take a few seconds)"
 #else
 #define press_confirm_to_apply "(Press " + INPUT_CONFIRM + " to apply)"
@@ -582,7 +582,7 @@ void Menu::renderMenu() {
 #define option_main_scaling_descriptions_line_1 { "Scale so that everything uses integer", "", "Scale everything so that", "Scale the game to fill the screen." }
 #define option_main_scaling_descriptions_line_2 { "scaling. Accurate, but small.", "", "the overlay fills the screen.", "The overlay will be cut off." }
 #define option_main_scaling_descriptions_line_3 { press_confirm_to_apply, "", press_confirm_to_apply, press_confirm_to_apply }
-#elif defined(WII) || defined(GAMECUBE) || defined(XBOX)
+#elif (RG35XX) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
 #define option_main_scaling_choices { "Pixel-Perfect", "", "", "Full Game" }
 #define option_main_scaling_descriptions_line_1 { "Scale so that everything uses integer", "", "", "Scale the game to fill the screen." }
 #define option_main_scaling_descriptions_line_2 { "scaling. The most accurate.", "", "", "The overlay will be cut off." }
@@ -630,7 +630,7 @@ void Menu::renderMenu() {
 #define option_cheats_noclip_descriptions_line_1 { "Remove the game's difficulty" }
 #define option_cheats_noclip_descriptions_line_2 { "by walking through cottages." }
 #define option_number_choices { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" } // I know, this is bad
-#if defined(WII_U) || defined(VITA) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
+#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
 #if defined(WII_U)
 #define console_quit_line_1 "WHY ARE YOU STILL USING A WII U?!"
 #elif defined(VITA)
@@ -759,7 +759,7 @@ void InitializeMenus() {
 	}
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(PSP) || defined(GAMECUBE) || defined(XBOX)
+#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(PSP) || defined(GAMECUBE) || defined(XBOX)
 		"", 8, true, 7, true, false);
 #elif defined(THREEDS)
 		"", 4, true, 3, true, false);
@@ -1036,10 +1036,10 @@ void InitializeMenus() {
 		MENU_SPEEDY_MODE->setLocked(true);
 		MENU_NOCLIP->setLocked(true);
 		MENU_DEBUG_MODE->setLocked(true);
-#if defined(THREEDS) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
+#if defined(RG35XX) || defined(THREEDS) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
 		MENU_SCALING->choiceIsAllowed[1] = false;
 #endif
-#if defined(THREEDS) || defined(WII) || defined(GAMECUBE) || defined(XBOX) || defined(WII_U)
+#if defined(RG35XX) || defined(THREEDS) || defined(WII) || defined(GAMECUBE) || defined(XBOX) || defined(WII_U)
 		MENU_SCALING->choiceIsAllowed[2] = false;
 #endif
 #if defined(THREEDS) || defined(WII_U) || defined(SWITCH)

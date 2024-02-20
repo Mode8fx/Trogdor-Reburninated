@@ -6,7 +6,7 @@
 #include "level_data.h"
 
 bool renderOverlay;
-#if defined(THREEDS)
+#if defined(RG35XX) || defined(THREEDS)
 bool showOverlay = false;
 #else
 bool showOverlay = true;
@@ -31,12 +31,12 @@ int main(int argv, char** args) {
 #endif
 		return 1;
 	}
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
+#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 	SDL_ShowCursor(SDL_DISABLE);
 #endif
 	InitializeController();
 
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
+#if !(defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 	try {
 #endif
 	loadGameState_partial();
@@ -90,7 +90,7 @@ int main(int argv, char** args) {
 		}
 		/* Handle Window Size Changes */
 		if (windowSizeChanged) {
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)) && !defined(SDL1)
+#if !(defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)) && !defined(SDL1)
 			if (scalingType % 2 == 1 && SDL_GetWindowSurface(window)->w >= appWidth && SDL_GetWindowSurface(window)->h >= appHeight) {
 				if (SDL_GetWindowSurface(window)->w < gameWidth)
 					SDL_SetWindowSize(window, gameWidth, SDL_GetWindowSurface(window)->h);
@@ -346,7 +346,7 @@ int main(int argv, char** args) {
 							renderText(text_3_controls_5, font_serif_white_6_mult);
 							renderText(text_3_controls_6, font_serif_white_6_mult);
 							break;
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
+#if !(defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 						case 5:
 							renderText(text_3_keyboard_1, font_serif_red_6_mult);
 							renderText(text_3_keyboard_2, font_serif_white_6_mult);
@@ -388,7 +388,7 @@ int main(int argv, char** args) {
 							renderText(text_3_controls_5, font_serif_white_6_mult);
 							renderText(text_3_controls_6, font_serif_white_6_mult);
 							break;
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
+#if !(defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 						case 4:
 							renderText(text_3_keyboard_1, font_serif_red_6_mult);
 							renderText(text_3_keyboard_2, font_serif_white_6_mult);
@@ -1301,7 +1301,7 @@ int main(int argv, char** args) {
 
 	return 0;
 
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
+#if !(defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 	} catch (const char *badPath) {
 #if !defined(SDL1)
 		SDL_SetRenderDrawColor(renderer, 69, 95, 216, 255);
