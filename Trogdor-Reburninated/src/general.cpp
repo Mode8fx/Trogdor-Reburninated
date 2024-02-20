@@ -87,8 +87,9 @@ void systemSpecificOpen() {
 
 void systemSpecificClose() {
 #if defined(WII_U)
-	/* Unmount SD Card */
 	WHBUnmountSdCard();
+	WHBProcInit();
+	WHBProcShutdown();
 #elif defined(VITA)
 	sceKernelExitProcess(0);
 #elif defined(WII) || defined(GAMECUBE)
