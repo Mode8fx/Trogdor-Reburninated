@@ -54,7 +54,7 @@ constexpr auto INPUT_SELECT     = (1 << 11); // backspace
 constexpr auto INPUT_FULLSCREEN = (1 << 12); // f
 constexpr auto INPUT_ALL_DIRS   = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIGHT;
 
-#if defined(WII_U) || defined(SWITCH) || defined(ANDROID) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
+#if defined(RG35XX) || defined(WII_U) || defined(SWITCH) || defined(ANDROID) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
 #define INPUT_CONFIRM std::string("A")
 #elif defined(VITA) || defined(PSP)
 #define INPUT_CONFIRM std::string("X")
@@ -64,7 +64,7 @@ constexpr auto INPUT_ALL_DIRS   = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIG
 #define INPUT_CONFIRM std::string("Z / A")
 #endif
 
-#if defined(WII_U) || defined(VITA) || defined(ANDROID) || defined(PSP) || defined(WII)
+#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(ANDROID) || defined(PSP) || defined(WII)
 #define INPUT_PAUSE std::string("START")
 #define INPUT_MISC std::string("SELECT")
 #elif defined(SWITCH)

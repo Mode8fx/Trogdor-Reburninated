@@ -33,7 +33,7 @@ void scaleAppByGame() {
 }
 
 void scaleGameAndApp() {
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(PSP) || defined(THREEDS) || defined(XBOX)
+#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(PSP) || defined(THREEDS) || defined(XBOX) || defined(RG35XX)
 	windowWidth = DEFAULT_WIDTH;
 	windowHeight = DEFAULT_HEIGHT;
 #elif !defined(SDL1)
@@ -138,7 +138,7 @@ void setScaling() {
 }
 
 void snapWindow_x(double range, Uint16 size) {
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)) && !defined(SDL1)
+#if !(defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)) && !defined(SDL1)
 	if (isWindowed) {
 		double_i = ((float)SDL_GetWindowSurface(window)->w / size);
 		if ((double_i - floor(double_i)) >= pow(1 - range, floor(double_i))) {
@@ -153,7 +153,7 @@ void snapWindow_x(double range, Uint16 size) {
 }
 
 void snapWindow_y(double range, Uint16 size) {
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)) && !defined(SDL1)
+#if !(defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)) && !defined(SDL1)
 	if (isWindowed) {
 		double_i = ((float)SDL_GetWindowSurface(window)->h / size);
 		if ((double_i - floor(double_i)) >= pow(1 - range, (short)(floor(double_i)))) {
@@ -168,7 +168,7 @@ void snapWindow_y(double range, Uint16 size) {
 }
 
 void SDL_toggleFullscreen() {
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)) && !defined(SDL1)
+#if !(defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)) && !defined(SDL1)
 	isWindowed = !isWindowed;
 	if (isWindowed) {
 		SDL_SetWindowFullscreen(window, 0);

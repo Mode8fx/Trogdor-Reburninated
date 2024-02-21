@@ -447,7 +447,7 @@ int trueScreenScaleInt = 1;
 float trueScreenScaleFull = 1;
 float screenScale_menu = 1;
 bool allowHiRes = true;
-#if defined(VITA) || defined(WII_U) || defined(SWITCH)
+#if defined(RG35XX) || defined(VITA) || defined(WII_U) || defined(SWITCH)
 Sint8 scalingType = 1;
 #elif defined(PSP)
 Sint8 scalingType = 3;

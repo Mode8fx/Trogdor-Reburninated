@@ -148,7 +148,7 @@ void InitializeText_HomeScreen() {
 	if (gameHiResMult < 2) {
 		SET_TEXT(("(1/"+to_string(MAX_PAGE_NUM_LOWRES)+")").c_str(), text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
+#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
 #else
@@ -194,7 +194,7 @@ void InitializeText_HomeScreen() {
 	} else {
 		SET_TEXT(("(1/"+to_string(MAX_PAGE_NUM_HIRES)+")").c_str(), text_3_page, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_page), 157 * gameHiResMult);
-#if defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
+#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX)
 		SET_TEXT("Use the D-pad to control Trogdor", text_3_instructions_1, font_serif_white_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_instructions_1), 59 * gameHiResMult);
 #else
@@ -253,7 +253,7 @@ void InitializeText_HomeScreen() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
 	SET_TEXT("minor graphical issues on O3DS)", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
-#elif defined(WII_U) || defined(SWITCH) || defined(GAMECUBE) || defined(ANDROID) || defined(XBOX)
+#elif defined(RG35XX) || defined(WII_U) || defined(SWITCH) || defined(GAMECUBE) || defined(ANDROID) || defined(XBOX)
 	SET_TEXT("-Press Y to change scaling", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("-Press X to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
@@ -275,7 +275,7 @@ void InitializeText_HomeScreen() {
 	SET_TEXT("(may take a few seconds)", text_3_controls_4, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 115 * gameHiResMult);
 #endif
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
+#if !(defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 	SET_TEXT("HEY, KEYBOARD USERS!", text_3_keyboard_1, font_serif_red_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_keyboard_1), 59 * gameHiResMult);
 	SET_TEXT("For cheat input:", text_3_keyboard_2, font_serif_white_6_mult,
@@ -366,7 +366,7 @@ void InitializeText_Cutscenes() {
 void InitializeText_PauseScreen() {
 	SET_TEXT("paused", text_4_paused_1, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_1), 130 * gameHiResMult);
-#if defined(WII_U) || defined(ANDROID) || defined(THREEDS)
+#if defined(RG35XX) || defined(WII_U) || defined(ANDROID) || defined(THREEDS)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
 	SET_TEXT("press 'A+SELECT' to quit", text_4_paused_3, font_serif_white_6,
@@ -564,7 +564,7 @@ void InitializeSFX() {
 	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
 		sfxArr_strongBad[i]->type = 1;
 	}
-#if defined(VITA) || defined(THREEDS) || defined(WII_U)
+#if defined(RG35XX) || defined(VITA) || defined(THREEDS) || defined(WII_U)
 	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
 		makeSoundStatic(sfxArr[i]);
 	}
@@ -662,7 +662,7 @@ void InitializeSpritesPart2() {
 }
 
 void exceptMissingFile(const char *path) {
-#if !(defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
+#if !(defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
 	ifile.open(path);
 	if (!ifile) {
 		throw(path);
