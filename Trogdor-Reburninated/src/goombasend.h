@@ -1,4 +1,4 @@
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 
 #include <gccore.h>
 #include <stdio.h>

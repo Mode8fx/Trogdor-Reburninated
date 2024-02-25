@@ -106,7 +106,7 @@ const string rootDir = "ux0:data/Trogdor-RB/";
 #elif defined(WII)
 const string rootDir = "sd:/apps/Trogdor-RB/";
 #elif defined(GAMECUBE)
-const string rootDir = "cardb:/Trogdor-RB/";
+const string rootDir = "iso:/";
 #elif defined(THREEDS)
 const string rootDir = "sdmc:/3ds/Trogdor-RB/";
 #else

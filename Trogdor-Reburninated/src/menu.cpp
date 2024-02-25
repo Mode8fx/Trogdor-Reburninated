@@ -918,7 +918,7 @@ void InitializeMenus() {
 		"", 23, true, 0, true, false);
 
 	/* Credits Notebook */
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 	menu_credits.prepareMenuNotebook(7, 304, 216, 2);
 #else
 	menu_credits.prepareMenuNotebook(6, 304, 216, 2);

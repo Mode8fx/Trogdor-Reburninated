@@ -23,7 +23,7 @@ include $(DEVKITPPC)/gamecube_rules
 TARGET		:=	boot
 BUILD		:=	build_gc
 SOURCES		:=	src src/fonts_h src/graphics_h src/graphics_h/backgrounds src/graphics_h/overlays
-DATA		:=
+DATA		:=  data
 TEXTURES	:=
 INCLUDES	:=	src src/fonts_h src/graphics_h src/graphics_h/backgrounds src/graphics_h/overlays
 
@@ -131,18 +131,12 @@ $(OUTPUT).elf: $(OFILES)
 $(OFILES_SOURCES) : $(HFILES)
 
 #---------------------------------------------------------------------------------
-# This rule links in binary data with the .bin extension
+# This rule links in binary data with the .gba extension
 #---------------------------------------------------------------------------------
-%.bin.o	:	%.bin
+%.gba.o			:	%.gba
 #---------------------------------------------------------------------------------
 	@echo $(notdir $<)
 	$(bin2o)
-
-#---------------------------------------------------------------------------------
-%.tpl.o	%_tpl.h :	%.tpl
-#---------------------------------------------------------------------------------
-	@echo $(notdir $<)
-	@$(bin2o)
 
 
 -include $(DEPSDIR)/*.d

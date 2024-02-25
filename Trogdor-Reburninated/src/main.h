@@ -6,7 +6,7 @@
 #include "config.h"
 #include "window.h"
 #include "classes.h"
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 extern "C" {
 #include "goombasend.h"
 }
@@ -462,7 +462,7 @@ SDL_DisplayMode DM;
 MenuManager MM;
 GameManager GM;
 
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 /* GoombaSend */
 u8 *resbuf, *cmdbuf;
 volatile u32 transval = 0;

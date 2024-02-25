@@ -11,7 +11,7 @@
  * split into an additional header file, goombasend.h
  */
 
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 
 #include "goombasend.h"
 #include "demo_gba.h"
