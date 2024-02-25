@@ -103,7 +103,7 @@ Menu menu_cheats;
 MenuNotebook menu_highscores_1;
 MenuNotebook menu_highscores_2;
 MenuNotebook menu_highscores_3;
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 MenuNotebook menu_gba_demo;
 #endif
 Menu menu_sound;

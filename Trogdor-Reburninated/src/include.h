@@ -40,7 +40,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
-#if defined(ANDROID)
+#if defined(ANDROID) || defined(XBOX)
 #include <cmath>
 #endif
 #include <chrono>

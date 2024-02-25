@@ -611,7 +611,7 @@ void Menu::renderMenu() {
 #define option_main_cheats_descriptions_line_1 { "Toggle secret cheats." }
 #define option_main_cheats_descriptions_line_2 { "Follow the hints!" }
 #define option_main_highscores_descriptions_line_1 { "View your high scores." }
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 #define option_main_gba_demo_descriptions_line_1 { "Transfer a demo of TroGBA" }
 #define option_main_gba_demo_descriptions_line_2 { "to your Game Boy Advance." }
 #endif
@@ -703,7 +703,7 @@ void InitializeMenus() {
 	MENU_HIGHSCORES->prepareMenuOption("High Scores", option_empty,
 		option_main_highscores_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 	MENU_GBA_DEMO->prepareMenuOption("Send GBA Demo", option_empty,
 		option_main_gba_demo_descriptions_line_1, option_main_gba_demo_descriptions_line_2, option_empty,
 		"", 1, true, 0, true, false);
@@ -850,7 +850,7 @@ void InitializeMenus() {
 	menu_highscores_3.pages[0]->setTextLine(1, "");
 	updateHighScores();
 
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 	/* GBA Demo Notebook */
 	menu_gba_demo.prepareMenuNotebook(4, 304, 216, 3);
 	if (!menusAreInitialized) {
@@ -870,7 +870,11 @@ void InitializeMenus() {
 	menu_gba_demo.pages[0]->setTextLine(8, "And it's free!");
 	menu_gba_demo.pages[0]->setTextLine(9, "https://jeremyelkayam.itch.io/trogba");
 	menu_gba_demo.pages[0]->setTextLine(10, "");
+#if defined(WII)
 	menu_gba_demo.pages[0]->setTextLine(11, "(Or press 2 to play the demo right now)");
+#else
+	menu_gba_demo.pages[0]->setTextLine(11, "(Or press A to play the demo right now)");
+#endif
 
 	menu_gba_demo.pages[1]->prepareMenuPage(6, 0, 30, 20, 1);
 	menu_gba_demo.pages[1]->setTextLine(0, "TROGDOR ON GBA");
@@ -958,7 +962,7 @@ void InitializeMenus() {
 	menu_credits.pages[2]->setTextLine(4, "U.Z. Inu");
 	j = 3;
 
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 	menu_credits.pages[j]->prepareMenuPage(9, 0, 30, 20, 1);
 	menu_credits.pages[j]->setTextLine(0, "- GBA DEMO -");
 	menu_credits.pages[j]->setTextLine(1, "");

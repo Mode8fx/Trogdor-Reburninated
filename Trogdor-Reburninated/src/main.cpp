@@ -485,7 +485,7 @@ int main(int argv, char** args) {
 						updateHighScores();
 						g_sceneState = 306;
 						break;
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 					case MENU_GBA_DEMO_INDEX:
 						menu_gba_demo.openNotebook();
 						g_sceneState = 307;
@@ -599,7 +599,7 @@ int main(int argv, char** args) {
 						break;
 				}
 				break;
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 			/* Trogba Demo Screen */
 			case 307:
 				g_frameState.increment();

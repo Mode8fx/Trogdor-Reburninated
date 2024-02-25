@@ -193,7 +193,7 @@ constexpr auto MENU_OTHER_INDEX = 2;
 constexpr auto MENU_CHEATS_INDEX = 3;
 constexpr auto MENU_RESET_SETTINGS_INDEX = 4;
 constexpr auto MENU_HIGHSCORES_INDEX = 5;
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 constexpr auto MENU_GBA_DEMO_INDEX = 6;
 constexpr auto MENU_SOUND_INDEX = 7;
 constexpr auto MENU_CREDITS_INDEX = 8;
@@ -211,7 +211,7 @@ constexpr auto MENU_NUM_OPTIONS = 9;
 #define MENU_CHEATS         menu_main.options[MENU_CHEATS_INDEX]
 #define MENU_RESET_SETTINGS menu_main.options[MENU_RESET_SETTINGS_INDEX]
 #define MENU_HIGHSCORES     menu_main.options[MENU_HIGHSCORES_INDEX]
-#if defined(WII)
+#if defined(WII) || defined(GAMECUBE)
 #define MENU_GBA_DEMO       menu_main.options[MENU_GBA_DEMO_INDEX]
 #endif
 #define MENU_SOUND          menu_main.options[MENU_SOUND_INDEX]
