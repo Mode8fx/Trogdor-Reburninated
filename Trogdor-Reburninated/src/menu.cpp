@@ -757,12 +757,10 @@ void InitializeMenus() {
 	}
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
-#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(PSP) || defined(GAMECUBE) || defined(XBOX)
+#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
 		"", 8, true, 7, true, false);
 #elif defined(THREEDS)
 		"", 4, true, 3, true, false);
-#elif defined(WII)
-		"", 8, true, 2, true, false);
 #else
 		"", 11, true, 7, true, false);
 #endif
@@ -1128,9 +1126,6 @@ State_Addon_v_2_1 getSettings_v_2_1() {
 }
 
 void updateFrameRate() {
-#if defined(WII)
-	uint_i = DEFAULT_WIDTH;
-#endif
 	switch (MENU_FRAME_RATE->index) {
 		case 1:
 			frameRate = 20;
