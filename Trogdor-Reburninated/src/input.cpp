@@ -146,7 +146,6 @@ void handlePlayerInput() {
 		controllerAxis_leftStickY = 0;
 	}
 #elif defined(GAMECUBE)
-	// TODO: Gamecube controls go here
 	PAD_ScanPads();
 	gc_keysDown = PAD_ButtonsDown(0);
 	gc_keysUp = PAD_ButtonsUp(0);

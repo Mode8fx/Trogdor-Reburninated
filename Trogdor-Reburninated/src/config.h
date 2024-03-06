@@ -136,8 +136,8 @@ constexpr auto DEFAULT_HEIGHT = 1080;
 constexpr auto DEFAULT_WIDTH = 480;
 constexpr auto DEFAULT_HEIGHT = 272;
 #elif defined(WII)
-extern Uint16 DEFAULT_WIDTH;
-extern Uint16 DEFAULT_HEIGHT;
+constexpr auto DEFAULT_WIDTH = 640;
+constexpr auto DEFAULT_HEIGHT = 480;
 #elif defined(THREEDS)
 constexpr auto DEFAULT_WIDTH = 400;
 constexpr auto DEFAULT_HEIGHT = 240;

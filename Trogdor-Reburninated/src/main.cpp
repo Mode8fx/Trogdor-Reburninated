@@ -618,7 +618,11 @@ int main(int argv, char** args) {
 						}
 						break;
 					case 2:
+#if !defined(SDL1)
+						SDL_RenderPresent(renderer);
+#else
 						SDL_Flip(windowScreen);
+#endif
 						send_rom();
 						menu_gba_demo.index = 3;
 						break;

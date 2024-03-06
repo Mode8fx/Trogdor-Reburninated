@@ -1,11 +1,6 @@
 #include "config.h"
 #include "menu.h"
 
-#if defined(WII)
-Uint16 DEFAULT_WIDTH = 640;
-Uint16 DEFAULT_HEIGHT = 480;
-#endif
-
 void saveGameState_settings() {
 	gameState.settings_general = getSettingsGeneral();
 	gameState.settings_difficulty = getSettingsDifficulty();
