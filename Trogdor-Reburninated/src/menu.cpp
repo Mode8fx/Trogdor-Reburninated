@@ -946,6 +946,8 @@ void InitializeMenus() {
 	menu_credits.pages[1]->setTextLine(6, "");
 #if defined(GAMECUBE)
 	menu_credits.pages[1]->setTextLine(7, "v2.1-beta");
+#elif defined(WII)
+	menu_credits.pages[1]->setTextLine(7, "v2.11");
 #else
 	menu_credits.pages[1]->setTextLine(7, "v2.1");
 #endif
