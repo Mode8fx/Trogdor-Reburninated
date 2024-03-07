@@ -2,10 +2,10 @@
 <app version="1">
   <name>Trogdor: Reburninated</name>
   <coder>Mode8fx</coder>
-  <version>2.1</version>
-  <release_date>202402192100</release_date>
+  <version>2.11</version>
+  <release_date>202403062100</release_date>
   <short_description>Burninate the countryside!</short_description>
-  <long_description>A recreation of the Homestar Runner Flash game "Trogdor" with new features, made with SDL. In-game button prompts are for Wii Remote, but a Gamecube controller also works.
+  <long_description>A recreation of the Homestar Runner Flash game "Trogdor" with new features, made with SDL2. In-game button prompts are for Wii Remote, but a Gamecube controller also works.
   
   https://github.com/Mode8fx/Trogdor-Reburninated
   
