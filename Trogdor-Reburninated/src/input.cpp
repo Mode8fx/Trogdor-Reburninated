@@ -149,8 +149,6 @@ void handlePlayerInput() {
 	PAD_ScanPads();
 	gc_keysDown = PAD_ButtonsDown(0);
 	gc_keysUp = PAD_ButtonsUp(0);
-	gc_keysDown = PAD_ButtonsDown(0);
-	gc_keysUp = PAD_ButtonsUp(0);
 	gc_mapDir(PAD_BUTTON_UP, INPUT_UP);
 	gc_mapDir(PAD_BUTTON_DOWN, INPUT_DOWN);
 	gc_mapDir(PAD_BUTTON_LEFT, INPUT_LEFT);
