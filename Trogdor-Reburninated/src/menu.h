@@ -7,7 +7,7 @@
 #define MENU_H
 
 constexpr auto MAX_NUM_OPTION_CHOICES = 23;
-constexpr auto MAX_NUM_MENU_OPTIONS = 9;
+constexpr auto MAX_NUM_MENU_OPTIONS = 10;
 constexpr auto MAX_NUM_MENU_PAGES = 7;
 constexpr auto MAX_NUM_MENU_LINES = 12;
 
