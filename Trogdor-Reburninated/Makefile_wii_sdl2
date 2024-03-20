@@ -31,7 +31,7 @@ INCLUDES	:=	src src/fonts_h src/graphics_h src/graphics_h/backgrounds src/graphi
 # options for code generation
 #---------------------------------------------------------------------------------
 
-CFLAGS	= `$(PREFIX)pkg-config --cflags sdl SDL_ttf SDL_mixer SDL_image freetype2` -g -O2 -Wall $(MACHDEP) $(INCLUDE) -DSDL1 -DWII
+CFLAGS	= `$(PREFIX)pkg-config --cflags sdl2 SDL2_ttf SDL2_mixer SDL2_image freetype2` -g -O2 -Wall $(MACHDEP) $(INCLUDE) -DWII
 CXXFLAGS	=	$(CFLAGS)
 
 LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map
@@ -39,7 +39,7 @@ LDFLAGS	=	-g $(MACHDEP) -Wl,-Map,$(notdir $@).map
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS	:=	`$(PREFIX)pkg-config --libs sdl SDL_ttf SDL_mixer SDL_image freetype2` -lfat -lwiiuse -lbte -lwiikeyboard -logc -lm
+LIBS	:=	`$(PREFIX)pkg-config --libs sdl2 SDL2_ttf SDL2_mixer SDL2_image freetype2` -lfat -lwiiuse -lbte -lwiikeyboard -logc -lm -lopus
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing

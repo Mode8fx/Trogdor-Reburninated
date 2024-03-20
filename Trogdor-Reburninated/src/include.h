@@ -9,6 +9,12 @@
 #include <SDL2/SDL_ttf.h>
 //#include <SDL2/SDL_mixer.h>
 #include "oslibAudio/oslib.h"
+#elif defined(WII) && defined(SDL1)
+#include <SDL/SDL.h>
+#include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
+#include <SDL/SDL_mixer.h>
+#include <SDL/SDL_rotozoom.h>
 #else
 #include <SDL.h>
 #include <SDL_image.h>
