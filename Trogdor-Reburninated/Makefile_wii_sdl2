@@ -1,3 +1,5 @@
+# When building for GC/Wii, there is currently an issue where a clean build will fail after compiling demo_gba.o. To compile these versions, simply attempt a build via `make`, allow it to fail, then run `make` again.
+
 #---------------------------------------------------------------------------------
 # Clear the implicit built in rules
 #---------------------------------------------------------------------------------
