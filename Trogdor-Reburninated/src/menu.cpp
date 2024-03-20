@@ -551,8 +551,6 @@ void Menu::renderMenu() {
 #define option_main_arrow_speed_descriptions_line_1 { "Change how quickly arrows move." }
 #if defined(THREEDS)
 #define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "", "", "", "", "", "", "" }
-#elif defined(WII) && defined(SDL1)
-#define option_main_frame_rate_choices { "16 FPS (orig.) (480p)", "20 FPS (480p)", "25 FPS (480p)", "30 FPS (240p)", "40 FPS (240p)", "50 FPS (240p)", "55 FPS (240p)", "60 FPS (240p)", "", "", "" }
 #else
 #define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS", "90 FPS", "120 FPS", "144 FPS" }
 #endif
@@ -764,7 +762,7 @@ void InitializeMenus() {
 #elif defined(THREEDS)
 		"", 4, true, 3, true, false);
 #elif defined(WII)
-		"", 8, true, 2, true, false);
+		"", 8, true, 7, true, false);
 #else
 		"", 11, true, 7, true, false);
 #endif
@@ -1132,9 +1130,6 @@ State_Addon_v_2_1 getSettings_v_2_1() {
 }
 
 void updateFrameRate() {
-#if defined(WII) && defined(SDL1)
-	uint_i = DEFAULT_WIDTH;
-#endif
 	switch (MENU_FRAME_RATE->index) {
 		case 1:
 			frameRate = 20;
@@ -1199,20 +1194,6 @@ void updateFrameRate() {
 #endif
 	popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 	ticksPerFrame = (Uint32)(1000 / frameRate);
-#if defined(WII) && defined(SDL1)
-	if (frameRate <= 25) {
-		DEFAULT_WIDTH = 640;
-		DEFAULT_HEIGHT = 480;
-	}
-	else {
-		DEFAULT_WIDTH = 320;
-		DEFAULT_HEIGHT = 240;
-	}
-	if (uint_i != DEFAULT_WIDTH) {
-		windowScreen = SDL_SetVideoMode(DEFAULT_WIDTH, DEFAULT_HEIGHT, 24, SDL_DOUBLEBUF);
-		setScaling();
-	}
-#endif
 }
 
 void setPreset(Sint8 ind) {
