@@ -759,10 +759,12 @@ void InitializeMenus() {
 	}
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
-#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
+#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(PSP) || (defined(WII) && !defined(SDL1)) || defined(GAMECUBE) || defined(XBOX)
 		"", 8, true, 7, true, false);
 #elif defined(THREEDS)
 		"", 4, true, 3, true, false);
+#elif defined(WII)
+		"", 8, true, 2, true, false);
 #else
 		"", 11, true, 7, true, false);
 #endif
@@ -1130,6 +1132,9 @@ State_Addon_v_2_1 getSettings_v_2_1() {
 }
 
 void updateFrameRate() {
+#if defined(WII) && defined(SDL1)
+	uint_i = DEFAULT_WIDTH;
+#endif
 	switch (MENU_FRAME_RATE->index) {
 		case 1:
 			frameRate = 20;
@@ -1194,6 +1199,20 @@ void updateFrameRate() {
 #endif
 	popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 	ticksPerFrame = (Uint32)(1000 / frameRate);
+#if defined(WII) && defined(SDL1)
+	if (frameRate <= 25) {
+		DEFAULT_WIDTH = 640;
+		DEFAULT_HEIGHT = 480;
+	}
+	else {
+		DEFAULT_WIDTH = 320;
+		DEFAULT_HEIGHT = 240;
+	}
+	if (uint_i != DEFAULT_WIDTH) {
+		windowScreen = SDL_SetVideoMode(DEFAULT_WIDTH, DEFAULT_HEIGHT, 24, SDL_DOUBLEBUF);
+		setScaling();
+	}
+#endif
 }
 
 void setPreset(Sint8 ind) {
