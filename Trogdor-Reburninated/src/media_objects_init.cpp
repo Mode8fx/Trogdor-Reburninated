@@ -581,9 +581,9 @@ void InitializeSFX() {
 }
 
 void InitializeSpritesPart1() {
-	PREPARE_SPRITE(sprite_videlectrix_logo, videlectrix_logo_big_bmp, videlectrix_logo_big_bmp_len, 0, 0, 1, 1, 1);
+	PREPARE_SPRITE_MENU(sprite_videlectrix_logo, videlectrix_logo_big_bmp, videlectrix_logo_big_bmp_len, 0, 0, 1, 1, 1);
 	sprite_videlectrix_logo_ins = SpriteInstance(&sprite_videlectrix_logo, 0, 0);
-	sprite_videlectrix_logo_ins.setPos((windowWidth - (sprite_videlectrix_logo_ins.dstrect.w * screenScale)) / 2, (windowHeight - (sprite_videlectrix_logo_ins.dstrect.h * screenScale)) / 2);
+	sprite_videlectrix_logo_ins.setPos((windowWidth - (sprite_videlectrix_logo_ins.dstrect.w * screenScale_menu)) / 2, (windowHeight - (sprite_videlectrix_logo_ins.dstrect.h * screenScale_menu)) / 2);
 	PREPARE_SPRITE(sprite_title_screen, title_screen_bmp, title_screen_bmp_len, 0, 0, 1, 1, 1);
 	sprite_title_screen_ins = SpriteInstance(&sprite_title_screen, 0, 0);
 	PREPARE_SPRITE(sprite_trogdor_logo, trogdor_logo_bmp, trogdor_logo_bmp_len,
