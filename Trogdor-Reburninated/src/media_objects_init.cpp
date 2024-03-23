@@ -91,7 +91,7 @@ void InitializeFontsAndText() {
 		OBJ_TO_SCREEN_AT_FRACTION_X(gameHiResWidth, text_9_nice_work, 0.77), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_9_nice_work, 0.45));
 	TTF_CloseFont(font_serif_white_10.font);
 
-	setFont(&font_nokia_12, __29_NOKIA_5110_FontSet_ttf, __29_NOKIA_5110_FontSet_ttf_len, 12, 12, TTF_STYLE_NORMAL, color_white, false);
+	setFont(&font_nokia_12, __29_NOKIA_5110_FontSet_ttf, __29_NOKIA_5110_FontSet_ttf_len, 12, 12, TTF_STYLE_NORMAL, color_white, true);
 #if defined(PSP)
 	SET_TEXT("presents", text_1_presents_1, font_nokia_12,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents_1, 0.7));
