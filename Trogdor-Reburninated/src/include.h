@@ -22,10 +22,12 @@
 #if !defined(XBOX)
 #include <SDL_mixer.h>
 #endif
-#if defined(GAMECUBE) || defined(THREEDS)
+#if defined(SDL1)
+#if (defined(GAMECUBE) || defined(THREEDS)
 #include <SDL_rotozoom.h>
-#elif defined(SDL1)
+#else
 #include "SDL_rotozoom.h"
+#endif
 #endif
 #endif
 

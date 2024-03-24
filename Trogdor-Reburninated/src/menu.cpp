@@ -949,7 +949,7 @@ void InitializeMenus() {
 	menu_credits.pages[1]->setTextLine(5, "/Trogdor-Reburninated");
 	menu_credits.pages[1]->setTextLine(6, "");
 #if defined(GAMECUBE)
-	menu_credits.pages[1]->setTextLine(7, "v2.1-beta");
+	menu_credits.pages[1]->setTextLine(7, "v2.11-beta");
 #elif defined(WII)
 	menu_credits.pages[1]->setTextLine(7, "v2.11");
 #else
