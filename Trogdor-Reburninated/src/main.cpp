@@ -1295,9 +1295,11 @@ int main(int argv, char** args) {
 		/* Cap Framerate */
 		frameCounter_global++;
 		frameTime = SDL_GetTicks() - (Uint32)timer_global.now;
-		if (frameTime < ticksPerFrame) {
-			SDL_Delay(ticksPerFrame - frameTime);
+		if (frameTime < ticksPerFrameInt) {
+			SDL_Delay(ticksPerFrameInt - frameTime);
 		}
+		ticksPerFrame += ticksPerFrameDefault - ticksPerFrameInt;
+		ticksPerFrameInt = (Uint32)ticksPerFrame;
 	}
 
 	/* Destroy all SDL objects and properly close program */

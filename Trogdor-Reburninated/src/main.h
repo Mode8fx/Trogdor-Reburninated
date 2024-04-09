@@ -424,7 +424,9 @@ Uint16 windowWidth;
 Uint16 windowHeight;
 double appWidthMult;
 double appHeightMult;
-Uint32 ticksPerFrame;
+float ticksPerFrameDefault;
+float ticksPerFrame;
+Uint32 ticksPerFrameInt;
 
 #if !defined(SDL1)
 SDL_Window *window;

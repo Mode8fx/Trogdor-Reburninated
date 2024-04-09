@@ -1196,7 +1196,9 @@ void updateFrameRate() {
 	frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / frameRate;
 #endif
 	popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
-	ticksPerFrame = (Uint32)(1000 / frameRate);
+	ticksPerFrameDefault = 1000.0F / frameRate;
+	ticksPerFrame = ticksPerFrameDefault;
+	ticksPerFrameInt = (Uint32)ticksPerFrame;
 #if defined(WII) && defined(SDL1)
 	if (frameRate <= 25) {
 		DEFAULT_WIDTH = 640;

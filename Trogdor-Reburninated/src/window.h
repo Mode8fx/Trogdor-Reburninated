@@ -19,7 +19,9 @@ extern Uint16 windowWidth;
 extern Uint16 windowHeight;
 extern double appWidthMult; // app scaling relative to window
 extern double appHeightMult; // app scaling relative to window
-extern Uint32 ticksPerFrame;
+extern float ticksPerFrameDefault;
+extern float ticksPerFrame;
+extern Uint32 ticksPerFrameInt;
 
 #if !defined(SDL1)
 extern SDL_Window *window;
