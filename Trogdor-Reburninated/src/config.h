@@ -121,6 +121,7 @@ const string rootDir = "";
 
 #if !defined(SDL1)
 extern SDL_DisplayMode DM;
+extern Uint16 displayRefreshRate;
 #endif
 
 #if defined(WII_U)

@@ -550,11 +550,11 @@ void Menu::renderMenu() {
 #define option_main_arrow_speed_choices { "Slow", "Normal", "Fast", "Very Fast", "Insane" }
 #define option_main_arrow_speed_descriptions_line_1 { "Change how quickly arrows move." }
 #if defined(THREEDS)
-#define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "", "", "", "", "", "", "" }
+#define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "", "", "", "", "" }
 #elif defined(WII) && defined(SDL1)
-#define option_main_frame_rate_choices { "16 FPS (orig.) (480p)", "20 FPS (480p)", "25 FPS (480p)", "30 FPS (240p)", "40 FPS (240p)", "50 FPS (240p)", "55 FPS (240p)", "60 FPS (240p)", "", "", "" }
+#define option_main_frame_rate_choices { "16 FPS (orig.) (480p)", "20 FPS (480p)", "25 FPS (480p)", "30 FPS (240p)", "40 FPS (240p)", "50 FPS (240p)", "55 FPS (240p)", "60 FPS (240p)", "Uncapped" }
 #else
-#define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS", "90 FPS", "120 FPS", "144 FPS" }
+#define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS", "Uncapped" }
 #endif
 #define option_main_frame_rate_descriptions_line_1 { "Higher frame rate, smoother gameplay." }
 #define option_main_frame_rate_descriptions_line_2 { "(Original Flash game is 16 FPS)" }
@@ -760,13 +760,13 @@ void InitializeMenus() {
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
 #if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(PSP) || (defined(WII) && !defined(SDL1)) || defined(GAMECUBE) || defined(XBOX)
-		"", 8, true, 7, true, false);
+		"", 9, true, 8, true, false);
 #elif defined(THREEDS)
 		"", 4, true, 3, true, false);
 #elif defined(WII)
-		"", 8, true, 2, true, false);
+		"", 9, true, 2, true, false);
 #else
-		"", 11, true, 7, true, false);
+		"", 9, true, 8, true, false);
 #endif
 	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
 		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
@@ -1177,13 +1177,10 @@ void updateFrameRate() {
 #endif
 			break;
 		case 8:
-			frameRate = 90;
-			break;
-		case 9:
-			frameRate = 120;
-			break;
-		case 10:
-			frameRate = 144;
+			frameRate = displayRefreshRate;
+#if defined(PSP)
+			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 60;
+#endif
 			break;
 		default:
 			frameRate = 16;

@@ -1291,15 +1291,25 @@ int main(int argv, char** args) {
 #else
 		SDL_Flip(windowScreen);
 #endif
-		
-		/* Cap Framerate */
+
 		frameCounter_global++;
-		frameTime = SDL_GetTicks() - (Uint32)timer_global.now;
-		if (frameTime < ticksPerFrameInt) {
-			SDL_Delay(ticksPerFrameInt - frameTime);
+#if defined(SDL1)
+		if (true) {
+#elif defined(THREEDS)
+		if (frameRate < 30) {
+//#elif defined(SWITCH) {
+//		if (frameRate < 60) { // Switch emulation can go above 60 FPS, so displayRefreshRate may mistakenly be above 60?
+#else
+		if (frameRate < displayRefreshRate) {
+#endif
+			/* Cap Framerate */
+			frameTime = SDL_GetTicks() - (Uint32)timer_global.now;
+			if (frameTime < ticksPerFrameInt) {
+				SDL_Delay(ticksPerFrameInt - frameTime);
+			}
+			ticksPerFrame += ticksPerFrameDefault - ticksPerFrameInt;
+			ticksPerFrameInt = (Uint32)ticksPerFrame;
 		}
-		ticksPerFrame += ticksPerFrameDefault - ticksPerFrameInt;
-		ticksPerFrameInt = (Uint32)ticksPerFrame;
 	}
 
 	/* Destroy all SDL objects and properly close program */
