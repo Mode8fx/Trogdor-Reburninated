@@ -134,6 +134,22 @@ add_executable(trogdorrb
 	"src/graphics_h/overlays/basement_right.h"
 	"src/graphics_h/overlays/basement_top.cpp"
 	"src/graphics_h/overlays/basement_top.h"
+	"src/graphics_h/overlays/compy_bottom.cpp"
+	"src/graphics_h/overlays/compy_bottom.h"
+	"src/graphics_h/overlays/compy_left.cpp"
+	"src/graphics_h/overlays/compy_left.h"
+	"src/graphics_h/overlays/compy_right.cpp"
+	"src/graphics_h/overlays/compy_right.h"
+	"src/graphics_h/overlays/compy_top.cpp"
+	"src/graphics_h/overlays/compy_top.h"
+	"src/graphics_h/overlays/strong_badia_bottom.cpp"
+	"src/graphics_h/overlays/strong_badia_bottom.h"
+	"src/graphics_h/overlays/strong_badia_left.cpp"
+	"src/graphics_h/overlays/strong_badia_left.h"
+	"src/graphics_h/overlays/strong_badia_right.cpp"
+	"src/graphics_h/overlays/strong_badia_right.h"
+	"src/graphics_h/overlays/strong_badia_top.cpp"
+	"src/graphics_h/overlays/strong_badia_top.h"
 )
 find_package(PkgConfig REQUIRED)
 

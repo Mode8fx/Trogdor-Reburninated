@@ -122,6 +122,16 @@ void repositionOverlay() {
 	sprite_overlay_basement_right_ins.dstrect = sprite_overlay_basement_right_ins.dstrect;
 	right_overlay_padding = sprite_overlay_basement_right_ins.dstrect;
 	right_overlay_padding.x += right_overlay_padding.w;
+
+	sprite_overlay_compy_top_ins.dstrect = sprite_overlay_basement_top_ins.dstrect;
+	sprite_overlay_compy_bottom_ins.dstrect = sprite_overlay_basement_bottom_ins.dstrect;
+	sprite_overlay_compy_left_ins.dstrect = sprite_overlay_basement_left_ins.dstrect;
+	sprite_overlay_compy_right_ins.dstrect = sprite_overlay_basement_right_ins.dstrect;
+	sprite_overlay_strong_badia_top_ins.dstrect = sprite_overlay_basement_top_ins.dstrect;
+	sprite_overlay_strong_badia_bottom_ins.dstrect = sprite_overlay_basement_bottom_ins.dstrect;
+	sprite_overlay_strong_badia_left_ins.dstrect = sprite_overlay_basement_left_ins.dstrect;
+	sprite_overlay_strong_badia_right_ins.dstrect = sprite_overlay_basement_right_ins.dstrect;
+
 }
 
 void setScaling() {

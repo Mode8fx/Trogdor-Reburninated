@@ -235,19 +235,19 @@ void InitializeText_HomeScreen() {
 #if defined(VITA) || defined(PSP)
 	SET_TEXT("-Press Triangle to change scaling", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
-	SET_TEXT("-Press Square to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
+	SET_TEXT("-Press Square to change overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
 	SET_TEXT(" ", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #elif defined(WII)
 	SET_TEXT("-Press Home (Wii) / Y (GC) to change scaling", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
-	SET_TEXT("-Press A (Wii) / R (GC) to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
+	SET_TEXT("-Press A (Wii) / R (GC) to change overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
 	SET_TEXT(" ", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #elif defined(THREEDS)
-	SET_TEXT("-Press X to toggle overlay", text_3_controls_3, font_serif_white_6_mult,
+	SET_TEXT("-Press X to change overlay", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("(Warning: Overlay may cause", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
@@ -256,14 +256,14 @@ void InitializeText_HomeScreen() {
 #elif defined(RG35XX) || defined(WII_U) || defined(SWITCH) || defined(GAMECUBE) || defined(ANDROID) || defined(XBOX)
 	SET_TEXT("-Press Y to change scaling", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
-	SET_TEXT("-Press X to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
+	SET_TEXT("-Press X to change overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
 	SET_TEXT(" ", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #else
 	SET_TEXT("-Press V / Y to change scaling", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
-	SET_TEXT("-Press C / X to toggle overlay", text_3_controls_5, font_serif_white_6_mult,
+	SET_TEXT("-Press C / X to change overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
 	SET_TEXT("-Press F/ESC to toggle fullscreen", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
@@ -618,6 +618,22 @@ void InitializeSpritesPart1() {
 	sprite_overlay_basement_left_ins = SpriteInstance(&sprite_overlay_basement_left, 0, 0);
 	PREPARE_SPRITE(sprite_overlay_basement_right, basement_right_bmp, basement_right_bmp_len, 285, 30, 1, 1, 1);
 	sprite_overlay_basement_right_ins = SpriteInstance(&sprite_overlay_basement_right, 0, 0);
+	PREPARE_SPRITE(sprite_overlay_compy_top, compy_top_bmp, compy_top_bmp_len, 0, 0, 1, 1, 1);
+	sprite_overlay_compy_top_ins = SpriteInstance(&sprite_overlay_compy_top, 0, 0);
+	PREPARE_SPRITE(sprite_overlay_compy_bottom, compy_bottom_bmp, compy_bottom_bmp_len, 0, 210, 1, 1, 1);
+	sprite_overlay_compy_bottom_ins = SpriteInstance(&sprite_overlay_compy_bottom, 0, 0);
+	PREPARE_SPRITE(sprite_overlay_compy_left, compy_left_bmp, compy_left_bmp_len, 0, 30, 1, 1, 1);
+	sprite_overlay_compy_left_ins = SpriteInstance(&sprite_overlay_compy_left, 0, 0);
+	PREPARE_SPRITE(sprite_overlay_compy_right, compy_right_bmp, compy_right_bmp_len, 285, 30, 1, 1, 1);
+	sprite_overlay_compy_right_ins = SpriteInstance(&sprite_overlay_compy_right, 0, 0);
+	PREPARE_SPRITE(sprite_overlay_strong_badia_top, strong_badia_top_bmp, strong_badia_top_bmp_len, 0, 0, 1, 1, 1);
+	sprite_overlay_strong_badia_top_ins = SpriteInstance(&sprite_overlay_strong_badia_top, 0, 0);
+	PREPARE_SPRITE(sprite_overlay_strong_badia_bottom, strong_badia_bottom_bmp, strong_badia_bottom_bmp_len, 0, 210, 1, 1, 1);
+	sprite_overlay_strong_badia_bottom_ins = SpriteInstance(&sprite_overlay_strong_badia_bottom, 0, 0);
+	PREPARE_SPRITE(sprite_overlay_strong_badia_left, strong_badia_left_bmp, strong_badia_left_bmp_len, 0, 30, 1, 1, 1);
+	sprite_overlay_strong_badia_left_ins = SpriteInstance(&sprite_overlay_strong_badia_left, 0, 0);
+	PREPARE_SPRITE(sprite_overlay_strong_badia_right, strong_badia_right_bmp, strong_badia_right_bmp_len, 285, 30, 1, 1, 1);
+	sprite_overlay_strong_badia_right_ins = SpriteInstance(&sprite_overlay_strong_badia_right, 0, 0);
 	divider_level_beaten_rect = { 0, 25, gameWidth, 2 };
 }
 
@@ -735,6 +751,14 @@ void destroyAllSprites() {
 	destroySprite(&sprite_overlay_basement_bottom);
 	destroySprite(&sprite_overlay_basement_left);
 	destroySprite(&sprite_overlay_basement_right);
+	destroySprite(&sprite_overlay_compy_top);
+	destroySprite(&sprite_overlay_compy_bottom);
+	destroySprite(&sprite_overlay_compy_left);
+	destroySprite(&sprite_overlay_compy_right);
+	destroySprite(&sprite_overlay_strong_badia_top);
+	destroySprite(&sprite_overlay_strong_badia_bottom);
+	destroySprite(&sprite_overlay_strong_badia_left);
+	destroySprite(&sprite_overlay_strong_badia_right);
 }
 
 void destroyTextChars(FontObject *fontObj) {
