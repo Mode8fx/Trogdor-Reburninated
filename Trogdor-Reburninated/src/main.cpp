@@ -1092,159 +1092,55 @@ int main(int argv, char** args) {
 				break;
 			/* Level 4 Interlude */
 			case 11:
-				GM.renderTopBar();
-				cutscene_level_4();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 11) {
-					g_frameState.increment();
-				}
+				playCutscene(1, 11, true);
 				break;
 			/* Level 8 Interlude */
 			case 12:
-				GM.renderTopBar();
-				cutscene_level_8();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 12) {
-					g_frameState.increment();
-				}
+				playCutscene(2, 12, true);
 				break;
 			/* Level 12 Interlude */
 			case 13:
-				GM.renderTopBar();
-				cutscene_level_12();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 13) {
-					g_frameState.increment();
-				}
+				playCutscene(3, 13, true);
 				break;
 			/* Level 16 Interlude */
 			case 14:
-				GM.renderTopBar();
-				cutscene_level_16();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 14) {
-					g_frameState.increment();
-				}
+				playCutscene(4, 14, true);
 				break;
 			/* Level 20 Interlude */
 			case 15:
-				GM.renderTopBar();
-				cutscene_level_20();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 15) {
-					g_frameState.increment();
-				}
+				playCutscene(5, 15, true);
 				break;
 			/* Level 24 Interlude */
 			case 16:
-				GM.renderTopBar();
-				cutscene_level_24();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 16) {
-					g_frameState.increment();
-				}
+				playCutscene(6, 16, true);
 				break;
 			/* Level 30 Interlude */
 			case 17:
-				GM.renderTopBar();
-				cutscene_level_30();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 17) {
-					g_frameState.increment();
-				}
+				playCutscene(7, 17, true);
 				break;
 			/* Level 34 Interlude */
 			case 18:
-				GM.renderTopBar();
-				cutscene_level_34();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 18) {
-					g_frameState.increment();
-				}
+				playCutscene(8, 18, true);
 				break;
 			/* Level 38 Interlude */
 			case 19:
-				GM.renderTopBar();
-				cutscene_level_38();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 19) {
-					g_frameState.increment();
-				}
+				playCutscene(9, 19, true);
 				break;
 			/* Level 42 Interlude */
 			case 20:
-				GM.renderTopBar();
-				cutscene_level_42();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 20) {
-					g_frameState.increment();
-				}
+				playCutscene(10, 20, true);
 				break;
 			/* Level 46 Interlude */
 			case 21:
-				GM.renderTopBar();
-				cutscene_level_46();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 21) {
-					g_frameState.increment();
-				}
+				playCutscene(11, 21, true);
 				break;
 			/* Level 50 Interlude */
 			case 22:
-				GM.renderTopBar();
-				cutscene_level_50();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 22) {
-					g_frameState.increment();
-				}
+				playCutscene(12, 22, true);
 				break;
 			/* Level 100 Interlude (Credits) */
 			case 23:
-				GM.renderTopBar();
-				cutscene_level_100();
-				if (!cutsceneIsPlaying) {
-					GM.levelInit();
-					g_sceneState = 4;
-				}
-				if (g_sceneState == 23) {
-					g_frameState.increment();
-				}
+				playCutscene(13, 23, true);
 				break;
 			/* Nothing? (or maybe blank transition from Credits to High Scores Screen) */
 			case 24:

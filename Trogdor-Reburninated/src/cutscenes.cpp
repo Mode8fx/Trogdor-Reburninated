@@ -1165,3 +1165,63 @@ void cutscene_level_100() {
 			break;
 	}
 }
+
+void playCutscene(Uint8 cutsceneNum, Sint16 initialSceneState, bool inGame) {
+	if (inGame) {
+		GM.renderTopBar();
+	}
+	switch (cutsceneNum) {
+		case 1:
+			cutscene_level_4();
+			break;
+		case 2:
+			cutscene_level_8();
+			break;
+		case 3:
+			cutscene_level_12();
+			break;
+		case 4:
+			cutscene_level_16();
+			break;
+		case 5:
+			cutscene_level_20();
+			break;
+		case 6:
+			cutscene_level_24();
+			break;
+		case 7:
+			cutscene_level_30();
+			break;
+		case 8:
+			cutscene_level_34();
+			break;
+		case 9:
+			cutscene_level_38();
+			break;
+		case 10:
+			cutscene_level_42();
+			break;
+		case 11:
+			cutscene_level_46();
+			break;
+		case 12:
+			cutscene_level_50();
+			break;
+		case 13:
+			cutscene_level_100();
+			break;
+		default:
+			break;
+	}
+	if (!cutsceneIsPlaying) {
+		if (inGame) {
+			GM.levelInit();
+			g_sceneState = 4;
+		} else {
+			g_sceneState = 308;
+		}
+	}
+	if (g_sceneState == initialSceneState) {
+		g_frameState.increment();
+	}
+}
