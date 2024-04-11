@@ -877,7 +877,7 @@ void HandleErrorText(const char *badPath) {
 	quickErrorTextRender_1("Make sure you have the correct", 0.6);
 	quickErrorTextRender_1("assets installed and try again.", 0.675);
 	quickErrorTextRender_1("Press ENTER/START to quit.", 0.825);
-	quickErrorTextRender_2("[Trogdor: Reburninated v2.1]", 0.9);
+	quickErrorTextRender_2("[Trogdor: Reburninated v2.2]", 0.9);
 	TTF_CloseFont(font_commodore_error_1.font);
 	TTF_CloseFont(font_commodore_error_2.font);
 

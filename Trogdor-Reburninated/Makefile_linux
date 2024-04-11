@@ -1,0 +1,33 @@
+OBJ_DIR = ./build_linux
+EXE=trogdorrb
+
+SRC_DIR		=	src
+EXCLUDED	=	$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(SRC_DIR)/fonts_h/54_serif_v01.cpp $(wildcard $(SRC_DIR)/sfx_h/*) $(wildcard $(SRC_DIR)/OSLibAudio/*)
+SRCS		=	$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/**/*.c) $(wildcard $(SRC_DIR)/graphics_h/**/*.cpp) $(wildcard $(SRC_DIR)/graphics_h/**/*.c))
+OBJS		=	$(patsubst %.cpp, %.o, $(patsubst %.c, %.o, $(SRCS)))
+
+
+CXX ?= g++
+SDLCONFIG ?= sdl2-config
+CXXFLAGS ?= -Os -Wall -Wextra -DLINUX -DPC -DLINUX
+LDFLAGS ?= -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lstdc++ -lmikmod
+
+CXXFLAGS += `$(SDLCONFIG) --cflags`
+LDFLAGS += `$(SDLCONFIG) --libs`
+
+.PHONY: all clean
+
+all: $(EXE)
+
+$(EXE): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(TARGET_ARCH) $^ $(LDFLAGS) -o $@
+
+$(OBJ_DIR)/%.o: %.cpp
+	mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(OBJ_DIR):
+	mkdir -p $@
+
+clean:
+	$(RM) -rv *~ $(OBJS) $(EXE)

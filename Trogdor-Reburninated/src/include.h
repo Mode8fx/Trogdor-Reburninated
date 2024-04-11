@@ -79,6 +79,8 @@
 #include <hal/audio.h>
 #include <windows.h>
 #include <xboxkrnl/xboxkrnl.h>
+#elif defined(LINUX)
+#include <sys/stat.h>
 #endif
 
 using namespace std;

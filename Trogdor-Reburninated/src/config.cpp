@@ -18,6 +18,9 @@ void saveGameState_settings() {
 }
 
 void loadGameState() {
+#if defined(LINUX)
+	mkdir((string(getenv("HOME")) + "/.trogdorrb").c_str(), 0777);
+#endif
 	saveBin = SDL_RWFromFile(SAVE_FILE, "rb");
 
 	if (saveBin) {

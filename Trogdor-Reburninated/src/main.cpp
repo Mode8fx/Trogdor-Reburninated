@@ -1204,7 +1204,7 @@ int main(int argv, char** args) {
 #endif
 
 		frameCounter_global++;
-#if defined(SDL1)
+#if defined(SDL1) || (defined(LINUX) && defined(PC))
 		if (true) {
 #elif defined(THREEDS)
 		if (frameRate < 30) {
