@@ -670,7 +670,11 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_strong_bad_ending, strong_bad_ending_bmp, strong_bad_ending_bmp_len, 0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_cursor, menu_cursor_bmp, menu_cursor_bmp_len, 0, 0, 1, 1, 1);
 	PREPARE_SPRITE_MENU(sprite_menu_cursor, menu_cursor_bmp, menu_cursor_bmp_len, 0, 0, 1, 1, 1);
+#if defined(THREEDS)
+	PREPARE_SPRITE_MENU(sprite_menu_background, options_menu_bmp, options_menu_bmp_len, 0, 0, 1, 1, 1);
+#else
 	PREPARE_SPRITE_MENU(sprite_menu_background, options_menu_bmp, options_menu_bmp_len, 0, 0, 1, 1, 0.5);
+#endif
 	sprite_menu_background_ins = SpriteInstance(&sprite_menu_background, 0, 0);
 	// PREPARE_SPRITE(sprite_game_over_banner, game_over_banner_bmp, game_over_banner_bmp_len, 0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_game_over_text, game_over_text_bmp, game_over_text_bmp_len, 0, 0, 1, 5, 1);
