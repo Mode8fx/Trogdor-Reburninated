@@ -1697,9 +1697,7 @@ void GameManager::dm_updateFrameState() { // death message
 				if (mans < 0) {
 					setMans(0);
 					gameOver = true;
-					if (infiniteLives || speedyMode || noclip || debugMode) {
-						gameState.highscores.custom = max(score, gameState.highscores.custom);
-					} else {
+					if (!(infiniteLives || speedyMode || noclip || debugMode)) {
 						switch (preset) {
 							case 1:
 								gameState.highscores.flash = max(score, gameState.highscores.flash);

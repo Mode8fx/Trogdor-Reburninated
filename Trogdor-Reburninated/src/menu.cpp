@@ -608,9 +608,9 @@ void Menu::renderMenu() {
 #define option_main_cosmetic_descriptions_line_1 { "Change settings related to" }
 #define option_main_cosmetic_descriptions_line_2 { "game audio and video." }
 #define option_main_other_descriptions_line_1 { "Change miscellaneous settings." }
-#define option_main_cheats_descriptions_line_1 { "Toggle secret cheats. Follow the hints!" }
-#define option_main_cheats_descriptions_line_2 { "Enabling a cheat disables high scores" }
-#define option_main_cheats_descriptions_line_3 { "for non-Custom presets." }
+#define option_main_cheats_descriptions_line_1 { "Toggle secret cheats." }
+#define option_main_cheats_descriptions_line_2 { "Follow the hints!" }
+#define option_main_cheats_descriptions_line_3 { "Enabling a cheat disables high scores." }
 #define option_main_highscores_descriptions_line_1 { "View your high scores." }
 #if defined(WII) || defined(GAMECUBE)
 #define option_main_gba_demo_descriptions_line_1 { "Transfer a demo of TroGBA" }
