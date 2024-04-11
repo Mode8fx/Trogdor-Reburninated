@@ -643,12 +643,31 @@ GameManager::GameManager(MenuManager mm) {
 		randomSeed = gameState.autosave.randomSeed;
 	} else {
 		preset = MENU_PRESET->index;
-		mans = 3;
 		level = 1;
-		infiniteLives = false;
-		speedyMode = 0;
-		noclip = false;
-		debugMode = false;
+		infiniteLives = MENU_INF_LIVES->isValue(0);
+		if (infiniteLives) {
+			mans = 99;
+		} else if (preset == 0) {
+			switch (MENU_EXTRA_LIVES->index) {
+				case 6:
+					mans = 10;
+					break;
+				case 7:
+					mans = 20;
+					break;
+				case 8:
+					mans = 30;
+					break;
+				default:
+					mans = MENU_EXTRA_LIVES->index;
+					break;
+			}
+		} else {
+			mans = 3;
+		}
+		speedyMode = MENU_SPEEDY_MODE->index;
+		noclip = MENU_NOCLIP->isValue(0);
+		debugMode = MENU_DEBUG_MODE->isValue(0);
 		switch (preset) {
 			case 0:
 				level = MENU_STARTING_LEVEL->index * 10 + 1;
@@ -659,28 +678,6 @@ GameManager::GameManager(MenuManager mm) {
 				archerFrequencySetting = MENU_ARCHER_FREQ->index;
 				treasureHutSetting = MENU_TREASURE_HUTS->index;
 				shuffleLevels = MENU_SHUFFLE_LEVELS->isValue(0);
-				infiniteLives = MENU_INF_LIVES->isValue(0);
-				if (infiniteLives) {
-					mans = 99;
-				} else {
-					switch (MENU_EXTRA_LIVES->index) {
-						case 6:
-							mans = 10;
-							break;
-						case 7:
-							mans = 20;
-							break;
-						case 8:
-							mans = 30;
-							break;
-						default:
-							mans = MENU_EXTRA_LIVES->index;
-							break;
-					}
-				}
-				speedyMode = MENU_SPEEDY_MODE->index;
-				noclip = MENU_NOCLIP->isValue(0);
-				debugMode = MENU_DEBUG_MODE->isValue(0);
 				break;
 			case 1:
 				livesIntervalSetting = 0;
@@ -735,6 +732,8 @@ GameManager::GameManager(MenuManager mm) {
 				archerFrequencySetting = 0;
 				treasureHutSetting = 1;
 				shuffleLevels = true;
+				break;
+			default:
 				break;
 		}
 		score = 0;
