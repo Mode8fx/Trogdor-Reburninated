@@ -590,10 +590,10 @@ void MenuManager::unlockCheat(Uint8 menuIndex, Sint8 indexAtUnlock) {
 }
 
 void MenuManager::typeStuff() {
-	if (handleCheat(0, contraArrayKey, 10, contraIndex, SFX_SFX2, 0)
-		|| handleCheat(1, s3kArrayKey, 9, s3kIndex, SFX_SPEEDINCREASED, 3)
-		|| handleCheat(2, dkcArrayKey, 6, dkcIndex, SFX_SBDOOJ_SHORT, 0)
-		|| handleCheat(3, pacmanArrayKey, 11, pacmanIndex, SFX_GOLDGET, 0)
+	if (handleCheat(0, contraArrayKey, 10, contraIndex, SFX_SFX2, 1)
+		|| handleCheat(1, s3kArrayKey, 9, s3kIndex, SFX_SPEEDINCREASED, 0)
+		|| handleCheat(2, dkcArrayKey, 6, dkcIndex, SFX_SBDOOJ_SHORT, 1)
+		|| handleCheat(3, pacmanArrayKey, 11, pacmanIndex, SFX_GOLDGET, 1)
 		) {
 		contraIndex = 0;
 		pacmanIndex = 0;
@@ -1697,28 +1697,32 @@ void GameManager::dm_updateFrameState() { // death message
 				if (mans < 0) {
 					setMans(0);
 					gameOver = true;
-					switch (preset) {
-						case 1:
-							gameState.highscores.flash = max(score, gameState.highscores.flash);
-							break;
-						case 2:
-							gameState.highscores.html5 = max(score, gameState.highscores.html5);
-							break;
-						case 3:
-							gameState.highscores.hard = max(score, gameState.highscores.hard);
-							break;
-						case 4:
-							gameState.highscores.cruel = max(score, gameState.highscores.cruel);
-							break;
-						case 5:
-							gameState.highscores.mipsChoice = max(score, gameState.highscores.mipsChoice);
-							break;
-						case 6:
-							gameState.addon_v_2_1.chance = max(score, gameState.addon_v_2_1.chance);
-							break;
-						default:
-							gameState.highscores.custom = max(score, gameState.highscores.custom);
-							break;
+					if (infiniteLives || speedyMode || noclip || debugMode) {
+						gameState.highscores.custom = max(score, gameState.highscores.custom);
+					} else {
+						switch (preset) {
+							case 1:
+								gameState.highscores.flash = max(score, gameState.highscores.flash);
+								break;
+							case 2:
+								gameState.highscores.html5 = max(score, gameState.highscores.html5);
+								break;
+							case 3:
+								gameState.highscores.hard = max(score, gameState.highscores.hard);
+								break;
+							case 4:
+								gameState.highscores.cruel = max(score, gameState.highscores.cruel);
+								break;
+							case 5:
+								gameState.highscores.mipsChoice = max(score, gameState.highscores.mipsChoice);
+								break;
+							case 6:
+								gameState.addon_v_2_1.chance = max(score, gameState.addon_v_2_1.chance);
+								break;
+							default:
+								gameState.highscores.custom = max(score, gameState.highscores.custom);
+								break;
+						}
 					}
 					saveGameState_all();
 				} else {

@@ -608,8 +608,9 @@ void Menu::renderMenu() {
 #define option_main_cosmetic_descriptions_line_1 { "Change settings related to" }
 #define option_main_cosmetic_descriptions_line_2 { "game audio and video." }
 #define option_main_other_descriptions_line_1 { "Change miscellaneous settings." }
-#define option_main_cheats_descriptions_line_1 { "Toggle secret cheats." }
-#define option_main_cheats_descriptions_line_2 { "Follow the hints!" }
+#define option_main_cheats_descriptions_line_1 { "Toggle secret cheats. Follow the hints!" }
+#define option_main_cheats_descriptions_line_2 { "Enabling a cheat disables high scores" }
+#define option_main_cheats_descriptions_line_3 { "for non-Custom presets." }
 #define option_main_highscores_descriptions_line_1 { "View your high scores." }
 #if defined(WII) || defined(GAMECUBE)
 #define option_main_gba_demo_descriptions_line_1 { "Transfer a demo of TroGBA" }
@@ -695,7 +696,7 @@ void InitializeMenus() {
 		option_main_other_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
 	MENU_CHEATS->prepareMenuOption("Cheats", option_empty,
-		option_main_cheats_descriptions_line_1, option_main_cheats_descriptions_line_2, option_custom_only,
+		option_main_cheats_descriptions_line_1, option_main_cheats_descriptions_line_2, option_main_cheats_descriptions_line_3,
 		"", 1, true, 0, true, false);
 	MENU_RESET_SETTINGS->prepareMenuOption("Reset to Default", option_empty,
 		option_main_reset_settings_descriptions_line_1, option_empty, option_empty,
@@ -1224,10 +1225,6 @@ void setPreset(Sint8 ind) {
 			MENU_TREASURE_HUTS->setFrozen(true, 0);
 			MENU_STARTING_LEVEL->setFrozen(true, 0);
 			MENU_SHUFFLE_LEVELS->setFrozen(true, 1);
-			MENU_INF_LIVES->setFrozen(true, 1);
-			MENU_SPEEDY_MODE->setFrozen(true, 0);
-			MENU_NOCLIP->setFrozen(true, 1);
-			MENU_DEBUG_MODE->setFrozen(true, 1);
 			break;
 		case 2:
 			MENU_EXTRA_LIVES->setFrozen(true, 3);
@@ -1239,10 +1236,6 @@ void setPreset(Sint8 ind) {
 			MENU_TREASURE_HUTS->setFrozen(true, 1);
 			MENU_STARTING_LEVEL->setFrozen(true, 0);
 			MENU_SHUFFLE_LEVELS->setFrozen(true, 1);
-			MENU_INF_LIVES->setFrozen(true, 1);
-			MENU_SPEEDY_MODE->setFrozen(true, 0);
-			MENU_NOCLIP->setFrozen(true, 1);
-			MENU_DEBUG_MODE->setFrozen(true, 1);
 			break;
 		case 3:
 			MENU_EXTRA_LIVES->setFrozen(true, 3);
@@ -1254,10 +1247,6 @@ void setPreset(Sint8 ind) {
 			MENU_TREASURE_HUTS->setFrozen(true, 0);
 			MENU_STARTING_LEVEL->setFrozen(true, 0);
 			MENU_SHUFFLE_LEVELS->setFrozen(true, 1);
-			MENU_INF_LIVES->setFrozen(true, 1);
-			MENU_SPEEDY_MODE->setFrozen(true, 0);
-			MENU_NOCLIP->setFrozen(true, 1);
-			MENU_DEBUG_MODE->setFrozen(true, 1);
 			break;
 		case 4:
 			MENU_EXTRA_LIVES->setFrozen(true, 3);
@@ -1269,10 +1258,6 @@ void setPreset(Sint8 ind) {
 			MENU_TREASURE_HUTS->setFrozen(true, 0);
 			MENU_STARTING_LEVEL->setFrozen(true, 0);
 			MENU_SHUFFLE_LEVELS->setFrozen(true, 1);
-			MENU_INF_LIVES->setFrozen(true, 1);
-			MENU_SPEEDY_MODE->setFrozen(true, 0);
-			MENU_NOCLIP->setFrozen(true, 1);
-			MENU_DEBUG_MODE->setFrozen(true, 1);
 			break;
 		case 5:
 			MENU_EXTRA_LIVES->setFrozen(true, 3);
@@ -1284,10 +1269,6 @@ void setPreset(Sint8 ind) {
 			MENU_TREASURE_HUTS->setFrozen(true, 1);
 			MENU_STARTING_LEVEL->setFrozen(true, 0);
 			MENU_SHUFFLE_LEVELS->setFrozen(true, 0);
-			MENU_INF_LIVES->setFrozen(true, 1);
-			MENU_SPEEDY_MODE->setFrozen(true, 0);
-			MENU_NOCLIP->setFrozen(true, 1);
-			MENU_DEBUG_MODE->setFrozen(true, 1);
 			break;
 		case 6:
 			MENU_EXTRA_LIVES->setFrozen(true, 3);
@@ -1299,10 +1280,6 @@ void setPreset(Sint8 ind) {
 			MENU_TREASURE_HUTS->setFrozen(true, 0);
 			MENU_STARTING_LEVEL->setFrozen(true, 0);
 			MENU_SHUFFLE_LEVELS->setFrozen(true, 0);
-			MENU_INF_LIVES->setFrozen(true, 1);
-			MENU_SPEEDY_MODE->setFrozen(true, 0);
-			MENU_NOCLIP->setFrozen(true, 1);
-			MENU_DEBUG_MODE->setFrozen(true, 1);
 			break;
 		default:
 			MENU_EXTRA_LIVES->setFrozen(false, 0);
@@ -1314,10 +1291,6 @@ void setPreset(Sint8 ind) {
 			MENU_TREASURE_HUTS->setFrozen(false, 0);
 			MENU_STARTING_LEVEL->setFrozen(false, 0);
 			MENU_SHUFFLE_LEVELS->setFrozen(false, 0);
-			MENU_INF_LIVES->setFrozen(false, 0);
-			MENU_SPEEDY_MODE->setFrozen(false, 0);
-			MENU_NOCLIP->setFrozen(false, 0);
-			MENU_DEBUG_MODE->setFrozen(false, 0);
 			break;
 	}
 }
