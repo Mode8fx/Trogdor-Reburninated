@@ -4,6 +4,7 @@
 #include "text_objects.h"
 #include "classes.h"
 #include "config.h"
+#include "input.h"
 
 SpriteInstance cutscene_level_beaten_trogdor;
 SpriteInstance cutscene_level_beaten_smoke;
@@ -1282,6 +1283,14 @@ void playCutscene(Uint8 cutsceneNum, Sint16 initialSceneState) {
 		g_frameState.increment();
 	}
 	if (!isInGame) {
+#if !(defined(PSP) || defined(XBOX))
+		if (keyPressed(INPUT_START)) {
+			g_sceneState = 308;
+			watchAllCutscenesCounter = -1;
+			Mix_HaltChannel(-1);
+			stopMusic();
+		}
+#endif
 #if !defined(SDL1)
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 #endif

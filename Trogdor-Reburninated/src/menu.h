@@ -279,15 +279,15 @@ extern MenuNotebook menu_highscores_2;
 extern MenuNotebook menu_highscores_3;
 
 extern Menu menu_sound;
-constexpr auto MENU_MUSIC_TEST_INDEX = 0;
-constexpr auto MENU_SFX_TEST_INDEX = 1;
-constexpr auto MENU_VOICE_TEST_INDEX = 2;
-constexpr auto MENU_CUTSCENE_TEST_INDEX = 3;
+constexpr auto MENU_CUTSCENE_TEST_INDEX = 0;
+constexpr auto MENU_MUSIC_TEST_INDEX = 1;
+constexpr auto MENU_SFX_TEST_INDEX = 2;
+constexpr auto MENU_VOICE_TEST_INDEX = 3;
 constexpr auto SOUND_NUM_OPTIONS = 4;
+#define MENU_CUTSCENE_TEST menu_sound.options[MENU_CUTSCENE_TEST_INDEX]
 #define MENU_MUSIC_TEST  menu_sound.options[MENU_MUSIC_TEST_INDEX]
 #define MENU_SFX_TEST    menu_sound.options[MENU_SFX_TEST_INDEX]
 #define MENU_VOICE_TEST menu_sound.options[MENU_VOICE_TEST_INDEX]
-#define MENU_CUTSCENE_TEST menu_sound.options[MENU_CUTSCENE_TEST_INDEX]
 
 extern MenuNotebook menu_credits;
 

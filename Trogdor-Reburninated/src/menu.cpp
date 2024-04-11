@@ -616,8 +616,8 @@ void Menu::renderMenu() {
 #define option_main_gba_demo_descriptions_line_1 { "Transfer a demo of TroGBA" }
 #define option_main_gba_demo_descriptions_line_2 { "to your Game Boy Advance." }
 #endif
-#define option_main_sound_descriptions_line_1 { "Listen to some number one jams" }
-#define option_main_sound_descriptions_line_2 { "and watch cutscenes." }
+#define option_main_sound_descriptions_line_1 { "Watch cutscenes and" }
+#define option_main_sound_descriptions_line_2 { "Listen to number one jams." }
 #define option_main_credits_descriptions_line_1 { "View the credits." }
 #define option_main_reset_settings_descriptions_line_1 { "Reset all settings to default." }
 #define option_main_quit_descriptions_line_1 { "Quit the game." }
@@ -910,6 +910,9 @@ void InitializeMenus() {
 			menu_sound.options[i] = new MenuOption();
 		}
 	}
+	MENU_CUTSCENE_TEST->prepareMenuOption("Cutscene", option_cutscene_choices,
+		option_main_sound_descriptions_line_1, option_main_sound_descriptions_line_2, option_empty,
+		"", 14, true, 0, true, false);
 	MENU_MUSIC_TEST->prepareMenuOption("Music", option_number_choices,
 		option_main_sound_descriptions_line_1, option_main_sound_descriptions_line_2, option_empty,
 		"", 13, true, 0, true, false);
@@ -919,9 +922,6 @@ void InitializeMenus() {
 	MENU_VOICE_TEST->prepareMenuOption("Voice", option_number_choices,
 		option_main_sound_descriptions_line_1, option_main_sound_descriptions_line_2, option_empty,
 		"", 23, true, 0, true, false);
-	MENU_CUTSCENE_TEST->prepareMenuOption("Cutscene", option_cutscene_choices,
-		option_main_sound_descriptions_line_1, option_main_sound_descriptions_line_2, option_empty,
-		"", 14, true, 0, true, false);
 
 	/* Credits Notebook */
 #if defined(WII) || defined(GAMECUBE)
