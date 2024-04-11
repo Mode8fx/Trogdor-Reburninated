@@ -610,13 +610,13 @@ void InitializeSpritesPart1() {
 	PREPARE_SPRITE(sprite_level_beaten_trogdor, level_beaten_trogdor_scaled_bmp, level_beaten_trogdor_scaled_bmp_len, -5, 41, 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_beaten_smoke, level_beaten_smoke_bmp, level_beaten_smoke_bmp_len, 100, 100, 8, 4, 0.6667);
 	PREPARE_SPRITE(sprite_game_over_trogdor, game_over_trogdor_bmp, game_over_trogdor_bmp_len, -13, 75, 1, 1, 1);
-	PREPARE_SPRITE(sprite_overlay_basement_top, basement_top_bmp, basement_top_bmp_len, 0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_basement_top, basement_top_bmp, basement_top_bmp_len, 0, 0, 1, 1, 0.5);
 	sprite_overlay_basement_top_ins = SpriteInstance(&sprite_overlay_basement_top, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_basement_bottom, basement_bottom_bmp, basement_bottom_bmp_len, 0, 210, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_basement_bottom, basement_bottom_bmp, basement_bottom_bmp_len, 0, 210, 1, 1, 0.5);
 	sprite_overlay_basement_bottom_ins = SpriteInstance(&sprite_overlay_basement_bottom, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_basement_left, basement_left_bmp, basement_left_bmp_len, 0, 30, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_basement_left, basement_left_bmp, basement_left_bmp_len, 0, 30, 1, 1, 0.5);
 	sprite_overlay_basement_left_ins = SpriteInstance(&sprite_overlay_basement_left, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_basement_right, basement_right_bmp, basement_right_bmp_len, 285, 30, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_basement_right, basement_right_bmp, basement_right_bmp_len, 285, 30, 1, 1, 0.5);
 	sprite_overlay_basement_right_ins = SpriteInstance(&sprite_overlay_basement_right, 0, 0);
 	PREPARE_SPRITE(sprite_overlay_compy_top, compy_top_bmp, compy_top_bmp_len, 0, 0, 1, 1, 1);
 	sprite_overlay_compy_top_ins = SpriteInstance(&sprite_overlay_compy_top, 0, 0);
