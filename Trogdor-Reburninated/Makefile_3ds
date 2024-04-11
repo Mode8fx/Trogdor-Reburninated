@@ -54,7 +54,7 @@ CFLAGS	:=	-g -Wall -O2 -mword-relocations \
 			-ffunction-sections \
 			$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) `sdl-config --cflags` `$(PREFIX)pkg-config --cflags  SDL_ttf SDL_gfx SDL_mixer SDL_image freetype2` -DSDL1 -D__3DS__ -DTHREEDS
+CFLAGS	+=	$(INCLUDE) `sdl-config --cflags` `$(PREFIX)pkg-config --cflags  SDL_ttf SDL_gfx SDL_mixer SDL_image freetype2` -DSDL1 -D__3DS__ -DTHREEDS -DNINTENDO_LAYOUT -DPRELOAD_SOUNDS
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fexceptions -std=gnu++11
 

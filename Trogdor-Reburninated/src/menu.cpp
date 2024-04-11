@@ -567,10 +567,10 @@ void Menu::renderMenu() {
 #define option_main_comment_freq_descriptions_line_1 { "Strong Bad does not talk.", "Strong Bad rarely talks.", "Strong Bad talks less than usual.", "Strong Bad talks as often", "Strong Bad talks a bit more often.", "Strong Bad talks much more often.", "Strong Bad won't shut up!" }
 #define option_main_comment_freq_descriptions_line_2 { "", "", "", "as he did in the original game.", "", "", "(He talks twice as much as usual.)"}
 #define option_main_comment_freq_descriptions_line_3 { "", "", "", "", "", "", "" }
-#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
-#define press_confirm_to_apply "(Press " + INPUT_CONFIRM + " to apply, may take a few seconds)"
-#else
+#if defined(PC)
 #define press_confirm_to_apply "(Press " + INPUT_CONFIRM + " to apply)"
+#else
+#define press_confirm_to_apply "(Press " + INPUT_CONFIRM + " to apply, may take a few seconds)"
 #endif
 #if defined(THREEDS)
 #define option_main_scaling_choices { "N/A", "N/A", "N/A", "N/A" }
@@ -631,7 +631,19 @@ void Menu::renderMenu() {
 #define option_cheats_noclip_descriptions_line_1 { "Remove the game's difficulty" }
 #define option_cheats_noclip_descriptions_line_2 { "by walking through cottages." }
 #define option_number_choices { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" } // I know, this is bad
-#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
+#if defined(SWITCH)
+#define console_quit_line_1 "Switch over? Virus equals very yes?"
+#define console_quit_line_2 ""
+#define console_quit_line_3 ""
+#elif defined(ANDROID)
+#define console_quit_line_1 "Android over? Virus equals very yes?"
+#define console_quit_line_2 ""
+#define console_quit_line_3 ""
+#elif defined(PC)
+#define console_quit_line_1 "Computer over? Virus equals very yes?"
+#define console_quit_line_2 ""
+#define console_quit_line_3 ""
+#else
 #if defined(WII_U)
 #define console_quit_line_1 "WHY ARE YOU STILL USING A WII U?!"
 #elif defined(VITA)
@@ -651,16 +663,6 @@ void Menu::renderMenu() {
 #endif
 #define console_quit_line_2 "WHAT IS WRONG WITH YOU?! STOP BUYING"
 #define console_quit_line_3 "CONSOLES FROM THRIFT STORES, MAN!"
-#else
-#if defined(SWITCH)
-#define console_quit_line_1 "Switch over? Virus equals very yes?"
-#elif defined(ANDROID)
-#define console_quit_line_1 "Android over? Virus equals very yes?"
-#else
-#define console_quit_line_1 "Computer over? Virus equals very yes?"
-#endif
-#define console_quit_line_2 ""
-#define console_quit_line_3 ""
 #endif
 #define option_quit_descriptions_line_1 { "Hey Player, I really like your", "Strong Bad's gonna get the", "Are you sure you want to quit this", "Don't leave yet -- There's a", "If you leave now, how will you", "Click \"Keep playing\" to email strong bad", console_quit_line_1 }
 #define option_quit_descriptions_line_2 { "\"quitting to play a different game\"", "high score, man, 50,000.", "great game?", "peasant around that corner!", "get ye flask?", "", console_quit_line_2 }
@@ -760,11 +762,9 @@ void InitializeMenus() {
 	}
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
-#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(PSP) || (defined(WII) && !defined(SDL1)) || defined(GAMECUBE) || defined(XBOX)
-		"", 9, true, 8, true, false);
-#elif defined(THREEDS)
+#if defined(THREEDS)
 		"", 4, true, 3, true, false);
-#elif defined(WII)
+#elif defined(WII) && defined(SDL1)
 		"", 9, true, 2, true, false);
 #else
 		"", 9, true, 8, true, false);
@@ -1178,7 +1178,7 @@ void updateFrameRate() {
 #endif
 			break;
 		case 8:
-			frameRate = displayRefreshRate;
+			frameRate = (Uint8)min((int)displayRefreshRate, 255);
 #if defined(PSP)
 			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 60;
 #endif

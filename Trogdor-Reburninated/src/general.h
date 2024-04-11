@@ -55,7 +55,7 @@ extern Uint16 popRandVal;
 
 constexpr auto PI = 3.14159265;
 
-#if defined(SDL1) && !defined(WII) && !defined(GAMECUBE) && !defined(PSP) && !defined(THREEDS)
+#if defined(SDL1) && defined(PC) && !defined(LINUX)
 extern FILE _iob[];
 
 extern "C" FILE * __cdecl __iob_func(void);
@@ -77,7 +77,7 @@ extern void applyColorKey(SDL_Surface *);
 extern void systemSpecificOpen();
 extern void systemSpecificClose();
 
-#if !(defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX) || defined(LINUX))
+#if defined(_MSC_VER)
 #define STRCPY(dest, src) strcpy_s(dest, src);
 #else
 #define STRCPY(dest, src) strcpy(dest, src);
@@ -92,7 +92,7 @@ extern void systemSpecificClose();
 #define ZERO_OUT_ARRAY(arr) \
     (memset(arr, 0, sizeof(arr)))
 
-#if !(defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(ANDROID) || defined(PSP) || defined(THREEDS) || defined(XBOX))
+#if defined(PC)
 #define PRINT(str) \
     cout << str << endl
 #else

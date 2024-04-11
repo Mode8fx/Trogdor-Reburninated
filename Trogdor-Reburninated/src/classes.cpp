@@ -1884,7 +1884,7 @@ void GameManager::burninationDecreaseCheat() {
 }
 
 void GameManager::handleDebugCheat() {
-#if defined(WII_U) || defined(SWITCH) || defined(WII) || defined(GAMECUBE) || defined(THREEDS)
+#if defined(NINTENDO_LAYOUT)
 	if (keyPressed(INPUT_A)) {
 		burninationIncreaseCheat();
 	}

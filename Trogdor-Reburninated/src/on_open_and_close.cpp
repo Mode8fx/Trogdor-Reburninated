@@ -24,32 +24,34 @@ void InitializeDisplay() {
 	setWidthHeightMults();
 
 	/* Set Window/Renderer */
-#if defined(PSP)
-	window = SDL_CreateWindow("Trogdor: Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DEFAULT_WIDTH, DEFAULT_HEIGHT, SDL_WINDOW_SHOWN);
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-#elif defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(SWITCH) || defined(ANDROID) || defined(XBOX) || ((defined(WII) || defined(GAMECUBE)) && !defined(SDL1))
-	window = SDL_CreateWindow("Trogdor: Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DEFAULT_WIDTH, DEFAULT_HEIGHT, 0);
-	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-#elif defined(WII) || defined(GAMECUBE) || defined(THREEDS)
+
+
+#if defined(SDL1)
+	SDL_WM_SetCaption("Trogdor: Reburninated", NULL);
+#if defined(PC)
+	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
+	windowScreen = SDL_SetVideoMode(DEFAULT_WIDTH, DEFAULT_HEIGHT, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
+#else
 #if defined(WII)
 	if (frameRate <= 25) {
 		DEFAULT_WIDTH = 640;
 		DEFAULT_HEIGHT = 480;
-	} else {
+	}
+	else {
 		DEFAULT_WIDTH = 320;
 		DEFAULT_HEIGHT = 240;
 	}
 #endif
-	SDL_WM_SetCaption("Trogdor: Reburninated", NULL);
 	windowScreen = SDL_SetVideoMode(DEFAULT_WIDTH, DEFAULT_HEIGHT, 24, SDL_DOUBLEBUF);
-#elif defined(SDL1)
-	SDL_WM_SetCaption("Trogdor: Reburninated", NULL);
-	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
-	windowScreen = SDL_SetVideoMode(DEFAULT_WIDTH, DEFAULT_HEIGHT, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
+#endif
 #else
+#if defined(PSP)
+	window = SDL_CreateWindow("Trogdor: Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DEFAULT_WIDTH, DEFAULT_HEIGHT, SDL_WINDOW_SHOWN);
+#elif defined(PC)
 	window = SDL_CreateWindow("Trogdor: Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DEFAULT_WIDTH, DEFAULT_HEIGHT, SDL_WINDOW_RESIZABLE);
+#else
+	window = SDL_CreateWindow("Trogdor: Reburninated", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, DEFAULT_WIDTH, DEFAULT_HEIGHT, 0);
+#endif
 	renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
@@ -176,7 +178,7 @@ void DestroyAll() {
 	Mix_HaltMusic();
 	//Mix_FreeMusic(bgm);
 	Mix_CloseAudio();
-#if !defined(WII) && !defined(GAMECUBE)
+#if !(defined(WII) || defined(GAMECUBE))
 	Mix_Quit();
 #endif
 #endif

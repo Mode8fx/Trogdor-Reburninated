@@ -2,7 +2,7 @@ ARCH ?= x64
 SDL_VERSION ?= 2
 
 CXX=g++
-CXXFLAGS=-std=c++11 -Wall -Wextra -O2
+CXXFLAGS=-std=c++11 -Wall -Wextra -O2 -DPC
 
 ifeq ($(SDL_VERSION), 2)
 	CPPFLAGS=-I./src \

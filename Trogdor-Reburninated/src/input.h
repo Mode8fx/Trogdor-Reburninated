@@ -54,20 +54,17 @@ constexpr auto INPUT_SELECT     = (1 << 11); // backspace
 constexpr auto INPUT_FULLSCREEN = (1 << 12); // f
 constexpr auto INPUT_ALL_DIRS   = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIGHT;
 
-#if defined(RG35XX) || defined(WII_U) || defined(SWITCH) || defined(ANDROID) || defined(GAMECUBE) || defined(THREEDS) || defined(XBOX)
-#define INPUT_CONFIRM std::string("A")
-#elif defined(VITA) || defined(PSP)
+#if defined(VITA) || defined(PSP)
 #define INPUT_CONFIRM std::string("X")
 #elif defined(WII)
 #define INPUT_CONFIRM std::string("2")
-#else
+#elif defined(PC)
 #define INPUT_CONFIRM std::string("Z / A")
+#else
+#define INPUT_CONFIRM std::string("A")
 #endif
 
-#if defined(RG35XX) || defined(WII_U) || defined(VITA) || defined(ANDROID) || defined(PSP) || defined(WII)
-#define INPUT_PAUSE std::string("START")
-#define INPUT_MISC std::string("SELECT")
-#elif defined(SWITCH)
+#if defined(SWITCH)
 #define INPUT_PAUSE std::string("+")
 #define INPUT_MISC std::string("-")
 #elif defined(GAMECUBE)
@@ -76,9 +73,12 @@ constexpr auto INPUT_ALL_DIRS   = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIG
 #elif defined(XBOX)
 #define INPUT_PAUSE std::string("START")
 #define INPUT_MISC std::string("BACK")
-#else
+#elif defined(PC)
 #define INPUT_PAUSE std::string("ENTER/START")
 #define INPUT_MISC std::string("BACK/SELECT")
+#else
+#define INPUT_PAUSE std::string("START")
+#define INPUT_MISC std::string("SELECT")
 #endif
 
 bool keyPressed(Uint16 key);
