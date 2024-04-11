@@ -25,6 +25,7 @@ extern void cutscene_level_46();
 extern void cutscene_level_46_arrow_helper(SpriteInstance *, Sint16);
 extern void cutscene_level_50();
 extern void cutscene_level_100();
-extern void playCutscene(Uint8, Sint16, bool);
+extern void prepareCutscene(Uint8, Sint16, bool);
+extern void playCutscene(Uint8, Sint16);
 
 #endif

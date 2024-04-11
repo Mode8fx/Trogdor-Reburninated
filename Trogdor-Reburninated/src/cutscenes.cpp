@@ -49,6 +49,7 @@ SpriteInstance cutscene_arrow_3;
 
 Sint8 cutscene_level_100_screen_counter;
 Uint8 sound_channel_level_beaten = 99;
+bool isInGame;
 
 void InitializeCutsceneObjects() {
 	cutscene_level_beaten_trogdor = SpriteInstance(&sprite_level_beaten_trogdor, 0, 0);
@@ -1166,8 +1167,13 @@ void cutscene_level_100() {
 	}
 }
 
-void playCutscene(Uint8 cutsceneNum, Sint16 initialSceneState, bool inGame) {
-	if (inGame) {
+void prepareCutscene(Uint8 cutsceneNum, Sint16 initialSceneState, bool inGame) {
+	g_sceneState = cutsceneNum;
+	g_frameState.set(initialSceneState);
+}
+
+void playCutscene(Uint8 cutsceneNum, Sint16 initialSceneState) {
+	if (isInGame) {
 		GM.renderTopBar();
 	}
 	switch (cutsceneNum) {
@@ -1214,7 +1220,7 @@ void playCutscene(Uint8 cutsceneNum, Sint16 initialSceneState, bool inGame) {
 			break;
 	}
 	if (!cutsceneIsPlaying) {
-		if (inGame) {
+		if (isInGame) {
 			GM.levelInit();
 			g_sceneState = 4;
 		} else {

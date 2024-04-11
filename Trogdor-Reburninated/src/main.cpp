@@ -1022,56 +1022,43 @@ int main(int argv, char** args) {
 					}
 					switch (GM.level) {
 						case 5:
-							g_sceneState = 11;
-							g_frameState.set(420);
+							prepareCutscene(11, 420, true);
 							break;
 						case 9:
-							g_sceneState = 12;
-							g_frameState.set(493);
+							prepareCutscene(12, 493, true);
 							break;
 						case 13:
-							g_sceneState = 13;
-							g_frameState.set(567);
+							prepareCutscene(13, 567, true);
 							break;
 						case 17:
-							g_sceneState = 14;
-							g_frameState.set(641);
+							prepareCutscene(14, 641, true);
 							break;
 						case 21:
-							g_sceneState = 15;
-							g_frameState.set(710);
+							prepareCutscene(15, 710, true);
 							break;
 						case 25:
-							g_sceneState = 16;
-							g_frameState.set(780);
+							prepareCutscene(16, 780, true);
 							break;
 						case 31:
-							g_sceneState = 17;
-							g_frameState.set(853);
+							prepareCutscene(17, 853, true);
 							break;
 						case 35:
-							g_sceneState = 18;
-							g_frameState.set(927);
+							prepareCutscene(18, 927, true);
 							break;
 						case 39:
-							g_sceneState = 19;
-							g_frameState.set(1000);
+							prepareCutscene(19, 1000, true);
 							break;
 						case 43:
-							g_sceneState = 20;
-							g_frameState.set(1076);
+							prepareCutscene(20, 1076, true);
 							break;
 						case 47:
-							g_sceneState = 21;
-							g_frameState.set(1153);
+							prepareCutscene(21, 1153, true);
 							break;
 						case 51:
-							g_sceneState = 22;
-							g_frameState.set(1226);
+							prepareCutscene(22, 1226, true);
 							break;
 						case 101:
-							g_sceneState = 23;
-							g_frameState.set(1337);
+							prepareCutscene(23, 1337, true);
 							break;
 						default:
 							GM.levelInit();
@@ -1092,55 +1079,55 @@ int main(int argv, char** args) {
 				break;
 			/* Level 4 Interlude */
 			case 11:
-				playCutscene(1, 11, true);
+				playCutscene(1, 11);
 				break;
 			/* Level 8 Interlude */
 			case 12:
-				playCutscene(2, 12, true);
+				playCutscene(2, 12);
 				break;
 			/* Level 12 Interlude */
 			case 13:
-				playCutscene(3, 13, true);
+				playCutscene(3, 13);
 				break;
 			/* Level 16 Interlude */
 			case 14:
-				playCutscene(4, 14, true);
+				playCutscene(4, 14);
 				break;
 			/* Level 20 Interlude */
 			case 15:
-				playCutscene(5, 15, true);
+				playCutscene(5, 15);
 				break;
 			/* Level 24 Interlude */
 			case 16:
-				playCutscene(6, 16, true);
+				playCutscene(6, 16);
 				break;
 			/* Level 30 Interlude */
 			case 17:
-				playCutscene(7, 17, true);
+				playCutscene(7, 17);
 				break;
 			/* Level 34 Interlude */
 			case 18:
-				playCutscene(8, 18, true);
+				playCutscene(8, 18);
 				break;
 			/* Level 38 Interlude */
 			case 19:
-				playCutscene(9, 19, true);
+				playCutscene(9, 19);
 				break;
 			/* Level 42 Interlude */
 			case 20:
-				playCutscene(10, 20, true);
+				playCutscene(10, 20);
 				break;
 			/* Level 46 Interlude */
 			case 21:
-				playCutscene(11, 21, true);
+				playCutscene(11, 21);
 				break;
 			/* Level 50 Interlude */
 			case 22:
-				playCutscene(12, 22, true);
+				playCutscene(12, 22);
 				break;
 			/* Level 100 Interlude (Credits) */
 			case 23:
-				playCutscene(13, 23, true);
+				playCutscene(13, 23);
 				break;
 			/* Nothing? (or maybe blank transition from Credits to High Scores Screen) */
 			case 24:
