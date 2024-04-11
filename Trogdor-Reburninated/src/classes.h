@@ -200,7 +200,7 @@ class GameManager {
 		float treasureHut_timer;                // remaining time in treasure hut
 		Loot lootArray[MAX_NUM_LOOT];           // array of Loot objects
 		float sbVoiceMult;                      // a multiplier for how often Strong Bad talks
-		bool bigHeadMode;                       // big head mode
+		//bool bigHeadMode;                     // big head mode
 		Sint8 speedyMode;                       // speedy mode
 		bool debugMode;                         // debug mode
 		bool noclip;                            // noclip cheat to walk through cottages

@@ -5,6 +5,7 @@
 #include "classes.h"
 #include "config.h"
 #include "input.h"
+#include "menu.h"
 
 SpriteInstance cutscene_level_beaten_trogdor;
 SpriteInstance cutscene_level_beaten_smoke;
@@ -93,7 +94,7 @@ void InitializeCutsceneObjects() {
 }
 
 void InitializeCutsceneObjects_trogdor() {
-	if (GM.bigHeadMode) {
+	if (IS_BIG_HEAD_MODE) {
 		cutscene_trogdor_1 = SpriteInstance(&sprite_trogdor_bighead, 0, 0);
 		cutscene_trogdor_2 = SpriteInstance(&sprite_trogdor_bighead, 0, 0);
 		cutscene_trogdor_3 = SpriteInstance(&sprite_trogdor_bighead, 0, 0);
@@ -448,7 +449,7 @@ void cutscene_level_20() {
 				cutsceneIsPlaying = true;
 				loadAndPlaySound(SFX_CUTSCENE);
 				cutscene_trogdor_flexing.isActive = false;
-				cutscene_trogdor_flexing.prepareAsCSO(92, 72, 0, GM.bigHeadMode, 0, 0, 0, 0);
+				cutscene_trogdor_flexing.prepareAsCSO(92, 72, 0, IS_BIG_HEAD_MODE, 0, 0, 0, 0);
 				break;
 			case 729:
 			case 747:
@@ -1091,7 +1092,7 @@ void cutscene_level_100() {
 			case 1681:
 				cutscene_level_100_screen_counter++;
 				cutscene_kerrek_smoked.isActive = false;
-				cutscene_trogdor_ending.prepareAsCSO(90, 84, 0, GM.bigHeadMode, 0, 0, 0, 0);
+				cutscene_trogdor_ending.prepareAsCSO(90, 84, 0, IS_BIG_HEAD_MODE, 0, 0, 0, 0);
 				cutscene_strong_bad_ending.prepareAsCSO(138, 94, 0, 0, 0, 0, 0, 0);
 				break;
 			case 1716:

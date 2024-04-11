@@ -644,6 +644,7 @@ int main(int argv, char** args) {
 					case 0:
 						stopMusic();
 						lastMusicPlayed = -1;
+						InitializeCutsceneObjects_trogdor(); // needed in case Big Head Mode was toggled
 						switch (MENU_CUTSCENE_TEST->index) {
 							case 0:
 								prepareCutscene(11, 420, false);

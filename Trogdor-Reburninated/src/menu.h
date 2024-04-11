@@ -249,6 +249,7 @@ constexpr auto COSMETIC_NUM_OPTIONS = 5;
 #define MENU_COMMENT_FREQ  menu_cosmetic.options[MENU_COMMENT_FREQ_INDEX]
 #define MENU_BIG_HEAD_MODE menu_cosmetic.options[MENU_BIG_HEAD_MODE_INDEX]
 #define MENU_SCALING       menu_cosmetic.options[MENU_SCALING_INDEX]
+#define IS_BIG_HEAD_MODE   MENU_BIG_HEAD_MODE->isValue(0)
 
 extern Menu menu_other;
 constexpr auto MENU_STARTING_LEVEL_INDEX = 0;

@@ -781,8 +781,7 @@ GameManager::GameManager(MenuManager mm) {
 	setBurnination(0);
 	archerFrequency = 0;
 	burnRate = 0;
-	bigHeadMode = MENU_BIG_HEAD_MODE->isValue(0);
-	player = Trogdor(bigHeadMode, speedyMode);
+	player = Trogdor(IS_BIG_HEAD_MODE, speedyMode);
 	player.sprite.facingRight = true;
 	switch (MENU_LIVES_INTERVAL->index) {
 		case 0:
