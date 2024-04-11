@@ -616,7 +616,8 @@ void Menu::renderMenu() {
 #define option_main_gba_demo_descriptions_line_1 { "Transfer a demo of TroGBA" }
 #define option_main_gba_demo_descriptions_line_2 { "to your Game Boy Advance." }
 #endif
-#define option_main_sound_descriptions_line_1 { "Listen to some number one jams." }
+#define option_main_sound_descriptions_line_1 { "Listen to some number one jams" }
+#define option_main_sound_descriptions_line_2 { "and watch cutscenes." }
 #define option_main_credits_descriptions_line_1 { "View the credits." }
 #define option_main_reset_settings_descriptions_line_1 { "Reset all settings to default." }
 #define option_main_quit_descriptions_line_1 { "Quit the game." }
@@ -631,6 +632,7 @@ void Menu::renderMenu() {
 #define option_cheats_noclip_descriptions_line_1 { "Remove the game's difficulty" }
 #define option_cheats_noclip_descriptions_line_2 { "by walking through cottages." }
 #define option_number_choices { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" } // I know, this is bad
+#define option_cutscene_choices { "Level 4", "Level 8", "Level 12", "Level 16", "Level 20", "Level 24", "Level 30", "Level 34", "Level 38", "Level 42", "Level 46", "Level 50", "Level 100", "Play All" }
 #if defined(SWITCH)
 #define console_quit_line_1 "Switch over? Virus equals very yes?"
 #define console_quit_line_2 ""
@@ -711,8 +713,8 @@ void InitializeMenus() {
 		option_main_gba_demo_descriptions_line_1, option_main_gba_demo_descriptions_line_2, option_empty,
 		"", 1, true, 0, true, false);
 #endif
-	MENU_SOUND->prepareMenuOption("Sound Test", option_empty,
-		option_main_sound_descriptions_line_1, option_empty, option_empty,
+	MENU_SOUND->prepareMenuOption("Theater", option_empty,
+		option_main_sound_descriptions_line_1, option_main_sound_descriptions_line_2, option_empty,
 		"", 1, true, 0, true, false);
 	MENU_CREDITS->prepareMenuOption("Credits", option_empty,
 		option_main_credits_descriptions_line_1, option_empty, option_empty,
@@ -909,14 +911,17 @@ void InitializeMenus() {
 		}
 	}
 	MENU_MUSIC_TEST->prepareMenuOption("Music", option_number_choices,
-		option_main_sound_descriptions_line_1, option_empty, option_empty,
+		option_main_sound_descriptions_line_1, option_main_sound_descriptions_line_2, option_empty,
 		"", 13, true, 0, true, false);
 	MENU_SFX_TEST->prepareMenuOption("SFX", option_number_choices,
-		option_main_sound_descriptions_line_1, option_empty, option_empty,
+		option_main_sound_descriptions_line_1, option_main_sound_descriptions_line_2, option_empty,
 		"", 13, true, 0, true, false);
 	MENU_VOICE_TEST->prepareMenuOption("Voice", option_number_choices,
-		option_main_sound_descriptions_line_1, option_empty, option_empty,
+		option_main_sound_descriptions_line_1, option_main_sound_descriptions_line_2, option_empty,
 		"", 23, true, 0, true, false);
+	MENU_CUTSCENE_TEST->prepareMenuOption("Cutscene", option_cutscene_choices,
+		option_main_sound_descriptions_line_1, option_main_sound_descriptions_line_2, option_empty,
+		"", 14, true, 0, true, false);
 
 	/* Credits Notebook */
 #if defined(WII) || defined(GAMECUBE)

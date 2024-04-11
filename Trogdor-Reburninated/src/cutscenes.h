@@ -6,6 +6,7 @@
 
 extern bool cutsceneIsPlaying;
 extern Uint8 sound_channel_level_beaten;
+extern Sint8 watchAllCutscenesCounter;
 
 extern void InitializeCutsceneObjects();
 extern void InitializeCutsceneObjects_trogdor();

@@ -698,6 +698,55 @@ int main(int argv, char** args) {
 					case 2:
 						loadAndPlaySound(sfxArr_strongBad[MENU_VOICE_TEST->index]);
 						break;
+					case 3:
+						stopMusic();
+						lastMusicPlayed = -1;
+						switch (MENU_CUTSCENE_TEST->index) {
+							case 0:
+								prepareCutscene(11, 420, false);
+								break;
+							case 1:
+								prepareCutscene(12, 493, false);
+								break;
+							case 2:
+								prepareCutscene(13, 567, false);
+								break;
+							case 3:
+								prepareCutscene(14, 641, false);
+								break;
+							case 4:
+								prepareCutscene(15, 710, false);
+								break;
+							case 5:
+								prepareCutscene(16, 780, false);
+								break;
+							case 6:
+								prepareCutscene(17, 853, false);
+								break;
+							case 7:
+								prepareCutscene(18, 927, false);
+								break;
+							case 8:
+								prepareCutscene(19, 1000, false);
+								break;
+							case 9:
+								prepareCutscene(20, 1076, false);
+								break;
+							case 10:
+								prepareCutscene(21, 1153, false);
+								break;
+							case 11:
+								prepareCutscene(22, 1226, false);
+								break;
+							case 12:
+								prepareCutscene(23, 1337, false);
+								break;
+							default:
+								watchAllCutscenesCounter = 1;
+								prepareCutscene(11, 420, false);
+								break;
+						}
+						break;
 					case -1: // Press B/Select
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;
@@ -1128,12 +1177,6 @@ int main(int argv, char** args) {
 			/* Level 100 Interlude (Credits) */
 			case 23:
 				playCutscene(13, 23);
-				break;
-			/* Nothing? (or maybe blank transition from Credits to High Scores Screen) */
-			case 24:
-				break;
-			/* High Scores Screen */
-			case 25:
 				break;
 			default:
 				break;

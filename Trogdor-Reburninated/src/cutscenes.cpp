@@ -50,6 +50,7 @@ SpriteInstance cutscene_arrow_3;
 Sint8 cutscene_level_100_screen_counter;
 Uint8 sound_channel_level_beaten = 99;
 bool isInGame;
+Sint8 watchAllCutscenesCounter = -1;
 
 void InitializeCutsceneObjects() {
 	cutscene_level_beaten_trogdor = SpriteInstance(&sprite_level_beaten_trogdor, 0, 0);
@@ -1167,9 +1168,59 @@ void cutscene_level_100() {
 	}
 }
 
-void prepareCutscene(Uint8 cutsceneNum, Sint16 initialSceneState, bool inGame) {
-	g_sceneState = cutsceneNum;
-	g_frameState.set(initialSceneState);
+void prepareCutscene(Uint8 sceneState, Sint16 initialFrameState, bool inGame) {
+	g_sceneState = sceneState;
+	g_frameState.set(initialFrameState);
+	isInGame = inGame;
+}
+
+static void setNextStateByCutscene() {
+	watchAllCutscenesCounter++;
+	switch (watchAllCutscenesCounter) {
+		case 1:
+			prepareCutscene(11, 420, false);
+			break;
+		case 2:
+			prepareCutscene(12, 493, false);
+			break;
+		case 3:
+			prepareCutscene(13, 567, false);
+			break;
+		case 4:
+			prepareCutscene(14, 641, false);
+			break;
+		case 5:
+			prepareCutscene(15, 710, false);
+			break;
+		case 6:
+			prepareCutscene(16, 780, false);
+			break;
+		case 7:
+			prepareCutscene(17, 853, false);
+			break;
+		case 8:
+			prepareCutscene(18, 927, false);
+			break;
+		case 9:
+			prepareCutscene(19, 1000, false);
+			break;
+		case 10:
+			prepareCutscene(20, 1076, false);
+			break;
+		case 11:
+			prepareCutscene(21, 1153, false);
+			break;
+		case 12:
+			prepareCutscene(22, 1226, false);
+			break;
+		case 13:
+			prepareCutscene(23, 1337, false);
+			break;
+		default:
+			g_sceneState = 308;
+			watchAllCutscenesCounter = -1;
+			break;
+	}
 }
 
 void playCutscene(Uint8 cutsceneNum, Sint16 initialSceneState) {
@@ -1224,10 +1275,19 @@ void playCutscene(Uint8 cutsceneNum, Sint16 initialSceneState) {
 			GM.levelInit();
 			g_sceneState = 4;
 		} else {
-			g_sceneState = 308;
+			setNextStateByCutscene();
 		}
 	}
 	if (g_sceneState == initialSceneState) {
 		g_frameState.increment();
+	}
+	if (!isInGame) {
+#if !defined(SDL1)
+		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+#endif
+		sprite_overlay_basement_top_ins.renderEmptyOverlay();
+		sprite_overlay_basement_bottom_ins.renderEmptyOverlay();
+		sprite_overlay_basement_left_ins.renderEmptyOverlay();
+		sprite_overlay_basement_right_ins.renderEmptyOverlay();
 	}
 }
