@@ -188,8 +188,8 @@ class Menu {
 
 extern Menu menu_main;
 constexpr auto MENU_DIFFICULTY_INDEX = 0;
-constexpr auto MENU_COSMETIC_INDEX = 1;
-constexpr auto MENU_OTHER_INDEX = 2;
+constexpr auto MENU_OTHER_INDEX = 1;
+constexpr auto MENU_COSMETIC_INDEX = 2;
 constexpr auto MENU_CHEATS_INDEX = 3;
 constexpr auto MENU_RESET_SETTINGS_INDEX = 4;
 constexpr auto MENU_HIGHSCORES_INDEX = 5;
@@ -206,8 +206,8 @@ constexpr auto MENU_QUIT_INDEX = 8;
 constexpr auto MENU_NUM_OPTIONS = 9;
 #endif
 #define MENU_DIFFICULTY     menu_main.options[MENU_DIFFICULTY_INDEX]
-#define MENU_COSMETIC       menu_main.options[MENU_COSMETIC_INDEX]
 #define MENU_OTHER          menu_main.options[MENU_OTHER_INDEX]
+#define MENU_COSMETIC       menu_main.options[MENU_COSMETIC_INDEX]
 #define MENU_CHEATS         menu_main.options[MENU_CHEATS_INDEX]
 #define MENU_RESET_SETTINGS menu_main.options[MENU_RESET_SETTINGS_INDEX]
 #define MENU_HIGHSCORES     menu_main.options[MENU_HIGHSCORES_INDEX]

@@ -509,9 +509,9 @@ void Menu::renderMenu() {
 #define option_main_starting_level_choices { "1", "11", "21", "31", "41", "51", "61", "71", "81", "91" }
 #define option_main_starting_level_descriptions_line_1 { "The level that the game starts on." }
 #define option_main_level_order_choices { "Original", "Shuffled" }
-#define option_shuffle_levels_descriptions_line_1 { "Shuffle the level order so it's", "Play using the original level order." }
-#define option_shuffle_levels_descriptions_line_2 { "different every time you play.", "" }
-#define option_shuffle_levels_descriptions_line_3 { "(Custom / Mode 8 / Chance presets only.)", "" }
+#define option_shuffle_levels_descriptions_line_1 { "Shuffle the level order so it's" }
+#define option_shuffle_levels_descriptions_line_2 { "different every time you play." }
+#define option_shuffle_levels_descriptions_line_3 { "(Custom / Mode 8 / Chance presets only.)" }
 #define option_main_preset_choices { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mode 8", "Chance" }
 #define option_main_preset_descriptions_line_1 { "Make your own rules!", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "They invented it just for this game!", "Knight/arrow speed and archer freq. are" }
 #define option_main_preset_descriptions_line_2 { "Cheats and level select", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "Do you has what it takes?", "Fewer extra lives, crazy fast arrows,", "shuffled every level, and levels are" }
@@ -603,11 +603,9 @@ void Menu::renderMenu() {
 #define option_main_scaling_descriptions_line_2 { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." }
 #define option_main_scaling_descriptions_line_3 { press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply }
 #endif
-#define option_main_difficulty_descriptions_line_1 { "Change settings related to" }
-#define option_main_difficulty_descriptions_line_2 { "game difficulty." }
-#define option_main_cosmetic_descriptions_line_1 { "Change settings related to" }
-#define option_main_cosmetic_descriptions_line_2 { "game audio and video." }
-#define option_main_other_descriptions_line_1 { "Change miscellaneous settings." }
+#define option_main_difficulty_descriptions_line_1 { "Change difficulty settings." }
+#define option_main_cosmetic_descriptions_line_1 { "Change audio and video settings." }
+#define option_main_other_descriptions_line_1 { "Change other gameplay settings." }
 #define option_main_cheats_descriptions_line_1 { "Toggle secret cheats." }
 #define option_main_cheats_descriptions_line_2 { "Follow the hints!" }
 #define option_main_cheats_descriptions_line_3 { "Enabling a cheat disables high scores." }
@@ -691,12 +689,12 @@ void InitializeMenus() {
 	}
 
 	MENU_DIFFICULTY->prepareMenuOption("Difficulty Settings", option_empty,
-		option_main_difficulty_descriptions_line_1, option_main_difficulty_descriptions_line_2, option_empty,
+		option_main_difficulty_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
 	MENU_COSMETIC->prepareMenuOption("Cosmetic Settings", option_empty,
-		option_main_cosmetic_descriptions_line_1, option_main_cosmetic_descriptions_line_2, option_empty,
+		option_main_cosmetic_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
-	MENU_OTHER->prepareMenuOption("Other Settings", option_empty,
+	MENU_OTHER->prepareMenuOption("Gameplay Settings", option_empty,
 		option_main_other_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
 	MENU_CHEATS->prepareMenuOption("Cheats", option_empty,
@@ -796,7 +794,7 @@ void InitializeMenus() {
 		"", 10, true, 0, true, true);
 	MENU_SHUFFLE_LEVELS->prepareMenuOption("Shuffle Levels", option_on_off,
 		option_shuffle_levels_descriptions_line_1, option_shuffle_levels_descriptions_line_2, option_shuffle_levels_descriptions_line_3,
-		"", 2, false, 1, true, true);
+		"", 2, true, 1, true, true);
 	MENU_KNIGHT_MOVEMENT->prepareMenuOption("Knight Movement", option_main_knight_movement_choices,
 		option_main_knight_movement_descriptions_line_1, option_main_knight_movement_descriptions_line_2, option_main_knight_movement_descriptions_line_3,
 		"", 2, false, 1, true, false);
