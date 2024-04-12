@@ -27,6 +27,7 @@ extern Sint16 controllerAxis_leftStickY;
 #if defined(WII)
 extern Uint32 wii_keysDown;
 extern Uint32 wii_keysUp;
+extern expansion_t wii_exp;
 #elif defined(GAMECUBE)
 extern Uint32 gc_keysDown;
 extern Uint32 gc_keysUp;

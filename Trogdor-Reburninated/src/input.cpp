@@ -55,6 +55,18 @@ inline static void handleHeldKeys(Uint32 deltaTime) {
 	}
 }
 
+inline static void applyStickDeadZoneX() {
+	if ((controllerAxis_leftStickX > -STICK_DEADZONE) && (controllerAxis_leftStickX < STICK_DEADZONE)) {
+		controllerAxis_leftStickX = 0;
+	}
+}
+
+inline static void applyStickDeadZoneY() {
+	if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
+		controllerAxis_leftStickY = 0;
+	}
+}
+
 #if defined(WII)
 inline static void wii_mapWiiDir(Uint32 wiimoteInput, Uint32 ccInput, Uint32 output) {
 	if (wii_keysDown & wiimoteInput || wii_keysDown & ccInput) {
@@ -108,6 +120,7 @@ inline static void gc_mapButton(Uint32 gcInput, Uint32 output) {
 void handlePlayerInput() {
 #if defined(WII)
 	WPAD_ScanPads();
+	WPAD_Expansion(WPAD_CHAN_0, &wii_exp);
 	wii_keysDown = WPAD_ButtonsDown(0);
 	wii_keysUp = WPAD_ButtonsUp(0);
 	wii_mapWiiDir(WPAD_BUTTON_UP, WPAD_CLASSIC_BUTTON_LEFT, INPUT_LEFT);
@@ -121,6 +134,16 @@ void handlePlayerInput() {
 	wii_mapWiiButton(WPAD_BUTTON_PLUS, WPAD_CLASSIC_BUTTON_PLUS, INPUT_START);
 	wii_mapWiiButton(WPAD_BUTTON_MINUS, WPAD_CLASSIC_BUTTON_MINUS, INPUT_SELECT);
 	wii_mapWiiButton(WPAD_BUTTON_HOME, WPAD_CLASSIC_BUTTON_HOME, INPUT_Y);
+	wii_mapWiiButton(WPAD_BUTTON_HOME, WPAD_CLASSIC_BUTTON_Y, INPUT_Y);
+	if (wii_exp.type == EXP_CLASSIC) {
+		controllerAxis_leftStickX = ((Sint16)wii_exp.classic.ljs.pos.x - 32) * 1023;
+		controllerAxis_leftStickY = ((Sint16)wii_exp.classic.ljs.pos.y - 32) * -1023;
+		applyStickDeadZoneX();
+		applyStickDeadZoneY();
+	} else {
+		controllerAxis_leftStickX = 0;
+		controllerAxis_leftStickY = 0;
+	}
 
 	PAD_ScanPads();
 	wii_keysDown = PAD_ButtonsDown(0);
@@ -137,13 +160,11 @@ void handlePlayerInput() {
 	wii_mapGCButton(PAD_TRIGGER_R, INPUT_R);
 	wii_mapGCButton(PAD_TRIGGER_Z, INPUT_SELECT);
 	wii_mapGCButton(PAD_BUTTON_START, INPUT_START);
-	controllerAxis_leftStickX = PAD_StickX(0) * 256;
-	controllerAxis_leftStickY = PAD_StickY(0) * -256;
-	if ((controllerAxis_leftStickX > -STICK_DEADZONE) && (controllerAxis_leftStickX < STICK_DEADZONE)) {
-		controllerAxis_leftStickX = 0;
-	}
-	if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
-		controllerAxis_leftStickY = 0;
+	if (controllerAxis_leftStickX == 0 && controllerAxis_leftStickY == 0) {
+		controllerAxis_leftStickX = PAD_StickX(0) * 256;
+		controllerAxis_leftStickY = PAD_StickY(0) * -256;
+		applyStickDeadZoneX();
+		applyStickDeadZoneY();
 	}
 #elif defined(GAMECUBE)
 	PAD_ScanPads();
@@ -161,14 +182,10 @@ void handlePlayerInput() {
 	gc_mapButton(PAD_TRIGGER_R, INPUT_R);
 	gc_mapButton(PAD_TRIGGER_Z, INPUT_SELECT);
 	gc_mapButton(PAD_BUTTON_START, INPUT_START);
-	controllerAxis_leftStickX = PAD_StickX(0) * 256;
-	controllerAxis_leftStickY = PAD_StickY(0) * -256;
-	if ((controllerAxis_leftStickX > -STICK_DEADZONE) && (controllerAxis_leftStickX < STICK_DEADZONE)) {
-		controllerAxis_leftStickX = 0;
-	}
-	if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
-		controllerAxis_leftStickY = 0;
-	}
+	controllerAxis_leftStickX = PAD_StickX(0) << 8;
+	controllerAxis_leftStickY = -(PAD_StickY(0) << 8);
+	applyStickDeadZoneX();
+	applyStickDeadZoneY();
 #else
 	keyInputs = 0;
 	/* Update Key/Button Presses, Mouse/Touch Input, and Window Resizing */
@@ -176,12 +193,8 @@ void handlePlayerInput() {
 	/* Update Controller Axes (SDL2 only; SDL1 axes are handled later) */
 	controllerAxis_leftStickX = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
 	controllerAxis_leftStickY = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);
-	if ((controllerAxis_leftStickX > -STICK_DEADZONE) && (controllerAxis_leftStickX < STICK_DEADZONE)) {
-		controllerAxis_leftStickX = 0;
-	}
-	if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
-		controllerAxis_leftStickY = 0;
-	}
+	applyStickDeadZoneX();
+	applyStickDeadZoneY();
 	/* Update Controller Hat Positions (SDL1 only; SDL2 D-Pad buttons are handled later) */
 #elif defined(THREEDS)
 	joystickHat = SDL_JoystickGetHat(joystick, 0);
@@ -664,15 +677,11 @@ void handlePlayerInput() {
 				switch (event.jaxis.axis) {
 					case 0:
 						controllerAxis_leftStickX = event.jaxis.value;
-						if ((controllerAxis_leftStickX > -STICK_DEADZONE) && (controllerAxis_leftStickX < STICK_DEADZONE)) {
-							controllerAxis_leftStickX = 0;
-						}
+						applyStickDeadZoneX();
 						break;
 					case 1:
 						controllerAxis_leftStickY = event.jaxis.value;
-						if ((controllerAxis_leftStickY > -STICK_DEADZONE) && (controllerAxis_leftStickY < STICK_DEADZONE)) {
-							controllerAxis_leftStickY = 0;
-						}
+						applyStickDeadZoneY();
 						break;
 					default:
 						break;

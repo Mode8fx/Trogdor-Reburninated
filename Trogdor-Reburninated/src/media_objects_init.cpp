@@ -369,7 +369,7 @@ void InitializeText_PauseScreen() {
 #if defined(WII)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press '2+SELECT' to quit", text_4_paused_3, font_serif_white_6,
+	SET_TEXT("press '2+SELECT/A+Z' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(GAMECUBE)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,

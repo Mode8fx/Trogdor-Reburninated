@@ -76,6 +76,7 @@ Sint16 controllerAxis_leftStickY;
 #if defined(WII)
 Uint32 wii_keysDown;
 Uint32 wii_keysUp;
+expansion_t wii_exp;
 #elif defined(GAMECUBE)
 Uint32 gc_keysDown;
 Uint32 gc_keysUp;
