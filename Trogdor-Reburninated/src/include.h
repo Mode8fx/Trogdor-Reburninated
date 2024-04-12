@@ -23,7 +23,7 @@
 #include <SDL_mixer.h>
 #endif
 #if defined(SDL1)
-#if (defined(GAMECUBE) || defined(THREEDS)
+#if defined(GAMECUBE) || defined(THREEDS)
 #include <SDL_rotozoom.h>
 #else
 #include "SDL_rotozoom.h"

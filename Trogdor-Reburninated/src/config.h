@@ -123,8 +123,8 @@ const string rootDir = "";
 
 #if !defined(SDL1)
 extern SDL_DisplayMode DM;
-extern Uint16 displayRefreshRate;
 #endif
+extern Uint16 displayRefreshRate;
 
 #if defined(WII_U)
 constexpr auto DEFAULT_WIDTH = 1280;

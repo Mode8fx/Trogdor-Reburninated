@@ -11,6 +11,10 @@ void InitializeDisplay() {
 #if !defined(SDL1)
 	SDL_GetCurrentDisplayMode(0, &DM);
 	displayRefreshRate = DM.refresh_rate;
+#elif defined(THREEDS)
+	displayRefreshRate = 30;
+#else
+	displayRefreshRate = 60;
 #endif
 #if defined(ANDROID)
 	SDL_SetHint(SDL_HINT_ORIENTATIONS, "Landscape");

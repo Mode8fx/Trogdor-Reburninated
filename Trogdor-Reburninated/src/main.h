@@ -474,8 +474,8 @@ Sint8 scalingType = 0;
 #endif
 #if !defined(SDL1)
 SDL_DisplayMode DM;
-Uint16 displayRefreshRate;
 #endif
+Uint16 displayRefreshRate;
 
 /* Managers */
 MenuManager MM;
