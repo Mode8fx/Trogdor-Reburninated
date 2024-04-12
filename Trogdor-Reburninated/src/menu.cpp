@@ -615,7 +615,7 @@ void Menu::renderMenu() {
 #define option_main_gba_demo_descriptions_line_2 { "to your Game Boy Advance." }
 #endif
 #define option_main_sound_descriptions_line_1 { "Watch cutscenes and" }
-#define option_main_sound_descriptions_line_2 { "Listen to number one jams." }
+#define option_main_sound_descriptions_line_2 { "listen to number one jams." }
 #define option_main_credits_descriptions_line_1 { "View the credits." }
 #define option_main_reset_settings_descriptions_line_1 { "Reset all settings to default." }
 #define option_main_quit_descriptions_line_1 { "Quit the game." }
