@@ -280,7 +280,7 @@ void handlePlayerInput() {
 					heldKeys |= INPUT_SELECT;
 					break;
 				}
-				if (event.key.keysym.sym == SDLK_f || event.key.keysym.sym == SDLK_ESCAPE) {
+				if (event.key.keysym.sym == SDLK_F11 || event.key.keysym.sym == SDLK_ESCAPE) {
 					heldKeys |= INPUT_FULLSCREEN;
 					break;
 				}
@@ -334,7 +334,7 @@ void handlePlayerInput() {
 					heldKeys &= ~INPUT_SELECT;
 					break;
 				}
-				if (event.key.keysym.sym == SDLK_f || event.key.keysym.sym == SDLK_ESCAPE) {
+				if (event.key.keysym.sym == SDLK_F11 || event.key.keysym.sym == SDLK_ESCAPE) {
 					heldKeys &= ~INPUT_FULLSCREEN;
 					break;
 				}
@@ -420,6 +420,10 @@ void handlePlayerInput() {
 					heldKeys |= INPUT_SELECT;
 					break;
 				}
+				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSTICK) {
+					heldKeys |= INPUT_FULLSCREEN;
+					break;
+				}
 				break;
 			case SDL_CONTROLLERBUTTONUP:
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_DPAD_UP) {
@@ -484,6 +488,10 @@ void handlePlayerInput() {
 				}
 				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_BACK) {
 					heldKeys &= ~INPUT_SELECT;
+					break;
+				}
+				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_RIGHTSTICK) {
+					heldKeys &= ~INPUT_FULLSCREEN;
 					break;
 				}
 				break;

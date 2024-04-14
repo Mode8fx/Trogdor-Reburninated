@@ -189,7 +189,7 @@ void InitializeText_HomeScreen() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_5a), 101 * gameHiResMult);
 		SET_TEXT("-What\'s a treasure hut?!?!", text_3_hints_6, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_6), 115 * gameHiResMult);
-		SET_TEXT("- Secret Code?!?!", text_3_hints_7, font_serif_red_6_mult,
+		SET_TEXT("- Secret Codes?!?!", text_3_hints_7, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_7), 129 * gameHiResMult);
 	} else {
 		SET_TEXT(("(1/"+to_string(MAX_PAGE_NUM_HIRES)+")").c_str(), text_3_page, font_serif_white_6_mult,
@@ -225,7 +225,7 @@ void InitializeText_HomeScreen() {
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_5), 115 * gameHiResMult);
 		SET_TEXT("-What\'s a treasure hut?!?!", text_3_hints_6, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_6), 129 * gameHiResMult);
-		SET_TEXT("- Secret Code?!?!", text_3_hints_7, font_serif_red_6_mult,
+		SET_TEXT("- Secret Codes?!?!", text_3_hints_7, font_serif_red_6_mult,
 			OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_hints_7), 143 * gameHiResMult);
 	}
 	SET_TEXT("WHILE PAUSED OR", text_3_controls_1, font_serif_red_6_mult,
@@ -233,47 +233,50 @@ void InitializeText_HomeScreen() {
 	SET_TEXT("ON THIS SCREEN:", text_3_controls_2, font_serif_red_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_2), 73 * gameHiResMult);
 #if defined(VITA) || defined(PSP)
-	SET_TEXT("-Press Triangle to change scaling", text_3_controls_3, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("-Press Square to change overlay", text_3_controls_5, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 101 * gameHiResMult);
 	SET_TEXT(" ", text_3_controls_6, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 115 * gameHiResMult);
+	SET_TEXT("-Press Triangle to change scaling", text_3_controls_3, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 129 * gameHiResMult);
+	SET_TEXT(" ", text_3_controls_4, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 143 * gameHiResMult);
 #elif defined(WII)
-	SET_TEXT("-Press Home (Wii) / Y (GC) to change scaling", text_3_controls_3, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("-Press A (Wii) / R (GC) to change overlay", text_3_controls_5, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 101 * gameHiResMult);
 	SET_TEXT(" ", text_3_controls_6, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 115 * gameHiResMult);
+	SET_TEXT("-Press Home (Wii) / Y (GC) to change scaling", text_3_controls_3, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 129 * gameHiResMult);
+	SET_TEXT(" ", text_3_controls_4, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 143 * gameHiResMult);
 #elif defined(THREEDS)
 	SET_TEXT("-Press X to change overlay", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
+	SET_TEXT(" ", text_3_controls_4, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 115 * gameHiResMult);
 	SET_TEXT("(Warning: Overlay may cause", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
 	SET_TEXT("minor graphical issues on O3DS)", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #elif defined(PC)
-	SET_TEXT("-Press V / Y to change scaling", text_3_controls_3, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("-Press C / X to change overlay", text_3_controls_5, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
-	SET_TEXT("-Press F/ESC to toggle fullscreen", text_3_controls_6, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 101 * gameHiResMult);
+	SET_TEXT("-Press V / Y to change scaling", text_3_controls_3, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 115 * gameHiResMult);
+	SET_TEXT("-Press F11 / ESC / Right Stick", text_3_controls_4, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 129 * gameHiResMult);
+	SET_TEXT("for fullscreen", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #else
-	SET_TEXT("-Press Y to change scaling", text_3_controls_3, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
 	SET_TEXT("-Press X to change overlay", text_3_controls_5, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 101 * gameHiResMult);
 	SET_TEXT(" ", text_3_controls_6, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
-#endif
-#if defined(THREEDS)
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 115 * gameHiResMult);
+	SET_TEXT("-Press Y to change scaling", text_3_controls_3, font_serif_white_6_mult,
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 129 * gameHiResMult);
 	SET_TEXT(" ", text_3_controls_4, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 115 * gameHiResMult);
-#else
-	SET_TEXT("(may take a few seconds)", text_3_controls_4, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 115 * gameHiResMult);
+		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 143 * gameHiResMult);
 #endif
 #if defined(PC)
 	SET_TEXT("HEY, KEYBOARD USERS!", text_3_keyboard_1, font_serif_red_6_mult,

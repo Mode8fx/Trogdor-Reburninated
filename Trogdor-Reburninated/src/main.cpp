@@ -278,34 +278,33 @@ int main(int argv, char** args) {
 				renderOverlay = true;
 				MM.typeStuff();
 				MM.handlePageChange();
-				if (MM.page == 1) {
-					if (keyPressed(INPUT_START)) {
-						if (gameState.autosave.mans >= 0) {
-							MM.continueHighlighted = true;
-							MM.cursor.dstrect.x = (int)((double)text_3_continue_1.dstrect.x / gameHiResMult) - (MM.cursor.dstrect.w * 2);
-							MM.cursor.dstrect.y = (int)(text_3_continue_1.dstrect.y / gameHiResMult);
-							g_sceneState = 3001;
-						} else {
-							MM.continueHighlighted = false;
-							GM = GameManager(MM);
-							GM.levelInit();
-							updateText(&text_4_score_val, to_string(GM.score));
-							updateText(&text_4_mans_val, to_string(GM.mans));
-							updateText(&text_4_level_val, to_string(GM.level));
-							InitializeCutsceneObjects_trogdor(); // needed in case Big Head Mode was toggled
-							g_sceneState = 4;
-						}
-					} else if (keyPressed(INPUT_SELECT)) {
-						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
-						menu_main.openMenu();
-						if (!menuMusicHasStarted) {
-							playMusic(MUSIC_MENU, true, DEFAULT_VOLUME_MUSIC);
-							menuMusicHasStarted = true;
-						} else {
-							resumeMusic();
-						}
-						g_sceneState = 301;
+				if (MM.page == 1 && keyPressed(INPUT_START)) {
+					if (gameState.autosave.mans >= 0) {
+						MM.continueHighlighted = true;
+						MM.cursor.dstrect.x = (int)((double)text_3_continue_1.dstrect.x / gameHiResMult) - (MM.cursor.dstrect.w * 2);
+						MM.cursor.dstrect.y = (int)(text_3_continue_1.dstrect.y / gameHiResMult);
+						g_sceneState = 3001;
+					} else {
+						MM.continueHighlighted = false;
+						GM = GameManager(MM);
+						GM.levelInit();
+						updateText(&text_4_score_val, to_string(GM.score));
+						updateText(&text_4_mans_val, to_string(GM.mans));
+						updateText(&text_4_level_val, to_string(GM.level));
+						InitializeCutsceneObjects_trogdor(); // needed in case Big Head Mode was toggled
+						g_sceneState = 4;
 					}
+				} else if (keyPressed(INPUT_SELECT)) {
+					menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
+					menu_main.openMenu();
+					if (!menuMusicHasStarted) {
+						playMusic(MUSIC_MENU, true, DEFAULT_VOLUME_MUSIC);
+						menuMusicHasStarted = true;
+					}
+					else {
+						resumeMusic();
+					}
+					g_sceneState = 301;
 				}
 				sprite_trogdor_logo_ins.renderSprite_game();
 				if (gameHiResMult < 2) {
@@ -515,6 +514,7 @@ int main(int argv, char** args) {
 						pauseMusic();
 						saveGameState_settings();
 						MM = MenuManager();
+						updateText(&text_3_page, "(" + to_string(MM.page) + "/" + to_string(MM.maxPageNum) + ")");
 						break;
 					default:
 						break;

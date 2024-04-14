@@ -814,7 +814,7 @@ void InitializeMenus() {
 	}
 	MENU_INF_LIVES->prepareMenuOption("Infinite Lives", option_on_off,
 		option_cheats_inf_lives_descriptions_line_1, option_cheats_inf_lives_descriptions_line_2, option_cheats_inf_lives_descriptions_line_3,
-		"Secret Code?!?!", 2, true, 1, true, true);
+		"The Original Secret Code", 2, true, 1, true, true);
 	MENU_SPEEDY_MODE->prepareMenuOption("Speedy Trogdor", option_speedy_mode_choices,
 		option_cheats_speedy_mode_descriptions_line_1, option_empty, option_empty,
 		"S&K Mushroom Pulley", 4, true, 0, true, true);
