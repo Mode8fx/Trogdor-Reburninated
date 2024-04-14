@@ -14,6 +14,8 @@ constexpr auto MAX_NUM_KNIGHTS = 2;
 constexpr auto MAX_NUM_PEASANTS = 7;
 constexpr auto MAX_NUM_LOOT = 7;
 
+#define SB_VOICE_MULT ((float)MENU_COMMENT_FREQ->index / 3)
+
 #if defined(SDL1)
 inline bool SDL_HasIntersection(const SDL_Rect *A, const SDL_Rect *B);
 #endif
@@ -73,7 +75,7 @@ class Peasant {
 		bool returning;
 		float timer;
 		Peasant();
-		void updateFrameState(float);
+		void updateFrameState();
 };
 
 class Archer {
@@ -199,7 +201,7 @@ class GameManager {
 		Sint16 store_y;                         // old player Y position (used for treasure huts)
 		float treasureHut_timer;                // remaining time in treasure hut
 		Loot lootArray[MAX_NUM_LOOT];           // array of Loot objects
-		float sbVoiceMult;                      // a multiplier for how often Strong Bad talks
+		//float sbVoiceMult;                    // a multiplier for how often Strong Bad talks
 		//bool bigHeadMode;                     // big head mode
 		Sint8 speedyMode;                       // speedy mode
 		bool debugMode;                         // debug mode

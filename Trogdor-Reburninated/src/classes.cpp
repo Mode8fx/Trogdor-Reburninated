@@ -288,7 +288,7 @@ Peasant::Peasant() {
 	sprite.collision = { 8 + sprite.dstrect.x, 5 + sprite.dstrect.y, 8, 19 };
 }
 
-void Peasant::updateFrameState(float sbVoiceMult) {
+void Peasant::updateFrameState() {
 	if (frameState.atStartOfFrame) {
 		switch (frameState.frame) {
 			case 1:
@@ -303,11 +303,11 @@ void Peasant::updateFrameState(float sbVoiceMult) {
 				sprite.setForm(3);
 				loadAndPlaySound(SFX_SQUISH);
 				rand_var = rand() % 1000;
-				if (rand_var < 3 * sbVoiceMult) {
+				if (rand_var < 3 * SB_VOICE_MULT) {
 					loadAndPlaySound(SFX_SB2);
-				} else if (rand_var < 6 * sbVoiceMult) {
+				} else if (rand_var < 6 * SB_VOICE_MULT) {
 					loadAndPlaySound(SFX_SBSQUISH1);
-				} else if (rand_var < 10 * sbVoiceMult) {
+				} else if (rand_var < 10 * SB_VOICE_MULT) {
 					loadAndPlaySound(SFX_SBSQUISH2);
 				}
 				break;
@@ -838,29 +838,6 @@ GameManager::GameManager(MenuManager mm) {
 	store_x = 0;
 	store_y = 0;
 	treasureHut_timer = 0;
-	switch (MENU_COMMENT_FREQ->index) {
-		case 0:
-			sbVoiceMult = 0;
-			break;
-		case 1:
-			sbVoiceMult = (float)0.3333;
-			break;
-		case 2:
-			sbVoiceMult = (float)0.6666;
-			break;
-		case 3:
-			sbVoiceMult = 1;
-			break;
-		case 4:
-			sbVoiceMult = (float)1.3333;
-			break;
-		case 5:
-			sbVoiceMult = (float)1.6666;
-			break;
-		default:
-			sbVoiceMult = 2;
-			break;
-	}
 }
 
 void GameManager::resetAllSrcRects() {
@@ -1470,7 +1447,7 @@ void GameManager::testBurnHut() {
 	for (i = 0; i < MAX_NUM_HUTS; i++) {
 		if (!hutArray[i].burning && SDL_HasIntersection(&player.sprite_fire.dstrect, &hutArray[i].sprite_fire.collision)) {
 			hutArray[i].burning = true;
-			if ((rand() % 100) < 5 * sbVoiceMult) {
+			if ((rand() % 100) < 5 * SB_VOICE_MULT) {
 				loadAndPlaySound(SFX_SBDOOJ);
 			}
 		}
@@ -1644,7 +1621,7 @@ void GameManager::testBurnPeasant() {
 	for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 		if (!peasantArray[i].burning && !peasantArray[i].stomped && peasantArray[i].sprite.isActive && SDL_HasIntersection(&player.sprite_fire.dstrect, &peasantArray[i].sprite.collision)) {
 			loadAndPlaySound(SFX_PEASANTSCREAM);
-			if ((rand() % 100) < 40 * sbVoiceMult) {
+			if ((rand() % 100) < 40 * SB_VOICE_MULT) {
 				if ((rand() % 100) > 50) {
 					loadAndPlaySound(SFX_SB6);
 				} else {
@@ -1674,10 +1651,10 @@ void GameManager::dm_updateFrameState() { // death message
 			case 6:
 				if (mans > 0) {
 					if (peasantometer == 9) {
-						if (sbVoiceMult > 0) {
+						if (SB_VOICE_MULT > 0) {
 							loadAndPlaySound(SFX_SB3);
 						}
-					} else if ((rand() % 100) < 20 * sbVoiceMult) {
+					} else if ((rand() % 100) < 20 * SB_VOICE_MULT) {
 						loadAndPlaySound(SFX_SBWORST);
 					}
 				} else {
@@ -1736,7 +1713,7 @@ void GameManager::dm_updateFrameState() { // death message
 				arched = true;
 				break;
 			case 31:
-				if (mans > 0 && (rand() % 100) < 20 * sbVoiceMult) {
+				if (mans > 0 && (rand() % 100) < 20 * SB_VOICE_MULT) {
 					loadAndPlaySound(SFX_SBARCH);
 				}
 				sprite_dm.setForm(1);
@@ -1767,7 +1744,7 @@ void GameManager::b_updateFrameState() { // burninate message
 			case 4:
 				sprite_bf.setForm(0);
 				rand_var = rand() % 100;
-				if (rand_var < 10 * sbVoiceMult) {
+				if (rand_var < 10 * SB_VOICE_MULT) {
 					if (rand_var < 5) { // the original game used 50 instead of 5, leaving SFX_SB5 unused
 						loadAndPlaySound(SFX_SB4);
 					} else {
@@ -1967,7 +1944,7 @@ void GameManager::renderPeasants() {
 	for (i = 0; i < MAX_NUM_PEASANTS; i++) {
 		if (peasantArray[i].sprite.isActive) {
 			if (!manually_paused && (!peasantArray[i].waiting || peasantArray[i].stomped)) {
-				peasantArray[i].updateFrameState(sbVoiceMult);
+				peasantArray[i].updateFrameState();
 			}
 			peasantArray[i].sprite.renderSprite_game();
 		}

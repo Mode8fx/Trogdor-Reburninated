@@ -161,16 +161,16 @@ void cutscene_game_over() {
 				cutscene_game_over_text.prepareAsCSO(44, 45, 0, 0, 0, 2, 0, 0);
 				if (GM.score < 2000) {
 					if (GM.arched) {
-						if ((rand() % 100) < 50 * GM.sbVoiceMult) {
+						if ((rand() % 100) < 50 * SB_VOICE_MULT) {
 							loadAndPlaySound(SFX_SBARCHEND);
 						}
-					} else if ((GM.score > 1000) && ((rand() % 100) < 70 * GM.sbVoiceMult)) {
+					} else if ((GM.score > 1000) && ((rand() % 100) < 70 * SB_VOICE_MULT)) {
 						loadAndPlaySound(SFX_SBSCORE);
-					} else if ((rand() % 100) < 70 * GM.sbVoiceMult) {
+					} else if ((rand() % 100) < 70 * SB_VOICE_MULT) {
 						loadAndPlaySound(SFX_SBGAMEOVER);
 					}
 				} else {
-					if (GM.sbVoiceMult > 0) {
+					if (SB_VOICE_MULT > 0) {
 						loadAndPlaySound(SFX_SBSECRET);
 					}
 					cutscene_game_over_jonathan_howe.prepareAsCSO(40, 173, 0, 0, 0, 1, 0, 0); // original is 41, 173
@@ -959,7 +959,7 @@ void cutscene_level_50() {
 				cutscene_kerrek_smoked.prepareAsCSO(137, 120, 1, 0, 0, 0, 0, 0);
 				break;
 			case 1297:
-				if (rand() % 100 < 50 * GM.sbVoiceMult) {
+				if (rand() % 100 < 50 * SB_VOICE_MULT) {
 					loadAndPlaySound(SFX_SBKERREK);
 				}
 				break;
@@ -998,7 +998,7 @@ void cutscene_level_100() {
 				cutscene_strong_bad.prepareAsCSO(220, 100, 0, 0, 1, 0, (float)-3.372, 0);
 				break;
 			case 1349:
-				if (rand() % 100 < 50 * GM.sbVoiceMult) {
+				if (rand() % 100 < 50 * SB_VOICE_MULT) {
 					loadAndPlaySound(SFX_SBWIN);
 				}
 				break;
@@ -1030,7 +1030,7 @@ void cutscene_level_100() {
 				cutscene_strong_bad.prepareAsCSO(115, 99, 0, 1, 0, 0, 0, 0);
 				break;
 			case 1456:
-				if (rand() % 100 < 50 * GM.sbVoiceMult) {
+				if (rand() % 100 < 50 * SB_VOICE_MULT) {
 					loadAndPlaySound(SFX_SBWIN2);
 				}
 				break;

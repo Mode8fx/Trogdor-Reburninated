@@ -1032,7 +1032,7 @@ int main(int argv, char** args) {
 				if (g_frameState.frame) {
 					switch (g_frameState.frame) {
 						case 257:
-							if ((rand() % 100) < 10 * GM.sbVoiceMult) {
+							if ((rand() % 100) < 10 * SB_VOICE_MULT) {
 								if ((rand() % 100) < 50) {
 									loadAndPlaySound(SFX_SBLEVELBEAT);
 								} else {
@@ -1041,7 +1041,7 @@ int main(int argv, char** args) {
 							}
 							break;
 						case 265:
-							if ((sfxChannel_strongBad == NULL) && ((rand() % 100) < 10 * GM.sbVoiceMult)) {
+							if ((sfxChannel_strongBad == NULL) && ((rand() % 100) < 10 * SB_VOICE_MULT)) {
 								loadAndPlaySound(SFX_SBBEST);
 							}
 							break;

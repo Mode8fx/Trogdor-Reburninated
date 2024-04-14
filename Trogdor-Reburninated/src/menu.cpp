@@ -565,7 +565,7 @@ void Menu::renderMenu() {
 #define option_main_level_tran_descriptions_line_3 { "", "" }
 #define option_main_comment_freq_choices { "Off", "Very Low", "Low", "Normal", "High", "Very High", "Let's-Player" }
 #define option_main_comment_freq_descriptions_line_1 { "Strong Bad does not talk.", "Strong Bad rarely talks.", "Strong Bad talks less than usual.", "Strong Bad talks as often", "Strong Bad talks a bit more often.", "Strong Bad talks much more often.", "Strong Bad won't shut up!" }
-#define option_main_comment_freq_descriptions_line_2 { "", "", "", "as he did in the original game.", "", "", "(He talks twice as much as usual.)"}
+#define option_main_comment_freq_descriptions_line_2 { "", "", "", "as he did in the original game.", "", "", "(He talks about twice as much as usual.)"}
 #define option_main_comment_freq_descriptions_line_3 { "", "", "", "", "", "", "" }
 #if defined(PC)
 #define press_confirm_to_apply "(Press " + INPUT_CONFIRM + " to apply)"
