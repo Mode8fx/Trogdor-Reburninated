@@ -97,12 +97,6 @@ void InitializeFontsAndText() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents_1, 0.7));
 	SET_TEXT(" ", text_1_presents_2, font_nokia_12,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents_2), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents_2, 0.8));
-#elif defined(THREEDS)
-	// on 3DS, this is offset by three characters for some reason
-	SET_TEXT("lofdfk^i d^jb", text_1_presents_1, font_nokia_12,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents_1, 0.23));
-	SET_TEXT("_v", text_1_presents_2, font_nokia_12,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents_2), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents_2, 0.3));
 #else
 	SET_TEXT("original game", text_1_presents_1, font_nokia_12,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_1_presents_1), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHiResHeight, text_1_presents_1, 0.23));
@@ -621,21 +615,21 @@ void InitializeSpritesPart1() {
 	sprite_overlay_basement_left_ins = SpriteInstance(&sprite_overlay_basement_left, 0, 0);
 	PREPARE_SPRITE(sprite_overlay_basement_right, basement_right_bmp, basement_right_bmp_len, 285, 30, 1, 1, 0.5);
 	sprite_overlay_basement_right_ins = SpriteInstance(&sprite_overlay_basement_right, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_compy_top, compy_top_bmp, compy_top_bmp_len, 0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_compy_top, compy_top_bmp, compy_top_bmp_len, 0, 0, 1, 1, 0.5);
 	sprite_overlay_compy_top_ins = SpriteInstance(&sprite_overlay_compy_top, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_compy_bottom, compy_bottom_bmp, compy_bottom_bmp_len, 0, 210, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_compy_bottom, compy_bottom_bmp, compy_bottom_bmp_len, 0, 210, 1, 1, 0.5);
 	sprite_overlay_compy_bottom_ins = SpriteInstance(&sprite_overlay_compy_bottom, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_compy_left, compy_left_bmp, compy_left_bmp_len, 0, 30, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_compy_left, compy_left_bmp, compy_left_bmp_len, 0, 30, 1, 1, 0.5);
 	sprite_overlay_compy_left_ins = SpriteInstance(&sprite_overlay_compy_left, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_compy_right, compy_right_bmp, compy_right_bmp_len, 285, 30, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_compy_right, compy_right_bmp, compy_right_bmp_len, 285, 30, 1, 1, 0.5);
 	sprite_overlay_compy_right_ins = SpriteInstance(&sprite_overlay_compy_right, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_strong_badia_top, strong_badia_top_bmp, strong_badia_top_bmp_len, 0, 0, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_strong_badia_top, strong_badia_top_bmp, strong_badia_top_bmp_len, 0, 0, 1, 1, 0.5);
 	sprite_overlay_strong_badia_top_ins = SpriteInstance(&sprite_overlay_strong_badia_top, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_strong_badia_bottom, strong_badia_bottom_bmp, strong_badia_bottom_bmp_len, 0, 210, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_strong_badia_bottom, strong_badia_bottom_bmp, strong_badia_bottom_bmp_len, 0, 210, 1, 1, 0.5);
 	sprite_overlay_strong_badia_bottom_ins = SpriteInstance(&sprite_overlay_strong_badia_bottom, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_strong_badia_left, strong_badia_left_bmp, strong_badia_left_bmp_len, 0, 30, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_strong_badia_left, strong_badia_left_bmp, strong_badia_left_bmp_len, 0, 30, 1, 1, 0.5);
 	sprite_overlay_strong_badia_left_ins = SpriteInstance(&sprite_overlay_strong_badia_left, 0, 0);
-	PREPARE_SPRITE(sprite_overlay_strong_badia_right, strong_badia_right_bmp, strong_badia_right_bmp_len, 285, 30, 1, 1, 1);
+	PREPARE_SPRITE(sprite_overlay_strong_badia_right, strong_badia_right_bmp, strong_badia_right_bmp_len, 285, 30, 1, 1, 0.5);
 	sprite_overlay_strong_badia_right_ins = SpriteInstance(&sprite_overlay_strong_badia_right, 0, 0);
 	divider_level_beaten_rect = { 0, 25, gameWidth, 2 };
 }
@@ -673,7 +667,7 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_strong_bad_ending, strong_bad_ending_bmp, strong_bad_ending_bmp_len, 0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_cursor, menu_cursor_bmp, menu_cursor_bmp_len, 0, 0, 1, 1, 1);
 	PREPARE_SPRITE_MENU(sprite_menu_cursor, menu_cursor_bmp, menu_cursor_bmp_len, 0, 0, 1, 1, 1);
-#if defined(THREEDS)
+#if defined(THREEDS) || defined(PSP)
 	PREPARE_SPRITE_MENU(sprite_menu_background, options_menu_240p_bmp, options_menu_240p_bmp_len, 0, 0, 1, 1, 1);
 #else
 	PREPARE_SPRITE_MENU(sprite_menu_background, options_menu_bmp, options_menu_bmp_len, 0, 0, 1, 1, 0.5);

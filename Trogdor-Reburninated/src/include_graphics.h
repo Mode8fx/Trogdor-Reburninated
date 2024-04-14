@@ -43,7 +43,7 @@
 #include "graphics_h/level_beaten_trogdor_scaled.h"
 #include "graphics_h/loot.h"
 #include "graphics_h/menu_cursor.h"
-#if defined(THREEDS)
+#if defined(THREEDS) || defined(PSP)
 #include "graphics_h/options_menu_240p.h"
 #else
 #include "graphics_h/options_menu.h"
