@@ -1132,62 +1132,33 @@ void updateFrameRate() {
 	switch (MENU_FRAME_RATE->index) {
 		case 1:
 			frameRate = 20;
-#if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 20; // this may seem redundant, but it's the only way it'll work on PSP; using the frameRate variable just... doesn't work
-#endif
 			break;
 		case 2:
 			frameRate = 25;
-#if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 25;
-#endif
 			break;
 		case 3:
 			frameRate = 30;
-#if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 30;
-#endif
 			break;
 		case 4:
 			frameRate = 40;
-#if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 40;
-#endif
 			break;
 		case 5:
 			frameRate = 50;
-#if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 50;
-#endif
 			break;
 		case 6:
 			frameRate = 55;
-#if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 55;
-#endif
 			break;
 		case 7:
 			frameRate = 60;
-#if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 60;
-#endif
 			break;
 		case 8:
 			frameRate = (Uint8)min((int)displayRefreshRate, 255);
-#if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 60;
-#endif
 			break;
 		default:
 			frameRate = 16;
-#if defined(PSP)
-			frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / 16;
-#endif
 			break;
 	}
-#if !defined(PSP)
 	frameRateMult = static_cast<float>(ORIGINAL_FRAME_RATE) / frameRate;
-#endif
 	popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 	ticksPerFrameDefault = 1000.0F / frameRate;
 	ticksPerFrame = ticksPerFrameDefault;
