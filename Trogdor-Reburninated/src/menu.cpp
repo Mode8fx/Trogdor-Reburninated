@@ -667,11 +667,12 @@ void Menu::renderMenu() {
 void InitializeMenus() {
 	TTF_Init();
 	// if the menu font would end up being the same as font_serif_white_6_mult, just use that instead of initializing an exclusive font
-	if (font_serif_white_6_mult.size == getDesiredFontSize(&font_serif_white_8)) {
-		menuFont = &font_serif_white_6_mult;
-	} else {
-		menuFont = &font_serif_white_8;
-	}
+	//if (font_serif_white_6_mult.size == getDesiredFontSize(&font_serif_white_8)) {
+	//	menuFont = &font_serif_white_6_mult;
+	//} else {
+	//	menuFont = &font_serif_white_8;
+	//}
+	menuFont = &font_serif_white_8;
 	setFont(menuFont, serif_v01_ttf, serif_v01_ttf_len, 8, 5, TTF_STYLE_NORMAL, color_white, true);
 	menuFont_frozen = &font_serif_gray_8;
 	setFont(&font_serif_gray_8, serif_v01_ttf, serif_v01_ttf_len, 8, 5, TTF_STYLE_NORMAL, color_gray, true);
