@@ -8,7 +8,7 @@ Homestar Runner is no stranger to [fan ports](https://www.mrphlip.com/ds/pop_tir
 ## Features
 - A faithful recreation of the original Flash game, including intermissions
 - Change gameplay settings such as enemy speed and points needed for extra lives, or use one of the new difficulty presets
-- Support for any frame rate up to 144 FPS (or 30/60, depending on console)
+- Support for any frame rate (or up to 30 FPS on 3DS)
 - Save data support, including mid-game progress and high score
 - Level select and shuffle
 - New cheats, in addition to the original game's Konami code
@@ -28,7 +28,7 @@ It was made by opening the original game in a Flash decompiler and porting its A
 That being said, almost all art and sound assets are ported directly from the original game, just reorganized into sprite sheets, with modifications only being made when necessary.
 
 ### Will this be ported to \_\_\_\_\_?
-This game was made to be compatible with both SDL 1.2 and SDL2 specifically so it could be ported to many systems. In particular, I would like to create a LibRetro core so it runs on a wide variety of systems. You could also try porting it yourself; this is open-source, after all.
+This game was made to be compatible with both SDL 1.2 and SDL2 specifically so it could be ported to many systems. You have my permission to port this wherever you want.
 
 ### Legal Stuff
 This is an unofficial fan project made without any involvement from anyone who contributed to the original game. Trogdor and Homestar Runner are owned by the Brothers Chaps, Mike and Matt Chapman. The original Flash game was programmed by Jonathan Howe.
