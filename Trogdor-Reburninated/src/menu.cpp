@@ -578,7 +578,7 @@ void Menu::renderMenu() {
 #define option_main_scaling_descriptions_line_1 { "Scale so that everything uses integer", "", "Scale everything so that", "Scale the game to fill the screen." }
 #define option_main_scaling_descriptions_line_2 { "scaling. Accurate, but small.", "", "the overlay fills the screen.", "The overlay will be cut off." }
 #define option_main_scaling_descriptions_line_3 { press_confirm_to_apply, "", press_confirm_to_apply, press_confirm_to_apply }
-#elif (RG35XX) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
+#elif defined(WII) || defined(GAMECUBE) || defined(XBOX)
 #define option_main_scaling_choices { "Pixel-Perfect", "", "", "Full Game" }
 #define option_main_scaling_descriptions_line_1 { "Scale so that everything uses integer", "", "", "Scale the game to fill the screen." }
 #define option_main_scaling_descriptions_line_2 { "scaling. The most accurate.", "", "", "The overlay will be cut off." }
@@ -1037,10 +1037,10 @@ void InitializeMenus() {
 		MENU_SPEEDY_MODE->setLocked(true);
 		MENU_NOCLIP->setLocked(true);
 		MENU_DEBUG_MODE->setLocked(true);
-#if defined(RG35XX) || defined(THREEDS) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
+#if defined(THREEDS) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
 		MENU_SCALING->choiceIsAllowed[1] = false;
 #endif
-#if defined(RG35XX) || defined(THREEDS) || defined(WII) || defined(GAMECUBE) || defined(XBOX) || defined(WII_U)
+#if defined(THREEDS) || defined(WII) || defined(GAMECUBE) || defined(XBOX) || defined(WII_U)
 		MENU_SCALING->choiceIsAllowed[2] = false;
 #endif
 #if defined(THREEDS) || defined(WII_U) || defined(SWITCH)

@@ -6,7 +6,7 @@
 #include "level_data.h"
 
 bool renderOverlay;
-#if defined(RG35XX) || defined(THREEDS)
+#if defined(THREEDS)
 Sint8 showOverlay = 0;
 #else
 Sint8 showOverlay = 1;

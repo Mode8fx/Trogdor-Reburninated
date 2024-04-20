@@ -47,7 +47,7 @@ void loadGameState_partial() { // used for display init (saved scaling option wo
 		// File does not exist, use default scaling
 #if defined(VITA) || defined(WII_U) || defined(SWITCH)
 		gameState.settings_cosmetic.scaling = 1;
-#elif defined(RG35XX) || defined(PSP)
+#elif defined(PSP)
 		gameState.settings_cosmetic.scaling = 3;
 #else
 		gameState.settings_cosmetic.scaling = 0;
