@@ -46,7 +46,7 @@ INCLUDES	:=	src src/fonts_h src/graphics_h src/graphics_h/backgrounds src/graphi
 
 APP_TITLE   := Trogdor: Reburninated
 APP_AUTHOR  := Mode8fx
-APP_VERSION := 2.2
+APP_VERSION := 2.21
 ICON        := release-resources/logo_icon_switch.jpg
 
 #---------------------------------------------------------------------------------
@@ -159,7 +159,7 @@ all: $(BUILD)
 
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
-	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefiles/Makefile_switch
 
 #---------------------------------------------------------------------------------
 clean:

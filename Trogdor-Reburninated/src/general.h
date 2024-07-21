@@ -77,7 +77,7 @@ extern void applyColorKey(SDL_Surface *);
 extern void systemSpecificOpen();
 extern void systemSpecificClose();
 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) && !defined(XBOX)
 #define STRCPY(dest, src) strcpy_s(dest, src);
 #else
 #define STRCPY(dest, src) strcpy(dest, src);
