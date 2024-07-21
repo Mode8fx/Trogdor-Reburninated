@@ -366,37 +366,37 @@ void InitializeText_PauseScreen() {
 #if defined(WII)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press '2+SELECT/A+Z' to quit", text_4_paused_3, font_serif_white_6,
+	SET_TEXT("press 'SELECT/Z' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(GAMECUBE)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'A+Z' to quit", text_4_paused_3, font_serif_white_6,
+	SET_TEXT("press 'Z' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(VITA) || defined(PSP)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'X+SELECT' to quit", text_4_paused_3, font_serif_white_6,
+	SET_TEXT("press 'SELECT' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(SWITCH)
 	SET_TEXT("press '+' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'A and -' to quit", text_4_paused_3, font_serif_white_6,
+	SET_TEXT("press '-' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(XBOX)
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'A+BACK' to quit", text_4_paused_3, font_serif_white_6,
+	SET_TEXT("press 'BACK' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #elif defined(PC)
-	SET_TEXT("press 'START/ENTER' to resume", text_4_paused_2, font_serif_white_6,
+	SET_TEXT("press 'ENTER/START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'Z+BACKSPACE/A+SELECT' to quit", text_4_paused_3, font_serif_white_6,
+	SET_TEXT("press 'BACKSPACE/SELECT' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #else
 	SET_TEXT("press 'START' to resume", text_4_paused_2, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_2), 145 * gameHiResMult);
-	SET_TEXT("press 'A+SELECT' to quit", text_4_paused_3, font_serif_white_6,
+	SET_TEXT("press 'SELECT' to quit", text_4_paused_3, font_serif_white_6,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_4_paused_3), 160 * gameHiResMult);
 #endif
 }
@@ -905,7 +905,7 @@ void HandleErrorText(const char *badPath) {
 	quickErrorTextRender_1("Make sure you have the correct", 0.6);
 	quickErrorTextRender_1("assets installed and try again.", 0.675);
 	quickErrorTextRender_1("Press ENTER/START to quit.", 0.825);
-	quickErrorTextRender_2("[Trogdor: Reburninated v2.2]", 0.9);
+	quickErrorTextRender_2("[Trogdor: Reburninated v2.21]", 0.9);
 	TTF_CloseFont(font_commodore_error_1.font);
 	TTF_CloseFont(font_commodore_error_2.font);
 

@@ -513,9 +513,9 @@ void Menu::renderMenu() {
 #define option_shuffle_levels_descriptions_line_2 { "different every time you play." }
 #define option_shuffle_levels_descriptions_line_3 { "(Custom / Mode 8 / Chance presets only.)" }
 #define option_main_preset_choices { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mode 8", "Chance" }
-#define option_main_preset_descriptions_line_1 { "Make your own rules!", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "They invented it just for this game!", "Knight/arrow speed and archer freq. are" }
-#define option_main_preset_descriptions_line_2 { "Cheats and level select", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "Do you has what it takes?", "Fewer extra lives, crazy fast arrows,", "shuffled every level, and levels are" }
-#define option_main_preset_descriptions_line_3 { "are also allowed.", "", "", "For Trogdor pros.", "", "all treasure huts, shuffled levels.", "shuffled! Who knows what could happen?" }
+#define option_main_preset_descriptions_line_1 { "Make your own rules! Cheats and", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "They invented it just for this game!", "Knight/arrow speed and archer freq. are" }
+#define option_main_preset_descriptions_line_2 { "level select are also allowed.", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "Do you has what it takes?", "Fewer extra lives, crazy fast arrows,", "shuffled every level, and levels are" }
+#define option_main_preset_descriptions_line_3 { "", "", "", "For Trogdor pros.", "", "all treasure huts, shuffled levels.", "shuffled! Who knows what could happen?" }
 #define option_main_extra_lives_choices { "0", "1", "2", "3", "4", "5", "10", "20", "30" }
 #define option_main_extra_lives_descriptions_line_1 { "The number of extra lives you start with." }
 #define option_main_lives_interval_choices { "Every 300 points", "Every 500 points", "Every 1000 points", "500 points only", "500 and 1000 only", "1000 points only", "1000 and 2000 only", "None" }
@@ -949,7 +949,7 @@ void InitializeMenus() {
 	menu_credits.pages[1]->setTextLine(4, "https://github.com/Mode8fx");
 	menu_credits.pages[1]->setTextLine(5, "/Trogdor-Reburninated");
 	menu_credits.pages[1]->setTextLine(6, "");
-	menu_credits.pages[1]->setTextLine(7, "v2.2");
+	menu_credits.pages[1]->setTextLine(7, "v2.21");
 
 	menu_credits.pages[2]->prepareMenuPage(5, 0, 30, 20, 1);
 	menu_credits.pages[2]->setTextLine(0, "- STINKOMAN MUSIC -");

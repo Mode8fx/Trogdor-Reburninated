@@ -475,6 +475,7 @@ int main(int argv, char** args) {
 						menu_cheats.setOptionChoice(MENU_SPEEDY_MODE_INDEX, MENU_SPEEDY_MODE->index_init);
 						menu_cheats.setOptionChoice(MENU_NOCLIP_INDEX, MENU_NOCLIP->index_init);
 						menu_cheats.setOptionChoice(MENU_DEBUG_MODE_INDEX, MENU_DEBUG_MODE->index_init);
+						setPreset(MENU_PRESET->index);
 						loadAndPlaySound(SFX_SBDOOJ_SHORT);
 						break;
 					case MENU_HIGHSCORES_INDEX:
@@ -900,7 +901,7 @@ int main(int argv, char** args) {
 							renderText(text_4_paused_2, font_serif_white_6);
 							renderText(text_4_paused_3, font_serif_white_6);
 						}
-						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
+						if (keyPressed(INPUT_SELECT)) {
 							g_sceneState = 3;
 							lastMusicPlayed = -1;
 							GM.saveGameState_autosave();
@@ -1000,7 +1001,7 @@ int main(int argv, char** args) {
 							renderText(text_4_paused_2, font_serif_white_6);
 							renderText(text_4_paused_3, font_serif_white_6);
 						}
-						if (keyHeld(INPUT_A) && keyPressed(INPUT_SELECT)) {
+						if (keyPressed(INPUT_SELECT)) {
 							g_sceneState = 3;
 							lastMusicPlayed = -1;
 							GM.saveGameState_autosave();
