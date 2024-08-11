@@ -5,6 +5,9 @@ SRC_DIR		=	src
 EXCLUDED	=	$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(SRC_DIR)/fonts_h/54_serif_v01.cpp $(wildcard $(SRC_DIR)/sfx_h/*) $(wildcard $(SRC_DIR)/OSLibAudio/*)
 SRCS		=	$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/**/*.c) $(wildcard $(SRC_DIR)/graphics_h/**/*.cpp) $(wildcard $(SRC_DIR)/graphics_h/**/*.c))
 OBJS		=	$(patsubst %.cpp, %.o, $(patsubst %.c, %.o, $(SRCS)))
+RC			=	windres
+RESOURCES	=	release-resources/resource.o
+
 
 CXX ?= x86_64-w64-mingw32-g++
 CXXFLAGS += $(shell pkg-config --cflags sdl2 SDL2_image SDL2_ttf SDL2_mixer)
@@ -12,10 +15,13 @@ LDFLAGS += $(shell pkg-config --libs sdl2 SDL2_image SDL2_ttf SDL2_mixer)
 
 .PHONY: all clean
 
-all: $(EXE)
+all: $(RESOURCES) $(EXE)
+
+$(RESOURCES): release-resources/resource.rc
+	$(RC) -o $@ $<
 
 $(EXE): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(TARGET_ARCH) $^ $(LDFLAGS) -o $@
+	$(CXX) $(CXXFLAGS) $(TARGET_ARCH) $^ $(RESOURCES) $(LDFLAGS) -o $@
 
 $(OBJ_DIR)/%.o: %.cpp
 	mkdir -p $(@D)
@@ -25,4 +31,4 @@ $(OBJ_DIR):
 	mkdir -p $@
 
 clean:
-	$(RM) -rv *~ $(OBJS) $(EXE)
+	$(RM) -rv *~ $(RESOURCES) $(OBJS) $(EXE)
