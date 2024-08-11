@@ -1,96 +1,28 @@
-ARCH ?= x64
-SDL_VERSION ?= 2
+OBJ_DIR = ./build_windows
+EXE=Trogdor-Reburninated.exe
 
-CXX=g++
-CXXFLAGS=-std=c++11 -Wall -Wextra -O2 -DPC
+SRC_DIR		=	src
+EXCLUDED	=	$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(SRC_DIR)/fonts_h/54_serif_v01.cpp $(wildcard $(SRC_DIR)/sfx_h/*) $(wildcard $(SRC_DIR)/OSLibAudio/*)
+SRCS		=	$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/**/*.c) $(wildcard $(SRC_DIR)/graphics_h/**/*.cpp) $(wildcard $(SRC_DIR)/graphics_h/**/*.c))
+OBJS		=	$(patsubst %.cpp, %.o, $(patsubst %.c, %.o, $(SRCS)))
 
-ifeq ($(SDL_VERSION), 2)
-	CPPFLAGS=-I./src \
-			 -I./SDL2/SDL2/include \
-			 -I./SDL2/SDL2_image/include \
-			 -I./SDL2/SDL2_ttf/include \
-			 -I./SDL2/SDL2_mixer/include
-	LDLIBS=-lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer
-else ifeq ($(SDL_VERSION), 1)
-	CPPFLAGS=-I./src \
-			 -I./SDL1/SDL/include \
-			 -I./SDL1/SDL_image/include \
-			 -I./SDL1/SDL_ttf/include \
-			 -I./SDL1/SDL_mixer/include
-	LDLIBS=-lSDLmain -lSDL -lSDL_image -lSDL_ttf -lSDL_mixer
-	CXXFLAGS+=-DSDL1
-else
-	$(error Unsupported SDL version $(SDL_VERSION))
-endif
+CXX ?= x86_64-w64-mingw32-g++
+CXXFLAGS += $(shell pkg-config --cflags sdl2 SDL2_image SDL2_ttf SDL2_mixer)
+LDFLAGS += $(shell pkg-config --libs sdl2 SDL2_image SDL2_ttf SDL2_mixer)
 
-ifeq ($(ARCH),x64)
-	CXXFLAGS += -m64
-	ifeq ($(SDL_VERSION), 2)
-		LDFLAGS=-L./SDL2/SDL2/lib/x64 \
-				-L./SDL2/SDL2_image/lib/x64 \
-				-L./SDL2/SDL2_ttf/lib/x64 \
-				-L./SDL2/SDL2_mixer/lib/x64
-	else
-		LDFLAGS=-L./SDL1/SDL/lib/x64 \
-				-L./SDL1/SDL_image/lib/x64 \
-				-L./SDL1/SDL_ttf/lib/x64 \
-				-L./SDL1/SDL_mixer/lib/x64
-	endif
-else ifeq ($(ARCH),x86)
-	CXXFLAGS += -m32
-	ifeq ($(SDL_VERSION),2)
-		LDFLAGS=-L./SDL2/SDL2/lib/x86 \
-				-L./SDL2/SDL2_image/lib/x86 \
-				-L./SDL2/SDL2_ttf/lib/x86 \
-				-L./SDL2/SDL2_mixer/lib/x86
-	else
-		LDFLAGS=-L./SDL1/SDL/lib/x86 \
-				-L./SDL1/SDL_image/lib/x86 \
-				-L./SDL1/SDL_ttf/lib/x86 \
-				-L./SDL1/SDL_mixer/lib/x86
-	endif
-else
-	$(error Unsupported architecture $(ARCH))
-endif
+.PHONY: all clean
 
-LDFLAGS+=-mwindows
+all: $(EXE)
 
-RESOURCES=release-resources/logo_icon_pc_64.png \
-          release-resources/resource.rc
+$(EXE): $(OBJS)
+	$(CXX) $(CXXFLAGS) $(TARGET_ARCH) $^ $(LDFLAGS) -o $@
 
-RESOURCE_OBJECT=release-resources/resource.o
+$(OBJ_DIR)/%.o: %.cpp
+	mkdir -p $(@D)
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-SRC_DIR=src
-EXCLUDED=$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(SRC_DIR)/fonts_h/54_serif_v01.cpp $(wildcard $(SRC_DIR)/sfx_h/*) $(wildcard $(SRC_DIR)/OSLibAudio/*)
-SRCS=$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/**/*.c) $(wildcard $(SRC_DIR)/graphics_h/**/*.cpp) $(wildcard $(SRC_DIR)/graphics_h/**/*.c))
-
-ifeq ($(SDL_VERSION), 1)
-	SRCS+=src/SDL_rotozoom.c
-endif
-
-OBJS=$(patsubst %.cpp, %.o, $(patsubst %.c, %.o, $(SRCS)))
-
-myprogram: $(OBJS) $(RESOURCE_OBJECT)
-	$(CXX) $(LDFLAGS) $(OBJS) $(RESOURCE_OBJECT) $(LDLIBS) -o Trogdor-Reburninated_$(ARCH)_SDL$(SDL_VERSION).exe
-
-$(RESOURCE_OBJECT): release-resources/resource.rc
-	windres -J rc -i $< -o $@
-
-release-resources/resource.rc: release-resources/logo_icon_pc_64.png
-	echo "ICON \"release-resources/logo_icon_pc_64.png\"" > $@
+$(OBJ_DIR):
+	mkdir -p $@
 
 clean:
-	rm -f $(OBJS) $(RESOURCE_OBJECT) Trogdor-Reburninated_x64_SDL2.exe
-	rm -f $(OBJS) $(RESOURCE_OBJECT) Trogdor-Reburninated_x64_SDL1.exe
-	rm -f $(OBJS) $(RESOURCE_OBJECT) Trogdor-Reburninated_x86_SDL2.exe
-	rm -f $(OBJS) $(RESOURCE_OBJECT) Trogdor-Reburninated_x86_SDL1.exe
-
-all:
-	make ARCH=x64 SDL_VERSION=2
-	make clean
-	make ARCH=x64 SDL_VERSION=1
-	make clean
-	make ARCH=x86 SDL_VERSION=2
-	make clean
-	make ARCH=x86 SDL_VERSION=1
-	make clean
+	$(RM) -rv *~ $(OBJS) $(EXE)
