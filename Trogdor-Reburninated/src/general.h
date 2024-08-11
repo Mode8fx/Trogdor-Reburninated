@@ -55,11 +55,11 @@ extern Uint16 popRandVal;
 
 constexpr auto PI = 3.14159265;
 
-#if defined(SDL1) && defined(PC) && !defined(LINUX)
-extern FILE _iob[];
-
-extern "C" FILE * __cdecl __iob_func(void);
-#endif
+//#if defined(SDL1) && defined(PC) && !defined(LINUX)
+//extern FILE _iob[];
+//
+//extern "C" FILE * __cdecl __iob_func(void);
+//#endif
 
 #if defined(_WIN32) && !defined(_WIN64)
 #define AUDIO_TROG_FORMAT AUDIO_S32SYS

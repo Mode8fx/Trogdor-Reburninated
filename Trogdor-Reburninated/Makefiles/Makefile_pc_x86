@@ -10,7 +10,7 @@ RESOURCES	=	release-resources/resource.o
 
 
 CXX ?= i686-w64-mingw32-g++
-CXXFLAGS += $(shell pkg-config --cflags sdl2 SDL2_image SDL2_ttf SDL2_mixer)
+CXXFLAGS += $(shell pkg-config --cflags sdl2 SDL2_image SDL2_ttf SDL2_mixer) -DPC
 LDFLAGS += $(shell pkg-config --libs sdl2 SDL2_image SDL2_ttf SDL2_mixer)
 
 .PHONY: all clean

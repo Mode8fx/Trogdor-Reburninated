@@ -1,12 +1,12 @@
 #include "general.h"
 
-#if defined(SDL1) && defined(PC) && !defined(LINUX)
-FILE _iob[] = { *stdin, *stdout, *stderr };
-
-FILE * __cdecl __iob_func(void) {
-	return _iob;
-}
-#endif
+//#if defined(SDL1) && defined(PC) && !defined(LINUX)
+//FILE _iob[] = { *stdin, *stdout, *stderr };
+//
+//FILE * __cdecl __iob_func(void) {
+//	return _iob;
+//}
+//#endif
 
 FrameState::FrameState() {
 	set(1);

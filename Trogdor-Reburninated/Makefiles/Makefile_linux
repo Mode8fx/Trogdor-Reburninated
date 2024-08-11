@@ -9,7 +9,7 @@ OBJS		=	$(patsubst %.cpp, %.o, $(patsubst %.c, %.o, $(SRCS)))
 
 CXX ?= g++
 SDLCONFIG ?= sdl2-config
-CXXFLAGS ?= -Os -Wall -Wextra -DLINUX -DPC -DLINUX
+CXXFLAGS ?= -Os -Wall -Wextra -DLINUX -DPC
 LDFLAGS ?= -lSDL2_image -lSDL2_ttf -lSDL2_mixer -lstdc++ -lmikmod
 
 CXXFLAGS += `$(SDLCONFIG) --cflags`
