@@ -180,6 +180,11 @@ void snapWindow_y(double range, Uint16 size) {
 void SDL_toggleFullscreen() {
 #if defined(PC) && !defined(SDL1)
 	isWindowed = !isWindowed;
+	setFullscreen();
+#endif
+}
+
+void setFullscreen() {
 	if (isWindowed) {
 		SDL_SetWindowFullscreen(window, 0);
 		SDL_SetWindowSize(window, DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -187,6 +192,39 @@ void SDL_toggleFullscreen() {
 		SDL_SetWindowSize(window, DM.w, DM.h);
 		SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
 	}
+	gameState.addon_v_2_2_1.windowed = isWindowed;
+	saveGameState_settings();
 	//setScaling();
+}
+
+void drawOverlay() {
+	switch (overlayType) {
+		case 1:
+			sprite_overlay_compy_top_ins.renderSprite_overlay();
+			sprite_overlay_compy_bottom_ins.renderSprite_overlay();
+			sprite_overlay_compy_left_ins.renderSprite_overlay();
+			sprite_overlay_compy_right_ins.renderSprite_overlay();
+			break;
+		case 2:
+			sprite_overlay_basement_top_ins.renderSprite_overlay();
+			sprite_overlay_basement_bottom_ins.renderSprite_overlay();
+			sprite_overlay_basement_left_ins.renderSprite_overlay();
+			sprite_overlay_basement_right_ins.renderSprite_overlay();
+			break;
+		case 3:
+			sprite_overlay_strong_badia_top_ins.renderSprite_overlay();
+			sprite_overlay_strong_badia_bottom_ins.renderSprite_overlay();
+			sprite_overlay_strong_badia_left_ins.renderSprite_overlay();
+			sprite_overlay_strong_badia_right_ins.renderSprite_overlay();
+			break;
+		default:
+#if !defined(SDL1)
+			SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 #endif
+			sprite_overlay_basement_top_ins.renderEmptyOverlay();
+			sprite_overlay_basement_bottom_ins.renderEmptyOverlay();
+			sprite_overlay_basement_left_ins.renderEmptyOverlay();
+			sprite_overlay_basement_right_ins.renderEmptyOverlay();
+			break;
+	}
 }

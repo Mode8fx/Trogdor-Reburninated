@@ -46,6 +46,7 @@ extern float trueScreenScaleFull; // the multiplier by which the screen should b
 extern float screenScale_menu;
 extern bool allowHiRes;
 extern Sint8 scalingType;
+extern Sint8 overlayType;
 
 extern float getScreenScale_app();
 extern void scaleGameByApp();
@@ -58,6 +59,8 @@ extern void setScaling();
 extern void snapWindow_x(double, Uint16);
 extern void snapWindow_y(double, Uint16);
 extern void SDL_toggleFullscreen();
+extern void setFullscreen();
 extern void InitializeMenus(); // this is in menu.cpp
+extern void drawOverlay();
 
 #endif

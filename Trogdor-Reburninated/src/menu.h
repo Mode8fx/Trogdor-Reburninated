@@ -243,13 +243,15 @@ constexpr auto MENU_MUSIC_INDEX = 1;
 constexpr auto MENU_COMMENT_FREQ_INDEX = 2;
 constexpr auto MENU_BIG_HEAD_MODE_INDEX = 3;
 constexpr auto MENU_SCALING_INDEX = 4;
-constexpr auto COSMETIC_NUM_OPTIONS = 5;
+constexpr auto MENU_OVERLAY_INDEX = 5;
+constexpr auto COSMETIC_NUM_OPTIONS = 6;
 #define MENU_FRAME_RATE    menu_cosmetic.options[MENU_FRAME_RATE_INDEX]
 #define MENU_MUSIC         menu_cosmetic.options[MENU_MUSIC_INDEX]
 #define MENU_COMMENT_FREQ  menu_cosmetic.options[MENU_COMMENT_FREQ_INDEX]
 #define MENU_BIG_HEAD_MODE menu_cosmetic.options[MENU_BIG_HEAD_MODE_INDEX]
-#define MENU_SCALING       menu_cosmetic.options[MENU_SCALING_INDEX]
 #define IS_BIG_HEAD_MODE   MENU_BIG_HEAD_MODE->isValue(0)
+#define MENU_SCALING       menu_cosmetic.options[MENU_SCALING_INDEX]
+#define MENU_OVERLAY       menu_cosmetic.options[MENU_OVERLAY_INDEX]
 
 extern Menu menu_other;
 constexpr auto MENU_STARTING_LEVEL_INDEX = 0;
@@ -308,6 +310,7 @@ extern State_Settings_Other getSettingsOther();
 extern State_Settings_Cheats getSettingsCheats();
 extern State_Settings_Unlocks getSettingsUnlocks();
 extern State_Addon_v_2_1 getSettings_v_2_1();
+extern State_Addon_v_2_2_1 getSettings_v_2_2_1();
 extern void updateFrameRate();
 extern void setPreset(Sint8);
 extern void updateHighScores();

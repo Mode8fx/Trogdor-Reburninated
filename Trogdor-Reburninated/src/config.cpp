@@ -1,5 +1,6 @@
 #include "config.h"
 #include "menu.h"
+#include "window.h"
 
 #if defined(WII) && defined(SDL1)
 Uint16 DEFAULT_WIDTH = 640;
@@ -14,6 +15,7 @@ void saveGameState_settings() {
 	gameState.settings_cheats = getSettingsCheats();
 	gameState.settings_unlocks = getSettingsUnlocks();
 	gameState.addon_v_2_1 = getSettings_v_2_1();
+	gameState.addon_v_2_2_1 = getSettings_v_2_2_1();
 	saveGameState_all();
 }
 
@@ -70,6 +72,8 @@ void setOptionsFromSaveData() {
 	menu_cosmetic.setOptionChoice(MENU_COMMENT_FREQ_INDEX, gameState.settings_cosmetic.commentFreq);
 	menu_cosmetic.setOptionChoice(MENU_BIG_HEAD_MODE_INDEX, gameState.settings_cosmetic.bigHeadMode);
 	menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, gameState.settings_cosmetic.scaling);
+	menu_cosmetic.setOptionChoice(MENU_OVERLAY_INDEX, gameState.addon_v_2_2_1.overlay);
+	overlayType = gameState.addon_v_2_2_1.overlay;
 	menu_other.setOptionChoice(MENU_STARTING_LEVEL_INDEX, gameState.settings_other.startingLevel);
 	menu_other.setOptionChoice(MENU_SHUFFLE_LEVELS_INDEX, gameState.settings_other.shuffleLevels);
 	menu_other.setOptionChoice(MENU_RESPAWN_BEHAVIOR_INDEX, gameState.settings_other.respawnBehavior);
@@ -86,6 +90,8 @@ void setOptionsFromSaveData() {
 	MENU_NOCLIP->setLocked(gameState.settings_unlocks.locked_noclip);
 	MENU_DEBUG_MODE->setLocked(gameState.settings_unlocks.locked_debugMode);
 	menu_other.setOptionChoice(MENU_KNIGHT_MOVEMENT_INDEX, gameState.addon_v_2_1.knightMovement);
+	isWindowed = gameState.addon_v_2_2_1.windowed;
+	setFullscreen();
 	setPreset(MENU_PRESET->index);
 }
 
@@ -97,6 +103,7 @@ void initializeDefaultGameState() {
 	gameState.settings_cheats = getSettingsCheats();
 	gameState.settings_unlocks = getSettingsUnlocks();
 	gameState.addon_v_2_1 = getSettings_v_2_1();
+	gameState.addon_v_2_2_1 = getSettings_v_2_2_1();
 	gameState.autosave = { -1, 0, 0, 0, 0, false, gameState.settings_difficulty, gameState.settings_other.shuffleLevels, gameState.settings_cheats };
 	gameState.highscores = { 0, 0, 0, 0, 0, 0 };
 	updateFrameRate();
@@ -126,6 +133,8 @@ void fixSaveDataIntegrity() {
 	gameState.settings_cheats.debugMode %= MENU_DEBUG_MODE->numChoices;
 	MENU_PRESET->index %= MENU_PRESET->numChoices;
 	gameState.addon_v_2_1.knightMovement %= MENU_KNIGHT_MOVEMENT->numChoices;
+	gameState.addon_v_2_2_1.overlay %= MENU_OVERLAY->numChoices;
+	gameState.addon_v_2_2_1.windowed %= 2;
 }
 
 void saveGameState_all() {

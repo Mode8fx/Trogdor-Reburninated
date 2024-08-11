@@ -599,6 +599,9 @@ void Menu::renderMenu() {
 #define option_main_scaling_descriptions_line_2 { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." }
 #define option_main_scaling_descriptions_line_3 { press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply }
 #endif
+#define option_main_overlay_choices { "None", "Compy 386", "Basement", "Strong Badia" }
+#define option_main_overlay_descriptions_line_1 { "Select a screen border." }
+#define option_main_overlay_descriptions_line_2 { "WARNING: May result in glitchy visuals." }
 #define option_main_difficulty_descriptions_line_1 { "Change difficulty settings." }
 #define option_main_cosmetic_descriptions_line_1 { "Change audio and video settings." }
 #define option_main_other_descriptions_line_1 { "Change other gameplay settings." }
@@ -778,6 +781,15 @@ void InitializeMenus() {
 	MENU_SCALING->prepareMenuOption("Screen Scaling", option_main_scaling_choices,
 		option_main_scaling_descriptions_line_1, option_main_scaling_descriptions_line_2, option_main_scaling_descriptions_line_3,
 		"", 4, false, scalingType, true, false);
+#if defined(THREEDS)
+	MENU_OVERLAY->prepareMenuOption("Screen Overlay", option_main_overlay_choices,
+		option_main_overlay_descriptions_line_1, option_main_overlay_descriptions_line_2, option_empty,
+		"", 4, true, overlayType, true, false);
+#else
+	MENU_OVERLAY->prepareMenuOption("Screen Overlay", option_main_overlay_choices,
+		option_main_overlay_descriptions_line_1, option_empty, option_empty,
+		"", 4, true, overlayType, true, false);
+#endif
 
 	/* Other Settings Menu */
 	menu_other.prepareMenu(OTHER_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -1124,6 +1136,13 @@ State_Addon_v_2_1 getSettings_v_2_1() {
 	return {
 		MENU_KNIGHT_MOVEMENT->index,
 	};
+}
+
+State_Addon_v_2_2_1 getSettings_v_2_2_1() {
+	return {
+		MENU_OVERLAY->index,
+		isWindowed
+};
 }
 
 void updateFrameRate() {

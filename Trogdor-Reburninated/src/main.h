@@ -473,6 +473,11 @@ Sint8 scalingType = 3;
 #else
 Sint8 scalingType = 0;
 #endif
+#if defined(THREEDS)
+Sint8 overlayType = 0;
+#else
+Sint8 overlayType = 1;
+#endif
 #if !defined(SDL1)
 SDL_DisplayMode DM;
 #endif

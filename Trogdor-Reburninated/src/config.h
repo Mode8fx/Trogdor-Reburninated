@@ -84,6 +84,11 @@ struct State_Addon_v_2_1 {
 	Uint32 chance;
 };
 
+struct State_Addon_v_2_2_1 {
+	Sint8 overlay;
+	Sint8 windowed;
+};
+
 struct GameState {
 	State_Settings_General    settings_general;
 	State_Settings_Difficulty settings_difficulty;
@@ -94,6 +99,7 @@ struct GameState {
 	State_Autosave            autosave;
 	State_HighScores          highscores;
 	State_Addon_v_2_1         addon_v_2_1;
+	State_Addon_v_2_2_1       addon_v_2_2_1;
 };
 
 /* Save File */

@@ -6,11 +6,6 @@
 #include "level_data.h"
 
 bool renderOverlay;
-#if defined(THREEDS)
-Sint8 showOverlay = 0;
-#else
-Sint8 showOverlay = 1;
-#endif
 bool menuMusicHasStarted = false;
 Sint8 lastMusicPlayed = -1;
 
@@ -86,7 +81,8 @@ int main(int argv, char** args) {
 #else
 		if (keyPressed(INPUT_X) && (g_sceneState == 2 || g_sceneState == 3 || GM.manually_paused)) {
 #endif
-			showOverlay = (showOverlay + 1) % 4;
+			overlayType = (overlayType + 1) % 4;
+			menu_cosmetic.setOptionChoice(MENU_OVERLAY_INDEX, overlayType);
 		}
 		/* Handle Window Size Changes */
 		if (windowSizeChanged) {
@@ -550,6 +546,7 @@ int main(int argv, char** args) {
 					case -1: // Press B/Select
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						updateFrameRate();
+						overlayType = MENU_OVERLAY->index;
 						g_sceneState = 301;
 						break;
 					default:
@@ -1197,35 +1194,7 @@ int main(int argv, char** args) {
 
 		/* Draw Overlay */
 		if (renderOverlay) {
-			switch (showOverlay) {
-				case 1:
-					sprite_overlay_compy_top_ins.renderSprite_overlay();
-					sprite_overlay_compy_bottom_ins.renderSprite_overlay();
-					sprite_overlay_compy_left_ins.renderSprite_overlay();
-					sprite_overlay_compy_right_ins.renderSprite_overlay();
-					break;
-				case 2:
-					sprite_overlay_basement_top_ins.renderSprite_overlay();
-					sprite_overlay_basement_bottom_ins.renderSprite_overlay();
-					sprite_overlay_basement_left_ins.renderSprite_overlay();
-					sprite_overlay_basement_right_ins.renderSprite_overlay();
-					break;
-				case 3:
-					sprite_overlay_strong_badia_top_ins.renderSprite_overlay();
-					sprite_overlay_strong_badia_bottom_ins.renderSprite_overlay();
-					sprite_overlay_strong_badia_left_ins.renderSprite_overlay();
-					sprite_overlay_strong_badia_right_ins.renderSprite_overlay();
-					break;
-				default:
-#if !defined(SDL1)
-					SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-#endif
-					sprite_overlay_basement_top_ins.renderEmptyOverlay();
-					sprite_overlay_basement_bottom_ins.renderEmptyOverlay();
-					sprite_overlay_basement_left_ins.renderEmptyOverlay();
-					sprite_overlay_basement_right_ins.renderEmptyOverlay();
-					break;
-			}
+			drawOverlay();
 		}
 
 		/* Update Screen */
