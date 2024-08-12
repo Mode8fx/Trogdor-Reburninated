@@ -83,14 +83,14 @@ set MAKEFILE_WSL_RG35XX=%MAKEFILES_WSL%/make_rg35xx.sh
 
 :: Running compilation commands...
 call :compile_windows_x64
-rem call :compile_windows_x86
-rem call :compile_linux
-rem call :compile_gc
-rem call :compile_wii
-rem call :compile_wii_u
-rem call :compile_switch
-rem call :compile_3ds
-rem call :compile_vita
+call :compile_windows_x86
+call :compile_linux
+call :compile_gc
+call :compile_wii
+call :compile_wii_u
+call :compile_switch
+call :compile_3ds
+call :compile_vita
 rem call :compile_rg35xx
 rem call :compile_psp
 
