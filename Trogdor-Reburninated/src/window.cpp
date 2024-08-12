@@ -185,6 +185,7 @@ void SDL_toggleFullscreen() {
 }
 
 void setFullscreen() {
+#if defined(PC) && !defined(SDL1)
 	if (isWindowed) {
 		SDL_SetWindowFullscreen(window, 0);
 		SDL_SetWindowSize(window, DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -195,6 +196,7 @@ void setFullscreen() {
 	gameState.addon_v_2_2_1.windowed = isWindowed;
 	saveGameState_settings();
 	//setScaling();
+#endif
 }
 
 void drawOverlay() {
