@@ -1049,14 +1049,25 @@ void InitializeMenus() {
 		MENU_SPEEDY_MODE->setLocked(true);
 		MENU_NOCLIP->setLocked(true);
 		MENU_DEBUG_MODE->setLocked(true);
-#if defined(THREEDS) || defined(PSP) || defined(WII) || defined(GAMECUBE) || defined(XBOX)
+		MENU_SCALING->choiceIsAllowed[0] = true;
+#if defined(THREEDS)
 		MENU_SCALING->choiceIsAllowed[1] = false;
-#endif
-#if defined(THREEDS) || defined(WII) || defined(GAMECUBE) || defined(XBOX) || defined(WII_U)
 		MENU_SCALING->choiceIsAllowed[2] = false;
-#endif
-#if defined(THREEDS) || defined(WII_U) || defined(SWITCH)
 		MENU_SCALING->choiceIsAllowed[3] = false;
+#elif defined(PC) || defined(SDL1)
+		MENU_SCALING->choiceIsAllowed[1] = true;
+		MENU_SCALING->choiceIsAllowed[2] = true;
+		MENU_SCALING->choiceIsAllowed[3] = true;
+#else
+		if (DM.w <= appWidth || DM.h <= appHeight) { // failsafe
+			MENU_SCALING->choiceIsAllowed[1] = true;
+			MENU_SCALING->choiceIsAllowed[2] = true;
+			MENU_SCALING->choiceIsAllowed[3] = true;
+		} else {
+			checkScalingLock_PixelPerfectGame();
+			checkScalingLock_Full();
+			checkScalingLock_FullGame();
+		}
 #endif
 	}
 
@@ -1290,3 +1301,26 @@ void updateHighScores() {
 	menu_highscores_3.pages[0]->setTextLine(7, to_string(gameState.addon_v_2_1.chance).c_str());
 	menu_highscores_3.pages[0]->setTextLine(8, to_string(gameState.highscores.custom).c_str());
 }
+
+#if !defined(SDL1)
+static bool isPerfectScale(Sint16 width, Sint16 height) {
+	k = min(DM.w / width, DM.h / height);
+	return (k * width == DM.w || k * height == DM.h);
+}
+
+static bool isMatchingScale(Sint16 w1, Sint16 h1, Sint16 w2, Sint16 h2) {
+	return (min(DM.w / w1, DM.h / h1) == min(DM.w / w2, DM.h / h2));
+}
+
+void checkScalingLock_PixelPerfectGame() {
+	MENU_SCALING->choiceIsAllowed[1] = !isMatchingScale(appWidth, appHeight, gameWidth, gameHeight);
+}
+
+void checkScalingLock_Full() {
+	MENU_SCALING->choiceIsAllowed[2] = !isPerfectScale(appWidth, appHeight);
+}
+
+void checkScalingLock_FullGame() {
+	MENU_SCALING->choiceIsAllowed[3] = !isPerfectScale(gameWidth, gameHeight);
+}
+#endif

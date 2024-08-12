@@ -314,5 +314,8 @@ extern State_Addon_v_2_2_1 getSettings_v_2_2_1();
 extern void updateFrameRate();
 extern void setPreset(Sint8);
 extern void updateHighScores();
+extern void checkScalingLock_PixelPerfectGame();
+extern void checkScalingLock_Full();
+extern void checkScalingLock_FullGame();
 
 #endif

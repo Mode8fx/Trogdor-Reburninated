@@ -19,8 +19,6 @@ void InitializeDisplay() {
 #if defined(ANDROID)
 	SDL_SetHint(SDL_HINT_ORIENTATIONS, "Landscape");
 #endif
-	appWidth = 320;
-	appHeight = 240;
 	appSrcRect = { 0, 0, appWidth, appHeight };
 	ticksPerFrameDefault = 1000.0F / frameRate;
 	ticksPerFrame = ticksPerFrameDefault;

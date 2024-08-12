@@ -7,11 +7,11 @@
 constexpr auto gameWidth = 250;
 constexpr auto gameHeight = 180;
 constexpr auto TWIPS_PER_PIXEL = 20;
+constexpr auto appWidth = 320;
+constexpr auto appHeight = 240;
 
 extern Uint16 gameHiResWidth;
 extern Uint16 gameHiResHeight;
-extern Uint16 appWidth;
-extern Uint16 appHeight;
 extern double gameWidthMult; // game scaling relative to app
 extern double gameHeightMult; // game scaling relative to app
 extern double gameHiResMult; // hi-res screen scaling

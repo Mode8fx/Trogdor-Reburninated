@@ -432,8 +432,6 @@ TextObject text_error_2;
 /* Window */
 Uint16 gameHiResWidth;
 Uint16 gameHiResHeight;
-Uint16 appWidth;
-Uint16 appHeight;
 double gameWidthMult;
 double gameHeightMult;
 double gameHiResMult;
