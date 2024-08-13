@@ -236,7 +236,7 @@ void InitializeText_HomeScreen() {
 	SET_TEXT(" ", text_3_controls_4, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 143 * gameHiResMult);
 #elif defined(WII)
-	SET_TEXT("-Press A (Wii) / R (GC) to change overlay", text_3_controls_5, font_serif_white_6_mult,
+	SET_TEXT("-Press A (Wii) / X (GC) to change overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 101 * gameHiResMult);
 	SET_TEXT(" ", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 115 * gameHiResMult);

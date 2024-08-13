@@ -132,13 +132,10 @@ extern SDL_DisplayMode DM;
 #endif
 extern Uint16 displayRefreshRate;
 
-#if defined(WII_U)
-constexpr auto DEFAULT_WIDTH = 1280;
-constexpr auto DEFAULT_HEIGHT = 720;
-#elif defined(VITA)
+#if defined(VITA)
 constexpr auto DEFAULT_WIDTH = 960;
 constexpr auto DEFAULT_HEIGHT = 544;
-#elif defined(SWITCH)
+#elif defined(SWITCH) || defined(WII_U)
 constexpr auto DEFAULT_WIDTH = 1920;
 constexpr auto DEFAULT_HEIGHT = 1080;
 #elif defined(PSP)
