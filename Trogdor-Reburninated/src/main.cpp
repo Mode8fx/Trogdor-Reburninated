@@ -9,6 +9,11 @@ bool renderOverlay;
 bool menuMusicHasStarted = false;
 Sint8 lastMusicPlayed = -1;
 
+bool showFPS = false;
+#if defined(THREEDS)
+bool useNew3DSClockSpeed = true;
+#endif
+
 int main(int argv, char** args) {
 	isRunning = true;
 	g_sceneState = 0;
@@ -770,6 +775,9 @@ int main(int argv, char** args) {
 					default:
 						break;
 				}
+				if (keyHeld(INPUT_LEFT) && (keyPressed(INPUT_X)) || keyPressed(INPUT_Y)) {
+					showFPS = !showFPS;
+				}
 				break;
 			/* Quit Screen */
 			case 310:
@@ -1198,6 +1206,9 @@ int main(int argv, char** args) {
 		}
 
 		/* Update Screen */
+		if (showFPS) {
+			printFPS(&font_serif_white_8);
+		}
 #if !defined(SDL1)
 		SDL_RenderPresent(renderer);
 #else

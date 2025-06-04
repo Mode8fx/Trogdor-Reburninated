@@ -58,6 +58,7 @@ extern void destroyTextObjectTexture(TextCharObject);
 extern int getDesiredFontSize(FontObject *);
 extern void setFont(FontObject *, unsigned char[], unsigned int, int, double, int, SDL_Color, bool);
 extern void initializeFont_numbers(FontObject *);
+extern void printFPS(FontObject *);
 
 // This should be a macro since pos_x and pos_y may (and likely will) change before they're needed
 #define SET_TEXT(text, textObj, fontObj, pos_x, pos_y) \

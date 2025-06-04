@@ -177,3 +177,51 @@ void initializeFont_numbers(FontObject *fontObj) {
 		}
 	}
 }
+
+Uint64 fps_lastTime = 0;
+double fps_freq;
+Uint8 fps_frameCount = 0;
+Uint8 fps_frameCountLastSecond = 0;
+
+void printFPS(FontObject *fontObj) {
+	fps_frameCount++;
+#if !defined(SDL1)
+	Uint64 currentTime = SDL_GetPerformanceCounter();
+	if (fps_lastTime == 0) {
+		fps_lastTime = currentTime;
+		fps_freq = (double)SDL_GetPerformanceFrequency();
+	}
+
+	double elapsed = (double)(currentTime - fps_lastTime) / fps_freq;
+	if (elapsed >= 1.0) {
+		fps_frameCountLastSecond = fps_frameCount;
+		fps_frameCount = 0;
+		fps_lastTime = currentTime;
+	}
+#else
+	Uint64 currentTime = SDL_GetTicks();
+
+	if (currentTime > fps_lastTime + 1000) {
+		fps_frameCountLastSecond = fps_frameCount;
+		fps_frameCount = 0;
+		fps_lastTime = currentTime;
+	}
+#endif
+	Sint16 fps_counterX = windowWidth / 2;
+	Sint16 fps_counterY = windowHeight * 15 / 16;
+
+	int hundreds = int(fps_frameCountLastSecond) / 100 + 16;
+	fontObj->textChars[hundreds].dstrect.x = fps_counterX - 20;
+	fontObj->textChars[hundreds].dstrect.y = fps_counterY;
+	renderTextChar_app(fontObj->textChars[hundreds]);
+
+	int tens = (int(fps_frameCountLastSecond) / 10) % 10 + 16;
+	fontObj->textChars[tens].dstrect.x = fps_counterX;
+	fontObj->textChars[tens].dstrect.y = fps_counterY;
+	renderTextChar_app(fontObj->textChars[tens]);
+
+	int ones = int(fps_frameCountLastSecond) % 10 + 16;
+	fontObj->textChars[ones].dstrect.x = fps_counterX + 20;
+	fontObj->textChars[ones].dstrect.y = fps_counterY;
+	renderTextChar_app(fontObj->textChars[ones]);
+}
