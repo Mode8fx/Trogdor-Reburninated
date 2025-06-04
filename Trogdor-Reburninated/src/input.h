@@ -5,9 +5,9 @@
 
 /* SDL Input */
 #if !defined(SDL1) && !defined(PSP)
-extern SDL_GameController *controller;
+extern SDL_GameController *controllers[8];
 #else
-extern SDL_Joystick *joystick;
+extern SDL_Joystick *joysticks[8];
 extern Uint8 joystickHat;
 #endif
 

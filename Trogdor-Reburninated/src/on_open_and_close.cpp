@@ -87,10 +87,9 @@ void InitializeController() {
 	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
 	joystick = SDL_JoystickOpen(0);
 #else
-	for (i = 0; i < SDL_NumJoysticks(); i++) {
+	for (i = 0; i < 8; i++) {
 		if (SDL_IsGameController(i)) {
-			controller = SDL_GameControllerOpen(i);
-			break;
+			controllers[i] = SDL_GameControllerOpen(i);
 		}
 	}
 #endif
@@ -129,8 +128,10 @@ void closeController() {
 		SDL_JoystickClose(joystick);
 	}
 #else
-	if (controller != NULL) {
-		SDL_GameControllerClose(controller);
+	for (char i = 0; i < 8; i++) {
+		if (controllers[i] != NULL) {
+			SDL_GameControllerClose(controllers[i]);
+		}
 	}
 #endif
 }

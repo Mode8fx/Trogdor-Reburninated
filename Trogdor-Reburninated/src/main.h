@@ -54,9 +54,9 @@ Uint16 popRandVal = frameRate * 100 / ORIGINAL_FRAME_RATE;
 
 /* SDL Input */
 #if !defined(SDL1) && !defined(PSP)
-SDL_GameController *controller;
+SDL_GameController *controllers[8];
 #else
-SDL_Joystick *joystick;
+SDL_Joystick *joysticks[8];
 Uint8 joystickHat;
 #endif
 

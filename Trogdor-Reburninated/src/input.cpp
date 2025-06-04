@@ -121,8 +121,8 @@ void handlePlayerInput() {
 #if defined(WII)
 	WPAD_ScanPads();
 	WPAD_Expansion(WPAD_CHAN_0, &wii_exp);
-	wii_keysDown = WPAD_ButtonsDown(0);
-	wii_keysUp = WPAD_ButtonsUp(0);
+	wii_keysDown = WPAD_ButtonsDown(0) | WPAD_ButtonsDown(1) | WPAD_ButtonsDown(2) | WPAD_ButtonsDown(3);
+	wii_keysUp = WPAD_ButtonsUp(0) | WPAD_ButtonsUp(1) | WPAD_ButtonsUp(2) | WPAD_ButtonsUp(3);
 	wii_mapWiiDir(WPAD_BUTTON_UP, WPAD_CLASSIC_BUTTON_LEFT, INPUT_LEFT);
 	wii_mapWiiDir(WPAD_BUTTON_DOWN, WPAD_CLASSIC_BUTTON_RIGHT, INPUT_RIGHT);
 	wii_mapWiiDir(WPAD_BUTTON_LEFT, WPAD_CLASSIC_BUTTON_DOWN, INPUT_DOWN);
@@ -146,8 +146,8 @@ void handlePlayerInput() {
 	}
 
 	PAD_ScanPads();
-	wii_keysDown = PAD_ButtonsDown(0);
-	wii_keysUp = PAD_ButtonsUp(0);
+	wii_keysDown = PAD_ButtonsDown(0) | PAD_ButtonsDown(1) | PAD_ButtonsDown(2) | PAD_ButtonsDown(3);
+	wii_keysUp = PAD_ButtonsUp(0) | PAD_ButtonsUp(1) | PAD_ButtonsUp(2) | PAD_ButtonsUp(3);
 	wii_mapGCDir(PAD_BUTTON_UP, INPUT_UP);
 	wii_mapGCDir(PAD_BUTTON_DOWN, INPUT_DOWN);
 	wii_mapGCDir(PAD_BUTTON_LEFT, INPUT_LEFT);
@@ -160,16 +160,19 @@ void handlePlayerInput() {
 	wii_mapGCButton(PAD_TRIGGER_R, INPUT_R);
 	wii_mapGCButton(PAD_TRIGGER_Z, INPUT_SELECT);
 	wii_mapGCButton(PAD_BUTTON_START, INPUT_START);
-	if (controllerAxis_leftStickX == 0 && controllerAxis_leftStickY == 0) {
-		controllerAxis_leftStickX = PAD_StickX(0) * 256;
-		controllerAxis_leftStickY = PAD_StickY(0) * -256;
+	for (char i = 0; i < 4; i++) {
+		controllerAxis_leftStickX = PAD_StickX(i) * 256;
+		controllerAxis_leftStickY = PAD_StickY(i) * -256;
 		applyStickDeadZoneX();
 		applyStickDeadZoneY();
+		if (controllerAxis_leftStickX != 0 || controllerAxis_leftStickY != 0) {
+			break;
+		}
 	}
 #elif defined(GAMECUBE)
 	PAD_ScanPads();
-	gc_keysDown = PAD_ButtonsDown(0);
-	gc_keysUp = PAD_ButtonsUp(0);
+	gc_keysDown = PAD_ButtonsDown(0) | PAD_ButtonsDown(1) | PAD_ButtonsDown(2) | PAD_ButtonsDown(3);
+	gc_keysUp = PAD_ButtonsUp(0) | PAD_ButtonsUp(1) | PAD_ButtonsUp(2) | PAD_ButtonsUp(3);
 	gc_mapDir(PAD_BUTTON_UP, INPUT_UP);
 	gc_mapDir(PAD_BUTTON_DOWN, INPUT_DOWN);
 	gc_mapDir(PAD_BUTTON_LEFT, INPUT_LEFT);
@@ -182,41 +185,28 @@ void handlePlayerInput() {
 	gc_mapButton(PAD_TRIGGER_R, INPUT_R);
 	gc_mapButton(PAD_TRIGGER_Z, INPUT_SELECT);
 	gc_mapButton(PAD_BUTTON_START, INPUT_START);
-	controllerAxis_leftStickX = PAD_StickX(0) << 8;
-	controllerAxis_leftStickY = -(PAD_StickY(0) << 8);
-	applyStickDeadZoneX();
-	applyStickDeadZoneY();
+	for (char i = 0; i < 4; i++) {
+		controllerAxis_leftStickX = PAD_StickX(i) << 8;
+		controllerAxis_leftStickY = -(PAD_StickY(i) << 8);
+		applyStickDeadZoneX();
+		applyStickDeadZoneY();
+		if (controllerAxis_leftStickX != 0 || controllerAxis_leftStickY != 0) {
+			break;
+		}
+	}
 #else
 	keyInputs = 0;
 	/* Update Key/Button Presses, Mouse/Touch Input, and Window Resizing */
 #if !defined(SDL1) && !defined(PSP)
 	/* Update Controller Axes (SDL2 only; SDL1 axes are handled later) */
-	controllerAxis_leftStickX = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTX);
-	controllerAxis_leftStickY = SDL_GameControllerGetAxis(controller, SDL_CONTROLLER_AXIS_LEFTY);
-	applyStickDeadZoneX();
-	applyStickDeadZoneY();
-	/* Update Controller Hat Positions (SDL1 only; SDL2 D-Pad buttons are handled later) */
-#elif defined(THREEDS)
-	joystickHat = SDL_JoystickGetHat(joystick, 0);
-	if (joystickHat & SDL_HAT_UP) {
-		heldDirs_dpad |= INPUT_UP;
-	} else {
-		heldDirs_dpad &= ~INPUT_UP;
-	}
-	if (joystickHat & SDL_HAT_DOWN) {
-		heldDirs_dpad |= INPUT_DOWN;
-	} else {
-		heldDirs_dpad &= ~INPUT_DOWN;
-	}
-	if (joystickHat & SDL_HAT_LEFT) {
-		heldDirs_dpad |= INPUT_LEFT;
-	} else {
-		heldDirs_dpad &= ~INPUT_LEFT;
-	}
-	if (joystickHat & SDL_HAT_RIGHT) {
-		heldDirs_dpad |= INPUT_RIGHT;
-	} else {
-		heldDirs_dpad &= ~INPUT_RIGHT;
+	for (char i = 0; i < 8; i++) {
+		controllerAxis_leftStickX = SDL_GameControllerGetAxis(controllers[i], SDL_CONTROLLER_AXIS_LEFTX);
+		controllerAxis_leftStickY = SDL_GameControllerGetAxis(controllers[i], SDL_CONTROLLER_AXIS_LEFTY);
+		applyStickDeadZoneX();
+		applyStickDeadZoneY();
+		if (controllerAxis_leftStickX != 0 || controllerAxis_leftStickY != 0) {
+			break;
+		}
 	}
 #endif
 	while (SDL_PollEvent(&event)) {
@@ -507,79 +497,31 @@ void handlePlayerInput() {
 //			case SDL_FINGERUP:
 //				break;
 //#endif
+			case SDL_CONTROLLERDEVICEADDED: {
+				int controllerIndex = event.cdevice.which;
+				// Find a free slot
+				for (int i = 0; i < 8; i++) {
+					if (controllers[i] == nullptr) {
+						controllers[i] = SDL_GameControllerOpen(controllerIndex);
+						break;
+					}
+				}
+				break;
+			}
+			case SDL_CONTROLLERDEVICEREMOVED: {
+				int controllerIndex = event.cdevice.which;
+				for (int i = 0; i < 8; i++) {
+					if (controllers[i] && SDL_JoystickInstanceID(SDL_GameControllerGetJoystick(controllers[i])) == controllerIndex) {
+						SDL_GameControllerClose(controllers[i]);
+						controllers[i] = nullptr;
+						break;
+					}
+				}
+				break;
+			}
 			default:
 				break;
 #else
-#if defined(THREEDS)
-			case SDL_JOYBUTTONDOWN:
-				if (event.jbutton.button == 0) {
-					heldKeys |= INPUT_START;
-					break;
-				}
-				if (event.jbutton.button == 1) {
-					heldKeys |= INPUT_A;
-					break;
-				}
-				if (event.jbutton.button == 2) {
-					heldKeys |= INPUT_B;
-					break;
-				}
-				if (event.jbutton.button == 3) {
-					heldKeys |= INPUT_X;
-					break;
-				}
-				if (event.jbutton.button == 4) {
-					//heldKeys |= INPUT_Y;
-					break;
-				}
-				if (event.jbutton.button == 5) {
-					heldKeys |= INPUT_L;
-					break;
-				}
-				if (event.jbutton.button == 6) {
-					heldKeys |= INPUT_R;
-					break;
-				}
-				if (event.jbutton.button == 7) {
-					heldKeys |= INPUT_SELECT;
-					break;
-				}
-				break;
-			case SDL_JOYBUTTONUP:
-				if (event.jbutton.button == 0) {
-					heldKeys &= ~INPUT_START;
-					break;
-				}
-				if (event.jbutton.button == 1) {
-					heldKeys &= ~INPUT_A;
-					break;
-				}
-				if (event.jbutton.button == 2) {
-					heldKeys &= ~INPUT_B;
-					break;
-				}
-				if (event.jbutton.button == 3) {
-					heldKeys &= ~INPUT_X;
-					break;
-				}
-				if (event.jbutton.button == 4) {
-					//heldKeys &= ~INPUT_Y;
-					break;
-				}
-				if (event.jbutton.button == 5) {
-					heldKeys &= ~INPUT_L;
-					break;
-				}
-				if (event.jbutton.button == 6) {
-					heldKeys &= ~INPUT_R;
-					break;
-				}
-				if (event.jbutton.button == 7) {
-					heldKeys &= ~INPUT_SELECT;
-					break;
-				}
-				break;
-#else // PSP
 			case SDL_JOYBUTTONDOWN:
 				if (event.jbutton.button == 8) { // Up
 					heldDirs_dpad |= INPUT_UP;
@@ -680,7 +622,6 @@ void handlePlayerInput() {
 					break;
 				}
 				break;
-#endif
 			case SDL_JOYAXISMOTION:
 				switch (event.jaxis.axis) {
 					case 0:
