@@ -34,6 +34,9 @@ int main(int argv, char** args) {
 #if !defined(PC)
 	SDL_ShowCursor(SDL_DISABLE);
 #endif
+#if defined(THREEDS)
+	osSetSpeedupEnable(useNew3DSClockSpeed);
+#endif
 	InitializeController();
 
 #if defined(PC)
@@ -72,7 +75,6 @@ int main(int argv, char** args) {
 		if (keyPressed(INPUT_FULLSCREEN)) {
 			SDL_toggleFullscreen();
 		}
-#if !defined(THREEDS)
 		if (keyPressed(INPUT_Y) && (g_sceneState == 2 || g_sceneState == 3 || GM.manually_paused)) {
 			do {
 				scalingType = (scalingType + 1) % 4;
@@ -80,7 +82,6 @@ int main(int argv, char** args) {
 			} while (MENU_SCALING->choiceIsAllowed[scalingType] == false);
 			windowSizeChanged = true;
 		}
-#endif
 #if defined(WII)
 		if ((keyPressed(INPUT_X) || keyPressed(INPUT_R)) && (g_sceneState == 2 || g_sceneState == 3 || GM.manually_paused)) {
 #else
@@ -542,12 +543,10 @@ int main(int argv, char** args) {
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_cosmetic.renderMenu();
 				switch (menu_cosmetic.handleInput(0)) {
-#if !defined(THREEDS)
 					case MENU_SCALING_INDEX:
 						scalingType = MENU_SCALING->index;
 						windowSizeChanged = true;
 						break;
-#endif
 					case -1: // Press B/Select
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						updateFrameRate();
@@ -775,9 +774,15 @@ int main(int argv, char** args) {
 					default:
 						break;
 				}
-				if (keyHeld(INPUT_LEFT) && (keyPressed(INPUT_X)) || keyPressed(INPUT_Y)) {
+				if (keyHeld(INPUT_LEFT) && (keyPressed(INPUT_X) || keyPressed(INPUT_Y))) {
 					showFPS = !showFPS;
 				}
+#if defined(THREEDS)
+				if (keyHeld(INPUT_DOWN) && keyHeld(INPUT_RIGHT) && (keyPressed(INPUT_X) || keyPressed(INPUT_Y))) {
+					useNew3DSClockSpeed = !useNew3DSClockSpeed;
+					osSetSpeedupEnable(useNew3DSClockSpeed);
+				}
+#endif
 				break;
 			/* Quit Screen */
 			case 310:
@@ -1218,10 +1223,6 @@ int main(int argv, char** args) {
 		frameCounter_global++;
 #if defined(SDL1) || (defined(LINUX) && defined(PC))
 		if (true) {
-#elif defined(THREEDS)
-		if (frameRate < 30) {
-//#elif defined(SWITCH) {
-//		if (frameRate < 60) { // Switch emulation can go above 60 FPS, so displayRefreshRate may mistakenly be above 60?
 #else
 		if (frameRate < displayRefreshRate) {
 #endif

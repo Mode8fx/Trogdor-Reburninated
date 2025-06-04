@@ -67,11 +67,7 @@ constexpr auto PI = 3.14159265;
 #define AUDIO_TROG_FORMAT MIX_DEFAULT_FORMAT
 #endif
 
-#if defined(THREEDS)
-constexpr auto AUDIO_SAMPLE_RATE = 22050;
-#else
 constexpr auto AUDIO_SAMPLE_RATE = 44100;
-#endif
 
 extern void applyColorKey(SDL_Surface *);
 extern void systemSpecificOpen();

@@ -549,13 +549,7 @@ void Menu::renderMenu() {
 #define option_main_knight_speed_descriptions_line_1 { "Change how quickly knights move." }
 #define option_main_arrow_speed_choices { "Slow", "Normal", "Fast", "Very Fast", "Insane" }
 #define option_main_arrow_speed_descriptions_line_1 { "Change how quickly arrows move." }
-#if defined(THREEDS)
-#define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "", "", "", "", "" }
-#elif defined(WII) && defined(SDL1)
-#define option_main_frame_rate_choices { "16 FPS (orig.) (480p)", "20 FPS (480p)", "25 FPS (480p)", "30 FPS (240p)", "40 FPS (240p)", "50 FPS (240p)", "55 FPS (240p)", "60 FPS (240p)", "Uncapped" }
-#else
 #define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS", "Uncapped" }
-#endif
 #define option_main_frame_rate_descriptions_line_1 { "Higher frame rate, smoother gameplay." }
 #define option_main_frame_rate_descriptions_line_2 { "(Original Flash game is 16 FPS)" }
 #define option_main_frame_rate_descriptions_line_3 { "" }
@@ -568,17 +562,10 @@ void Menu::renderMenu() {
 #define option_main_comment_freq_descriptions_line_2 { "", "", "", "as he did in the original game.", "", "", "(He talks about twice as much as usual.)"}
 #define option_main_comment_freq_descriptions_line_3 { "", "", "", "", "", "", "" }
 #define press_confirm_to_apply "(Press " + INPUT_CONFIRM + " to apply)"
-#if defined(THREEDS)
-#define option_main_scaling_choices { "N/A", "N/A", "N/A", "N/A" }
-#define option_main_scaling_descriptions_line_1 { "(Unused)", "(Unused)", "(Unused)", "(Unused)" }
-#define option_main_scaling_descriptions_line_2 { "", "", "", "" }
-#define option_main_scaling_descriptions_line_3 { "", "", "", "" }
-#else
 #define option_main_scaling_choices { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "Full Game" }
 #define option_main_scaling_descriptions_line_1 { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "Scale the game to fill the screen." }
 #define option_main_scaling_descriptions_line_2 { "scaling. Accurate, but possibly small.", "with integer scaling. The most accurate.", "the overlay fills the screen.", "The overlay will be cut off." }
 #define option_main_scaling_descriptions_line_3 { press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply, press_confirm_to_apply }
-#endif
 #define option_main_overlay_choices { "None", "Compy 386", "Basement", "Strong Badia" }
 #define option_main_overlay_descriptions_line_1 { "Select a screen border." }
 #define option_main_difficulty_descriptions_line_1 { "Change difficulty settings." }
@@ -741,13 +728,7 @@ void InitializeMenus() {
 	}
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
-#if defined(THREEDS)
-		"", 4, true, 3, true, false);
-#elif defined(WII) && defined(SDL1)
-		"", 9, true, 2, true, false);
-#else
 		"", 9, true, 8, true, false);
-#endif
 	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
 		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
 		"", 2, false, 0, true, false);
@@ -1023,11 +1004,7 @@ void InitializeMenus() {
 		MENU_NOCLIP->setLocked(true);
 		MENU_DEBUG_MODE->setLocked(true);
 		MENU_SCALING->choiceIsAllowed[0] = true;
-#if defined(THREEDS)
-		MENU_SCALING->choiceIsAllowed[1] = false;
-		MENU_SCALING->choiceIsAllowed[2] = false;
-		MENU_SCALING->choiceIsAllowed[3] = false;
-#elif defined(PC) || defined(SDL1)
+#if defined(PC) || defined(SDL1)
 		MENU_SCALING->choiceIsAllowed[1] = true;
 		MENU_SCALING->choiceIsAllowed[2] = true;
 		MENU_SCALING->choiceIsAllowed[3] = true;
@@ -1130,9 +1107,6 @@ State_Addon_v_2_2_1 getSettings_v_2_2_1() {
 }
 
 void updateFrameRate() {
-#if defined(WII) && defined(SDL1)
-	uint_i = DEFAULT_WIDTH;
-#endif
 	switch (MENU_FRAME_RATE->index) {
 		case 1:
 			frameRate = 20;
@@ -1167,20 +1141,6 @@ void updateFrameRate() {
 	ticksPerFrameDefault = 1000.0F / frameRate;
 	ticksPerFrame = ticksPerFrameDefault;
 	ticksPerFrameInt = (Uint32)ticksPerFrame;
-#if defined(WII) && defined(SDL1)
-	if (frameRate <= 25) {
-		DEFAULT_WIDTH = 640;
-		DEFAULT_HEIGHT = 480;
-	}
-	else {
-		DEFAULT_WIDTH = 320;
-		DEFAULT_HEIGHT = 240;
-	}
-	if (uint_i != DEFAULT_WIDTH) {
-		windowScreen = SDL_SetVideoMode(DEFAULT_WIDTH, DEFAULT_HEIGHT, 24, SDL_DOUBLEBUF);
-		setScaling();
-	}
-#endif
 }
 
 void setPreset(Sint8 ind) {

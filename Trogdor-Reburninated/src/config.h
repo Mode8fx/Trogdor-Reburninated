@@ -152,12 +152,12 @@ constexpr auto DEFAULT_HEIGHT = 480;
 #elif defined(THREEDS)
 constexpr auto DEFAULT_WIDTH = 400;
 constexpr auto DEFAULT_HEIGHT = 240;
-#elif defined(ANDROID)
+#elif defined(SDL1)
+constexpr auto DEFAULT_WIDTH = 640;
+constexpr auto DEFAULT_HEIGHT = 480;
+#elif defined(ANDROID) || defined(LINUX)
 #define DEFAULT_WIDTH  max(DM.w, DM.h)
 #define DEFAULT_HEIGHT min(DM.w, DM.h)
-#elif defined(SDL1)
-constexpr auto DEFAULT_WIDTH = 320;
-constexpr auto DEFAULT_HEIGHT = 240;
 #else
 constexpr auto DEFAULT_WIDTH = 640;
 constexpr auto DEFAULT_HEIGHT = 480;

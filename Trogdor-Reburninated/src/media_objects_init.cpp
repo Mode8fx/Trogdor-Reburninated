@@ -244,15 +244,6 @@ void InitializeText_HomeScreen() {
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 129 * gameHiResMult);
 	SET_TEXT(" ", text_3_controls_4, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 143 * gameHiResMult);
-#elif defined(THREEDS)
-	SET_TEXT("-Press X to change overlay", text_3_controls_3, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 101 * gameHiResMult);
-	SET_TEXT(" ", text_3_controls_4, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 115 * gameHiResMult);
-	SET_TEXT("(Warning: Overlay may cause", text_3_controls_5, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 129 * gameHiResMult);
-	SET_TEXT("minor graphical issues on O3DS)", text_3_controls_6, font_serif_white_6_mult,
-		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #elif defined(PC)
 	SET_TEXT("-Press C / X to change overlay", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 101 * gameHiResMult);

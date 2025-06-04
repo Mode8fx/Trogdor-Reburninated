@@ -11,8 +11,6 @@ void InitializeDisplay() {
 #if !defined(SDL1)
 	SDL_GetCurrentDisplayMode(0, &DM);
 	displayRefreshRate = DM.refresh_rate;
-#elif defined(THREEDS)
-	displayRefreshRate = 30;
 #else
 	displayRefreshRate = 60;
 #endif
@@ -109,14 +107,11 @@ void renderBackground() {
 }
 
 void renderTransparentForeground() {
-#if !defined(THREEDS)
-	outputRect = gameToWindowDstRect;
 #if !defined(SDL1)
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 200);
 	SDL_RenderFillRect(renderer, &outputRect);
 #else
 	SDL_BlitSurface(transparentScreen, NULL, windowScreen, &outputRect);
-#endif
 #endif
 }
 

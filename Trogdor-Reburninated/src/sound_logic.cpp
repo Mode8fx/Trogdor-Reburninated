@@ -72,7 +72,7 @@ void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
 void stopMusic() {
 	if (MUSIC_IS_PLAYING()) {
 		STOP_MUSIC();
-#if !(defined(PSP) || defined(THREEDS))
+#if !defined(PSP)
 		FREE_MUSIC();
 #endif
 	}
