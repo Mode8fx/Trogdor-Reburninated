@@ -62,6 +62,7 @@
 #include <pspctrl.h>
 #elif defined(THREEDS)
 #include <3ds.h>
+#include <sys/stat.h>
 #elif defined(XBOX)
 #include <hal/debug.h>
 #include <hal/xbox.h>

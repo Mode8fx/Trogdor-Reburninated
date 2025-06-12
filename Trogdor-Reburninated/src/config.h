@@ -107,6 +107,7 @@ extern SDL_RWops *saveBin;
 extern GameState gameState;
 
 /* System-Specific Variables */
+extern string getExeDirectory();
 #if defined(VITA)
 const string rootDir = "ux0:data/Trogdor-RB/";
 #elif defined(WII)
@@ -115,8 +116,10 @@ const string rootDir = "sd:/apps/Trogdor-RB/";
 const string rootDir = "/Trogdor-RB/";
 #elif defined(THREEDS)
 const string rootDir = "sdmc:/3ds/Trogdor-RB/";
+#elif defined(_WIN32)
+const string rootDir = getExeDirectory() + "/";
 #elif defined(LINUX)
-const string rootDir = string(getenv("HOME")) + "/.trogdorrb/";
+const string rootDir = string(getenv("HOME")) + "/.local/share/.trogdorrb/";
 #else
 const string rootDir = "";
 #endif

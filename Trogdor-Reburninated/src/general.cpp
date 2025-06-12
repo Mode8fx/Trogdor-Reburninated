@@ -1,5 +1,13 @@
 #include "general.h"
 
+#include <string>
+#if defined(_WIN32)
+#include <windows.h>
+#elif defined(LINUX)
+#include <unistd.h>
+#include <limits.h>
+#endif
+
 //#if defined(SDL1) && defined(PC) && !defined(LINUX)
 //FILE _iob[] = { *stdin, *stdout, *stderr };
 //
