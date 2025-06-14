@@ -1,34 +1,48 @@
-OBJ_DIR = ./build_windows_x86
-EXE=Trogdor-Reburninated.exe
+# Usage: In MSYS2 MinGW 32-bit shell, `make`
 
-SRC_DIR		=	src
-EXCLUDED	=	$(SRC_DIR)/goombasend.c $(SRC_DIR)/SDL_rotozoom.c $(SRC_DIR)/fonts_h/54_serif_v01.cpp $(wildcard $(SRC_DIR)/sfx_h/*) $(wildcard $(SRC_DIR)/OSLibAudio/*)
-SRCS		=	$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_DIR)/*.c) $(wildcard $(SRC_DIR)/**/*.cpp) $(wildcard $(SRC_DIR)/**/*.c) $(wildcard $(SRC_DIR)/graphics_h/**/*.cpp) $(wildcard $(SRC_DIR)/graphics_h/**/*.c))
-OBJS		=	$(patsubst %.cpp, %.o, $(patsubst %.c, %.o, $(SRCS)))
-RC			=	windres
-RESOURCES	=	release-resources/resource.o
+# ─── Directories & Target ────────────────────────────────────────────────────
+OBJ_DIR    := build_win32
+EXE        := Trogdor-Reburninated_win32.exe
 
+SRC_DIR    := src
+SRCS       := $(filter-out , \
+               $(wildcard $(SRC_DIR)/*.cpp) \
+               $(wildcard $(SRC_DIR)/fonts_h/*.cpp) \
+               $(wildcard $(SRC_DIR)/graphics_h/*.cpp) \
+               $(wildcard $(SRC_DIR)/graphics_h/backgrounds/*.cpp) \
+			   $(wildcard $(SRC_DIR)/graphics_h/overlays/*.cpp) \
+               $(wildcard $(SRC_DIR)/sfx_h/*.cpp) \
+              )
+OBJS       := $(SRCS:%.cpp=$(OBJ_DIR)/%.o)
 
-CXX ?= i686-w64-mingw32-g++
-CXXFLAGS += $(shell pkg-config --cflags sdl2 SDL2_image SDL2_ttf SDL2_mixer) -DPC
-LDFLAGS += $(shell pkg-config --libs sdl2 SDL2_image SDL2_ttf SDL2_mixer)
+# ─── Toolchain & Flags ───────────────────────────────────────────────────────
+CXX        := i686-w64-mingw32-g++
+PKG        := pkgconf
 
+# Optimize-for-size, warnings, C++11, platform defines,
+# per-function/data sections + LTO + no RTTI/exceptions,
+# plus SDL2 include flags (static).
+CXXFLAGS   := -O2 -Wall -Wextra -std=gnu++11 \
+              -DPC -D_WIN32 \
+              -ffunction-sections -fdata-sections -flto=4 -fno-rtti -fexceptions \
+              $(shell $(PKG) --static --cflags sdl2)
+
+# Static link against libstdc++, libgcc, SDL2 + extensions + gc-sections + strip + LTO
+LDFLAGS    := -static -static-libgcc -static-libstdc++ \
+              $(shell $(PKG) --static --libs sdl2 SDL2_image SDL2_mixer SDL2_ttf) \
+              -Wl,--gc-sections -s -flto
+
+# ─── Build Rules ──────────────────────────────────────────────────────────────
 .PHONY: all clean
 
-all: $(RESOURCES) $(EXE)
-
-$(RESOURCES): release-resources/resource.rc
-	$(RC) -o $@ $<
+all: $(EXE)
 
 $(EXE): $(OBJS)
-	$(CXX) $(CXXFLAGS) $(TARGET_ARCH) $^ $(RESOURCES) $(LDFLAGS) -o $@
+	$(CXX) $(OBJS) $(CXXFLAGS) $(LDFLAGS) -o $@
 
 $(OBJ_DIR)/%.o: %.cpp
-	mkdir -p $(@D)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
-$(OBJ_DIR):
-	mkdir -p $@
+	mkdir -p $(dir $@)
+	$(CXX) -c $< $(CXXFLAGS) -o $@
 
 clean:
-	$(RM) -rv *~ $(RESOURCES) $(OBJS) $(EXE)
+	rm -rf $(OBJ_DIR) $(EXE)

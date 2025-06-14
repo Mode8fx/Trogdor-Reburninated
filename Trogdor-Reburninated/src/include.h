@@ -44,6 +44,7 @@
 #include <whb/proc.h>
 #elif defined(VITA)
 #include <psp2/kernel/processmgr.h>
+#include <sys/stat.h>
 #elif defined(SWITCH)
 #include <switch.h>
 #elif defined(WII)

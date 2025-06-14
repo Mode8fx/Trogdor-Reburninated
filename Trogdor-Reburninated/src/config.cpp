@@ -2,13 +2,18 @@
 #include "menu.h"
 #include "window.h"
 
+#include <string>
+#if defined(_WIN32)
+#include <windows.h>
+#elif defined(LINUX)
+#include <unistd.h>
+#include <limits.h>
+#endif
+
 #if !defined(MAX_PATH) && defined(LINUX)
 #define MAX_PATH 4096
 #elif !defined(MAX_PATH)
 #define MAX_PATH 260
-#endif
-#if defined(_WIN32)
-#include <windows.h>
 #endif
 
 string getExeDirectory() {
@@ -18,7 +23,7 @@ string getExeDirectory() {
 #if defined(_WIN32)
 	GetModuleFileNameA(NULL, buffer, MAX_PATH);
 #elif defined(LINUX)
-	ssize_t count = readlink("/proc/self/exe", buffer, PATH_MAX);
+	ssize_t count = readlink("/proc/self/exe", buffer, MAX_PATH);
 	if (count == -1) {
 		// Handle error if needed
 		buffer[0] = '\0';
