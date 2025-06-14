@@ -112,6 +112,7 @@ void renderBackground() {
 }
 
 void renderTransparentForeground() {
+	outputRect = gameToWindowDstRect;
 #if !defined(SDL1)
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 200);
 	SDL_RenderFillRect(renderer, &outputRect);
