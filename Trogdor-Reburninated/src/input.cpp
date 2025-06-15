@@ -117,6 +117,18 @@ inline static void gc_mapButton(Uint32 gcInput, Uint32 output) {
 }
 #endif
 
+#if defined(SWITCH)
+#define BUTTON_TOP SDL_CONTROLLER_BUTTON_X
+#define BUTTON_BOTTOM SDL_CONTROLLER_BUTTON_B
+#define BUTTON_LEFT SDL_CONTROLLER_BUTTON_Y
+#define BUTTON_RIGHT SDL_CONTROLLER_BUTTON_A
+#else
+#define BUTTON_TOP SDL_CONTROLLER_BUTTON_Y
+#define BUTTON_BOTTOM SDL_CONTROLLER_BUTTON_A
+#define BUTTON_LEFT SDL_CONTROLLER_BUTTON_X
+#define BUTTON_RIGHT SDL_CONTROLLER_BUTTON_B
+#endif
+
 void handlePlayerInput() {
 #if defined(WII)
 	WPAD_ScanPads();
@@ -207,6 +219,28 @@ void handlePlayerInput() {
 		if (controllerAxis_leftStickX != 0 || controllerAxis_leftStickY != 0) {
 			break;
 		}
+	}
+#elif defined(THREEDS)
+	joystickHat = SDL_JoystickGetHat(joysticks[0], 0);
+	if (joystickHat & SDL_HAT_UP) {
+		heldDirs_dpad |= INPUT_UP;
+	} else {
+		heldDirs_dpad &= ~INPUT_UP;
+	}
+	if (joystickHat & SDL_HAT_DOWN) {
+		heldDirs_dpad |= INPUT_DOWN;
+	} else {
+		heldDirs_dpad &= ~INPUT_DOWN;
+	}
+	if (joystickHat & SDL_HAT_LEFT) {
+		heldDirs_dpad |= INPUT_LEFT;
+	} else {
+		heldDirs_dpad &= ~INPUT_LEFT;
+	}
+	if (joystickHat & SDL_HAT_RIGHT) {
+		heldDirs_dpad |= INPUT_RIGHT;
+	} else {
+		heldDirs_dpad &= ~INPUT_RIGHT;
 	}
 #endif
 	while (SDL_PollEvent(&event)) {
@@ -362,35 +396,19 @@ void handlePlayerInput() {
 					heldDirs_dpad |= INPUT_RIGHT;
 					break;
 				}
-#if defined(SWITCH)
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
-#else
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
-#endif
+				if (event.cbutton.button == BUTTON_BOTTOM) {
 					heldKeys |= INPUT_A;
 					break;
 				}
-#if defined(SWITCH)
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
-#else
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
-#endif
+				if (event.cbutton.button == BUTTON_RIGHT) {
 					heldKeys |= INPUT_B;
 					break;
 				}
-#if defined(SWITCH)
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
-#else
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
-#endif
+				if (event.cbutton.button == BUTTON_LEFT) {
 					heldKeys |= INPUT_X;
 					break;
 				}
-#if defined(SWITCH)
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
-#else
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
-#endif
+				if (event.cbutton.button == BUTTON_TOP) {
 					heldKeys |= INPUT_Y;
 					break;
 				}
@@ -432,35 +450,19 @@ void handlePlayerInput() {
 					heldDirs_dpad &= ~INPUT_RIGHT;
 					break;
 				}
-#if defined(SWITCH)
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
-#else
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
-#endif
+				if (event.cbutton.button == BUTTON_BOTTOM) {
 					heldKeys &= ~INPUT_A;
 					break;
 				}
-#if defined(SWITCH)
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_A) {
-#else
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_B) {
-#endif
+				if (event.cbutton.button == BUTTON_RIGHT) {
 					heldKeys &= ~INPUT_B;
 					break;
 				}
-#if defined(SWITCH)
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
-#else
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
-#endif
+				if (event.cbutton.button == BUTTON_LEFT) {
 					heldKeys &= ~INPUT_X;
 					break;
 				}
-#if defined(SWITCH)
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_X) {
-#else
-				if (event.cbutton.button == SDL_CONTROLLER_BUTTON_Y) {
-#endif
+				if (event.cbutton.button == BUTTON_TOP) {
 					heldKeys &= ~INPUT_Y;
 					break;
 				}
@@ -485,18 +487,6 @@ void handlePlayerInput() {
 					break;
 				}
 				break;
-//#if !defined(PSP)
-//			case SDL_FINGERDOWN:
-//				mouseInput_x = (Sint32)(event.tfinger.x * windowWidth);
-//				mouseInput_y = (Sint32)(event.tfinger.y * windowHeight);
-//				break;
-//			case SDL_FINGERMOTION:
-//				mouseInput_x = (Sint32)(event.tfinger.x * windowWidth);
-//				mouseInput_y = (Sint32)(event.tfinger.y * windowHeight);
-//				break;
-//			case SDL_FINGERUP:
-//				break;
-//#endif
 			case SDL_CONTROLLERDEVICEADDED: {
 				int controllerIndex = event.cdevice.which;
 				// Find a free slot
@@ -520,6 +510,77 @@ void handlePlayerInput() {
 				break;
 			}
 			default:
+				break;
+
+#else
+#if defined(THREEDS)
+			case SDL_JOYBUTTONDOWN:
+				if (event.jbutton.button == 0) {
+					heldKeys |= INPUT_START;
+					break;
+				}
+				if (event.jbutton.button == 1) {
+					heldKeys |= INPUT_A;
+					break;
+				}
+				if (event.jbutton.button == 2) {
+					heldKeys |= INPUT_B;
+					break;
+				}
+				if (event.jbutton.button == 3) {
+					heldKeys |= INPUT_X;
+					break;
+				}
+				if (event.jbutton.button == 4) {
+					heldKeys |= INPUT_Y;
+					break;
+				}
+				if (event.jbutton.button == 5) {
+					heldKeys |= INPUT_L;
+					break;
+				}
+				if (event.jbutton.button == 6) {
+					heldKeys |= INPUT_R;
+					break;
+				}
+				if (event.jbutton.button == 7) {
+					heldKeys |= INPUT_SELECT;
+					break;
+				}
+				break;
+			case SDL_JOYBUTTONUP:
+				if (event.jbutton.button == 0) {
+					heldKeys &= ~INPUT_START;
+					break;
+				}
+				if (event.jbutton.button == 1) {
+					heldKeys &= ~INPUT_A;
+					break;
+				}
+				if (event.jbutton.button == 2) {
+					heldKeys &= ~INPUT_B;
+					break;
+				}
+				if (event.jbutton.button == 3) {
+					heldKeys &= ~INPUT_X;
+					break;
+				}
+				if (event.jbutton.button == 4) {
+					heldKeys &= ~INPUT_Y;
+					break;
+				}
+				if (event.jbutton.button == 5) {
+					heldKeys &= ~INPUT_L;
+					break;
+				}
+				if (event.jbutton.button == 6) {
+					heldKeys &= ~INPUT_R;
+					break;
+				}
+				if (event.jbutton.button == 7) {
+					heldKeys &= ~INPUT_SELECT;
+					break;
+				}
 				break;
 #else
 			case SDL_JOYBUTTONDOWN:
@@ -622,6 +683,7 @@ void handlePlayerInput() {
 					break;
 				}
 				break;
+#endif
 			case SDL_JOYAXISMOTION:
 				switch (event.jaxis.axis) {
 					case 0:

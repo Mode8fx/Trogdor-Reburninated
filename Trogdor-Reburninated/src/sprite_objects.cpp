@@ -141,7 +141,9 @@ void prepareSprite(SpriteObject *spriteObj, unsigned char sprite_data[], unsigne
   // Load the sprite sheet as a surface
   rw = SDL_RWFromConstMem(sprite_data, sprite_len);
   temp_sprite_sheet = IMG_Load_RW(rw, 1);
-  applyColorKey(temp_sprite_sheet, isTransparent);
+  if (isTransparent) {
+    SDL_SetColorKey(temp_sprite_sheet, SDL_TRUE, 0xFF00FF);
+  }
   // Store the size values of the sprite sheet
   frame_w = (Sint16)(temp_sprite_sheet->w / numFrames);
   frame_h = (Sint16)(temp_sprite_sheet->h / numForms);
@@ -261,15 +263,12 @@ void drawRectWithAlpha(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
 
 void sdl1_createTransparentScreen() {
 #if defined(SDL1)
-#if defined(WII) || defined(GAMECUBE)
-    transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 24, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
-    SDL_FillRect(transparentScreen, NULL, 0x000000C8);
-#elif SDL_BYTEORDER == SDL_BIG_ENDIAN
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
     transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
-    SDL_FillRect(transparentScreen, NULL, 0x000000C8);
+    SDL_FillRect(transparentScreen, NULL, 0x00000037);
 #else
     transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-    SDL_FillRect(transparentScreen, NULL, 0xC8000000);
+    SDL_FillRect(transparentScreen, NULL, 0x37000000);
 #endif
 #endif
 }

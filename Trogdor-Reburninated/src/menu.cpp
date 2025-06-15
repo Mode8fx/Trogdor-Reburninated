@@ -549,7 +549,11 @@ void Menu::renderMenu() {
 #define option_main_knight_speed_descriptions_line_1 { "Change how quickly knights move." }
 #define option_main_arrow_speed_choices { "Slow", "Normal", "Fast", "Very Fast", "Insane" }
 #define option_main_arrow_speed_descriptions_line_1 { "Change how quickly arrows move." }
+#if defined(THREEDS)
+#define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "", "", "", "", "" }
+#else
 #define option_main_frame_rate_choices { "16 FPS (original)", "20 FPS", "25 FPS", "30 FPS", "40 FPS", "50 FPS", "55 FPS", "60 FPS", "Uncapped" }
+#endif
 #define option_main_frame_rate_descriptions_line_1 { "Higher frame rate, smoother gameplay." }
 #define option_main_frame_rate_descriptions_line_2 { "(Original Flash game is 16 FPS)" }
 #define option_main_frame_rate_descriptions_line_3 { "" }
@@ -728,7 +732,11 @@ void InitializeMenus() {
 	}
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
 		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
+#if defined(THREEDS)
+		"", 4, true, 3, true, false);
+#else
 		"", 9, true, 8, true, false);
+#endif
 	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
 		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
 		"", 2, false, 0, true, false);
@@ -1004,7 +1012,11 @@ void InitializeMenus() {
 		MENU_NOCLIP->setLocked(true);
 		MENU_DEBUG_MODE->setLocked(true);
 		MENU_SCALING->choiceIsAllowed[0] = true;
-#if defined(PC) || defined(SDL1)
+#if defined(THREEDS)
+		MENU_SCALING->choiceIsAllowed[1] = false;
+		MENU_SCALING->choiceIsAllowed[2] = false;
+		MENU_SCALING->choiceIsAllowed[3] = true;
+#elif defined(PC)
 		MENU_SCALING->choiceIsAllowed[1] = true;
 		MENU_SCALING->choiceIsAllowed[2] = true;
 		MENU_SCALING->choiceIsAllowed[3] = true;

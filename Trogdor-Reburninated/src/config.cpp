@@ -59,9 +59,9 @@ void loadGameState() {
 	mkdir((string(getenv("HOME")) + "/.local/share").c_str(), 0755);
 	mkdir((string(getenv("HOME")) + "/.local/share/.trogdorrb").c_str(), 0755);
 #elif defined(VITA)
-	mkdir("ux0:data/TrogdorRB", 0777);
+	mkdir("ux0:data/Trogdor-RB", 0777);
 #elif defined(THREEDS)
-	mkdir("sdmc:/3ds/TrogdorRB", 0777);
+	mkdir("sdmc:/3ds/Trogdor-RB", 0777);
 #endif
 	saveBin = SDL_RWFromFile(SAVE_FILE, "rb");
 

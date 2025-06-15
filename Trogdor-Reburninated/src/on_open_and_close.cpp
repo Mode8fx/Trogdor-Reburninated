@@ -11,6 +11,8 @@ void InitializeDisplay() {
 #if !defined(SDL1)
 	SDL_GetCurrentDisplayMode(0, &DM);
 	displayRefreshRate = DM.refresh_rate;
+#elif defined(THREEDS)
+	displayRefreshRate = 30;
 #else
 	displayRefreshRate = 60;
 #endif
@@ -31,17 +33,9 @@ void InitializeDisplay() {
 #if defined(PC)
 	SDL_putenv("SDL_VIDEO_WINDOW_POS=center");
 	windowScreen = SDL_SetVideoMode(DEFAULT_WIDTH, DEFAULT_HEIGHT, 0, SDL_HWSURFACE | SDL_DOUBLEBUF);
+#elif defined(THREEDS)
+	windowScreen = SDL_SetVideoMode(DEFAULT_WIDTH, DEFAULT_HEIGHT, 24, 0);
 #else
-#if defined(WII)
-	if (frameRate <= 25) {
-		DEFAULT_WIDTH = 640;
-		DEFAULT_HEIGHT = 480;
-	}
-	else {
-		DEFAULT_WIDTH = 320;
-		DEFAULT_HEIGHT = 240;
-	}
-#endif
 	windowScreen = SDL_SetVideoMode(DEFAULT_WIDTH, DEFAULT_HEIGHT, 24, SDL_DOUBLEBUF);
 #endif
 #else
@@ -84,11 +78,19 @@ void InitializeSound() {
 void InitializeController() {
 #if defined(SDL1) // also applies to PSP SDL1
 	SDL_JoystickEventState(SDL_ENABLE);
-	joystick = SDL_JoystickOpen(0);
+	for (i = 0; i < 8; i++) {
+		if (i < SDL_NumJoysticks()) {
+			joysticks[i] = SDL_JoystickOpen(i);
+		}
+	}
 	SDL_JoystickEventState(SDL_ENABLE);
 #elif defined(PSP)
 	SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
-	joystick = SDL_JoystickOpen(0);
+	for (i = 0; i < 8; i++) {
+		if (i < SDL_NumJoysticks()) {
+			joysticks[i] = SDL_JoystickOpen(i);
+		}
+	}
 #else
 	for (i = 0; i < 8; i++) {
 		if (SDL_IsGameController(i)) {
@@ -122,11 +124,11 @@ void renderTransparentForeground() {
 }
 
 void closeController() {
-#if defined(PSP)
-	SDL_JoystickClose(joystick);
-#elif defined(SDL1)
-	if (SDL_JoystickOpened(0)) {
-		SDL_JoystickClose(joystick);
+#if defined(PSP) || defined(SDL1)
+	for (char i = 0; i < 8; i++) {
+		if (joysticks[i] != NULL) {
+			SDL_JoystickClose(joysticks[i]);
+		}
 	}
 #else
 	for (char i = 0; i < 8; i++) {

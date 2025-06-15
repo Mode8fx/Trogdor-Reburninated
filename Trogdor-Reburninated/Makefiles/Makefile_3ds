@@ -1,6 +1,3 @@
-export PKG_CONFIG_LIBDIR := $(DEVKITPRO)/portlibs/3ds/lib/pkgconfig
-export PKG_CONFIG_SYSROOT_DIR := /
-
 #---------------------------------------------------------------------------------
 .SUFFIXES:
 #---------------------------------------------------------------------------------
@@ -57,14 +54,14 @@ CFLAGS	:=	-g -Wall -O2 -mword-relocations \
 			-ffunction-sections \
 			$(ARCH)
 
-CFLAGS	+=	$(INCLUDE) `pkg-config --cflags sdl2 SDL2_ttf SDL2_mixer SDL2_image freetype2` -D__3DS__ -DTHREEDS -DNINTENDO_LAYOUT -DPRELOAD_SOUNDS
+CFLAGS	+=	$(INCLUDE) `sdl-config --cflags` `$(PREFIX)pkg-config --cflags  SDL_ttf SDL_gfx SDL_mixer SDL_image freetype2` -DSDL1 -D__3DS__ -DTHREEDS -DNINTENDO_LAYOUT -DPRELOAD_SOUNDS
 
 CXXFLAGS	:= $(CFLAGS) -fno-rtti -fexceptions -std=gnu++11
 
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= `pkg-config --libs sdl2 SDL2_ttf SDL2_mixer SDL2_image freetype2` -lxmp -lctru -lm
+LIBS	:= `sdl-config --libs` `$(PREFIX)pkg-config --libs  SDL_ttf SDL_gfx SDL_mixer SDL_image freetype2` -lctru -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
