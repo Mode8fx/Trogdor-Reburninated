@@ -59,12 +59,14 @@ void FrameState::mod(Uint8 num) {
 	}
 }
 
-void applyColorKey(SDL_Surface *surface) {
+void applyColorKey(SDL_Surface *surface, bool isTransparent) {
+	if (isTransparent) {
 #if !defined(SDL1)
-	SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
+		SDL_SetColorKey(surface, SDL_TRUE, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
 #else
-	SDL_SetColorKey(surface, SDL_SRCCOLORKEY, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
+		SDL_SetColorKey(surface, SDL_SRCCOLORKEY, SDL_MapRGB(surface->format, 0xFF, 0, 0xFF));
 #endif
+	}
 }
 
 void systemSpecificOpen() {

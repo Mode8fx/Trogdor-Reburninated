@@ -113,7 +113,7 @@ void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
     SDL_BlitSurface(temp_sprite_sheet, &single_srcrect, temp_sprite_single, &single_dstrect);
 }
 
-void prepareSprite(SpriteObject *spriteObj, unsigned char sprite_data[], unsigned int sprite_len, Sint8 numFrames, Sint8 numForms, double scale, bool isMenuSprite) {
+void prepareSprite(SpriteObject *spriteObj, unsigned char sprite_data[], unsigned int sprite_len, Sint8 numFrames, Sint8 numForms, double scale, bool isMenuSprite, bool isTransparent) {
   spriteObj->spriteScale = scale;
   // Check if the surface/texture already exists
 #if !defined(SDL1)
@@ -141,7 +141,7 @@ void prepareSprite(SpriteObject *spriteObj, unsigned char sprite_data[], unsigne
   // Load the sprite sheet as a surface
   rw = SDL_RWFromConstMem(sprite_data, sprite_len);
   temp_sprite_sheet = IMG_Load_RW(rw, 1);
-  SDL_SetColorKey(temp_sprite_sheet, SDL_TRUE, 0xFF00FF);
+  applyColorKey(temp_sprite_sheet, isTransparent);
   // Store the size values of the sprite sheet
   frame_w = (Sint16)(temp_sprite_sheet->w / numFrames);
   frame_h = (Sint16)(temp_sprite_sheet->h / numForms);
@@ -167,7 +167,7 @@ void prepareSprite(SpriteObject *spriteObj, unsigned char sprite_data[], unsigne
       if (subSprite.y_offset_end < subSprite.y_offset_start) { // blank sprite
         subSprite.y_offset_end = subSprite.y_offset_start;
       }
-      spriteObj->sub[i][j].center_y = (spriteObj->sub[i][j].y_offset_end - subSprite.y_offset_start) / 2;
+      subSprite.center_y = (subSprite.y_offset_end - subSprite.y_offset_start) / 2;
       // Create a new surface from the boundaries of the sprite (temp_sprite_single)
       prepareSurfaceFromSpriteSheet(spriteObj);
       // Get info from temp_sprite_single
@@ -177,17 +177,17 @@ void prepareSprite(SpriteObject *spriteObj, unsigned char sprite_data[], unsigne
       subSprite.scaled_h = (int)(subSprite.h * scale * currScreenScale);
 #if !defined(SDL1)
       // [SDL2] Create a texture from temp_sprite_single
-      applyColorKey(temp_sprite_single);
+      applyColorKey(temp_sprite_single, isTransparent);
       subSprite.texture = SDL_CreateTextureFromSurface(renderer, temp_sprite_single);
 #else
       if (currScreenScale == 1 && scale == 1) {
         // [SDL1 Normal] Create a new surface from temp_sprite_single
-        applyColorKey(temp_sprite_single);
+        applyColorKey(temp_sprite_single, isTransparent);
         subSprite.surface = SDL_DisplayFormat(temp_sprite_single);
       } else {
         // [SDL1 Zoom] Create a zoomed surface from temp_sprite_single and zoom it
         temp_sprite_single_zoom = zoomSurface(temp_sprite_single, currScreenScale * scale, currScreenScale * scale, SMOOTHING_OFF);
-        applyColorKey(temp_sprite_single_zoom);
+        applyColorKey(temp_sprite_single_zoom, isTransparent);
         subSprite.surface = SDL_DisplayFormat(temp_sprite_single_zoom);
         SDL_FreeSurface(temp_sprite_single_zoom);
         temp_sprite_single_zoom = NULL;

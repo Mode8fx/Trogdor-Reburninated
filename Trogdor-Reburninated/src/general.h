@@ -69,7 +69,7 @@ constexpr auto PI = 3.14159265;
 
 constexpr auto AUDIO_SAMPLE_RATE = 44100;
 
-extern void applyColorKey(SDL_Surface *);
+extern void applyColorKey(SDL_Surface *, bool);
 extern void systemSpecificOpen();
 extern void systemSpecificClose();
 
