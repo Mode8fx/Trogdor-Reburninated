@@ -1,2 +1,2 @@
-extern unsigned char options_menu_240p_bmp[];
-extern unsigned int options_menu_240p_bmp_len;
+extern unsigned char options_menu_240p_img[];
+extern unsigned int options_menu_240p_img_len;

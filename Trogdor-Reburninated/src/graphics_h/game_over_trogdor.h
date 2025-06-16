@@ -1,2 +1,2 @@
-extern unsigned char game_over_trogdor_bmp[];
-extern unsigned int game_over_trogdor_bmp_len;
+extern unsigned char game_over_trogdor_img[];
+extern unsigned int game_over_trogdor_img_len;

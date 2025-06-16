@@ -1,2 +1,2 @@
-extern unsigned char compy_left_bmp[];
-extern unsigned int compy_left_bmp_len;
+extern unsigned char compy_left_img[];
+extern unsigned int compy_left_img_len;

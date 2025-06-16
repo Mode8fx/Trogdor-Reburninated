@@ -1,2 +1,2 @@
-extern unsigned char compy_top_bmp[];
-extern unsigned int compy_top_bmp_len;
+extern unsigned char compy_top_img[];
+extern unsigned int compy_top_img_len;

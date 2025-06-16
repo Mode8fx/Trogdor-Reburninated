@@ -1,2 +1,2 @@
-extern unsigned char kerrek_smoked_bmp[];
-extern unsigned int kerrek_smoked_bmp_len;
+extern unsigned char kerrek_smoked_img[];
+extern unsigned int kerrek_smoked_img_len;

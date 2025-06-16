@@ -1,2 +1,2 @@
-extern unsigned char title_screen_bmp[];
-extern unsigned int title_screen_bmp_len;
+extern unsigned char title_screen_img[];
+extern unsigned int title_screen_img_len;

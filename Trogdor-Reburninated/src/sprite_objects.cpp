@@ -264,11 +264,11 @@ void drawRectWithAlpha(SDL_Rect rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a) {
 void sdl1_createTransparentScreen() {
 #if defined(SDL1)
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
-    SDL_FillRect(transparentScreen, NULL, 0x00000037);
+    transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 16, 0xF000, 0x00F0, 0x0F00, 0x000F);
+    SDL_FillRect(transparentScreen, NULL, 0x0004);
 #else
-    transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-    SDL_FillRect(transparentScreen, NULL, 0x37000000);
+    transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 16, 0x000F, 0x0F00, 0x00F0, 0xF000);
+    SDL_FillRect(transparentScreen, NULL, 0x4000);
 #endif
 #endif
 }

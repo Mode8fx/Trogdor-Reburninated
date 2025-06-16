@@ -87,9 +87,6 @@
     <ClCompile Include="src\graphics_h\end_of_level_trogdor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\graphics_h\game_over_banner.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\graphics_h\game_over_text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -306,9 +303,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics_h\end_of_level_trogdor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\graphics_h\game_over_banner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics_h\game_over_text.h">

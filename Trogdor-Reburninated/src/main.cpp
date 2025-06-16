@@ -776,11 +776,13 @@ int main(int argv, char** args) {
 				}
 				if (keyHeld(INPUT_LEFT) && (keyPressed(INPUT_X) || keyPressed(INPUT_Y))) {
 					showFPS = !showFPS;
+					loadAndPlaySound(SFX_GOLDGET);
 				}
 #if defined(THREEDS)
 				if (keyHeld(INPUT_DOWN) && keyHeld(INPUT_RIGHT) && (keyPressed(INPUT_X) || keyPressed(INPUT_Y))) {
 					useNew3DSClockSpeed = !useNew3DSClockSpeed;
 					osSetSpeedupEnable(useNew3DSClockSpeed);
+					loadAndPlaySound(SFX_GOLDGET);
 				}
 #endif
 				break;

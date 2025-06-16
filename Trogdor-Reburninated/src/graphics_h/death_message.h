@@ -1,2 +1,2 @@
-extern unsigned char death_message_bmp[];
-extern unsigned int death_message_bmp_len;
+extern unsigned char death_message_img[];
+extern unsigned int death_message_img_len;

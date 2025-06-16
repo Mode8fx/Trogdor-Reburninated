@@ -1,2 +1,2 @@
-extern unsigned char peasantometer_bmp[];
-extern unsigned int peasantometer_bmp_len;
+extern unsigned char peasantometer_img[];
+extern unsigned int peasantometer_img_len;

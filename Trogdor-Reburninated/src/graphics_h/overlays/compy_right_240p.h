@@ -1,2 +1,2 @@
-extern unsigned char compy_right_240p_bmp[];
-extern unsigned int compy_right_240p_bmp_len;
+extern unsigned char compy_right_240p_img[];
+extern unsigned int compy_right_240p_img_len;

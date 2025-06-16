@@ -1,2 +1,2 @@
-extern unsigned char level_beaten_smoke_bmp[];
-extern unsigned int level_beaten_smoke_bmp_len;
+extern unsigned char level_beaten_smoke_img[];
+extern unsigned int level_beaten_smoke_img_len;

@@ -237,7 +237,6 @@
     <ClCompile Include="src\graphics_h\death_message.cpp" />
     <ClCompile Include="src\graphics_h\end_of_level_flash.cpp" />
     <ClCompile Include="src\graphics_h\end_of_level_trogdor.cpp" />
-    <ClCompile Include="src\graphics_h\game_over_banner.cpp" />
     <ClCompile Include="src\graphics_h\game_over_text.cpp" />
     <ClCompile Include="src\graphics_h\game_over_trogdor.cpp" />
     <ClCompile Include="src\graphics_h\heart.cpp" />
@@ -313,7 +312,6 @@
     <ClInclude Include="src\graphics_h\death_message.h" />
     <ClInclude Include="src\graphics_h\end_of_level_flash.h" />
     <ClInclude Include="src\graphics_h\end_of_level_trogdor.h" />
-    <ClInclude Include="src\graphics_h\game_over_banner.h" />
     <ClInclude Include="src\graphics_h\game_over_text.h" />
     <ClInclude Include="src\graphics_h\game_over_trogdor.h" />
     <ClInclude Include="src\graphics_h\heart.h" />

@@ -1,2 +1,2 @@
-extern unsigned char basement_top_bmp[];
-extern unsigned int basement_top_bmp_len;
+extern unsigned char basement_top_img[];
+extern unsigned int basement_top_img_len;

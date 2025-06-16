@@ -1,2 +1,2 @@
-extern unsigned char trogdor_bmp[];
-extern unsigned int trogdor_bmp_len;
+extern unsigned char trogdor_img[];
+extern unsigned int trogdor_img_len;

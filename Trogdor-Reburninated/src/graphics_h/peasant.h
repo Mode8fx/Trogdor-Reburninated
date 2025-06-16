@@ -1,2 +1,2 @@
-extern unsigned char peasant_bmp[];
-extern unsigned int peasant_bmp_len;
+extern unsigned char peasant_img[];
+extern unsigned int peasant_img_len;

@@ -1,2 +1,2 @@
-extern unsigned char bg_2_bmp[];
-extern unsigned int bg_2_bmp_len;
+extern unsigned char bg_2_img[];
+extern unsigned int bg_2_img_len;

@@ -1,2 +1,2 @@
-extern unsigned char arrow_bmp[];
-extern unsigned int arrow_bmp_len;
+extern unsigned char arrow_img[];
+extern unsigned int arrow_img_len;

@@ -1,2 +1,2 @@
-extern unsigned char bm_empty_bmp[];
-extern unsigned int bm_empty_bmp_len;
+extern unsigned char bm_empty_img[];
+extern unsigned int bm_empty_img_len;

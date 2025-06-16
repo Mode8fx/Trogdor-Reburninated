@@ -1,2 +1,2 @@
-extern unsigned char knight_bmp[];
-extern unsigned int knight_bmp_len;
+extern unsigned char knight_img[];
+extern unsigned int knight_img_len;

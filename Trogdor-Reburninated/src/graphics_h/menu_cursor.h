@@ -1,2 +1,2 @@
-extern unsigned char menu_cursor_bmp[];
-extern unsigned int menu_cursor_bmp_len;
+extern unsigned char menu_cursor_img[];
+extern unsigned int menu_cursor_img_len;

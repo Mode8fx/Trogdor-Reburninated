@@ -1,2 +1,2 @@
-extern unsigned char archer_bmp[];
-extern unsigned int archer_bmp_len;
+extern unsigned char archer_img[];
+extern unsigned int archer_img_len;

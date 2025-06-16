@@ -18,7 +18,7 @@
 #include "graphics_h/death_message.h"
 #include "graphics_h/end_of_level_flash.h"
 #include "graphics_h/end_of_level_trogdor.h"
-#include "graphics_h/game_over_banner.h"
+//#include "graphics_h/game_over_banner.h"
 #include "graphics_h/game_over_text.h"
 #include "graphics_h/game_over_trogdor.h"
 #include "graphics_h/heart.h"

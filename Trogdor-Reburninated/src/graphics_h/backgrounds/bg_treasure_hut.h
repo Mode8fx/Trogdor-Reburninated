@@ -1,2 +1,2 @@
-extern unsigned char bg_treasure_hut_bmp[];
-extern unsigned int bg_treasure_hut_bmp_len;
+extern unsigned char bg_treasure_hut_img[];
+extern unsigned int bg_treasure_hut_img_len;
