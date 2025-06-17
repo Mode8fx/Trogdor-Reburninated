@@ -119,6 +119,7 @@ class Trogdor {
 		Sint8 y_offset;       // used for movement
 		Sint8 moveSpeed;      // used for movement
 		Uint8 frameStateFlag; // used for movement
+		SDL_Rect hutCollisionRect; // used for collision with huts
 		Trogdor();
 		Trogdor(bool, Sint8);
 		void updateFrameState();

@@ -454,6 +454,7 @@ Trogdor::Trogdor(bool bigHead, Sint8 speedyMode) {
 	y_offset = 0;
 	moveSpeed = 3 + speedyMode;
 	frameStateFlag = 0;
+	hutCollisionRect = { sprite.dstrect.x, sprite.dstrect.y, sprite.spriteObj->sub[1][0].w, sprite.spriteObj->sub[1][0].h}; // sprite.dstrect, NOT collision; to fix height comparison being inconsistent
 }
 
 void Trogdor::updateFrameState() {
@@ -1176,9 +1177,11 @@ void GameManager::playerMove(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
 		if (trog->sprite.dstrect.x < LEFT_BOUND_TROG || trog->sprite.dstrect.x > RIGHT_BOUND_TROG) {
 			trogdor_add_x_delta(-delta_x);
 		} else if (!noclip) {
+			trog->hutCollisionRect.x = trog->sprite.dstrect.x;
+			trog->hutCollisionRect.y = trog->sprite.dstrect.y;
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
 				if (hutArray[i].direction > 0 && !hutArray[i].burned
-					&& SDL_HasIntersection(&trog->sprite.dstrect, &hutArray[i].sprite.collision)) { // &trog->sprite->dstrect, NOT &trog->collision
+					&& (SDL_HasIntersection(&trog->hutCollisionRect, &hutArray[i].sprite.collision))) {
 					trogdor_add_x_delta(-delta_x);
 					break;
 				}
@@ -1193,9 +1196,11 @@ void GameManager::playerMove(Trogdor *trog, Sint8 delta_x, Sint8 delta_y) {
 		if (trog->sprite.dstrect.y < UPPER_BOUND_TROG || trog->sprite.dstrect.y > LOWER_BOUND_TROG) {
 			trogdor_add_y_delta(-delta_y);
 		} else if (!noclip) {
+			trog->hutCollisionRect.x = trog->sprite.dstrect.x;
+			trog->hutCollisionRect.y = trog->sprite.dstrect.y;
 			for (i = 0; i < MAX_NUM_HUTS; i++) {
 				if (hutArray[i].direction > 0 && !hutArray[i].burned
-					&& SDL_HasIntersection(&trog->sprite.dstrect, &hutArray[i].sprite.collision)) { // &trog->sprite->dstrect, NOT &trog->collision
+					&& (SDL_HasIntersection(&trog->hutCollisionRect, &hutArray[i].sprite.collision))) {
 					trogdor_add_y_delta(-delta_y);
 					break;
 				}
