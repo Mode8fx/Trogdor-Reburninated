@@ -57,6 +57,7 @@
 #include <ogc/pad.h>
 #include <dirent.h>
 #include <fat.h>
+#include <sys/stat.h>
 #elif defined(PSP)
 #include <pspkernel.h>
 #include <pspdebug.h>

@@ -16,6 +16,8 @@
 #define MAX_PATH 260
 #endif
 
+string rootDir;
+
 string getExeDirectory() {
 #if defined(_WIN32) || defined(LINUX)
 	char buffer[MAX_PATH];
@@ -41,6 +43,44 @@ string getExeDirectory() {
 #endif
 }
 
+static bool directoryExists(const std::string &path) {
+	struct stat info;
+	if (stat(path.c_str(), &info) != 0) {
+		// Path does not exist or cannot be accessed
+		return false;
+	}
+	return (info.st_mode & S_IFDIR) != 0; // Check if it's a directory
+}
+
+void setRootDir() {
+	string devices[] = {"sda", "sdb", "gcl", "sdc"};
+#if defined(VITA)
+	rootDir = "ux0:data/Trogdor-RB/";
+#elif defined(WII)
+	rootDir = "sd:/apps/Trogdor-RB/";
+#elif defined(GAMECUBE)
+	// Check every possible drive, but default to sdc (sd2sp) if nothing is found.
+	// If the resources dir doesn't exist anywhere, there won't be audio anyway.
+	for (const auto& device : devices) {
+		rootDir = device + ":/Trogdor-RB/";
+		if directoryExists(rootDir) {
+			break;
+		}
+	}
+#elif defined(THREEDS)
+	rootDir = "sdmc:/3ds/Trogdor-RB/";
+#elif defined(_WIN32)
+	rootDir = getExeDirectory() + "/";
+#elif defined(LINUX)
+	mkdir((string(getenv("HOME")) + "/.local").c_str(), 0755);
+	mkdir((string(getenv("HOME")) + "/.local/share").c_str(), 0755);
+	mkdir((string(getenv("HOME")) + "/.local/share/.trogdorrb").c_str(), 0755);
+	rootDir = string(getenv("HOME")) + "/.local/share/.trogdorrb/";
+#else
+	rootDir = "";
+#endif
+}
+
 void saveGameState_settings() {
 	gameState.settings_general = getSettingsGeneral();
 	gameState.settings_difficulty = getSettingsDifficulty();
@@ -54,15 +94,6 @@ void saveGameState_settings() {
 }
 
 void loadGameState() {
-#if defined(LINUX)
-	mkdir((string(getenv("HOME")) + "/.local").c_str(), 0755);
-	mkdir((string(getenv("HOME")) + "/.local/share").c_str(), 0755);
-	mkdir((string(getenv("HOME")) + "/.local/share/.trogdorrb").c_str(), 0755);
-#elif defined(VITA)
-	mkdir("ux0:data/Trogdor-RB", 0777);
-#elif defined(THREEDS)
-	mkdir("sdmc:/3ds/Trogdor-RB", 0777);
-#endif
 	saveBin = SDL_RWFromFile(SAVE_FILE, "rb");
 
 	if (saveBin) {

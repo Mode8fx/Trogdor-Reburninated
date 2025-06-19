@@ -108,21 +108,7 @@ extern GameState gameState;
 
 /* System-Specific Variables */
 extern string getExeDirectory();
-#if defined(VITA)
-const string rootDir = "ux0:data/Trogdor-RB/";
-#elif defined(WII)
-const string rootDir = "sd:/apps/Trogdor-RB/";
-#elif defined(GAMECUBE)
-const string rootDir = "sd:/Trogdor-RB/";
-#elif defined(THREEDS)
-const string rootDir = "sdmc:/3ds/Trogdor-RB/";
-#elif defined(_WIN32)
-const string rootDir = getExeDirectory() + "/";
-#elif defined(LINUX)
-const string rootDir = string(getenv("HOME")) + "/.local/share/.trogdorrb/";
-#else
-const string rootDir = "";
-#endif
+extern string rootDir;
 
 #define SAVE_FILE (rootDir+"save.bin").c_str()
 
@@ -166,6 +152,7 @@ constexpr auto DEFAULT_WIDTH = 640;
 constexpr auto DEFAULT_HEIGHT = 480;
 #endif
 
+extern void setRootDir();
 extern void saveGameState_settings();
 extern void loadGameState();
 extern void loadGameState_partial();

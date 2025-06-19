@@ -42,6 +42,7 @@ int main(int argv, char** args) {
 #if defined(PC)
 	try {
 #endif
+	setRootDir();
 	loadGameState_partial();
 	scalingType = gameState.settings_cosmetic.scaling;
 	InitializeDisplay();
