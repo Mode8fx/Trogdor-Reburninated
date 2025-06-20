@@ -2,14 +2,14 @@
 <app version="1">
   <name>Trogdor: Reburninated</name>
   <coder>Mode8fx</coder>
-  <version>2.21</version>
-  <release_date>202408122200</release_date>
+  <version>2.3</version>
+  <release_date>202506222200</release_date>
   <short_description>Burninate the countryside!</short_description>
   <long_description>A recreation of the Homestar Runner Flash game "Trogdor" with new features, made with SDL2. In-game button prompts are for Wii Remote, but a Gamecube controller also works.
   
   https://github.com/Mode8fx/Trogdor-Reburninated
   
-  Trogdor is originally created and owned by the Brothers Chaps, and programmed by Jonathan Howe; credits are listed in-game.
+  Trogdor is originally created and owned by the Brothers Chaps, and programmed by Jonathan Howe. Credits are listed in-game.
   </long_description>
 </app>
 
