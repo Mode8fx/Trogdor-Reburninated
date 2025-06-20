@@ -925,12 +925,16 @@ void InitializeMenus() {
 	menu_credits.pages[1]->setTextLine(6, "");
 	menu_credits.pages[1]->setTextLine(7, "v2.3");
 
-	menu_credits.pages[2]->prepareMenuPage(5, 0, 30, 20, 1);
+	menu_credits.pages[2]->prepareMenuPage(9, 0, 30, 20, 1);
 	menu_credits.pages[2]->setTextLine(0, "- STINKOMAN MUSIC -");
 	menu_credits.pages[2]->setTextLine(1, "");
-	menu_credits.pages[2]->setTextLine(2, "Jonathan Howe");
-	menu_credits.pages[2]->setTextLine(3, "");
+	menu_credits.pages[2]->setTextLine(2, "- ORIGINAL -");
+	menu_credits.pages[2]->setTextLine(3, "Jonathan Howe");
 	menu_credits.pages[2]->setTextLine(4, "U.Z. Inu");
+	menu_credits.pages[2]->setTextLine(5, "");
+	menu_credits.pages[2]->setTextLine(6, "- REMASTERED (Level 5/6/Boss) -");
+	menu_credits.pages[2]->setTextLine(7, "CoolGuyBug");
+	menu_credits.pages[2]->setTextLine(8, "https://www.youtube.com/@CoolGuyTunes");
 	j = 3;
 
 #if defined(WII) || defined(GAMECUBE)
