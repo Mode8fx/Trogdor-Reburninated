@@ -26,20 +26,6 @@ constexpr auto MUSIC_STINKOMAN_LAST_10 = "music/stinkoman_level_10.bgm";
 constexpr auto MUSIC_STINKOMAN_BOSS = "music/stinkoman_boss_fight.bgm";
 constexpr auto MUSIC_STINKOMAN_HOMESTRETCH = "music/stinkoman_z_sabre.bgm";
 constexpr auto MUSIC_STINKOMAN_FINAL_BOSS = "music/stinkoman_mecha_trogador.bgm";
-#elif defined(THREEDS) // an old 3DS can already barely keep up without needing to decompress OGG
-constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.wav";
-constexpr auto MUSIC_MENU = "music/menu.wav";
-constexpr auto MUSIC_ENDING_1 = "music/ending_1.wav";
-constexpr auto MUSIC_ENDING_2 = "music/ending_2.wav";
-constexpr auto MUSIC_STINKOMAN_DAY = "music/stinkoman_level_1.wav";
-constexpr auto MUSIC_STINKOMAN_EVENING = "music/stinkoman_level_2.wav";
-constexpr auto MUSIC_STINKOMAN_NIGHT = "music/stinkoman_level_5.wav";
-constexpr auto MUSIC_STINKOMAN_DAWN = "music/stinkoman_level_6.wav";
-constexpr auto MUSIC_STINKOMAN_MIDPOINT = "music/stinkoman_level_9.wav";
-constexpr auto MUSIC_STINKOMAN_LAST_10 = "music/stinkoman_level_10.wav";
-constexpr auto MUSIC_STINKOMAN_BOSS = "music/stinkoman_boss_fight.wav";
-constexpr auto MUSIC_STINKOMAN_HOMESTRETCH = "music/stinkoman_z_sabre.wav";
-constexpr auto MUSIC_STINKOMAN_FINAL_BOSS = "music/stinkoman_mecha_trogador.wav";
 #else
 constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.ogg";
 constexpr auto MUSIC_MENU = "music/menu.ogg";
