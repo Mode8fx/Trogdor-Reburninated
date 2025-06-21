@@ -15,6 +15,9 @@ SRCS       := $(filter-out , \
               )
 OBJS       := $(SRCS:%.cpp=$(OBJ_DIR)/%.o)
 
+RES_RC     := release-resources/resource.rc
+RES_OBJ    := $(OBJ_DIR)/resource.o
+
 # ─── Toolchain & Flags ───────────────────────────────────────────────────────
 CXX        := x86_64-w64-mingw32-g++
 PKG        := pkgconf
@@ -37,12 +40,16 @@ LDFLAGS    := -static -static-libgcc -static-libstdc++ \
 
 all: $(EXE)
 
-$(EXE): $(OBJS)
-	$(CXX) $(OBJS) $(CXXFLAGS) $(LDFLAGS) -o $@
+$(EXE): $(OBJS) $(RES_OBJ)
+	$(CXX) $(OBJS) $(RES_OBJ) $(CXXFLAGS) $(LDFLAGS) -o $@
 
 $(OBJ_DIR)/%.o: %.cpp
 	mkdir -p $(dir $@)
 	$(CXX) -c $< $(CXXFLAGS) -o $@
+
+$(RES_OBJ): $(RES_RC)
+	mkdir -p $(dir $@)
+	windres $< -O coff -o $@
 
 clean:
 	rm -rf $(OBJ_DIR) $(EXE)

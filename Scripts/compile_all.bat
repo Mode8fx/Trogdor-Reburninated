@@ -267,7 +267,6 @@ goto :eof
 :compile_android
 echo Android: Compiling with Android Studio...
 cd "%REPO%/Android/android-project"
-rem call ndk-build clean NDK_PROJECT_PATH=app NDK_MODULE_PATH=app/jni
 call ndk-build NDK_PROJECT_PATH=app NDK_MODULE_PATH=app/jni
 call gradlew assembleRelease
 echo Android: Signing compiled apk and moving it to %OUTPUT_ANDROID%...
@@ -277,5 +276,7 @@ rem call adb install -r app-release-signed.apk
 sleep 2
 echo Android: Deleting unneeded idsig file...
 del /q "%OUTPUT_ANDROID_IDSIG%"
+echo Android: Cleaning up...
+call ndk-build clean NDK_PROJECT_PATH=app NDK_MODULE_PATH=app/jni
 cd /d "%CURR_DIR%"
 echo.
