@@ -7,8 +7,7 @@ LOCAL_SRC_FILES := $(wildcard app/src/main/cpp/*.cpp) \
 	$(wildcard app/src/main/cpp/fonts_h/*.cpp) \
 	$(wildcard app/src/main/cpp/graphics_h/*.cpp) \
 	$(wildcard app/src/main/cpp/graphics_h/backgrounds/*.cpp) \
-	$(wildcard app/src/main/cpp/graphics_h/overlays/*.cpp) \
-	$(wildcard app/src/main/cpp/sfx_h/*.cpp)
+	$(wildcard app/src/main/cpp/graphics_h/overlays/*.cpp)
 
 $(info LOCAL_PATH is $(LOCAL_PATH))
 $(info LOCAL_SRC_FILES is $(LOCAL_SRC_FILES))
