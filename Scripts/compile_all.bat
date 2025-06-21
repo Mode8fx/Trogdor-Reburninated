@@ -103,7 +103,7 @@ call :compile_3ds
 call :compile_vita
 rem call :compile_rg35xx
 rem call :compile_psp
-rem call :compile_android
+call :compile_android
 
 echo Done.
 goto :eof

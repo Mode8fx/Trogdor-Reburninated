@@ -61,8 +61,6 @@ add_executable(trogdorrb
 	"src/graphics_h/end_of_level_flash.h"
 	"src/graphics_h/end_of_level_trogdor.cpp"
 	"src/graphics_h/end_of_level_trogdor.h"
-	"src/graphics_h/game_over_banner.cpp"
-	"src/graphics_h/game_over_banner.h"
 	"src/graphics_h/game_over_text.cpp"
 	"src/graphics_h/game_over_text.h"
 	"src/graphics_h/game_over_trogdor.cpp"

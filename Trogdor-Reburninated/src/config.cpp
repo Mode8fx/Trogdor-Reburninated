@@ -43,6 +43,7 @@ string getExeDirectory() {
 #endif
 }
 
+#if defined(GAMECUBE)
 static bool directoryExists(const std::string &path) {
 	struct stat info;
 	if (stat(path.c_str(), &info) != 0) {
@@ -51,6 +52,7 @@ static bool directoryExists(const std::string &path) {
 	}
 	return (info.st_mode & S_IFDIR) != 0; // Check if it's a directory
 }
+#endif
 
 void setRootDir() {
 	string devices[] = {"sda", "sdb", "gcl", "sdc"};
@@ -63,7 +65,7 @@ void setRootDir() {
 	// If the resources dir doesn't exist anywhere, there won't be audio anyway.
 	for (const auto& device : devices) {
 		rootDir = device + ":/Trogdor-RB/";
-		if directoryExists(rootDir) {
+		if (directoryExists(rootDir)) {
 			break;
 		}
 	}
