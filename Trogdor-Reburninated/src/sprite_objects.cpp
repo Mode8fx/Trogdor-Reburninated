@@ -105,7 +105,9 @@ void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
     single_srcrect.w = spriteObj->sub[i][j].x_offset_end - spriteObj->sub[i][j].x_offset_start + 1;
     single_srcrect.h = spriteObj->sub[i][j].y_offset_end - spriteObj->sub[i][j].y_offset_start + 1;
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 24, 0xFF000000, 0x00FF0000, 0x0000FF00, 0);
+    temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
+#elif defined(VITA)
+    temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 #else
     temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 24, 0x000000FF, 0x0000FF00, 0x00FF0000, 0);
 #endif
@@ -265,10 +267,10 @@ void sdl1_createTransparentScreen() {
 #if defined(SDL1)
 #if SDL_BYTEORDER == SDL_BIG_ENDIAN
     transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 16, 0xF000, 0x00F0, 0x0F00, 0x000F);
-    SDL_FillRect(transparentScreen, NULL, 0x0004);
+    SDL_FillRect(transparentScreen, NULL, 0x0008);
 #else
     transparentScreen = SDL_CreateRGBSurface(0, gameHiResWidth, gameHiResHeight, 16, 0x000F, 0x0F00, 0x00F0, 0xF000);
-    SDL_FillRect(transparentScreen, NULL, 0x4000);
+    SDL_FillRect(transparentScreen, NULL, 0x8000);
 #endif
 #endif
 }

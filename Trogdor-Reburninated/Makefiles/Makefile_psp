@@ -8,7 +8,7 @@ SRCS		=	$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_
 OBJS		=	$(patsubst %.cpp, %.o, $(patsubst %.c, %.o, $(SRCS)))
 
 INCDIR =
-CFLAGS = -G0 -O2 -DPSP
+CFLAGS = -G0 -O2 -DPSP -DPRELOAD_SOUNDS
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti -fpermissive
 ASFLAGS = $(CFLAGS)
 

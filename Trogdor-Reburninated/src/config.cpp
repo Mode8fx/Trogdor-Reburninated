@@ -43,7 +43,7 @@ string getExeDirectory() {
 #endif
 }
 
-#if defined(GAMECUBE)
+#if defined(GAMECUBE) || defined(LINUX)
 static bool directoryExists(const std::string &path) {
 	struct stat info;
 	if (stat(path.c_str(), &info) != 0) {
@@ -74,6 +74,10 @@ void setRootDir() {
 #elif defined(_WIN32)
 	rootDir = getExeDirectory() + "/";
 #elif defined(LINUX)
+	rootDir = getExeDirectory() + "/";
+	if (directoryExists(rootDir + "music")) {
+		return;
+	}
 	mkdir((string(getenv("HOME")) + "/.local").c_str(), 0755);
 	mkdir((string(getenv("HOME")) + "/.local/share").c_str(), 0755);
 	mkdir((string(getenv("HOME")) + "/.local/share/.trogdorrb").c_str(), 0755);

@@ -86,7 +86,7 @@ int main(int argv, char** args) {
 		}
 		/* Handle Window Size Changes */
 		if (windowSizeChanged) {
-#if defined(PC) && !defined(SDL1)
+#if defined(PC) && !(defined(SDL1) || defined(LINUX))
 			if (scalingType % 2 == 1 && SDL_GetWindowSurface(window)->w >= appWidth && SDL_GetWindowSurface(window)->h >= appHeight) {
 				if (SDL_GetWindowSurface(window)->w < gameWidth)
 					SDL_SetWindowSize(window, gameWidth, SDL_GetWindowSurface(window)->h);

@@ -53,6 +53,13 @@ void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
 	}
 	bgm = LOAD_MUSIC(musicRelPath);
 #if defined(PSP)
+	if (bgm == NULL) {
+		oslDeinitAudio();
+		oslInitAudio();
+		return;
+	}
+#endif
+#if defined(PSP)
 	if (loop) {
 		oslSetSoundLoop(bgm, true);
 	}
@@ -72,9 +79,7 @@ void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
 void stopMusic() {
 	if (MUSIC_IS_PLAYING()) {
 		STOP_MUSIC();
-#if !(defined(PSP) || defined(THREEDS))
 		FREE_MUSIC();
-#endif
 	}
 }
 
