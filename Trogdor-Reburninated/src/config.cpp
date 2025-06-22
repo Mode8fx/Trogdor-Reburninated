@@ -55,14 +55,14 @@ static bool directoryExists(const std::string &path) {
 #endif
 
 void setRootDir() {
-	string devices[] = {"sda", "sdb", "gcl", "sdc"};
 #if defined(VITA)
 	rootDir = "ux0:data/Trogdor-RB/";
 #elif defined(WII)
 	rootDir = "sd:/apps/Trogdor-RB/";
 #elif defined(GAMECUBE)
 	// Check every possible drive, but default to sdc (sd2sp) if nothing is found.
-	// If the resources dir doesn't exist anywhere, there won't be audio anyway.
+	// If the resources dir doesn't exist anywhere, the game won't load anyway.
+	string devices[] = {"sda", "sdb", "gcl", "sdc"};
 	for (const auto& device : devices) {
 		rootDir = device + ":/Trogdor-RB/";
 		if (directoryExists(rootDir)) {
@@ -103,8 +103,7 @@ void loadGameState() {
 		SDL_RWclose(saveBin);
 		fixSaveDataIntegrity();
 		setOptionsFromSaveData();
-	}
-	else {
+	} else {
 		// File does not exist, initialize default game state
 		initializeDefaultGameState();
 	}
@@ -117,8 +116,7 @@ void loadGameState_partial() { // used for display init (saved scaling option wo
 		SDL_RWread(saveBin, &gameState, sizeof(gameState), 1);
 		SDL_RWclose(saveBin);
 		gameState.settings_cosmetic.scaling %= 4;
-	}
-	else {
+	} else {
 		// File does not exist, use default scaling
 #if defined(VITA) || defined(WII_U) || defined(SWITCH)
 		gameState.settings_cosmetic.scaling = 1;

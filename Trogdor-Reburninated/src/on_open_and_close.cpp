@@ -54,6 +54,9 @@ void InitializeDisplay() {
 #endif
 	SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
 #endif
+#if defined(ANDROID)
+	SDL_SetWindowFullscreen(window, SDL_WINDOW_FULLSCREEN);
+#endif
 	setScaling();
 }
 
@@ -62,10 +65,9 @@ void InitializeSound() {
 	oslInitAudio();
 #elif defined(XBOX)
 #else
-	//if (Mix_OpenAudio(5513, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
 	if (Mix_OpenAudio(AUDIO_SAMPLE_RATE, AUDIO_TROG_FORMAT, 2, 2048) < 0) {
-#if !defined(SDL1) && !defined(ANDROID)
-		SDL_Log(Mix_GetError());
+#if !defined(SDL1)
+		SDL_Log("Unable to initialize SDL_Mixer: %s", Mix_GetError());
 #endif
 	}
 	setVolume_music(gameState.settings_general.bgmVolume);

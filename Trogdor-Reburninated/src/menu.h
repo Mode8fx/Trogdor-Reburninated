@@ -203,7 +203,11 @@ constexpr auto MENU_NUM_OPTIONS = 10;
 constexpr auto MENU_SOUND_INDEX = 6;
 constexpr auto MENU_CREDITS_INDEX = 7;
 constexpr auto MENU_QUIT_INDEX = 8;
+#if defined(NO_QUIT)
+constexpr auto MENU_NUM_OPTIONS = 8;
+#else
 constexpr auto MENU_NUM_OPTIONS = 9;
+#endif
 #endif
 #define MENU_DIFFICULTY     menu_main.options[MENU_DIFFICULTY_INDEX]
 #define MENU_OTHER          menu_main.options[MENU_OTHER_INDEX]

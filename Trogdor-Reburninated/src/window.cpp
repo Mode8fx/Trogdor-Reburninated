@@ -135,7 +135,6 @@ void repositionOverlay() {
 }
 
 void setScaling() {
-#if !defined(ANDROID)
 	scaleGameAndApp();
 	setWidthHeightMults();
 	InitializeSpritesPart1();
@@ -144,7 +143,6 @@ void setScaling() {
 	destroyAllTextChars();
 	InitializeFontsAndText();
 	InitializeMenus();
-#endif
 }
 
 void snapWindow_x(double range, Uint16 size) {

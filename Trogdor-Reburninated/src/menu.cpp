@@ -687,9 +687,11 @@ void InitializeMenus() {
 	MENU_CREDITS->prepareMenuOption("Credits", option_empty,
 		option_main_credits_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
+#if !defined(NO_QUIT)
 	MENU_QUIT->prepareMenuOption("Quit Game", option_empty,
 		option_main_quit_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
+#endif
 
 	/* Difficulty Settings Menu */
 	menu_difficulty.prepareMenu(DIFFICULTY_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);

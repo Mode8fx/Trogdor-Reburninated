@@ -26,7 +26,7 @@ int main(int argv, char** args) {
 #else
 	if (SDL_Init(SDL_INIT_TIMER|SDL_INIT_AUDIO|SDL_INIT_VIDEO|SDL_INIT_JOYSTICK|SDL_INIT_GAMECONTROLLER) != 0) {
 #endif
-#if !defined(SDL1) && !defined(ANDROID)
+#if !defined(SDL1)
 		SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
 #endif
 		return 1;
@@ -47,13 +47,6 @@ int main(int argv, char** args) {
 	scalingType = gameState.settings_cosmetic.scaling;
 	InitializeDisplay();
 	loadGameState();
-
-#if defined(ANDROID)
-	/* Initialize SDL_ttf, fonts, text objects, and sprite objects (already done for other systems in InitializeDisplay() via setScaling() */
-	InitializeFontsAndText();
-	InitializeSpritesPart1();
-	InitializeSpritesPart2();
-#endif
 
 	InitializeCutsceneObjects();
 
