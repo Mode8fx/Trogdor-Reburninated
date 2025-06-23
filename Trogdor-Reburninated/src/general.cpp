@@ -69,6 +69,50 @@ void applyColorKey(SDL_Surface *surface, bool isTransparent) {
 	}
 }
 
+#if defined(GAMECUBE)
+#define DEV_GCSDA 	  1
+#define DEV_GCSDB 	  2
+#define DEV_GCSDC 	  3
+
+static bool gc_initFAT(int device)
+{
+	switch (device) {
+	case DEV_GCSDA:
+		__io_gcsda.startup();
+		if (!__io_gcsda.isInserted()) {
+			return false;
+		}
+		if (!fatMountSimple("sda", &__io_gcsda)) {
+			return false;
+		}
+		break;
+	case DEV_GCSDB:
+		__io_gcsdb.startup();
+		if (!__io_gcsdb.isInserted()) {
+			return false;
+		}
+		if (!fatMountSimple("sdb", &__io_gcsdb)) {
+			return false;
+		}
+		break;
+	case DEV_GCSDC:
+		__io_gcsd2.startup();
+		if (!__io_gcsd2.isInserted()) {
+			return false;
+		}
+		if (!fatMountSimple("sdc", &__io_gcsd2)) {
+			return false;
+		}
+		break;
+	default:
+		return false;
+		break;
+	}
+
+	return true;
+}
+#endif
+
 void systemSpecificOpen() {
 #if defined(WII_U)
 	/* Set SD Card Mount Path */
@@ -85,10 +129,17 @@ void systemSpecificOpen() {
 #elif defined(SWITCH)
 	/* Set SD Card mount path */
 	chdir("/switch/Trogdor-RB");
-#elif defined(WII) || defined(GAMECUBE)
+#elif defined(WII)
 	/* Initialize SD Card */
 	fatInitDefault();
 	/* Initialize Controller */
+	PAD_Init();
+#elif defined(GAMECUBE)
+	for (int i = 1; i < 4; i++) {
+		if (gc_initFAT(i)) {
+			break;
+		}
+	}
 	PAD_Init();
 #elif defined(XBOX)
 	XVideoSetMode(640, 480, 32, REFRESH_DEFAULT);

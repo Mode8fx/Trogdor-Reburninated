@@ -60,9 +60,7 @@ void setRootDir() {
 #elif defined(WII)
 	rootDir = "sd:/apps/Trogdor-RB/";
 #elif defined(GAMECUBE)
-	// Check every possible drive, but default to sdc (sd2sp) if nothing is found.
-	// If the resources dir doesn't exist anywhere, the game won't load anyway.
-	string devices[] = {"sda", "sdb", "gcl", "sdc"};
+	string devices[] = {"sda", "sdb", "sdc"};
 	for (const auto& device : devices) {
 		rootDir = device + ":/Trogdor-RB/";
 		if (directoryExists(rootDir)) {
