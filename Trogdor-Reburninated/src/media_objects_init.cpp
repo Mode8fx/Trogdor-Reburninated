@@ -536,7 +536,7 @@ void InitializeSFX() {
 }
 
 void InitializeSpritesPart1() {
-	PREPARE_SPRITE_MENU(sprite_videlectrix_logo, videlectrix_logo_big_img, videlectrix_logo_big_img_len, 0, 0, 1, 1, 0.808f);
+	PREPARE_SPRITE_VIDELECTRIX(sprite_videlectrix_logo, videlectrix_logo_big_img, videlectrix_logo_big_img_len, 0, 0, 1, 1, 0.8f);
 	sprite_videlectrix_logo_ins = SpriteInstance(&sprite_videlectrix_logo, 0, 0);
 	sprite_videlectrix_logo_ins.setPos((windowWidth - (sprite_videlectrix_logo_ins.dstrect.w * screenScale_menu)) / 2 - menuToWindowDstRect.x, (windowHeight - (sprite_videlectrix_logo_ins.dstrect.h * screenScale_menu)) / 2 - menuToWindowDstRect.y);
 	PREPARE_SPRITE_OPAQUE(sprite_title_screen, title_screen_img, title_screen_img_len, 0, 0, 1, 1, 1);

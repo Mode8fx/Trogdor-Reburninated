@@ -110,7 +110,7 @@ extern GameState gameState;
 extern string getExeDirectory();
 extern string rootDir;
 
-#define SAVE_FILE (rootDir+"save.bin").c_str()
+#define SAVE_FILE (rootDir+"trogdorrb-save.bin").c_str()
 
 #define CREATE_DEBUG_FILE(str) \
 	saveBin = SDL_RWFromFile((rootDir + str).c_str(), "w+b"); \

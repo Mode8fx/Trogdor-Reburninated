@@ -217,6 +217,108 @@ void prepareSprite(SpriteObject *spriteObj, unsigned char sprite_data[], unsigne
   setSpriteScale(spriteObj);
 }
 
+void prepareSprite_Videlectrix(SpriteObject *spriteObj, unsigned char sprite_data[], unsigned int sprite_len, Sint8 numFrames, Sint8 numForms, double scale, bool isMenuSprite, bool isTransparent) {
+  spriteObj->spriteScale = scale;
+  // Check if the surface/texture already exists
+#if !defined(SDL1)
+  if (spriteObj->sub[0] != NULL) {
+    return;
+  }
+#endif
+  if (isMenuSprite) {
+    currScreenScale = screenScale_menu;
+  } else {
+    currScreenScale = screenScale;
+  }
+  // Allocate the SpriteSubObject array; each element of this 2D array represents a single sprite from the sprite sheet
+  for (i = 0; i < numFrames; i++) {
+    if (spriteObj->sub[i] != NULL) {
+#if defined(SDL1)
+      for (j = 0; j < numForms; j++) {
+        SDL_FreeSurface(spriteObj->sub[i][j].surface);
+      }
+#endif
+      free(spriteObj->sub[i]);
+    }
+    spriteObj->sub[i] = (SpriteSubObject*)malloc(numForms * sizeof(SpriteSubObject));
+  }
+  // Load the sprite sheet as a surface
+  rw = SDL_RWFromConstMem(sprite_data, sprite_len);
+  temp_sprite_sheet = IMG_Load_RW(rw, 1);
+  if (isTransparent) {
+    SDL_SetColorKey(temp_sprite_sheet, SDL_TRUE, 0xFF00FF);
+  }
+  // Store the size values of the sprite sheet
+  frame_w = (Sint16)(temp_sprite_sheet->w / numFrames);
+  frame_h = (Sint16)(temp_sprite_sheet->h / numForms);
+  spriteObj->numFrames = numFrames;
+  spriteObj->numForms = numForms;
+  // Iterate through each section (sprite) of the sprite sheet
+  // Convert the pixels to 32 bit
+  pixels = (Uint32*)temp_sprite_sheet->pixels;
+  bpp = temp_sprite_sheet->format->BytesPerPixel;
+  for (i = 0; i < numFrames; i++) {
+    for (j = 0; j < numForms; j++) {
+      SpriteSubObject &subSprite = spriteObj->sub[i][j];
+      // Get the sprite's left/right boundary (the x position where the sprite actually begins/ends)
+      subSprite.x_offset_start = getXOffsetStart(spriteObj, i, j);
+      subSprite.x_offset_end = getXOffsetEnd(spriteObj, i, j);
+      if (subSprite.x_offset_end < subSprite.x_offset_start) { // blank sprite
+        subSprite.x_offset_end = subSprite.x_offset_start;
+      }
+      subSprite.center_x = (subSprite.x_offset_end - subSprite.x_offset_start) / 2;
+      // Get the sprite's upper/lower boundary (the y position where the sprite actually begins/ends)
+      subSprite.y_offset_start = getYOffsetStart(spriteObj, i, j);
+      subSprite.y_offset_end = getYOffsetEnd(spriteObj, i, j);
+      if (subSprite.y_offset_end < subSprite.y_offset_start) { // blank sprite
+        subSprite.y_offset_end = subSprite.y_offset_start;
+      }
+      subSprite.center_y = (subSprite.y_offset_end - subSprite.y_offset_start) / 2;
+      // Create a new surface from the boundaries of the sprite (temp_sprite_single)
+      prepareSurfaceFromSpriteSheet(spriteObj);
+      // Get info from temp_sprite_single
+      subSprite.w = temp_sprite_single->w;
+      subSprite.h = temp_sprite_single->h;
+      subSprite.scaled_w = (int)(subSprite.w * scale * currScreenScale);
+      subSprite.scaled_h = (int)(subSprite.h * currScreenScale);
+#if !defined(SDL1)
+      // [SDL2] Create a texture from temp_sprite_single
+      applyColorKey(temp_sprite_single, isTransparent);
+      subSprite.texture = SDL_CreateTextureFromSurface(renderer, temp_sprite_single);
+//#elif defined(FUNKEY)
+//      applyColorKey(temp_sprite_single, isTransparent);
+//      subSprite.surface = SDL_DisplayFormat(temp_sprite_single);
+#else
+      if (currScreenScale == 1 && scale == 1) {
+        // [SDL1 Normal] Create a new surface from temp_sprite_single
+        applyColorKey(temp_sprite_single, isTransparent);
+        subSprite.surface = SDL_DisplayFormat(temp_sprite_single);
+      } else {
+        // [SDL1 Zoom] Create a zoomed surface from temp_sprite_single and zoom it
+        temp_sprite_single_zoom = zoomSurface(temp_sprite_single, currScreenScale * scale, currScreenScale, SMOOTHING_OFF);
+        applyColorKey(temp_sprite_single_zoom, isTransparent);
+        subSprite.surface = SDL_DisplayFormat(temp_sprite_single_zoom);
+        SDL_FreeSurface(temp_sprite_single_zoom);
+        temp_sprite_single_zoom = NULL;
+      }
+#endif
+      // Free temp_sprite_single since we no longer need it
+      SDL_FreeSurface(temp_sprite_single);
+      temp_sprite_single = NULL;
+      // Adjust offsets according to scale
+      subSprite.x_offset_start = static_cast<Uint8>(subSprite.x_offset_start * scale);
+      subSprite.x_offset_end = static_cast<Uint8>(subSprite.x_offset_end * scale);
+      subSprite.y_offset_start = static_cast<Uint8>(subSprite.y_offset_start * scale);
+      subSprite.y_offset_end = static_cast<Uint8>(subSprite.y_offset_end * scale);
+    }
+  }
+  // Free the sprite sheet since we no longer need it
+  SDL_FreeSurface(temp_sprite_sheet);
+  temp_sprite_sheet = NULL;
+
+  setSpriteScale(spriteObj);
+}
+
 void setSpriteScale(SpriteObject *spriteObj) {
     spriteObj->dstrect = { 0, 0, 0, 0 };
     spriteObj->dstrect.w = (int)(frame_w * spriteObj->spriteScale);
