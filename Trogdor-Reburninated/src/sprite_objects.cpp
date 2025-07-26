@@ -560,7 +560,7 @@ void SpriteInstance::renderSprite_menu() {
 
 void SpriteInstance::renderSprite_overlay() {
     outputRect = dstrect;
-    outputRect.x -= 40;
+    outputRect.x;
 #if !defined(SDL1)
     SDL_RenderCopy(renderer, currSprite, NULL, &outputRect);
 #else

@@ -15,7 +15,7 @@ LDFLAGS ?= -lSDL_image -lSDL_ttf -lSDL_mixer -lmikmod -lSDL_gfx
 CXX = /usr/local/FunKey-sdk-2.3.0/usr/bin/arm-linux-g++
 PREFIX = /usr/local/FunKey-sdk-2.3.0/arm-funkey-linux-musleabihf/sysroot/usr
 SDLCONFIG = $(PREFIX)/bin/sdl-config
-CXXFLAGS += -march=armv7-a+neon-vfpv4 -mtune=cortex-a7 -mfpu=neon-vfpv4 -DLINUX -DFUNKEY -DCONSOLE -DSDL1 -DNINTENDO_LAYOUT
+CXXFLAGS += -march=armv7-a+neon-vfpv4 -mtune=cortex-a7 -mfpu=neon-vfpv4 -DLINUX -DFUNKEY -DCONSOLE -DSDL1 -DPRELOAD_SOUNDS -DNINTENDO_LAYOUT
 
 CXXFLAGS += `$(SDLCONFIG) --cflags`
 LDFLAGS += `$(SDLCONFIG) --libs`

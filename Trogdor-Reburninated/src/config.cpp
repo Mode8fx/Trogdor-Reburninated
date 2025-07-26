@@ -29,8 +29,7 @@ string getExeDirectory() {
 	if (count == -1) {
 		// Handle error if needed
 		buffer[0] = '\0';
-	}
-	else {
+	} else {
 		buffer[count] = '\0';
 	}
 #endif
@@ -71,15 +70,11 @@ void setRootDir() {
 	rootDir = "sdmc:/3ds/Trogdor-RB/";
 #elif defined(_WIN32)
 	rootDir = getExeDirectory() + "/";
+#elif defined(FUNKEY)
+	mkdir("/mnt/FunKey/.trogdorrb", 0755);
+	rootDir = getExeDirectory() + "/";
 #elif defined(LINUX)
 	rootDir = getExeDirectory() + "/";
-	if (directoryExists(rootDir + "music")) {
-		return;
-	}
-	mkdir((string(getenv("HOME")) + "/.local").c_str(), 0755);
-	mkdir((string(getenv("HOME")) + "/.local/share").c_str(), 0755);
-	mkdir((string(getenv("HOME")) + "/.local/share/.trogdorrb").c_str(), 0755);
-	rootDir = string(getenv("HOME")) + "/.local/share/.trogdorrb/";
 #else
 	rootDir = "";
 #endif
