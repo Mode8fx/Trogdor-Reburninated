@@ -56,7 +56,7 @@ void InitializeFontsAndText() {
 	setFont(&font_serif_red_6, serif_v01_ttf, serif_v01_ttf_len, 8, 6, TTF_STYLE_NORMAL, color_red, false);
 	initializeFont_numbers(&font_serif_red_6);
 	SET_TEXT("??????", text_4_score_val, font_serif_red_6,
-		5 * gameHiResMult, 11 * gameHiResMult);
+		5 * gameHiResMult + 5, 11 * gameHiResMult);
 	SET_TEXT("??", text_4_mans_val, font_serif_red_6,
 		230 * gameHiResMult, 1 * gameHiResMult);
 	SET_TEXT("??", text_4_level_val, font_serif_red_6,
@@ -109,7 +109,7 @@ void InitializeFontsAndText() {
 	//setFont(font_serif_2_bold_red_23, "fonts/54_serif_v01.ttf", 23, 23, TTF_STYLE_BOLD, color_red);
 	setFont(&font_serif_2_red_6, serif_v01_ttf, serif_v01_ttf_len, 8, 6, TTF_STYLE_NORMAL, color_red, false);
 	SET_TEXT("SCORE:", text_4_score, font_serif_2_red_6,
-		5 * gameHiResMult, 1 * gameHiResMult);
+		5 * gameHiResMult + 5, 1 * gameHiResMult);
 	SET_TEXT("MANS:", text_4_mans, font_serif_2_red_6,
 		200 * gameHiResMult, 1 * gameHiResMult);
 	SET_TEXT("LEVEL:", text_4_level, font_serif_2_red_6,
@@ -254,11 +254,11 @@ void InitializeText_HomeScreen() {
 	SET_TEXT("for fullscreen", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 143 * gameHiResMult);
 #else
-	SET_TEXT("-Press X to change overlay", text_3_controls_5, font_serif_white_6_mult,
+	SET_TEXT(" ", text_3_controls_5, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_5), 101 * gameHiResMult);
-	SET_TEXT(" ", text_3_controls_6, font_serif_white_6_mult,
+	SET_TEXT("-Press X to change overlay", text_3_controls_6, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_6), 115 * gameHiResMult);
-	SET_TEXT("-Press Y to change scaling", text_3_controls_3, font_serif_white_6_mult,
+	SET_TEXT(" ", text_3_controls_3, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_3), 129 * gameHiResMult);
 	SET_TEXT(" ", text_3_controls_4, font_serif_white_6_mult,
 		OBJ_TO_MID_SCREEN_X(gameHiResWidth, text_3_controls_4), 143 * gameHiResMult);
@@ -536,13 +536,13 @@ void InitializeSFX() {
 }
 
 void InitializeSpritesPart1() {
-	PREPARE_SPRITE_MENU(sprite_videlectrix_logo, videlectrix_logo_big_img, videlectrix_logo_big_img_len, 0, 0, 1, 1, 1);
+	PREPARE_SPRITE_MENU(sprite_videlectrix_logo, videlectrix_logo_big_img, videlectrix_logo_big_img_len, 0, 0, 1, 1, 0.808f);
 	sprite_videlectrix_logo_ins = SpriteInstance(&sprite_videlectrix_logo, 0, 0);
 	sprite_videlectrix_logo_ins.setPos((windowWidth - (sprite_videlectrix_logo_ins.dstrect.w * screenScale_menu)) / 2 - menuToWindowDstRect.x, (windowHeight - (sprite_videlectrix_logo_ins.dstrect.h * screenScale_menu)) / 2 - menuToWindowDstRect.y);
 	PREPARE_SPRITE_OPAQUE(sprite_title_screen, title_screen_img, title_screen_img_len, 0, 0, 1, 1, 1);
 	sprite_title_screen_ins = SpriteInstance(&sprite_title_screen, 0, 0);
 	PREPARE_SPRITE(sprite_trogdor_logo, trogdor_logo_img, trogdor_logo_img_len,
-		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_trogdor_logo), 15, 1, 1, 1);
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_trogdor_logo), 15, 1, 1, 0.96f);
 	sprite_trogdor_logo_ins = SpriteInstance(&sprite_trogdor_logo, 0, 0);
 	PREPARE_SPRITE_BG(sprite_level_background_1, bg_1_img, bg_1_img_len, 0, 25);
 	PREPARE_SPRITE_BG(sprite_level_background_2, bg_2_img, bg_2_img_len, 0, 25);
@@ -565,31 +565,31 @@ void InitializeSpritesPart1() {
 	PREPARE_SPRITE(sprite_level_beaten_trogdor, level_beaten_trogdor_scaled_img, level_beaten_trogdor_scaled_img_len, -5, 41, 1, 1, 1);
 	PREPARE_SPRITE(sprite_level_beaten_smoke, level_beaten_smoke_img, level_beaten_smoke_img_len, 100, 100, 8, 4, 0.6667);
 	PREPARE_SPRITE(sprite_game_over_trogdor, game_over_trogdor_img, game_over_trogdor_img_len, -13, 75, 1, 1, 1);
-#if defined(THREEDS) || defined(PSP)
+#if defined(THREEDS) || defined(PSP) || defined(FUNKEY)
 	PREPARE_SPRITE_OPAQUE(sprite_overlay_basement_top, basement_top_240p_img, basement_top_240p_img_len, 0, 0, 1, 1, 1);
 	sprite_overlay_basement_top_ins = SpriteInstance(&sprite_overlay_basement_top, 0, 0);
 	PREPARE_SPRITE_OPAQUE(sprite_overlay_basement_bottom, basement_bottom_240p_img, basement_bottom_240p_img_len, 0, 210, 1, 1, 1);
 	sprite_overlay_basement_bottom_ins = SpriteInstance(&sprite_overlay_basement_bottom, 0, 0);
-	PREPARE_SPRITE_OPAQUE(sprite_overlay_basement_left, basement_left_240p_img, basement_left_240p_img_len, 0, 30, 1, 1, 1);
-	sprite_overlay_basement_left_ins = SpriteInstance(&sprite_overlay_basement_left, 0, 0);
-	PREPARE_SPRITE_OPAQUE(sprite_overlay_basement_right, basement_right_240p_img, basement_right_240p_img_len, 285, 30, 1, 1, 1);
-	sprite_overlay_basement_right_ins = SpriteInstance(&sprite_overlay_basement_right, 0, 0);
+	//PREPARE_SPRITE_OPAQUE(sprite_overlay_basement_left, basement_left_240p_img, basement_left_240p_img_len, 0, 30, 1, 1, 1);
+	//sprite_overlay_basement_left_ins = SpriteInstance(&sprite_overlay_basement_left, 0, 0);
+	//PREPARE_SPRITE_OPAQUE(sprite_overlay_basement_right, basement_right_240p_img, basement_right_240p_img_len, 285, 30, 1, 1, 1);
+	//sprite_overlay_basement_right_ins = SpriteInstance(&sprite_overlay_basement_right, 0, 0);
 	PREPARE_SPRITE_OPAQUE(sprite_overlay_compy_top, compy_top_240p_img, compy_top_240p_img_len, 0, 0, 1, 1, 1);
 	sprite_overlay_compy_top_ins = SpriteInstance(&sprite_overlay_compy_top, 0, 0);
 	PREPARE_SPRITE_OPAQUE(sprite_overlay_compy_bottom, compy_bottom_240p_img, compy_bottom_240p_img_len, 0, 210, 1, 1, 1);
 	sprite_overlay_compy_bottom_ins = SpriteInstance(&sprite_overlay_compy_bottom, 0, 0);
-	PREPARE_SPRITE_OPAQUE(sprite_overlay_compy_left, compy_left_240p_img, compy_left_240p_img_len, 0, 30, 1, 1, 1);
-	sprite_overlay_compy_left_ins = SpriteInstance(&sprite_overlay_compy_left, 0, 0);
-	PREPARE_SPRITE_OPAQUE(sprite_overlay_compy_right, compy_right_240p_img, compy_right_240p_img_len, 285, 30, 1, 1, 1);
-	sprite_overlay_compy_right_ins = SpriteInstance(&sprite_overlay_compy_right, 0, 0);
+	//PREPARE_SPRITE_OPAQUE(sprite_overlay_compy_left, compy_left_240p_img, compy_left_240p_img_len, 0, 30, 1, 1, 1);
+	//sprite_overlay_compy_left_ins = SpriteInstance(&sprite_overlay_compy_left, 0, 0);
+	//PREPARE_SPRITE_OPAQUE(sprite_overlay_compy_right, compy_right_240p_img, compy_right_240p_img_len, 285, 30, 1, 1, 1);
+	//sprite_overlay_compy_right_ins = SpriteInstance(&sprite_overlay_compy_right, 0, 0);
 	PREPARE_SPRITE_OPAQUE(sprite_overlay_strong_badia_top, strong_badia_top_240p_img, strong_badia_top_240p_img_len, 0, 0, 1, 1, 1);
 	sprite_overlay_strong_badia_top_ins = SpriteInstance(&sprite_overlay_strong_badia_top, 0, 0);
 	PREPARE_SPRITE_OPAQUE(sprite_overlay_strong_badia_bottom, strong_badia_bottom_240p_img, strong_badia_bottom_240p_img_len, 0, 210, 1, 1, 1);
 	sprite_overlay_strong_badia_bottom_ins = SpriteInstance(&sprite_overlay_strong_badia_bottom, 0, 0);
-	PREPARE_SPRITE_OPAQUE(sprite_overlay_strong_badia_left, strong_badia_left_240p_img, strong_badia_left_240p_img_len, 0, 30, 1, 1, 1);
-	sprite_overlay_strong_badia_left_ins = SpriteInstance(&sprite_overlay_strong_badia_left, 0, 0);
-	PREPARE_SPRITE_OPAQUE(sprite_overlay_strong_badia_right, strong_badia_right_240p_img, strong_badia_right_240p_img_len, 285, 30, 1, 1, 1);
-	sprite_overlay_strong_badia_right_ins = SpriteInstance(&sprite_overlay_strong_badia_right, 0, 0);
+	//PREPARE_SPRITE_OPAQUE(sprite_overlay_strong_badia_left, strong_badia_left_240p_img, strong_badia_left_240p_img_len, 0, 30, 1, 1, 1);
+	//sprite_overlay_strong_badia_left_ins = SpriteInstance(&sprite_overlay_strong_badia_left, 0, 0);
+	//PREPARE_SPRITE_OPAQUE(sprite_overlay_strong_badia_right, strong_badia_right_240p_img, strong_badia_right_240p_img_len, 285, 30, 1, 1, 1);
+	//sprite_overlay_strong_badia_right_ins = SpriteInstance(&sprite_overlay_strong_badia_right, 0, 0);
 #else
 	PREPARE_SPRITE_OPAQUE(sprite_overlay_basement_top, basement_top_img, basement_top_img_len, 0, 0, 1, 1, 0.5);
 	sprite_overlay_basement_top_ins = SpriteInstance(&sprite_overlay_basement_top, 0, 0);
@@ -652,7 +652,7 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_strong_bad_ending, strong_bad_ending_img, strong_bad_ending_img_len, 0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_cursor, menu_cursor_img, menu_cursor_img_len, 0, 0, 1, 1, 1);
 	PREPARE_SPRITE_MENU(sprite_menu_cursor, menu_cursor_img, menu_cursor_img_len, 0, 0, 1, 1, 1);
-#if defined(THREEDS) || defined(PSP)
+#if defined(THREEDS) || defined(PSP) || defined(FUNKEY)
 	PREPARE_SPRITE_MENU(sprite_menu_background, options_menu_240p_img, options_menu_240p_img_len, 0, 0, 1, 1, 1);
 #else
 	PREPARE_SPRITE_MENU(sprite_menu_background, options_menu_img, options_menu_img_len, 0, 0, 1, 1, 0.5);
@@ -735,16 +735,16 @@ void destroyAllSprites() {
 	destroySprite(&sprite_game_over_jonathan_howe);
 	destroySprite(&sprite_overlay_basement_top);
 	destroySprite(&sprite_overlay_basement_bottom);
-	destroySprite(&sprite_overlay_basement_left);
-	destroySprite(&sprite_overlay_basement_right);
+	//destroySprite(&sprite_overlay_basement_left);
+	//destroySprite(&sprite_overlay_basement_right);
 	destroySprite(&sprite_overlay_compy_top);
 	destroySprite(&sprite_overlay_compy_bottom);
-	destroySprite(&sprite_overlay_compy_left);
-	destroySprite(&sprite_overlay_compy_right);
+	//destroySprite(&sprite_overlay_compy_left);
+	//destroySprite(&sprite_overlay_compy_right);
 	destroySprite(&sprite_overlay_strong_badia_top);
 	destroySprite(&sprite_overlay_strong_badia_bottom);
-	destroySprite(&sprite_overlay_strong_badia_left);
-	destroySprite(&sprite_overlay_strong_badia_right);
+	//destroySprite(&sprite_overlay_strong_badia_left);
+	//destroySprite(&sprite_overlay_strong_badia_right);
 }
 
 void destroyTextChars(FontObject *fontObj) {

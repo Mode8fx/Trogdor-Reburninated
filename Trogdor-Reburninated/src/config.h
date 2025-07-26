@@ -116,41 +116,10 @@ extern string rootDir;
 	saveBin = SDL_RWFromFile((rootDir + str).c_str(), "w+b"); \
 	SDL_RWclose(saveBin);
 
-#if !defined(SDL1)
-extern SDL_DisplayMode DM;
-#endif
 extern Uint16 displayRefreshRate;
 
-#if defined(VITA)
-constexpr auto DEFAULT_WIDTH = 960;
-constexpr auto DEFAULT_HEIGHT = 544;
-#elif defined(SWITCH) || defined(WII_U)
-constexpr auto DEFAULT_WIDTH = 1920;
-constexpr auto DEFAULT_HEIGHT = 1080;
-#elif defined(PSP)
-constexpr auto DEFAULT_WIDTH = 480;
-constexpr auto DEFAULT_HEIGHT = 272;
-#elif defined(WII)
-#if defined(SDL1)
-extern Uint16 DEFAULT_WIDTH;
-extern Uint16 DEFAULT_HEIGHT;
-#else
-constexpr auto DEFAULT_WIDTH = 640;
-constexpr auto DEFAULT_HEIGHT = 480;
-#endif
-#elif defined(THREEDS)
-constexpr auto DEFAULT_WIDTH = 400;
+constexpr auto DEFAULT_WIDTH = 240;
 constexpr auto DEFAULT_HEIGHT = 240;
-#elif defined(SDL1)
-constexpr auto DEFAULT_WIDTH = 640;
-constexpr auto DEFAULT_HEIGHT = 480;
-#elif defined(ANDROID) || defined(LINUX)
-#define DEFAULT_WIDTH  max(DM.w, DM.h)
-#define DEFAULT_HEIGHT min(DM.w, DM.h)
-#else
-constexpr auto DEFAULT_WIDTH = 640;
-constexpr auto DEFAULT_HEIGHT = 480;
-#endif
 
 extern void setRootDir();
 extern void saveGameState_settings();

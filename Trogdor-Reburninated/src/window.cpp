@@ -83,7 +83,7 @@ void scaleGameAndApp() {
 	appToWindowDstRect.y = max((int)((windowHeight - appToWindowDstRect.h) / 2), 0);
 	gameToWindowDstRect.w = (int)(gameWidth * trueScreenScaleFull);
 	gameToWindowDstRect.h = (int)(gameHeight * trueScreenScaleFull);
-	gameToWindowDstRect.x = max((int)((windowWidth - gameToWindowDstRect.w) / 2), 0);
+	gameToWindowDstRect.x = -5;
 	gameToWindowDstRect.y = max((int)((windowHeight - gameToWindowDstRect.h) / 2), 0);
 	gameHiResWidth = gameToWindowDstRect.w;
 	gameHiResHeight = gameToWindowDstRect.h;
@@ -101,36 +101,36 @@ void repositionOverlay() {
 	sprite_overlay_basement_top_ins.dstrect.h = (int)(sprite_overlay_basement_top.dstrect.h * screenScale);
 	sprite_overlay_basement_bottom_ins.dstrect.w = (int)(sprite_overlay_basement_bottom.dstrect.w * screenScale);
 	sprite_overlay_basement_bottom_ins.dstrect.h = (int)(sprite_overlay_basement_bottom.dstrect.h * screenScale);
-	sprite_overlay_basement_left_ins.dstrect.w = (int)(sprite_overlay_basement_left.dstrect.w * screenScale);
-	sprite_overlay_basement_left_ins.dstrect.h = (int)(sprite_overlay_basement_left.dstrect.h * screenScale);
-	sprite_overlay_basement_right_ins.dstrect.w = (int)(sprite_overlay_basement_right.dstrect.w * screenScale);
-	sprite_overlay_basement_right_ins.dstrect.h = (int)(sprite_overlay_basement_right.dstrect.h * screenScale);
-	sprite_overlay_basement_top_ins.dstrect.x = gameToWindowDstRect.x - sprite_overlay_basement_left_ins.dstrect.w;
+	//sprite_overlay_basement_left_ins.dstrect.w = (int)(sprite_overlay_basement_left.dstrect.w * screenScale);
+	//sprite_overlay_basement_left_ins.dstrect.h = (int)(sprite_overlay_basement_left.dstrect.h * screenScale);
+	//sprite_overlay_basement_right_ins.dstrect.w = (int)(sprite_overlay_basement_right.dstrect.w * screenScale);
+	//sprite_overlay_basement_right_ins.dstrect.h = (int)(sprite_overlay_basement_right.dstrect.h * screenScale);
+	//sprite_overlay_basement_top_ins.dstrect.x = gameToWindowDstRect.x - sprite_overlay_basement_left_ins.dstrect.w;
 	sprite_overlay_basement_top_ins.dstrect.y = gameToWindowDstRect.y - sprite_overlay_basement_top_ins.dstrect.h;
 	sprite_overlay_basement_bottom_ins.dstrect.x = sprite_overlay_basement_top_ins.dstrect.x;
 	sprite_overlay_basement_bottom_ins.dstrect.y = gameToWindowDstRect.y + gameToWindowDstRect.h;
-	sprite_overlay_basement_left_ins.dstrect.x = sprite_overlay_basement_top_ins.dstrect.x;
-	sprite_overlay_basement_left_ins.dstrect.y = gameToWindowDstRect.y;
-	sprite_overlay_basement_right_ins.dstrect.x = gameToWindowDstRect.x + gameToWindowDstRect.w;
+	//sprite_overlay_basement_left_ins.dstrect.x = sprite_overlay_basement_top_ins.dstrect.x;
+	//sprite_overlay_basement_left_ins.dstrect.y = gameToWindowDstRect.y;
+	//sprite_overlay_basement_right_ins.dstrect.x = gameToWindowDstRect.x + gameToWindowDstRect.w;
 	uint_i = sprite_overlay_basement_top_ins.dstrect.x + sprite_overlay_basement_top_ins.dstrect.w;
-	uint_j = sprite_overlay_basement_right_ins.dstrect.x + sprite_overlay_basement_right_ins.dstrect.w;
-	sprite_overlay_basement_right_ins.dstrect.x += (uint_i - uint_j);
-	sprite_overlay_basement_right_ins.dstrect.y = sprite_overlay_basement_left_ins.dstrect.y;
+	//uint_j = sprite_overlay_basement_right_ins.dstrect.x + sprite_overlay_basement_right_ins.dstrect.w;
+	//sprite_overlay_basement_right_ins.dstrect.x += (uint_i - uint_j);
+	//sprite_overlay_basement_right_ins.dstrect.y = sprite_overlay_basement_left_ins.dstrect.y;
 	sprite_overlay_basement_top_ins.dstrect = sprite_overlay_basement_top_ins.dstrect;
 	sprite_overlay_basement_bottom_ins.dstrect = sprite_overlay_basement_bottom_ins.dstrect;
-	sprite_overlay_basement_left_ins.dstrect = sprite_overlay_basement_left_ins.dstrect;
-	sprite_overlay_basement_right_ins.dstrect = sprite_overlay_basement_right_ins.dstrect;
-	right_overlay_padding = sprite_overlay_basement_right_ins.dstrect;
-	right_overlay_padding.x += right_overlay_padding.w;
+	//sprite_overlay_basement_left_ins.dstrect = sprite_overlay_basement_left_ins.dstrect;
+	//sprite_overlay_basement_right_ins.dstrect = sprite_overlay_basement_right_ins.dstrect;
+	//right_overlay_padding = sprite_overlay_basement_right_ins.dstrect;
+	//right_overlay_padding.x += right_overlay_padding.w;
 
 	sprite_overlay_compy_top_ins.dstrect = sprite_overlay_basement_top_ins.dstrect;
 	sprite_overlay_compy_bottom_ins.dstrect = sprite_overlay_basement_bottom_ins.dstrect;
-	sprite_overlay_compy_left_ins.dstrect = sprite_overlay_basement_left_ins.dstrect;
-	sprite_overlay_compy_right_ins.dstrect = sprite_overlay_basement_right_ins.dstrect;
+	//sprite_overlay_compy_left_ins.dstrect = sprite_overlay_basement_left_ins.dstrect;
+	//sprite_overlay_compy_right_ins.dstrect = sprite_overlay_basement_right_ins.dstrect;
 	sprite_overlay_strong_badia_top_ins.dstrect = sprite_overlay_basement_top_ins.dstrect;
 	sprite_overlay_strong_badia_bottom_ins.dstrect = sprite_overlay_basement_bottom_ins.dstrect;
-	sprite_overlay_strong_badia_left_ins.dstrect = sprite_overlay_basement_left_ins.dstrect;
-	sprite_overlay_strong_badia_right_ins.dstrect = sprite_overlay_basement_right_ins.dstrect;
+	//sprite_overlay_strong_badia_left_ins.dstrect = sprite_overlay_basement_left_ins.dstrect;
+	//sprite_overlay_strong_badia_right_ins.dstrect = sprite_overlay_basement_right_ins.dstrect;
 
 }
 
@@ -202,20 +202,20 @@ void drawOverlay() {
 		case 1:
 			sprite_overlay_compy_top_ins.renderSprite_overlay();
 			sprite_overlay_compy_bottom_ins.renderSprite_overlay();
-			sprite_overlay_compy_left_ins.renderSprite_overlay();
-			sprite_overlay_compy_right_ins.renderSprite_overlay();
+			//sprite_overlay_compy_left_ins.renderSprite_overlay();
+			//sprite_overlay_compy_right_ins.renderSprite_overlay();
 			break;
 		case 2:
 			sprite_overlay_basement_top_ins.renderSprite_overlay();
 			sprite_overlay_basement_bottom_ins.renderSprite_overlay();
-			sprite_overlay_basement_left_ins.renderSprite_overlay();
-			sprite_overlay_basement_right_ins.renderSprite_overlay();
+			//sprite_overlay_basement_left_ins.renderSprite_overlay();
+			//sprite_overlay_basement_right_ins.renderSprite_overlay();
 			break;
 		case 3:
 			sprite_overlay_strong_badia_top_ins.renderSprite_overlay();
 			sprite_overlay_strong_badia_bottom_ins.renderSprite_overlay();
-			sprite_overlay_strong_badia_left_ins.renderSprite_overlay();
-			sprite_overlay_strong_badia_right_ins.renderSprite_overlay();
+			//sprite_overlay_strong_badia_left_ins.renderSprite_overlay();
+			//sprite_overlay_strong_badia_right_ins.renderSprite_overlay();
 			break;
 		default:
 #if !defined(SDL1)
@@ -223,8 +223,8 @@ void drawOverlay() {
 #endif
 			sprite_overlay_basement_top_ins.renderEmptyOverlay();
 			sprite_overlay_basement_bottom_ins.renderEmptyOverlay();
-			sprite_overlay_basement_left_ins.renderEmptyOverlay();
-			sprite_overlay_basement_right_ins.renderEmptyOverlay();
+			//sprite_overlay_basement_left_ins.renderEmptyOverlay();
+			//sprite_overlay_basement_right_ins.renderEmptyOverlay();
 			break;
 	}
 }

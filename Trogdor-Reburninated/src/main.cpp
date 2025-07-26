@@ -537,10 +537,10 @@ int main(int argv, char** args) {
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_cosmetic.renderMenu();
 				switch (menu_cosmetic.handleInput(0)) {
-					case MENU_SCALING_INDEX:
-						scalingType = MENU_SCALING->index;
-						windowSizeChanged = true;
-						break;
+					//case MENU_SCALING_INDEX:
+					//	scalingType = MENU_SCALING->index;
+					//	windowSizeChanged = true;
+					//	break;
 					case -1: // Press B/Select
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						updateFrameRate();

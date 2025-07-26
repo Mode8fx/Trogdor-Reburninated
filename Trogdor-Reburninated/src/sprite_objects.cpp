@@ -183,6 +183,9 @@ void prepareSprite(SpriteObject *spriteObj, unsigned char sprite_data[], unsigne
       // [SDL2] Create a texture from temp_sprite_single
       applyColorKey(temp_sprite_single, isTransparent);
       subSprite.texture = SDL_CreateTextureFromSurface(renderer, temp_sprite_single);
+//#elif defined(FUNKEY)
+//      applyColorKey(temp_sprite_single, isTransparent);
+//      subSprite.surface = SDL_DisplayFormat(temp_sprite_single);
 #else
       if (currScreenScale == 1 && scale == 1) {
         // [SDL1 Normal] Create a new surface from temp_sprite_single
@@ -430,7 +433,7 @@ void SpriteInstance::renderSpriteAsCSO_game() {
 }
 
 void SpriteInstance::renderSprite_app() {
-    outputRect.x = (Sint16)(dstrect.x + currSpriteXOffset);
+    outputRect.x = (Sint16)(dstrect.x + currSpriteXOffset) - 40;
     outputRect.y = (Sint16)(dstrect.y + currSpriteYOffset);
     outputRect.w = (int)(dstrect.w * screenScale);
     outputRect.h = (int)(dstrect.h * screenScale);
@@ -455,6 +458,7 @@ void SpriteInstance::renderSprite_menu() {
 
 void SpriteInstance::renderSprite_overlay() {
     outputRect = dstrect;
+    outputRect.x -= 40;
 #if !defined(SDL1)
     SDL_RenderCopy(renderer, currSprite, NULL, &outputRect);
 #else

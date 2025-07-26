@@ -93,18 +93,7 @@ set OUTPUT_ANDROID_IDSIG=%OUTPUT_ANDROID_IDSIG:/=\%
 
 
 :: Running compilation commands...
-call :compile_windows_x64
-call :compile_windows_x86
-call :compile_linux
-call :compile_gc
-call :compile_wii
-call :compile_wii_u
-call :compile_switch
-call :compile_3ds
-call :compile_vita
-rem call :compile_rg35xx
-rem call :compile_psp
-call :compile_android
+call :compile_funkey
 
 echo Done.
 goto :eof
@@ -245,6 +234,17 @@ echo RG35XX: Moving compiled binary to %OUTPUT_RG35XX%...
 mv %REPO%/build_rg35xx/trogdorrb %OUTPUT_RG35XX%
 echo RG35XX: Cleaning up...
 rm -r %REPO%/build_rg35xx
+echo.
+goto :eof
+
+:compile_funkey
+echo FunKey: Compiling with WSL...
+wsl -e sh -c "cd %REPO_WSL% && make -f %MAKEFILE_WSL_FUNKEY% > /dev/null 2>&1"
+echo FunKey: Moving compiled binary to %OUTPUT_FUNKEY%...
+mv %REPO%/trogdorrb %OUTPUT_FUNKEY%
+echo FunKey: Cleaning up...
+rm -r %REPO%/build_funkey
+echo Did not attempt to make OPK. Use OpenPackageCreator for that.
 echo.
 goto :eof
 

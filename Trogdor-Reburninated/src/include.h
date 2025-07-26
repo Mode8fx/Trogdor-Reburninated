@@ -17,7 +17,7 @@
 #include <SDL_mixer.h>
 #endif
 #if defined(SDL1)
-#include "SDL_rotozoom.h"
+#include <SDL_rotozoom.h>
 #endif
 #endif
 

@@ -1297,7 +1297,7 @@ void playCutscene(Uint8 cutsceneNum, Sint16 initialSceneState) {
 #endif
 		sprite_overlay_basement_top_ins.renderEmptyOverlay();
 		sprite_overlay_basement_bottom_ins.renderEmptyOverlay();
-		sprite_overlay_basement_left_ins.renderEmptyOverlay();
-		sprite_overlay_basement_right_ins.renderEmptyOverlay();
+		//sprite_overlay_basement_left_ins.renderEmptyOverlay();
+		//sprite_overlay_basement_right_ins.renderEmptyOverlay();
 	}
 }

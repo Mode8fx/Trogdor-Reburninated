@@ -129,6 +129,92 @@ inline static void gc_mapButton(Uint32 gcInput, Uint32 output) {
 #define BUTTON_RIGHT SDL_CONTROLLER_BUTTON_B
 #endif
 
+inline static void handleKeyboardKeysDown_FunKey() {
+	switch (event.key.keysym.sym) {
+	case 117:
+		heldDirs_dpad |= INPUT_UP;
+		return;
+	case 100:
+		heldDirs_dpad |= INPUT_DOWN;
+		return;
+	case 108:
+		heldDirs_dpad |= INPUT_LEFT;
+		return;
+	case 114:
+		heldDirs_dpad |= INPUT_RIGHT;
+		return;
+	case 97:
+		heldKeys |= INPUT_A;
+		return;
+	case 98:
+		heldKeys |= INPUT_B;
+		return;
+	case 115:
+		heldKeys |= INPUT_START;
+		return;
+	case 107:
+		heldKeys |= INPUT_SELECT;
+		return;
+	case 120:
+		heldKeys |= INPUT_X;
+		return;
+	case 121:
+		heldKeys |= INPUT_Y;
+		return;
+	case 109:
+		heldKeys |= INPUT_L;
+		return;
+	case 110:
+		heldKeys |= INPUT_R;
+		return;
+	default:
+		return;
+	}
+}
+
+inline static void handleKeyboardKeysUp_FunKey() {
+	switch (event.key.keysym.sym) {
+	case 117:
+		heldDirs_dpad &= ~INPUT_UP;
+		return;
+	case 100:
+		heldDirs_dpad &= ~INPUT_DOWN;
+		return;
+	case 108:
+		heldDirs_dpad &= ~INPUT_LEFT;
+		return;
+	case 114:
+		heldDirs_dpad &= ~INPUT_RIGHT;
+		return;
+	case 97:
+		heldKeys &= ~INPUT_A;
+		return;
+	case 98:
+		heldKeys &= ~INPUT_B;
+		return;
+	case 115:
+		heldKeys &= ~INPUT_START;
+		return;
+	case 107:
+		heldKeys &= ~INPUT_SELECT;
+		return;
+	case 120:
+		heldKeys &= ~INPUT_X;
+		return;
+	case 121:
+		heldKeys &= ~INPUT_Y;
+		return;
+	case 109:
+		heldKeys &= ~INPUT_L;
+		return;
+	case 110:
+		heldKeys &= ~INPUT_R;
+		return;
+	default:
+		return;
+	}
+}
+
 void handlePlayerInput() {
 #if defined(WII)
 	WPAD_ScanPads();
@@ -203,6 +289,23 @@ void handlePlayerInput() {
 		applyStickDeadZoneX();
 		applyStickDeadZoneY();
 		if (controllerAxis_leftStickX != 0 || controllerAxis_leftStickY != 0) {
+			break;
+		}
+	}
+#elif defined(FUNKEY)
+	while (SDL_PollEvent(&event)) {
+		switch (event.type) {
+		case SDL_QUIT:
+			isRunning = false;
+			break;
+			/* Handle Button Input (FunKey) */
+		case SDL_KEYDOWN:
+			handleKeyboardKeysDown_FunKey();
+			break;
+		case SDL_KEYUP:
+			handleKeyboardKeysUp_FunKey();
+			break;
+		default:
 			break;
 		}
 	}
