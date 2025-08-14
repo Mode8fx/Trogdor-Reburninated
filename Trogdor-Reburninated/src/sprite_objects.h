@@ -136,7 +136,7 @@ extern Sint16 getXOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y);
 extern Sint8 getYOffsetStart(SpriteObject *spriteObj, Sint8 x, Sint8 y);
 extern Sint16 getYOffsetEnd(SpriteObject *spriteObj, Sint8 x, Sint8 y);
 extern void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj);
-extern void prepareSprite(SpriteObject *, unsigned char[], unsigned int, Sint8, Sint8, double, bool, bool);
+extern void prepareSprite(SpriteObject *, unsigned char[], unsigned int, Sint8, Sint8, double, bool, bool, bool);
 extern void prepareSprite_Videlectrix(SpriteObject *, unsigned char[], unsigned int, Sint8, Sint8, double, bool, bool);
 extern void setSpriteScale(SpriteObject *);
 extern void setSpritePos(SpriteObject *, int, int);
@@ -146,15 +146,19 @@ extern void drawRectWithAlpha(SDL_Rect, Uint8, Uint8, Uint8, Uint8);
 extern void sdl1_createTransparentScreen();
 
 #define PREPARE_SPRITE(spriteObj, sprite_data, sprite_len, rect_x, rect_y, numFrames, numForms, scale) \
-    prepareSprite(&spriteObj, sprite_data, sprite_len, numFrames, numForms, scale, false, true);       \
+    prepareSprite(&spriteObj, sprite_data, sprite_len, numFrames, numForms, scale, false, true, true); \
     setSpritePos(&spriteObj, (int)rect_x, (int)rect_y);
 
 #define PREPARE_SPRITE_OPAQUE(spriteObj, sprite_data, sprite_len, rect_x, rect_y, numFrames, numForms, scale) \
-    prepareSprite(&spriteObj, sprite_data, sprite_len, numFrames, numForms, scale, false, false);             \
+    prepareSprite(&spriteObj, sprite_data, sprite_len, numFrames, numForms, scale, false, false, true);       \
+    setSpritePos(&spriteObj, (int)rect_x, (int)rect_y);
+
+#define PREPARE_SPRITE_NO_OFFSET(spriteObj, sprite_data, sprite_len, rect_x, rect_y, numFrames, numForms, scale) \
+    prepareSprite(&spriteObj, sprite_data, sprite_len, numFrames, numForms, scale, false, true, false); \
     setSpritePos(&spriteObj, (int)rect_x, (int)rect_y);
 
 #define PREPARE_SPRITE_MENU(spriteObj, sprite_data, sprite_len, rect_x, rect_y, numFrames, numForms, scale) \
-    prepareSprite(&spriteObj, sprite_data, sprite_len, numFrames, numForms, scale, true, true);             \
+    prepareSprite(&spriteObj, sprite_data, sprite_len, numFrames, numForms, scale, true, true, true);       \
     setSpritePos(&spriteObj, (int)rect_x, (int)rect_y);
 
 #define PREPARE_SPRITE_VIDELECTRIX(spriteObj, sprite_data, sprite_len, rect_x, rect_y, numFrames, numForms, scale) \
@@ -162,7 +166,7 @@ extern void sdl1_createTransparentScreen();
     setSpritePos(&spriteObj, (int)rect_x, (int)rect_y);
 
 #define PREPARE_SPRITE_MENU_OPAQUE(spriteObj, sprite_data, sprite_len, rect_x, rect_y, numFrames, numForms, scale) \
-    prepareSprite(&spriteObj, sprite_data, sprite_len, numFrames, numForms, scale, true, false);                   \
+    prepareSprite(&spriteObj, sprite_data, sprite_len, numFrames, numForms, scale, true, false, true);             \
     setSpritePos(&spriteObj, (int)rect_x, (int)rect_y);
 
 #define PREPARE_SPRITE_BG(spriteObj, sprite_data, sprite_len, rect_x, rect_y) \

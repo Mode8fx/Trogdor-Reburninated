@@ -10,7 +10,7 @@
 const Uint8 contraArrayKey[10] = { 0, 0, 1, 1, 2, 3, 2, 3, 5, 4 }; // Up Up Down Down Left Right Left Right B A (Konami code)
 const Uint8 pacmanArrayKey[11] = { 0, 0, 0, 1, 1, 1, 2, 3, 2, 3, 2 }; // Up Up Up Down Down Down Left Right Left Right Left (play Pac-Man on a Ms. Pac-Man + Galaga arcade cabinet)
 const Uint8 s3kArrayKey[9] = { 2, 2, 2, 3, 3, 3, 0, 0, 0 }; // Left Left Left Right Right Right Up Up Up (Sonic & Knuckles and S3&K level select)
-const Uint8 fzxArrayKey[8] = { 2, 5, 3, 0, 1, 2, 3, 4 }; // Left B Right Up Down Left Right A ((roughly) unlock everything in F-Zero X)
+const Uint8 fzxArrayKey[8] = { 2, 5, 3, 0, 1, 2, 3, 4 }; // Left B Right Up Down Left Right A ((roughly) unlock everything in F-Zero X) (unused)
 const Uint8 dkcArrayKey[6] = { 5, 4, 9, 9, 4, 8 }; // B A R R A L (Donkey Kong Country 50 lives code)
 
 constexpr auto LEFT_BOUND = 17;
@@ -562,7 +562,12 @@ MenuManager::MenuManager() {
 bool MenuManager::handleCheat(Uint8 menuIndex, const Uint8 *cheatArrayKey, Uint8 cheatLen, Sint8 &cheatIndex, SoundEffect *sfx, Sint8 indexAtUnlock) {
 	if (menu_cheats.options[menuIndex]->optionIsLocked) {
 		if (keyInputs != 0) {
-			if (keyInputs == (1 << (cheatArrayKey[cheatIndex]))) {
+			Uint32 currBtn = (1 << (cheatArrayKey[cheatIndex]));
+			if (keyPressed(currBtn)
+				|| ((currBtn == INPUT_A) && keyPressed(INPUT_A_CHEAT))
+				|| ((currBtn == INPUT_B) && keyPressed(INPUT_B_CHEAT))
+				|| ((currBtn == INPUT_L) && keyPressed(INPUT_L_CHEAT))
+				|| ((currBtn == INPUT_R) && keyPressed(INPUT_R_CHEAT))) {
 				cheatIndex++;
 				if ((Uint32)cheatIndex == cheatLen) {
 					unlockCheat(menuIndex, indexAtUnlock);
@@ -987,6 +992,7 @@ void GameManager::setMusic() {
 								break;
 						}
 					}
+					setVolume_music(DEFAULT_VOLUME_MUSIC);
 					break;
 			}
 			break;
@@ -1127,7 +1133,7 @@ void GameManager::getPlayerInput() {
 	if (startDown && !keyHeld(INPUT_START)) {
 		startDown = false;
 		manually_paused = frameCounter_global;
-		setVolume_music(DEFAULT_VOLUME_MUSIC / 3);
+		setVolume_music(DEFAULT_VOLUME_MUSIC_PAUSED);
 		sdl1_createTransparentScreen();
 	}
 	if (keyHeld(INPUT_L) && kick_frameState.frame == 1) {

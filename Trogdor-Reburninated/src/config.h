@@ -5,6 +5,8 @@
 
 constexpr auto DEFAULT_VOLUME_GAME = 100;
 constexpr auto DEFAULT_VOLUME_MUSIC = 35;
+constexpr auto DEFAULT_VOLUME_MUSIC_LATE_LEVEL = 18;
+constexpr auto DEFAULT_VOLUME_MUSIC_PAUSED = 11;
 #if defined(PC)
 #define MAX_PAGE_NUM_LOWRES 5
 #define MAX_PAGE_NUM_HIRES 4
