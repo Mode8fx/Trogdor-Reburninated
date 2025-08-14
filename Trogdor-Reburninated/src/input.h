@@ -53,6 +53,10 @@ constexpr auto INPUT_R          = (1 <<  9); // e
 constexpr auto INPUT_START      = (1 << 10); // enter
 constexpr auto INPUT_SELECT     = (1 << 11); // backspace
 constexpr auto INPUT_FULLSCREEN = (1 << 12); // f
+constexpr auto INPUT_A_CHEAT    = (1 << 13); // a
+constexpr auto INPUT_B_CHEAT    = (1 << 14); // b
+constexpr auto INPUT_L_CHEAT    = (1 << 15); // l
+constexpr auto INPUT_R_CHEAT    = (1 << 16); // r
 constexpr auto INPUT_ALL_DIRS   = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIGHT;
 
 #if defined(VITA) || defined(PSP)
@@ -85,7 +89,7 @@ constexpr auto INPUT_ALL_DIRS   = INPUT_UP | INPUT_DOWN | INPUT_LEFT | INPUT_RIG
 #define INPUT_MISC std::string("SELECT")
 #endif
 
-bool keyPressed(Uint16 key);
+bool keyPressed(Uint32 key);
 bool keyHeld(Uint16 button);
 void handlePlayerInput();
 

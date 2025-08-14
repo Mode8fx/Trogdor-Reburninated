@@ -3,7 +3,7 @@
 
 constexpr auto STICK_DEADZONE = 10922; // 32767 / 3
 
-bool keyPressed(Uint16 key) {
+bool keyPressed(Uint32 key) {
 	return (keyInputs & key);
 }
 
@@ -264,8 +264,13 @@ void handlePlayerInput() {
 					heldDirs_kb |= INPUT_DOWN;
 					break;
 				}
-				if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a) {
+				if (event.key.keysym.sym == SDLK_LEFT) {
 					heldDirs_kb |= INPUT_LEFT;
+					break;
+				}
+				if (event.key.keysym.sym == SDLK_a) {
+					heldDirs_kb |= INPUT_LEFT;
+					heldKeys |= INPUT_A_CHEAT;
 					break;
 				}
 				if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d) {
@@ -296,6 +301,18 @@ void handlePlayerInput() {
 					heldKeys |= INPUT_R;
 					break;
 				}
+				if (event.key.keysym.sym == SDLK_b) {
+					heldKeys |= INPUT_B_CHEAT;
+					break;
+				}
+				if (event.key.keysym.sym == SDLK_l) {
+					heldKeys |= INPUT_L_CHEAT;
+					break;
+				}
+				if (event.key.keysym.sym == SDLK_r) {
+					heldKeys |= INPUT_R_CHEAT;
+					break;
+				}
 				if (event.key.keysym.sym == SDLK_RETURN) {
 					heldKeys |= INPUT_START;
 					break;
@@ -318,8 +335,13 @@ void handlePlayerInput() {
 					heldDirs_kb &= ~INPUT_DOWN;
 					break;
 				}
-				if (event.key.keysym.sym == SDLK_LEFT || event.key.keysym.sym == SDLK_a) {
+				if (event.key.keysym.sym == SDLK_LEFT) {
 					heldDirs_kb &= ~INPUT_LEFT;
+					break;
+				}
+				if (event.key.keysym.sym == SDLK_a) {
+					heldDirs_kb &= ~INPUT_LEFT;
+					heldKeys &= ~INPUT_A_CHEAT;
 					break;
 				}
 				if (event.key.keysym.sym == SDLK_RIGHT || event.key.keysym.sym == SDLK_d) {
@@ -348,6 +370,18 @@ void handlePlayerInput() {
 				}
 				if (event.key.keysym.sym == SDLK_e) {
 					heldKeys &= ~INPUT_R;
+					break;
+				}
+				if (event.key.keysym.sym == SDLK_b) {
+					heldKeys &= ~INPUT_B_CHEAT;
+					break;
+				}
+				if (event.key.keysym.sym == SDLK_l) {
+					heldKeys &= ~INPUT_L_CHEAT;
+					break;
+				}
+				if (event.key.keysym.sym == SDLK_r) {
+					heldKeys &= ~INPUT_R_CHEAT;
 					break;
 				}
 				if (event.key.keysym.sym == SDLK_RETURN) {
