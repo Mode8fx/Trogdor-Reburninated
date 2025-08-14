@@ -987,6 +987,7 @@ void GameManager::setMusic() {
 								break;
 						}
 					}
+					setVolume_music(DEFAULT_VOLUME_MUSIC);
 					break;
 			}
 			break;
@@ -1127,7 +1128,7 @@ void GameManager::getPlayerInput() {
 	if (startDown && !keyHeld(INPUT_START)) {
 		startDown = false;
 		manually_paused = frameCounter_global;
-		setVolume_music(DEFAULT_VOLUME_MUSIC / 3);
+		setVolume_music(DEFAULT_VOLUME_MUSIC_PAUSED);
 		sdl1_createTransparentScreen();
 	}
 	if (keyHeld(INPUT_L) && kick_frameState.frame == 1) {

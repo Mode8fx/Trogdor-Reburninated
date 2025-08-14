@@ -823,7 +823,9 @@ int main(int argv, char** args) {
 					if (GM.testWon() || (keyPressed(INPUT_SELECT) && GM.debugMode)) {
 						GM.updateScore(min((20 + ((GM.level / 5) + 1) * 5), 200));
 						GM.clearArrows();
-						if (!(GM.level == 47 || GM.level == 49 || (GM.level >= 91 && GM.level <= 94) || GM.level == 96 || GM.level == 98 || GM.level == 99)) {
+						if (GM.level == 47 || GM.level == 49 || (GM.level >= 91 && GM.level <= 94) || GM.level == 96 || GM.level == 98 || GM.level == 99) {
+							setVolume_music(DEFAULT_VOLUME_MUSIC_LATE_LEVEL);
+						} else {
 							fadeMusic(1200);
 						}
 						g_sceneState = 8;
