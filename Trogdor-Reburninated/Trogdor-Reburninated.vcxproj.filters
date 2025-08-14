@@ -231,6 +231,9 @@
     <ClCompile Include="src\graphics_h\overlays\strong_badia_top.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\graphics_h\level_beaten_smoke_small.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\fonts_h\29_NOKIA_5110_FontSet.h">
@@ -462,6 +465,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\graphics_h\overlays\strong_badia_top.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\graphics_h\level_beaten_smoke_small.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -28,6 +28,7 @@
 #include "graphics_h/knight.h"
 #include "graphics_h/knight_funnyjoke.h"
 #include "graphics_h/level_beaten_smoke.h"
+#include "graphics_h/level_beaten_smoke_small.h"
 #include "graphics_h/level_beaten_trogdor_scaled.h"
 #include "graphics_h/loot.h"
 #include "graphics_h/menu_cursor.h"

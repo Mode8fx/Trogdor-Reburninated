@@ -115,7 +115,7 @@ void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
     SDL_BlitSurface(temp_sprite_sheet, &single_srcrect, temp_sprite_single, &single_dstrect);
 }
 
-void prepareSprite(SpriteObject *spriteObj, unsigned char sprite_data[], unsigned int sprite_len, Sint8 numFrames, Sint8 numForms, double scale, bool isMenuSprite, bool isTransparent) {
+void prepareSprite(SpriteObject *spriteObj, unsigned char sprite_data[], unsigned int sprite_len, Sint8 numFrames, Sint8 numForms, double scale, bool isMenuSprite, bool isTransparent, bool useOffset) {
   spriteObj->spriteScale = scale;
   // Check if the surface/texture already exists
 #if !defined(SDL1)
@@ -159,15 +159,25 @@ void prepareSprite(SpriteObject *spriteObj, unsigned char sprite_data[], unsigne
     for (j = 0; j < numForms; j++) {
       SpriteSubObject &subSprite = spriteObj->sub[i][j];
       // Get the sprite's left/right boundary (the x position where the sprite actually begins/ends)
-      subSprite.x_offset_start = getXOffsetStart(spriteObj, i, j);
-      subSprite.x_offset_end = getXOffsetEnd(spriteObj, i, j);
+      if (useOffset) {
+        subSprite.x_offset_start = getXOffsetStart(spriteObj, i, j);
+        subSprite.x_offset_end = getXOffsetEnd(spriteObj, i, j);
+      } else {
+        subSprite.x_offset_start = 0;
+        subSprite.x_offset_end = frame_w - 1;
+      }
       if (subSprite.x_offset_end < subSprite.x_offset_start) { // blank sprite
         subSprite.x_offset_end = subSprite.x_offset_start;
       }
       subSprite.center_x = (subSprite.x_offset_end - subSprite.x_offset_start) / 2;
       // Get the sprite's upper/lower boundary (the y position where the sprite actually begins/ends)
-      subSprite.y_offset_start = getYOffsetStart(spriteObj, i, j);
-      subSprite.y_offset_end = getYOffsetEnd(spriteObj, i, j);
+      if (useOffset) {
+        subSprite.y_offset_start = getYOffsetStart(spriteObj, i, j);
+        subSprite.y_offset_end = getYOffsetEnd(spriteObj, i, j);
+      } else {
+        subSprite.y_offset_start = 0;
+        subSprite.y_offset_end = frame_h - 1;
+      }
       if (subSprite.y_offset_end < subSprite.y_offset_start) { // blank sprite
         subSprite.y_offset_end = subSprite.y_offset_start;
       }

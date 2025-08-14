@@ -246,6 +246,7 @@
     <ClCompile Include="src\graphics_h\knight.cpp" />
     <ClCompile Include="src\graphics_h\knight_funnyjoke.cpp" />
     <ClCompile Include="src\graphics_h\level_beaten_smoke.cpp" />
+    <ClCompile Include="src\graphics_h\level_beaten_smoke_small.cpp" />
     <ClCompile Include="src\graphics_h\level_beaten_trogdor_scaled.cpp" />
     <ClCompile Include="src\graphics_h\loot.cpp" />
     <ClCompile Include="src\graphics_h\menu_cursor.cpp" />
@@ -321,6 +322,7 @@
     <ClInclude Include="src\graphics_h\knight.h" />
     <ClInclude Include="src\graphics_h\knight_funnyjoke.h" />
     <ClInclude Include="src\graphics_h\level_beaten_smoke.h" />
+    <ClInclude Include="src\graphics_h\level_beaten_smoke_small.h" />
     <ClInclude Include="src\graphics_h\level_beaten_trogdor_scaled.h" />
     <ClInclude Include="src\graphics_h\loot.h" />
     <ClInclude Include="src\graphics_h\menu_cursor.h" />

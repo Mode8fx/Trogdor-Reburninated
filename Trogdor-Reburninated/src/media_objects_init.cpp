@@ -535,6 +535,24 @@ void InitializeSFX() {
 	}
 }
 
+void destroySprite(SpriteObject *sprite) {
+	for (i = 0; i < sprite->numFrames; i++) {
+		for (j = 0; j < sprite->numForms; j++) {
+			if (&sprite->sub[i][j] != NULL) {
+#if !defined(SDL1)
+				SDL_DestroyTexture(sprite->sub[i][j].texture);
+#else
+				SDL_FreeSurface(sprite->sub[i][j].surface);
+#endif
+			}
+		}
+		if (sprite->sub[i] != NULL) {
+			free(sprite->sub[i]);
+			sprite->sub[i] = NULL;
+		}
+	}
+}
+
 void InitializeSpritesPart1() {
 	PREPARE_SPRITE_MENU(sprite_videlectrix_logo, videlectrix_logo_big_img, videlectrix_logo_big_img_len, 0, 0, 1, 1, 1);
 	sprite_videlectrix_logo_ins = SpriteInstance(&sprite_videlectrix_logo, 0, 0);
@@ -563,7 +581,12 @@ void InitializeSpritesPart1() {
 	PREPARE_SPRITE(sprite_burninate_fire, burninate_message_fire_img, burninate_message_fire_img_len,
 		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_burninate_fire), OBJ_FRAME_TO_MID_SCREEN_Y(gameHeight, sprite_burninate_fire), 1, 12, 1);
 	PREPARE_SPRITE(sprite_level_beaten_trogdor, level_beaten_trogdor_scaled_img, level_beaten_trogdor_scaled_img_len, -5, 41, 1, 1, 1);
-	PREPARE_SPRITE(sprite_level_beaten_smoke, level_beaten_smoke_img, level_beaten_smoke_img_len, 100, 100, 8, 4, 0.6667);
+	destroySprite(&sprite_level_beaten_smoke);
+	if (gameHiResMult < 1.6) {
+		PREPARE_SPRITE_NO_OFFSET(sprite_level_beaten_smoke, level_beaten_smoke_small_img, level_beaten_smoke_small_img_len, 100, 100, 8, 4, 1);
+	} else {
+		PREPARE_SPRITE_NO_OFFSET(sprite_level_beaten_smoke, level_beaten_smoke_img, level_beaten_smoke_img_len, 100, 100, 8, 4, 0.6667);
+	}
 	PREPARE_SPRITE(sprite_game_over_trogdor, game_over_trogdor_img, game_over_trogdor_img_len, -13, 75, 1, 1, 1);
 #if defined(THREEDS) || defined(PSP)
 	PREPARE_SPRITE_OPAQUE(sprite_overlay_basement_top, basement_top_240p_img, basement_top_240p_img_len, 0, 0, 1, 1, 1);
@@ -633,6 +656,7 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_trogdor_dead, trogdor_dead_img, trogdor_dead_img_len, 0, 0, 2, 2, 1);
 	PREPARE_SPRITE(sprite_knight, knight_img, knight_img_len, 0, 0, 6, 2, 1);
 	PREPARE_SPRITE(sprite_peasant, peasant_img, peasant_img_len, 0, 0, 2, 4, 1);
+	destroySprite(&sprite_end_of_level_trogdor);
 	if (gameHiResMult < 1.6) {
 		PREPARE_SPRITE(sprite_end_of_level_trogdor, end_of_level_trogdor_img, end_of_level_trogdor_img_len,
 			OBJ_TO_SCREEN_AT_FRACTION_X(gameWidth, sprite_end_of_level_trogdor, 0.476), OBJ_TO_SCREEN_AT_FRACTION_Y(gameHeight, sprite_end_of_level_trogdor, 0.6), 1, 2, 2);
@@ -671,21 +695,6 @@ void exceptMissingFile(const char *path) {
 	}
 	ifile.close();
 #endif
-}
-
-void destroySprite(SpriteObject *sprite) {
-	for (i = 0; i < sprite->numFrames; i++) {
-		for (j = 0; j < sprite->numForms; j++) {
-			if (&sprite->sub[i][j] != NULL) {
-#if !defined(SDL1)
-				SDL_DestroyTexture(sprite->sub[i][j].texture);
-#else
-				SDL_FreeSurface(sprite->sub[i][j].surface);
-#endif
-			}
-		}
-		free(sprite->sub[i]);
-	}
 }
 
 void destroyAllSprites() {
@@ -841,6 +850,7 @@ void HandleErrorText(const char *badPath) {
 	STRCPY(tempCharArrayError, badPath);
 	setFont(&font_commodore_error_1, Commodore_Pixelized_v1_2_ttf, Commodore_Pixelized_v1_2_ttf_len, 10, 10, TTF_STYLE_NORMAL, color_white, true);
 	setFont(&font_commodore_error_2, Commodore_Pixelized_v1_2_ttf, Commodore_Pixelized_v1_2_ttf_len, 10, 9, TTF_STYLE_NORMAL, color_orange, true);
+	srand(SDL_GetTicks());
 	uint_i = (rand() % 4);
 	switch (uint_i) {
 		case 0:
@@ -863,7 +873,7 @@ void HandleErrorText(const char *badPath) {
 	quickErrorTextRender_1("Make sure you have the correct", 0.6);
 	quickErrorTextRender_1("assets installed and try again.", 0.675);
 	quickErrorTextRender_1("Press ENTER/START to quit.", 0.825);
-	quickErrorTextRender_2("[Trogdor: Reburninated v2.3]", 0.9);
+	quickErrorTextRender_2("[Trogdor: Reburninated v2.31]", 0.9);
 	TTF_CloseFont(font_commodore_error_1.font);
 	TTF_CloseFont(font_commodore_error_2.font);
 
