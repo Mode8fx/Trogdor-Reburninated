@@ -3,8 +3,8 @@
 set "CURR_DIR=%CD%"
 
 :: Manual sleep amounts (because `start /wait` doesn't work...)
-set SLEEP_COMPILE=45
-set SLEEP_COMPILE_LONG=55
+set SLEEP_COMPILE=50
+set SLEEP_COMPILE_LONG=60
 set SLEEP_COMPILE_SHORT=5
 set SLEEP_CLEAN=2
 
@@ -60,7 +60,7 @@ set OUTPUT_WII=%OUTPUT_DIR%-wii/apps/Trogdor-RB/boot.dol
 :: Makefile: Wii U
 set MAKEFILE_DKP_WII_U=%MAKEFILES_DKP%/make_wii_u.sh
 set OUTPUT_WII_U=%OUTPUT_DIR%-wiiu/wiiu/apps/Trogdor-RB/Trogdor-Reburninated.rpx
-set OUTPUT_WII_U_WUHB=%OUTPUT_DIR%-wiiu/wiiu/apps/Trogdor-Reburninated.wuhb
+set OUTPUT_WII_U_WUHB=%OUTPUT_DIR%-wiiu/wiiu/apps/Trogdor-RB/Trogdor-Reburninated.wuhb
 
 :: Makefile: Switch
 set MAKEFILE_DKP_SWITCH=%MAKEFILES_DKP%/Makefile_switch
