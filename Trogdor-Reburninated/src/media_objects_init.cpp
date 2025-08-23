@@ -60,7 +60,7 @@ void InitializeFontsAndText() {
 	SET_TEXT("??", text_4_mans_val, font_serif_red_6,
 		230 * gameHiResMult, 1 * gameHiResMult);
 	SET_TEXT("??", text_4_level_val, font_serif_red_6,
-		230 * gameHiResMult, 11 * gameHiResMult);
+		230 * gameHiResMult - 6, 11 * gameHiResMult);
 	if (font_serif_red_6.size == 8) {
 		text_4_score_val.dstrect.y -= 1;
 		text_4_mans_val.dstrect.y -= 2;
@@ -113,7 +113,7 @@ void InitializeFontsAndText() {
 	SET_TEXT("MANS:", text_4_mans, font_serif_2_red_6,
 		200 * gameHiResMult, 1 * gameHiResMult);
 	SET_TEXT("LEVEL:", text_4_level, font_serif_2_red_6,
-		195 * gameHiResMult, 11 * gameHiResMult);
+		195 * gameHiResMult - 6, 11 * gameHiResMult);
 	if (font_serif_2_red_6.size == 8) {
 		text_4_score.dstrect.y -= 2;
 		text_4_mans.dstrect.x -= font_serif_2_red_6.size;
@@ -648,7 +648,7 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_cottage, cottage_img, cottage_img_len, 0, 0, 2, 4, 1);
 	PREPARE_SPRITE(sprite_cottage_fire, cottage_fire_img, cottage_fire_img_len, 0, 0, 4, 2, 1);
 	PREPARE_SPRITE(sprite_peasantometer_icon, peasantometer_img, peasantometer_img_len, 0, 3, 2, 1, 1);
-	sprite_peasantometer_icon_init_x = (Uint8)(gameWidth * 66 / gameWidth);
+	sprite_peasantometer_icon_init_x = (Uint8)(gameWidth * 66 / gameWidth - 6);
 	sprite_peasantometer_icon_step = (int)(sprite_peasantometer_icon.dstrect.w * 1.5);
 	PREPARE_SPRITE(sprite_archer, archer_img, archer_img_len, 0, 0, 2, 2, 1);
 	PREPARE_SPRITE(sprite_arrow, arrow_img, arrow_img_len, 0, 0, 1, 2, 1);
