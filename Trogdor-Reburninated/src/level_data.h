@@ -218,7 +218,7 @@ const Sint16 levels[33][20] = {
 	DIR_RIGHT, -1244, 1005,
 	0, 0, 0 },
 	/* 29 */ { 3, 0,
-	DIR_RIGHT, 855, 274,
+	DIR_RIGHT, 875, 274, // originally 855
 	DIR_DOWN, -1976, 238,
 	DIR_DOWN, -204, -995,
 	DIR_LEFT, 1806, 835,
