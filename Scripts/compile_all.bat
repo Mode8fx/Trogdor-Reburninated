@@ -33,7 +33,7 @@ set MAKEFILES_WSL=/mnt%MAKEFILES_DKP%
 :: Path: 3DS CIA Utilities
 set BANNERTOOL="D:/Utilities/3DS CIA Creation/bannertool"
 set MAKEROM="D:/Utilities/3DS CIA Creation/makerom-v0.18.3-win_x86_64/makerom.exe"
-set VERSION_3DS=560
+set VERSION_3DS=561
 
 
 
