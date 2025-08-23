@@ -46,7 +46,7 @@ INCLUDES	:=	src src/fonts_h src/graphics_h src/graphics_h/backgrounds src/graphi
 
 APP_TITLE   := Trogdor: Reburninated
 APP_AUTHOR  := Mode8fx
-APP_VERSION := 2.3
+APP_VERSION := 2.31
 ICON        := release-resources/logo_icon_switch.jpg
 
 #---------------------------------------------------------------------------------

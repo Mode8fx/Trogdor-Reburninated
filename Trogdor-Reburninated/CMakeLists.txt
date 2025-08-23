@@ -79,6 +79,8 @@ add_executable(trogdorrb
 	"src/graphics_h/knight_funnyjoke.h"
 	"src/graphics_h/level_beaten_smoke.cpp"
 	"src/graphics_h/level_beaten_smoke.h"
+	"src/graphics_h/level_beaten_smoke_small.cpp"
+	"src/graphics_h/level_beaten_smoke_small.h"
 	"src/graphics_h/level_beaten_trogdor_scaled.cpp"
 	"src/graphics_h/level_beaten_trogdor_scaled.h"
 	"src/graphics_h/loot.cpp"
