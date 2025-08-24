@@ -104,11 +104,11 @@ void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
     single_srcrect.y = (frame_h * j) + spriteObj->sub[i][j].y_offset_start;
     single_srcrect.w = spriteObj->sub[i][j].x_offset_end - spriteObj->sub[i][j].x_offset_start + 1;
     single_srcrect.h = spriteObj->sub[i][j].y_offset_end - spriteObj->sub[i][j].y_offset_start + 1;
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN // Gamecube, Wii, Wii U
     temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 32, 0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
-#elif defined(VITA)
-    temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
-#else
+#elif defined(SWITCH) || defined(THREEDS) || defined(PSP) || defined(FUNKEY) || defined(ANDROID)
+    temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 24, 0x000000FF, 0x0000FF00, 0x00FF0000, 0);
+#else // Vita and PortMaster need this
     temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 #endif
     single_dstrect = { 0, 0, single_srcrect.w, single_srcrect.h };
