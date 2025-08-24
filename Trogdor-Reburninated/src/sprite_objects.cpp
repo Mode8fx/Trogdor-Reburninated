@@ -109,7 +109,7 @@ void prepareSurfaceFromSpriteSheet(SpriteObject *spriteObj) {
 #elif defined(VITA)
     temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 #else
-    temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 24, 0x000000FF, 0x0000FF00, 0x00FF0000, 0);
+    temp_sprite_single = SDL_CreateRGBSurface(0, single_srcrect.w, single_srcrect.h, 32, 0x000000FF, 0x0000FF00, 0x00FF0000, 0xFF000000);
 #endif
     single_dstrect = { 0, 0, single_srcrect.w, single_srcrect.h };
     SDL_BlitSurface(temp_sprite_sheet, &single_srcrect, temp_sprite_single, &single_dstrect);
