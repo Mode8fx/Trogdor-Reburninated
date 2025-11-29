@@ -925,7 +925,11 @@ void InitializeMenus() {
 	menu_credits.pages[1]->setTextLine(4, "https://github.com/Mode8fx");
 	menu_credits.pages[1]->setTextLine(5, "/Trogdor-Reburninated");
 	menu_credits.pages[1]->setTextLine(6, "");
+#if defined(SWITCH)
+	menu_credits.pages[1]->setTextLine(7, "v2.32");
+#else
 	menu_credits.pages[1]->setTextLine(7, "v2.31");
+#endif
 
 	menu_credits.pages[2]->prepareMenuPage(9, 0, 30, 20, 1);
 	menu_credits.pages[2]->setTextLine(0, "- STINKOMAN MUSIC -");
