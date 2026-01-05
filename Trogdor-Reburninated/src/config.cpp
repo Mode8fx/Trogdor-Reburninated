@@ -43,7 +43,7 @@ string getExeDirectory() {
 #endif
 }
 
-#if defined(GAMECUBE) || defined(LINUX)
+#if defined(LINUX)
 static bool directoryExists(const std::string &path) {
 	struct stat info;
 	if (stat(path.c_str(), &info) != 0) {
@@ -60,13 +60,7 @@ void setRootDir() {
 #elif defined(WII)
 	rootDir = "sd:/apps/Trogdor-RB/";
 #elif defined(GAMECUBE)
-	string devices[] = {"sda", "sdb", "sdc"};
-	for (const auto& device : devices) {
-		rootDir = device + ":/Trogdor-RB/";
-		if (directoryExists(rootDir)) {
-			break;
-		}
-	}
+	rootDir = "/Trogdor-RB/";
 #elif defined(THREEDS)
 	rootDir = "sdmc:/3ds/Trogdor-RB/";
 #elif defined(_WIN32)
