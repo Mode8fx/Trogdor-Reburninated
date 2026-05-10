@@ -16,7 +16,11 @@ bool useNew3DSClockSpeed = true;
 #endif
 
 static bool canPreserveOverlayInScene() {
+#if defined(FORCE_DRAW_OVERLAY)
+	return false;
+#else
 	return g_sceneState <= 23 || g_sceneState == 3001;
+#endif
 }
 
 static bool shouldClipToGameWindow() {

@@ -8,13 +8,13 @@ SRCS		=	$(filter-out $(EXCLUDED), $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(SRC_
 OBJS		=	$(patsubst %.cpp, %.o, $(patsubst %.c, %.o, $(SRCS)))
 
 INCDIR =
-CFLAGS = -G0 -O2 -DPSP -DPRELOAD_SOUNDS
+CFLAGS = -G0 -O2 -DPSP -DPRELOAD_SOUNDS -DFORCE_DRAW_OVERLAY
 CXXFLAGS = $(CFLAGS) -fno-exceptions -fno-rtti -fpermissive
 ASFLAGS = $(CFLAGS)
 
 LIBDIR =
 LDFLAGS =
-LIBS = -lSDL2main -lSDL2_image -lpng -ljpeg -lSDL2_mixer -lstdc++ -lSDL2_ttf -lSDL2 -lGL -lGLU -lglut -lfreetype -lz -lbz2 -lpspmp3 -lmad -logg -lvorbisenc -lvorbis -lvorbisfile -lmikmod \
+LIBS = -lSDL2main -lSDL2_image -lpng -ljpeg -lSDL2_mixer -lstdc++ -lSDL2_ttf -lSDL2 -lGL -lGLU -lglut -lfreetype -lharfbuzz -lz -lbz2 -lpspmp3 -lmad -logg -lvorbisenc -lvorbis -lvorbisfile -lmikmod \
          -lpspvfpu -lpsphprm -lpspsdk -lpspctrl -lpspumd -lpsprtc -lpsppower -lpspgum -lpspgu -lpspaudiolib -lpspaudio \
          -lm -lpspvram
 
