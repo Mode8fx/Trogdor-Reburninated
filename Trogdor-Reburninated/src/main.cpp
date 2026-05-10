@@ -157,6 +157,7 @@ int main(int argv, char** args) {
 			menu_main.updateOptionPositions();
 			menu_difficulty.updateOptionPositions();
 			menu_cosmetic.updateOptionPositions();
+			menu_audio.updateOptionPositions();
 			menu_other.updateOptionPositions();
 			menu_cheats.updateOptionPositions();
 			menu_quit.updateOptionPositions();
@@ -476,13 +477,17 @@ int main(int argv, char** args) {
 						menu_difficulty.openMenu();
 						g_sceneState = 302;
 						break;
+					case MENU_OTHER_INDEX:
+						menu_other.openMenu();
+						g_sceneState = 304;
+						break;
 					case MENU_COSMETIC_INDEX:
 						menu_cosmetic.openMenu();
 						g_sceneState = 303;
 						break;
-					case MENU_OTHER_INDEX:
-						menu_other.openMenu();
-						g_sceneState = 304;
+					case MENU_AUDIO_INDEX:
+						menu_audio.openMenu();
+						g_sceneState = 311;
 						break;
 					case MENU_CHEATS_INDEX:
 						menu_cheats.openMenu();
@@ -499,8 +504,8 @@ int main(int argv, char** args) {
 						menu_difficulty.setOptionChoice(MENU_TREASURE_HUTS_INDEX, MENU_TREASURE_HUTS->index_init);
 						menu_cosmetic.setOptionChoice(MENU_FRAME_RATE_INDEX, MENU_FRAME_RATE->index_init);
 						updateFrameRate();
-						menu_cosmetic.setOptionChoice(MENU_MUSIC_INDEX, MENU_MUSIC->index_init);
-						menu_cosmetic.setOptionChoice(MENU_COMMENT_FREQ_INDEX, MENU_COMMENT_FREQ->index_init);
+						menu_audio.setOptionChoice(MENU_MUSIC_INDEX, MENU_MUSIC->index_init);
+						menu_audio.setOptionChoice(MENU_COMMENT_FREQ_INDEX, MENU_COMMENT_FREQ->index_init);
 						menu_cosmetic.setOptionChoice(MENU_BIG_HEAD_MODE_INDEX, MENU_BIG_HEAD_MODE->index_init);
 						//menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, MENU_SCALING->index_init);
 						menu_other.setOptionChoice(MENU_STARTING_LEVEL_INDEX, MENU_STARTING_LEVEL->index_init);
@@ -572,7 +577,7 @@ int main(int argv, char** args) {
 						break;
 				}
 				break;
-			/* Cosmetic Settings Menu */
+			/* Video Settings Menu */
 			case 303:
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
@@ -586,6 +591,20 @@ int main(int argv, char** args) {
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						updateFrameRate();
 						overlayType = MENU_OVERLAY->index;
+						g_sceneState = 301;
+						break;
+					default:
+						break;
+				}
+				break;
+			/* Audio Settings Menu */
+			case 311:
+				g_frameState.increment();
+				sprite_menu_background_ins.renderSprite_menu();
+				menu_audio.renderMenu();
+				switch (menu_audio.handleInput(0)) {
+					case -1: // Press B/Select
+						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;
 						break;
 					default:

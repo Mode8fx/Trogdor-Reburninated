@@ -190,28 +190,30 @@ extern Menu menu_main;
 constexpr auto MENU_DIFFICULTY_INDEX = 0;
 constexpr auto MENU_OTHER_INDEX = 1;
 constexpr auto MENU_COSMETIC_INDEX = 2;
-constexpr auto MENU_CHEATS_INDEX = 3;
-constexpr auto MENU_RESET_SETTINGS_INDEX = 4;
-constexpr auto MENU_HIGHSCORES_INDEX = 5;
+constexpr auto MENU_AUDIO_INDEX = 3;
+constexpr auto MENU_CHEATS_INDEX = 4;
+constexpr auto MENU_RESET_SETTINGS_INDEX = 5;
+constexpr auto MENU_HIGHSCORES_INDEX = 6;
 #if defined(WII) || defined(GAMECUBE)
-constexpr auto MENU_GBA_DEMO_INDEX = 6;
+constexpr auto MENU_GBA_DEMO_INDEX = 7;
+constexpr auto MENU_SOUND_INDEX = 8;
+constexpr auto MENU_CREDITS_INDEX = 9;
+constexpr auto MENU_QUIT_INDEX = 10;
+constexpr auto MENU_NUM_OPTIONS = 11;
+#else
 constexpr auto MENU_SOUND_INDEX = 7;
 constexpr auto MENU_CREDITS_INDEX = 8;
 constexpr auto MENU_QUIT_INDEX = 9;
-constexpr auto MENU_NUM_OPTIONS = 10;
-#else
-constexpr auto MENU_SOUND_INDEX = 6;
-constexpr auto MENU_CREDITS_INDEX = 7;
-constexpr auto MENU_QUIT_INDEX = 8;
 #if defined(NO_QUIT)
-constexpr auto MENU_NUM_OPTIONS = 8;
-#else
 constexpr auto MENU_NUM_OPTIONS = 9;
+#else
+constexpr auto MENU_NUM_OPTIONS = 10;
 #endif
 #endif
 #define MENU_DIFFICULTY     menu_main.options[MENU_DIFFICULTY_INDEX]
 #define MENU_OTHER          menu_main.options[MENU_OTHER_INDEX]
 #define MENU_COSMETIC       menu_main.options[MENU_COSMETIC_INDEX]
+#define MENU_AUDIO          menu_main.options[MENU_AUDIO_INDEX]
 #define MENU_CHEATS         menu_main.options[MENU_CHEATS_INDEX]
 #define MENU_RESET_SETTINGS menu_main.options[MENU_RESET_SETTINGS_INDEX]
 #define MENU_HIGHSCORES     menu_main.options[MENU_HIGHSCORES_INDEX]
@@ -243,19 +245,22 @@ constexpr auto DIFFICULTY_NUM_OPTIONS = 8;
 
 extern Menu menu_cosmetic;
 constexpr auto MENU_FRAME_RATE_INDEX = 0;
-constexpr auto MENU_MUSIC_INDEX = 1;
-constexpr auto MENU_COMMENT_FREQ_INDEX = 2;
+constexpr auto MENU_SCALING_INDEX = 1;
+constexpr auto MENU_OVERLAY_INDEX = 2;
 constexpr auto MENU_BIG_HEAD_MODE_INDEX = 3;
-constexpr auto MENU_SCALING_INDEX = 4;
-constexpr auto MENU_OVERLAY_INDEX = 5;
-constexpr auto COSMETIC_NUM_OPTIONS = 6;
+constexpr auto COSMETIC_NUM_OPTIONS = 4;
 #define MENU_FRAME_RATE    menu_cosmetic.options[MENU_FRAME_RATE_INDEX]
-#define MENU_MUSIC         menu_cosmetic.options[MENU_MUSIC_INDEX]
-#define MENU_COMMENT_FREQ  menu_cosmetic.options[MENU_COMMENT_FREQ_INDEX]
-#define MENU_BIG_HEAD_MODE menu_cosmetic.options[MENU_BIG_HEAD_MODE_INDEX]
-#define IS_BIG_HEAD_MODE   MENU_BIG_HEAD_MODE->isValue(0)
 #define MENU_SCALING       menu_cosmetic.options[MENU_SCALING_INDEX]
 #define MENU_OVERLAY       menu_cosmetic.options[MENU_OVERLAY_INDEX]
+#define MENU_BIG_HEAD_MODE menu_cosmetic.options[MENU_BIG_HEAD_MODE_INDEX]
+#define IS_BIG_HEAD_MODE   MENU_BIG_HEAD_MODE->isValue(0)
+
+extern Menu menu_audio;
+constexpr auto MENU_MUSIC_INDEX = 0;
+constexpr auto MENU_COMMENT_FREQ_INDEX = 1;
+constexpr auto AUDIO_NUM_OPTIONS = 2;
+#define MENU_MUSIC        menu_audio.options[MENU_MUSIC_INDEX]
+#define MENU_COMMENT_FREQ menu_audio.options[MENU_COMMENT_FREQ_INDEX]
 
 extern Menu menu_other;
 constexpr auto MENU_STARTING_LEVEL_INDEX = 0;

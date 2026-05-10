@@ -573,7 +573,8 @@ void Menu::renderMenu() {
 #define option_main_overlay_choices { "None", "Compy 386", "Basement", "Strong Badia" }
 #define option_main_overlay_descriptions_line_1 { "Select a screen border." }
 #define option_main_difficulty_descriptions_line_1 { "Change difficulty settings." }
-#define option_main_cosmetic_descriptions_line_1 { "Change audio and video settings." }
+#define option_main_cosmetic_descriptions_line_1 { "Change video/sprite settings." }
+#define option_main_audio_descriptions_line_1 { "Change audio settings." }
 #define option_main_other_descriptions_line_1 { "Change other gameplay settings." }
 #define option_main_cheats_descriptions_line_1 { "Toggle secret cheats." }
 #define option_main_cheats_descriptions_line_2 { "Follow the hints!" }
@@ -661,11 +662,14 @@ void InitializeMenus() {
 	MENU_DIFFICULTY->prepareMenuOption("Difficulty Settings", option_empty,
 		option_main_difficulty_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
-	MENU_COSMETIC->prepareMenuOption("Cosmetic Settings", option_empty,
-		option_main_cosmetic_descriptions_line_1, option_empty, option_empty,
-		"", 1, true, 0, true, false);
 	MENU_OTHER->prepareMenuOption("Gameplay Settings", option_empty,
 		option_main_other_descriptions_line_1, option_empty, option_empty,
+		"", 1, true, 0, true, false);
+	MENU_COSMETIC->prepareMenuOption("Video Settings", option_empty,
+		option_main_cosmetic_descriptions_line_1, option_empty, option_empty,
+		"", 1, true, 0, true, false);
+	MENU_AUDIO->prepareMenuOption("Audio Settings", option_empty,
+		option_main_audio_descriptions_line_1, option_empty, option_empty,
 		"", 1, true, 0, true, false);
 	MENU_CHEATS->prepareMenuOption("Cheats", option_empty,
 		option_main_cheats_descriptions_line_1, option_main_cheats_descriptions_line_2, option_main_cheats_descriptions_line_3,
@@ -739,21 +743,29 @@ void InitializeMenus() {
 #else
 		"", 9, true, 8, true, false);
 #endif
-	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
-		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
-		"", 2, false, 0, true, false);
-	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_comment_freq_choices,
-		option_main_comment_freq_descriptions_line_1, option_main_comment_freq_descriptions_line_2, option_main_comment_freq_descriptions_line_3,
-		"", 7, false, 3, true, false);
-	MENU_BIG_HEAD_MODE->prepareMenuOption("Big Head Mode", option_on_off,
-		option_main_big_head_mode_descriptions_line_1, option_empty, option_empty,
-		"", 2, true, 1, true, false);
 	MENU_SCALING->prepareMenuOption("Screen Scaling", option_main_scaling_choices,
 		option_main_scaling_descriptions_line_1, option_main_scaling_descriptions_line_2, option_main_scaling_descriptions_line_3,
 		"", 4, false, scalingType, true, false);
 	MENU_OVERLAY->prepareMenuOption("Screen Overlay", option_main_overlay_choices,
 		option_main_overlay_descriptions_line_1, option_empty, option_empty,
 		"", 4, true, overlayType, true, false);
+	MENU_BIG_HEAD_MODE->prepareMenuOption("Big Head Mode", option_on_off,
+		option_main_big_head_mode_descriptions_line_1, option_empty, option_empty,
+		"", 2, true, 1, true, false);
+
+	/* Audio Settings Menu */
+	menu_audio.prepareMenu(AUDIO_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
+	if (!menusAreInitialized) {
+		for (i = 0; i < AUDIO_NUM_OPTIONS; i++) {
+			menu_audio.options[i] = new MenuOption();
+		}
+	}
+	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
+		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
+		"", 2, false, 0, true, false);
+	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_comment_freq_choices,
+		option_main_comment_freq_descriptions_line_1, option_main_comment_freq_descriptions_line_2, option_main_comment_freq_descriptions_line_3,
+		"", 7, false, 3, true, false);
 
 	/* Other Settings Menu */
 	menu_other.prepareMenu(OTHER_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -1046,6 +1058,7 @@ void InitializeMenus() {
 	menu_main.updateOptionPositions();
 	menu_difficulty.updateOptionPositions();
 	menu_cosmetic.updateOptionPositions();
+	menu_audio.updateOptionPositions();
 	menu_cheats.updateOptionPositions();
 	menu_quit.updateOptionPositions();
 	setPreset(MENU_PRESET->index);

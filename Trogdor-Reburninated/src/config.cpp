@@ -135,8 +135,8 @@ void setOptionsFromSaveData() {
 	menu_difficulty.setOptionChoice(MENU_TREASURE_HUTS_INDEX, gameState.settings_difficulty.treasureHuts);
 	menu_cosmetic.setOptionChoice(MENU_FRAME_RATE_INDEX, gameState.settings_cosmetic.frameRate);
 	updateFrameRate();
-	menu_cosmetic.setOptionChoice(MENU_MUSIC_INDEX, gameState.settings_cosmetic.music);
-	menu_cosmetic.setOptionChoice(MENU_COMMENT_FREQ_INDEX, gameState.settings_cosmetic.commentFreq);
+	menu_audio.setOptionChoice(MENU_MUSIC_INDEX, gameState.settings_cosmetic.music);
+	menu_audio.setOptionChoice(MENU_COMMENT_FREQ_INDEX, gameState.settings_cosmetic.commentFreq);
 	menu_cosmetic.setOptionChoice(MENU_BIG_HEAD_MODE_INDEX, gameState.settings_cosmetic.bigHeadMode);
 	menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, gameState.settings_cosmetic.scaling);
 	menu_cosmetic.setOptionChoice(MENU_OVERLAY_INDEX, gameState.addon_v_2_2_1.overlay);

@@ -97,6 +97,7 @@ bool cutsceneIsPlaying = false;
 Menu menu_main;
 Menu menu_difficulty;
 Menu menu_cosmetic;
+Menu menu_audio;
 Menu menu_other;
 Menu menu_cheats;
 MenuNotebook menu_highscores_1;
