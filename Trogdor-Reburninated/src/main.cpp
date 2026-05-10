@@ -6,6 +6,7 @@
 #include "level_data.h"
 
 bool renderOverlay;
+bool shouldRedrawOverlay = true;
 bool menuMusicHasStarted = false;
 Sint8 lastMusicPlayed = -1;
 
@@ -13,6 +14,41 @@ bool showFPS = false;
 #if defined(THREEDS)
 bool useNew3DSClockSpeed = true;
 #endif
+
+static bool canPreserveOverlayInScene() {
+	return g_sceneState <= 23 || g_sceneState == 3001;
+}
+
+static bool shouldClipToGameWindow() {
+	return (g_sceneState >= 2 && g_sceneState <= 23 && g_sceneState != 7 && g_sceneState != 10) || g_sceneState == 3001;
+}
+
+static void setGameWindowClip(bool shouldClip) {
+#if !defined(SDL1)
+	SDL_RenderSetClipRect(renderer, shouldClip ? &gameToWindowDstRect : NULL);
+#else
+	SDL_SetClipRect(windowScreen, shouldClip ? &gameToWindowDstRect : NULL);
+#endif
+}
+
+static void clearScreen(bool preserveOverlay) {
+#if !defined(SDL1)
+	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	if (preserveOverlay) {
+		SDL_RenderFillRect(renderer, &gameToWindowDstRect);
+	} else {
+		SDL_RenderClear(renderer);
+		shouldRedrawOverlay = true;
+	}
+#else
+	if (preserveOverlay) {
+		SDL_FillRect(windowScreen, &gameToWindowDstRect, 0x000000);
+	} else {
+		SDL_FillRect(windowScreen, NULL, 0x000000);
+		shouldRedrawOverlay = true;
+	}
+#endif
+}
 
 int main(int argv, char** args) {
 	isRunning = true;
@@ -55,6 +91,8 @@ int main(int argv, char** args) {
 		(Uint16)text_0_loading.dstrect.w, (Uint16)text_0_loading.dstrect.h };
 
 	while (isRunning) {
+		bool forceFullScreenClear = false;
+
 		/* Update Timers */
 		timer_global.last = timer_global.now;
 		timer_global.now = SDL_GetTicks();
@@ -82,6 +120,7 @@ int main(int argv, char** args) {
 		if (keyPressed(INPUT_X) && (g_sceneState == 2 || g_sceneState == 3 || GM.manually_paused)) {
 #endif
 			overlayType = (overlayType + 1) % 4;
+			shouldRedrawOverlay = true;
 			menu_cosmetic.setOptionChoice(MENU_OVERLAY_INDEX, overlayType);
 		}
 		/* Handle Window Size Changes */
@@ -135,15 +174,13 @@ int main(int argv, char** args) {
 #endif
 			}
 			windowSizeChanged = false;
+			forceFullScreenClear = true;
+			shouldRedrawOverlay = true;
 		}
 
 		/* Clear Screen */
-#if !defined(SDL1)
-		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-		SDL_RenderClear(renderer);
-#else
-		SDL_FillRect(windowScreen, NULL, 0x000000);
-#endif
+		clearScreen(renderOverlay && canPreserveOverlayInScene() && !forceFullScreenClear);
+		setGameWindowClip(shouldClipToGameWindow());
 
 		/* Scene states:
 		 *  0: Loading Screen
@@ -1203,15 +1240,20 @@ int main(int argv, char** args) {
 		/* Free Sound Effects That Have Finished Playing */
 		if (g_sceneState > 0) freeFinishedSoundChunks();
 
-		/* Draw Overlay */
-		if (renderOverlay) {
-			drawOverlay();
-		}
-
-		/* Update Screen */
+		/* Draw FPS Counter */
 		if (showFPS) {
 			printFPS(&font_serif_white_8);
 		}
+
+		setGameWindowClip(false);
+
+		/* Draw Overlay */
+		if (renderOverlay && (shouldRedrawOverlay || !canPreserveOverlayInScene())) {
+			drawOverlay();
+			shouldRedrawOverlay = false;
+		}
+
+		/* Update Screen */
 #if !defined(SDL1)
 		SDL_RenderPresent(renderer);
 #else
