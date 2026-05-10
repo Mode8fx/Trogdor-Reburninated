@@ -25,7 +25,7 @@ PKG        := pkgconf
 # per-function/data sections + LTO + no RTTI/exceptions,
 # plus SDL2 include flags (static).
 CXXFLAGS   := -O2 -Wall -Wextra -std=gnu++11 \
-              -DPC -D_WIN32 \
+              -DPC -D_WIN32 -DPRELOAD_SOUNDS \
               -ffunction-sections -fdata-sections -flto=4 -fno-rtti -fexceptions \
               $(shell $(PKG) --static --cflags sdl2)
 

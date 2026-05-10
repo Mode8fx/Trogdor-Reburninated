@@ -9,6 +9,6 @@ NXDK_SDL = y
 
 NXDK_CXX = y
 
-CFLAGS += -O2 -DXBOX
+CFLAGS += -O2 -DXBOX -DPRELOAD_SOUNDS
 
 include $(NXDK_DIR)/Makefile
