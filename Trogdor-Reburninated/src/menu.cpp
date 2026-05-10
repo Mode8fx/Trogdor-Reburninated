@@ -513,9 +513,9 @@ void Menu::renderMenu() {
 #define option_shuffle_levels_descriptions_line_2 { "different every time you play." }
 #define option_shuffle_levels_descriptions_line_3 { "(Custom / Mode 8 / Chance presets only.)" }
 #define option_main_preset_choices { "Custom", "Flash", "HTML5", "Hard", "Cruel", "Mode 8", "Chance" }
-#define option_main_preset_descriptions_line_1 { "Make your own rules! Cheats and", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "They invented it just for this game!", "Knight/arrow speed and archer freq. are" }
-#define option_main_preset_descriptions_line_2 { "level select are also allowed.", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "Do you has what it takes?", "Fewer extra lives, crazy fast arrows,", "shuffled every level, and levels are" }
-#define option_main_preset_descriptions_line_3 { "", "", "", "For Trogdor pros.", "", "all treasure huts, shuffled levels.", "shuffled! Who knows what could happen?" }
+#define option_main_preset_descriptions_line_1 { "Make your own rules! Cheats and", "Default settings. Same as", "Settings from the HTML5 port.", "Fewer extra lives, faster", "No extra lives, tons of danger.", "They invented it just for this game!", "Go rando! Knight/arrow speed and archer" }
+#define option_main_preset_descriptions_line_2 { "level select are also allowed.", "the original Flash game.", "No peasant penalty, all treasure huts.", "and more abundant enemies.", "Do you has what it takes?", "Fewer extra lives, crazy fast arrows,", "freq. are shuffled every level, and" }
+#define option_main_preset_descriptions_line_3 { "", "", "", "For Trogdor pros.", "", "all treasure huts, shuffled levels.", "level order is shuffled." }
 #define option_main_extra_lives_choices { "0", "1", "2", "3", "4", "5", "10", "20", "30" }
 #define option_main_extra_lives_descriptions_line_1 { "The number of extra lives you start with." }
 #define option_main_lives_interval_choices { "Every 300 points", "Every 500 points", "Every 1000 points", "500 points only", "500 and 1000 only", "1000 points only", "1000 and 2000 only", "None" }
