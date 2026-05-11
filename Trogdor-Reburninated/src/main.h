@@ -157,6 +157,7 @@ SoundEffect sfx_burninate;
 SoundEffect sfx_cutscene;
 SoundEffect sfx_gameover;
 SoundEffect sfx_speedincreased;
+SoundEffect sfx_ending_1;
 SoundEffect sfx_sbdooj_short;
 SoundEffect sfx_itsover;
 

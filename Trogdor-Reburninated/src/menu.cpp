@@ -898,10 +898,10 @@ void InitializeMenus() {
 		"", 14, true, 0, true, false);
 	MENU_MUSIC_TEST->prepareMenuOption("Music", option_number_choices,
 		option_main_sound_descriptions_line_1, option_main_sound_descriptions_line_2, option_empty,
-		"", 13, true, 0, true, false);
+		"", 12, true, 0, true, false);
 	MENU_SFX_TEST->prepareMenuOption("SFX", option_number_choices,
 		option_main_sound_descriptions_line_1, option_main_sound_descriptions_line_2, option_empty,
-		"", 13, true, 0, true, false);
+		"", 14, true, 0, true, false);
 	MENU_VOICE_TEST->prepareMenuOption("Voice", option_number_choices,
 		option_main_sound_descriptions_line_1, option_main_sound_descriptions_line_2, option_empty,
 		"", 23, true, 0, true, false);

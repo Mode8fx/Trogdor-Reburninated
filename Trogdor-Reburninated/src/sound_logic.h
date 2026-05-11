@@ -3,7 +3,7 @@
 #ifndef SOUND_LOGIC_H
 #define SOUND_LOGIC_H
 
-constexpr auto NUM_SOUND_EFFECTS_SFX = 13; // hardcoded; change this as more sound effects are added
+constexpr auto NUM_SOUND_EFFECTS_SFX = 14; // hardcoded; change this as more sound effects are added
 //constexpr auto NUM_SOUND_EFFECTS_GAMEMUSIC = 0;
 constexpr auto NUM_SOUND_EFFECTS_STRONG_BAD = 23;
 constexpr auto NUM_SOUND_CHANNELS = 8;
@@ -15,7 +15,6 @@ constexpr auto SFX_CHANNEL_STRONG_BAD = NUM_SOUND_CHANNELS - 1; // highest chann
 #if defined(PSP)
 constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.bgm";
 constexpr auto MUSIC_MENU = "music/menu.bgm";
-constexpr auto MUSIC_ENDING_1 = "music/ending_1.bgm";
 constexpr auto MUSIC_ENDING_2 = "music/ending_2.bgm";
 constexpr auto MUSIC_STINKOMAN_DAY = "music/stinkoman_level_1.bgm";
 constexpr auto MUSIC_STINKOMAN_EVENING = "music/stinkoman_level_2.bgm";
@@ -29,7 +28,6 @@ constexpr auto MUSIC_STINKOMAN_FINAL_BOSS = "music/stinkoman_mecha_trogador.bgm"
 #else
 constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.ogg";
 constexpr auto MUSIC_MENU = "music/menu.ogg";
-constexpr auto MUSIC_ENDING_1 = "music/ending_1.ogg";
 constexpr auto MUSIC_ENDING_2 = "music/ending_2.ogg";
 constexpr auto MUSIC_STINKOMAN_DAY = "music/stinkoman_level_1.ogg";
 constexpr auto MUSIC_STINKOMAN_EVENING = "music/stinkoman_level_2.ogg";
@@ -97,6 +95,7 @@ extern void setVolume_music(Uint8);
 #define SFX_CUTSCENE      sfxArr[10]
 #define SFX_GAMEOVER      sfxArr[11]
 #define SFX_SPEEDINCREASED sfxArr[12]
+#define SFX_ENDING_1      sfxArr[13]
 #define SFX_SB1           sfxArr_strongBad[0]
 #define SFX_SB2           sfxArr_strongBad[1]
 #define SFX_SB3           sfxArr_strongBad[2]
@@ -154,6 +153,7 @@ extern SoundEffect sfx_burninate;
 extern SoundEffect sfx_cutscene;
 extern SoundEffect sfx_gameover;
 extern SoundEffect sfx_speedincreased;
+extern SoundEffect sfx_ending_1;
 extern SoundEffect sfx_sbdooj_short;
 extern SoundEffect sfx_itsover;
 

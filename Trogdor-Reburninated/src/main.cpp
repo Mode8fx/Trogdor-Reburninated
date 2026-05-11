@@ -787,9 +787,6 @@ int main(int argv, char** args) {
 									playMusic(MUSIC_STINKOMAN_FINAL_BOSS, true, DEFAULT_VOLUME_MUSIC);
 									break;
 								case 11:
-									playMusic(MUSIC_ENDING_1, false, DEFAULT_VOLUME_MUSIC);
-									break;
-								case 12:
 									playMusic(MUSIC_ENDING_2, false, DEFAULT_VOLUME_MUSIC);
 									break;
 								default:

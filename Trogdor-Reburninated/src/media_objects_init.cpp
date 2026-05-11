@@ -475,6 +475,11 @@ void InitializeSFX() {
 	sfx_sbdooj_short.path = "sfx/sbdooj_short.wav";
 	sfx_itsover.path = "sfx/soundboard_itsover.wav";
 #endif
+#if defined(PSP)
+	sfx_ending_1.path = "music/ending_1.bgm";
+#else
+	sfx_ending_1.path = "music/ending_1.ogg";
+#endif
 	sfxArr[0] = &sfx_burn_hut;
 	makeSoundStatic(sfxArr[0]);
 	sfxArr[1] = &sfx_goldget;
@@ -493,6 +498,7 @@ void InitializeSFX() {
 	sfxArr[10] = &sfx_cutscene;
 	sfxArr[11] = &sfx_gameover;
 	sfxArr[12] = &sfx_speedincreased;
+	sfxArr[13] = &sfx_ending_1;
 	sfxArr_strongBad[0] = &sfx_sb1;
 	sfxArr_strongBad[1] = &sfx_sb2;
 	sfxArr_strongBad[2] = &sfx_sb3;
