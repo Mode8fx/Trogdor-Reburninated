@@ -111,9 +111,7 @@ MenuNotebook menu_credits;
 Menu menu_quit;
 
 /* Audio */
-#if defined(PSP)
-OSL_SOUND *bgm;
-#elif defined(XBOX)
+#if defined(XBOX)
 int *bgm;
 #else
 Mix_Music *bgm;

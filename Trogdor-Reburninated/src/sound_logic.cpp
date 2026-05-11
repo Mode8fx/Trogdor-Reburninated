@@ -8,19 +8,7 @@ SoundEffect *sfxChannelArr[NUM_SOUND_CHANNELS_SFX] = { NULL, NULL, NULL, NULL, N
 //SoundEffect *sfxChannel_gameMusic = NULL;
 SoundEffect *sfxChannel_strongBad = NULL;
 
-#if defined(PSP)
-#define LOAD_MUSIC(path)       oslLoadSoundFile((rootDir + path).c_str(), OSL_FMT_STREAM)
-#define STOP_MUSIC()           oslStopSound(bgm)
-#define FREE_MUSIC()           oslDeleteSound(bgm); bgm = NULL;
-#define PAUSE_MUSIC()          oslPauseSound(bgm, 1)
-#define RESUME_MUSIC()         oslPauseSound(bgm, 0)
-#define FADE_MUSIC(ms)         STOP_MUSIC()
-#define LOAD_SFX(sfx)          oslLoadSoundFile((rootDir + sfx->path).c_str(), OSL_FMT_NONE)
-#define PLAY_SFX(sfx, channel) oslPlaySound(sfx->chunk, channel)
-#define FREE_SFX(sfx)          oslDeleteSound(sfx->chunk)
-#define SET_VOLUME_MUSIC(vol)  bgm->volumeLeft = bgm->volumeRight = ((vol * OSL_VOLUME_MAX) / 100)
-#define MUSIC_IS_PLAYING()     (bgm != NULL)
-#elif defined(XBOX)
+#if defined(XBOX)
 #define LOAD_MUSIC(path)       NULL
 #define STOP_MUSIC()           NULL
 #define FREE_MUSIC()           NULL
@@ -52,20 +40,7 @@ void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
 		stopMusic();
 	}
 	bgm = LOAD_MUSIC(musicRelPath);
-#if defined(PSP)
-	if (bgm == NULL) {
-		oslDeinitAudio();
-		oslInitAudio();
-		return;
-	}
-#endif
-#if defined(PSP)
-	if (loop) {
-		oslSetSoundLoop(bgm, true);
-	}
-	oslPlaySound(bgm, SFX_CHANNEL_GAME_MUSIC);
-	setVolume_music(vol);
-#elif defined(XBOX)
+#if defined(XBOX)
 #else
 	setVolume_music(vol);
 	if (loop) {
@@ -109,10 +84,7 @@ Uint8 loadAndPlaySound(SoundEffect *sfx) {
 		sfx->isPlaying = true;
 	}
 	if (sfx->type == 0) {
-#if defined(PSP)
-		sfxIndex = (sfxIndex + 1) % SFX_CHANNEL_GAME_MUSIC;
-		PLAY_SFX(sfx, sfxIndex);
-#elif defined(XBOX)
+#if defined(XBOX)
 		sfxIndex = 0;
 #else
 		sfxIndex = PLAY_SFX(sfx, SFX_CHANNEL_GAME);
@@ -136,9 +108,7 @@ void makeSoundStatic(SoundEffect *sfx) {
 void freeFinishedSoundChunks() {
 	for (sfxIndex = 0; sfxIndex < NUM_SOUND_CHANNELS_SFX; sfxIndex++) {
 		if (sfxChannelArr[sfxIndex] != NULL) {
-#if defined(PSP)
-			if (oslGetSoundChannel(sfxChannelArr[sfxIndex]->chunk) < 0) {
-#elif defined(XBOX)
+#if defined(XBOX)
 			if (false) {
 #else
 			if (!Mix_Playing(sfxIndex)) {
@@ -148,9 +118,7 @@ void freeFinishedSoundChunks() {
 		}
 	}
 	if (sfxChannel_strongBad != NULL) {
-#if defined(PSP)
-		if (oslGetSoundChannel(sfxChannel_strongBad->chunk) < 0) {
-#elif defined(XBOX)
+#if defined(XBOX)
 		if (false) {
 #else
 		if (!Mix_Playing(SFX_CHANNEL_STRONG_BAD)) {
@@ -191,11 +159,5 @@ void freeFinishedSoundChunks() {
 }
 
 void setVolume_music(Uint8 vol) {
-#if defined(PSP)
-	if (MUSIC_IS_PLAYING()) {
-		SET_VOLUME_MUSIC(vol);
-	}
-#else
 	SET_VOLUME_MUSIC(vol);
-#endif
 }

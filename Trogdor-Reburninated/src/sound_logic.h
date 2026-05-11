@@ -12,20 +12,6 @@ constexpr auto SFX_CHANNEL_GAME = -1; // any free channel
 constexpr auto SFX_CHANNEL_GAME_MUSIC = NUM_SOUND_CHANNELS - 2;
 constexpr auto SFX_CHANNEL_STRONG_BAD = NUM_SOUND_CHANNELS - 1; // highest channel
 
-#if defined(PSP)
-constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.bgm";
-constexpr auto MUSIC_MENU = "music/menu.bgm";
-constexpr auto MUSIC_ENDING_2 = "music/ending_2.bgm";
-constexpr auto MUSIC_STINKOMAN_DAY = "music/stinkoman_level_1.bgm";
-constexpr auto MUSIC_STINKOMAN_EVENING = "music/stinkoman_level_2.bgm";
-constexpr auto MUSIC_STINKOMAN_NIGHT = "music/stinkoman_level_5.bgm";
-constexpr auto MUSIC_STINKOMAN_DAWN = "music/stinkoman_level_6.bgm";
-constexpr auto MUSIC_STINKOMAN_MIDPOINT = "music/stinkoman_level_9.bgm";
-constexpr auto MUSIC_STINKOMAN_LAST_10 = "music/stinkoman_level_10.bgm";
-constexpr auto MUSIC_STINKOMAN_BOSS = "music/stinkoman_boss_fight.bgm";
-constexpr auto MUSIC_STINKOMAN_HOMESTRETCH = "music/stinkoman_z_sabre.bgm";
-constexpr auto MUSIC_STINKOMAN_FINAL_BOSS = "music/stinkoman_mecha_trogador.bgm";
-#else
 constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.ogg";
 constexpr auto MUSIC_MENU = "music/menu.ogg";
 constexpr auto MUSIC_ENDING_2 = "music/ending_2.ogg";
@@ -38,7 +24,6 @@ constexpr auto MUSIC_STINKOMAN_LAST_10 = "music/stinkoman_level_10.ogg";
 constexpr auto MUSIC_STINKOMAN_BOSS = "music/stinkoman_boss_fight.ogg";
 constexpr auto MUSIC_STINKOMAN_HOMESTRETCH = "music/stinkoman_z_sabre.ogg";
 constexpr auto MUSIC_STINKOMAN_FINAL_BOSS = "music/stinkoman_mecha_trogador.ogg";
-#endif
 
 struct SoundEffect {
 	bool isPlaying = false;
@@ -47,18 +32,14 @@ struct SoundEffect {
 	const char *path;
 	//unsigned char *data;
 	//unsigned int len;
-#if defined(PSP)
-	OSL_SOUND *chunk;
-#elif defined(XBOX)
+#if defined(XBOX)
 	int *chunk;
 #else
 	Mix_Chunk *chunk;
 #endif
 };
 
-#if defined(PSP)
-extern OSL_SOUND *bgm;
-#elif defined(XBOX)
+#if defined(XBOX)
 extern int *bgm;
 #else
 extern Mix_Music *bgm;

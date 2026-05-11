@@ -475,11 +475,7 @@ void InitializeSFX() {
 	sfx_sbdooj_short.path = "sfx/sbdooj_short.wav";
 	sfx_itsover.path = "sfx/soundboard_itsover.wav";
 #endif
-#if defined(PSP)
-	sfx_ending_1.path = "music/ending_1.bgm";
-#else
 	sfx_ending_1.path = "music/ending_1.ogg";
-#endif
 	sfxArr[0] = &sfx_burn_hut;
 	makeSoundStatic(sfxArr[0]);
 	sfxArr[1] = &sfx_goldget;

@@ -989,11 +989,7 @@ void InitializeMenus() {
 #else
 	menu_credits.pages[j]->setTextLine(2, "SDL2");
 	menu_credits.pages[j]->setTextLine(3, "SDL2_image");
-#if defined(PSP)
-	menu_credits.pages[j]->setTextLine(4, "OSLibAudio");
-#else
 	menu_credits.pages[j]->setTextLine(4, "SDL2_mixer");
-#endif
 	menu_credits.pages[j]->setTextLine(5, "SDL2_ttf");
 	menu_credits.pages[j]->setTextLine(6, "");
 #endif

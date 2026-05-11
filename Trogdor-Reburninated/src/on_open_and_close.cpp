@@ -67,10 +67,6 @@ void InitializeDisplay() {
 }
 
 void InitializeSound() {
-#if defined(PSP)
-	oslInitAudio();
-#elif defined(XBOX)
-#else
 	if (Mix_OpenAudio(AUDIO_SAMPLE_RATE, AUDIO_TROG_FORMAT, 2, 2048) < 0) {
 #if !defined(SDL1)
 		SDL_Log("Unable to initialize SDL_Mixer: %s", Mix_GetError());
@@ -80,7 +76,6 @@ void InitializeSound() {
 	Mix_AllocateChannels(NUM_SOUND_CHANNELS);
 	Mix_Volume(SFX_CHANNEL_GAME, (int)(gameState.settings_general.sfxVolume * 128.0 / 100));
 	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(gameState.settings_general.sfxVolume * 128.0 / 100));
-#endif
 }
 
 void InitializeController() {
@@ -164,37 +159,19 @@ void DestroyAll() {
 	/* Sound */
 	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
 		if (sfxArr[i]->chunk != NULL) {
-#if defined(PSP)
-			oslDeleteSound(sfxArr[i]->chunk);
-#elif defined(XBOX)
-#else
 			Mix_FreeChunk(sfxArr[i]->chunk);
-#endif
 		}
 	}
 	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
 		if (sfxArr_strongBad[i]->chunk != NULL) {
-#if defined(PSP)
-			oslDeleteSound(sfxArr_strongBad[i]->chunk);
-#elif defined(XBOX)
-#else
 			Mix_FreeChunk(sfxArr_strongBad[i]->chunk);
-#endif
 		}
 	}
-#if defined(PSP)
-	if (bgm != NULL) {
-		oslDeleteSound(bgm);
-	}
-	oslDeinitAudio();
-#elif defined(XBOX)
-#else
 	Mix_HaltMusic();
 	//Mix_FreeMusic(bgm);
 	Mix_CloseAudio();
 #if !(defined(WII) || defined(GAMECUBE))
 	Mix_Quit();
-#endif
 #endif
 	/* Controller */
 	closeController();
