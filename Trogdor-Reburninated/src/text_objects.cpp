@@ -12,12 +12,13 @@ char tempChar[2] = { '\0', '\0' };
 SDL_Surface *temp_text;
 #endif
 
-void setText(std::string text, TextObject *textObj, FontObject *fontObj) {
+void setText(const std::string &text, TextObject *textObj, FontObject *fontObj) {
 	textObj->str = text;
 	STRCPY(tempCharArray, textObj->str.c_str());
 	textObj->dstrect.w = 0;
 	textObj->dstrect.h = 0;
-	for (uint_i = 0; uint_i < textObj->str.length(); uint_i++) {
+	const unsigned int textLength = (unsigned int)textObj->str.length();
+	for (uint_i = 0; uint_i < textLength; uint_i++) {
 		i = tempCharArray[uint_i] - 32;
 #if !defined(SDL1)
 		if (fontObj->textChars[i].texture == NULL) {
@@ -37,7 +38,7 @@ void setTextPos(TextObject *textObj, Sint16 pos_x, Sint16 pos_y) {
     textObj->dstrect.y = pos_y;
 }
 
-void updateText(TextObject *textObj, string text) {
+void updateText(TextObject *textObj, const string &text) {
     textObj->str = text;
 }
 
@@ -62,7 +63,7 @@ void setTextChar(const char *text, TTF_Font *font, SDL_Color text_color, TextCha
     textCharObj->dstrect.h = charTempY;
 }
 
-void renderTextChar(TextCharObject textCharObj) {
+void renderTextChar(const TextCharObject &textCharObj) {
     outputRect = textCharObj.dstrect;
     outputRect.x += gameToWindowDstRect.x;
     outputRect.y += gameToWindowDstRect.y;
@@ -73,18 +74,20 @@ void renderTextChar(TextCharObject textCharObj) {
 #endif
 }
 
-void renderText(TextObject textObj, FontObject fontObj) {
+void renderText(const TextObject &textObj, const FontObject &fontObj) {
 	STRCPY(tempCharArray, textObj.str.c_str());
 	charWidthCounter = 0;
-	for (charCounter = 0; charCounter < textObj.str.length(); charCounter++) {
-		setTextCharPosX(&CHAR_AT_INDEX(charCounter, fontObj.textChars), (textObj.dstrect.x + charWidthCounter));
-		setTextCharPosY(&CHAR_AT_INDEX(charCounter, fontObj.textChars), textObj.dstrect.y);
-		renderTextChar(CHAR_AT_INDEX(charCounter, fontObj.textChars));
-		charWidthCounter += CHAR_AT_INDEX(charCounter, fontObj.textChars).dstrect.w;
+	const Uint8 textLength = (Uint8)textObj.str.length();
+	for (charCounter = 0; charCounter < textLength; charCounter++) {
+		TextCharObject textChar = CHAR_AT_INDEX(charCounter, fontObj.textChars);
+		textChar.dstrect.x = textObj.dstrect.x + charWidthCounter;
+		textChar.dstrect.y = textObj.dstrect.y;
+		renderTextChar(textChar);
+		charWidthCounter += textChar.dstrect.w;
 	}
 }
 
-void renderTextChar_app(TextCharObject textCharObj) {
+void renderTextChar_app(const TextCharObject &textCharObj) {
 	outputRect = textCharObj.dstrect;
 	outputRect.x += appToWindowDstRect.x;
 	outputRect.y += appToWindowDstRect.y;
@@ -95,18 +98,20 @@ void renderTextChar_app(TextCharObject textCharObj) {
 #endif
 }
 
-void renderText_app(TextObject textObj, FontObject fontObj) {
+void renderText_app(const TextObject &textObj, const FontObject &fontObj) {
 	STRCPY(tempCharArray, textObj.str.c_str());
 	charWidthCounter = 0;
-	for (charCounter = 0; charCounter < textObj.str.length(); charCounter++) {
-		setTextCharPosX(&CHAR_AT_INDEX(charCounter, fontObj.textChars), (textObj.dstrect.x + charWidthCounter));
-		setTextCharPosY(&CHAR_AT_INDEX(charCounter, fontObj.textChars), textObj.dstrect.y);
-		renderTextChar_app(CHAR_AT_INDEX(charCounter, fontObj.textChars));
-		charWidthCounter += CHAR_AT_INDEX(charCounter, fontObj.textChars).dstrect.w;
+	const Uint8 textLength = (Uint8)textObj.str.length();
+	for (charCounter = 0; charCounter < textLength; charCounter++) {
+		TextCharObject textChar = CHAR_AT_INDEX(charCounter, fontObj.textChars);
+		textChar.dstrect.x = textObj.dstrect.x + charWidthCounter;
+		textChar.dstrect.y = textObj.dstrect.y;
+		renderTextChar_app(textChar);
+		charWidthCounter += textChar.dstrect.w;
 	}
 }
 
-void renderTextChar_menu(TextCharObject textCharObj) {
+void renderTextChar_menu(const TextCharObject &textCharObj) {
 	outputRect = textCharObj.dstrect;
 	outputRect.x += menuToWindowDstRect.x;
 	outputRect.y += menuToWindowDstRect.y;
@@ -117,23 +122,17 @@ void renderTextChar_menu(TextCharObject textCharObj) {
 #endif
 }
 
-void renderText_menu(TextObject textObj, FontObject fontObj) {
+void renderText_menu(const TextObject &textObj, const FontObject &fontObj) {
 	STRCPY(tempCharArray, textObj.str.c_str());
 	charWidthCounter = 0;
-	for (charCounter = 0; charCounter < textObj.str.length(); charCounter++) {
-		setTextCharPosX(&CHAR_AT_INDEX(charCounter, fontObj.textChars), (textObj.dstrect.x + charWidthCounter));
-		setTextCharPosY(&CHAR_AT_INDEX(charCounter, fontObj.textChars), textObj.dstrect.y);
-		renderTextChar_menu(CHAR_AT_INDEX(charCounter, fontObj.textChars));
-		charWidthCounter += CHAR_AT_INDEX(charCounter, fontObj.textChars).dstrect.w;
+	const Uint8 textLength = (Uint8)textObj.str.length();
+	for (charCounter = 0; charCounter < textLength; charCounter++) {
+		TextCharObject textChar = CHAR_AT_INDEX(charCounter, fontObj.textChars);
+		textChar.dstrect.x = textObj.dstrect.x + charWidthCounter;
+		textChar.dstrect.y = textObj.dstrect.y;
+		renderTextChar_menu(textChar);
+		charWidthCounter += textChar.dstrect.w;
 	}
-}
-
-void setTextCharPosX(TextCharObject *textCharObj, int pos_x) {
-    textCharObj->dstrect.x = pos_x;
-}
-
-void setTextCharPosY(TextCharObject *textCharObj, int pos_y) {
-    textCharObj->dstrect.y = pos_y;
 }
 
 void destroyTextObjectTexture(TextCharObject textCharObj) {

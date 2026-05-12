@@ -8,7 +8,6 @@
 #include "input.h"
 #include "include_fonts.h"
 #include "include_graphics.h"
-#include "include_sfx.h"
 
 ifstream ifile;
 

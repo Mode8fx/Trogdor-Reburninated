@@ -42,18 +42,16 @@ struct FontObject {
 	TextCharObject textChars[126 + 1 - 32];
 };
 
-extern void setText(std::string, TextObject *, FontObject *);
+extern void setText(const std::string &, TextObject *, FontObject *);
 extern void setTextPos(TextObject *, Sint16, Sint16);
-extern void updateText(TextObject *, string);
+extern void updateText(TextObject *, const string &);
 extern void setTextChar(const char *, TTF_Font *, SDL_Color, TextCharObject *);
-extern void renderTextChar(TextCharObject);
-extern void renderText(TextObject, FontObject);
-extern void renderTextChar_app(TextCharObject);
-extern void renderText_app(TextObject, FontObject);
-extern void renderTextChar_menu(TextCharObject);
-extern void renderText_menu(TextObject, FontObject);
-extern void setTextCharPosX(TextCharObject *, int);
-extern void setTextCharPosY(TextCharObject *, int);
+extern void renderTextChar(const TextCharObject &);
+extern void renderText(const TextObject &, const FontObject &);
+extern void renderTextChar_app(const TextCharObject &);
+extern void renderText_app(const TextObject &, const FontObject &);
+extern void renderTextChar_menu(const TextCharObject &);
+extern void renderText_menu(const TextObject &, const FontObject &);
 extern void destroyTextObjectTexture(TextCharObject);
 extern int getDesiredFontSize(FontObject *);
 extern void setFont(FontObject *, unsigned char[], unsigned int, int, double, int, SDL_Color, bool);

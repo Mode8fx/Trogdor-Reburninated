@@ -135,7 +135,7 @@ void MenuNotebook::renderNotebook() {
 /* MENU OPTION */
 /***************/
 
-void MenuOption::prepareMenuOption(std::string label_ptr, const std::vector<std::string> choice_ptr, const std::vector<std::string> desc_ptr_1, const std::vector<std::string> desc_ptr_2, const std::vector<std::string> desc_ptr_3, std::string altDesc_ptr, Uint8 numCh, bool oneDesc, Sint8 start, bool wrap, bool canFreeze) {
+void MenuOption::prepareMenuOption(const std::string &label_ptr, const std::vector<std::string> &choice_ptr, const std::vector<std::string> &desc_ptr_1, const std::vector<std::string> &desc_ptr_2, const std::vector<std::string> &desc_ptr_3, const std::string &altDesc_ptr, Uint8 numCh, bool oneDesc, Sint8 start, bool wrap, bool canFreeze) {
 	labelPtr = label_ptr;
 	if (!menusAreInitialized) {
 		choicePtr = choice_ptr;
@@ -207,13 +207,13 @@ void MenuOption::updateLabel() {
 
 // this initializes text chars used in choices that aren't initially selected
 void MenuOption::initChoicesAndDescriptions() {
-	if (choicePtr.size() != 0) {
+	if (!choicePtr.empty()) {
 		for (counter = 0; counter < numChoices; counter++) {
 			if (optionCanFreeze) setText(choicePtr[counter], &choice, menuFont_frozen);
 			setText(choicePtr[counter], &choice, menuFont);
 		}
 	}
-	if (descPtr_1.size() != 0) {
+	if (!descPtr_1.empty()) {
 		if (!oneDescription) {
 			for (counter = 0; counter < numChoices; counter++) {
 				if (optionCanFreeze) {
@@ -231,7 +231,7 @@ void MenuOption::initChoicesAndDescriptions() {
 
 void MenuOption::updateChoice(Sint8 ind) {
 	if (!optionIsLocked) {
-		if (choicePtr.size() != 0) {
+		if (!choicePtr.empty()) {
 			if (optionCanFreeze && (optionIsFrozen || optionIsLocked)) {
 				setText(choicePtr[ind], &choice, menuFont_frozen);
 			} else {
@@ -245,7 +245,7 @@ void MenuOption::updateChoice(Sint8 ind) {
 
 void MenuOption::updateDescription(Sint8 ind) {
 	if (!optionIsLocked) {
-		if (descPtr_1.size() != 0) {
+		if (!descPtr_1.empty()) {
 			if (oneDescription) {
 				setText(descPtr_1[0], &description_1, menuFont);
 				setText(descPtr_2[0], &description_2, menuFont);

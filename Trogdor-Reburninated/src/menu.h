@@ -110,7 +110,7 @@ class MenuOption {
 		bool optionIsLocked;
 		MenuOption() {
 		}
-		void prepareMenuOption(std::string, const std::vector<std::string>, const std::vector<std::string>, const std::vector<std::string>, const std::vector<std::string>, std::string, Uint8, bool, Sint8, bool, bool);
+		void prepareMenuOption(const std::string &, const std::vector<std::string> &, const std::vector<std::string> &, const std::vector<std::string> &, const std::vector<std::string> &, const std::string &, Uint8, bool, Sint8, bool, bool);
 		void setFrozen(bool, Sint8);
 		void setLocked(bool);
 		void initLabel();
