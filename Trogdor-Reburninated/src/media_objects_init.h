@@ -14,7 +14,7 @@ extern void InitializeSFX();
 extern void InitializeSpritesPart1();
 extern void InitializeSpritesPart2();
 extern void exceptMissingFile(const char *);
-extern void destroySprite(SpriteObject);
+extern void destroySprite(SpriteObject *);
 extern void destroyAllSprites();
 extern void destroyTextChars(TextCharObject, Uint8);
 extern void destroyAllTextChars();

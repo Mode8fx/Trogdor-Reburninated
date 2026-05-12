@@ -511,13 +511,20 @@ void InitializeSFX() {
 void destroySprite(SpriteObject *sprite) {
 	for (i = 0; i < sprite->numFrames; i++) {
 		for (j = 0; j < sprite->numForms; j++) {
-			if (&sprite->sub[i][j] != NULL) {
-#if !defined(SDL1)
-				SDL_DestroyTexture(sprite->sub[i][j].texture);
-#else
-				SDL_FreeSurface(sprite->sub[i][j].surface);
-#endif
+			if (sprite->sub[i] == NULL) {
+				break;
 			}
+#if !defined(SDL1)
+			if (sprite->sub[i][j].texture != NULL) {
+				SDL_DestroyTexture(sprite->sub[i][j].texture);
+				sprite->sub[i][j].texture = NULL;
+			}
+#else
+			if (sprite->sub[i][j].surface != NULL) {
+				SDL_FreeSurface(sprite->sub[i][j].surface);
+				sprite->sub[i][j].surface = NULL;
+			}
+#endif
 		}
 		if (sprite->sub[i] != NULL) {
 			free(sprite->sub[i]);
