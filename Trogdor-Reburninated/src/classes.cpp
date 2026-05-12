@@ -624,7 +624,11 @@ void MenuManager::handlePageChange() {
 GameManager::GameManager() {
 }
 
-GameManager::GameManager(MenuManager mm) {
+GameManager::GameManager(bool initializeGame) {
+	if (!initializeGame) {
+		return;
+	}
+
 	initialized = true;
 	forceMusicStart = true;
 

@@ -19,8 +19,6 @@ struct TextObject {
     TextRect dstrect;
 };
 
-#define CHAR_AT_INDEX(index, charArr) charArr[tempCharArray[index] - 32]
-
 /* Single Characters */
 struct TextCharObject {
 #if !defined(SDL1)

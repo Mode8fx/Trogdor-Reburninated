@@ -3,29 +3,50 @@
 #include "window.h"
 #include "config.h"
 
-char tempCharArray[64];
-Uint8 charCounter;
-Sint16 charWidthCounter;
-
-char tempChar[2] = { '\0', '\0' };
 #if !defined(SDL1)
 SDL_Surface *temp_text;
 #endif
 
+static inline Uint8 getTextCharIndex(unsigned char textChar) {
+	return (Uint8)(textChar - 32);
+}
+
+static inline void renderTextCharAtPosition(const TextCharObject &textCharObj, Sint16 pos_x, Sint16 pos_y, const SDL_Rect &offsetRect) {
+	outputRect = textCharObj.dstrect;
+	outputRect.x = pos_x + offsetRect.x;
+	outputRect.y = pos_y + offsetRect.y;
+#if !defined(SDL1)
+	SDL_RenderCopy(renderer, textCharObj.texture, NULL, &outputRect);
+#else
+	SDL_BlitSurface(textCharObj.surface, NULL, windowScreen, &outputRect);
+#endif
+}
+
+static void renderTextInternal(const TextObject &textObj, const FontObject &fontObj, const SDL_Rect &offsetRect) {
+	const char *textChars = textObj.str.c_str();
+	Sint16 charWidth = 0;
+	const string::size_type textLength = textObj.str.length();
+	for (string::size_type charIndex = 0; charIndex < textLength; charIndex++) {
+		const TextCharObject &textChar = fontObj.textChars[getTextCharIndex((unsigned char)textChars[charIndex])];
+		renderTextCharAtPosition(textChar, textObj.dstrect.x + charWidth, textObj.dstrect.y, offsetRect);
+		charWidth += textChar.dstrect.w;
+	}
+}
+
 void setText(const std::string &text, TextObject *textObj, FontObject *fontObj) {
 	textObj->str = text;
-	STRCPY(tempCharArray, textObj->str.c_str());
 	textObj->dstrect.w = 0;
 	textObj->dstrect.h = 0;
-	const unsigned int textLength = (unsigned int)textObj->str.length();
-	for (uint_i = 0; uint_i < textLength; uint_i++) {
-		i = tempCharArray[uint_i] - 32;
+	const char *textChars = textObj->str.c_str();
+	const string::size_type textLength = textObj->str.length();
+	for (string::size_type charIndex = 0; charIndex < textLength; charIndex++) {
+		i = getTextCharIndex((unsigned char)textChars[charIndex]);
 #if !defined(SDL1)
 		if (fontObj->textChars[i].texture == NULL) {
 #else
 		if (fontObj->textChars[i].surface == NULL) {
 #endif
-			tempChar[0] = i + 32;
+			char tempChar[2] = { (char)(i + 32), '\0' };
 			setTextChar(tempChar, fontObj->font, fontObj->color, &fontObj->textChars[i]);
 		}
 		textObj->dstrect.w += fontObj->textChars[i].dstrect.w;
@@ -64,75 +85,27 @@ void setTextChar(const char *text, TTF_Font *font, SDL_Color text_color, TextCha
 }
 
 void renderTextChar(const TextCharObject &textCharObj) {
-    outputRect = textCharObj.dstrect;
-    outputRect.x += gameToWindowDstRect.x;
-    outputRect.y += gameToWindowDstRect.y;
-#if !defined(SDL1)
-    SDL_RenderCopy(renderer, textCharObj.texture, NULL, &outputRect);
-#else
-    SDL_BlitSurface(textCharObj.surface, NULL, windowScreen, &outputRect);
-#endif
+    renderTextCharAtPosition(textCharObj, textCharObj.dstrect.x, textCharObj.dstrect.y, gameToWindowDstRect);
 }
 
 void renderText(const TextObject &textObj, const FontObject &fontObj) {
-	STRCPY(tempCharArray, textObj.str.c_str());
-	charWidthCounter = 0;
-	const Uint8 textLength = (Uint8)textObj.str.length();
-	for (charCounter = 0; charCounter < textLength; charCounter++) {
-		TextCharObject textChar = CHAR_AT_INDEX(charCounter, fontObj.textChars);
-		textChar.dstrect.x = textObj.dstrect.x + charWidthCounter;
-		textChar.dstrect.y = textObj.dstrect.y;
-		renderTextChar(textChar);
-		charWidthCounter += textChar.dstrect.w;
-	}
+	renderTextInternal(textObj, fontObj, gameToWindowDstRect);
 }
 
 void renderTextChar_app(const TextCharObject &textCharObj) {
-	outputRect = textCharObj.dstrect;
-	outputRect.x += appToWindowDstRect.x;
-	outputRect.y += appToWindowDstRect.y;
-#if !defined(SDL1)
-	SDL_RenderCopy(renderer, textCharObj.texture, NULL, &outputRect);
-#else
-	SDL_BlitSurface(textCharObj.surface, NULL, windowScreen, &outputRect);
-#endif
+	renderTextCharAtPosition(textCharObj, textCharObj.dstrect.x, textCharObj.dstrect.y, appToWindowDstRect);
 }
 
 void renderText_app(const TextObject &textObj, const FontObject &fontObj) {
-	STRCPY(tempCharArray, textObj.str.c_str());
-	charWidthCounter = 0;
-	const Uint8 textLength = (Uint8)textObj.str.length();
-	for (charCounter = 0; charCounter < textLength; charCounter++) {
-		TextCharObject textChar = CHAR_AT_INDEX(charCounter, fontObj.textChars);
-		textChar.dstrect.x = textObj.dstrect.x + charWidthCounter;
-		textChar.dstrect.y = textObj.dstrect.y;
-		renderTextChar_app(textChar);
-		charWidthCounter += textChar.dstrect.w;
-	}
+	renderTextInternal(textObj, fontObj, appToWindowDstRect);
 }
 
 void renderTextChar_menu(const TextCharObject &textCharObj) {
-	outputRect = textCharObj.dstrect;
-	outputRect.x += menuToWindowDstRect.x;
-	outputRect.y += menuToWindowDstRect.y;
-#if !defined(SDL1)
-	SDL_RenderCopy(renderer, textCharObj.texture, NULL, &outputRect);
-#else
-	SDL_BlitSurface(textCharObj.surface, NULL, windowScreen, &outputRect);
-#endif
+	renderTextCharAtPosition(textCharObj, textCharObj.dstrect.x, textCharObj.dstrect.y, menuToWindowDstRect);
 }
 
 void renderText_menu(const TextObject &textObj, const FontObject &fontObj) {
-	STRCPY(tempCharArray, textObj.str.c_str());
-	charWidthCounter = 0;
-	const Uint8 textLength = (Uint8)textObj.str.length();
-	for (charCounter = 0; charCounter < textLength; charCounter++) {
-		TextCharObject textChar = CHAR_AT_INDEX(charCounter, fontObj.textChars);
-		textChar.dstrect.x = textObj.dstrect.x + charWidthCounter;
-		textChar.dstrect.y = textObj.dstrect.y;
-		renderTextChar_menu(textChar);
-		charWidthCounter += textChar.dstrect.w;
-	}
+	renderTextInternal(textObj, fontObj, menuToWindowDstRect);
 }
 
 void destroyTextObjectTexture(TextCharObject textCharObj) {
@@ -163,15 +136,15 @@ void setFont(FontObject *fontObj, unsigned char font_data[], unsigned int font_l
 }
 
 void initializeFont_numbers(FontObject *fontObj) {
-	STRCPY(tempCharArray, "0123456789");
+	const char digitChars[] = "0123456789";
 	for (uint_i = 0; uint_i < 10; uint_i++) {
-		i = tempCharArray[uint_i] - 32;
+		i = getTextCharIndex((unsigned char)digitChars[uint_i]);
 #if !defined(SDL1)
 		if (fontObj->textChars[i].texture == NULL) {
 #else
 		if (fontObj->textChars[i].surface == NULL) {
 #endif
-			tempChar[0] = i + 32;
+			char tempChar[2] = { (char)(i + 32), '\0' };
 			setTextChar(tempChar, fontObj->font, fontObj->color, &fontObj->textChars[i]);
 		}
 	}

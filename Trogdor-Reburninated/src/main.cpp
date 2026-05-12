@@ -323,7 +323,7 @@ int main(int argv, char** args) {
 						g_sceneState = 3001;
 					} else {
 						MM.continueHighlighted = false;
-						GM = GameManager(MM);
+						GM = GameManager(true);
 						GM.levelInit();
 						updateText(&text_4_score_val, to_string(GM.score));
 						updateText(&text_4_mans_val, to_string(GM.mans));
@@ -452,7 +452,7 @@ int main(int argv, char** args) {
 							MM.cursor.dstrect.y = (int)(text_3_continue_2.dstrect.y / gameHiResMult);
 						}
 					} else if (keyPressed(INPUT_A) || keyPressed(INPUT_START)) {
-						GM = GameManager(MM);
+						GM = GameManager(true);
 						GM.levelInit();
 						updateText(&text_4_score_val, to_string(GM.score));
 						updateText(&text_4_mans_val, to_string(GM.mans));

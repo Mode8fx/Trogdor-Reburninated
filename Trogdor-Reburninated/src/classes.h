@@ -214,7 +214,7 @@ class GameManager {
 		Uint8 levelIndices[33];                 // used for "Shuffle Levels" setting
 		Uint32 randomSeed;                      // random seed used for several things; saved for level shuffling
 		GameManager();
-		GameManager(MenuManager);
+		GameManager(bool);
 		void resetAllSrcRects();
 		void setArcherFrequency();
 		void setBurnRate();
