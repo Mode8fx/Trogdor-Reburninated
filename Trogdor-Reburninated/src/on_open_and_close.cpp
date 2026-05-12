@@ -67,7 +67,7 @@ void InitializeDisplay() {
 }
 
 void InitializeSound() {
-	if (Mix_OpenAudio(AUDIO_SAMPLE_RATE, AUDIO_TROG_FORMAT, 2, 2048) < 0) {
+	if (Mix_OpenAudio(AUDIO_SAMPLE_RATE, AUDIO_TROG_FORMAT, 2, AUDIO_TROG_CHUNK_SIZE) < 0) {
 #if !defined(SDL1)
 		SDL_Log("Unable to initialize SDL_Mixer: %s", Mix_GetError());
 #endif

@@ -69,8 +69,10 @@ constexpr auto PI = 3.14159265;
 
 #if defined(THREEDS) || defined(PSP)
 constexpr auto AUDIO_SAMPLE_RATE = 22050;
+constexpr auto AUDIO_TROG_CHUNK_SIZE = 2048;
 #else
 constexpr auto AUDIO_SAMPLE_RATE = 44100;
+constexpr auto AUDIO_TROG_CHUNK_SIZE = 1024;
 #endif
 
 extern void applyColorKey(SDL_Surface *, bool);

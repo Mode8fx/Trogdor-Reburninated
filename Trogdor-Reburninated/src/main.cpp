@@ -252,7 +252,6 @@ int main(int argv, char** args) {
 							text_0_loading_censor_rect.x += font_serif_white_14.textChars['.' - 32].dstrect.w;
 							break;
 						case 11:
-							InitializeMusic();
 							text_0_loading_censor_rect.x += font_serif_white_14.textChars['.' - 32].dstrect.w;
 							break;
 						case 13:

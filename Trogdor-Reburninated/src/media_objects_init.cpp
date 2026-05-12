@@ -396,86 +396,58 @@ void InitializeText_OptionsMenu(FontObject *fontObj) {
 	//setText("PLACEHOLDER", &textVar, fontObj);
 }
 
-void InitializeMusic() {
+static string getPreferredSfxPath(const char *filePath) {
+    string basePath(filePath);
+
+    string wavPath = basePath + ".wav";
+    SDL_RWops *file = SDL_RWFromFile((rootDir + wavPath).c_str(), "rb");
+
+    if (file != nullptr) {
+        SDL_RWclose(file);
+        return wavPath;
+    }
+
+    return basePath + ".ogg";
 }
 
 void InitializeSFX() {
-#if defined(OGG_SFX)
-	sfx_burn_hut.path = "sfx/burn_hut.ogg";
-	sfx_goldget.path = "sfx/trog_goldget.ogg";
-	sfx_peasantscream.path = "sfx/trog_peasantscream.ogg";
-	sfx_sfx2.path = "sfx/trog_sfx2.ogg";
-	sfx_trogador.path = "sfx/trogador.ogg";
-	sfx_arrow.path = "sfx/trog_arrow.ogg";
-	sfx_squish.path = "sfx/squish.ogg";
-	sfx_death.path = "sfx/death.ogg";
-	sfx_kick.path = "sfx/kick.ogg";
-	sfx_burninate.path = "sfx/burninate.ogg";
-	sfx_cutscene.path = "sfx/cutscene.ogg";
-	sfx_gameover.path = "sfx/gameover.ogg";
-	sfx_speedincreased.path = "sfx/speedincreased.ogg";
-	sfx_sb1.path = "sfx/trog_sb1.ogg";
-	sfx_sb2.path = "sfx/trog_sb2.ogg";
-	sfx_sb3.path = "sfx/trog_sb3.ogg";
-	sfx_sb4.path = "sfx/trog_sb4.ogg";
-	sfx_sb5.path = "sfx/trog_sb5.ogg";
-	sfx_sb6.path = "sfx/trog_sb6.ogg";
-	sfx_sb7.path = "sfx/trog_sb7.ogg";
-	sfx_sbarch.path = "sfx/trog_sbarch.ogg";
-	sfx_sbarchend.path = "sfx/trog_sbarchend.ogg";
-	sfx_sbbest.path = "sfx/trog_sbbest.ogg";
-	sfx_sbdooj.path = "sfx/trog_sbdooj.ogg";
-	sfx_sbgameover.path = "sfx/trog_sbgameover.ogg";
-	sfx_sbkerrek.path = "sfx/trog_sbkerrek.ogg";
-	sfx_sblevelbeat.path = "sfx/trog_sblevelbeat.ogg";
-	sfx_sbscore.path = "sfx/trog_sbscore.ogg";
-	sfx_sbsecret.path = "sfx/trog_sbsecret.ogg";
-	sfx_sbsquish1.path = "sfx/trog_sbsquish1.ogg";
-	sfx_sbsquish2.path = "sfx/trog_sbsquish2.ogg";
-	sfx_sbwin.path = "sfx/trog_sbwin.ogg";
-	sfx_sbwin2.path = "sfx/trog_sbwin2.ogg";
-	sfx_sbworst.path = "sfx/trog_sbworst.ogg";
-	sfx_sbdooj_short.path = "sfx/sbdooj_short.ogg";
-	sfx_itsover.path = "sfx/soundboard_itsover.ogg";
-#else
-	sfx_burn_hut.path = "sfx/burn_hut.wav";
-	sfx_goldget.path = "sfx/trog_goldget.wav";
-	sfx_peasantscream.path = "sfx/trog_peasantscream.wav";
-	sfx_sfx2.path = "sfx/trog_sfx2.wav";
-	sfx_trogador.path = "sfx/trogador.wav";
-	sfx_arrow.path = "sfx/trog_arrow.wav";
-	sfx_squish.path = "sfx/squish.wav";
-	sfx_death.path = "sfx/death.wav";
-	sfx_kick.path = "sfx/kick.wav";
-	sfx_burninate.path = "sfx/burninate.wav";
-	sfx_cutscene.path = "sfx/cutscene.wav";
-	sfx_gameover.path = "sfx/gameover.wav";
-	sfx_speedincreased.path = "sfx/speedincreased.wav";
-	sfx_sb1.path = "sfx/trog_sb1.wav";
-	sfx_sb2.path = "sfx/trog_sb2.wav";
-	sfx_sb3.path = "sfx/trog_sb3.wav";
-	sfx_sb4.path = "sfx/trog_sb4.wav";
-	sfx_sb5.path = "sfx/trog_sb5.wav";
-	sfx_sb6.path = "sfx/trog_sb6.wav";
-	sfx_sb7.path = "sfx/trog_sb7.wav";
-	sfx_sbarch.path = "sfx/trog_sbarch.wav";
-	sfx_sbarchend.path = "sfx/trog_sbarchend.wav";
-	sfx_sbbest.path = "sfx/trog_sbbest.wav";
-	sfx_sbdooj.path = "sfx/trog_sbdooj.wav";
-	sfx_sbgameover.path = "sfx/trog_sbgameover.wav";
-	sfx_sbkerrek.path = "sfx/trog_sbkerrek.wav";
-	sfx_sblevelbeat.path = "sfx/trog_sblevelbeat.wav";
-	sfx_sbscore.path = "sfx/trog_sbscore.wav";
-	sfx_sbsecret.path = "sfx/trog_sbsecret.wav";
-	sfx_sbsquish1.path = "sfx/trog_sbsquish1.wav";
-	sfx_sbsquish2.path = "sfx/trog_sbsquish2.wav";
-	sfx_sbwin.path = "sfx/trog_sbwin.wav";
-	sfx_sbwin2.path = "sfx/trog_sbwin2.wav";
-	sfx_sbworst.path = "sfx/trog_sbworst.wav";
-	sfx_sbdooj_short.path = "sfx/sbdooj_short.wav";
-	sfx_itsover.path = "sfx/soundboard_itsover.wav";
-#endif
-	sfx_ending_1.path = "music/ending_1.ogg";
+	sfx_burn_hut.path = getPreferredSfxPath("sfx/burn_hut");
+	sfx_goldget.path = getPreferredSfxPath("sfx/trog_goldget");
+	sfx_peasantscream.path = getPreferredSfxPath("sfx/trog_peasantscream");
+	sfx_sfx2.path = getPreferredSfxPath("sfx/trog_sfx2");
+	sfx_trogador.path = getPreferredSfxPath("sfx/trogador");
+	sfx_arrow.path = getPreferredSfxPath("sfx/trog_arrow");
+	sfx_squish.path = getPreferredSfxPath("sfx/squish");
+	sfx_death.path = getPreferredSfxPath("sfx/death");
+	sfx_kick.path = getPreferredSfxPath("sfx/kick");
+	sfx_burninate.path = getPreferredSfxPath("sfx/burninate");
+	sfx_cutscene.path = getPreferredSfxPath("sfx/cutscene");
+	sfx_gameover.path = getPreferredSfxPath("sfx/gameover");
+	sfx_speedincreased.path = getPreferredSfxPath("sfx/speedincreased");
+	sfx_sb1.path = getPreferredSfxPath("sfx/trog_sb1");
+	sfx_sb2.path = getPreferredSfxPath("sfx/trog_sb2");
+	sfx_sb3.path = getPreferredSfxPath("sfx/trog_sb3");
+	sfx_sb4.path = getPreferredSfxPath("sfx/trog_sb4");
+	sfx_sb5.path = getPreferredSfxPath("sfx/trog_sb5");
+	sfx_sb6.path = getPreferredSfxPath("sfx/trog_sb6");
+	sfx_sb7.path = getPreferredSfxPath("sfx/trog_sb7");
+	sfx_sbarch.path = getPreferredSfxPath("sfx/trog_sbarch");
+	sfx_sbarchend.path = getPreferredSfxPath("sfx/trog_sbarchend");
+	sfx_sbbest.path = getPreferredSfxPath("sfx/trog_sbbest");
+	sfx_sbdooj.path = getPreferredSfxPath("sfx/trog_sbdooj");
+	sfx_sbgameover.path = getPreferredSfxPath("sfx/trog_sbgameover");
+	sfx_sbkerrek.path = getPreferredSfxPath("sfx/trog_sbkerrek");
+	sfx_sblevelbeat.path = getPreferredSfxPath("sfx/trog_sblevelbeat");
+	sfx_sbscore.path = getPreferredSfxPath("sfx/trog_sbscore");
+	sfx_sbsecret.path = getPreferredSfxPath("sfx/trog_sbsecret");
+	sfx_sbsquish1.path = getPreferredSfxPath("sfx/trog_sbsquish1");
+	sfx_sbsquish2.path = getPreferredSfxPath("sfx/trog_sbsquish2");
+	sfx_sbwin.path = getPreferredSfxPath("sfx/trog_sbwin");
+	sfx_sbwin2.path = getPreferredSfxPath("sfx/trog_sbwin2");
+	sfx_sbworst.path = getPreferredSfxPath("sfx/trog_sbworst");
+	sfx_sbdooj_short.path = getPreferredSfxPath("sfx/sbdooj_short");
+	sfx_itsover.path = getPreferredSfxPath("sfx/soundboard_itsover");
+	sfx_ending_1.path = getPreferredSfxPath("music/ending_1");
 	sfxArr[0] = &sfx_burn_hut;
 	makeSoundStatic(sfxArr[0]);
 	sfxArr[1] = &sfx_goldget;
@@ -530,10 +502,10 @@ void InitializeSFX() {
 	}
 #endif
 	for (i = 0; i < NUM_SOUND_EFFECTS_SFX; i++) {
-		exceptMissingFile(sfxArr[i]->path);
+		exceptMissingFile(sfxArr[i]->path.c_str());
 	}
 	for (i = 0; i < NUM_SOUND_EFFECTS_STRONG_BAD; i++) {
-		exceptMissingFile(sfxArr_strongBad[i]->path);
+		exceptMissingFile(sfxArr_strongBad[i]->path.c_str());
 	}
 }
 

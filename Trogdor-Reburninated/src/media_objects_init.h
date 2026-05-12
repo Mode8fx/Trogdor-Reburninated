@@ -10,7 +10,6 @@ extern void InitializeText_HomeScreen();
 extern void InitializeText_Cutscenes();
 extern void InitializeText_PauseScreen();
 extern void InitializeText_OptionsMenu(FontObject *);
-extern void InitializeMusic();
 extern void InitializeSFX();
 extern void InitializeSpritesPart1();
 extern void InitializeSpritesPart2();

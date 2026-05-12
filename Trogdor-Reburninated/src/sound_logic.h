@@ -29,7 +29,7 @@ struct SoundEffect {
 	bool isPlaying = false;
 	Uint8 type = 0;
 	bool isStatic = false;
-	const char *path;
+	string path;
 	//unsigned char *data;
 	//unsigned int len;
 #if defined(XBOX)
