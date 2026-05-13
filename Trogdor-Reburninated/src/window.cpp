@@ -179,6 +179,7 @@ void SDL_toggleFullscreen() {
 #if defined(PC) && !defined(SDL1)
 	isWindowed = !isWindowed;
 	setFullscreen();
+	windowSizeChanged = true;
 #endif
 }
 

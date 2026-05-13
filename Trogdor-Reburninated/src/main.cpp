@@ -15,16 +15,25 @@ bool showFPS = false;
 bool useNew3DSClockSpeed = true;
 #endif
 
-static bool canPreserveOverlayInScene() {
+static bool sceneUsesGameWindow(Sint16 sceneState) {
+    return (sceneState >= 2 && sceneState <= 23 && sceneState != 7 && sceneState != 10) || sceneState == 3001;
+}
+
+static bool canPreserveOverlayInScene(Sint16 sceneState) {
 #if defined(FORCE_DRAW_OVERLAY)
 	return false;
 #else
-	return g_sceneState <= 23 || g_sceneState == 3001;
+	#if defined(PC) && !defined(SDL1)
+	if (!isWindowed) {
+		return false;
+	}
+	#endif
+	return sceneUsesGameWindow(sceneState);
 #endif
 }
 
 static bool shouldClipToGameWindow() {
-	return (g_sceneState >= 2 && g_sceneState <= 23 && g_sceneState != 7 && g_sceneState != 10) || g_sceneState == 3001;
+	return sceneUsesGameWindow(g_sceneState);
 }
 
 static void setGameWindowClip(bool shouldClip) {
@@ -58,6 +67,7 @@ int main(int argv, char** args) {
 	isRunning = true;
 	g_sceneState = 0;
 	g_frameState.set(1);
+	bool overlayWasSafeLastFrame = false;
 	systemSpecificOpen();
 
 	/* Initialize SDL */
@@ -183,9 +193,16 @@ int main(int argv, char** args) {
 			shouldRedrawOverlay = true;
 		}
 
+		const Sint16 sceneStateForFrame = g_sceneState;
+		const bool clipToGameWindowThisFrame = sceneUsesGameWindow(sceneStateForFrame);
+		const bool canPreserveOverlayThisFrame = renderOverlay
+			&& overlayWasSafeLastFrame
+			&& canPreserveOverlayInScene(sceneStateForFrame)
+			&& !forceFullScreenClear;
+
 		/* Clear Screen */
-		clearScreen(renderOverlay && canPreserveOverlayInScene() && !forceFullScreenClear);
-		setGameWindowClip(shouldClipToGameWindow());
+		clearScreen(canPreserveOverlayThisFrame);
+		setGameWindowClip(clipToGameWindowThisFrame);
 
 		/* Scene states:
 		 *  0: Loading Screen
@@ -946,7 +963,7 @@ int main(int argv, char** args) {
 					GM.renderPeasants();
 					GM.renderTrogdor();
 					if (GM.burnination > 0) {
-						GM.player.sprite_fire.renderSprite_game();
+						GM.player.sprite_fire.renderSprite_game_smooth();
 					}
 					GM.renderArchers();
 					GM.renderArrows();
@@ -1048,7 +1065,7 @@ int main(int argv, char** args) {
 					GM.renderLoot();
 					GM.renderTrogdor();
 					if (GM.burnination > 0) {
-						GM.player.sprite_fire.renderSprite_game();
+						GM.player.sprite_fire.renderSprite_game_smooth();
 					}
 					if (GM.sprite_dm.isActive) {
 						GM.sprite_dm.renderSprite_game();
@@ -1267,10 +1284,11 @@ int main(int argv, char** args) {
 		setGameWindowClip(false);
 
 		/* Draw Overlay */
-		if (renderOverlay && (shouldRedrawOverlay || !canPreserveOverlayInScene())) {
+		if (renderOverlay && (shouldRedrawOverlay || !canPreserveOverlayInScene(sceneStateForFrame))) {
 			drawOverlay();
 			shouldRedrawOverlay = false;
 		}
+		overlayWasSafeLastFrame = renderOverlay && canPreserveOverlayInScene(sceneStateForFrame);
 
 		/* Update Screen */
 #if !defined(SDL1)

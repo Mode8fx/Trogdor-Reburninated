@@ -427,6 +427,28 @@ void SpriteInstance::renderSprite_game() {
 #endif
 }
 
+void SpriteInstance::renderSprite_game_smooth() {
+#if !defined(SDL1)
+#if SDL_VERSION_ATLEAST(2, 0, 10)
+    SDL_FRect outputRectFloat = {
+        ((pos_x + currSpriteXOffset) * screenScale) + gameToWindowDstRect.x,
+        ((pos_y + currSpriteYOffset) * screenScale) + gameToWindowDstRect.y,
+        (float)(dstrect.w * screenScale),
+        (float)(dstrect.h * screenScale)
+    };
+    SDL_RenderCopyF(renderer, currSprite, &srcrect, &outputRectFloat);
+#else
+    outputRect.x = (Sint16)(((pos_x + currSpriteXOffset) * screenScale) + gameToWindowDstRect.x);
+    outputRect.y = (Sint16)(((pos_y + currSpriteYOffset) * screenScale) + gameToWindowDstRect.y);
+    outputRect.w = (int)(dstrect.w * screenScale);
+    outputRect.h = (int)(dstrect.h * screenScale);
+    SDL_RenderCopy(renderer, currSprite, &srcrect, &outputRect);
+#endif
+#else
+    renderSprite_game();
+#endif
+}
+
 void SpriteInstance::renderSpriteAsCSO_game() {
     outputRect.x = (Sint16)(((dstrect.x / TWIPS_PER_PIXEL) - currSpriteCenterX) * screenScale) + gameToWindowDstRect.x;
     outputRect.y = (Sint16)(((dstrect.y / TWIPS_PER_PIXEL) - currSpriteCenterY) * screenScale) + gameToWindowDstRect.y;

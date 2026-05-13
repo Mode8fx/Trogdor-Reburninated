@@ -521,11 +521,11 @@ void Trogdor::resetPos(bool giveInvince) {
 
 void Trogdor::updateBreathLoc() {
 	if (sprite.facingRight) {
-		sprite_fire.setPosX((float)sprite.dstrect.x + 38);
-		sprite_fire.setPosY((float)sprite.dstrect.y + 10);
+		sprite_fire.setPosX(sprite.pos_x + 37);
+		sprite_fire.setPosY(sprite.pos_y + 10);
 	} else {
-		sprite_fire.setPosX((float)sprite.dstrect.x - 24);
-		sprite_fire.setPosY((float)sprite.dstrect.y + 10);
+		sprite_fire.setPosX(sprite.pos_x - 24);
+		sprite_fire.setPosY(sprite.pos_y + 9);
 	}
 }
 
@@ -1933,10 +1933,10 @@ void GameManager::renderArchers() {
 void GameManager::renderArrows() {
 	for (i = 0; i < MAX_NUM_ARROWS; i++) {
 		if (arrowArrayR[i].sprite.isActive) {
-			arrowArrayR[i].sprite.renderSprite_game();
+			arrowArrayR[i].sprite.renderSprite_game_smooth();
 		}
 		if (arrowArrayL[i].sprite.isActive) {
-			arrowArrayL[i].sprite.renderSprite_game();
+			arrowArrayL[i].sprite.renderSprite_game_smooth();
 		}
 	}
 }
@@ -1951,7 +1951,7 @@ void GameManager::renderLoot() {
 
 void GameManager::renderKnights() {
 	for (i = 0; i < MAX_NUM_KNIGHTS; i++) {
-		knightArray[i].sprite.renderSprite_game();
+		knightArray[i].sprite.renderSprite_game_smooth();
 	}
 }
 
@@ -1961,7 +1961,7 @@ void GameManager::renderPeasants() {
 			if (!manually_paused && (!peasantArray[i].waiting || peasantArray[i].stomped)) {
 				peasantArray[i].updateFrameState();
 			}
-			peasantArray[i].sprite.renderSprite_game();
+			peasantArray[i].sprite.renderSprite_game_smooth();
 		}
 	}
 }
@@ -1969,9 +1969,9 @@ void GameManager::renderPeasants() {
 void GameManager::renderTrogdor() {
 	if (player.sprite.isActive) {
 		if (player.frameState.frame >= 19) {
-			player.sprite_death.renderSprite_game();
+			player.sprite_death.renderSprite_game_smooth();
 		} else {
-			player.sprite.renderSprite_game();
+			player.sprite.renderSprite_game_smooth();
 		}
 	}
 }

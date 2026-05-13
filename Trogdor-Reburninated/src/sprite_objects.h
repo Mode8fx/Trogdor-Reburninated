@@ -121,6 +121,7 @@ class SpriteInstance {
         void addPosY(float);
         void setPos(float, float);
         void renderSprite_game();
+        void renderSprite_game_smooth();
         void renderSpriteAsCSO_game();
         void renderSprite_app();
         void renderSprite_menu();
