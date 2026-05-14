@@ -59,6 +59,7 @@ extern void pauseMusic();
 extern void resumeMusic();
 extern void fadeMusic(Uint16);
 extern void setVolume_sfx(Uint8);
+extern void setVolume_commentary(Uint8);
 extern Uint8 loadAndPlaySound(SoundEffect *);
 extern void makeSoundStatic(SoundEffect *);
 extern void freeFinishedSoundChunks();

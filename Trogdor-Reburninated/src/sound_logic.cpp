@@ -203,6 +203,12 @@ void setVolume_sfx(Uint8 vol) {
 #if defined(XBOX)
 #else
 	Mix_Volume(SFX_CHANNEL_GAME, (int)(vol * 128.0 / 100));
-	Mix_Volume(SFX_CHANNEL_STRONG_BAD, MIX_MAX_VOLUME);
+#endif
+}
+
+void setVolume_commentary(Uint8 vol) {
+#if defined(XBOX)
+#else
+	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(vol * 128.0 / 100));
 #endif
 }

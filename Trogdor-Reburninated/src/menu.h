@@ -260,14 +260,16 @@ constexpr auto MENU_MUSIC_INDEX = 0;
 constexpr auto MUSIC_SETTING_OFF = 0;
 constexpr auto MUSIC_SETTING_STINKOMAN = 1;
 constexpr auto MUSIC_SETTING_CUSTOM = 2;
-constexpr auto MENU_MUSIC_VOLUME_INDEX = 1;
-constexpr auto MENU_COMMENT_FREQ_INDEX = 2;
+constexpr auto MENU_COMMENT_FREQ_INDEX = 1;
+constexpr auto MENU_MUSIC_VOLUME_INDEX = 2;
 constexpr auto MENU_SFX_VOLUME_INDEX = 3;
-constexpr auto AUDIO_NUM_OPTIONS = 4;
+constexpr auto MENU_COMMENTARY_VOLUME_INDEX = 4;
+constexpr auto AUDIO_NUM_OPTIONS = 5;
 #define MENU_MUSIC        menu_audio.options[MENU_MUSIC_INDEX]
-#define MENU_MUSIC_VOLUME menu_audio.options[MENU_MUSIC_VOLUME_INDEX]
 #define MENU_COMMENT_FREQ menu_audio.options[MENU_COMMENT_FREQ_INDEX]
+#define MENU_MUSIC_VOLUME menu_audio.options[MENU_MUSIC_VOLUME_INDEX]
 #define MENU_SFX_VOLUME   menu_audio.options[MENU_SFX_VOLUME_INDEX]
+#define MENU_COMMENTARY_VOLUME menu_audio.options[MENU_COMMENTARY_VOLUME_INDEX]
 
 extern bool menusAreInitialized;
 

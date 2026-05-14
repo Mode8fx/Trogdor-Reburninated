@@ -569,6 +569,8 @@ void Menu::renderMenu() {
 #define option_main_comment_freq_descriptions_line_2 { "", "", "", "as he did in the original game.", "", "", "(He talks about twice as much as usual.)"}
 #define option_main_comment_freq_descriptions_line_3 { "", "", "", "", "", "", "" }
 #define option_main_sfx_volume_descriptions_line_1 { "Set the volume of sound effects." }
+#define option_main_commentary_volume_descriptions_line_1 { "Set the volume of commentary." }
+#define option_main_commentary_volume_descriptions_line_2 { "Has no effect if commentary is disabled." }
 #define press_confirm_to_apply "(Press " + INPUT_CONFIRM + " to apply)"
 #define option_main_scaling_choices { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "Full Game" }
 #define option_main_scaling_descriptions_line_1 { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "Scale the game to fill the screen." }
@@ -768,15 +770,18 @@ void InitializeMenus() {
 	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
 		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
 		"", 3, false, 0, true, false);
-	MENU_MUSIC_VOLUME->prepareMenuOption("Music Volume", option_main_volume_choices,
-		option_main_music_volume_descriptions_line_1, option_main_music_volume_descriptions_line_2, option_empty,
-		"", 11, true, DEFAULT_MUSIC_VOLUME_INDEX, true, false);
 	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_comment_freq_choices,
 		option_main_comment_freq_descriptions_line_1, option_main_comment_freq_descriptions_line_2, option_main_comment_freq_descriptions_line_3,
 		"", 7, false, 3, true, false);
+	MENU_MUSIC_VOLUME->prepareMenuOption("Music Volume", option_main_volume_choices,
+		option_main_music_volume_descriptions_line_1, option_main_music_volume_descriptions_line_2, option_empty,
+		"", 11, true, DEFAULT_MUSIC_VOLUME_INDEX, true, false);
 	MENU_SFX_VOLUME->prepareMenuOption("SFX Volume", option_main_volume_choices,
 		option_main_sfx_volume_descriptions_line_1, option_empty, option_empty,
 		"", 11, true, DEFAULT_SFX_VOLUME_INDEX, true, false);
+	MENU_COMMENTARY_VOLUME->prepareMenuOption("Commentary Vol.", option_main_volume_choices,
+		option_main_commentary_volume_descriptions_line_1, option_main_commentary_volume_descriptions_line_2, option_empty,
+		"", 11, true, DEFAULT_COMMENTARY_VOLUME_INDEX, true, false);
 
 	/* Other Settings Menu */
 	menu_other.prepareMenu(OTHER_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -1151,7 +1156,8 @@ State_Addon_v_2_2_1 getSettings_v_2_2_1() {
 State_Addon_v_2_4 getSettings_v_2_4() {
 	return {
 		MENU_MUSIC_VOLUME->index,
-		MENU_SFX_VOLUME->index
+		MENU_SFX_VOLUME->index,
+		MENU_COMMENTARY_VOLUME->index
 	};
 }
 

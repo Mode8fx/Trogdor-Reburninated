@@ -24,6 +24,10 @@ Uint8 getConfiguredGameVolume() {
 	return Uint8(10 * MENU_SFX_VOLUME->index);
 }
 
+Uint8 getConfiguredCommentaryVolume() {
+	return Uint8(10 * gameState.addon_v_2_4.commentaryVolume);
+}
+
 string rootDir;
 
 string getExeDirectory() {
@@ -145,9 +149,10 @@ void setOptionsFromSaveData() {
 	menu_cosmetic.setOptionChoice(MENU_FRAME_RATE_INDEX, gameState.settings_cosmetic.frameRate);
 	updateFrameRate();
 	menu_audio.setOptionChoice(MENU_MUSIC_INDEX, gameState.settings_cosmetic.music);
-	menu_audio.setOptionChoice(MENU_MUSIC_VOLUME_INDEX, gameState.addon_v_2_4.musicVolume);
 	menu_audio.setOptionChoice(MENU_COMMENT_FREQ_INDEX, gameState.settings_cosmetic.commentFreq);
+	menu_audio.setOptionChoice(MENU_MUSIC_VOLUME_INDEX, gameState.addon_v_2_4.musicVolume);
 	menu_audio.setOptionChoice(MENU_SFX_VOLUME_INDEX, gameState.addon_v_2_4.sfxVolume);
+	menu_audio.setOptionChoice(MENU_COMMENTARY_VOLUME_INDEX, gameState.addon_v_2_4.commentaryVolume);
 	menu_cosmetic.setOptionChoice(MENU_BIG_HEAD_MODE_INDEX, gameState.settings_cosmetic.bigHeadMode);
 	menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, gameState.settings_cosmetic.scaling);
 	menu_cosmetic.setOptionChoice(MENU_OVERLAY_INDEX, gameState.addon_v_2_2_1.overlay);
@@ -192,9 +197,11 @@ void fixSaveDataIntegrity() {
 	if (gameState.settings_general.bgmVolume == LEGACY_DEFAULT_VOLUME_MUSIC
 		&& gameState.settings_general.sfxVolume == LEGACY_DEFAULT_VOLUME_GAME
 		&& gameState.addon_v_2_4.musicVolume == 0
-		&& gameState.addon_v_2_4.sfxVolume == 0) {
+		&& gameState.addon_v_2_4.sfxVolume == 0
+		&& gameState.addon_v_2_4.commentaryVolume == 0) {
 		gameState.addon_v_2_4.musicVolume = DEFAULT_MUSIC_VOLUME_INDEX;
 		gameState.addon_v_2_4.sfxVolume = DEFAULT_SFX_VOLUME_INDEX;
+		gameState.addon_v_2_4.commentaryVolume = DEFAULT_COMMENTARY_VOLUME_INDEX;
 	}
 	gameState.settings_difficulty.preset %= MENU_PRESET->numChoices;
 	gameState.settings_difficulty.extraLives %= MENU_EXTRA_LIVES->numChoices;
@@ -206,9 +213,10 @@ void fixSaveDataIntegrity() {
 	gameState.settings_difficulty.treasureHuts %= MENU_TREASURE_HUTS->numChoices;
 	gameState.settings_cosmetic.frameRate %= MENU_FRAME_RATE->numChoices;
 	gameState.settings_cosmetic.music %= MENU_MUSIC->numChoices;
-	gameState.addon_v_2_4.musicVolume %= MENU_MUSIC_VOLUME->numChoices;
 	gameState.settings_cosmetic.commentFreq %= MENU_COMMENT_FREQ->numChoices;
+	gameState.addon_v_2_4.musicVolume %= MENU_MUSIC_VOLUME->numChoices;
 	gameState.addon_v_2_4.sfxVolume %= MENU_SFX_VOLUME->numChoices;
+	gameState.addon_v_2_4.commentaryVolume %= MENU_COMMENTARY_VOLUME->numChoices;
 	gameState.settings_cosmetic.bigHeadMode %= MENU_BIG_HEAD_MODE->numChoices;
 	gameState.settings_cosmetic.scaling %= MENU_SCALING->numChoices;
 	gameState.settings_other.startingLevel %= MENU_STARTING_LEVEL->numChoices;

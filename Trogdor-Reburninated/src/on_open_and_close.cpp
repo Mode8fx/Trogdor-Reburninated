@@ -75,6 +75,7 @@ void InitializeSound() {
 	setVolume_music(DEFAULT_VOLUME_MUSIC);
 	Mix_AllocateChannels(NUM_SOUND_CHANNELS);
 	setVolume_sfx(DEFAULT_VOLUME_GAME);
+	setVolume_commentary(DEFAULT_VOLUME_COMMENTARY);
 }
 
 void InitializeController() {
