@@ -16,11 +16,26 @@ static Sint8 currentMusicSetting() {
 	return gameState.settings_cosmetic.music;
 }
 
-static string getChosenMusicPath(const char *musicRelPath) {
-	if (currentMusicSetting() == MUSIC_SETTING_CUSTOM) {
-		return rootDir + "music/custom/" + musicRelPath;
+static bool fileExists(const string &filePath) {
+	SDL_RWops *file = SDL_RWFromFile(filePath.c_str(), "rb");
+	if (file == nullptr) {
+		return false;
 	}
-	return rootDir + "music/" + musicRelPath;
+	SDL_RWclose(file);
+	return true;
+}
+
+static string getChosenMusicPath(const char *musicRelPath) {
+	const string musicDir = (currentMusicSetting() == MUSIC_SETTING_CUSTOM) ? "music/custom/" : "music/";
+	const string oggPath = rootDir + musicDir + musicRelPath + ".ogg";
+	if (fileExists(oggPath)) {
+		return oggPath;
+	}
+	const string wavPath = rootDir + musicDir + musicRelPath + ".wav";
+	if (fileExists(wavPath)) {
+		return wavPath;
+	}
+	return "";
 }
 
 #if defined(XBOX)
@@ -57,6 +72,9 @@ void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
 #if defined(XBOX)
 #else
 	const string musicPath = getChosenMusicPath(musicRelPath);
+	if (musicPath.empty()) {
+		return;
+	}
 	bgm = Mix_LoadMUS(musicPath.c_str());
 	if (bgm == NULL) {
 		return;
