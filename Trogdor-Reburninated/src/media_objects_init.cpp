@@ -540,7 +540,7 @@ void InitializeSpritesPart1() {
 	PREPARE_SPRITE_OPAQUE(sprite_title_screen, title_screen_img, title_screen_img_len, 0, 0, 1, 1, 1);
 	sprite_title_screen_ins = SpriteInstance(&sprite_title_screen, 0, 0);
 	PREPARE_SPRITE(sprite_trogdor_logo, trogdor_logo_img, trogdor_logo_img_len,
-		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_trogdor_logo), 15, 1, 1, 1);
+		OBJ_FRAME_TO_MID_SCREEN_X(gameWidth, sprite_trogdor_logo), 2, 1, 1, 1);
 	sprite_trogdor_logo_ins = SpriteInstance(&sprite_trogdor_logo, 0, 0);
 	PREPARE_SPRITE_BG(sprite_level_background_1, bg_1_img, bg_1_img_len, 0, 25);
 	PREPARE_SPRITE_BG(sprite_level_background_2, bg_2_img, bg_2_img_len, 0, 25);
