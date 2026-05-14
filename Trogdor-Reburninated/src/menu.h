@@ -257,10 +257,15 @@ constexpr auto COSMETIC_NUM_OPTIONS = 4;
 
 extern Menu menu_audio;
 constexpr auto MENU_MUSIC_INDEX = 0;
+constexpr auto MUSIC_SETTING_OFF = 0;
+constexpr auto MUSIC_SETTING_STINKOMAN = 1;
+constexpr auto MUSIC_SETTING_CUSTOM = 2;
 constexpr auto MENU_COMMENT_FREQ_INDEX = 1;
 constexpr auto AUDIO_NUM_OPTIONS = 2;
 #define MENU_MUSIC        menu_audio.options[MENU_MUSIC_INDEX]
 #define MENU_COMMENT_FREQ menu_audio.options[MENU_COMMENT_FREQ_INDEX]
+
+extern bool menusAreInitialized;
 
 extern Menu menu_other;
 constexpr auto MENU_STARTING_LEVEL_INDEX = 0;

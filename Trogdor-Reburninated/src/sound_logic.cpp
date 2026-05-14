@@ -1,12 +1,27 @@
 #include "sound_logic.h"
 #include "config.h"
 #include "general.h"
+#include "menu.h"
 
 bool sfxShouldBePlaying = false;
 Uint8 sfxIndex = 0;
 SoundEffect *sfxChannelArr[NUM_SOUND_CHANNELS_SFX] = { NULL, NULL, NULL, NULL, NULL, NULL };
 //SoundEffect *sfxChannel_gameMusic = NULL;
 SoundEffect *sfxChannel_strongBad = NULL;
+
+static Sint8 currentMusicSetting() {
+	if (menusAreInitialized) {
+		return MENU_MUSIC->index;
+	}
+	return gameState.settings_cosmetic.music;
+}
+
+static string getChosenMusicPath(const char *musicRelPath) {
+	if (currentMusicSetting() == MUSIC_SETTING_CUSTOM) {
+		return rootDir + "music/custom/" + musicRelPath;
+	}
+	return rootDir + "music/" + musicRelPath;
+}
 
 #if defined(XBOX)
 #define LOAD_MUSIC(path)       NULL
@@ -39,9 +54,13 @@ void playMusic(const char *musicRelPath, bool loop, Uint8 vol) {
 	if (MUSIC_IS_PLAYING()) {
 		stopMusic();
 	}
-	bgm = LOAD_MUSIC(musicRelPath);
 #if defined(XBOX)
 #else
+	const string musicPath = getChosenMusicPath(musicRelPath);
+	bgm = Mix_LoadMUS(musicPath.c_str());
+	if (bgm == NULL) {
+		return;
+	}
 	setVolume_music(vol);
 	if (loop) {
 		Mix_PlayMusic(bgm, -1);

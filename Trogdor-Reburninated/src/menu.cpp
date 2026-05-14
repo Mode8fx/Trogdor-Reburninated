@@ -523,10 +523,10 @@ void Menu::renderMenu() {
 #define option_main_lives_interval_descriptions_line_1 { "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "Get an extra life", "No extra lives." }
 #define option_main_lives_interval_descriptions_line_2 { "every 300 points.", "every 500 points.", "every 1000 points.", "at 500 points.", "at 500 and 1000 points.", "at 1000 points.", "at 1000 and 2000 points.", "" }
 #define option_main_lives_interval_descriptions_line_3 { "", "", "", "", "", "", "", "" }
-#define option_main_music_choices { "Off", "Stinkoman 20X6"}
-#define option_main_music_descriptions_line_1 { "Don't play music in-game.", "Play music from Stinkoman 20X6." }
-#define option_main_music_descriptions_line_2 { "", "The song changes depending on the level." }
-#define option_main_music_descriptions_line_3 { "", "" }
+#define option_main_music_choices { "Off", "Stinkoman 20X6", "Custom"}
+#define option_main_music_descriptions_line_1 { "Don't play music in-game.", "Play music from Stinkoman 20X6.", "Play your own music." }
+#define option_main_music_descriptions_line_2 { "", "The song changes depending on the level.", "View the README for more details." }
+#define option_main_music_descriptions_line_3 { "", "", "" }
 #define option_main_peasant_penalty_descriptions_line_1 { "The peasant meter decreases", "No penalty for escaped peasants." }
 #define option_main_peasant_penalty_descriptions_line_2 { "every time a peasant escapes.", "" }
 #define option_main_peasant_penalty_descriptions_line_3 { "", "" }
@@ -764,7 +764,7 @@ void InitializeMenus() {
 	}
 	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
 		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
-		"", 2, false, 0, true, false);
+		"", 3, false, 0, true, false);
 	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_comment_freq_choices,
 		option_main_comment_freq_descriptions_line_1, option_main_comment_freq_descriptions_line_2, option_main_comment_freq_descriptions_line_3,
 		"", 7, false, 3, true, false);

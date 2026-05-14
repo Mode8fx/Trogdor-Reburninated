@@ -942,7 +942,8 @@ void GameManager::updateKnightIncrement() {
 
 void GameManager::setMusic() {
 	switch (MENU_MUSIC->index) {
-		case 1:
+		case MUSIC_SETTING_STINKOMAN:
+		case MUSIC_SETTING_CUSTOM:
 			switch (level) {
 				case 4:
 				case 8:

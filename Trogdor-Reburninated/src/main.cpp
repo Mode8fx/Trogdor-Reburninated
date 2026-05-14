@@ -9,6 +9,7 @@ bool renderOverlay;
 bool shouldRedrawOverlay = true;
 bool menuMusicHasStarted = false;
 Sint8 lastMusicPlayed = -1;
+Sint8 audioMenuMusicSettingOnOpen = MUSIC_SETTING_OFF;
 
 bool showFPS = false;
 #if defined(THREEDS)
@@ -498,6 +499,7 @@ int main(int argv, char** args) {
 						g_sceneState = 303;
 						break;
 					case MENU_AUDIO_INDEX:
+						audioMenuMusicSettingOnOpen = MENU_MUSIC->index;
 						menu_audio.openMenu();
 						g_sceneState = 311;
 						break;
@@ -616,6 +618,10 @@ int main(int argv, char** args) {
 				menu_audio.renderMenu();
 				switch (menu_audio.handleInput(0)) {
 					case -1: // Press B/Select
+						if ((audioMenuMusicSettingOnOpen == MUSIC_SETTING_CUSTOM) != (MENU_MUSIC->index == MUSIC_SETTING_CUSTOM)) {
+							playMusic(MUSIC_MENU, true, DEFAULT_VOLUME_MUSIC);
+							menuMusicHasStarted = true;
+						}
 						menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, scalingType);
 						g_sceneState = 301;
 						break;

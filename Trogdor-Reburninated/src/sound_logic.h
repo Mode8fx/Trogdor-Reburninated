@@ -12,18 +12,18 @@ constexpr auto SFX_CHANNEL_GAME = -1; // any free channel
 constexpr auto SFX_CHANNEL_GAME_MUSIC = NUM_SOUND_CHANNELS - 2;
 constexpr auto SFX_CHANNEL_STRONG_BAD = NUM_SOUND_CHANNELS - 1; // highest channel
 
-constexpr auto MUSIC_TITLE_SCREEN = "music/title_screen.ogg";
-constexpr auto MUSIC_MENU = "music/menu.ogg";
-constexpr auto MUSIC_ENDING_2 = "music/cast.ogg";
-constexpr auto MUSIC_STINKOMAN_DAY = "music/stinkoman_level_day.ogg";
-constexpr auto MUSIC_STINKOMAN_EVENING = "music/stinkoman_level_evening.ogg";
-constexpr auto MUSIC_STINKOMAN_NIGHT = "music/stinkoman_level_night.ogg";
-constexpr auto MUSIC_STINKOMAN_DAWN = "music/stinkoman_level_dawn.ogg";
-constexpr auto MUSIC_STINKOMAN_MIDPOINT = "music/stinkoman_level_midpoint.ogg";
-constexpr auto MUSIC_STINKOMAN_LAST_10 = "music/stinkoman_level_last_10.ogg";
-constexpr auto MUSIC_STINKOMAN_BOSS = "music/stinkoman_level_pre_cutscene.ogg";
-constexpr auto MUSIC_STINKOMAN_HOMESTRETCH = "music/stinkoman_level_homestretch.ogg";
-constexpr auto MUSIC_STINKOMAN_FINAL_BOSS = "music/stinkoman_level_final.ogg";
+constexpr auto MUSIC_TITLE_SCREEN = "title_screen.ogg";
+constexpr auto MUSIC_MENU = "menu.ogg";
+constexpr auto MUSIC_ENDING_2 = "cast.ogg";
+constexpr auto MUSIC_STINKOMAN_DAY = "stinkoman_level_day.ogg";
+constexpr auto MUSIC_STINKOMAN_EVENING = "stinkoman_level_evening.ogg";
+constexpr auto MUSIC_STINKOMAN_NIGHT = "stinkoman_level_night.ogg";
+constexpr auto MUSIC_STINKOMAN_DAWN = "stinkoman_level_dawn.ogg";
+constexpr auto MUSIC_STINKOMAN_MIDPOINT = "stinkoman_level_midpoint.ogg";
+constexpr auto MUSIC_STINKOMAN_LAST_10 = "stinkoman_level_last_10.ogg";
+constexpr auto MUSIC_STINKOMAN_BOSS = "stinkoman_level_pre_cutscene.ogg";
+constexpr auto MUSIC_STINKOMAN_HOMESTRETCH = "stinkoman_level_homestretch.ogg";
+constexpr auto MUSIC_STINKOMAN_FINAL_BOSS = "stinkoman_level_final.ogg";
 
 struct SoundEffect {
 	bool isPlaying = false;
