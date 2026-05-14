@@ -260,10 +260,14 @@ constexpr auto MENU_MUSIC_INDEX = 0;
 constexpr auto MUSIC_SETTING_OFF = 0;
 constexpr auto MUSIC_SETTING_STINKOMAN = 1;
 constexpr auto MUSIC_SETTING_CUSTOM = 2;
-constexpr auto MENU_COMMENT_FREQ_INDEX = 1;
-constexpr auto AUDIO_NUM_OPTIONS = 2;
+constexpr auto MENU_MUSIC_VOLUME_INDEX = 1;
+constexpr auto MENU_COMMENT_FREQ_INDEX = 2;
+constexpr auto MENU_SFX_VOLUME_INDEX = 3;
+constexpr auto AUDIO_NUM_OPTIONS = 4;
 #define MENU_MUSIC        menu_audio.options[MENU_MUSIC_INDEX]
+#define MENU_MUSIC_VOLUME menu_audio.options[MENU_MUSIC_VOLUME_INDEX]
 #define MENU_COMMENT_FREQ menu_audio.options[MENU_COMMENT_FREQ_INDEX]
+#define MENU_SFX_VOLUME   menu_audio.options[MENU_SFX_VOLUME_INDEX]
 
 extern bool menusAreInitialized;
 
@@ -325,6 +329,7 @@ extern State_Settings_Cheats getSettingsCheats();
 extern State_Settings_Unlocks getSettingsUnlocks();
 extern State_Addon_v_2_1 getSettings_v_2_1();
 extern State_Addon_v_2_2_1 getSettings_v_2_2_1();
+extern State_Addon_v_2_4 getSettings_v_2_4();
 extern void updateFrameRate();
 extern void setPreset(Sint8);
 extern void updateHighScores();

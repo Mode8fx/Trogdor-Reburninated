@@ -527,6 +527,9 @@ void Menu::renderMenu() {
 #define option_main_music_descriptions_line_1 { "Don't play music in-game.", "Play music from Stinkoman 20X6.", "Play your own music." }
 #define option_main_music_descriptions_line_2 { "", "The song changes depending on the level.", "Check the README for more details." }
 #define option_main_music_descriptions_line_3 { "", "", "" }
+#define option_main_volume_choices { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }
+#define option_main_music_volume_descriptions_line_1 { "Set the volume of music." }
+#define option_main_music_volume_descriptions_line_2 { "Has no effect if music is disabled." }
 #define option_main_peasant_penalty_descriptions_line_1 { "The peasant meter decreases", "No penalty for escaped peasants." }
 #define option_main_peasant_penalty_descriptions_line_2 { "every time a peasant escapes.", "" }
 #define option_main_peasant_penalty_descriptions_line_3 { "", "" }
@@ -557,7 +560,6 @@ void Menu::renderMenu() {
 #endif
 #define option_main_frame_rate_descriptions_line_1 { "Higher frame rate, smoother gameplay." }
 #define option_main_frame_rate_descriptions_line_2 { "(Original Flash game is 16 FPS)" }
-#define option_main_frame_rate_descriptions_line_3 { "" }
 #define option_main_level_tran_choices { "Original", "Button Press" }
 #define option_main_level_tran_descriptions_line_1 { "After beating a level, the next", "After beating a level, press " + INPUT_CONFIRM }
 #define option_main_level_tran_descriptions_line_2 { "level will load automatically.", "or " + INPUT_PAUSE + " to load the next level." }
@@ -566,6 +568,7 @@ void Menu::renderMenu() {
 #define option_main_comment_freq_descriptions_line_1 { "Strong Bad does not talk.", "Strong Bad rarely talks.", "Strong Bad talks less than usual.", "Strong Bad talks as often", "Strong Bad talks a bit more often.", "Strong Bad talks much more often.", "Strong Bad won't shut up!" }
 #define option_main_comment_freq_descriptions_line_2 { "", "", "", "as he did in the original game.", "", "", "(He talks about twice as much as usual.)"}
 #define option_main_comment_freq_descriptions_line_3 { "", "", "", "", "", "", "" }
+#define option_main_sfx_volume_descriptions_line_1 { "Set the volume of sound effects." }
 #define press_confirm_to_apply "(Press " + INPUT_CONFIRM + " to apply)"
 #define option_main_scaling_choices { "Pixel-Perfect", "Pixel-Perfect Game", "Full", "Full Game" }
 #define option_main_scaling_descriptions_line_1 { "Scale so that everything uses integer", "Scale the game to be as big as possible", "Scale everything so that", "Scale the game to fill the screen." }
@@ -739,7 +742,7 @@ void InitializeMenus() {
 		}
 	}
 	MENU_FRAME_RATE->prepareMenuOption("Frame Rate", option_main_frame_rate_choices,
-		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_main_frame_rate_descriptions_line_3,
+		option_main_frame_rate_descriptions_line_1, option_main_frame_rate_descriptions_line_2, option_empty,
 #if defined(THREEDS)
 		"", 4, true, 3, true, false);
 #else
@@ -765,9 +768,15 @@ void InitializeMenus() {
 	MENU_MUSIC->prepareMenuOption("Music", option_main_music_choices,
 		option_main_music_descriptions_line_1, option_main_music_descriptions_line_2, option_main_music_descriptions_line_3,
 		"", 3, false, 0, true, false);
+	MENU_MUSIC_VOLUME->prepareMenuOption("Music Volume", option_main_volume_choices,
+		option_main_music_volume_descriptions_line_1, option_main_music_volume_descriptions_line_2, option_empty,
+		"", 11, true, DEFAULT_MUSIC_VOLUME_INDEX, true, false);
 	MENU_COMMENT_FREQ->prepareMenuOption("Commentary", option_main_comment_freq_choices,
 		option_main_comment_freq_descriptions_line_1, option_main_comment_freq_descriptions_line_2, option_main_comment_freq_descriptions_line_3,
 		"", 7, false, 3, true, false);
+	MENU_SFX_VOLUME->prepareMenuOption("SFX Volume", option_main_volume_choices,
+		option_main_sfx_volume_descriptions_line_1, option_empty, option_empty,
+		"", 11, true, DEFAULT_SFX_VOLUME_INDEX, true, false);
 
 	/* Other Settings Menu */
 	menu_other.prepareMenu(OTHER_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 160 + (16 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);
@@ -1071,8 +1080,8 @@ void InitializeMenus() {
 
 State_Settings_General getSettingsGeneral() {
 	return {
-		DEFAULT_VOLUME_MUSIC,
-		100
+		0,
+		0
 	};
 }
 
@@ -1137,6 +1146,13 @@ State_Addon_v_2_2_1 getSettings_v_2_2_1() {
 		MENU_OVERLAY->index,
 		isWindowed
 };
+}
+
+State_Addon_v_2_4 getSettings_v_2_4() {
+	return {
+		MENU_MUSIC_VOLUME->index,
+		MENU_SFX_VOLUME->index
+	};
 }
 
 void updateFrameRate() {

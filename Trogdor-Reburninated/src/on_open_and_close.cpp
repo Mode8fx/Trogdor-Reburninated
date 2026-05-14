@@ -72,10 +72,9 @@ void InitializeSound() {
 		SDL_Log("Unable to initialize SDL_Mixer: %s", Mix_GetError());
 #endif
 	}
-	setVolume_music(gameState.settings_general.bgmVolume);
+	setVolume_music(DEFAULT_VOLUME_MUSIC);
 	Mix_AllocateChannels(NUM_SOUND_CHANNELS);
-	Mix_Volume(SFX_CHANNEL_GAME, (int)(gameState.settings_general.sfxVolume * 128.0 / 100));
-	Mix_Volume(SFX_CHANNEL_STRONG_BAD, (int)(gameState.settings_general.sfxVolume * 128.0 / 100));
+	setVolume_sfx(DEFAULT_VOLUME_GAME);
 }
 
 void InitializeController() {

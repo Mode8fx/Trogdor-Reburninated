@@ -198,3 +198,11 @@ void freeFinishedSoundChunks() {
 void setVolume_music(Uint8 vol) {
 	SET_VOLUME_MUSIC(vol);
 }
+
+void setVolume_sfx(Uint8 vol) {
+#if defined(XBOX)
+#else
+	Mix_Volume(SFX_CHANNEL_GAME, (int)(vol * 128.0 / 100));
+	Mix_Volume(SFX_CHANNEL_STRONG_BAD, MIX_MAX_VOLUME);
+#endif
+}

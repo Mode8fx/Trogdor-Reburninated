@@ -519,7 +519,9 @@ int main(int argv, char** args) {
 						menu_cosmetic.setOptionChoice(MENU_FRAME_RATE_INDEX, MENU_FRAME_RATE->index_init);
 						updateFrameRate();
 						menu_audio.setOptionChoice(MENU_MUSIC_INDEX, MENU_MUSIC->index_init);
+						menu_audio.setOptionChoice(MENU_MUSIC_VOLUME_INDEX, MENU_MUSIC_VOLUME->index_init);
 						menu_audio.setOptionChoice(MENU_COMMENT_FREQ_INDEX, MENU_COMMENT_FREQ->index_init);
+						menu_audio.setOptionChoice(MENU_SFX_VOLUME_INDEX, MENU_SFX_VOLUME->index_init);
 						menu_cosmetic.setOptionChoice(MENU_BIG_HEAD_MODE_INDEX, MENU_BIG_HEAD_MODE->index_init);
 						//menu_cosmetic.setOptionChoice(MENU_SCALING_INDEX, MENU_SCALING->index_init);
 						menu_other.setOptionChoice(MENU_STARTING_LEVEL_INDEX, MENU_STARTING_LEVEL->index_init);
@@ -531,6 +533,8 @@ int main(int argv, char** args) {
 						menu_cheats.setOptionChoice(MENU_SPEEDY_MODE_INDEX, MENU_SPEEDY_MODE->index_init);
 						menu_cheats.setOptionChoice(MENU_NOCLIP_INDEX, MENU_NOCLIP->index_init);
 						menu_cheats.setOptionChoice(MENU_DEBUG_MODE_INDEX, MENU_DEBUG_MODE->index_init);
+						setVolume_music(DEFAULT_VOLUME_MUSIC);
+						setVolume_sfx(DEFAULT_VOLUME_GAME);
 						setPreset(MENU_PRESET->index);
 						loadAndPlaySound(SFX_SBDOOJ_SHORT);
 						break;
@@ -616,6 +620,8 @@ int main(int argv, char** args) {
 				g_frameState.increment();
 				sprite_menu_background_ins.renderSprite_menu();
 				menu_audio.renderMenu();
+				setVolume_music(DEFAULT_VOLUME_MUSIC);
+				setVolume_sfx(DEFAULT_VOLUME_GAME);
 				switch (menu_audio.handleInput(0)) {
 					case -1: // Press B/Select
 						if ((audioMenuMusicSettingOnOpen == MUSIC_SETTING_CUSTOM) != (MENU_MUSIC->index == MUSIC_SETTING_CUSTOM)) {

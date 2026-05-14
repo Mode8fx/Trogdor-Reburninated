@@ -3,8 +3,12 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-constexpr auto DEFAULT_VOLUME_GAME = 100;
-constexpr auto DEFAULT_VOLUME_MUSIC = 35;
+constexpr auto LEGACY_DEFAULT_VOLUME_GAME = 100;
+constexpr auto LEGACY_DEFAULT_VOLUME_MUSIC = 35;
+constexpr auto DEFAULT_MUSIC_VOLUME_INDEX = 5;
+constexpr auto DEFAULT_SFX_VOLUME_INDEX = 10;
+#define DEFAULT_VOLUME_GAME getConfiguredGameVolume()
+#define DEFAULT_VOLUME_MUSIC getConfiguredMusicVolume()
 #define DEFAULT_VOLUME_MUSIC_LATE_LEVEL Uint8(DEFAULT_VOLUME_MUSIC / 2)
 #define DEFAULT_VOLUME_MUSIC_PAUSED Uint8(DEFAULT_VOLUME_MUSIC / 3)
 #if defined(PC)
@@ -91,6 +95,11 @@ struct State_Addon_v_2_2_1 {
 	Sint8 windowed;
 };
 
+struct State_Addon_v_2_4 {
+	Sint8 musicVolume;
+	Sint8 sfxVolume;
+};
+
 struct GameState {
 	State_Settings_General    settings_general;
 	State_Settings_Difficulty settings_difficulty;
@@ -102,6 +111,7 @@ struct GameState {
 	State_HighScores          highscores;
 	State_Addon_v_2_1         addon_v_2_1;
 	State_Addon_v_2_2_1       addon_v_2_2_1;
+	State_Addon_v_2_4         addon_v_2_4;
 };
 
 /* Save File */
@@ -111,6 +121,8 @@ extern GameState gameState;
 /* System-Specific Variables */
 extern string getExeDirectory();
 extern string rootDir;
+extern Uint8 getConfiguredMusicVolume();
+extern Uint8 getConfiguredGameVolume();
 
 #define SAVE_FILE (rootDir+"save.bin").c_str()
 
