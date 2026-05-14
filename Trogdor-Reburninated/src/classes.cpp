@@ -960,7 +960,7 @@ void GameManager::setMusic() {
 					break;
 				default:
 					if (level >= 47 && level <= 48) {
-						if (level == 46 || forceMusicStart) {
+						if (level == 47 || forceMusicStart) {
 							playMusic(MUSIC_STINKOMAN_MIDPOINT, true, DEFAULT_VOLUME_MUSIC);
 						}
 					} else if (level >= 49 && level <= 50) {
