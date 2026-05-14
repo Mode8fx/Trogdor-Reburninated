@@ -1,7 +1,7 @@
+:: Increase the gain of all WAV/OGG files in the current directory an equal amount, up to the point where one of them would clip. If at least one file is already at maximum gain, then nothing changes.
+
 @echo off
 setlocal enabledelayedexpansion
-
-:: Increase the gain of all WAV/OGG files in the current directory an equal amount, up to the point where one of them would clip. If at least one file is already at maximum gain, then nothing changes.
 
 set "OUTDIR=louder_audio"
 set "MARGIN=0.1"

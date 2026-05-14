@@ -525,7 +525,7 @@ void Menu::renderMenu() {
 #define option_main_lives_interval_descriptions_line_3 { "", "", "", "", "", "", "", "" }
 #define option_main_music_choices { "Off", "Stinkoman 20X6", "Custom"}
 #define option_main_music_descriptions_line_1 { "Don't play music in-game.", "Play music from Stinkoman 20X6.", "Play your own music." }
-#define option_main_music_descriptions_line_2 { "", "The song changes depending on the level.", "View the README for more details." }
+#define option_main_music_descriptions_line_2 { "", "The song changes depending on the level.", "Check the README for more details." }
 #define option_main_music_descriptions_line_3 { "", "", "" }
 #define option_main_peasant_penalty_descriptions_line_1 { "The peasant meter decreases", "No penalty for escaped peasants." }
 #define option_main_peasant_penalty_descriptions_line_2 { "every time a peasant escapes.", "" }

@@ -1,7 +1,7 @@
+:: Increase the gain of all WAV/OGG files in the current directory to their maximum amount without clipping.
+
 @echo off
 setlocal enabledelayedexpansion
-
-:: Increase the gain of all WAV/OGG files in the current directory to their maximum amount without clipping.
 
 set "OUTDIR=maximized_audio"
 set "MARGIN=0.1"
