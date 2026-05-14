@@ -180,7 +180,7 @@ void printFPS(FontObject *fontObj) {
 	}
 #endif
 	Sint16 fps_counterX = windowWidth / 2;
-	Sint16 fps_counterY = windowHeight * 15 / 16;
+	Sint16 fps_counterY = windowHeight * 19 / 24;
 
 	int hundreds = int(fps_frameCountLastSecond) / 100 + 16;
 	fontObj->textChars[hundreds].dstrect.x = fps_counterX - 20;

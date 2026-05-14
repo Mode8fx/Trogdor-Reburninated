@@ -9,6 +9,7 @@ Sint8 counter;
 bool menusAreInitialized = false;
 FontObject *menuFont;
 FontObject *menuFont_frozen;
+Sint16 menuLabelLineHeight;
 
 #define CURR_OPTION options[cursorIndex]
 #define CURR_OPTION_ONSCREEN options[currOnscreenIndex]
@@ -449,7 +450,7 @@ void Menu::updateOptionPositions() {
 		updateOptionChoicePosition(currOnscreenIndex);
 	}
 	cursor.dstrect.x = CURR_OPTION->label.dstrect.x - (Sint16)(cursor.dstrect.w * screenScale_menu * 2);
-	cursor.dstrect.y = CURR_OPTION->label.dstrect.y + ((CURR_OPTION->label.dstrect.h - (Sint16)(cursor.dstrect.h * screenScale_menu)) / 2);
+	cursor.dstrect.y = CURR_OPTION->label.dstrect.y + ((menuLabelLineHeight - (Sint16)(cursor.dstrect.h * screenScale_menu)) / 2);
 }
 
 void Menu::updateOptionChoicePosition(Sint8 optionIndex) {
@@ -650,6 +651,7 @@ void InitializeMenus() {
 	setFont(menuFont, serif_v01_ttf, serif_v01_ttf_len, 8, 5, TTF_STYLE_NORMAL, color_white, true);
 	menuFont_frozen = &font_serif_gray_8;
 	setFont(&font_serif_gray_8, serif_v01_ttf, serif_v01_ttf_len, 8, 5, TTF_STYLE_NORMAL, color_gray, true);
+	menuLabelLineHeight = (Sint16)TTF_FontHeight(menuFont->font);
 
 	/* Options Menu */
 	menu_main.prepareMenu(MENU_NUM_OPTIONS, 6, &sprite_menu_cursor, false, 1, 32 + (16 * (screenScale_menu >= 2)), 168 + (8 * (screenScale_menu >= 2)), 0, 25, 175, 25, 15, 0, 0, true);

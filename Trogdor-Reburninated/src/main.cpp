@@ -32,10 +32,6 @@ static bool canPreserveOverlayInScene(Sint16 sceneState) {
 #endif
 }
 
-static bool shouldClipToGameWindow() {
-	return sceneUsesGameWindow(g_sceneState);
-}
-
 static void setGameWindowClip(bool shouldClip) {
 #if !defined(SDL1)
 	SDL_RenderSetClipRect(renderer, shouldClip ? &gameToWindowDstRect : NULL);
@@ -1276,11 +1272,6 @@ int main(int argv, char** args) {
 		/* Free Sound Effects That Have Finished Playing */
 		if (g_sceneState > 0) freeFinishedSoundChunks();
 
-		/* Draw FPS Counter */
-		if (showFPS) {
-			printFPS(&font_serif_white_8);
-		}
-
 		setGameWindowClip(false);
 
 		/* Draw Overlay */
@@ -1289,6 +1280,11 @@ int main(int argv, char** args) {
 			shouldRedrawOverlay = false;
 		}
 		overlayWasSafeLastFrame = renderOverlay && canPreserveOverlayInScene(sceneStateForFrame);
+
+		/* Draw FPS Counter */
+		if (showFPS) {
+			printFPS(&font_serif_white_8);
+		}
 
 		/* Update Screen */
 #if !defined(SDL1)
