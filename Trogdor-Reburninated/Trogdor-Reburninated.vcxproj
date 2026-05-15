@@ -250,7 +250,7 @@
     <ClCompile Include="src\graphics_h\level_beaten_trogdor_scaled.cpp" />
     <ClCompile Include="src\graphics_h\loot.cpp" />
     <ClCompile Include="src\graphics_h\menu_cursor.cpp" />
-    <ClCompile Include="src\graphics_h\options_menu.cpp" />
+    <ClCompile Include="src\graphics_h\options_menu_720p.cpp" />
     <ClCompile Include="src\graphics_h\overlays\basement_bottom.cpp" />
     <ClCompile Include="src\graphics_h\overlays\basement_left.cpp" />
     <ClCompile Include="src\graphics_h\overlays\basement_right.cpp" />
@@ -326,7 +326,7 @@
     <ClInclude Include="src\graphics_h\level_beaten_trogdor_scaled.h" />
     <ClInclude Include="src\graphics_h\loot.h" />
     <ClInclude Include="src\graphics_h\menu_cursor.h" />
-    <ClInclude Include="src\graphics_h\options_menu.h" />
+    <ClInclude Include="src\graphics_h\options_menu_720p.h" />
     <ClInclude Include="src\graphics_h\overlays\basement_bottom.h" />
     <ClInclude Include="src\graphics_h\overlays\basement_left.h" />
     <ClInclude Include="src\graphics_h\overlays\basement_right.h" />
