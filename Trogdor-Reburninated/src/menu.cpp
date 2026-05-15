@@ -11,16 +11,24 @@ FontObject *menuFont;
 FontObject *menuFont_frozen;
 Sint16 menuLabelLineHeight;
 
+static inline Sint16 scaleMenuX(Sint16 x) {
+	return (Sint16)(((double)x * menuToWindowDstRect.w) / appWidth);
+}
+
+static inline Sint16 scaleMenuY(Sint16 y) {
+	return (Sint16)(((double)y * menuToWindowDstRect.h) / appHeight);
+}
+
 #define CURR_OPTION options[cursorIndex]
 #define CURR_OPTION_ONSCREEN options[currOnscreenIndex]
 #define CURR_SPACER_X (spacer_x * (currOnscreenIndex - topOnscreenIndex))
 
-#define CENTER_X(textObj)  OBJ_TO_MID_SCREEN_X((Sint16)(appWidth * screenScale_menu), textObj)
-#define DESC_LINE_Y_TOP    (Sint16)(start_y_desc * screenScale_menu)
-#define DESC_LINE_Y_UPPER  (Sint16)((start_y_desc + (spacer_y_desc / 2)) * screenScale_menu)
-#define DESC_LINE_Y_MID    (Sint16)((start_y_desc + spacer_y_desc) * screenScale_menu)
-#define DESC_LINE_Y_LOWER  (Sint16)((start_y_desc + (spacer_y_desc * 3 / 2)) * screenScale_menu)
-#define DESC_LINE_Y_BOTTOM (Sint16)((start_y_desc + (spacer_y_desc * 2)) * screenScale_menu)
+#define CENTER_X(textObj)  OBJ_TO_MID_SCREEN_X(menuToWindowDstRect.w, textObj)
+#define DESC_LINE_Y_TOP    scaleMenuY(start_y_desc)
+#define DESC_LINE_Y_UPPER  scaleMenuY(start_y_desc + (spacer_y_desc / 2))
+#define DESC_LINE_Y_MID    scaleMenuY(start_y_desc + spacer_y_desc)
+#define DESC_LINE_Y_LOWER  scaleMenuY(start_y_desc + (spacer_y_desc * 3 / 2))
+#define DESC_LINE_Y_BOTTOM scaleMenuY(start_y_desc + (spacer_y_desc * 2))
 
 /*************/
 /* MENU PAGE */
@@ -38,16 +46,16 @@ void MenuPage::setTextLine(Sint8 index, const char text[]) {
 	setText(text, &lines[index], menuFont);
 	switch (alignType) {
 		case 0:
-			lines[index].dstrect.x = (Sint16)(start_x * screenScale_menu);
+			lines[index].dstrect.x = scaleMenuX(start_x);
 			break;
 		case 1:
 			lines[index].dstrect.x = CENTER_X(lines[index]);
 			break;
 		default:
-			lines[index].dstrect.x = (Sint16)(start_x * screenScale_menu) - lines[index].dstrect.w;
+			lines[index].dstrect.x = scaleMenuX(start_x) - lines[index].dstrect.w;
 			break;
 	}
-	lines[index].dstrect.y = (Sint16)((start_y + (spacer_y * index)) * screenScale_menu);
+	lines[index].dstrect.y = scaleMenuY(start_y + (spacer_y * index));
 }
 
 void MenuPage::render() {
@@ -62,9 +70,9 @@ void MenuPage::render() {
 
 void MenuNotebook::prepareMenuNotebook(Sint8 num_pages, Sint16 pos_x, Sint16 pos_y, Sint8 align_type) {
 	numPages = num_pages;
-	pageCounter.dstrect.y = (Sint16)(pos_y * screenScale_menu);
+	pageCounter.dstrect.y = scaleMenuY(pos_y);
 	setText("(1/5)", &pageCounter, menuFont);
-	pageCounter_x = (Sint16)(pos_x * screenScale_menu);
+	pageCounter_x = scaleMenuX(pos_x);
 	alignType_pageCounter = align_type;
 	if (!menusAreInitialized) {
 		index = 0;
@@ -445,12 +453,12 @@ void Menu::updateOptionPositions() {
 		}
 		CURR_OPTION_ONSCREEN->label.dstrect.y = start_y_option + (spacer_y_option * (currOnscreenIndex - topOnscreenIndex));
 
-		CURR_OPTION_ONSCREEN->label.dstrect.x = (Sint16)(CURR_OPTION_ONSCREEN->label.dstrect.x * screenScale_menu);
-		CURR_OPTION_ONSCREEN->label.dstrect.y = (Sint16)(CURR_OPTION_ONSCREEN->label.dstrect.y * screenScale_menu);
+		CURR_OPTION_ONSCREEN->label.dstrect.x = scaleMenuX(CURR_OPTION_ONSCREEN->label.dstrect.x);
+		CURR_OPTION_ONSCREEN->label.dstrect.y = scaleMenuY(CURR_OPTION_ONSCREEN->label.dstrect.y);
 		updateOptionChoicePosition(currOnscreenIndex);
 	}
-	cursor.dstrect.x = CURR_OPTION->label.dstrect.x - (Sint16)(cursor.dstrect.w * screenScale_menu * 2);
-	cursor.dstrect.y = CURR_OPTION->label.dstrect.y + ((menuLabelLineHeight - (Sint16)(cursor.dstrect.h * screenScale_menu)) / 2);
+	cursor.dstrect.x = CURR_OPTION->label.dstrect.x - scaleMenuX((Sint16)(cursor.dstrect.w * 2));
+	cursor.dstrect.y = CURR_OPTION->label.dstrect.y + ((menuLabelLineHeight - scaleMenuY(cursor.dstrect.h)) / 2);
 }
 
 void Menu::updateOptionChoicePosition(Sint8 optionIndex) {
@@ -467,7 +475,7 @@ void Menu::updateOptionChoicePosition(Sint8 optionIndex) {
 	}
 	options[optionIndex]->choice.dstrect.y = options[optionIndex]->label.dstrect.y;
 
-	options[optionIndex]->choice.dstrect.x = (Sint16)(options[optionIndex]->choice.dstrect.x * screenScale_menu);
+	options[optionIndex]->choice.dstrect.x = scaleMenuX(options[optionIndex]->choice.dstrect.x);
 	updateOptionDescPosition(optionIndex);
 }
 

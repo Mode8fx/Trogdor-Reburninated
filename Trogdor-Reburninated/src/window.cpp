@@ -89,11 +89,11 @@ void scaleGameAndApp() {
 	gameHiResHeight = gameToWindowDstRect.h;
 	gameHiResSrcRect.w = gameHiResWidth;
 	gameHiResSrcRect.h = gameHiResHeight;
-	screenScale_menu = std::floor(getScreenScale_app());
+	screenScale_menu = (float)windowHeight / appHeight;
 	menuToWindowDstRect.w = (int)(appWidth * screenScale_menu);
-	menuToWindowDstRect.h = (int)(appHeight * screenScale_menu);
-	menuToWindowDstRect.x = max((int)((windowWidth - menuToWindowDstRect.w) / 2), 0);
-	menuToWindowDstRect.y = max((int)((windowHeight - menuToWindowDstRect.h) / 2), 0);
+	menuToWindowDstRect.h = windowHeight;
+	menuToWindowDstRect.x = (windowWidth - menuToWindowDstRect.w) / 2;
+	menuToWindowDstRect.y = 0;
 }
 
 void repositionOverlay() {

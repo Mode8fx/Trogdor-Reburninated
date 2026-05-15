@@ -45,7 +45,6 @@
 #include "graphics_h/overlays/strong_badia_left_240p.h"
 #include "graphics_h/overlays/strong_badia_right_240p.h"
 #include "graphics_h/overlays/strong_badia_top_240p.h"
-#include "graphics_h/options_menu_240p.h"
 #else
 #include "graphics_h/overlays/basement_bottom.h"
 #include "graphics_h/overlays/basement_left.h"
@@ -59,7 +58,13 @@
 #include "graphics_h/overlays/strong_badia_left.h"
 #include "graphics_h/overlays/strong_badia_right.h"
 #include "graphics_h/overlays/strong_badia_top.h"
+#endif
+#if defined(THREEDS)
+#include "graphics_h/options_menu_240p.h"
+#elif defined(PSP) || defined(GAMECUBE) || defined(WII)
 #include "graphics_h/options_menu.h"
+#else
+#include "graphics_h/options_menu_720p.h"
 #endif
 #include "graphics_h/peasant.h"
 #include "graphics_h/peasantometer.h"
