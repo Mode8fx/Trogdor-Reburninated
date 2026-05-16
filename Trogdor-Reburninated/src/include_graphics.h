@@ -59,9 +59,9 @@
 #include "graphics_h/overlays/strong_badia_right.h"
 #include "graphics_h/overlays/strong_badia_top.h"
 #endif
-#if defined(THREEDS)
+#if defined(THREEDS) || defined(PSP)
 #include "graphics_h/options_menu_240p.h"
-#elif defined(PSP) || defined(GAMECUBE) || defined(WII)
+#elif defined(GAMECUBE) || defined(WII)
 #include "graphics_h/options_menu.h"
 #else
 #include "graphics_h/options_menu_720p.h"

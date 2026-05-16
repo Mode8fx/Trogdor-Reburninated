@@ -656,9 +656,9 @@ void InitializeSpritesPart2() {
 	PREPARE_SPRITE(sprite_strong_bad_ending, strong_bad_ending_img, strong_bad_ending_img_len, 0, 0, 1, 1, 1);
 	PREPARE_SPRITE(sprite_cursor, menu_cursor_img, menu_cursor_img_len, 0, 0, 1, 1, 1);
 	PREPARE_SPRITE_MENU(sprite_menu_cursor, menu_cursor_img, menu_cursor_img_len, 0, 0, 1, 1, 1);
-#if defined(THREEDS)
+#if defined(THREEDS) || defined(PSP)
 	PREPARE_SPRITE_MENU(sprite_menu_background, options_menu_240p_img, options_menu_240p_img_len, 0, 0, 1, 1, 1);
-#elif defined(PSP) || defined(GAMECUBE) || defined(WII)
+#elif defined(GAMECUBE) || defined(WII)
 	PREPARE_SPRITE_MENU(sprite_menu_background, options_menu_img, options_menu_img_len, 0, 0, 1, 1, 0.5);
 #else
 	PREPARE_SPRITE_MENU(sprite_menu_background, options_menu_720p_img, options_menu_720p_img_len, 0, 0, 1, 1, 0.33334);

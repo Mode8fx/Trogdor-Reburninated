@@ -194,6 +194,7 @@ elseif (VITA)
 	include("${VITASDK}/share/vita.cmake" REQUIRED)
 	add_definitions(-DVITA)
 	add_definitions(-DPRELOAD_SOUNDS)
+	add_definitions(-DFORCE_DRAW_OVERLAY)
 	
 	set(VITA_APP_NAME "Trogdor: Reburninated")
 	set(VITA_TITLEID  "TROG73287")
