@@ -1,6 +1,8 @@
 #include "window.h"
 #include "sprite_objects.h"
 #include "general.h"
+#include "menu.h"
+#include "cutscenes.h"
 #include "media_objects_init.h"
 #include "config.h"
 
@@ -135,6 +137,7 @@ void repositionOverlay() {
 }
 
 void setScaling() {
+	const bool hadInitializedMenus = menusAreInitialized;
 	scaleGameAndApp();
 	setWidthHeightMults();
 	InitializeSpritesPart1();
@@ -143,6 +146,9 @@ void setScaling() {
 	destroyAllTextChars();
 	InitializeFontsAndText();
 	InitializeMenus();
+	if (hadInitializedMenus) {
+		InitializeCutsceneObjects();
+	}
 }
 
 void snapWindow_x(double range, Uint16 size) {
