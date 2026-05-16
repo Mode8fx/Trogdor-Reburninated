@@ -89,11 +89,11 @@ void scaleGameAndApp() {
 	gameHiResHeight = gameToWindowDstRect.h;
 	gameHiResSrcRect.w = gameHiResWidth;
 	gameHiResSrcRect.h = gameHiResHeight;
-	screenScale_menu = (float)windowHeight / appHeight;
+	screenScale_menu = getScreenScale_app();
 	menuToWindowDstRect.w = (int)(appWidth * screenScale_menu);
-	menuToWindowDstRect.h = windowHeight;
+	menuToWindowDstRect.h = (int)(appHeight * screenScale_menu);
 	menuToWindowDstRect.x = (windowWidth - menuToWindowDstRect.w) / 2;
-	menuToWindowDstRect.y = 0;
+	menuToWindowDstRect.y = (windowHeight - menuToWindowDstRect.h) / 2;
 }
 
 void repositionOverlay() {

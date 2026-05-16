@@ -61,7 +61,7 @@ CXXFLAGS	:= $(CFLAGS) -fno-rtti -fexceptions -std=gnu++11
 ASFLAGS	:=	-g $(ARCH)
 LDFLAGS	=	-specs=3dsx.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS	:= `sdl-config --libs` `$(PREFIX)pkg-config --libs  SDL_ttf SDL_gfx SDL_mixer SDL_image freetype2` -lctru -lm
+LIBS	:= `sdl-config --libs` `$(PREFIX)pkg-config --libs  SDL_ttf SDL_gfx SDL_mixer SDL_image freetype2` -lopusfile -lopus -logg -lxmp -lpng -lz -lbz2 -lctru -lm
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing

@@ -5,7 +5,7 @@ set "CURR_DIR=%CD%"
 :: Manual sleep amounts (because `start /wait` doesn't work...)
 set SLEEP_COMPILE=50
 set SLEEP_COMPILE_LONG=60
-set SLEEP_COMPILE_SHORT=5
+set SLEEP_COMPILE_SHORT=10
 set SLEEP_CLEAN=2
 
 :: Path: repo (the folder that contains /src)
@@ -51,7 +51,7 @@ set OUTPUT_LINUX=%OUTPUT_DIR%-linux/Trogdor-Reburninated
 
 :: Makefile: Gamecube
 set MAKEFILE_DKP_GC=%MAKEFILES_DKP%/Makefile_gc
-set OUTPUT_GC=%OUTPUT_DIR%-gamecube/Trogdor-RB/boot.dol
+set OUTPUT_GC=%OUTPUT_DIR%-gamecube/Trogdor-RB/Trogdor-Reburninated.dol
 
 :: Makefile: Wii
 set MAKEFILE_DKP_WII=%MAKEFILES_DKP%/Makefile_wii
@@ -93,17 +93,6 @@ set OUTPUT_ANDROID_IDSIG=%OUTPUT_ANDROID_IDSIG:/=\%
 
 
 :: Running compilation commands...
-call :compile_windows_x64
-call :compile_windows_x86
-call :compile_linux
-call :compile_gc
-call :compile_wii
-call :compile_wii_u
-call :compile_switch
-call :compile_3ds
-call :compile_vita
-rem call :compile_rg35xx
-rem call :compile_psp
 call :compile_android
 
 echo Done.
@@ -155,7 +144,7 @@ echo Gamecube: Compiling with devkitPro...
 cp %MAKEFILE_DKP_GC% %MAKEFILE_DEFAULT%
 :: make is run twice to get around a makefile issue
 start /wait "" %DEVKITPRO% /usr/bin/bash -lc "cd %REPO_DKP%; make; make"
-sleep %SLEEP_COMPILE%
+sleep %SLEEP_COMPILE_LONG%
 echo Gamecube: Moving compiled dol to %OUTPUT_GC%...
 mv %REPO%/boot.dol %OUTPUT_GC%
 echo Gamecube: Cleaning up...
@@ -170,7 +159,7 @@ echo Wii: Compiling with devkitPro...
 cp %MAKEFILE_DKP_WII% %MAKEFILE_DEFAULT%
 :: make is run twice to get around a makefile issue
 start /wait "" %DEVKITPRO% /usr/bin/bash -lc "cd %REPO_DKP%; make; make"
-sleep %SLEEP_COMPILE%
+sleep %SLEEP_COMPILE_LONG%
 echo Wii: Moving compiled dol to %OUTPUT_WII%...
 mv %REPO%/boot.dol %OUTPUT_WII%
 echo Wii: Cleaning up...
@@ -187,6 +176,7 @@ sleep %SLEEP_COMPILE_LONG%
 sleep 10
 echo Wii U: Moving compiled rpx to %OUTPUT_WII_U%...
 mv %REPO%/build_wii_u/trogdorrb.rpx %OUTPUT_WII_U%
+sleep %SLEEP_COMPILE_SHORT%
 echo Wii U WHUB: Creating WUHB in %OUTPUT_WII_U_WUHB%...
 start /wait "" %DEVKITPRO% /usr/bin/bash -lc "wuhbtool %REPO%/build_wii_u_whub/trogdorrb.rpx %OUTPUT_WII_U_WUHB% --name=\"Trogdor: Reburninated\" --short-name=\"Trogdor: Reburninated\" --author=Mode8fx --icon=%RELEASE_RESOURCES%/logo_icon_vita.png --tv-image=%RELEASE_RESOURCES%/splash_screen_wiiu_tv.png --drc-image=%RELEASE_RESOURCES%/splash_screen_wiiu_gamepad.png"
 sleep %SLEEP_COMPILE_SHORT%
@@ -216,7 +206,7 @@ goto :eof
 echo 3DS: Compiling with devkitPro...
 cp %MAKEFILE_DKP_3DS% %MAKEFILE_DEFAULT%
 start /wait "" %DEVKITPRO% /usr/bin/bash -lc "cd %REPO_DKP%; make"
-sleep %SLEEP_COMPILE%
+sleep %SLEEP_COMPILE_LONG%
 echo 3DS: Moving compiled 3dsx to %OUTPUT_3DS%...
 mv %REPO%/Trogdor-Reburninated.3dsx %OUTPUT_3DS%
 echo 3DS: Creating CIA in %OUTPUT_3DS_CIA%...
