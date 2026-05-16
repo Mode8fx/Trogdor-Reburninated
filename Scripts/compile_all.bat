@@ -93,6 +93,17 @@ set OUTPUT_ANDROID_IDSIG=%OUTPUT_ANDROID_IDSIG:/=\%
 
 
 :: Running compilation commands...
+call :compile_windows_x64
+call :compile_windows_x86
+call :compile_linux
+call :compile_gc
+call :compile_wii
+call :compile_wii_u
+call :compile_switch
+call :compile_3ds
+call :compile_vita
+rem call :compile_rg35xx
+rem call :compile_psp
 call :compile_android
 
 echo Done.
